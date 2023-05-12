@@ -16,7 +16,7 @@
 	<packaging>jar</packaging>
 	<properties>
 		<java.version>11</java.version>
-		<start-class>com.actas.kdmes.Aprj003Application</start-class>
+		<start-class>com.dae.kdmes.Aprj003Application</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -125,7 +125,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.4.4</version>
 				<configuration>
-					<mainClass>com.actas.kdmes.Aprj003Application</mainClass>
+					<mainClass>com.dae.kdmes.Aprj003Application</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

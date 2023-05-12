@@ -2,118 +2,227 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="layouts/layout01/fragments/head :: headFragment" />
+<head th:replace="layouts/XRegister/head :: headFragment" />
 
-<body>
-  <!-- ===============================================-->
-  <!--    Main Content-->
-  <!-- ===============================================-->
-  <main class="main" id="top">
-    <div class="container-fluid">
-      <div class="row min-vh-100 flex-center g-0">
-        <div class="col-lg-8 col-xxl-5 py-3 position-relative">
-          <img class="bg-auth-circle-shape" th:src="@{/assets/img/icons/spot-illustrations/bg-shape.png}" alt=""
-            width="250">
-          <img class="bg-auth-circle-shape-2" th:src="@{/assets/img/icons/spot-illustrations/shape-1.png}" alt=""
-            width="150">
-          <div class="card overflow-hidden z-index-1">
-            <div class="card-body p-0">
-              <div class="row g-0 h-100">
-                <div class="col-md-5 text-center bg-card-gradient">
-                  <div class="position-relative p-4 pt-md-5 pb-md-7 light">
-                    <div class="bg-holder bg-auth-card-shape"
-                      style="background-image:url(../../../assets/img/icons/spot-illustrations/half-circle.png);">
-                    </div>
-                    <!--/.bg-holder-->
+<body style="background: url(/images/bg1.png) center center; background-size: cover;">
 
-                    <div class="z-index-1 position-relative"><a
-                        class="link-light mb-4 font-sans-serif fs-4 d-inline-block fw-bolder" th:href="@{/}">Actas
-                        ERP</a>
-                      <p class="opacity-75 text-white">With the power of Actas, you can now focus only on functionaries
-                        for your digital source, while leaving the data service on us!</p>
-                    </div>
-                  </div>
-                  <div class="mt-3 mb-4 mt-md-4 mb-md-5 light">
-                    <p class="text-white">계정이 없으신가요?<br><a class="text-decoration-underline link-light"
-                        th:href="@{/members/new}">사용자등록</a></p>
-                    <p class="mb-0 mt-4 mt-md-5 fs--1 fw-semi-bold text-white opacity-75">Read our <a
-                        class="text-decoration-underline text-white" href="#!">terms</a> and <a
-                        class="text-decoration-underline text-white" href="#!">conditions </a></p>
-                  </div>
-                </div>
-                <div class="col-md-7 d-flex flex-center">
-                  <div class="p-4 p-md-5 flex-grow-1">
-                    <div class="row flex-between-center">
-                      <div class="col-auto">
-                        <h3>Login</h3>
-                      </div>
-                    </div>
-                    <form  action="/login" method="POST">
-                      <div class="mb-3">
-                        <label class="form-label" for="card-email">User ID</label>
-                        <input class="form-control" name="username" id="username" type="text" />
-                      </div>
-                      <div class="mb-3">
-                        <div class="d-flex justify-content-between">
-                          <label class="form-label" for="card-password">Password</label>
-                        </div>
-                        <input class="form-control" name="password" id="password" type="password" />
-                      </div>
-                      <div class="row flex-between-center">
-                        <div class="col-auto">
-                          <div class="form-check mb-0">
-                            <input class="form-check-input" type="checkbox" id="card-checkbox" checked="checked" />
-                            <label class="form-check-label mb-0" for="card-checkbox">Remember me</label>
-                          </div>
-                        </div>
-                        <div class="col-auto"><a class="fs--1"
-                            href="../../../pages/authentication/card/forgot-password.html">Forgot Password?</a></div>
-                      </div>
-                      <div class="mb-3">
-                        <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button>
-                      </div>
-                      <div class="mb-3">
-                        <div th:if="${loginErrorMsg}" class="alert alert-warning border-2 d-flex align-items-center"
-                          role="alert">
-                          <div class="bg-warning me-3 icon-item"><span
-                              class="fas fa-exclamation-circle text-white fs-3"></span></div>
-                          <p class="mb-0 flex-1" th:text="${loginErrorMsg}">Incorrent data</p>
-                        </div>
-                      </div>
-                       <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"></input> -->
-                    </form>
-                    <!-- <div th:if="${param.error}">
-                                <div class="alert alert-danger" role="alert">
-                                    <b>사용자 아이디 또는 암호를 확인하세요.</b>
-                                </div>
-                            </div>
-                            <div th:if="${param.logout}">
-                                <div class="alert alert-danger" role="alert">
-                                    <b>로그아웃 되었습니다.</b>
-                                </div>        
-                            </div>                               -->
-                    <!-- <div class="position-relative mt-4">
-                              <hr class="bg-300" />
-                              <div class="divider-content-center">or log in with</div>
-                            </div> -->
-                    <!-- <div class="row g-2 mt-2">
-                              <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="#"><span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> google</a></div>
-                              <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="#"><span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> facebook</a></div>
-                            </div> -->
-                  </div>
-                </div>
-              </div>
+<div class="content main">
+
+  <div class="box_con_wrap">
+    <div class="head_tit">
+      <h1>경덕산업 MES System</h1>
+    </div>
+    <div class="box_con" style="background: url(/images/login_bg.png) no-repeat;">
+      <div class="logo">
+        <a th:href="@{/auth/admin}">
+          <img src="/images/logo.png" alt="">
+        </a>
+      </div>
+      <div class="login">
+        <div class="tit">Login</div>
+        <form action="/login" method="POST">
+          <!-- <div class="input_wrap"> 
+            <select name="select" id="select" class="select">
+              <option value="AA">본사관리</option>
+              <option value="BB">고객사용자</option>
+              <option value="CC">영업사원</option>  
+            </select> 
+          </div>  -->
+          <div class="input_wrap icon i_id">
+            <input type="text" id="loginid" name="loginid">
+            <input type="hidden" id="ipaddr" name="ipaddr">
+          </div>
+          <div class="input_wrap icon i_pw">
+            <input type="password" id="logpass" name="logpass">
+          </div>
+          <div class="account">
+            <div class="save_id">
+              <input type="checkbox" id="card-checkbox" checked="checked">
+              <label for="save_id" class="check_style1">ID 저장</label>
+            </div>
+            <!-- <ul class="find_account">
+              <li>
+                <a href="">아이디 찾기</a>
+              </li>
+              <li>
+                <a href="">비밀번호 찾기</a>
+              </li>
+            </ul> -->
+          </div>
+          <div class="login_btn">
+            <div class="btn_wrap">
+              <button type="button" id="login_btn" name="login_btn">Login</button>
+            </div>
+
+
+          </div>
+          <!-- <div>
+            <a th:href="@{/auth/cltcdnew}">사원사용자등록</a><br>
+            <a th:href="@{/auth/actcdnew}">고객사용자등록</a>
+          </div> -->
+          <div class="mb-3">
+            <div th:if="${loginErrorMsg}" class="alert alert-warning border-2 d-flex align-items-center"
+                 role="alert">
+              <div class="bg-warning me-3 icon-item"><span
+                      class="fas fa-exclamation-circle text-white fs-3"></span></div>
+              <p class="mb-0 flex-1" th:text="${loginErrorMsg}">Incorrent data</p>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
-  </main>
-  <!-- ===============================================-->
-  <!--    End of Main Content-->
-  <!-- ===============================================-->
 
-  <footer th:replace="layouts/layout01/fragments/footer :: footerFragment"></footer>
+  </div>
+</div>
+
+<script>
+
+      window.onload = function() {  
+        getIpClient();
+      }
+
+      async function getIpClient() {
+        try {
+          const response = await axios.get('https://api.ipify.org?format=json');
+          document.getElementById('ipaddr').value = response.data.ip;
+          // console.log(response.data.ip);
+          // console.log("----");
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+        
+
+
+      var btn_obj = document.getElementById('login_btn');
+      btn_obj.addEventListener("click",function(){
+        
+          //TB_FPLAN_WORK TB_FPLAN_W010  SAVE
+          var ls_loginid   = document.getElementById('loginid').value;
+          var ls_logpass   = document.getElementById('logpass').value;
+          var ls_ipaddr    = document.getElementById('ipaddr').value;
+          // var ls_select  = document.getElementById('select').value;
+          var ls_actcustcdz = "EEAN" ; //document.getElementById('actcustcdz').value;
+          var ls_select = "AA";
+          alert("kkk");
+          $.ajax({
+              url: '/authcrud/login',
+              type:"POST",
+              data: {
+                  "loginid"    : ls_loginid ,
+                  "logpass"  : ls_logpass,
+                  "ipaddr"  : ls_ipaddr,
+                  "flag"    : ls_select 
+              },
+              async:false,
+              success:function(userFormDto){
+
+                var ListDto = userFormDto;
+                var ls_userid = userFormDto["userid"]
+                var ls_username = userFormDto["username"]
+                var ls_cltcd= userFormDto["cltcd"]
+                var ls_dbnm = userFormDto["dbnm"]
+                var ls_flag = userFormDto["flag"]
+                //var ls_url = 'userid=' + ls_userid +'&username=' + ls_username +'&cltcd=' + ls_cltcd +'&dbnm=' + ls_dbnm +'&flag=' + ls_flag;
+                var ls_url = 'userid=' + ls_userid
+                var ls_useyn = userFormDto["useyn"]
+                var ls_wrongnum = userFormDto["wrongnum"]
+
+
+                if(userFormDto == "" || userFormDto == null){
+                  alert("사용자 구분을 확인하세요.");
+                  return false;
+                }
+
+                if(ls_wrongnum == 3 || ls_useyn == "N"){
+                  wrongPasswd();
+                }else{
+                  insertLogin();
+
+                window.location.href = '/auth/emmsdashboard';
+                  // if(data == "success"){
+                  //     alert("등록 되었습니다.");
+                  //     var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>가입되었습니다.</span></div>";
+                  // }else{
+                  //     alert("등록오류");
+                  //     var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>가입실패</span></div>";
+                  // }
+                  // statusdis_div.innerHTML  = ls_text;
+                }
+
+              },error:function(e){
+                  wrongPasswd();
+              }
+          }).done(function(fragment){
+
+          })
+
+     })
+
+     function insertLogin(){
+      console.log("insertlogin start");
+      var ls_loginid   = document.getElementById('loginid').value;
+      var ls_logpass   = document.getElementById('logpass').value;
+      var ls_ipaddr    = document.getElementById('ipaddr').value;
+      console.log(ls_loginid, ls_logpass, ls_ipaddr);
+
+      $.ajax({
+        url: '/authcrud/loginlog',
+        type:"POST",
+        data: {
+              "loginid" : ls_loginid,
+              "logpass" : ls_logpass,
+              "ipaddr"  : ls_ipaddr
+        },
+        async:false,
+        success:function(){
+          console.log('success');
+        }
+      });
+     }
+
+     function wrongPasswd(){
+        console.log("wrongPasswd start");
+        var ls_loginid   = document.getElementById('loginid').value;
+        var ls_logpass   = document.getElementById('logpass').value;
+
+        $.ajax({
+        url: '/authcrud/wrongpasswd',
+        type:"POST",
+        data: {
+              "loginid" : ls_loginid,
+              "logpass" : ls_logpass
+        },
+        async:false,
+        success:function(userFormDto){
+          var ListDto = userFormDto;
+          var ls_wrongnum = userFormDto["wrongnum"];
+          var ls_useyn = userFormDto["useyn"];
+
+          if(ls_wrongnum < 3 && ls_useyn == "Y"){
+            alert("비밀번호를 "+ls_wrongnum+"회 틀렸습니다. 로그인 3회 실패 시 사용 중지됩니다.");
+          }else{
+            if(userFormDto == "null"){
+              alert("등록되지 않은 사용자입니다.")
+            }else {
+              alert("사용 중지된 계정입니다. 관리자에게 문의하세요.");
+              console.log(userFormDto);
+            }
+          }
+        }
+      });
+     }
+
+
+
+</script>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<footer th:replace="layouts/XRegister/footer :: footerFragment"></footer>
 </body>
 
 </html>
