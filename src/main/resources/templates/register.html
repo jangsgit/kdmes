@@ -26,32 +26,15 @@
             </div>
             <div class="form">
                 <div class="tit">
-                    회원가입
-                </div>
+                    경덕산업 MES System
+                </div> 
                 <div class="sub_tit">
-                    유지보수센터
+                    회원가입
                 </div>
                 <div class="form_wrap">
 
                     <form th:action="@{/auth/save}" role="form" method="post"  th:object="${userFormDto}">
-
-                        <div class="input_wrap flex">
-                            <p>사업자 번호</p>
-                            <input type="text" autocomplete="on" id="saupnum" name="saupnum" th:field="*{saupnum}"/>
-                            <div th:if="${#fields.hasErrors('saupnum')}"  th:errors="*{saupnum}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
-                                <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
-                                <p class="mb-0 flex-1">Incorrent data</p>
-                            </div>
-                            <div id="inwarnning_div"></div>
-
-                            <button type="button" id="saupnum_btn" name="saupnum_btn"><span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span>
-                                <span class="d-none d-sm-inline-block ms-1">업체확인</span></button>
-                            <input type="hidden" value="N" id="squpnum_chk">
-                        </div>
-
-                        <!--
-                        <div class="alert">사업자번호가 틀립니다.</div>
-                        -->
+ 
                         <div class="input_wrap flex">
                             <p>아이디</p>
                             <input type="text" autocomplete="on" id="userid" name="userid" th:field="*{userid}" placeholder="아이디는 10자리까지입니다." maxlength="10"/>
@@ -61,13 +44,7 @@
                                 <p class="mb-0 flex-1">Incorrent data</p>
                             </div>
                             -->
-                            <div id="inchkid_div"></div>
-
-
-
-
-
-
+                            <div id="inchkid_div"></div> 
                             <button type="button" id="idchk_btn" name="idchk_btn"><span class="fas fa-check" data-fa-transform="shrink-3 down-2"></span>
                                 <span class="d-none d-sm-inline-block ms-1">중복확인</span>
                             </button></button><input type="hidden" value="N" id="idchk">
@@ -91,17 +68,17 @@
 
 
                         <div class="input_wrap flex">
-                            <p>핸드폰 번호</p>
-                            <input type="text" autocomplete="on" id="phone" name="phone" th:field="*{phone}" placeholder="010포함 11자리입니다. -포함 시 13자리" maxlength="13"/>
-                            <div th:if="${#fields.hasErrors('phone')}"  th:errors="*{phone}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
+                            <p>사원코드</p>
+                            <input type="text" autocomplete="on" id="perid" name="perid" th:field="*{perid}"  maxlength="13"/>
+                            <div th:if="${#fields.hasErrors('perid')}"  th:errors="*{perid}"  class="alert alert-warning border-2 d-flex align-items-center" role="alert">
                                 <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
                                 <p class="mb-0 flex-1">Incorrent data</p>
                             </div>
-                            <div id="inchkphone_div"></div>
+                            <div id="inchkperid_div"></div>
 
 
-                            <button type="button" id="phone_chk" name="phone_chk">중복확인</button>
-                            <input type="hidden" id="phonechk" value="N">
+                            <button type="button" id="perid_chk" name="perid_chk">중복확인</button>
+                            <input type="hidden" id="peridchk" value="N">
                         </div>
 
 

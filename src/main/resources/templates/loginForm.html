@@ -56,10 +56,10 @@
 
 
           </div>
-          <!-- <div>
-            <a th:href="@{/auth/cltcdnew}">사원사용자등록</a><br>
-            <a th:href="@{/auth/actcdnew}">고객사용자등록</a>
-          </div> -->
+          <div>
+            <a th:href="@{/auth/cltcdnew}">사용자등록</a><br>
+            <!-- <a th:href="@{/auth/actcdnew}">고객사용자등록</a> -->
+          </div>
           <div class="mb-3">
             <div th:if="${loginErrorMsg}" class="alert alert-warning border-2 d-flex align-items-center"
                  role="alert">
@@ -103,7 +103,7 @@
           var ls_logpass   = document.getElementById('logpass').value;
           var ls_ipaddr    = document.getElementById('ipaddr').value;
           // var ls_select  = document.getElementById('select').value;
-          var ls_actcustcdz = "EEAN" ; //document.getElementById('actcustcdz').value;
+          var ls_actcustcdz = "KDMES" ; //document.getElementById('actcustcdz').value;
           var ls_select = "AA";          
           $.ajax({
               url: '/authcrud/login',
