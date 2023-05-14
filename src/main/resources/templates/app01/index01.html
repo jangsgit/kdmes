@@ -62,12 +62,12 @@
                                     <div class="tab-pane fade show active" id="step01">   
                                         <div class="row gx-3" style="  margin: 10px 10px 10px;"> 
                                             <div class="col-6 col-sm-3">
-                                              <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1" for="zipCode">업체분류코드</label>
-                                              <input class="form-control" id="cifcode" placeholder="2자리" type="text">
+                                              <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1" for="zipCode">대분류코드</label>
+                                              <input class="form-control" id="com_cls" placeholder="3자리" type="text">
                                             </div>
                                             <div class="col-6 col-sm-3">
-                                              <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1" for="expDate">업체분류명</label>
-                                              <input class="form-control" id="cifcodename"   type="text">
+                                              <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1" for="expDate">대분류명칭</label>
+                                              <input class="form-control" id="com_cnam"   type="text">
                                             </div> 
                                           </div>
                                         <div class="container-fluid"> 
@@ -145,12 +145,12 @@
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
                 columns: [     
-                    { binding: 'cifcode', header: '코드', align: "center",   width: 100 }, 
-                    { binding: 'cifcodename', header: '업체구분명', align: "center", 
+                    { binding: 'com_cls', header: '대분류코드', align: "center",   width: 100 }, 
+                    { binding: 'com_cnam', header: '대분류명칭', align: "center", 
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                            text: '<b>${item.cifcodename}</b>',
+                            text: '<b>${item.comcodename}</b>',
                             click: (e, ctx) => {
-                                wactnmChk(ctx.item.cifcode, ctx.item.cifcodename);
+                                wactnmChk(ctx.item.com_cls, ctx.item.com_cnam);
                             }
                         }),
                     width: 300},  
@@ -184,15 +184,15 @@
 
             // tab01검색 데이터 수집
             function getData_tab01(){    
-                var wtab01Dto = [[${cifcodeList}]];   
+                var wtab01Dto = [[${comcodeList}]];   
                 var wactnm_data = [];
                 var cnt = 1;
                 for (var i = 0; i < wtab01Dto.length; i++) {
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
-                        cifcode:  wtab01Dto[i]["cifcode"], 
-                        cifcodename:  wtab01Dto[i]["cifcodename"], 
+                        cifcode:  wtab01Dto[i]["com_cls"], 
+                        cifcodename:  wtab01Dto[i]["com_cnam"], 
                     });
                     cnt++;
                 }    
@@ -223,14 +223,14 @@
             });  
             // 현장검색 데이터 수집
             function getData_wlist(){    
-                var wactnm_data = [[${cifcodeList}]];  
+                var wactnm_data = [[${comcodeList}]];  
                 var cnt = 1;
                 for (var i = 0; i < 12; i++) {
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
-                        cifcode:  wactnm_data[i]["cifcode"], 
-                        cifcodename:  wactnm_data[i]["cifcodename"], 
+                        cifcode:  wactnm_data[i]["com_cls"], 
+                        cifcodename:  wactnm_data[i]["com_cnam"], 
                     });
                     cnt++;
                 }    
@@ -249,8 +249,8 @@
 
         function save_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
-            var ls_code = document.getElementById('cifcode').value;
-            var ls_codenm = document.getElementById('cifcodename').value;
+            var ls_code = document.getElementById('com_cls').value;
+            var ls_codenm = document.getElementById('com_cnam').value;
 
         
             if (!confirm("저장하시겠습니까?")) {
@@ -261,22 +261,22 @@
                 case 'A':
 
                 if(ls_code == null || ls_code.length == 0 || ls_code == ""){ 
-                    alert("코드를 2자리로 등록하세요") 
-                    document.getElementById("cifcode").focus(); 
+                    alert("대분류코드를 3자리로 등록하세요") 
+                    document.getElementById("com_cls").focus(); 
                     return ;               
                 }  
                 if(ls_codenm == null || ls_codenm.length == 0 || ls_codenm == ""){ 
-                    alert("분류명을 등록하세요") 
-                    document.getElementById("cifcodename").focus(); 
+                    alert("대분류명칭을 등록하세요") 
+                    document.getElementById("com_cnam").focus(); 
                     return ;               
                 }   
 
                     $.ajax({
-                        url: '/popup/cifcodesave',  
+                        url: '/app01/comcodesave',  
                         type:"POST",
                         data: { 
-                            "code"      : ls_code,  
-                            "codenm"      : ls_codenm ,  
+                            "com_cls"      : ls_code,  
+                            "com_cnam"      : ls_codenm ,  
                         }, 
                         async:false,
                         success:function(data){   
@@ -345,8 +345,8 @@
 
         function delete_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
-            var ls_code = document.getElementById('cifcode').value;
-            var ls_codenm = document.getElementById('cifcodename').value;
+            var ls_code = document.getElementById('com_cls').value;
+            var ls_codenm = document.getElementById('com_cnam').value;
 
         
             if (!confirm("삭제하시겠습니까?")) {
@@ -357,17 +357,17 @@
                 case 'A':
 
                 if(ls_code == null || ls_code.length == 0 || ls_code == ""){ 
-                    alert("코드를 확인하세요") 
-                    document.getElementById("cifcode").focus(); 
+                    alert("대분류코드를 확인하세요") 
+                    document.getElementById("com_cls").focus(); 
                     return ;               
                 }    
 
                     $.ajax({
-                        url: '/popup/cifcodedel',  
+                        url: '/app01/comcodedel',  
                         type:"POST",
                         data: { 
-                            "code"      : ls_code,  
-                            "codenm"      : ls_codenm ,  
+                            "com_cls"      : ls_code,  
+                            "com_cnam"      : ls_codenm ,  
                         }, 
                         async:false,
                         success:function(data){   
@@ -438,8 +438,8 @@
         function clear_rtn(arg){
             switch(arg){
                 case 'A': 
-                    document.getElementById('cifcode').value = "";
-                    document.getElementById('cifcodename').value = "";
+                    document.getElementById('com_cls').value = "";
+                    document.getElementById('com_cnam').value = "";
                     break;
                 case 'B': 
                     
@@ -465,7 +465,7 @@
             switch(arg1){
                 case 'A':
                     $.ajax({
-                        url: '/popup/cifcodelist',  
+                        url: '/app01/comcodelist',  
                         type:"POST",
                         data: { 
                             "searchtxt"      : "%"  
@@ -540,8 +540,8 @@
                 wtab01_data.push({
                     id: i, 
                     index: cnt,
-                    cifcode: wtab01Dto[i]["cifcode"],
-                    cifcodename: wtab01Dto[i]["cifcodename"],                                 
+                    cifcode: wtab01Dto[i]["com_cls"],
+                    cifcodename: wtab01Dto[i]["com_cnam"],                                 
                 });
                 cnt++;
             }   
@@ -551,21 +551,21 @@
             wtab01Grid.autoGenerateColumns = false; 
             view_p01tab01page.sourceCollection  = wtab01_data;
             var cols = new wijmo.grid.Column(); 
-            cols.binding = 'cifcode';
-            cols.header = '코드';
+            cols.binding = 'com_cls';
+            cols.header = '대분류코드';
             cols.align = "center";
             cols.width = 100; 
             wtab01Grid.columns.push(cols);    
             // console.log("cols", cols);  
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'cifcodename';
-            cols.header = '업체분류명';
+            cols.binding = 'com_cnam';
+            cols.header = '대분류명칭';
             cols.align = "center";
             cols.width = 200; 
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.cifcodename}</b>',
+                text: '<b>${item.com_cnam}</b>',
                 click: (e, ctx) => {
-                    wactnmChk(ctx.item.cifcode, ctx.item.cifcodename);
+                    wactnmChk(ctx.item.com_cls, ctx.item.com_cnam);
                 }
             });
             wtab01Grid.columns.push(cols);   
@@ -573,8 +573,8 @@
         }
  
         function wactnmChk(arg1, arg2){
-            document.getElementById('cifcode').value = arg1; 
-            document.getElementById('cifcodename').value = arg2;    
+            document.getElementById('com_cls').value = arg1; 
+            document.getElementById('com_cnam').value = arg2;    
         } 
          
         
