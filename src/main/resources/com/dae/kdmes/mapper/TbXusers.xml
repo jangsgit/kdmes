@@ -3,7 +3,7 @@
 
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.dae.kdmes.Mapper.master.MasterDBMapper">
-    <select id="GetTBXa012Blank" resultType="com.dae.kdmes.DTO.App01.App01Model">
+    <select id="GetTBXa012Blank" resultType="com.dae.kdmes.DTO.TBXa012VO">
         select '' as  custcd, '' as spjangcd, '' as spjangnm, '' as custperclsf, '' as saupnum, '' as prenm, '' as corpnum, '' as biztype, '' as item, '' as tel1, '' as fax,
                '' as zipcd, '' as adresa, '' as adresb, '' as popidmsg, '' as poppw, '' as guchung, '' as reqcustcd,'' as cmsmemo, '' as cmspass, '' as agnertel1, '' as agnertel2 from dual
     </select>

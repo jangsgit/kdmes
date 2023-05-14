@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@MapperScan(value="com.dae.kdmes.mapper.master", sqlSessionFactoryRef="masterSqlSessionFactory")
+@MapperScan(value="com.dae.kdmes.mapper", sqlSessionFactoryRef="masterSqlSessionFactory")
 @EnableTransactionManagement
 public class MasterDataBaseConfig {
 
@@ -35,7 +35,7 @@ public class MasterDataBaseConfig {
         //세션 생성 시, 빌드된 DataSource를 세팅하고 SQL문을 관리할 mapper.xml의 경로를 알려준다.
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(masterDataSource);
-        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:com/dae/kdmes/mapper/master/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:com/dae/kdmes/mapper/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
