@@ -51,7 +51,7 @@ public class App01Controller {
             model.addAttribute("comcodeList",index01ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
-            log.info("App01_index Exception ================================================================");
+            log.info("App01_index Exception =============================");
             log.info("Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }
@@ -60,70 +60,6 @@ public class App01Controller {
     }
 
 
-    //업체분류현황
-    @GetMapping(value="/comcodelist")
-    public Object App01ComCodeList_index(@RequestParam("searchtxt") String searchtxt,
-                                         Model model, HttpServletRequest request) throws Exception{
-        try {
 
-            if(searchtxt == null || searchtxt.equals("")){
-                searchtxt = "%";
-            }
-            index01Dto.setCom_cls(searchtxt);
-            index01ListDto = service01.getComCodeList(index01Dto);
-
-            model.addAttribute("comcodeList",index01ListDto);
-
-        } catch (Exception ex) {
-//                dispatchException = ex;
-            log.info("insalist Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-        }
-
-        return index01ListDto;
-    }
-
-
-    @RequestMapping(value="/comcodesave")
-    public String App01ComCodeSave_index(  @RequestParam("com_cls") String com_cls,
-                                           @RequestParam("com_cnam") String com_cnam,
-                                           Model model,   HttpServletRequest request){
-        HttpSession session = request.getSession();
-        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-        model.addAttribute("userformDto",userformDto);
-
-        Boolean result = false;
-        index01Dto.setCom_cls(com_cls);
-        index01Dto.setCom_cnam(com_cnam);
-        index01ListDto = service01.getComCodeList(index01Dto);
-        if(index01ListDto.isEmpty() || index01ListDto.size() == 0){
-            result = service01.InsertComCode(index01Dto);
-        }else{
-            result = service01.UpdateComCode(index01Dto);
-        }
-        if (!result) {
-            return "error";
-        }
-        return "success";
-    }
-
-    @RequestMapping(value="/comcodedel")
-    public String App01ComCodeDel_index(  @RequestParam("com_cls") String com_cls,
-                                          @RequestParam("com_cnam") String com_cnam,
-                                          Model model,   HttpServletRequest request){
-        HttpSession session = request.getSession();
-        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-        model.addAttribute("userformDto",userformDto);
-
-        Boolean result = false;
-        index01Dto.setCom_cls(com_cls);
-        index01Dto.setCom_cnam(com_cnam);
-        index01ListDto = service01.getComCodeList(index01Dto);
-        result = service01.DeleteComCode(index01Dto);
-        if (!result) {
-            return "error";
-        }
-        return "success";
-    }
 
 }

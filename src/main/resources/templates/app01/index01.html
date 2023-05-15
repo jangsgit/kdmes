@@ -148,7 +148,7 @@
                     { binding: 'com_cls', header: '대분류코드', align: "center",   width: 100 }, 
                     { binding: 'com_cnam', header: '대분류명칭', align: "center", 
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                            text: '<b>${item.comcodename}</b>',
+                            text: '<b>${item.com_cnam}</b>',
                             click: (e, ctx) => {
                                 wactnmChk(ctx.item.com_cls, ctx.item.com_cnam);
                             }
@@ -191,51 +191,51 @@
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
-                        cifcode:  wtab01Dto[i]["com_cls"], 
-                        cifcodename:  wtab01Dto[i]["com_cnam"], 
+                        com_cls:  wtab01Dto[i]["com_cls"], 
+                        com_cnam:  wtab01Dto[i]["com_cnam"], 
                     });
                     cnt++;
-                }    
+                }     
                 return wactnm_data;                                          
             } 
 
             //간편분류 popup list
-            view_p01tab02page = new wijmo.collections.CollectionView(getData_wlist(), {
-                pageSize: 12
-            });
-            // 간편분류 페이지 이동
-            new wijmo.input.CollectionViewNavigator('#thePager01', {
-                byPage: true,
-                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                cv: view_p01tab02page
-            });     
-            wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
-                autoGenerateColumns: false,
-                isReadOnly: false, 
-                allowSorting: 'MultiColumn',
-                selectionMode: 'RowRange',
-                alternatingRowStep: 0,
-                columns: [     
-                    { binding: 'actnm', header: '코드', align: "center", width: '1*' }, 
-                    { binding: 'telno', header: '간편분류명', align: "center", width: '1*' },  
-                ], 
-                itemsSource: view_p01tab02page
-            });  
-            // 현장검색 데이터 수집
-            function getData_wlist(){    
-                var wactnm_data = [[${comcodeList}]];  
-                var cnt = 1;
-                for (var i = 0; i < 12; i++) {
-                    wactnm_data.push({
-                        id: i, 
-                        index: cnt,
-                        cifcode:  wactnm_data[i]["com_cls"], 
-                        cifcodename:  wactnm_data[i]["com_cnam"], 
-                    });
-                    cnt++;
-                }    
-                return wactnm_data;                                      
-            } 
+            // view_p01tab02page = new wijmo.collections.CollectionView(getData_wlist(), {
+            //     pageSize: 12
+            // });
+            // // 간편분류 페이지 이동
+            // new wijmo.input.CollectionViewNavigator('#thePager01', {
+            //     byPage: true,
+            //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            //     cv: view_p01tab02page
+            // });     
+            // wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
+            //     autoGenerateColumns: false,
+            //     isReadOnly: false, 
+            //     allowSorting: 'MultiColumn',
+            //     selectionMode: 'RowRange',
+            //     alternatingRowStep: 0,
+            //     columns: [     
+            //         { binding: 'actnm', header: '코드', align: "center", width: '1*' }, 
+            //         { binding: 'telno', header: '간편분류명', align: "center", width: '1*' },  
+            //     ], 
+            //     itemsSource: view_p01tab02page
+            // });  
+            // // 현장검색 데이터 수집
+            // function getData_wlist(){    
+            //     var wactnm_data = [[${comcodeList}]];  
+            //     var cnt = 1;
+            //     for (var i = 0; i < 12; i++) {
+            //         wactnm_data.push({
+            //             id: i, 
+            //             index: cnt,
+            //             cifcode:  wactnm_data[i]["com_cls"], 
+            //             cifcodename:  wactnm_data[i]["com_cnam"], 
+            //         });
+            //         cnt++;
+            //     }    
+            //     return wactnm_data;                                      
+            // } 
                        
 
         } 
@@ -272,7 +272,7 @@
                 }   
 
                     $.ajax({
-                        url: '/app01/comcodesave',  
+                        url: '/app01m/comcodesave',  
                         type:"POST",
                         data: { 
                             "com_cls"      : ls_code,  
@@ -363,7 +363,7 @@
                 }    
 
                     $.ajax({
-                        url: '/app01/comcodedel',  
+                        url: '/app01m/comcodedel',  
                         type:"POST",
                         data: { 
                             "com_cls"      : ls_code,  
@@ -465,7 +465,7 @@
             switch(arg1){
                 case 'A':
                     $.ajax({
-                        url: '/app01/comcodelist',  
+                        url: '/app01m/comcodelist',  
                         type:"POST",
                         data: { 
                             "searchtxt"      : "%"  
@@ -540,8 +540,8 @@
                 wtab01_data.push({
                     id: i, 
                     index: cnt,
-                    cifcode: wtab01Dto[i]["com_cls"],
-                    cifcodename: wtab01Dto[i]["com_cnam"],                                 
+                    com_cls: wtab01Dto[i]["com_cls"],
+                    com_cnam: wtab01Dto[i]["com_cnam"],                                 
                 });
                 cnt++;
             }   
@@ -585,11 +585,7 @@
 
         $(document).ready(function() { 
             getToday()
-            fn_egov_init_date()
-            $('datetimepicker').datetimepicker({
-                
-            }); 
-
+            fn_egov_init_date() 
             $("#frdate").change(function(e){ 
                 // console.log("달력클릭");
                 // console.log(convert_time(e.timestamp));
@@ -619,8 +615,8 @@
             if(date > 0 && date < 10) {date = "0" + date};
             let ls_frday = year + '-' + month + '-01' 
             let ls_today = year + '-' + month + '-' + date 
-            document.getElementById('frdate').value = ls_frday;
-            document.getElementById('todate').value = ls_today;
+            // document.getElementById('frdate').value = ls_frday;
+            // document.getElementById('todate').value = ls_today;
         }
 
         function convert_time(timestamp){ 
@@ -636,34 +632,7 @@
         }
 
         function fn_egov_init_date(){
-            var $frdate = $('#frdate');
-            var $todate = $('#todate');
-            $frdate.datetimepicker({
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {                                    
-                    this.setOptions({
-                        // maxDate: $frdate.val() ? $frdate.val() : false
-                    })
-                },
-            });
-
-            $todate.datetimepicker({
-                timepicker: false,
-                lang: 'ko',
-                format: 'Y-m-d',    //'Y-m-d H:i',
-                scrollMonth: false,
-                scrollInput: false,
-                onShow: function (ct) {
-                    this.setOptions({
-                        // minDate: $todate.val() ? $todate.val() : false
-                    })
-                }
-            });
-
+             
         }
  
         class FlexGridContextMenu {
