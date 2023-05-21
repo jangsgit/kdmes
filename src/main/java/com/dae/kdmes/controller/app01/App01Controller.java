@@ -59,7 +59,4 @@ public class App01Controller {
         return "App01/index01";
     }
 
-
-
-
 }

@@ -16,4 +16,12 @@ public interface Index01Mapper {
     public Boolean UpdateComCode(Index01Dto  parm) ;
     public Boolean DeleteComCode(Index01Dto  parm) ;
 
+    public List<Index01Dto> GetComcodeDetailList(Index01Dto parm) ;
+
+    public List<Index01Dto> getComCodeLists(Index01Dto parm) ;
+
+    public Boolean InsertComCodeDetail(Index01Dto parm) ;
+    public Boolean UpdateComCodeDetail(Index01Dto  parm) ;
+    public Boolean DeleteComCodeDetail(Index01Dto  parm) ;
+
 }

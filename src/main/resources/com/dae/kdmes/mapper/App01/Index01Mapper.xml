@@ -24,6 +24,32 @@
         DELETE  TB_CA510   where com_cls  = #{com_cls}
     </update>
 
+    <select id="getComCodeLists"  parameterType="com.dae.kdmes.DTO.App01.Index01Dto" resultType="com.dae.kdmes.DTO.App01.Index01Dto">
+        <![CDATA[
+            select com_cls, com_cnam, com_work from TB_CA510  where 1=1 and isnull(com_cls,'') Like concat('%',#{com_cnam},'%') order by com_cls
+        ]]>
+    </select>
+
+    <select id="getComCodeDetailList"  parameterType="com.dae.kdmes.DTO.App01.Index01Dto" resultType="com.dae.kdmes.DTO.App01.Index01Dto">
+        <![CDATA[
+            select * from TB_CA510  where com_code != '00' and com_cls = #{com_cls}
+        ]]>
+    </select>
+
+    <insert id="InsertComCodeDetail" parameterType="com.dae.kdmes.DTO.App01.Index01Dto" >
+        insert into TB_CA510 (com_cls, com_code, com_cnam ,com_rem1, com_rem2, com_order,com_work) values
+        (#{com_cls}, #{com_code}, #{com_cnam},#{com_rem1}, #{com_rem2},#{com_order},#{com_work})
+    </insert>
+
+    <update id="UpdateComCodeDetail" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
+        UPDATE  TB_CA510 SET com_cnam = #{com_cnam} and com_rem1 = #{com_rem1} and com_rem2 = #{com_rem2} and com_order = #{com_order} and com_work =
+        where com_cls  = #{com_cls} and com_cnam = #{com_cnam} and com_code = #{com_code}
+    </update>
+
+    <update id="DeleteComCodeDetail" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
+        DELETE  TB_CA510   where com_cls  = #{com_cls} and com_cnam = #{com_cnam} and com_code = #{com_code}
+    </update>
+
 
 
 </mapper>

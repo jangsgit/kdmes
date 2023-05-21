@@ -11,12 +11,28 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service("Index01Service")
 public class Index01Service {
+
     @Autowired
     Index01Mapper indexMapper;
-    public List<Index01Dto> getComCodeList(Index01Dto parm){ return  indexMapper.getComCodeList(parm);} ;
+
+    public List<Index01Dto> getComCodeList(Index01Dto parm){
+        return indexMapper.getComCodeList(parm);
+    }
 
     public Boolean InsertComCode(Index01Dto parm){ return  indexMapper.InsertComCode(parm);}
-    public Boolean UpdateComCode(Index01Dto parm){  return  indexMapper.UpdateComCode(parm);  }
-    public Boolean DeleteComCode(Index01Dto parm){  return  indexMapper.DeleteComCode(parm);  }
+    public Boolean UpdateComCode(Index01Dto parm){  return  indexMapper.UpdateComCode(parm);}
+    public Boolean DeleteComCode(Index01Dto parm){  return  indexMapper.DeleteComCode(parm);}
+
+    public List<Index01Dto> getComCodeLists(Index01Dto parm){
+        return indexMapper.getComCodeLists(parm);
+    }
+
+    public List<Index01Dto> GetComcodeDetailList(Index01Dto parm){
+        return  indexMapper.GetComcodeDetailList(parm);
+    }
+
+    public Boolean InsertComCodeDetail(Index01Dto parm){ return  indexMapper.InsertComCodeDetail(parm);}
+    public Boolean UpdateComCodeDetail(Index01Dto parm){  return  indexMapper.UpdateComCodeDetail(parm);}
+    public Boolean DeleteComCodeDetail(Index01Dto parm){  return  indexMapper.DeleteComCodeDetail(parm);}
 
 }

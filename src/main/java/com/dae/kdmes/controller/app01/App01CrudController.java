@@ -99,4 +99,101 @@ public class App01CrudController {
 
         return index01ListDto;
     }
+
+    //업체분류현황
+    @GetMapping(value="/comcodelists")
+    public Object App01ComCodeLists_index(@RequestParam("searchtxt") String searchtxt,
+                                         Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index01Dto.setCom_cls(searchtxt);
+            index01ListDto = service01.getComCodeLists(index01Dto);
+
+            model.addAttribute("comcodeLists",index01ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index01ListDto;
+    }
+
+    @RequestMapping(value="/comcodedetailsave")
+    public String App01ComCodeDetailSave_index(  @RequestParam("com_cls") String com_cls,
+                                           @RequestParam("com_cnam") String com_cnam,
+                                           Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Boolean result = false;
+        index01Dto.setCom_cls(com_cls);
+        index01Dto.setCom_cnam(com_cnam);
+        index01ListDto = service01.getComCodeList(index01Dto);
+        if(index01ListDto.isEmpty() || index01ListDto.size() == 0){
+            result = service01.InsertComCodeDetail(index01Dto);
+        }else{
+            result = service01.UpdateComCodeDetail(index01Dto);
+        }
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+    @RequestMapping(value="/comcodedetaildel")
+    public String App01ComCodeDetailDel_index(  @RequestParam("com_cls") String com_cls,
+                                          @RequestParam("com_cnam") String com_cnam,
+                                          Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Boolean result = false;
+        index01Dto.setCom_cls(com_cls);
+        index01Dto.setCom_cnam(com_cnam);
+        //index01ListDto = service01.getComCodeDetailList(index01Dto);
+        result = service01.DeleteComCodeDetail(index01Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+    @GetMapping(value="/comcodedetaillist")
+    public Object App01ComdodeDetailList_index(@RequestParam("searchtxt") String searchtxt,
+                                           @RequestParam("com_cls") String com_cls,
+                                           Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("공통코드등록");
+        CommDto.setMenuUrl("기준정보>공통코드등록");
+        CommDto.setMenuCode("index01");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            if(com_cls == null || com_cls.equals("")){
+                com_cls = "%";
+            }
+            log.debug("searchtxt =====>" + searchtxt );
+
+            index01Dto.setCom_cls(com_cls);
+            index01Dto.setCom_cnam(searchtxt);;
+            index01ListDto = service01.GetComcodeDetailList(index01Dto);
+            model.addAttribute("index01ListDto",index01ListDto);
+
+        } catch (Exception ex) {
+            log.info("App01ComdodeDetailList_index Exception =====>" + ex.toString());
+        }
+
+        return index01ListDto;
+    }
 }
