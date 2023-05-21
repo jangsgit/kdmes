@@ -358,14 +358,10 @@
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
-                        jepm: '', 
-                        jepmnm: '', 
-                        jgugek: '', 
-                        jsize: '', 
-                        jmodel_code: '', 
-                        jcolor_code: '', 
-                        jcustomer_code: '', 
-                        jqty:  '', 
+                        com_cls: '', 
+                        com_cnam: '', 
+                        com_rem1: '', 
+                        com_rem2: '', 
                     });
                     cnt++;
                 }     
@@ -778,10 +774,10 @@
                 wtab03_data.push({
                     id: i, 
                     index: cnt,
-                    jkey: wtab03Dto[i]["com_cls"],
-                    jpum: wtab03Dto[i]["com_cnam"],
-                    jgugek: wtab03Dto[i]["com_rem1"],
-                    jgugek: wtab03Dto[i]["com_rem2"]              
+                    com_cls: wtab03Dto[i]["com_cls"],
+                    com_cnam: wtab03Dto[i]["com_cnam"],
+                    com_rem1: wtab03Dto[i]["com_rem1"],
+                    com_rem2: wtab03Dto[i]["com_rem2"]              
                 });
                 cnt++;
             }     
