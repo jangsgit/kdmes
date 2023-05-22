@@ -35,4 +35,6 @@ public class Index01Service {
     public Boolean UpdateComCodeDetail(Index01Dto parm){  return  indexMapper.UpdateComCodeDetail(parm);}
     public Boolean DeleteComCodeDetail(Index01Dto parm){  return  indexMapper.DeleteComCodeDetail(parm);}
 
+    public String GetComCodeCheck(Index01Dto parm){  return  indexMapper.GetComCodeCheck(parm);  }
+
 }

@@ -134,8 +134,8 @@ public class App01CrudController {
         Boolean result = false;
         index01Dto.setCom_cls(com_cls);
         index01Dto.setCom_cnam(com_cnam);
-        index01ListDto = service01.getComCodeList(index01Dto);
-        if(index01ListDto.isEmpty() || index01ListDto.size() == 0){
+        String ls_comcode = service01.GetComCodeCheck(index01Dto);
+        if(ls_comcode == null || ls_comcode.equals("")){
             result = service01.InsertComCodeDetail(index01Dto);
         }else{
             result = service01.UpdateComCodeDetail(index01Dto);

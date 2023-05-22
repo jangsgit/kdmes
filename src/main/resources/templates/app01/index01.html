@@ -117,6 +117,28 @@
                                                                <input class="form-control form-control-sm" id="com_cnam" type="text"    autocomplete="off"> 
                                                            </div>
                                                        </div>
+                                                     </div>
+                                                     <div class="row gx-3" style="  margin: 10px 10px 10px;">
+                                                        <div class="col-2 col-sm-2">
+                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">코드</span> 
+                                                                <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off"> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 col-sm-2">
+                                                           <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">항목1</span> 
+                                                               <input class="form-control form-control-sm" id="com_rem1" type="text"    autocomplete="off"> 
+                                                           </div>
+                                                       </div>
+                                                       <div class="col-2 col-sm-2">
+                                                           <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">항목2</span> 
+                                                               <input class="form-control form-control-sm" id="com_rem2" type="text"    autocomplete="off"> 
+                                                           </div>
+                                                       </div>
+                                                       <div class="col-2 col-sm-2">
+                                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">업무구분</span> 
+                                                            <input class="form-control form-control-sm" id="com_work" type="text"    autocomplete="off"> 
+                                                        </div>
+                                                    </div>
                                                        <div class="col-auto">  
                                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
                                                            </button>
@@ -131,7 +153,7 @@
                                                        </div>  
                                                      </div>                                                         
                                                     <div class="container-fluid"  >                                                         
-                                                        <div id="wtab03Grid_div"  style="overflow:scroll;   height:540px;   margin:0 auto; "></div> 
+                                                        <div id="wtab03Grid_div"  style="overflow:scroll;   height:485px;   margin:0 auto; "></div> 
                                                      </div>  
                                                   </td> 
                                                 </tr>
@@ -280,7 +302,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.com_cnam}</b>',
                             click: (e, ctx) => {
-                                wactnmChks(ctx.item.com_cls, ctx.item.com_cnam);                 
+                                wactnmChkss(ctx.item.com_cls, ctx.item.com_cnam);                 
                             }
                         })
                     },                
@@ -317,10 +339,11 @@
                 selectionMode: 'RowRange',
                 alternatingRowStep: 0,
                 columns: [     
-                    { binding: 'com_cls', header: '코드', align: "center", width: '1*' }, 
+                    { binding: 'com_code', header: '코드', align: "center", width: '1*' }, 
                     { binding: 'com_cnam', header: '코드명', align: "center", width: '1*' }, 
                     { binding: 'com_rem1', header: '항목1', align: "center", width: '1*' }, 
                     { binding: 'com_rem2', header: '항목2', align: "center", width: '1*' }, 
+                    { binding: 'com_work', header: '업무구분', align: "center", width: '1*' },
                 ], 
                 itemsSource: view_p01tab03page
             });  
@@ -358,10 +381,11 @@
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
-                        com_cls: '', 
+                        com_code: '', 
                         com_cnam: '', 
                         com_rem1: '', 
                         com_rem2: '', 
+                        com_work: '',
                     });
                     cnt++;
                 }     
@@ -405,7 +429,11 @@
         function save_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
             var ls_code = document.getElementById('com_cls').value;
+            var ls_codes = document.getElementById('com_code').value;
             var ls_codenm = document.getElementById('com_cnam').value;
+            var ls_rem1 = document.getElementById('com_rem1').value;
+            var ls_rem2 = document.getElementById('com_rem2').value;
+            var ls_work = document.getElementById('com_work').value;
 
         
             if (!confirm("저장하시겠습니까?")) {
@@ -458,7 +486,11 @@
                         type:"POST",
                         data: { 
                             "com_cls"      : ls_code,  
-                            "com_cnam"      : ls_codenm , 
+                            "com_cnam"      : ls_codenm ,
+                            "com_code"      : ls_codes,  
+                            "com_rem1"      : ls_rem1 , 
+                            "com_rem2"      : ls_rem2 , 
+                            "com_work"      : ls_work ,  
                         }, 
                         async:false,
                         success:function(data){   
@@ -508,6 +540,9 @@
             var ls_tab = document.getElementById('tabvalue').value;
             var ls_code = document.getElementById('com_cls').value;
             var ls_codenm = document.getElementById('com_cnam').value;
+            var ls_rem1 = document.getElementById('com_rem1').value;
+            var ls_rem2 = document.getElementById('com_rem2').value;
+            var ls_work = document.getElementById('com_work').value;
 
         
             if (!confirm("삭제하시겠습니까?")) {
@@ -554,6 +589,10 @@
                         data: { 
                             "com_cls"      : ls_code,  
                             "com_cnam"      : ls_codenm ,
+                            "com_code"      : ls_codes,  
+                            "com_rem1"      : ls_rem1 , 
+                            "com_rem2"      : ls_rem2 , 
+                            "com_work"      : ls_work ,  
                         }, 
                         async:false,
                         success:function(data){   
@@ -601,7 +640,12 @@
                     document.getElementById('com_cnam').value = "";
                     break;
                 case 'B': 
-                    
+                    document.getElementById('com_cls').value = "";
+                    document.getElementById('com_cnam').value = "";
+                    document.getElementById('com_code').value = "";
+                    document.getElementById('com_rem1').value = "";
+                    document.getElementById('com_rem2').value = "";
+                    document.getElementById('com_work').value = "";
                     break;
                 case 'C':
                    
@@ -761,7 +805,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.com_cnam}</b>',
                 click: (e, ctx) => {
-                    wactnmChk(ctx.item.com_cls, ctx.item.com_cnam);
+                    wactnmChks(ctx.item.com_cls, ctx.item.com_cnam);
                 }
             });
         }
@@ -775,9 +819,11 @@
                     id: i, 
                     index: cnt,
                     com_cls: wtab03Dto[i]["com_cls"],
+                    com_cls: wtab03Dto[i]["com_code"],
                     com_cnam: wtab03Dto[i]["com_cnam"],
                     com_rem1: wtab03Dto[i]["com_rem1"],
-                    com_rem2: wtab03Dto[i]["com_rem2"]              
+                    com_rem2: wtab03Dto[i]["com_rem2"],
+                    com_work: wtab03Dto[i]["com_work"]              
                 });
                 cnt++;
             }     
@@ -786,7 +832,7 @@
             wtab03Grid.autoGenerateColumns = false; 
             view_p01tab03page.sourceCollection  = wtab03_data;
             var cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cls';
+            cols.binding = 'com_code';
             cols.header = '코드';
             cols.align = "center";
             cols.width = 200; 
@@ -812,12 +858,46 @@
             cols.align = "center";
             cols.width = 100;  
             wtab03Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'com_work';
+            cols.header = '업무구분';
+            cols.align = "center";
+            cols.width = 100;  
+            wtab03Grid.columns.push(cols);  
         } 
  
         function wactnmChk(arg1, arg2){
             document.getElementById('com_cls').value = arg1; 
             document.getElementById('com_cnam').value = arg2;    
         } 
+
+        function wactnmChks(arg){   
+            var ls_cls = document.getElementById('com_cls').value;
+            var ls_cnam = document.getElementById('com_cnam').value; 
+            // console.log(arg)
+            // console.log(ls_todate)
+            $.ajax({
+                url: '/app01m/comcodedetaillist',  
+                type:"POST",
+                data: { 
+                    "searchtxt" : '%',
+                    "com_cls" :ls_cls, 
+                    "com_cnam" :ls_cnam, 
+                }, 
+                async:false,
+                success:function(data){  
+                    // console.log(data);
+                    tabC_grid(data);
+                },error:function(e){
+                    console.log("error");                            
+                }
+            }).done(function(fragment){           
+
+            })        
+
+        }  
+ 
          
         
 

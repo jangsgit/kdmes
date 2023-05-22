@@ -24,4 +24,5 @@ public interface Index01Mapper {
     public Boolean UpdateComCodeDetail(Index01Dto  parm) ;
     public Boolean DeleteComCodeDetail(Index01Dto  parm) ;
 
+    public String GetComCodeCheck(Index01Dto  parm) ;
 }
