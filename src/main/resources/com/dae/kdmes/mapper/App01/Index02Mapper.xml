@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.App01.Index02Mapper">
+
+
+    <select id="getWflagList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
+        <![CDATA[
+            select com_cls, com_cnam from TB_CA510  where com_code = '00' and isnull(com_cls,'') Like concat('%',#{com_cls},'%') order by com_cls
+        ]]>
+    </select>
+
+    <insert id="InsertComCode" parameterType="com.dae.kdmes.DTO.App01.Index01Dto" >
+        insert into TB_CA510 (com_cls, com_code, com_cnam ) values
+        (#{com_cls}, '00', #{com_cnam})
+    </insert>
+
+    <update id="UpdateComCode" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
+        UPDATE  TB_CA510 SET com_cnam = #{com_cnam} where com_cls   = #{com_cls} and com_code = '00'
+    </update>
+
+    <update id="DeleteComCode" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
+        DELETE  TB_CA510   where com_cls  = #{com_cls}
+    </update>
+
+
+
+</mapper>

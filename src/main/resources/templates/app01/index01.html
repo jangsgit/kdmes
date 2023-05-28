@@ -109,12 +109,12 @@
                                                     <div class="row gx-3" style="  margin: 10px 10px 10px;">
                                                         <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류코드</span> 
-                                                               <input class="form-control form-control-sm" id="com_cls" type="text"    autocomplete="off"  placeholder="3자리"     > 
+                                                               <input class="form-control form-control-sm" id="com_cls02" type="text"    autocomplete="off"  placeholder="3자리" disabled> 
                                                            </div>
                                                        </div>
                                                        <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
-                                                               <input class="form-control form-control-sm" id="com_cnam" type="text"    autocomplete="off"> 
+                                                               <input class="form-control form-control-sm" id="com_cnam02" type="text"    autocomplete="off" disabled> 
                                                            </div>
                                                        </div>
                                                      </div>
@@ -293,7 +293,7 @@
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
                 columns: [       
-                    { binding: 'com_cls', header: '대분류코드', align: "center", width: 150 }, 
+                    { binding: 'com_cls', header: '대분류코드', align: "center", width: 100 }, 
                     {
                         binding: 'com_cnam',
                         width: 150,
@@ -302,7 +302,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.com_cnam}</b>',
                             click: (e, ctx) => {
-                                wactnmChkss(ctx.item.com_cls, ctx.item.com_cnam);                 
+                                wactnmChks(ctx.item.com_cls, ctx.item.com_cnam);                 
                             }
                         })
                     },                
@@ -402,20 +402,23 @@
             document.getElementById('tabvalue').value = arg; 
         } 
      
-        function wactnmChks(arg){   
+        function wactnmChks(arg1,arg2){   
             var ls_tab = document.getElementById('tabvalue').value;
-            // console.log(arg)
+            
+            document.getElementById('com_cls02').value = arg1;
+            document.getElementById('com_cnam02').value = arg2;
+             console.log(arg2);
             // console.log(ls_todate)
             $.ajax({
                 url: '/app01m/comcodedetaillist',  
                 type:"POST",
                 data: { 
                     "searchtxt" : '%',
-                    "com_cls" :arg, 
+                    "com_cls" :arg1, 
                 }, 
                 async:false,
                 success:function(data){  
-                    // console.log(data);
+                     console.log(data);
                     tabC_grid(data);
                 },error:function(e){
                     console.log("error");                            
@@ -429,8 +432,10 @@
         function save_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
             var ls_code = document.getElementById('com_cls').value;
+            var ls_code02 = document.getElementById('com_cls02').value;
             var ls_codes = document.getElementById('com_code').value;
             var ls_codenm = document.getElementById('com_cnam').value;
+            var ls_codenm02 = document.getElementById('com_cnam02').value;
             var ls_rem1 = document.getElementById('com_rem1').value;
             var ls_rem2 = document.getElementById('com_rem2').value;
             var ls_work = document.getElementById('com_work').value;
@@ -481,12 +486,33 @@
                     })  
                     break;
                 case 'B': 
+                    if(ls_codes == null || ls_codes.length == 0 || ls_codes == ""){ 
+                        alert("코드를 등록하세요") 
+                        document.getElementById("com_code").focus(); 
+                        return ;               
+                    }  
+                    if(ls_rem1 == null || ls_rem1.length == 0 || ls_rem1 == ""){ 
+                        alert("항목1을 등록하세요") 
+                        document.getElementById("com_rem1").focus(); 
+                        return ;               
+                    }
+                    if(ls_rem2 == null || ls_rem2.length == 0 || ls_rem2 == ""){ 
+                        alert("항목2을 등록하세요") 
+                        document.getElementById("com_rem2").focus(); 
+                        return ;               
+                    }
+                    if(ls_work == null || ls_work.length == 0 || ls_work == ""){ 
+                        alert("업무구분을 등록하세요") 
+                        document.getElementById("com_work").focus(); 
+                        return ;               
+                    }        
+
                     $.ajax({
                         url: '/app01m/comcodedetailsave',  
                         type:"POST",
                         data: { 
-                            "com_cls"      : ls_code,  
-                            "com_cnam"      : ls_codenm ,
+                            "com_cls"      : ls_code02,  
+                            "com_cnam"      : ls_codenm02 ,
                             "com_code"      : ls_codes,  
                             "com_rem1"      : ls_rem1 , 
                             "com_rem2"      : ls_rem2 , 
@@ -539,7 +565,10 @@
         function delete_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
             var ls_code = document.getElementById('com_cls').value;
+            var ls_code02 = document.getElementById('com_cls02').value;
             var ls_codenm = document.getElementById('com_cnam').value;
+            var ls_codenm02 = document.getElementById('com_cnam02').value;
+            var ls_codes = document.getElementById('com_code').value;
             var ls_rem1 = document.getElementById('com_rem1').value;
             var ls_rem2 = document.getElementById('com_rem2').value;
             var ls_work = document.getElementById('com_work').value;
@@ -587,20 +616,22 @@
                         url: '/app01m/comcodedetaildel',  
                         type:"POST",
                         data: { 
-                            "com_cls"      : ls_code,  
-                            "com_cnam"      : ls_codenm ,
+                            "com_cls"      : ls_code02,  
+                            "com_cnam"      : ls_codenm02 ,
                             "com_code"      : ls_codes,  
-                            "com_rem1"      : ls_rem1 , 
-                            "com_rem2"      : ls_rem2 , 
-                            "com_work"      : ls_work ,  
                         }, 
                         async:false,
                         success:function(data){   
-                            tabC_grid(data);
+                            if(data == "success"){
+                                alert("삭제되었습니다.") 
+                                searchList_rtn(ls_tab);  
+                                clear_rtn(ls_tab);             
+                            }else{                       
+                                alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
+                            }
+                           
                         },error:function(e){
-                            console.log("error");
-                            // alert(data.code);
-                            // alert(data.message);
+                            console.log("error"); 
                         }
                     }).done(function(fragment){           
 
@@ -665,6 +696,9 @@
         })   
 
         function searchList_rtn(arg1){ 
+
+            var ls_code = document.getElementById('com_cls02').value;
+            var ls_codenm = document.getElementById('com_cnam02').value;
             switch(arg1){
                 case 'A':
                     $.ajax({
@@ -690,15 +724,15 @@
                         url: '/app01m/comcodedetaillist',  
                         type:"POST",
                         data: { 
-                            "searchtxt"      : "%"  
+                            "searchtxt" : '%',
+                            "com_cls" :ls_code, 
                         }, 
                         async:false,
-                        success:function(data){   
-                            tabB_grid(data);
+                        success:function(data){  
+                            console.log(data);
+                            tabC_grid(data);
                         },error:function(e){
-                            console.log("error");
-                            // alert(data.code);
-                            // alert(data.message);
+                            console.log("error");                            
                         }
                     }).done(function(fragment){           
 
@@ -819,7 +853,7 @@
                     id: i, 
                     index: cnt,
                     com_cls: wtab03Dto[i]["com_cls"],
-                    com_cls: wtab03Dto[i]["com_code"],
+                    com_code: wtab03Dto[i]["com_code"],
                     com_cnam: wtab03Dto[i]["com_cnam"],
                     com_rem1: wtab03Dto[i]["com_rem1"],
                     com_rem2: wtab03Dto[i]["com_rem2"],
@@ -835,35 +869,41 @@
             cols.binding = 'com_code';
             cols.header = '코드';
             cols.align = "center";
-            cols.width = 200; 
+            cols.width = 250; 
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.com_code}</b>',
+                click: (e, ctx) => {
+                    wactnmChk1(ctx.item.com_code, ctx.item.com_rem1, ctx.item.com_rem2, ctx.item.com_work);
+                }
+            });  
             wtab03Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'com_cnam';
             cols.header = '코드명';
             cols.align = "center";
-            cols.width = 200;  
+            cols.width = 250;  
             wtab03Grid.columns.push(cols);   
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'com_rem1';
             cols.header = '항목1';
             cols.align = "center";
-            cols.width = 100;  
+            cols.width = 250;  
             wtab03Grid.columns.push(cols);
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'com_rem2';
             cols.header = '항목2';
             cols.align = "center";
-            cols.width = 100;  
+            cols.width = 250;  
             wtab03Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'com_work';
             cols.header = '업무구분';
             cols.align = "center";
-            cols.width = 100;  
+            cols.width = 250;  
             wtab03Grid.columns.push(cols);  
         } 
  
@@ -872,31 +912,12 @@
             document.getElementById('com_cnam').value = arg2;    
         } 
 
-        function wactnmChks(arg){   
-            var ls_cls = document.getElementById('com_cls').value;
-            var ls_cnam = document.getElementById('com_cnam').value; 
-            // console.log(arg)
-            // console.log(ls_todate)
-            $.ajax({
-                url: '/app01m/comcodedetaillist',  
-                type:"POST",
-                data: { 
-                    "searchtxt" : '%',
-                    "com_cls" :ls_cls, 
-                    "com_cnam" :ls_cnam, 
-                }, 
-                async:false,
-                success:function(data){  
-                    // console.log(data);
-                    tabC_grid(data);
-                },error:function(e){
-                    console.log("error");                            
-                }
-            }).done(function(fragment){           
-
-            })        
-
-        }  
+        function wactnmChk1(arg1,arg2,arg3,arg4){   
+            document.getElementById('com_code').value = arg1; 
+            document.getElementById('com_rem1').value = arg2;
+            document.getElementById('com_rem2').value = arg3;
+            document.getElementById('com_work').value = arg4;      
+        }
  
          
         

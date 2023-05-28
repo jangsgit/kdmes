@@ -126,6 +126,10 @@ public class App01CrudController {
     @RequestMapping(value="/comcodedetailsave")
     public String App01ComCodeDetailSave_index(  @RequestParam("com_cls") String com_cls,
                                            @RequestParam("com_cnam") String com_cnam,
+                                           @RequestParam("com_code") String com_code,
+                                           @RequestParam("com_rem1") String com_rem1,
+                                           @RequestParam("com_rem2") String com_rem2,
+                                           @RequestParam("com_work") String com_work,
                                            Model model,   HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -134,6 +138,10 @@ public class App01CrudController {
         Boolean result = false;
         index01Dto.setCom_cls(com_cls);
         index01Dto.setCom_cnam(com_cnam);
+        index01Dto.setCom_code(com_code);
+        index01Dto.setCom_rem1(com_rem1);
+        index01Dto.setCom_rem2(com_rem2);
+        index01Dto.setCom_work(com_work);
         String ls_comcode = service01.GetComCodeCheck(index01Dto);
         if(ls_comcode == null || ls_comcode.equals("")){
             result = service01.InsertComCodeDetail(index01Dto);
@@ -149,6 +157,7 @@ public class App01CrudController {
     @RequestMapping(value="/comcodedetaildel")
     public String App01ComCodeDetailDel_index(  @RequestParam("com_cls") String com_cls,
                                           @RequestParam("com_cnam") String com_cnam,
+                                          @RequestParam("com_code") String com_code,
                                           Model model,   HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -157,6 +166,7 @@ public class App01CrudController {
         Boolean result = false;
         index01Dto.setCom_cls(com_cls);
         index01Dto.setCom_cnam(com_cnam);
+        index01Dto.setCom_code(com_code);
         //index01ListDto = service01.getComCodeDetailList(index01Dto);
         result = service01.DeleteComCodeDetail(index01Dto);
         if (!result) {
