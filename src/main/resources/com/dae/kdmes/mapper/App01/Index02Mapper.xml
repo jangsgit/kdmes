@@ -7,22 +7,43 @@
 
     <select id="getWflagList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-            select com_cls, com_cnam from TB_CA510  where com_code = '00' and isnull(com_cls,'') Like concat('%',#{com_cls},'%') order by com_cls
+            select com_cls, com_cnam from TB_CA510  where com_code = '01' and isnull(com_cls,'') Like concat('%',#{com_cls},'%') order by com_cls
         ]]>
     </select>
 
-    <insert id="InsertComCode" parameterType="com.dae.kdmes.DTO.App01.Index01Dto" >
-        insert into TB_CA510 (com_cls, com_code, com_cnam ) values
-        (#{com_cls}, '00', #{com_cnam})
+    <select id="GetFplanDetailList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
+        <![CDATA[
+            select * from TB_FPLAN_WRMC where wfrag = #{com_cls}
+        ]]>
+    </select>
+
+    <insert id="InsertFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto" >
+        insert into TB_FPLAN_WRMC (wrmc, wrmcnm, wperid ) values
+        (#{wrmc}, #{wrmcnm}, #{wperid})
     </insert>
 
-    <update id="UpdateComCode" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
-        UPDATE  TB_CA510 SET com_cnam = #{com_cnam} where com_cls   = #{com_cls} and com_code = '00'
+    <update id="UpdateFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto">
+        <![CDATA[
+        UPDATE  TB_FPLAN_WRMC SET wrmc = #{wrmc} , wrmcnm = #{wrmcnm} , wperid = #{wperid}
+        where wrmc  = #{wrmc} and wrmcnm = #{wrmcnm} and wperid = #{wperid}
+        ]]>
     </update>
 
-    <update id="DeleteComCode" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
-        DELETE  TB_CA510   where com_cls  = #{com_cls}
+    <update id="DeleteFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto">
+        <![CDATA[
+        DELETE  TB_FPLAN_WRMC   where wrmc  = #{wrmc} and wrmcnm = #{wrmcnm} and wperid = #{wperid}
+        ]]>
     </update>
+
+    <select id="GetComCodeCheck" parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="String">
+        <![CDATA[
+        select   wrmc , wperid
+        from TB_FPLAN_WRMC WITH (NOLOCK)
+        WHERE isnull(wrmc,'')   = #{wrmc}
+        and isnull(wperid,'')   = #{wperid}
+        ORDER BY wrmc
+        ]]>
+    </select>
 
 
 

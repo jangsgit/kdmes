@@ -47,18 +47,11 @@
                         <div class="table table_style2">
                             <div class="card-body bg-light">
                                 <ul class="nav nav-tabs">
-                                    <!-- <li class="nav-item">
-                                      <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공통분류등록</a>
-                                    </li> -->
-                                    <li class="nav-item">
-                                      <a class="nav-link" data-toggle="tab" href="#step01"  onclick="tabchk_rtn('A')">공정별설비등록</a>
-                                    </li>
-                                    <!-- <li class="nav-item">
-                                      <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">기초코드3</a>
-                                    </li> -->
+                                     <li class="nav-item">
+                                      <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공정별설비등록</a>
+                                    </li> 
                                     <input type="hidden" id="tabvalue" value="A">
                                   </ul>
-                                  <div class="tab-content">
                                     <!-- <div class="tab-pane fade show active" id="step01">   
                                         <div class="row gx-3" style="  margin: 10px 10px 10px;">
                                              <div class="col-2 col-sm-2">
@@ -88,7 +81,7 @@
                                             <div id="wtab01Grid_div" ></div>
                                             <div id="tab01Pager"></div>
                                         </div>   
-                                    </div> -->
+                                    </div>   -->
                                     <div class="tab-pane fade" id="step01">
                                         <div class="row gx-3" style="  margin: 10px 10px 10px;"> 
                                             <!-- <div class="col-6 col-sm-3">
@@ -109,34 +102,34 @@
                                                     <div class="row gx-3" style="  margin: 10px 10px 10px;">
                                                         <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정코드</span> 
-                                                               <input class="form-control form-control-sm" id="com_cls02" type="text"    autocomplete="off"  placeholder="3자리" disabled> 
+                                                               <input class="form-control form-control-sm" id="com_cls" type="text"    autocomplete="off"  placeholder="3자리" disabled> 
                                                            </div>
                                                        </div>
                                                        <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정명</span> 
-                                                               <input class="form-control form-control-sm" id="com_cnam02" type="text"    autocomplete="off" disabled> 
+                                                               <input class="form-control form-control-sm" id="com_cnam" type="text"    autocomplete="off" disabled> 
                                                            </div>
                                                        </div>
                                                      </div>
                                                      <div class="row gx-3" style="  margin: 10px 10px 10px;">
                                                         <div class="col-2 col-sm-2">
                                                             <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">설비코드</span> 
-                                                                <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off"> 
+                                                                <input class="form-control form-control-sm" id="wrmc" type="text"    autocomplete="off"> 
                                                             </div>
                                                         </div>
                                                         <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">설비명</span> 
-                                                               <input class="form-control form-control-sm" id="com_rem1" type="text"    autocomplete="off"> 
+                                                               <input class="form-control form-control-sm" id="wrmcnm" type="text"    autocomplete="off"> 
                                                            </div>
                                                        </div>
                                                        <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">담당자</span> 
-                                                               <input class="form-control form-control-sm" id="com_rem2" type="text"    autocomplete="off"> 
+                                                               <input class="form-control form-control-sm" id="wperid" type="text"    autocomplete="off"> 
                                                            </div>
                                                        </div>
                                                        <div class="col-2 col-sm-2">
                                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">담당자명</span> 
-                                                            <input class="form-control form-control-sm" id="com_work" type="text"    autocomplete="off"> 
+                                                            <input class="form-control form-control-sm" id="wpernm" type="text"    autocomplete="off"> 
                                                         </div>
                                                     </div>
                                                        <div class="col-auto">  
@@ -171,7 +164,6 @@
                                             <div id="tab03Pager"></div>
                                         </div>
                                     </div> -->
-                                  </div>
                             </div>
                         </div>    
                 </div>
@@ -293,19 +285,10 @@
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
                 columns: [       
-                    { binding: 'com_cls', header: '대분류코드', align: "center", width: 100 }, 
-                    {
-                        binding: 'com_cnam',
-                        width: 150,
-                        header: '대분류명칭', 
-                        align:"center",
-                        cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                            text: '<b>${item.com_cnam}</b>',
-                            click: (e, ctx) => {
-                                wactnmChks(ctx.item.com_cls, ctx.item.com_cnam);                 
-                            }
-                        })
-                    },                
+                    { binding: 'wrmc', header: '설비코드', align: "center", width: '1*' }, 
+                    { binding: 'wrmcnm', header: '설비명', align: "center", width: '1*' }, 
+                    { binding: 'wperid', header: '담당자', align: "center", width: '1*' }, 
+                    { binding: 'wpernm', header: '담당자명', align: "center", width: '1*' }, 
                 ], 
                     
                 itemsSource: view_p01tab02page
@@ -315,15 +298,17 @@
             wtab02Grid.select(new wijmo.grid.CellRange(0, 0), true); 
                 // tab01검색 데이터 수집
             function getData_tab02(){       
-                var wtab02Dto = [[${comcodeList}]];   
+                var wtab02Dto = [[${wrmcList}]];   
                 var wactnm_data = [];
                 var cnt = 1;
                 for (var i = 0; i < wtab02Dto.length; i++) {
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
-                        com_cls:  wtab02Dto[i]["com_cls"], 
-                        com_cnam:  wtab02Dto[i]["com_cnam"], 
+                        wrmc: '', 
+                        wrmcnm: '', 
+                        wperid: '', 
+                        wpernm: '', 
                     });
                     cnt++;
                 }     
@@ -405,12 +390,12 @@
         function wactnmChks(arg1,arg2){   
             var ls_tab = document.getElementById('tabvalue').value;
             
-            document.getElementById('com_cls02').value = arg1;
-            document.getElementById('com_cnam02').value = arg2;
+            document.getElementById('com_cls').value = arg1;
+            document.getElementById('com_cnam').value = arg2;
              console.log(arg2);
             // console.log(ls_todate)
             $.ajax({
-                url: '/app01m/comcodedetaillist',  
+                url: '/app01m/getFplanDetailList',  
                 type:"POST",
                 data: { 
                     "searchtxt" : '%',
@@ -432,13 +417,11 @@
         function save_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
             var ls_code = document.getElementById('com_cls').value;
-            var ls_code02 = document.getElementById('com_cls02').value;
-            var ls_codes = document.getElementById('com_code').value;
             var ls_codenm = document.getElementById('com_cnam').value;
-            var ls_codenm02 = document.getElementById('com_cnam02').value;
-            var ls_rem1 = document.getElementById('com_rem1').value;
-            var ls_rem2 = document.getElementById('com_rem2').value;
-            var ls_work = document.getElementById('com_work').value;
+            var ls_wrmc = document.getElementById('wrmc').value;
+            var ls_wrmcnm = document.getElementById('wrmcnm').value;
+            var ls_wperid = document.getElementById('wperid').value;
+            var ls_wpernm = document.getElementById('wpernm').value;
 
         
             if (!confirm("저장하시겠습니까?")) {
@@ -447,76 +430,37 @@
             
             switch(ls_tab){
                 case 'A':
-
-                if(ls_code == null || ls_code.length == 0 || ls_code == ""){ 
-                    alert("대분류코드를 3자리로 등록하세요") 
-                    document.getElementById("com_cls").focus(); 
-                    return ;               
-                }  
-                if(ls_codenm == null || ls_codenm.length == 0 || ls_codenm == ""){ 
-                    alert("대분류명칭을 등록하세요") 
-                    document.getElementById("com_cnam").focus(); 
-                    return ;               
-                }   
-
-                    $.ajax({
-                        url: '/app01m/comcodesave',  
-                        type:"POST",
-                        data: { 
-                            "com_cls"      : ls_code,  
-                            "com_cnam"      : ls_codenm ,  
-                        }, 
-                        async:false,
-                        success:function(data){   
-                            if(data == "success"){
-                                alert("저장되었습니다.") 
-                                searchList_rtn(ls_tab);  
-                                clear_rtn(ls_tab);        
-                            }else{                       
-                                alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
-                                // listUp();
-                                console.log(data);  
-                            }
-                           
-                        },error:function(e){
-                            console.log("error"); 
-                        }
-                    }).done(function(fragment){           
-
-                    })  
-                    break;
-                case 'B': 
-                    if(ls_codes == null || ls_codes.length == 0 || ls_codes == ""){ 
-                        alert("코드를 등록하세요") 
-                        document.getElementById("com_code").focus(); 
+                    if(ls_wrmc == null || ls_wrmc.length == 0 || ls_wrmc == ""){ 
+                        alert("설비코드를 등록하세요") 
+                        document.getElementById("wrmc").focus(); 
                         return ;               
                     }  
-                    if(ls_rem1 == null || ls_rem1.length == 0 || ls_rem1 == ""){ 
-                        alert("항목1을 등록하세요") 
-                        document.getElementById("com_rem1").focus(); 
+                    if(ls_wrmcnm == null || ls_wrmcnm.length == 0 || ls_wrmcnm == ""){ 
+                        alert("설비명을 등록하세요") 
+                        document.getElementById("wrmcnm").focus(); 
                         return ;               
                     }
-                    if(ls_rem2 == null || ls_rem2.length == 0 || ls_rem2 == ""){ 
-                        alert("항목2을 등록하세요") 
-                        document.getElementById("com_rem2").focus(); 
+                    if(ls_wperid == null || ls_wperid.length == 0 || ls_wperid == ""){ 
+                        alert("담당자를 등록하세요") 
+                        document.getElementById("wperid").focus(); 
                         return ;               
                     }
-                    if(ls_work == null || ls_work.length == 0 || ls_work == ""){ 
-                        alert("업무구분을 등록하세요") 
-                        document.getElementById("com_work").focus(); 
+                    if(ls_wpernm == null || ls_wpernm.length == 0 || ls_wpernm == ""){ 
+                        alert("담당자명을 등록하세요") 
+                        document.getElementById("ls_wpernm").focus(); 
                         return ;               
                     }        
 
                     $.ajax({
-                        url: '/app01m/comcodedetailsave',  
+                        url: '/app01m/fplandetailsave',  
                         type:"POST",
                         data: { 
-                            "com_cls"      : ls_code02,  
+                            "com_cls"       : ls_code02,  
                             "com_cnam"      : ls_codenm02 ,
-                            "com_code"      : ls_codes,  
-                            "com_rem1"      : ls_rem1 , 
-                            "com_rem2"      : ls_rem2 , 
-                            "com_work"      : ls_work ,  
+                            "wrmc"          : ls_wrmc,  
+                            "wrmcnm"        : ls_wrmcnm , 
+                            "wperid"        : ls_wperid , 
+                            "wpernm"        : ls_wpernm ,  
                         }, 
                         async:false,
                         success:function(data){   
@@ -565,13 +509,11 @@
         function delete_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
             var ls_code = document.getElementById('com_cls').value;
-            var ls_code02 = document.getElementById('com_cls02').value;
             var ls_codenm = document.getElementById('com_cnam').value;
-            var ls_codenm02 = document.getElementById('com_cnam02').value;
-            var ls_codes = document.getElementById('com_code').value;
-            var ls_rem1 = document.getElementById('com_rem1').value;
-            var ls_rem2 = document.getElementById('com_rem2').value;
-            var ls_work = document.getElementById('com_work').value;
+            var ls_wrmc = document.getElementById('wrmc').value;
+            var ls_wrmcnm = document.getElementById('wrmcnm').value;
+            var ls_wperid = document.getElementById('wperid').value;
+            var ls_wpernm = document.getElementById('wpernm').value;
 
         
             if (!confirm("삭제하시겠습니까?")) {
@@ -588,11 +530,12 @@
                 }    
 
                     $.ajax({
-                        url: '/app01m/comcodedel',  
+                        url: '/app01m/fplandetaildel',  
                         type:"POST",
                         data: { 
-                            "com_cls"      : ls_code,  
-                            "com_cnam"      : ls_codenm ,  
+                            "wrmc"      : ls_wrmc,  
+                            "wrmcnm"      : ls_wrmcnm , 
+                            "wperid"      : ls_wperid , 
                         }, 
                         async:false,
                         success:function(data){   
@@ -669,6 +612,10 @@
                 case 'A': 
                     document.getElementById('com_cls').value = "";
                     document.getElementById('com_cnam').value = "";
+                    document.getElementById('wrmc').value = "";
+                    document.getElementById('wrmcnm').value = "";
+                    document.getElementById('wperid').value = "";
+                    document.getElementById('wpernm').value = "";
                     break;
                 case 'B': 
                     document.getElementById('com_cls').value = "";
@@ -697,12 +644,12 @@
 
         function searchList_rtn(arg1){ 
 
-            var ls_code = document.getElementById('com_cls02').value;
-            var ls_codenm = document.getElementById('com_cnam02').value;
+            var ls_code = document.getElementById('com_cls').value;
+            var ls_codenm = document.getElementById('com_cnam').value;
             switch(arg1){
                 case 'A':
                     $.ajax({
-                        url: '/app01m/comcodelist',  
+                        url: '/app01m/getFplanDetailList',  
                         type:"POST",
                         data: { 
                             "searchtxt"      : "%"  
@@ -786,14 +733,14 @@
             view_p01tab01page.sourceCollection  = wtab01_data;
             var cols = new wijmo.grid.Column(); 
             cols.binding = 'com_cls';
-            cols.header = '대분류코드';
+            cols.header = '공정코드';
             cols.align = "center";
             cols.width = 100; 
             wtab01Grid.columns.push(cols);    
             // console.log("cols", cols);  
             cols = new wijmo.grid.Column(); 
             cols.binding = 'com_cnam';
-            cols.header = '대분류명칭';
+            cols.header = '공정코드명';
             cols.align = "center";
             cols.width = 200; 
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
@@ -815,7 +762,11 @@
                     id: i, 
                     index: cnt,
                     com_cls: wtab02Dto[i]["com_cls"],
-                    com_cnam: wtab02Dto[i]["com_cnam"],                              
+                    com_code: wtab02Dto[i]["com_code"],
+                    wrnm: wtab02Dto[i]["wrmc"],
+                    wrmcnm: wtab02Dto[i]["wrmcnm"],
+                    wperid: wtab02Dto[i]["wperid"],
+                    wpernm: wtab02Dto[i]["wpernm"]                               
                 });
                 cnt++;
             }   
@@ -825,23 +776,33 @@
             wtab02Grid.autoGenerateColumns = false; 
             view_p01tab02page.sourceCollection  = wtab02_data;
             var cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cls';
-            cols.header = '대분류코드';
-            cols.align = "center";
-            cols.width = 100; 
-            wtab02Grid.columns.push(cols);    
-            // console.log("cols", cols);  
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cnam';
-            cols.header = '대분류명칭';
+            cols.binding = 'wrmc';
+            cols.header = '설비코드';
             cols.align = "center";
-            cols.width = 200; 
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.com_cnam}</b>',
-                click: (e, ctx) => {
-                    wactnmChks(ctx.item.com_cls, ctx.item.com_cnam);
-                }
-            });
+            cols.width = 250;  
+            wtab02Grid.columns.push(cols);   
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wrmcnm';
+            cols.header = '설비명';
+            cols.align = "center";
+            cols.width = 250;  
+            wtab02Grid.columns.push(cols);
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wperid';
+            cols.header = '담당자';
+            cols.align = "center";
+            cols.width = 250;  
+            wtab02Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wpernm';
+            cols.header = '담당자명';
+            cols.align = "center";
+            cols.width = 250;  
+            wtab02Grid.columns.push(cols);
         }
 
         function tabC_grid(data){
@@ -913,10 +874,10 @@
         } 
 
         function wactnmChk1(arg1,arg2,arg3,arg4){   
-            document.getElementById('com_code').value = arg1; 
-            document.getElementById('com_rem1').value = arg2;
-            document.getElementById('com_rem2').value = arg3;
-            document.getElementById('com_work').value = arg4;      
+            document.getElementById('wrmc').value = arg1; 
+            document.getElementById('wrmcnm').value = arg2;
+            document.getElementById('wperid').value = arg3;
+            document.getElementById('wpernm').value = arg4;      
         }
  
          
