@@ -48,7 +48,7 @@
                             <div class="card-body bg-light">
                                 <ul class="nav nav-tabs">
                                      <li class="nav-item">
-                                      <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공정별설비등록</a>
+                                      <a class="nav-link" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공정별설비등록</a>
                                     </li> 
                                     <input type="hidden" id="tabvalue" value="A">
                                   </ul>
@@ -208,11 +208,11 @@
                 pageSize: 12
             });
             // tab01검색 페이지 이동
-            new wijmo.input.CollectionViewNavigator('#tab01Pager', {
-                byPage: true,
-                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                cv: view_p01tab01page
-            });     
+            // new wijmo.input.CollectionViewNavigator('#tab01Pager', {
+            //     byPage: true,
+            //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            //     cv: view_p01tab01page
+            // });     
             wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
                 autoGenerateColumns: false,
                 showMarquee: true,
@@ -260,7 +260,7 @@
 
             // tab01검색 데이터 수집
             function getData_tab01(){    
-                var wtab01Dto = [[${comcodeList}]];   
+                var wtab01Dto = [[${WflagList}]];   
                 var wactnm_data = [];
                 var cnt = 1;
                 for (var i = 0; i < wtab01Dto.length; i++) {
@@ -297,11 +297,10 @@
             // 첫번째 항목(정렬/그룹화한 후)을 선택
             wtab02Grid.select(new wijmo.grid.CellRange(0, 0), true); 
                 // tab01검색 데이터 수집
-            function getData_tab02(){       
-                var wtab02Dto = [[${wrmcList}]];   
+            function getData_tab02(){        
                 var wactnm_data = [];
                 var cnt = 1;
-                for (var i = 0; i < wtab02Dto.length; i++) {
+                for (var i = 0; i < 20; i++) {
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
@@ -315,46 +314,46 @@
                 return wactnm_data;                                              
             }  
 
-          view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
-            });
-            wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
-                autoGenerateColumns: false,
-                isReadOnly: false, 
-                allowSorting: 'MultiColumn',
-                selectionMode: 'RowRange',
-                alternatingRowStep: 0,
-                columns: [     
-                    { binding: 'com_code', header: '코드', align: "center", width: '1*' }, 
-                    { binding: 'com_cnam', header: '코드명', align: "center", width: '1*' }, 
-                    { binding: 'com_rem1', header: '항목1', align: "center", width: '1*' }, 
-                    { binding: 'com_rem2', header: '항목2', align: "center", width: '1*' }, 
-                    { binding: 'com_work', header: '업무구분', align: "center", width: '1*' },
-                ], 
-                itemsSource: view_p01tab03page
-            });  
+        //   view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
+        //     });
+        //     wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
+        //         autoGenerateColumns: false,
+        //         isReadOnly: false, 
+        //         allowSorting: 'MultiColumn',
+        //         selectionMode: 'RowRange',
+        //         alternatingRowStep: 0,
+        //         columns: [     
+        //             { binding: 'com_code', header: '코드', align: "center", width: '1*' }, 
+        //             { binding: 'com_cnam', header: '코드명', align: "center", width: '1*' }, 
+        //             { binding: 'com_rem1', header: '항목1', align: "center", width: '1*' }, 
+        //             { binding: 'com_rem2', header: '항목2', align: "center", width: '1*' }, 
+        //             { binding: 'com_work', header: '업무구분', align: "center", width: '1*' },
+        //         ], 
+        //         itemsSource: view_p01tab03page
+        //     });  
 
 
-            new FlexGridContextMenu(wtab03Grid);  
-            // 선택기 생성
-            selector = new wijmo.grid.selector.Selector(wtab03Grid, {
-                itemChecked: () => {
-                    // showCheckedCount();
-                }
-            }); 
-            // 헤더 열 전환
-            setHeaderColumn(true);
-            function setHeaderColumn(headerOn) {
-                // wtab04Grid.headersVisibility = headerOn
-                // ? wijmo.grid.HeadersVisibility.All
-                // : wijmo.grid.HeadersVisibility.Column;
-                // selector.column = headerOn
-                // ? wtab04Grid.rowHeaders.columns[0]
-                // : wtab04Grid.columns[0];
-            } 
-            wtab03Grid.showMarquee = true;
-            wtab03Grid.focus();
-            wijmo.toggleClass(wtab03Grid.hostElement, 'highlightActive', true);
-            wtab03Grid.focus();
+            // new FlexGridContextMenu(wtab03Grid);  
+            // // 선택기 생성
+            // selector = new wijmo.grid.selector.Selector(wtab03Grid, {
+            //     itemChecked: () => {
+            //         // showCheckedCount();
+            //     }
+            // }); 
+            // // 헤더 열 전환
+            // setHeaderColumn(true);
+            // function setHeaderColumn(headerOn) {
+            //     // wtab04Grid.headersVisibility = headerOn
+            //     // ? wijmo.grid.HeadersVisibility.All
+            //     // : wijmo.grid.HeadersVisibility.Column;
+            //     // selector.column = headerOn
+            //     // ? wtab04Grid.rowHeaders.columns[0]
+            //     // : wtab04Grid.columns[0];
+            // } 
+            // wtab03Grid.showMarquee = true;
+            // wtab03Grid.focus();
+            // wijmo.toggleClass(wtab03Grid.hostElement, 'highlightActive', true);
+            // wtab03Grid.focus();
 
 
 
@@ -387,7 +386,7 @@
             document.getElementById('tabvalue').value = arg; 
         } 
      
-        function wactnmChks(arg1,arg2){   
+        function wactnmChk(arg1,arg2){   
             var ls_tab = document.getElementById('tabvalue').value;
             
             document.getElementById('com_cls').value = arg1;
@@ -395,7 +394,7 @@
              console.log(arg2);
             // console.log(ls_todate)
             $.ajax({
-                url: '/app01m/getFplanDetailList',  
+                url: '/app01m/fplandetaillist',  
                 type:"POST",
                 data: { 
                     "searchtxt" : '%',
@@ -649,7 +648,7 @@
             switch(arg1){
                 case 'A':
                     $.ajax({
-                        url: '/app01m/getFplanDetailList',  
+                        url: '/app01m/getWflagList',  
                         type:"POST",
                         data: { 
                             "searchtxt"      : "%"  
@@ -780,7 +779,13 @@
             cols.binding = 'wrmc';
             cols.header = '설비코드';
             cols.align = "center";
-            cols.width = 250;  
+            cols.width = 250;
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.wrmc}</b>',
+                click: (e, ctx) => {
+                    wactnmChk1(ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.wperid, ctx.item.wpernm);
+                }
+            });   
             wtab02Grid.columns.push(cols);   
 
             cols = new wijmo.grid.Column(); 
@@ -831,12 +836,6 @@
             cols.header = '코드';
             cols.align = "center";
             cols.width = 250; 
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.com_code}</b>',
-                click: (e, ctx) => {
-                    wactnmChk1(ctx.item.com_code, ctx.item.com_rem1, ctx.item.com_rem2, ctx.item.com_work);
-                }
-            });  
             wtab03Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
@@ -878,6 +877,105 @@
             document.getElementById('wrmcnm').value = arg2;
             document.getElementById('wperid').value = arg3;
             document.getElementById('wpernm').value = arg4;      
+        }
+
+        function CifSearchList_rtn(arg){  
+
+var searchCode = ""; 
+
+if(arg == "M"){
+    searchCode = document.getElementById('searchCode').value;   
+}
+if(arg == "A"){
+    searchCode = document.getElementById('cifname').value;   
+} 
+if(searchCode == null || searchCode.length == 0 || searchCode == ""){ 
+    searchCode = "%"         ;
+}     
+let ls_conacorp1 = "%";  
+let ls_conagita = "%";   
+$.ajax({
+            url: '/app01m/index02/listtot',  
+        type:"POST",
+        data: { 
+            "conacorp1" :ls_conacorp1, 
+            "conacorp" :searchCode, 
+            "conagita" :ls_conagita, 
+        }, 
+        async:false,
+        success:function(data){  
+            tabPop_grid(data);
+        },error:function(e){
+            console.log("error");                            
+        }
+    }).done(function(fragment){           
+
+    })    
+
+}     
+        //  담당자 팝업 grid data 수집
+        function tabPop_grid(data){
+        // console.log(data);
+        var wtab02Dto  = data;    
+        var wtab02_data = [];
+        var cnt = 1;
+        for (var i = 0; i < wtab02Dto.length; i++) {
+            wtab02_data.push({
+                id: i, 
+                index: cnt, 
+                acorp1: wtab02Dto[i]["acorp1"], 
+                acorp2: wtab02Dto[i]["acorp2"], 
+                acorp3: wtab02Dto[i]["acorp3"],  
+                acode: wtab02Dto[i]["acode"], 
+                acorp: wtab02Dto[i]["acorp"]      
+            });
+            cnt++;
+        }   
+
+        // console.log(winnameGrid);
+
+        winnameGrid.columns.clear();  
+        winnameGrid.autoGenerateColumns = false; 
+        view_innamepage.sourceCollection  = wtab02_data;
+
+        var cols = new wijmo.grid.Column(); 
+        cols.binding = 'acode';
+        cols.header = '코드';
+        cols.align = "center";
+        cols.width = 80;
+        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+            text: '<b>${item.acode}</b>',
+            click: (e, ctx) => {
+                wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode,   ctx.item.acorp );                    
+                
+            }
+        });
+        winnameGrid.columns.push(cols);  
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'acorp';
+        cols.header = '거래처명'; 
+        cols.align = "left"; 
+        cols.width = 200;
+        winnameGrid.columns.push(cols); 
+        }
+            
+        function wcifChk_a(arg1, arg2, arg3, arg4, arg5){            
+        document.getElementById('acorp1').value = arg1;  
+        document.getElementById('acorp2').value = arg2;  
+        document.getElementById('acorp3').value = arg3;  
+        document.getElementById('acode').value = arg4;  
+        document.getElementById('searchCode').value = arg5;
+        document.getElementById('cifname').value = arg5;  
+        if(arg1 == "02"){
+            document.getElementById('jpbgubn').value = "P";
+        }else{
+            document.getElementById('jpbgubn').value = "B";
+        } 
+        //품목조회
+        retrieve_rtn()
+        $("#winnamemodal_btn").trigger("click");
+
         }
  
          

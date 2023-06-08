@@ -226,7 +226,7 @@ public class App01CrudController {
             index02Dto.setCom_cls(searchtxt);
             index02ListDto = service02.getWflagList(index02Dto);
 
-            model.addAttribute("getWflagList",index02ListDto);
+            model.addAttribute("WflagList",index02ListDto);
 
         } catch (Exception ex) {
 //                dispatchException = ex;
