@@ -7,40 +7,40 @@
 
     <select id="getWflagList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-            select com_cls, com_cnam from TB_CA510  where com_code = '01' and isnull(com_cls,'') Like concat('%',#{com_cls},'%') order by com_cls
+            select com_code, com_work from TB_CA510  where com_cls = '001'
         ]]>
     </select>
 
     <select id="GetFplanDetailList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-            select * from TB_FPLAN_WRMC where wfrag = #{com_cls}
+            select * from TB_FPLAN_WRMC where wflag = #{com_code}
         ]]>
     </select>
 
     <insert id="InsertFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto" >
-        insert into TB_FPLAN_WRMC (wrmc, wrmcnm, wperid ) values
-        (#{wrmc}, #{wrmcnm}, #{wperid})
+        insert into TB_FPLAN_WRMC (custcd,spjangcd, wflag, wrmc, wrmcnm, wperid ) values
+        ('KDMES', 'ZZ',#{com_code}, #{wrmc}, #{wrmcnm}, #{wperid})
     </insert>
 
     <update id="UpdateFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
         UPDATE  TB_FPLAN_WRMC SET wrmc = #{wrmc} , wrmcnm = #{wrmcnm} , wperid = #{wperid}
-        where wrmc  = #{wrmc} and wrmcnm = #{wrmcnm} and wperid = #{wperid}
+        where wflag  = #{com_code} and wrmc = #{wrmc}
         ]]>
     </update>
 
     <update id="DeleteFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-        DELETE  TB_FPLAN_WRMC   where wrmc  = #{wrmc} and wrmcnm = #{wrmcnm} and wperid = #{wperid}
+        DELETE  TB_FPLAN_WRMC   where wrmc  = #{wrmc} and wrmcnm = #{wrmcnm}
         ]]>
     </update>
 
-    <select id="GetComCodeCheck" parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="String">
+    <select id="GetFplanCheck" parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="String">
         <![CDATA[
-        select   wrmc , wperid
+        select   wrmc , wperid ,wflag
         from TB_FPLAN_WRMC WITH (NOLOCK)
         WHERE isnull(wrmc,'')   = #{wrmc}
-        and isnull(wperid,'')   = #{wperid}
+        and isnull(wflag,'')   = #{com_code}
         ORDER BY wrmc
         ]]>
     </select>

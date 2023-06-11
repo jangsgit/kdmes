@@ -47,42 +47,16 @@
                         <div class="table table_style2">
                             <div class="card-body bg-light">
                                 <ul class="nav nav-tabs">
-                                     <li class="nav-item">
-                                      <a class="nav-link" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공정별설비등록</a>
+                                    <li class="nav-item">
+                                      <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공정별설비등록</a>
                                     </li> 
+                                    <!-- <li class="nav-item">
+                                      <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">분류상세등록</a>
+                                    </li> -->
                                     <input type="hidden" id="tabvalue" value="A">
                                   </ul>
-                                    <!-- <div class="tab-pane fade show active" id="step01">   
-                                        <div class="row gx-3" style="  margin: 10px 10px 10px;">
-                                             <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류코드</span> 
-                                                    <input class="form-control form-control-sm" id="com_cls" type="text"    autocomplete="off"  placeholder="3자리"     > 
-                                                </div>
-                                            </div>
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
-                                                    <input class="form-control form-control-sm" id="com_cnam" type="text"    autocomplete="off"> 
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
-                                                </button>
-                                            </div>  
-                                            <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn()">저장
-                                                </button>
-                                            </div>  
-                                            <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn()">삭제
-                                                </button>
-                                            </div>  
-                                          </div>
-                                        <div class="container-fluid"> 
-                                            <div id="wtab01Grid_div" ></div>
-                                            <div id="tab01Pager"></div>
-                                        </div>   
-                                    </div>   -->
-                                    <div class="tab-pane fade" id="step01">
+                                  <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="step01">  
                                         <div class="row gx-3" style="  margin: 10px 10px 10px;"> 
                                             <!-- <div class="col-6 col-sm-3">
                                               <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1" for="expDate">대분류명칭</label>
@@ -102,12 +76,12 @@
                                                     <div class="row gx-3" style="  margin: 10px 10px 10px;">
                                                         <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정코드</span> 
-                                                               <input class="form-control form-control-sm" id="com_cls" type="text"    autocomplete="off"  placeholder="3자리" disabled> 
+                                                               <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off"  placeholder="3자리" disabled> 
                                                            </div>
                                                        </div>
                                                        <div class="col-2 col-sm-2">
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정명</span> 
-                                                               <input class="form-control form-control-sm" id="com_cnam" type="text"    autocomplete="off" disabled> 
+                                                               <input class="form-control form-control-sm" id="com_work" type="text"    autocomplete="off" disabled> 
                                                            </div>
                                                        </div>
                                                      </div>
@@ -171,8 +145,46 @@
         </div>
     </div>
     
-    <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />  
-    <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  /> 
+    <!--  모달 처리 -->
+    <input class="form-control form-control-sm"  type="hidden" id="innamebtn" data-bs-toggle="modal" data-bs-target="#cifmodal"  /> 
+    <!--------------------------------------------------------------------------------------->   
+    <div class="modal fade" id="cifmodal" data-bs-keyboard="false"
+    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+    aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+            style="max-width: 600px">
+            <div class="modal-content border-0">
+                <div class="modal-body p-0" > 
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                            
+                        <div class="search">
+                            <div class="input_wrap">  
+                                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){CifSearchList_rtn('M')}"
+                                placeholder="담당자명 "     />                                      
+                            </div>
+
+                            <button id="winnameBtn">
+                                <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                            </button>
+                        </div>                             
+                    </div>   
+                    <div class="container-fluid"> 
+                        <div id="winnameGrid_div" ></div>
+                        <div id="thePager03"></div>
+                    </div>   
+                </div>  
+
+                <div class="modal-footer">
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                type="button"  id="winnamemodal_btn" data-bs-dismiss="modal">Close</button>
+                        </div> 
+                    </div>
+                </div>   
+
+            </div>
+        </div> 
+    </div>  
 
  
 <!--------------------------------------------------------------------------------------->     
@@ -221,15 +233,15 @@
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
                 columns: [     
-                    { binding: 'com_cls', header: '공정코드', align: "center",   width: 100 }, 
-                    { binding: 'com_cnam', header: '공정명', align: "center", 
+                    { binding: 'com_code', header: '공정코드', align: "center",   width: 100 }, 
+                    { binding: 'com_work', header: '공정명', align: "center", 
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                            text: '<b>${item.com_cnam}</b>',
+                            text: '<b>${item.com_work}</b>',
                             click: (e, ctx) => {
-                                wactnmChk(ctx.item.com_cls, ctx.item.com_cnam);
+                                wactnmChk(ctx.item.com_code, ctx.item.com_work);
                             }
                         }),
-                    width: 300},  
+                    width: 150},  
                     // { binding: 'psize', header: '규격', width: '*', format: '*' }  
                 ], 
                 itemsSource: view_p01tab01page
@@ -260,20 +272,39 @@
 
             // tab01검색 데이터 수집
             function getData_tab01(){    
-                var wtab01Dto = [[${WflagList}]];   
+                var wtab01Dto = [[${WflagList}]];
                 var wactnm_data = [];
                 var cnt = 1;
-                for (var i = 0; i < wtab01Dto.length; i++) {
-                    wactnm_data.push({
-                        id: i, 
-                        index: cnt,
-                        com_cls:  wtab01Dto[i]["com_cls"], 
-                        com_cnam:  wtab01Dto[i]["com_cnam"], 
-                    });
-                    cnt++;
-                }     
+                var rowcnt = wtab01Dto.length;
+                if(rowcnt == 0){
+                    rowcnt = 20;
+                    for (var i = 0; i < rowcnt; i++) {
+                        wactnm_data.push({
+                            id: i, 
+                            index: cnt,
+                            com_code: '', 
+                            com_work:''
+                        });
+                        cnt++;
+                    }            
+                }else{
+                    for (var i = 0; i < wtab01Dto.length; i++) {
+                        wactnm_data.push({
+                            id: i, 
+                            index: cnt,
+                            com_code:  wtab01Dto[i]["com_code"], 
+                            com_work:  wtab01Dto[i]["com_work"], 
+                        });
+                        cnt++;
+                    }     
+                }
+                console.log(wactnm_data);   
                 return wactnm_data;                                          
             }  
+
+
+
+
              view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
                 pageSize: 100
             }); 
@@ -358,26 +389,68 @@
 
 
             //  데이터 수집
-            function getData_tab03(){        
-                var wactnm_data = [];
-                var cnt = 1;
-                for (var i = 0; i < 20; i++) {
-                    wactnm_data.push({
-                        id: i, 
-                        index: cnt,
-                        com_code: '', 
-                        com_cnam: '', 
-                        com_rem1: '', 
-                        com_rem2: '', 
-                        com_work: '',
-                    });
-                    cnt++;
-                }     
-                return wactnm_data;                           
-            }  
+            // function getData_tab03(){        
+            //     var wactnm_data = [];
+            //     var cnt = 1;
+            //     for (var i = 0; i < 20; i++) {
+            //         wactnm_data.push({
+            //             id: i, 
+            //             index: cnt,
+            //             com_code: '', 
+            //             com_cnam: '', 
+            //             com_rem1: '', 
+            //             com_rem2: '', 
+            //             com_work: '',
+            //         });
+            //         cnt++;
+            //     }     
+            //     return wactnm_data;                           
+            // }  
                        
 
         } 
+        //담당자현황 Modaㅣ
+        view_innamepage = new wijmo.collections.CollectionView(getData_wlist2(), {
+                pageSize: 12
+            });
+            // 담당자 페이지 이동
+            new wijmo.input.CollectionViewNavigator('#thePager03', {
+                byPage: true,
+                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                cv: view_innamepage
+            });     
+            winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
+                autoGenerateColumns: false,
+                isReadOnly: false, 
+                allowSorting: 'MultiColumn',
+                selectionMode: 'RowRange',
+                alternatingRowStep: 0,
+                columns: [     
+                    { binding: 'wperid', header: '담당자', align: "center", width: '1*' },
+                    { binding: 'wpernm', header: '담당자명', align: "center", width: '1*' },
+                ], 
+                itemsSource: view_innamepage
+            });  
+            
+            winnameGrid.showMarquee = true;
+            winnameGrid.focus();
+            wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
+            winnameGrid.focus();
+            // 담당자 데이터 수집
+            function getData_wlist2(){   
+                var winname_data = []; 
+                var cnt = 1;
+                for (var i = 0; i < 12; i++) {
+                    winname_data.push({
+                        id: i, 
+                        index: cnt,
+                        wperid:"",
+                        wpernm: "",                            
+                    });
+                    cnt++;
+                }    
+                return winname_data;                                      
+            } 
 
          
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -389,8 +462,8 @@
         function wactnmChk(arg1,arg2){   
             var ls_tab = document.getElementById('tabvalue').value;
             
-            document.getElementById('com_cls').value = arg1;
-            document.getElementById('com_cnam').value = arg2;
+            document.getElementById('com_code').value = arg1;
+            document.getElementById('com_work').value = arg2;
              console.log(arg2);
             // console.log(ls_todate)
             $.ajax({
@@ -398,12 +471,12 @@
                 type:"POST",
                 data: { 
                     "searchtxt" : '%',
-                    "com_cls" :arg1, 
+                    "com_code" :arg1, 
                 }, 
                 async:false,
                 success:function(data){  
                      console.log(data);
-                    tabC_grid(data);
+                    tabB_grid(data);
                 },error:function(e){
                     console.log("error");                            
                 }
@@ -415,8 +488,8 @@
 
         function save_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
-            var ls_code = document.getElementById('com_cls').value;
-            var ls_codenm = document.getElementById('com_cnam').value;
+            var ls_code = document.getElementById('com_code').value;
+            var ls_codenm = document.getElementById('com_work').value;
             var ls_wrmc = document.getElementById('wrmc').value;
             var ls_wrmcnm = document.getElementById('wrmcnm').value;
             var ls_wperid = document.getElementById('wperid').value;
@@ -454,8 +527,8 @@
                         url: '/app01m/fplandetailsave',  
                         type:"POST",
                         data: { 
-                            "com_cls"       : ls_code02,  
-                            "com_cnam"      : ls_codenm02 ,
+                            "com_code"       : ls_code,  
+                            "com_work"      : ls_codenm ,
                             "wrmc"          : ls_wrmc,  
                             "wrmcnm"        : ls_wrmcnm , 
                             "wperid"        : ls_wperid , 
@@ -507,8 +580,8 @@
 
         function delete_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
-            var ls_code = document.getElementById('com_cls').value;
-            var ls_codenm = document.getElementById('com_cnam').value;
+            var ls_code = document.getElementById('com_code').value;
+            var ls_codenm = document.getElementById('com_work').value;
             var ls_wrmc = document.getElementById('wrmc').value;
             var ls_wrmcnm = document.getElementById('wrmcnm').value;
             var ls_wperid = document.getElementById('wperid').value;
@@ -524,7 +597,7 @@
 
                 if(ls_code == null || ls_code.length == 0 || ls_code == ""){ 
                     alert("대분류코드를 확인하세요") 
-                    document.getElementById("com_cls").focus(); 
+                    document.getElementById("com_code").focus(); 
                     return ;               
                 }    
 
@@ -580,26 +653,6 @@
                     })  
                     break;
                 case 'C':
-                    $.ajax({
-                        url: '/app03/p001tab03',  
-                        type:"POST",
-                        data: { 
-                            "frdate"      : arg2,  
-                            "todate"      : arg3 ,  
-                            "actcdz"      : arg4 ,  
-                            "actcontcdz"  : arg5  
-                        }, 
-                        async:false,
-                        success:function(data){   
-                            tabC_grid(data);
-                        },error:function(e){
-                            console.log("error");
-                            // alert(data.code);
-                            // alert(data.message);
-                        }
-                    }).done(function(fragment){           
-
-                    })  
                     break;                
                 default:    
                     break;                
@@ -609,20 +662,14 @@
         function clear_rtn(arg){
             switch(arg){
                 case 'A': 
-                    document.getElementById('com_cls').value = "";
-                    document.getElementById('com_cnam').value = "";
+                    document.getElementById('com_code').value = "";
+                    document.getElementById('com_work').value = "";
                     document.getElementById('wrmc').value = "";
                     document.getElementById('wrmcnm').value = "";
                     document.getElementById('wperid').value = "";
                     document.getElementById('wpernm').value = "";
                     break;
                 case 'B': 
-                    document.getElementById('com_cls').value = "";
-                    document.getElementById('com_cnam').value = "";
-                    document.getElementById('com_code').value = "";
-                    document.getElementById('com_rem1').value = "";
-                    document.getElementById('com_rem2').value = "";
-                    document.getElementById('com_work').value = "";
                     break;
                 case 'C':
                    
@@ -643,8 +690,8 @@
 
         function searchList_rtn(arg1){ 
 
-            var ls_code = document.getElementById('com_cls').value;
-            var ls_codenm = document.getElementById('com_cnam').value;
+            var ls_code = document.getElementById('com_code').value;
+            var ls_codenm = document.getElementById('com_work').value;
             switch(arg1){
                 case 'A':
                     $.ajax({
@@ -671,7 +718,7 @@
                         type:"POST",
                         data: { 
                             "searchtxt" : '%',
-                            "com_cls" :ls_code, 
+                            "com_code" :ls_code, 
                         }, 
                         async:false,
                         success:function(data){  
@@ -720,8 +767,8 @@
                 wtab01_data.push({
                     id: i, 
                     index: cnt,
-                    com_cls: wtab01Dto[i]["com_cls"],
-                    com_cnam: wtab01Dto[i]["com_cnam"],                                 
+                    com_code: wtab01Dto[i]["com_code"],
+                    com_work: wtab01Dto[i]["com_work"],                                 
                 });
                 cnt++;
             }   
@@ -731,21 +778,21 @@
             wtab01Grid.autoGenerateColumns = false; 
             view_p01tab01page.sourceCollection  = wtab01_data;
             var cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cls';
+            cols.binding = 'com_code';
             cols.header = '공정코드';
             cols.align = "center";
             cols.width = 100; 
             wtab01Grid.columns.push(cols);    
             // console.log("cols", cols);  
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cnam';
-            cols.header = '공정코드명';
+            cols.binding = 'com_work';
+            cols.header = '공정명';
             cols.align = "center";
             cols.width = 200; 
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.com_cnam}</b>',
+                text: '<b>${item.com_work}</b>',
                 click: (e, ctx) => {
-                    wactnmChk(ctx.item.com_cls, ctx.item.com_cnam);
+                    wactnmChk(ctx.item.com_code, ctx.item.com_work);
                 }
             });
             wtab01Grid.columns.push(cols);   
@@ -760,9 +807,9 @@
                 wtab02_data.push({
                     id: i, 
                     index: cnt,
-                    com_cls: wtab02Dto[i]["com_cls"],
                     com_code: wtab02Dto[i]["com_code"],
-                    wrnm: wtab02Dto[i]["wrmc"],
+                    com_work: wtab02Dto[i]["com_work"],
+                    wrmc: wtab02Dto[i]["wrmc"],
                     wrmcnm: wtab02Dto[i]["wrmcnm"],
                     wperid: wtab02Dto[i]["wperid"],
                     wpernm: wtab02Dto[i]["wpernm"]                               
@@ -810,67 +857,62 @@
             wtab02Grid.columns.push(cols);
         }
 
-        function tabC_grid(data){
-            var wtab03Dto  = data;    
-            var wtab03_data = [];
-            var cnt = 1;
-            for (var i = 0; i < wtab03Dto.length; i++) {
-                wtab03_data.push({
-                    id: i, 
-                    index: cnt,
-                    com_cls: wtab03Dto[i]["com_cls"],
-                    com_code: wtab03Dto[i]["com_code"],
-                    com_cnam: wtab03Dto[i]["com_cnam"],
-                    com_rem1: wtab03Dto[i]["com_rem1"],
-                    com_rem2: wtab03Dto[i]["com_rem2"],
-                    com_work: wtab03Dto[i]["com_work"]              
-                });
-                cnt++;
-            }     
-            // console.log(wtab03_data.length);
-            wtab03Grid.columns.clear();  
-            wtab03Grid.autoGenerateColumns = false; 
-            view_p01tab03page.sourceCollection  = wtab03_data;
-            var cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_code';
-            cols.header = '코드';
-            cols.align = "center";
-            cols.width = 250; 
-            wtab03Grid.columns.push(cols);  
+        // function tabC_grid(data){
+        //     var wtab03Dto  = data;    
+        //     var wtab03_data = [];
+        //     var cnt = 1;
+        //     for (var i = 0; i < wtab03Dto.length; i++) {
+        //         wtab03_data.push({
+        //             id: i, 
+        //             index: cnt,
+        //             com_cls: wtab03Dto[i]["com_cls"],
+        //             com_code: wtab03Dto[i]["com_code"],
+        //             com_cnam: wtab03Dto[i]["com_cnam"],
+        //             com_rem1: wtab03Dto[i]["com_rem1"],
+        //             com_rem2: wtab03Dto[i]["com_rem2"],
+        //             com_work: wtab03Dto[i]["com_work"]              
+        //         });
+        //         cnt++;
+        //     }     
+        //     // console.log(wtab03_data.length);
+        //     wtab03Grid.columns.clear();  
+        //     wtab03Grid.autoGenerateColumns = false; 
+        //     view_p01tab03page.sourceCollection  = wtab03_data;
+        //     var cols = new wijmo.grid.Column(); 
+        //     cols.binding = 'com_code';
+        //     cols.header = '코드';
+        //     cols.align = "center";
+        //     cols.width = 250; 
+        //     wtab03Grid.columns.push(cols);  
 
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cnam';
-            cols.header = '코드명';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);   
+        //     cols = new wijmo.grid.Column(); 
+        //     cols.binding = 'com_cnam';
+        //     cols.header = '코드명';
+        //     cols.align = "center";
+        //     cols.width = 250;  
+        //     wtab03Grid.columns.push(cols);   
 
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_rem1';
-            cols.header = '항목1';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);
+        //     cols = new wijmo.grid.Column(); 
+        //     cols.binding = 'com_rem1';
+        //     cols.header = '항목1';
+        //     cols.align = "center";
+        //     cols.width = 250;  
+        //     wtab03Grid.columns.push(cols);
             
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_rem2';
-            cols.header = '항목2';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);  
+        //     cols = new wijmo.grid.Column(); 
+        //     cols.binding = 'com_rem2';
+        //     cols.header = '항목2';
+        //     cols.align = "center";
+        //     cols.width = 250;  
+        //     wtab03Grid.columns.push(cols);  
 
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_work';
-            cols.header = '업무구분';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);  
-        } 
- 
-        function wactnmChk(arg1, arg2){
-            document.getElementById('com_cls').value = arg1; 
-            document.getElementById('com_cnam').value = arg2;    
-        } 
+        //     cols = new wijmo.grid.Column(); 
+        //     cols.binding = 'com_work';
+        //     cols.header = '업무구분';
+        //     cols.align = "center";
+        //     cols.width = 250;  
+        //     wtab03Grid.columns.push(cols);  
+        // } 
 
         function wactnmChk1(arg1,arg2,arg3,arg4){   
             document.getElementById('wrmc').value = arg1; 
@@ -879,104 +921,97 @@
             document.getElementById('wpernm').value = arg4;      
         }
 
-        function CifSearchList_rtn(arg){  
+        // function CifSearchList_rtn(arg){  
 
-var searchCode = ""; 
+        //     var searchCode = ""; 
 
-if(arg == "M"){
-    searchCode = document.getElementById('searchCode').value;   
-}
-if(arg == "A"){
-    searchCode = document.getElementById('cifname').value;   
-} 
-if(searchCode == null || searchCode.length == 0 || searchCode == ""){ 
-    searchCode = "%"         ;
-}     
-let ls_conacorp1 = "%";  
-let ls_conagita = "%";   
-$.ajax({
-            url: '/app01m/index02/listtot',  
-        type:"POST",
-        data: { 
-            "conacorp1" :ls_conacorp1, 
-            "conacorp" :searchCode, 
-            "conagita" :ls_conagita, 
-        }, 
-        async:false,
-        success:function(data){  
-            tabPop_grid(data);
-        },error:function(e){
-            console.log("error");                            
-        }
-    }).done(function(fragment){           
+        //     if(arg == "M"){
+        //         searchCode = document.getElementById('searchCode').value;   
+        //     }
+        //     if(arg == "A"){
+        //         searchCode = document.getElementById('cifname').value;   
+        //     } 
+        //     if(searchCode == null || searchCode.length == 0 || searchCode == ""){ 
+        //         searchCode = "%"         ;
+        //     }     
+        //     let ls_conacorp1 = "%";  
+        //     let ls_conagita = "%";   
+        //     $.ajax({
+        //                 url: '/app01m/index02/listtot',  
+        //             type:"POST",
+        //             data: { 
+        //                 "conacorp1" :ls_conacorp1, 
+        //                 "conacorp" :searchCode, 
+        //                 "conagita" :ls_conagita, 
+        //             }, 
+        //             async:false,
+        //             success:function(data){  
+        //                 tabPop_grid(data);
+        //             },error:function(e){
+        //                 console.log("error");                            
+        //             }
+        //         }).done(function(fragment){           
 
-    })    
+        //         })    
 
-}     
-        //  담당자 팝업 grid data 수집
-        function tabPop_grid(data){
-        // console.log(data);
-        var wtab02Dto  = data;    
-        var wtab02_data = [];
-        var cnt = 1;
-        for (var i = 0; i < wtab02Dto.length; i++) {
-            wtab02_data.push({
-                id: i, 
-                index: cnt, 
-                acorp1: wtab02Dto[i]["acorp1"], 
-                acorp2: wtab02Dto[i]["acorp2"], 
-                acorp3: wtab02Dto[i]["acorp3"],  
-                acode: wtab02Dto[i]["acode"], 
-                acorp: wtab02Dto[i]["acorp"]      
-            });
-            cnt++;
-        }   
+        // }     
+        // //  담당자 팝업 grid data 수집
+        // function tabPop_grid(data){
+        //     // console.log(data);
+        //     var wtab02Dto  = data;    
+        //     var wtab02_data = [];
+        //     var cnt = 1;
+        //     for (var i = 0; i < wtab02Dto.length; i++) {
+        //         wtab02_data.push({
+        //             id: i, 
+        //             index: cnt, 
+        //             acorp1: wtab02Dto[i]["wperid"], 
+        //             acorp2: wtab02Dto[i]["wpernm"],    
+        //         });
+        //         cnt++;
+        // }   
 
-        // console.log(winnameGrid);
+        // // console.log(winnameGrid);
 
-        winnameGrid.columns.clear();  
-        winnameGrid.autoGenerateColumns = false; 
-        view_innamepage.sourceCollection  = wtab02_data;
+        // winnameGrid.columns.clear();  
+        // winnameGrid.autoGenerateColumns = false; 
+        // view_innamepage.sourceCollection  = wtab02_data;
 
-        var cols = new wijmo.grid.Column(); 
-        cols.binding = 'acode';
-        cols.header = '코드';
-        cols.align = "center";
-        cols.width = 80;
-        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-            text: '<b>${item.acode}</b>',
-            click: (e, ctx) => {
-                wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode,   ctx.item.acorp );                    
+        // var cols = new wijmo.grid.Column(); 
+        // cols.binding = 'wperid';
+        // cols.header = '담담자';
+        // cols.align = "center";
+        // cols.width = 80;
+        // cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+        //     text: '<b>${item.wperid}</b>',
+        //     click: (e, ctx) => {
+        //         wcifChk_a(ctx.item.wperid, ctx.item.wpernm);                    
                 
-            }
-        });
-        winnameGrid.columns.push(cols);  
+        //     }
+        // });
+        // winnameGrid.columns.push(cols);  
 
-        cols = new wijmo.grid.Column(); 
-        cols.binding = 'acorp';
-        cols.header = '거래처명'; 
-        cols.align = "left"; 
-        cols.width = 200;
-        winnameGrid.columns.push(cols); 
-        }
+        // cols = new wijmo.grid.Column(); 
+        // cols.binding = 'wpernm';
+        // cols.header = '담당자명'; 
+        // cols.align = "left"; 
+        // cols.width = 200;
+        // winnameGrid.columns.push(cols); 
+        // }
             
-        function wcifChk_a(arg1, arg2, arg3, arg4, arg5){            
-        document.getElementById('acorp1').value = arg1;  
-        document.getElementById('acorp2').value = arg2;  
-        document.getElementById('acorp3').value = arg3;  
-        document.getElementById('acode').value = arg4;  
-        document.getElementById('searchCode').value = arg5;
-        document.getElementById('cifname').value = arg5;  
-        if(arg1 == "02"){
-            document.getElementById('jpbgubn').value = "P";
-        }else{
-            document.getElementById('jpbgubn').value = "B";
-        } 
-        //품목조회
-        retrieve_rtn()
-        $("#winnamemodal_btn").trigger("click");
+        // function wcifChk_a(arg1, arg2, arg3, arg4, arg5){            
+        // document.getElementById('wperid').value = arg1;  
+        // document.getElementById('wpernm').value = arg2;  
+        // if(arg1 == "02"){
+        //     document.getElementById('jpbgubn').value = "P";
+        // }else{
+        //     document.getElementById('jpbgubn').value = "B";
+        // } 
+        // //품목조회
+        // retrieve_rtn()
+        // $("#winnamemodal_btn").trigger("click");
 
-        }
+        // }
  
          
         

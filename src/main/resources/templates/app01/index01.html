@@ -243,27 +243,27 @@
                 itemsSource: view_p01tab01page
             });  
 
-            new FlexGridContextMenu(wtab01Grid); 
-            // 선택기 생성
-            let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
-                itemChecked: () => {
-                    showCheckedCount();
-                }
-            }); 
-            // 헤더 열 전환
-            setHeaderColumn(true);
-            function setHeaderColumn(headerOn) {
-                wtab01Grid.headersVisibility = headerOn
-                ? wijmo.grid.HeadersVisibility.All
-                : wijmo.grid.HeadersVisibility.Column;
-                selector.column = headerOn
-                ? wtab01Grid.rowHeaders.columns[0]
-                : wtab01Grid.columns[0];
-            } 
-            wtab01Grid.showMarquee = true;
-            wtab01Grid.focus();
-            wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
-            wtab01Grid.focus();
+            // new FlexGridContextMenu(wtab01Grid); 
+            // // 선택기 생성
+            // let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
+            //     itemChecked: () => {
+            //         showCheckedCount();
+            //     }
+            // }); 
+            // // 헤더 열 전환
+            // setHeaderColumn(true);
+            // function setHeaderColumn(headerOn) {
+            //     wtab01Grid.headersVisibility = headerOn
+            //     ? wijmo.grid.HeadersVisibility.All
+            //     : wijmo.grid.HeadersVisibility.Column;
+            //     selector.column = headerOn
+            //     ? wtab01Grid.rowHeaders.columns[0]
+            //     : wtab01Grid.columns[0];
+            // } 
+            // wtab01Grid.showMarquee = true;
+            // wtab01Grid.focus();
+            // wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
+            // wtab01Grid.focus();
 
 
             // tab01검색 데이터 수집
