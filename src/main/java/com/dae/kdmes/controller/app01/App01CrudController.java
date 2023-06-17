@@ -3,12 +3,14 @@ package com.dae.kdmes.controller.app01;
 import com.dae.kdmes.DTO.App01.Index01Dto;
 import com.dae.kdmes.DTO.App01.Index02Dto;
 import com.dae.kdmes.DTO.App01.Index03Dto;
+import com.dae.kdmes.DTO.App01.Index04Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.Service.App01.Index01Service;
 import com.dae.kdmes.Service.App01.Index02Service;
 import com.dae.kdmes.Service.App01.Index03Service;
+import com.dae.kdmes.Service.App01.Index04Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +33,8 @@ public class App01CrudController {
     private final Index02Service service02;
 
     private final Index03Service service03;
+
+    private final Index04Service service04;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
@@ -40,11 +44,15 @@ public class App01CrudController {
 
     Index03Dto index03Dto = new Index03Dto();
 
+    Index04Dto index04Dto = new Index04Dto();
+
     List<PopupDto> popupListDto = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
 
     List<Index02Dto> index02ListDto = new ArrayList<>();
     List<Index03Dto> index03List = new ArrayList<>();
+
+    List<Index04Dto> index04ListDto = new ArrayList<>();
 
     protected Log log =  LogFactory.getLog(this.getClass());
 
@@ -509,5 +517,173 @@ public class App01CrudController {
         }
 
         return index03List;
+    }
+
+    @GetMapping(value="/getPgunList")
+    public Object App01PgunList_index(@RequestParam("searchtxt") String searchtxt,
+                                          Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index04Dto.setCom_cls(searchtxt);
+            index04ListDto = service04.getPgunList(index04Dto);
+
+            model.addAttribute("pgunList",index04ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index04ListDto;
+    }
+
+    @GetMapping(value="/getHcodList")
+    public Object App01HcodList_index(@RequestParam("searchtxt") String searchtxt,
+                                      @RequestParam("com_code") String com_code,
+                                      Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index04Dto.setPgun(searchtxt);
+            index04Dto.setCom_code(com_code);
+            index04ListDto = service04.getHcodList(index04Dto);
+
+            model.addAttribute("hcodList",index04ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index04ListDto;
+    }
+
+    @RequestMapping(value="/hcodsave")
+    public String App01HcodSave_index(  @RequestParam("hcod") String hcod,
+                                        @RequestParam("com_code") String com_code,
+                                           @RequestParam("hnam") String hnam,
+                                           Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Boolean result = false;
+        index04Dto.setCom_code(com_code);
+        index04Dto.setHcod(hcod);
+        index04Dto.setHnam(hnam);
+        String ls_hcod = service04.GetHcodCheck(index04Dto);
+        if(ls_hcod == null || ls_hcod.equals("")){
+            result = service04.InsertHcod(index04Dto);
+        }else{
+            result = service04.UpdateHcod(index04Dto);
+        }
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+    @RequestMapping(value="/hcoddel")
+    public String App01HcodDel_index(  @RequestParam("hcod") String hcod,
+                                       @RequestParam("com_code") String com_code,
+                                          @RequestParam("hnam") String hnam,
+                                          Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Boolean result = false;
+        index04Dto.setCom_code(com_code);
+        index04Dto.setHcod(hcod);
+        index04Dto.setHnam(hnam);
+        index04ListDto = service04.getHcodList(index04Dto);
+        result = service04.DeleteHcod(index04Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+    @GetMapping(value="/getBgroupList")
+    public Object App01BgroupList_index(@RequestParam("searchtxt") String searchtxt,
+                                        @RequestParam("hcod") String hcod,
+                                        @RequestParam("com_code") String com_code,
+                                      Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index04Dto.setPgun(searchtxt);
+            index04Dto.setHcod(hcod);
+            index04Dto.setCom_code(com_code);
+            index04ListDto = service04.getBgroupList(index04Dto);
+
+            model.addAttribute("bgroupList",index04ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index04ListDto;
+    }
+
+    @RequestMapping(value="/bgroupsave")
+    public String App01BgroupSave_index(  @RequestParam("hcod") String hcod,
+                                          @RequestParam("bgroup") String bgroup,
+                                          @RequestParam("com_code") String com_code,
+                                          @RequestParam("bgrpnm") String bgrpnm,
+                                        Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Boolean result = false;
+        index04Dto.setBgroup(bgroup);
+        index04Dto.setHcod(hcod);
+        index04Dto.setBgrpnm(bgrpnm);
+        index04Dto.setCom_code(com_code);
+        String ls_bgroup = service04.GetBgroupCheck(index04Dto);
+        if(ls_bgroup == null || ls_bgroup.equals("")){
+            result = service04.InsertBgroup(index04Dto);
+        }else{
+            result = service04.UpdateBgroup(index04Dto);
+        }
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+    @RequestMapping(value="/bgroupdel")
+    public String App01BgroupDel_index(  @RequestParam("hcod") String hcod,
+                                       @RequestParam("bgroup") String bgroup,
+                                       @RequestParam("bgrpnm") String bgrpnm,
+                                       @RequestParam("com_code") String com_code,
+                                       Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Boolean result = false;
+        index04Dto.setBgroup(bgroup);
+        index04Dto.setHcod(hcod);
+        index04Dto.setBgrpnm(bgrpnm);
+        index04Dto.setCom_code(com_code);
+        index04ListDto = service04.getBgroupList(index04Dto);
+        result = service04.DeleteBgroup(index04Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
     }
 }
