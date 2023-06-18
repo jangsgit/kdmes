@@ -826,7 +826,7 @@
             cols.binding = 'wrmc';
             cols.header = '설비코드';
             cols.align = "center";
-            cols.width = 250;
+            cols.width = 300;
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.wrmc}</b>',
                 click: (e, ctx) => {
@@ -839,21 +839,21 @@
             cols.binding = 'wrmcnm';
             cols.header = '설비명';
             cols.align = "center";
-            cols.width = 250;  
+            cols.width = 300;  
             wtab02Grid.columns.push(cols);
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'wperid';
             cols.header = '담당자';
             cols.align = "center";
-            cols.width = 250;  
+            cols.width = 300;  
             wtab02Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'wpernm';
             cols.header = '담당자명';
             cols.align = "center";
-            cols.width = 250;  
+            cols.width = 300;  
             wtab02Grid.columns.push(cols);
         }
 

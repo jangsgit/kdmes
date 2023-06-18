@@ -27,19 +27,6 @@
                 <div class="left">
                     품목별그룹등록
                 </div>
-                <!-- <ul class="right">
-                    <li>
-                        <button class="btn btn-secondary me-1 mb-1"  id="retrieveBtn" type="button"><i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
-                        </button> 
-                    </li>
-                    <li>
-                        <button class="btn btn-warning me-1 mb-1" type="button" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span>삭제 </button>
-                    </li>
-                    <li>
-                        <button class="btn btn-primary me-1 mb-1" type="button" onclick="save_btn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span>저장 </button>
-                    </li> 
-                </ul> -->
-
             </div> 
             <div class="section status"> 
                 <div class="sec_con" style="width: 100%;">
@@ -54,8 +41,8 @@
                                       <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">분류상세등록</a>
                                     </li> -->
                                     <input type="hidden" id="tabvalue" value="A">
-                                  </ul>
-                                  <div class="tab-content">
+                                </ul>
+                                <div class="tab-content">
                                     <div class="tab-pane fade show active" id="step01">  
                                         <div class="row gx-3" style="  margin: 10px 10px 10px;"> 
                                             <!-- <div class="col-6 col-sm-3">
@@ -65,172 +52,115 @@
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-borderless" style="height: 100px;" >
-                                              <tbody>
-                                                <tr> 
-                                                    <td class="align-top" style="width: 20%;"> 
-                                                        <div class="container-fluid">   
-                                                            <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px;  width:250px; margin:0 auto; "></div>  
-                                                        </div>  
-                                                    </td>
-                                                    <td class="align-top"  style="width: 50%;">
-                                                        <div class="row gx-3">
-                                                            <div class="col-2 col-sm-2">
-                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">분류코드</span> 
-                                                                <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off"  placeholder="1자리" disabled> 
+                                                <tbody>
+                                                    <tr> 
+                                                        <td class="align-top" style="width: 20%;"> 
+                                                            <div class="container-fluid">   
+                                                                <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px;  width:250px; margin:0 auto; "></div>  
+                                                            </div>  
+                                                        </td>
+                                                        <td class="align-top" style = "text-align: left; width: 40%;">
+                                                            <div class="row gx-3">
+                                                                <div class="col-3 col-sm-4">
+                                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">분류코드</span> 
+                                                                    <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off" disabled> 
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-2 col-sm-2">
-                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">분류명칭</span> 
-                                                                <input class="form-control form-control-sm" id="com_work" type="text"    autocomplete="off" disabled> 
+                                                            <div class="col-3 col-sm-4">
+                                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">분류명칭</span> 
+                                                                    <input class="form-control form-control-sm" id="com_work" type="text"    autocomplete="off" disabled> 
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row gx-3" style="  margin: 5px 5px 5px;">
-                                                            <div class="col-2 col-sm-2">
+                                                            <div class="row gx-3">
+                                                                <div class="col-3 col-sm-4">
+                                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류코드</span> 
+                                                                        <input class="form-control form-control-sm" id="hcod" type="text"    autocomplete="off"> 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 col-sm-4">
+                                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
+                                                                        <input class="form-control form-control-sm" id="hnam" type="text"    autocomplete="off"> 
+                                                                    </div>                                                        
+                                                                </div>                                                      
+                                                                <div class="col-auto"  style="margin: 3px 3px 3px;">  
+                                                                    <input class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="hidden" onclick="retrieve_rtn()">
+                                                                    </input>
+                                                                    <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn()">저장
+                                                                    </button>
+                                                                    <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn()">삭제
+                                                                    </button>
+                                                                </div>
+                                                            </div>    
+                                                            <div class="container-fluid"  >                                                         
+                                                                <div id="wtab02Grid_div"  style="overflow:scroll; width:400px; height:485px; margin: 1px 1px 1px;"></div> 
+                                                            </div>  
+                                                        </td>                                                    
+                                                        <td class="align-top"style = "text-align: left; width: 40%;">
+                                                            <div class="row gx-3">
+                                                                <div class="col-3 col-sm-4">
                                                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류코드</span> 
-                                                                    <input class="form-control form-control-sm" id="hcod" type="text"    autocomplete="off"> 
+                                                                    <input class="form-control form-control-sm" id="hcod1" type="text"    autocomplete="off" disabled> 
                                                                 </div>
                                                             </div>
-                                                            <div class="col-2 col-sm-2">
-                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
-                                                                <input class="form-control form-control-sm" id="hnam" type="text"    autocomplete="off"> 
-                                                            </div>                                                        
-                                                        </div>                                                      
-                                                        <div class="col-auto"  style="margin: 5px 5px 5px;">  
-                                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
-                                                            </button>
-                                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn()">저장
-                                                            </button>
-                                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn()">삭제
-                                                            </button>
-                                                        </div>                                                                                                     
-                                                        <br><br><br>
-                                                        <div class="container-fluid"  >                                                         
-                                                            <div id="wtab02Grid_div"  style="overflow:scroll; width:350px; height:485px; margin: 5px 5px 5px;"></div> 
-                                                        </div>  
-                                                    </td>                                                    
-                                                    <td class="align-top"  style="width: 50%;">
-                                                        <div class="row gx-3">
-                                                            <div class="col-2 col-sm-2">
-                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류코드</span> 
-                                                                <input class="form-control form-control-sm" id="hcod1" type="text"    autocomplete="off"  placeholder="1자리" disabled> 
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2 col-sm-2">
-                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
-                                                                <input class="form-control form-control-sm" id="hnam1" type="text"    autocomplete="off" disabled> 
-                                                            </div>
-                                                        </div>
-                                                        <div class="row gx-3" style="  margin: 5px 5px 5px;">
-                                                            <div class="col-2 col-sm-2">
-                                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">중분류코드</span> 
-                                                                    <input class="form-control form-control-sm" id="bgroup" type="text"    autocomplete="off"> 
+                                                            <div class="col-3 col-sm-4">
+                                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
+                                                                    <input class="form-control form-control-sm" id="hnam1" type="text"    autocomplete="off" disabled> 
                                                                 </div>
                                                             </div>
-                                                            <div class="col-2 col-sm-2">
-                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">중분류명칭</span> 
-                                                                <input class="form-control form-control-sm" id="bgrpnm" type="text"    autocomplete="off"> 
-                                                            </div>                                                        
-                                                        </div>                                                      
-                                                        <div class="col-auto"  style="margin: 5px 5px 5px;">  
-                                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn1()">조회
-                                                            </button>
-                                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn1()">저장
-                                                            </button>
-                                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn1()">삭제
-                                                            </button>
-                                                        </div>                                                                                                        
-                                                        <br><br><br>
-                                                        <div class="container-fluid"  >                                                         
-                                                            <div id="wtab03Grid_div"  style="overflow:scroll; width:350px; height:485px;"></div> 
-                                                        </div>  
-                                                    </td>
-                                                </tr>
-                                              </tbody>
+                                                            <div class="row gx-3">
+                                                                <div class="col-3 col-sm-4">
+                                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">중분류코드</span> 
+                                                                        <input class="form-control form-control-sm" id="bgroup" type="text"    autocomplete="off"> 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 col-sm-4">
+                                                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">중분류명칭</span> 
+                                                                        <input class="form-control form-control-sm" id="bgrpnm" type="text"    autocomplete="off"> 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-auto"  style="margin: 3px 3px 3px;">
+                                                                    <input class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn1"  type="hidden" onclick="retrieve_rtn1()">
+                                                                    </input>
+                                                                    <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn1()">저장
+                                                                    </button>
+                                                                    <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn1()">삭제
+                                                                    </button>
+                                                                </div>                                                                
+                                                                </div>
+                                                            </div>         
+                                                            <div class="container-fluid"  >                                                         
+                                                                <div id="wtab03Grid_div"  style="overflow:scroll; width:400px; height:485px; margin: 1px 1px 1px;"></div> 
+                                                            </div>  
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
-                                        </div>  
-                                        <!-- <div class="container-fluid">
-                                            <div id="wtab02Grid_div" ></div>
-                                            <div id="tab02Pager"></div>
-                                          </div> -->
-                                    </div>
-                                    <!-- <div class="tab-pane fade" id="step03">
-                                        <div class="container-fluid">
-                                            <div id="wtab03Grid_div" ></div>
-                                            <div id="tab03Pager"></div>
-                                        </div>
-                                    </div> -->
-                            </div>
-                        </div>    
+                                        </div>                                         
+                                    </div>                               
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!--  모달 처리 -->
-    <input class="form-control form-control-sm"  type="hidden" id="innamebtn" data-bs-toggle="modal" data-bs-target="#cifmodal"  /> 
-    <!--------------------------------------------------------------------------------------->   
-    <div class="modal fade" id="cifmodal" data-bs-keyboard="false"
-    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-    aria-hidden="true">
-        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-            style="max-width: 600px">
-            <div class="modal-content border-0">
-                <div class="modal-body p-0" > 
-                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                            
-                        <div class="search">
-                            <div class="input_wrap">  
-                                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){CifSearchList_rtn('M')}"
-                                placeholder="담당자명 "     />                                      
-                            </div>
-
-                            <button id="winnameBtn">
-                                <img th:src="@{/assets/images/i_search.png}" alt=""> 
-                            </button>
-                        </div>                             
-                    </div>   
-                    <div class="container-fluid"> 
-                        <div id="winnameGrid_div" ></div>
-                        <div id="thePager03"></div>
-                    </div>   
-                </div>  
-
-                <div class="modal-footer">
-                    <div class="row g-1">
-                        <div class="col-auto">
-                            <button class="badge-soft-primary dropdown-item rounded-1"
-                                type="button"  id="winnamemodal_btn" data-bs-dismiss="modal">Close</button>
-                        </div> 
-                    </div>
-                </div>   
-
-            </div>
-        </div> 
-    </div>  
-
- 
 <!--------------------------------------------------------------------------------------->     
 
-
-
-
-
-
-
-
     <script type="text/javascript" th:inline="javascript">
-         var view_p01tab01page;
-         var view_p01tab02page;
-         var view_p01tab03page; 
-         var wtab01Grid;
-         var wtab02Grid;
-         var wtab03Grid; 
-         var typeMenu;  
-         var treemap;
-         let barchart;
-         let ani;
+        var view_p01tab01page;
+        var view_p01tab02page;
+        var view_p01tab03page; 
+        var wtab01Grid;
+        var wtab02Grid;
+        var wtab03Grid; 
+        var typeMenu;  
+        var treemap;
+        let barchart;
+        let ani;
         var wseries_data = [0]; 
 
-         window.onload = function() {  
+        window.onload = function() {  
             localStorage.setItem("setpage", "app03p001");
             //tab02 차트그리기
             // Tab02Chartinit()
@@ -262,8 +192,7 @@
                                 wactnmChk(ctx.item.com_code, ctx.item.com_work);
                             }
                         }),
-                    width: 100},  
-                    // { binding: 'psize', header: '규격', width: '*', format: '*' }  
+                    width: 100},   
                 ], 
                 itemsSource: view_p01tab01page
             });  
@@ -289,7 +218,6 @@
             wtab01Grid.focus();
             wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
             wtab01Grid.focus();
-
 
             // tab01검색 데이터 수집
             function getData_tab01(){    
@@ -318,8 +246,7 @@
                         });
                         cnt++;
                     }     
-                }
-                console.log(wactnm_data);   
+                }  
                 return wactnm_data;                                          
             }  
 
@@ -334,19 +261,17 @@
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
                 columns: [       
-                    { binding: 'hcod', header: '대분류코드', align: "center", width: '1*' }, 
+                    { binding: 'hcod', header: '대분류코드', align: "center", width: 100 }, 
                     { binding: 'hnam', header: '대분류명칭', align: "center", 
-                        cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                            text: '<b>${item.hnam}</b>',
-                            click: (e, ctx) => {
-                                wactnmChk2(ctx.item.hcod, ctx.item.hnam);
-                            }
-                        }),
-                    width: 100},  
-                ], 
-                    
-                itemsSource: view_p01tab02page
-                
+                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                text: '<b>${item.hnam}</b>',
+                                click: (e, ctx) => {
+                                    wactnmChk2(ctx.item.hcod, ctx.item.hnam);
+                                }
+                    }),   
+                    width: '1*'},  
+                ],      
+                itemsSource: view_p01tab02page               
             });   
             // 첫번째 항목(정렬/그룹화한 후)을 선택
             wtab02Grid.select(new wijmo.grid.CellRange(0, 0), true); 
@@ -377,12 +302,10 @@
                 allowSorting: 'MultiColumn',
                 alternatingRowStep: 0,
                 columns: [       
-                    { binding: 'bgroup', header: '중분류코드', align: "center", width: '1*' }, 
+                    { binding: 'bgroup', header: '중분류코드', align: "center", width: 100 }, 
                     { binding: 'bgrpnm', header: '중분류명칭', align: "center", width: '1*' }, 
-                ], 
-                    
-                itemsSource: view_p01tab03page
-                
+                ],        
+                itemsSource: view_p01tab03page   
             });   
             // 첫번째 항목(정렬/그룹화한 후)을 선택
             wtab03Grid.select(new wijmo.grid.CellRange(0, 0), true); 
@@ -415,8 +338,7 @@
             
             document.getElementById('com_code').value = arg1;
             document.getElementById('com_work').value = arg2;
-             console.log(arg1);
-            // console.log(ls_todate)
+
             $.ajax({
                 url: '/app01m/getHcodList',  
                 type:"POST",
@@ -437,20 +359,22 @@
 
         }
               
-        function wactnmChk2(arg1){   
+        function wactnmChk2(arg1,arg2,arg3){   
             var ls_tab = document.getElementById('tabvalue').value;
- 
+            var com_code = document.getElementById('com_code').value;
+            
+            document.getElementById('hcod').value = arg1; 
+            document.getElementById('hnam').value = arg2;
             document.getElementById('hcod1').value = arg1; 
-            document.getElementById('hnam1').value = arg2; 
-            console.log(arg1);
-            // console.log(ls_todate)
+            document.getElementById('hnam1').value = arg2;
+
             $.ajax({
                 url: '/app01m/getBgroupList',  
                 type:"POST",
                 data: { 
                     "searchtxt" : '%',
                     "hcod" :arg1, 
-                    "com_code" :arg1, 
+                    "com_code" :com_code, 
                 }, 
                 async:false,
                 success:function(data){  
@@ -473,7 +397,7 @@
             var ls_hnam = document.getElementById('hnam').value;
         
             if (!confirm("저장하시겠습니까?")) {
-                    return ; 
+                return ; 
             }   
             
             switch(ls_tab){
@@ -558,11 +482,10 @@
                         success:function(data){   
                             if(data == "success"){
                                 alert("저장되었습니다.") 
-                                searchList_rtn(ls_tab);  
+                                searchList_rtn1(ls_tab);  
                                 clear_rtn(ls_tab);        
                             }else{                       
                                 alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
-                                // listUp();
                                 console.log(data);  
                             }
                         },error:function(e){
@@ -575,7 +498,6 @@
                 default:    
                     break;                
             } 
-
         } 
 
         function delete_btn(arg){
@@ -597,7 +519,6 @@
                     document.getElementById("hcod").focus(); 
                     return ;               
                 }    
-
                     $.ajax({
                         url: '/app01m/hcoddel',  
                         type:"POST",
@@ -663,7 +584,7 @@
                         success:function(data){   
                             if(data == "success"){
                                 alert("삭제되었습니다.") 
-                                searchList_rtn(ls_tab);  
+                                searchList_rtn1(ls_tab);  
                                 clear_rtn(ls_tab);             
                             }else{                       
                                 alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
@@ -682,6 +603,7 @@
         } 
 
         function clear_rtn(arg){
+            var ls_tab = document.getElementById('tabvalue').value;
             switch(arg){
                 case 'A': 
                     document.getElementById('com_code').value = "";
@@ -691,11 +613,7 @@
                     document.getElementById('bgroup').value = "";
                     document.getElementById('bgrpnm').value = "";
                     break;
-                case 'B': 
-                    break;
-                case 'C':
-                   
-                    break;                
+              
                 default:    
                     break;                
             } 
@@ -708,79 +626,69 @@
             
             var ls_tab = document.getElementById('tabvalue').value;   
             searchList_rtn(ls_tab);
-        })   
-
-        function searchList_rtn(arg1){ 
-
-            var ls_code = document.getElementById('com_code').value;
-            var ls_codenm = document.getElementById('com_work').value;
-            switch(arg1){
-                case 'A':
-                    $.ajax({
-                        url: '/app01m/getWflagList',  
-                        type:"POST",
-                        data: { 
-                            "searchtxt"      : "%"  
-                        }, 
-                        async:false,
-                        success:function(data){   
-                            tabA_grid(data);
-                        },error:function(e){
-                            console.log("error");
-                            // alert(data.code);
-                            // alert(data.message);
-                        }
-                    }).done(function(fragment){           
-
-                    })  
-                    break;
-                case 'B': 
-                    $.ajax({
-                        url: '/app01m/comcodedetaillist',  
-                        type:"POST",
-                        data: { 
-                            "searchtxt" : '%',
-                            "com_code" :ls_code, 
-                        }, 
-                        async:false,
-                        success:function(data){  
-                            console.log(data);
-                            tabC_grid(data);
-                        },error:function(e){
-                            console.log("error");                            
-                        }
-                    }).done(function(fragment){           
-
-                    })  
-                    break;
-                case 'C':
-                    $.ajax({
-                        url: '/app03/p001tab03',  
-                        type:"POST",
-                        data: { 
-                            "frdate"      : arg2,  
-                            "todate"      : arg3 ,  
-                            "actcdz"      : arg4 ,  
-                            "actcontcdz"  : arg5  
-                        }, 
-                        async:false,
-                        success:function(data){   
-                            tabC_grid(data);
-                        },error:function(e){
-                            console.log("error");
-                            // alert(data.code);
-                            // alert(data.message);
-                        }
-                    }).done(function(fragment){           
-
-                    })  
-                    break;                
-                default:    
-                    break;                
-            }
+        }) 
         
+        document.getElementById("retrieveBtn1").addEventListener("click",function(){ 
+            
+            var ls_tab = document.getElementById('tabvalue').value;   
+            searchList_rtn1(ls_tab);
+        })
 
-        }        
+        function searchList_rtn(arg1,arg2){ 
+
+            var ls_tab = document.getElementById('tabvalue').value;
+            
+            document.getElementById('com_code').value = arg1;
+            document.getElementById('com_work').value = arg2;
+             console.log(arg1);
+            // console.log(ls_todate)
+            $.ajax({
+                url: '/app01m/getHcodList',  
+                type:"POST",
+                data: { 
+                    "searchtxt" : '%',
+                    "com_code" :arg1, 
+                }, 
+                async:false,
+                success:function(data){  
+                     console.log(data);
+                    tabB_grid(data);
+                },error:function(e){
+                    console.log("error");                            
+                }
+            }).done(function(fragment){           
+
+            })        
+        }
+
+        function searchList_rtn1(arg1,arg2){ 
+            var ls_tab = document.getElementById('tabvalue').value;
+            
+            document.getElementById('hcod').value = arg1; 
+            document.getElementById('hnam').value = arg2;
+            document.getElementById('hcod1').value = arg1; 
+            document.getElementById('hnam1').value = arg2; 
+            console.log(arg1);
+            $.ajax({
+                url: '/app01m/getBgroupList',  
+                type:"POST",
+                data: { 
+                    "searchtxt" : '%',
+                    "hcod" :arg1, 
+                    "com_code" :arg1, 
+                }, 
+                async:false,
+                success:function(data){  
+                     console.log(data);
+                    tabC_grid(data);
+                },error:function(e){
+                    console.log("error");                            
+                }
+            }).done(function(fragment){           
+
+            })        
+        }
+
         function tabA_grid(data){
             var wtab01Dto  = data;    
             var wtab01_data = [];
@@ -844,24 +752,24 @@
             cols.binding = 'hcod';
             cols.header = '대분류코드';
             cols.align = "center";
-            cols.width = 150;
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.hcod}</b>',
-                click: (e, ctx) => {
-                    wactnmChk1(ctx.item.hcod, ctx.item.hnam);
-                }
-            });   
+            cols.width = 100;             
             wtab02Grid.columns.push(cols);   
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'hnam';
             cols.header = '대분류명칭';
             cols.align = "center";
-            cols.width = 150;  
+            cols.width = "1*";
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.hnam}</b>',
+                click: (e, ctx) => {
+                    wactnmChk2(ctx.item.hcod, ctx.item.hnam);
+                }
+            });  
             wtab02Grid.columns.push(cols);
         }
 
-        function tabc_grid(data){
+        function tabC_grid(data){
             var wtab03Dto  = data;    
             var wtab03_data = [];
             var cnt = 1;
@@ -884,20 +792,20 @@
             cols.binding = 'bgroup';
             cols.header = '중분류코드';
             cols.align = "center";
-            cols.width = 150;
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.bgroup}</b>',
-                click: (e, ctx) => {
-                    wactnmChk2(ctx.item.bgroup, ctx.item.bgrpnm);
-                }
-            });   
+            cols.width = 100;
             wtab03Grid.columns.push(cols);   
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'bgrpnm';
             cols.header = '중분류명칭';
             cols.align = "center";
-            cols.width = 150;  
+            cols.width = "1*";
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.bgrpnm}</b>',
+                click: (e, ctx) => {
+                    wactnmChk3(ctx.item.bgroup, ctx.item.bgrpnm);
+                }
+            });     
             wtab03Grid.columns.push(cols);
         }
 
@@ -906,6 +814,10 @@
             document.getElementById('hnam').value = arg2;
             document.getElementById('hcod1').value = arg1; 
             document.getElementById('hnam1').value = arg2;      
+        }
+        function wactnmChk3(arg1,arg2){   
+            document.getElementById('bgroup').value = arg1; 
+            document.getElementById('bgrpnm').value = arg2;      
         }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
