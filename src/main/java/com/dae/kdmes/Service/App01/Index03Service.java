@@ -5,6 +5,7 @@ import com.dae.kdmes.Mapper.App01.Index03Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.dae.kdmes.DTO.Popup.PopupDto;
 
 import java.util.List;
 
@@ -43,6 +44,13 @@ public class Index03Service {
     }
     public Index03Dto GetJpumOrderJkey(Index03Dto parm){
         return  appMapper.GetJpumOrderJkey(parm);
+    }
+
+    public List<PopupDto> getj1_keyList(PopupDto parm){
+        return  appMapper.getj1_keyList(parm);
+    }
+    public List<PopupDto> getj2_keyList(PopupDto parm){
+        return  appMapper.getj2_keyList(parm);
     }
 
 

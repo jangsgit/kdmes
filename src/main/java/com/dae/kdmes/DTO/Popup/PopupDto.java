@@ -12,4 +12,8 @@ public class PopupDto {
     private String inname;
     private String cifcode;
     private String cifcodename;
+    private String j1_key;
+    private String j1_name;
+    private String j2_key;
+    private String j2_name;
 }

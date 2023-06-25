@@ -1,6 +1,7 @@
 package com.dae.kdmes.Mapper.App01;
 
 import com.dae.kdmes.DTO.App01.Index03Dto;
+import com.dae.kdmes.DTO.Popup.PopupDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,10 @@ public interface Index03Mapper {
     public List<Index03Dto> GetJpumModelList(Index03Dto parm) ;
     public List<Index03Dto> GetJpumCustJaegoList(Index03Dto parm) ;
     public Index03Dto GetJpumOrderJkey(Index03Dto parm) ;
+
+    public List<PopupDto> getj1_keyList(PopupDto parm) ;
+
+    public List<PopupDto> getj2_keyList(PopupDto parm) ;
 
 
     public Boolean InsertJpum(Index03Dto  parm) ;

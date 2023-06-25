@@ -383,6 +383,7 @@ public class App01CrudController {
             }
             index03Dto.setJpum(searchtxt);
             index03List = service03.GetJpumList(index03Dto);
+
             model.addAttribute("index03List",index03List);
 
         } catch (Exception ex) {
@@ -402,44 +403,53 @@ public class App01CrudController {
                     case "jkey":
                         index03Dto.setJkey(values.toString());
                         break;
-                    case "jpbgubn":
-                        index03Dto.setJpb_gubn(values.toString());
+                    case "j_dae":
+                        index03Dto.setJ_dae(values.toString());
                         break;
-                    case "jgongcode":
-                        index03Dto.setJgong_code(values.toString());
-                        break;
-                    case "jdancode":
-                        index03Dto.setJdan_code(values.toString());
-                        break;
-                    case "jmodelcode":
-                        index03Dto.setJmodel_code(values.toString());
-                        break;
-                    case "jcolorcode":
-                        index03Dto.setJcolor_code(values.toString());
-                        break;
-                    case "jcustomercode":
-                        index03Dto.setJcustomer_code(values.toString());
-                        break;
-                    case "jbonsacode":
-                        index03Dto.setJbonsa_code(values.toString());
-                        break;
-                    case "jsayonggubn":
-                        index03Dto.setJsayong_gubn(values.toString());
-                        break;
-                    case "jpum":
-                        index03Dto.setJpum(values.toString());
+                    case "j_jung":
+                        index03Dto.setJ_jung(values.toString());
                         break;
                     case "jgugek":
                         index03Dto.setJgugek(values.toString());
                         break;
-                    case "jsize":
-                        index03Dto.setJsize(values.toString());
+                    case "jpum":
+                        index03Dto.setJpum(values.toString());
                         break;
-                    case "jchgoga0":
-                        index03Dto.setJchgoga0(values.toString());
+                    case "jgugek2":
+                        index03Dto.setJgugek2(values.toString());
+                        break;
+                    case "jpumcode":
+                        index03Dto.setJpumcode(values.toString());
+                        break;
+                    case "jsayang":
+                        index03Dto.setJsayang(values.toString());
+                        break;
+                    case "j_net":
+                        index03Dto.setJ_net(values.toString());
+                        break;
+                    case "jchajong":
+                        index03Dto.setJchajong(values.toString());
+                        break;
+                    case "j_sr":
+                        index03Dto.setJ_sr(values.toString());
+                        break;
+                    case "j_ct":
+                        index03Dto.setJ_ct(values.toString());
+                        break;
+                    case "j_cavity":
+                        index03Dto.setJ_cavity(values.toString());
+                        break;
+                    case "jdanwy":
+                        index03Dto.setJdanwy(values.toString());
                         break;
                     case "jbigo":
                         index03Dto.setJbigo(values.toString());
+                        break;
+                    case "w_b_gubn":
+                        index03Dto.setW_b_gubn(values.toString());
+                        break;
+                    case "jchgoga0":
+                        index03Dto.setJchgoga0(values.toString());
                         break;
                     default:
                         break;
@@ -493,7 +503,7 @@ public class App01CrudController {
 
     //간편주문 리스트 01 등록
     @GetMapping(value="/index03/ganlist01")
-    public Object App03GanList01_index(@RequestParam("jpbgubn") String jpbgubn,
+    public Object App03GanList01_index(@RequestParam("jpbgubn") String jkey,
                                        @RequestParam("flag") String flag,
                                        Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("주문등록");
@@ -504,10 +514,10 @@ public class App01CrudController {
         model.addAttribute("userformDto",userformDto);
 
         try {
-            if(jpbgubn == null || jpbgubn.equals("")){
-                jpbgubn = "%";
+            if(jkey == null || jkey.equals("")){
+                jkey = "%";
             }
-            index03Dto.setJpb_gubn(jpbgubn);
+            index03Dto.setJkey(jkey);
             index03List = service03.GetGanListBonsa01(index03Dto);
             model.addAttribute("index03GanList01",index03List);
 

@@ -7,21 +7,24 @@ import lombok.Setter;
 @Setter
 public class Index03Dto {
     private String jkey;
-    private String jpb_gubn;
-    private String jgong_code;
-    private String jdan_code;
-    private String jmodel_code;
-    private String jcolor_code;
-    private String jcustomer_code;
-    private String jbonsa_code;
-    private String jsayong_gubn;
-    private String jpum;
+    private String j_dae;
+    private String j_jung;
     private String jgugek;
-    private String jsize;
-    private String jchgoga0;
+    private String jpum;
+    private String jgugek2;
+    private String jpumcode;
+    private String jsayang;
+    private String j_net;
+    private String jchajong;
+    private String j_sr;
+    private String j_ct;
+    private String j_cavity;
+    private String jdanwy;
     private String jbigo;
-    private String ascode;
-    private String jqty;
+    private String w_b_gubn;
+    private String jchgoga0;
     private String frdate;
     private String todate;
+    private String j1_key;
+    private String j1_name;
 }

@@ -5,6 +5,7 @@ import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.DTO.App01.Index01Dto;
 import com.dae.kdmes.DTO.App01.Index02Dto;
+import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App01.Index04Dto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.dae.kdmes.Service.App01.Index01Service;
 import com.dae.kdmes.Service.App01.Index02Service;
+import com.dae.kdmes.Service.App01.Index03Service;
 import com.dae.kdmes.Service.App01.Index04Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,6 +35,8 @@ public class App01Controller {
 
     private final Index02Service service02;
 
+    private final Index03Service service03;
+
     private final Index04Service service04;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
@@ -41,12 +45,17 @@ public class App01Controller {
 
     Index02Dto index02Dto = new Index02Dto();
 
+    Index03Dto index03Dto = new Index03Dto();
+
     Index04Dto index04Dto = new Index04Dto();
 
     List<PopupDto> popupListDto = new ArrayList<>();
+
+    List<PopupDto> popupListDto1 = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
 
     List<Index02Dto> index02ListDto = new ArrayList<>();
+    List<Index03Dto> index03List = new ArrayList<>();
 
     List<Index04Dto> index04ListDto = new ArrayList<>();
 
@@ -98,6 +107,34 @@ public class App01Controller {
         return "App01/index02";
     }
 
+    //제품등록
+    @GetMapping(value="/index05")
+    public String App03_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("제품등록");
+        CommDto.setMenuUrl("기준정보>제품정보");
+        CommDto.setMenuCode("index05");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            index03Dto.setJpum("%");
+            index03List = service03.GetJpumList(index03Dto);
+            popupListDto = service03.getj1_keyList(popupDto);
+            popupListDto1 = service03.getj2_keyList(popupDto);
+
+            model.addAttribute("j1_keyList",popupListDto);
+            model.addAttribute("j2_keyList",popupListDto1);
+            model.addAttribute("index03List",index03List);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App03001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index05";
+    }
     @GetMapping(value="/index04")
     public String App01_index04(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("품목그룹등록");
