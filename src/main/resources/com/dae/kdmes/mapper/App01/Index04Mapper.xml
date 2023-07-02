@@ -40,7 +40,7 @@
     <update id="UpdateHcod" parameterType="com.dae.kdmes.DTO.App01.Index04Dto">
         <![CDATA[
         UPDATE  TB_CA503 SET hcod = #{hcod} , hnam = #{hnam}
-        where pgun  = #{com_code}
+        where pgun  = #{com_code} and hcod = #{hcod}
         ]]>
     </update>
 
@@ -55,7 +55,7 @@
         select   hcod , hnam ,pgun
         from TB_CA503 WITH (NOLOCK)
         WHERE isnull(hcod,'')   = #{hcod}
-        and isnull(hnam,'')   = #{hnam}
+        and isnull(pgun,'')   = #{com_code}
         ORDER BY hcod
         ]]>
     </select>
@@ -84,7 +84,7 @@
     <update id="UpdateBgroup" parameterType="com.dae.kdmes.DTO.App01.Index04Dto">
         <![CDATA[
         UPDATE  TB_CA503_01 SET bgroup = #{bgroup} , bgrpnm = #{bgrpnm}
-        where pgun  = #{com_code} and hcod = #{hcod}
+        where pgun  = #{com_code} and hcod = #{hcod} and bgroup = #{bgroup}
         ]]>
     </update>
 
@@ -99,7 +99,7 @@
         select   hcod ,bgroup, bgrpnm
         from TB_CA503_01 WITH (NOLOCK)
         WHERE isnull(bgroup,'')   = #{bgroup}
-        and isnull(bgrpnm,'')   = #{bgrpnm}
+        and isnull(hcod,'')   = #{hcod}
         ORDER BY bgroup
         ]]>
     </select>

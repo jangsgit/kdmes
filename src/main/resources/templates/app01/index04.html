@@ -425,7 +425,7 @@
                             if(data == "success"){
                                 alert("저장되었습니다.") 
                                 searchList_rtn(ls_tab);  
-                                //clear_rtn(ls_tab);        
+                                clear_rtn1(ls_tab);        
                             }else{                       
                                 alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                                 // listUp();
@@ -602,14 +602,27 @@
             } 
         } 
 
+        function clear_rtn1(arg){
+            var ls_tab = document.getElementById('tabvalue').value;
+            switch(arg){
+                case 'A': 
+                    document.getElementById('hcod').value = "";
+                    document.getElementById('hnam').value = "";
+                    document.getElementById('hcod1').value = "";
+                    document.getElementById('hnam1').value = "";
+                    document.getElementById('bgroup').value = "";
+                    document.getElementById('bgrpnm').value = "";
+                    break;
+              
+                default:    
+                    break;                
+            } 
+
+        }
         function clear_rtn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
             switch(arg){
                 case 'A': 
-                    document.getElementById('com_code').value = "";
-                    document.getElementById('com_work').value = "";
-                    document.getElementById('hcod').value = "";
-                    document.getElementById('hnam').value = "";
                     document.getElementById('bgroup').value = "";
                     document.getElementById('bgrpnm').value = "";
                     break;
@@ -634,20 +647,18 @@
             searchList_rtn1(ls_tab);
         })
 
-        function searchList_rtn(arg1,arg2){ 
+        function searchList_rtn(arg1){ 
 
             var ls_tab = document.getElementById('tabvalue').value;
-            
-            document.getElementById('com_code').value = arg1;
-            document.getElementById('com_work').value = arg2;
-             console.log(arg1);
+            var ls_code = document.getElementById('com_code').value;
+
             // console.log(ls_todate)
             $.ajax({
                 url: '/app01m/getHcodList',  
                 type:"POST",
                 data: { 
                     "searchtxt" : '%',
-                    "com_code" :arg1, 
+                    "com_code" :ls_code, 
                 }, 
                 async:false,
                 success:function(data){  
@@ -661,21 +672,20 @@
             })        
         }
 
-        function searchList_rtn1(arg1,arg2){ 
+        function searchList_rtn1(arg1){ 
             var ls_tab = document.getElementById('tabvalue').value;
+            var ls_code = document.getElementById('com_code').value;
+            var hcod = document.getElementById('hcod').value;
+            var hcod1 = document.getElementById('hcod1').value;
             
-            document.getElementById('hcod').value = arg1; 
-            document.getElementById('hnam').value = arg2;
-            document.getElementById('hcod1').value = arg1; 
-            document.getElementById('hnam1').value = arg2; 
             console.log(arg1);
             $.ajax({
                 url: '/app01m/getBgroupList',  
                 type:"POST",
                 data: { 
                     "searchtxt" : '%',
-                    "hcod" :arg1, 
-                    "com_code" :arg1, 
+                    "hcod" :hcod, 
+                    "com_code" :ls_code, 
                 }, 
                 async:false,
                 success:function(data){  

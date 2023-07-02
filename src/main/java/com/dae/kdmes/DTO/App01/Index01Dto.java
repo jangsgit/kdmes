@@ -13,5 +13,7 @@ public class Index01Dto {
     private String com_rem2;
     private Integer com_order;
     private String com_work;
+    private String insano;
+    private String inname;
 
 }

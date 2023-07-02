@@ -146,6 +146,29 @@ public class App01CrudController {
         return index01ListDto;
     }
 
+    //담당자현황
+    @GetMapping(value="/wperidlist")
+    public Object App01WperidList_index(@RequestParam("searchtxt") String searchtxt,
+                                          Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index01Dto.setCom_cls(searchtxt);
+            index01ListDto = service01.getWperidlist(index01Dto);
+
+            model.addAttribute("wperidList",index01ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index01ListDto;
+    }
+
     @RequestMapping(value="/comcodedetailsave")
     public String App01ComCodeDetailSave_index(  @RequestParam("com_cls") String com_cls,
                                            @RequestParam("com_cnam") String com_cnam,
@@ -450,6 +473,12 @@ public class App01CrudController {
                         break;
                     case "jchgoga0":
                         index03Dto.setJchgoga0(values.toString());
+                        break;
+                    case "j_misayong":
+                        index03Dto.setJ_misayong(values.toString());
+                        break;
+                    case "j_sang":
+                        index03Dto.setJ_sang(values.toString());
                         break;
                     default:
                         break;

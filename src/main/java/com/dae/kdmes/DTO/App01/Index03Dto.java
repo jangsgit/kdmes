@@ -27,4 +27,6 @@ public class Index03Dto {
     private String todate;
     private String j1_key;
     private String j1_name;
+    private String j_misayong;
+    private String j_sang;
 }

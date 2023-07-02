@@ -42,7 +42,7 @@
              <!-- contents body 시작--> 
              <!-- form 또는 action 으로 받아오기  -->
              <div class="section regist">
-                <div class="sec_con" style="width: 55%;">
+                <div class="sec_con" style="width: 55%; ">
                     <div class="box_wrap">
                         <div class="box_input" >
                             <div class="date_wrap">
@@ -55,7 +55,7 @@
                                       <div class="tab-content" >                                        
                                         <div class="tab-pane fade show active"  >  
                                                 <div class="container-fluid" id="op1" >
-                                                <div id="wtab01Grid_div" ></div>
+                                                <div id="wtab01Grid_div" style="height: 600px; " ></div>
                                                 <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div>
                                             </div>                                               
                                         </div>                                        
@@ -126,10 +126,9 @@
                                                 </div>
                                             </td>  
                                             <th>규격중복체크</th>
-                                            <td>
-                                                <div class="input_wrap">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                   
+                                            <td>                                              
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" id="j_sang" value="j_sang" type="checkbox"/>                                         
                                                 </div>
                                             </td>                                                                                     
                                         </tr>       
@@ -142,8 +141,8 @@
                                             </td>                                   
                                             <th>미사용제품</th>
                                             <td colspan="2"> 
-                                                <div class="input_wrap">                                                   
-                                                    <input class="form-check-input" type="checkbox">                         
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" id="j_misayong" value="j_misayong" type="checkbox"/>                                         
                                                 </div>
                                             </td>                                                     
                                         </tr>  
@@ -216,9 +215,29 @@
                                         <tr>  
                                             <th>품목분류</th>
                                             <td colspan="5">
-                                                <div class="input_wrap"> 
+                                                <!-- <div class="input_wrap"> 
                                                     <input type="radio"  id="w_b_gubn" autocomplete="off"   >원자재
-                                                </div>                                   
+                                                </div> -->
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" id="w_b_gubn" type="radio" name="inlineRadioOptions" value="option1" />
+                                                    <label class="form-check-label" for="inlineRadio1">원자재</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" id="w_b_gubn" type="radio" name="inlineRadioOptions" value="option2" />
+                                                    <label class="form-check-label" for="inlineRadio2">부자재</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" id="w_b_gubn" type="radio" name="inlineRadioOptions" value="option3"/>
+                                                    <label class="form-check-label" for="inlineRadio4">제품</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" id="w_b_gubn" type="radio" name="inlineRadioOptions" value="option4"/>
+                                                    <label class="form-check-label" for="inlineRadio3">반제품</label>
+                                                </div>   
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" id="w_b_gubn" type="radio" name="inlineRadioOptions" value="option5"/>
+                                                    <label class="form-check-label" for="inlineRadio5">기타</label>
+                                                </div>                                      
                                             </td>                                                                                  
                                         </tr>
                                         <tr>  
@@ -342,7 +361,7 @@
                             <div class="infor_bar type2">
                                 <div class="left">
                                    제품현황
-                                  </div>
+                                </div>
                                     <ul class="right">
                                         <li>
                                         <button type="button" class="color2" id="wciflistBtn">
@@ -447,7 +466,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.jkey}</b>',
                         click: (e, ctx) => {
-                            wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0);                    
+                            wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0, ctx.item.j_misayong, ctx.item.j_sang);                    
                         }
                     })
                 }, 
@@ -466,7 +485,9 @@
                 { binding: 'w_b_gubn', header: '품목분류', align: "center", width: 100 },               
                 { binding: 'jchgoga0', header: '단가', align: "right", width: 100 }, 
                 { binding: 'j_dae', header: '대분류', align: "center", width: 0 },               
-                { binding: 'j_jung', header: '중분류', align: "right", width: 0 },                                
+                { binding: 'j_jung', header: '중분류', align: "right", width: 0 }, 
+                { binding: 'j_misayong', header: '미사용', align: "right", width: 0 },  
+                { binding: 'j_sang', header: '구격중복사용', align: "right", width: 0 },                                  
                 
             ], 
             itemsSource: view_p01tab01page
@@ -525,7 +546,9 @@
                     jdanwy: wtab01Dto[i]["jdanwy"],
                     w_b_gubn: wtab01Dto[i]["w_b_gubn"],
                     jchgoga0: wtab01Dto[i]["jchgoga0"],
-                    jbigo: wtab01Dto[i]["jbigo"]      
+                    jbigo: wtab01Dto[i]["jbigo"],
+                    j_misayong: wtab01Dto[i]["j_misayong"],
+                    j_sang: wtab01Dto[i]["j_sang"]     
                     
                 });
                 cnt++;
@@ -703,6 +726,8 @@
         document.getElementById('jchgoga0').value = ""; 
         document.getElementById('j_dae').value = "";   
         document.getElementById('j_jung').value = ""; 
+        document.getElementById('j_misayong').value = ""; 
+        document.getElementById('j_sang').value = ""; 
     }
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
@@ -724,8 +749,25 @@
         var ls_jbigo    =  document.getElementById('jbigo').value;
         var ls_w_b_gubn =  document.getElementById('w_b_gubn').value;  
         var ls_jchgoga0 =  document.getElementById('jchgoga0').value; 
+        var ls_j_misayong =  document.getElementById('j_misayong').value;
+        var ls_j_sang =  document.getElementById('j_sang').value;
               
-
+        const j_misayong = document.getElementById('j_misayong'); 
+        const is_checked = j_misayong.checked;
+        console.log(is_checked);
+        if (is_checked){
+            ls_j_misayong = "0"
+        }else{
+            ls_j_misayong = "1"
+        }
+        const j_sang = document.getElementById('j_sang'); 
+        const is_checked1 = j_sang.checked;
+        console.log(is_checked1);
+        if (is_checked1){
+            ls_j_sang = "0"
+        }else{
+            ls_j_sang = "1"
+        }
         
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
@@ -755,7 +797,9 @@
                 "jdanwy"        : ls_jdanwy,
                 "w_b_gubn"      : ls_w_b_gubn,
                 "jbigo"         : ls_jbigo,
-                "jchgoga0"      : ls_jchgoga0,      
+                "jchgoga0"      : ls_jchgoga0,
+                "j_misayong"    : ls_j_misayong,
+                "j_sang"        : ls_j_sang,        
             } 
             //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
             formData.delete("key");  
@@ -802,12 +846,6 @@
     function listUp(){
         window.location.href = '/app01/index03';
     }; 
- 
-
-
-
-
-
 
         document.getElementById("wciflistBtn").addEventListener("click",function(){   
             searchListTot_rtn();  
@@ -877,7 +915,9 @@
                     jdanwy: wtab01Dto[i]["jdanwy"],
                     jbigo: wtab01Dto[i]["jbigo"],
                     w_b_gubn: wtab01Dto[i]["w_b_gubn"],
-                    jchgoga0: wtab01Dto[i]["jchgoga0"],     
+                    jchgoga0: wtab01Dto[i]["jchgoga0"], 
+                    j_misayong: wtab01Dto[i]["j_misayong"], 
+                    j_sang: wtab01Dto[i]["j_sang"],    
                 });
                 cnt++;
             }   
@@ -897,7 +937,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.jkey}</b>',
                 click: (e, ctx) => {
-                    wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0 );                 
+                    wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0 , ctx.item.j_misayong , ctx.item.j_sang);                 
                     
                 }
             });
@@ -1017,7 +1057,19 @@
             cols.width = 0;
             wtab01Grid.columns.push(cols); 
 
-      
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_misayong';
+            cols.header = '미사용여부'; 
+            cols.align = "right"; 
+            cols.width = 0;
+            wtab01Grid.columns.push(cols); 
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_sang';
+            cols.header = '규격중복체크'; 
+            cols.align = "right"; 
+            cols.width = 0;
+            wtab01Grid.columns.push(cols); 
         }        
 
 //             wcifChk_a(jkey, jpb_gubn, jgong_code, jdan_code, jmodel_code,jcolor_code, jcustomer_code, jbonsa_code, jsayong_gubn, jpum, jgugek,jsize, jchgoga0, jbigo );                             
@@ -1039,11 +1091,23 @@
             document.getElementById('jbigo').value = arg15;
             document.getElementById('w_b_gubn').value = arg16;
             document.getElementById('jchgoga0').value = arg17;
+            document.getElementById('j_misayong').value = arg18;
+            document.getElementById('j_sang').value = arg19;
 
-            console.log(arg2);
-            console.log(arg3);
-        }      
-
+            const j_misayong = document.getElementById('j_misayong'); 
+            if(arg18 == "0"){
+                j_misayong.checked = true; 
+            }else{
+                j_misayong.checked = false  
+            } 
+  
+            const callbackflag = document.getElementById('j_sang'); 
+            if(arg19 == "1"){
+                j_sang.checked = true; 
+            }else{
+                j_sang.checked = false  
+            }   
+            }        
 
         function searchListTot_rtn(){ 
                
@@ -1102,7 +1166,8 @@
                     jsize: wtab02Dto[i]["jsize"], 
                     jchgoga0: wtab02Dto[i]["jchgoga0"], 
                     jchgoga0: wtab02Dto[i]["jchgoga0"],
-                    jbigo: wtab02Dto[i]["jbigo"],          
+                    jbigo: wtab02Dto[i]["jbigo"], 
+                    jbigo: wtab02Dto[i]["j_misayong"],         
                 });
                 cnt++;
             }   
@@ -1121,7 +1186,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.jkey}</b>',
                 click: (e, ctx) => {
-                    wcifChk_a(ctx.item.jkey, ctx.item.jpb_gubn, ctx.item.jgong_code, ctx.item.jdan_code, ctx.item.jmodel_code,ctx.item.jcolor_code, ctx.item.jcustomer_code, ctx.item.jbonsa_code, ctx.item.jsayong_gubn, ctx.item.jpum, ctx.item.jgugek,ctx.item.jsize, ctx.item.jchgoga0, ctx.item.jbigo );                    
+                    wcifChk_a(ctx.item.jkey, ctx.item.jpb_gubn, ctx.item.jgong_code, ctx.item.jdan_code, ctx.item.jmodel_code,ctx.item.jcolor_code, ctx.item.jcustomer_code, ctx.item.jbonsa_code, ctx.item.jsayong_gubn, ctx.item.jpum, ctx.item.jgugek,ctx.item.jsize, ctx.item.jchgoga0, ctx.item.jbigo , ctx.item.j_misayong);                    
                     
                 }
             });

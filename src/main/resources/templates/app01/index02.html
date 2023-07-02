@@ -95,15 +95,11 @@
                                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">설비명</span> 
                                                                <input class="form-control form-control-sm" id="wrmcnm" type="text"    autocomplete="off"> 
                                                            </div>
-                                                       </div>
-                                                       <div class="col-2 col-sm-2">
-                                                           <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">담당자</span> 
-                                                               <input class="form-control form-control-sm" id="wperid" type="text"    autocomplete="off"> 
-                                                           </div>
-                                                       </div>
+                                                       </div>                                                    
                                                        <div class="col-2 col-sm-2">
                                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">담당자명</span> 
-                                                            <input class="form-control form-control-sm" id="wpernm" type="text"    autocomplete="off"> 
+                                                            <input class="form-control form-control-sm" id="wpernm" type="text"    autocomplete="off">
+                                                            <input class="form-control form-control-sm" id="wperid" type="hidden"    autocomplete="off">  
                                                         </div>
                                                     </div>
                                                        <div class="col-auto">  
@@ -158,7 +154,7 @@
                     <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                            
                         <div class="search">
                             <div class="input_wrap">  
-                                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){CifSearchList_rtn('M')}"
+                                <input class="form-control form-control-sm" id="searchCode" type="text"   onkeyup="if(window.event.keyCode==13){insaSearchList_rtn('M')}"
                                 placeholder="담당자명 "     />                                      
                             </div>
 
@@ -188,12 +184,6 @@
 
  
 <!--------------------------------------------------------------------------------------->     
-
-
-
-
-
-
 
 
     <script type="text/javascript" th:inline="javascript">
@@ -302,10 +292,7 @@
                 return wactnm_data;                                          
             }  
 
-
-
-
-             view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
+            view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
                 pageSize: 100
             }); 
             wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
@@ -345,114 +332,126 @@
                 return wactnm_data;                                              
             }  
 
-        //   view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
-        //     });
-        //     wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
-        //         autoGenerateColumns: false,
-        //         isReadOnly: false, 
-        //         allowSorting: 'MultiColumn',
-        //         selectionMode: 'RowRange',
-        //         alternatingRowStep: 0,
-        //         columns: [     
-        //             { binding: 'com_code', header: '코드', align: "center", width: '1*' }, 
-        //             { binding: 'com_cnam', header: '코드명', align: "center", width: '1*' }, 
-        //             { binding: 'com_rem1', header: '항목1', align: "center", width: '1*' }, 
-        //             { binding: 'com_rem2', header: '항목2', align: "center", width: '1*' }, 
-        //             { binding: 'com_work', header: '업무구분', align: "center", width: '1*' },
-        //         ], 
-        //         itemsSource: view_p01tab03page
-        //     });  
-
-
-            // new FlexGridContextMenu(wtab03Grid);  
-            // // 선택기 생성
-            // selector = new wijmo.grid.selector.Selector(wtab03Grid, {
-            //     itemChecked: () => {
-            //         // showCheckedCount();
-            //     }
-            // }); 
-            // // 헤더 열 전환
-            // setHeaderColumn(true);
-            // function setHeaderColumn(headerOn) {
-            //     // wtab04Grid.headersVisibility = headerOn
-            //     // ? wijmo.grid.HeadersVisibility.All
-            //     // : wijmo.grid.HeadersVisibility.Column;
-            //     // selector.column = headerOn
-            //     // ? wtab04Grid.rowHeaders.columns[0]
-            //     // : wtab04Grid.columns[0];
-            // } 
-            // wtab03Grid.showMarquee = true;
-            // wtab03Grid.focus();
-            // wijmo.toggleClass(wtab03Grid.hostElement, 'highlightActive', true);
-            // wtab03Grid.focus();
-
-
-
-            //  데이터 수집
-            // function getData_tab03(){        
-            //     var wactnm_data = [];
-            //     var cnt = 1;
-            //     for (var i = 0; i < 20; i++) {
-            //         wactnm_data.push({
-            //             id: i, 
-            //             index: cnt,
-            //             com_code: '', 
-            //             com_cnam: '', 
-            //             com_rem1: '', 
-            //             com_rem2: '', 
-            //             com_work: '',
-            //         });
-            //         cnt++;
-            //     }     
-            //     return wactnm_data;                           
-            // }  
-                       
-
-        } 
+            
         //담당자현황 Modaㅣ
         view_innamepage = new wijmo.collections.CollectionView(getData_wlist2(), {
                 pageSize: 12
             });
-            // 담당자 페이지 이동
-            new wijmo.input.CollectionViewNavigator('#thePager03', {
-                byPage: true,
-                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                cv: view_innamepage
-            });     
-            winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
-                autoGenerateColumns: false,
-                isReadOnly: false, 
-                allowSorting: 'MultiColumn',
-                selectionMode: 'RowRange',
-                alternatingRowStep: 0,
-                columns: [     
-                    { binding: 'wperid', header: '담당자', align: "center", width: '1*' },
-                    { binding: 'wpernm', header: '담당자명', align: "center", width: '1*' },
-                ], 
-                itemsSource: view_innamepage
-            });  
-            
-            winnameGrid.showMarquee = true;
-            winnameGrid.focus();
-            wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
-            winnameGrid.focus();
-            // 담당자 데이터 수집
-            function getData_wlist2(){   
-                var winname_data = []; 
-                var cnt = 1;
-                for (var i = 0; i < 12; i++) {
-                    winname_data.push({
-                        id: i, 
-                        index: cnt,
-                        wperid:"",
-                        wpernm: "",                            
-                    });
-                    cnt++;
-                }    
-                return winname_data;                                      
-            } 
+        // 담당자 페이지 이동
+        new wijmo.input.CollectionViewNavigator('#thePager03', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_innamepage
+        });     
+        winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
+            autoGenerateColumns: false,
+            isReadOnly: false, 
+            allowSorting: 'MultiColumn',
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [     
+                { binding: 'insano', header: '담당자', align: "center", width: '1*' },
+                { binding: 'inname', header: '담당자명', align: "center", width: '1*' },
+            ], 
+            itemsSource: view_innamepage
+        });  
+        
+        winnameGrid.showMarquee = true;
+        winnameGrid.focus();
+        wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
+        winnameGrid.focus();
+        // 담당자 데이터 수집
+        function getData_wlist2(){   
+            var winname_data = []; 
+            var cnt = 1;
+            for (var i = 0; i < 12; i++) {
+                winname_data.push({
+                    id: i, 
+                    index: cnt,
+                    insano:"",
+                    inname: "",                            
+                });
+                cnt++;
+            }    
+            return winname_data;                                      
+        } 
+    } 
 
-         
+    
+    document.getElementById("wpernm").addEventListener("keyup", (e)=>{ 
+        if(e.keyCode === 13){  
+            insaflag = "A"; 
+            insaSearchList_rtn("A"); 
+        }
+    });  
+
+    function insaSearchList_rtn(arg){  
+        var insaText = "";
+        if(arg == "M"){
+            insaText = document.getElementById('searchCode').value;   
+        }
+        if(arg == "A"){
+            insaText = document.getElementById('wpernm').value;   
+        }
+        
+        $.ajax({
+            url: '/app01m/wperidlist',  
+            type:"POST",
+            data: { 
+                "searchtxt" :insaText, 
+            }, 
+            async:false,
+            success:function(data){  
+                tabpopup_grid(data);
+            },error:function(e){
+                console.log("error");                            
+            }
+        }).done(function(fragment){           
+
+        })        
+
+    }     
+ 
+       //  거래처팝업 grid data 수집
+       function tabpopup_grid(data){
+            var wtab01Dto  = data;    
+            var wtab01_data = [];
+            var cnt = 1;
+            for (var i = 0; i < wtab01Dto.length; i++) {
+                wtab01_data.push({
+                    id: i, 
+                    index: cnt, 
+                    insano: wtab01Dto[i]["insano"], 
+                    inname: wtab01Dto[i]["inname"]       
+                });
+                cnt++;
+            }    
+            // console.log(wtab01_data); 
+            winnameGrid.columns.clear();  
+            winnameGrid.autoGenerateColumns = false; 
+            view_innamepage.sourceCollection  = wtab01_data;
+
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'insano';
+            cols.header = '코드';
+            cols.align = "center";
+            cols.width = '*';  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.insano}</b>',
+                click: (e, ctx) => {
+                    winsaChk_a(ctx.item.inname, ctx.item.insano);  
+                }
+            });
+            winnameGrid.columns.push(cols);  
+ 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'inname';
+            cols.header = '사원명';
+            cols.align = "center";
+            cols.width = '*';  
+            winnameGrid.columns.push(cols);  
+        }               
+  
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //선택한 탭 체크 
          function tabchk_rtn(arg){
@@ -920,100 +919,6 @@
             document.getElementById('wperid').value = arg3;
             document.getElementById('wpernm').value = arg4;      
         }
-
-        // function CifSearchList_rtn(arg){  
-
-        //     var searchCode = ""; 
-
-        //     if(arg == "M"){
-        //         searchCode = document.getElementById('searchCode').value;   
-        //     }
-        //     if(arg == "A"){
-        //         searchCode = document.getElementById('cifname').value;   
-        //     } 
-        //     if(searchCode == null || searchCode.length == 0 || searchCode == ""){ 
-        //         searchCode = "%"         ;
-        //     }     
-        //     let ls_conacorp1 = "%";  
-        //     let ls_conagita = "%";   
-        //     $.ajax({
-        //                 url: '/app01m/index02/listtot',  
-        //             type:"POST",
-        //             data: { 
-        //                 "conacorp1" :ls_conacorp1, 
-        //                 "conacorp" :searchCode, 
-        //                 "conagita" :ls_conagita, 
-        //             }, 
-        //             async:false,
-        //             success:function(data){  
-        //                 tabPop_grid(data);
-        //             },error:function(e){
-        //                 console.log("error");                            
-        //             }
-        //         }).done(function(fragment){           
-
-        //         })    
-
-        // }     
-        // //  담당자 팝업 grid data 수집
-        // function tabPop_grid(data){
-        //     // console.log(data);
-        //     var wtab02Dto  = data;    
-        //     var wtab02_data = [];
-        //     var cnt = 1;
-        //     for (var i = 0; i < wtab02Dto.length; i++) {
-        //         wtab02_data.push({
-        //             id: i, 
-        //             index: cnt, 
-        //             acorp1: wtab02Dto[i]["wperid"], 
-        //             acorp2: wtab02Dto[i]["wpernm"],    
-        //         });
-        //         cnt++;
-        // }   
-
-        // // console.log(winnameGrid);
-
-        // winnameGrid.columns.clear();  
-        // winnameGrid.autoGenerateColumns = false; 
-        // view_innamepage.sourceCollection  = wtab02_data;
-
-        // var cols = new wijmo.grid.Column(); 
-        // cols.binding = 'wperid';
-        // cols.header = '담담자';
-        // cols.align = "center";
-        // cols.width = 80;
-        // cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-        //     text: '<b>${item.wperid}</b>',
-        //     click: (e, ctx) => {
-        //         wcifChk_a(ctx.item.wperid, ctx.item.wpernm);                    
-                
-        //     }
-        // });
-        // winnameGrid.columns.push(cols);  
-
-        // cols = new wijmo.grid.Column(); 
-        // cols.binding = 'wpernm';
-        // cols.header = '담당자명'; 
-        // cols.align = "left"; 
-        // cols.width = 200;
-        // winnameGrid.columns.push(cols); 
-        // }
-            
-        // function wcifChk_a(arg1, arg2, arg3, arg4, arg5){            
-        // document.getElementById('wperid').value = arg1;  
-        // document.getElementById('wpernm').value = arg2;  
-        // if(arg1 == "02"){
-        //     document.getElementById('jpbgubn').value = "P";
-        // }else{
-        //     document.getElementById('jpbgubn').value = "B";
-        // } 
-        // //품목조회
-        // retrieve_rtn()
-        // $("#winnamemodal_btn").trigger("click");
-
-        // }
- 
-         
         
 
   

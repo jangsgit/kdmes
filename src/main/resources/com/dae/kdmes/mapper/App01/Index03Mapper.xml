@@ -83,7 +83,7 @@
         <![CDATA[
             select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jsayang, jpum,
                    j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn,
-                   E.jcifcodename as jcifcodename
+                   E.jcifcodename as jcifcodename, j_misayong, j_sang
             from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey = E.jcifcode)
             WHERE isnull(jpum,'') Like concat('%',#{jpum},'%')
@@ -106,10 +106,10 @@
 
     <insert id="InsertJpum" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
         insert into JCODE ( jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode,
-                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0) values
+                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang) values
                         (#{jkey}, #{j_dae}, #{j_jung}, #{jgugek}, #{jpum}, #{jgugek2}, #{jpumcode},
                          #{jsayang}, #{j_net}, #{jchajong}, #{j_sr}, #{j_ct}, #{j_cavity}, #{jdanwy}, #{jbigo}, #{w_b_gubn},
-                         #{jchgoga0})
+                         #{jchgoga0}, #{j_misayong} , #{j_sang})
     </insert>
 
 
@@ -148,6 +148,10 @@
         <if test="w_b_gubn != null">w_b_gubn=#{w_b_gubn}</if>
         <if test="jchgoga0 != null ">,</if>
         <if test="jchgoga0 != null">jchgoga0=#{jchgoga0}</if>
+        <if test="j_misayong != null ">,</if>
+        <if test="j_misayong != null">j_misayong=#{j_misayong}</if>
+        <if test="j_sang != null ">,</if>
+        <if test="j_sang != null">j_sang=#{j_sang}</if>
         where jkey   = #{jkey}
     </update>
 
