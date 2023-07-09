@@ -214,13 +214,16 @@
                                         </tr>
                                         <tr>  
                                             <th>품목분류</th>
-                                            <td colspan="5">                                               
+                                            <td colspan="5">
+                                                <!-- <div class="input_wrap"> 
+                                                    <input type="radio"  id="w_b_gubn" autocomplete="off"   >원자재
+                                                </div> -->
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" id="w_b_gubn" name="w_b_gubn" type="radio"  value="W"  />
+                                                    <input class="form-check-input" name="w_b_gubn" id="W" type="radio"  value="W" />
                                                     <label class="form-check-label" for="inlineRadio1">원자재</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" id="w_b_gubn" name="w_b_gubn" type="radio" value="B" />
+                                                    <input class="form-check-input" name="w_b_gubn" id="B" type="radio" value="B" />
                                                     <label class="form-check-label" for="inlineRadio2">부자재</label>
                                                 </div>
                                                 <!-- <div class="form-check form-check-inline">
@@ -228,13 +231,13 @@
                                                     <label class="form-check-label" for="inlineRadio4">제품</label>
                                                 </div> -->
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" id="w_b_gubn" name="w_b_gubn"  type="radio"  value="H"/>
+                                                    <input class="form-check-input" name="w_b_gubn" id="H" type="radio"  value="H"/>
                                                     <label class="form-check-label" for="inlineRadio3">반제품</label>
                                                 </div>   
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" id="w_b_gubn" name="w_b_gubn" type="radio"  value="G"/>
+                                                    <input class="form-check-input" name="w_b_gubn" id="G" type="radio"  value="G"/>
                                                     <label class="form-check-label" for="inlineRadio5">기타</label>
-                                                </div>                                                                            
+                                                </div>                                      
                                             </td>                                                                                  
                                         </tr>
                                         <tr>  
@@ -743,7 +746,8 @@
         var ls_j_ct     =  document.getElementById('j_ct').value;  
         var ls_j_cavity =  document.getElementById('j_cavity').value;  
         var ls_jdanwy   =  document.getElementById('jdanwy').value; 
-        var ls_jbigo    =  document.getElementById('jbigo').value; 
+        var ls_jbigo    =  document.getElementById('jbigo').value;
+        var ls_w_b_gubn =  document.getElementById('w_b_gubn').value;  
         var ls_jchgoga0 =  document.getElementById('jchgoga0').value; 
         var ls_j_misayong =  document.getElementById('j_misayong').value;
         var ls_j_sang =  document.getElementById('j_sang').value;
@@ -764,19 +768,23 @@
         }else{
             ls_j_sang = "1"
         }
+        
+        const w_b_gubn = document.getElementById('w_b_gubn').value; 
+        
+        console.log(ls_w_b_gubn);
 
-        var x = document.getElementsByName('w_b_gubn');
+        return;
 
-        console.log(x);
-            for(var i=0; i<4; i++) {
-                console.log(x[i].value);
-                if(x[i].checked){
-                    ls_w_b_gubn = x[i].value;
-                    console.log("!!!!!!!!!!!!!!!!!!!" + ls_w_b_gubn);
-                    //break;
-                }
-            }
-
+        if(is_selected == "원자재"){
+            ls_w_b_gubn = "W"; 
+        }else if(is_selected == "부자재"){
+            ls_w_b_gubn = "B"; 
+        }else if(is_selected == "반제품"){
+            ls_w_b_gubn = "H"; 
+        }else{
+            ls_w_b_gubn = "G"; 
+        }   
+        
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
                 }   
@@ -1097,7 +1105,7 @@
             document.getElementById('j_cavity').value = arg13; 
             document.getElementById('jdanwy').value = arg14;  
             document.getElementById('jbigo').value = arg15;
- //           document.getElementById('w_b_gubn').value = arg16;
+            document.getElementById('w_b_gubn').value = arg16;
             document.getElementById('jchgoga0').value = arg17;
             document.getElementById('j_misayong').value = arg18;
             document.getElementById('j_sang').value = arg19;
@@ -1115,16 +1123,18 @@
             }else{
                 j_sang.checked = false;  
             }
-            var x = document.getElementsByName('w_b_gubn');
-
-            for(var i=0; i<4; i++) {
-                if(x[i].value == arg16){
-                console.log("22222222222222222" + x[i].value);
-                   x[i].checked = true;
-                }else{
-                    x[i].checked = false;
-                }
-            }
+            
+            const w_b_gubn = document.getElementById('w_b_gubn'); 
+            console.log("11111111111111" + arg16);
+            if(arg16 == "W"){
+                w_b_gubn.checked = "원자재"; 
+            }else if(arg16 == "B"){
+                w_b_gubn.checked = "부자재"; 
+            }else if(arg16 == "H"){
+                w_b_gubn.checked = "반제품"; 
+            }else{
+                w_b_gubn.checked = "기타"; 
+            }   
         }        
 
         function searchListTot_rtn(){ 
