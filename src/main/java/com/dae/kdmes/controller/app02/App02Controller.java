@@ -1,16 +1,13 @@
 package com.dae.kdmes.controller.app02;
 
-import com.dae.kdmes.DTO.App01.Index01Dto;
+import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.App01.Index02Dto;
 import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App01.Index04Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
-import com.dae.kdmes.Service.App01.Index01Service;
-import com.dae.kdmes.Service.App01.Index02Service;
-import com.dae.kdmes.Service.App01.Index03Service;
-import com.dae.kdmes.Service.App01.Index04Service;
+import com.dae.kdmes.Service.App02.Index10Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,17 +27,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/app02", method = RequestMethod.POST)
 public class App02Controller {
-    private final Index01Service service01;
-
-    private final Index02Service service02;
-
-    private final Index03Service service03;
-
-    private final Index04Service service04;
+    private final Index10Service service10;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
-    Index01Dto index01Dto = new Index01Dto();
+    Index10Dto index10Dto = new Index10Dto();
 
     Index02Dto index02Dto = new Index02Dto();
 
@@ -51,7 +42,7 @@ public class App02Controller {
     List<PopupDto> popupListDto = new ArrayList<>();
 
     List<PopupDto> popupListDto1 = new ArrayList<>();
-    List<Index01Dto> index01ListDto = new ArrayList<>();
+    List<Index10Dto> index10ListDto = new ArrayList<>();
 
     List<Index02Dto> index02ListDto = new ArrayList<>();
     List<Index03Dto> index03List = new ArrayList<>();
@@ -70,9 +61,9 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
-            index01ListDto = service01.getComCodeList(index01Dto);
+            index10ListDto = service10.getFplanList(index10Dto);
 
-            model.addAttribute("comcodeList",index01ListDto);
+            model.addAttribute("fplanList",index10ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App02_index Exception =============================");

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.App02.Index10Mapper">
+
+
+    <select id="getFplanList"  parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
+        <![CDATA[
+            select TB.indate, TB.prod_sdate, TB.prod_edate, TB.lotno, TB.cltcd, TB.qcdate, TB.perid, TB.workdv,
+                TB.pcode, E.jpum, E.jgugek, TB.dem_flag, E.jchajong, E.jgugek2, E.jsayang, E.j_sr, E.jpumcode, E.jdanwy,
+                TB.prod_qty, TB.cls_flag, TB.istore, TB.ostore, TB.rwflag, TB.remark
+             from TB_FPLAN TB
+            INNER JOIN JCODE E WITH(NOLOCK) ON (TB.PCODE = E.jpumcode)
+             WHERE 1=1
+            ORDER BY TB.pcode
+        ]]>
+    </select>
+
+    <select id="GetFplanList"  parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
+        <![CDATA[
+            select * from TB_FPLAN TB
+            WITH (NOLOCK)
+            WHERE isnull(pcode,'') Like concat('%',#{pcode},'%')
+            ORDER BY TB.pcode
+        ]]>
+    </select>
+
+    <select id="GetFplanCheck" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
+        <![CDATA[
+        select   plan_no
+        from TB_FPLAN WITH (NOLOCK)
+        WHERE isnull(plan_no,'')   = #{plan_no}
+        ORDER BY plan_no
+        ]]>
+    </select>
+
+    <insert id="InsertFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
+        insert into TB_FPLAN ( plan_no, indate, prod_sdate, prod_edate, lotno, cltcd, qcdate, perid,
+        workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark) values
+        (#{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{qcdate}, #{perid},
+        #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, #{cls_flag}, #{istore}, #{ostore}, #{rwflag}, #{remark})
+    </insert>
+
+
+    <update id="UpdateJpum" parameterType="com.dae.kdmes.DTO.App02.Index10Dto">
+        update TB_FPLAN
+        set pcode = #{pcode}
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+        <if test="prod_sdate != null ">,</if>
+        <if test="prod_sdate != null">prod_sdate=#{prod_sdate}</if>
+        <if test="prod_edate != null ">,</if>
+        <if test="prod_edate != null">prod_edate=#{prod_edate}</if>
+        <if test="lotno != null ">,</if>
+        <if test="lotno != null">lotno=#{lotno}</if>
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+        <if test="qcdate != null ">,</if>
+        <if test="qcdate != null">qcdate=#{qcdate}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="workdv != null ">,</if>
+        <if test="workdv != null">workdv=#{workdv}</if>
+        <if test="pcode != null ">,</if>
+        <if test="pcode != null">pcode=#{pcode}</if>
+        <if test="dem_flag != null ">,</if>
+        <if test="dem_flag != null">dem_flag=#{dem_flag}</if>
+        <if test="prod_qty != null ">,</if>
+        <if test="prod_qty != null">prod_qty=#{prod_qty}</if>
+        <if test="cls_flag != null ">,</if>
+        <if test="cls_flag != null">cls_flag=#{cls_flag}</if>
+        <if test="istore != null ">,</if>
+        <if test="istore != null">istore=#{istore}</if>
+        <if test="ostore != null ">,</if>
+        <if test="ostore != null">ostore=#{ostore}</if>
+        <if test="rwflag != null ">,</if>
+        <if test="rwflag != null">rwflag=#{rwflag}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        where plan_no   = #{plan_no}
+    </update>
+
+
+    <update id="DeleteJpum" parameterType="com.dae.kdmes.DTO.App01.Index03Dto">
+        DELETE  TB_FPLAN where plan_no  = #{plan_no}
+    </update>
+
+
+</mapper>

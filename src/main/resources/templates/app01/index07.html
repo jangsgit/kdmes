@@ -24,224 +24,275 @@
             <th:block th:include="layouts/APPHeader/appheadTop"/>
             <!-- contents infor_bar -->
             <div class="infor_bar type2">                                
-                <div class="left">생산계획등록</div>                               
+                <div class="left">제품등록</div>
+                <ul class="right" >
+                   
+                    <li style="clear: right;">
+                    <h5 style="color:rgb(255, 166, 0); font-size: 17px; text-align: center;" ><b>★ : 필수 입력</b></h5>
+                    </li>
+                    <li>
+                        <button type="button" class="color4" id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal">
+                           제품현황
+                        </button>
+                    </li>
+                </ul>               
+                    
             </div>           
             
              <!-- contents body 시작--> 
              <!-- form 또는 action 으로 받아오기  -->
              <div class="section regist">
-                <div class="sec_con" style="width: 100%; ">
-                    <div class="box_wrap" style = "height: 1000px;">
+                <div class="sec_con" style="width: 55%; ">
+                    <div class="box_wrap">
                         <div class="box_input" >
-                            <div class="date_wrap">    
+                            <div class="date_wrap">
+                                <input type="text"  id="searchtxt" placeholder="품명"> 
+                                <button type="button" id="retrieveBtn" >검색</button>      
                             </div>                              
                             <!-- //여기서부터 그래프 -->
                             <div class="table table_style2">
                                 <div class="card-body bg-light">   
-                                    <div class="tab-content" >                                        
+                                      <div class="tab-content" >                                        
                                         <div class="tab-pane fade show active"  >  
                                                 <div class="container-fluid" id="op1" >
-                                                <div id="wtab01Grid_div" style="overflow:scroll; height:200px"></div>
-                                                <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
+                                                <div id="wtab01Grid_div" style="height: 600px; " ></div>
+                                                <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div>
                                             </div>                                               
-                                        </div>      
-                                    </div>    
+                                        </div>                                        
+                                      </div>
                                 </div>
-                            </div>
-                            <form action="">
-                                <div class="table table_style1" style = "width: 90%; margin-left: 50px">
-                                    <table>
-                                        <tbody>   
-                                            <tr> 
-                                                <th>등록일자</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap"> 
-                                                        <input type="text" id="indate" placeholder=""  autocomplete="off">                                        
-                                                    </div>                                            
-                                                </td>
-                                                <th>생산시작일자</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap"> 
-                                                        <input type="text" id="prod_sdate" placeholder=""  autocomplete="off">                                         
-                                                    </div>                                                                                                           
-                                                </td>                                                
-                                                <th>생산종료일자</th> 
-                                                <td colspan="2">
-                                                    <div class="input_wrap">
-                                                        <input type="text" id="prod_edate" placeholder=""  autocomplete="off">
-                                                    </div>
-                                                </td>                                             
-                                                <th>LOTNO</th> 
-                                                <td colspan="4">
-                                                    <div class="input_wrap">
-                                                        <input type="text" id="lotno" placeholder=""  autocomplete="off">
-                                                    </div>
-                                                </td>                                      
-                                            </tr>   
-                                            <tr> 
-                                                <th>거래처</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="cltcd" autocomplete="off"> 
-                                                    </div>
-                                                </td>                                                                               
-                                                <th>출고예정일</th> 
-                                                <td colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="qcdate" autocomplete="off"   > 
-                                                    </div>
-                                                </td>
-                                                <th>담당자</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="perid" autocomplete="off"> 
-                                                    </div>
-                                                </td>                                                                               
-                                                <th>납기구분</th> 
-                                                <td  colspan="4">
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" name="workdv" id="workdv" type="radio"  value="0" />
-                                                        <label class="form-check-label" for="inlineRadio1">일반</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" name="workdv" id="workdv" type="radio" value="1" />
-                                                        <label class="form-check-label" for="inlineRadio2">긴급</label>
-                                                    </div>
-                                                </td>                                                             
-                                            </tr>  
-                                            <tr>                                            
-                                                <th>품목코드<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
-                                                <td  colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="pcode" autocomplete="off"   > 
-                                                    </div>                                                
-                                                </td>
-                                                <td  colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="jpum" autocomplete="off"  placeholder = "품목명"  > 
-                                                    </div>
-                                                    <!-- <div class="form-check form-switch">
-                                                        <input type="text" id="j_sang" value="j_sang" placeholder = "품목명"/>                                         
-                                                    </div> -->
-                                                </td>    
-                                                <th>규격</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap">
-                                                        <input type="text" id="jgugek" placeholder=""  >
-                                                    </div>
-                                                </td> 
-                                                <th>검사제외</th>
-                                                <td colspan="4"> 
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" id="dem_flag" value="dem_flag" type="checkbox"/>                                         
-                                                    </div>
-                                                </td>                                                                                        
-                                            </tr>       
-                                            <tr>                                         
-                                                <th>차종</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap">
-                                                        <input type="text" id="jchajong" placeholder=""  >
-                                                    </div>
-                                                </td>                                   
-                                                <th>사양구분</th>
-                                                <td colspan="2"> 
-                                                    <div class="input_wrap">
-                                                        <input type="text"  id="jsayang" autocomplete="off"  placeholder="" >                                        
-                                                    </div>
-                                                </td>  
-                                                <th>색상</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="jgugek2" autocomplete="off"  placeholder="" >  
-                                                    </div>
-                                                </td>
-                                                <th>스푸루</th>
-                                                <td colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="j_sr" autocomplete="off"  placeholder="" >  
-                                                    </div>
-                                                </td>                                                    
-                                            </tr>  
-                                            <tr> 
-                                                <th>품번</th>
-                                                <td  colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="jpumcode" autocomplete="off"   > 
-                                                    </div>
-                                                </td>                                        
-                                                <th>단위</th> 
-                                                <td  colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="jdanwy" autocomplete="off"   > 
-                                                    </div>
-                                                </td>                                                                                            
-                                                <th>생산계획수량</th> 
-                                                <td  colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="prod_qty" autocomplete="off"   > 
-                                                    </div>
-                                                </td>
-                                                <th>작지상태</th> 
-                                                <td  colspan="4">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="cls_flag" autocomplete="off"   > 
-                                                    </div>
-                                                </td>                                                     
-                                            </tr>                                                                                                                                                                                    
-                                            <tr>                                                                                                                        
-                                                <th>입고창고</th> 
-                                                <td >
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="istore" autocomplete="off"   > 
-                                                    </div>
-                                                </td>   
-                                                <th>출고창고</th> 
-                                                <td colspan="2">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="ostore" autocomplete="off"   > 
-                                                    </div>
-                                                </td>    
-                                                <th>시간구분</th> 
-                                                <td colspan="4">
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" name="rwflag" id="rwflag" type="radio"  value="D" />
-                                                        <label class="form-check-label" for="inlineRadio1">주간</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" name="rwflag" id="rwflag" type="radio" value="N" />
-                                                        <label class="form-check-label" for="inlineRadio2">야간</label>
-                                                    </div>
-                                                </td>                                  
-                                            </tr>
-                                            <tr> 
-                                                <th>주의사항</th>
-                                                <td  colspan="10">
-                                                    <div class="input_wrap">                                               
-                                                        <input type="text"  id="remark" autocomplete="off"   > 
-                                                    </div>
-                                                </td>                                                                                            
-                                            </tr>                                                                             
-                                        </tbody>
-                                    </table>
-                                        <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
-                                            <div class="btns" >                                                        
-                                                <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
-                                                <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
-                                                <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
-                                            </div>                                     
-                                        </div>                              
-                                </div>                           
-                            </form>
-                            <div class="tab-pane fade show active"  >  
-                                <div class="container-fluid" id="op1" >
-                                <div id="wtab02Grid_div"></div>
-                                <div style="display: flex; margin: 0 auto; " id="tab02Pager"></div>
-                            </div>                                               
-                        </div>                            
+                            </div>                       
+                                                        
                         </div>
                     </div>
-                </div>             
+                </div>
+                <!-- 우측 전체 테이블 -->
+                <div class="sec_con" style="width: 40%;">
+                    <div class="box_wrap" style="padding-bottom: 100px;">
+                        <form action="">
+                            <div class="table table_style1" >
+                                <table>
+                                    <tbody>   
+                                        <tr> 
+                                            <th>품목분류</th>
+                                            <td >
+                                                <div class="input_wrap" style="max-width: 230px;"> 
+                                                    <select th:field="*{j1_keyList}" name="j_dae" id="j_dae">
+                                                        <option value="">선택</option>
+                                                        <option th:each="val : ${j1_keyList}" th:value="${val.j1_key}" th:text="${val.j1_name}">
+                                                    </select>                                              
+                                                </div>                                            
+                                            </td>
+                                            <td >
+                                                <div class="input_wrap" style="max-width: 225px;"> 
+                                                    <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
+                                                        <option value="">선택</option>
+                                                        <option th:each="val : ${j2_keyList}" th:value="${val.j2_key}" th:text="${val.j2_name}">
+                                                    </select>                                              
+                                                </div>                                                                                                           
+                                            </td>                                                
+                                            <!-- <th>간편주문코드</th> 
+                                            <td >
+                                                <div class="input_wrap">
+                                                    <input type="text" id="jbonsa_code" placeholder=""  >
+                                                </div>
+                                            </td>                                             
+                                            <th>고객분류코드</th> 
+                                            <td >
+                                                <div class="input_wrap">
+                                                    <input type="text" id="jcustomer_code" placeholder=""  >
+                                                </div>
+                                            </td>                                       -->
+                                        </tr>   
+                                        <tr> 
+                                            <th>제품코드<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
+                                            <td colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="jkey" autocomplete="off"  onclick="barcode_prt()" > 
+                                                </div>
+                                            </td>                                                                               
+                                            <th>상대제품번호</th> 
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="jpumcode" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                                        
+                                        </tr>  
+                                        <tr>                                            
+                                            <th>제품명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="jpum" autocomplete="off"   > 
+                                                </div>
+                                            </td>  
+                                            <th>규격중복체크</th>
+                                            <td>                                              
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" id="j_sang" value="j_sang" type="checkbox"/>                                         
+                                                </div>
+                                            </td>                                                                                     
+                                        </tr>       
+                                        <tr>                                         
+                                            <th>규격</th>
+                                            <td colspan="2">
+                                                <div class="input_wrap">
+                                                    <input type="text" id="jgugek" placeholder=""  >
+                                                </div>
+                                            </td>                                   
+                                            <th>미사용제품</th>
+                                            <td colspan="2"> 
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" id="j_misayong" value="j_misayong" type="checkbox"/>                                         
+                                                </div>
+                                            </td>                                                     
+                                        </tr>  
+                                        <tr> 
+                                            <th>색상</th>
+                                            <td colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="jgugek2" autocomplete="off"  placeholder="" >  
+                                                </div>
+                                            </td>                                                                                                                            
+                                        </tr>    
+                                        <tr> 
+                                            <th>사양구분</th>
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="jsayang" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                        
+                                            <th>제품중량</th> 
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="j_net" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                                       
+                                        </tr>                                                                                                                                                                                    
+                                        <tr> 
+                                            <th>차종</th>
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="jchajong" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                        
+                                            <th>스프루</th> 
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="j_sr" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                                       
+                                        </tr>
+                                        <tr> 
+                                            <th>C/T</th>
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="j_ct" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                        
+                                            <th>CAVITY</th> 
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="j_cavity" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                                       
+                                        </tr>                                      
+                                        <tr> 
+                                            <th>기본단위</th>
+                                            <td  colspan="2">
+                                                <div class="input_wrap">                                               
+                                                    <input type="text"  id="jdanwy" autocomplete="off"   > 
+                                                </div>
+                                            </td>                                                                                                                                  
+                                        </tr>       
+                                        <tr>  
+                                            <th>비고</th>
+                                            <td colspan="2">
+                                                <div class="input-group"> 
+                                                    <textarea class="form-control" aria-label="With textarea" name="jbigo" id="jbigo" ></textarea>
+                                                </div>                                   
+                                            </td>                                                                                  
+                                        </tr>
+                                        <tr>  
+                                            <th>품목분류</th>
+                                            <td colspan="5">
+                                                <!-- <div class="input_wrap"> 
+                                                    <input type="radio"  id="w_b_gubn" autocomplete="off"   >원자재
+                                                </div> -->
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" name="w_b_gubn" id="W" type="radio"  value="W" />
+                                                    <label class="form-check-label" for="inlineRadio1">원자재</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" name="w_b_gubn" id="B" type="radio" value="B" />
+                                                    <label class="form-check-label" for="inlineRadio2">부자재</label>
+                                                </div>
+                                                <!-- <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" name="w_b_gubn" type="radio" name="inlineRadioOptions" value="option3"/>
+                                                    <label class="form-check-label" for="inlineRadio4">제품</label>
+                                                </div> -->
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" name="w_b_gubn" id="H" type="radio"  value="H"/>
+                                                    <label class="form-check-label" for="inlineRadio3">반제품</label>
+                                                </div>   
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" name="w_b_gubn" id="G" type="radio"  value="G"/>
+                                                    <label class="form-check-label" for="inlineRadio5">기타</label>
+                                                </div>                                      
+                                            </td>                                                                                  
+                                        </tr>
+                                        <tr>  
+                                            <th>공정후검사</th>
+                                            <td colspan="2">
+                                                <div class="input_wrap">                                                                                                                                          
+                                                </div>                                   
+                                            </td>                                                                                  
+                                        </tr>
+                                        <tr>  
+                                            <th>출고가</th>
+                                            <td colspan="2">
+                                                <div class="input_wrap"> 
+                                                    <input type="text"  id="jchgoga0" autocomplete="off"   > 
+                                                </div>                                     
+                                            </td>                                                                                  
+                                        </tr>              
+                                        <!-- <tr>  
+                                            <th>BARCODE</th>
+                                            <td colspan="1"> 
+                                                    <div id="btnDiv" class="btn_wrap">  
+                                                    <div id="bcTarget"></div> 
+                                                </div>             
+                                            </td>     
+                                            <th>인쇄수량</th>       
+                                            <td colspan="4">
+                                                <div class="container">
+                                                    <div class="row align-items-start">
+                                                        <div class="col"> 
+                                                            <input class="form-control form-control-sm" id="inprtqty" type="number"  value = 0 placeholder=""  />
+                                                          </div>
+                                                          <div class="col">
+                                                            <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="barcodeprt" onclick="barcodeprt_btn()"><span class="fas fa-print ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">출력</span></button>                                               
+                                                          </div>
+                                                    </div>
+                                                </div>        
+                                            </td>                                       
+                                        </tr>    -->
+                                    </tbody>
+                                </table>
+                                    <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
+                                        <div class="btns" >                                                        
+                                            <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
+                                            <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
+                                            <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
+
+                                        </div>
+                                        
+                                        <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
+                                    </div>                              
+                            </div>                           
+                        </form>
+
+                    </div>
+                </div>
             </div>       
 
 
@@ -390,14 +441,15 @@
     window.onload = function() {   
             //tab01 grid list
         view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+            sortDescriptions: [new wijmo.collections.SortDescription("acode", false)],
             pageSize: 21
         });
        // tab01 grid page
-        // new wijmo.input.CollectionViewNavigator('#tab01Pager', {
-        //     byPage: true,
-        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-        //     cv: view_p01tab01page
-        // });      
+        new wijmo.input.CollectionViewNavigator('#tab01Pager', {
+            byPage: true,
+            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            cv: view_p01tab01page
+        });      
         wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
             autoGenerateColumns: false,
             showMarquee: true,
@@ -406,26 +458,37 @@
             allowSorting: 'MultiColumn',
             alternatingRowStep: 0,
             columns: [     
-                { binding: 'indate', header: '등록일자', align: "center", width: 100 }, 
-                { binding: 'cltcd', header: '거래처', align: "left", width: 250 }, 
-                { binding: 'pcode', 
-                    header: '품목', 
-                    align: "center", 
-                    width: 200,
+                {
+                    binding: 'jkey',
+                    width: 180,
+                    header: '코드', 
+                    align:"center",
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.pcode}</b>',
+                        text: '<b>${item.jkey}</b>',
                         click: (e, ctx) => {
-                            wcifChk_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.cltcd,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark);                    
+                            wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0, ctx.item.j_misayong, ctx.item.j_sang);                    
                         }
-                    }) 
-                },   
-                { binding: 'jgugek', header: '규격', align: "left", width: 250 },   
-                { binding: 'prod_qty', header: '계획수량', align: "right", width: 100 },  
-                { binding: 'lotno', header: '로트번호', align: "center", width: 150 },
-                { binding: 'prod_sdate', header: '생산시작일', align: "center", width: 100 },
-                { binding: 'prod_edate', header: '생산종료일', align: "center", width: 100 },
-                { binding: 'cls_flag', header: '작지상태', align: "center", width: 100 },
-                { binding: 'perid', header: '담당자', align: "center", width: 100 },            
+                    })
+                }, 
+                { binding: 'jpum', header: '제품명', align: "left", width: 250 }, 
+                { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
+                { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
+                { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
+                { binding: 'jpumcode', header: '상대제품번호', align: "center", width: 200 },
+                { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
+                { binding: 'j_net', header: '제품중량', align: "center", width: 100 },
+                { binding: 'jchajong', header: '차종', align: "center", width: 100 },
+                { binding: 'j_sr', header: '스프루', align: "center", width: 100 },
+                { binding: 'j_ct', header: 'C/T', align: "center", width: 100 },   
+                { binding: 'j_cavity', header: 'CAVITY', align: "center", width: 100 },
+                { binding: 'jbigo', header: '비고', align: "center", width: 100 },
+                { binding: 'w_b_gubn', header: '품목분류', align: "center", width: 100 },               
+                { binding: 'jchgoga0', header: '단가', align: "right", width: 100 }, 
+                { binding: 'j_dae', header: '대분류', align: "center", width: 0 },               
+                { binding: 'j_jung', header: '중분류', align: "right", width: 0 }, 
+                { binding: 'j_misayong', header: '미사용', align: "right", width: 0 },  
+                { binding: 'j_sang', header: '구격중복사용', align: "right", width: 0 },                                  
+                
             ], 
             itemsSource: view_p01tab01page
         });        
@@ -460,39 +523,33 @@
  
         // tab01검색 데이터 수집
         function getData_tab01(){        
-            var wtab01Dto = [[${fplanList}]];   
+            var wtab01Dto = [[${index03List}]];   
             var wactnm_data = [];       
             var cnt = 1;   
             for (var i = 0; i < wtab01Dto.length; i++) {
                 wactnm_data.push({
                     id: i, 
                     index: cnt,
-                    indate: wtab01Dto[i]["indate"], 
-                    cltcd: wtab01Dto[i]["cltcd"], 
-                    pcode: wtab01Dto[i]["pcode"], 
+                    jkey: wtab01Dto[i]["jkey"], 
+                    j_dae: wtab01Dto[i]["j_dae"], 
+                    j_jung: wtab01Dto[i]["j_jung"], 
                     jgugek: wtab01Dto[i]["jgugek"], 
-                    prod_qty: wtab01Dto[i]["prod_qty"], 
-                    lotno: wtab01Dto[i]["lotno"], 
-                    prod_sdate: wtab01Dto[i]["prod_sdate"], 
-                    prod_edate: wtab01Dto[i]["prod_edate"], 
-                    cls_flag: wtab01Dto[i]["cls_flag"], 
-                    perid: wtab01Dto[i]["perid"],    
-                    workdv: wtab01Dto[i]["workdv"], 
-                    qcdate: wtab01Dto[i]["qcdate"], 
                     jpum: wtab01Dto[i]["jpum"], 
-                    dem_flag: wtab01Dto[i]["dem_flag"], 
-                    jchajong: wtab01Dto[i]["jchajong"], 
-                    jsayang: wtab01Dto[i]["jsayang"], 
                     jgugek2: wtab01Dto[i]["jgugek2"], 
-                    j_sr: wtab01Dto[i]["j_sr"], 
                     jpumcode: wtab01Dto[i]["jpumcode"], 
-                    jdanwy: wtab01Dto[i]["jdanwy"], 
-                    prod_qty: wtab01Dto[i]["prod_qty"],    
-                    cls_flag: wtab01Dto[i]["cls_flag"],
-                    istore: wtab01Dto[i]["istore"], 
-                    ostore: wtab01Dto[i]["ostore"], 
-                    rwflag: wtab01Dto[i]["rwflag"],    
-                    remark: wtab01Dto[i]["remark"],                                 
+                    jsayang: wtab01Dto[i]["jsayang"], 
+                    j_net: wtab01Dto[i]["j_net"], 
+                    jchajong: wtab01Dto[i]["jchajong"], 
+                    j_sr: wtab01Dto[i]["j_sr"], 
+                    j_ct: wtab01Dto[i]["j_ct"], 
+                    j_cavity: wtab01Dto[i]["j_cavity"], 
+                    jdanwy: wtab01Dto[i]["jdanwy"],
+                    w_b_gubn: wtab01Dto[i]["w_b_gubn"],
+                    jchgoga0: wtab01Dto[i]["jchgoga0"],
+                    jbigo: wtab01Dto[i]["jbigo"],
+                    j_misayong: wtab01Dto[i]["j_misayong"],
+                    j_sang: wtab01Dto[i]["j_sang"]     
+                    
                 });
                 cnt++;
             }      
@@ -522,9 +579,9 @@
             alternatingRowStep: 0,
             columns: [     
                 {
-                    binding: 'pcode',
+                    binding: 'jkey',
                     width: 180,
-                    header: '품목코드', 
+                    header: '코드', 
                     align:"center",
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.jkey}</b>',
@@ -533,13 +590,20 @@
                         }
                     })
                 }, 
-                { binding: 'jpb_gubn', header: '품목명', align: "left", width: 80 },  
-                { binding: 'jgong_code', header: '규격', align: "center", width: 80 },    
-                { binding: 'jdan_code', header: '단위', align: "center", width: 80 },               
-                { binding: 'jmodel_code', header: '상대품번', align: "center", width: 100 },  
-                { binding: 'jcolor_code', header: '소요량', align: "center", width: 100 },  
-                { binding: 'jcustomer_code', header: '투입수량', align: "center", width: 120 },  
-                { binding: 'jbonsa_code', header: '출고수량', align: "center", width: 80 },               
+                { binding: 'jpb_gubn', header: '제품구분', align: "left", width: 80 },  
+                { binding: 'jgong_code', header: '공장코드', align: "center", width: 80 },    
+                { binding: 'jdan_code', header: '단가코드', align: "center", width: 80 },               
+                { binding: 'jmodel_code', header: '모델라인', align: "center", width: 100 },  
+                { binding: 'jcolor_code', header: '모델칼라', align: "center", width: 100 },  
+                { binding: 'jcustomer_code', header: '고객분류코드', align: "center", width: 120 },  
+                { binding: 'jbonsa_code', header: '간편주문코드', align: "center", width: 80 }, 
+                { binding: 'jsayong_gubn', header: '사용구분', align: "center", width: 80 }, 
+                { binding: 'jpum', header: '제품명', align: "center", width: 180 },     
+                { binding: 'jgugek', header: '규격명', align: "left", width: 150 },    
+                { binding: 'jsize', header: '사이즈', align: "left", width: 100 },   
+                { binding: 'jchgoga0', header: '출고단가', align: "left", width: 100 },          
+                { binding: 'jbigo', header: '비고', align: "left", width: 100 },               
+                
             ], 
             itemsSource: view_p01tab02page
         });       
@@ -582,7 +646,7 @@
                 wactnm_data.push({
                     id: i, 
                     index: cnt,
-                    pcode: wtab01Dto[i]["pcode"], 
+                    jkey: wtab01Dto[i]["jkey"], 
                     jpb_gubn: wtab01Dto[i]["jpb_gubn"], 
                     jgong_code: wtab01Dto[i]["jgong_code"], 
                     jdan_code: wtab01Dto[i]["jdan_code"], 
@@ -596,7 +660,8 @@
                     jsize: wtab01Dto[i]["jsize"], 
                     jchgoga0: wtab01Dto[i]["jchgoga0"], 
                     jchgoga0: wtab01Dto[i]["jchgoga0"],
-                    jbigo: wtab01Dto[i]["jbigo"]            
+                    jbigo: wtab01Dto[i]["jbigo"]     
+                    
                 });
                 cnt++;
             }      
@@ -612,13 +677,15 @@
         if (!confirm("삭제하시겠습니까?")) {
             return ; 
         }               
-        var ls_pcode = document.getElementById('pcode').value;                                        
-                 console.log('ls_pcode') ;
+        var ls_jkey = document.getElementById('jkey').value;                                        
+                 console.log('ls_jkey') ;
+                 console.log(ls_jkey) ;
+
         $.ajax({
-            url: '/app02m/index10/del',   
+            url: '/app01m/index03/del',   
             type:"POST", 
             data: {
-                "pcode" : ls_pcode 
+                "ascode" : ls_jkey 
             },
             async:false,
             success:function(data){ 
@@ -640,111 +707,116 @@
     
     //초기화 function
     function clear_rtn(elem){
-        document.getElementById('indate').value =  ""; 
-        document.getElementById('prod_sdate').value =  "";   
-        document.getElementById('prod_edate').value =  ""; 
-        document.getElementById('lotno').value =  "";
-        document.getElementById('cltcd').value =  "";  
-        document.getElementById('qcdate').value =  "";    
-        document.getElementById('perid').value =  ""; 
-        document.getElementById('workdv').value = ""; 
-        document.getElementById('pcode').value =  ""; 
-        document.getElementById('jpum').value =  "";   
-        document.getElementById('jgugek').value =  ""; 
-        document.getElementById('dem_flag').value =  ""; 
-        document.getElementById('jchajong').value =  ""; 
-        document.getElementById('jsayang').value = "";  
-        document.getElementById('jgugek2').value = "";  
-        document.getElementById('jpumcode').value = "";   
-        document.getElementById('jdanwy').value = ""; 
-        document.getElementById('j_sr').value = "";   
-        document.getElementById('prod_qty').value = ""; 
-        document.getElementById('cls_flag').value = ""; 
-        document.getElementById('istore').value = ""; 
-        document.getElementById('ostore').value = ""; 
-        document.getElementById('rwflag').value = ""; 
-        document.getElementById('remark').value = ""; 
+        document.getElementById('jkey').value =  ""; 
+        document.getElementById('j_dae').value =  "";   
+        document.getElementById('j_jung').value =  ""; 
+        document.getElementById('jgugek').value =  "";
+        document.getElementById('jpum').value =  "";  
+        document.getElementById('jgugek2').value =  "";    
+        document.getElementById('jpumcode').value =  ""; 
+        document.getElementById('jsayang').value = ""; 
+        document.getElementById('j_net').value =  ""; 
+        document.getElementById('jchajong').value =  "";   
+        document.getElementById('j_sr').value =  ""; 
+        document.getElementById('j_ct').value =  ""; 
+        document.getElementById('j_cavity').value =  ""; 
+        document.getElementById('jdanwy').value = "";  
+        document.getElementById('jbigo').value = "";  
+        document.getElementById('w_b_gubn').value = "";   
+        document.getElementById('jchgoga0').value = ""; 
+        document.getElementById('j_dae').value = "";   
+        document.getElementById('j_jung').value = ""; 
+        document.getElementById('j_misayong').value = ""; 
+        document.getElementById('j_sang').value = ""; 
     }
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
                 
-        var ls_indate     =  document.getElementById('indate').value;  
-        var ls_prod_sdate    =  document.getElementById('prod_sdate').value;  
-        var ls_prod_edate   =  document.getElementById('prod_edate').value;
-        var ls_lotno   =  document.getElementById('lotno').value;  
-        var ls_cltcd     =  document.getElementById('cltcd').value;
-        var ls_qcdate  =  document.getElementById('qcdate').value;     
-        var ls_perid =  document.getElementById('perid').value;  
-        var ls_workdv  =  document.getElementById('workdv').value; 
-        var ls_pcode    =  document.getElementById('pcode').value;  
-        var ls_dem_flag =  document.getElementById('dem_flag').value;    
-        var ls_prod_qty     =  document.getElementById('prod_qty').value;  
-        var ls_cls_flag    =  document.getElementById('cls_flag').value;  
-        var ls_istore =  document.getElementById('istore').value;  
-        var ls_ostore   =  document.getElementById('ostore').value; 
-        var ls_rwflag    =  document.getElementById('rwflag').value;
-        var ls_remark =  document.getElementById('remark').value;  
+        var ls_jkey     =  document.getElementById('jkey').value;  
+        var ls_j_dae    =  document.getElementById('j_dae').value;  
+        var ls_j_jung   =  document.getElementById('j_jung').value;
+        var ls_jgugek   =  document.getElementById('jgugek').value;  
+        var ls_jpum     =  document.getElementById('jpum').value;
+        var ls_jgugek2  =  document.getElementById('jgugek2').value;     
+        var ls_jpumcode =  document.getElementById('jpumcode').value;  
+        var ls_jsayang  =  document.getElementById('jsayang').value; 
+        var ls_j_net    =  document.getElementById('j_net').value;  
+        var ls_jchajong =  document.getElementById('jchajong').value;    
+        var ls_j_sr     =  document.getElementById('j_sr').value;  
+        var ls_j_ct     =  document.getElementById('j_ct').value;  
+        var ls_j_cavity =  document.getElementById('j_cavity').value;  
+        var ls_jdanwy   =  document.getElementById('jdanwy').value; 
+        var ls_jbigo    =  document.getElementById('jbigo').value;
+        var ls_w_b_gubn =  document.getElementById('w_b_gubn').value;  
+        var ls_jchgoga0 =  document.getElementById('jchgoga0').value; 
+        var ls_j_misayong =  document.getElementById('j_misayong').value;
+        var ls_j_sang =  document.getElementById('j_sang').value;
               
-        const dem_flag = document.getElementById('dem_flag'); 
-        const is_checked = dem_flag.checked;
+        const j_misayong = document.getElementById('j_misayong'); 
+        const is_checked = j_misayong.checked;
         console.log(is_checked);
         if (is_checked){
-            ls_dem_flag = "1"
+            ls_j_misayong = "0"
         }else{
-            ls_dem_flag = "0"
+            ls_j_misayong = "1"
         }
+        const j_sang = document.getElementById('j_sang'); 
+        const is_checked1 = j_sang.checked;
+        console.log(is_checked1);
+        if (is_checked1){
+            ls_j_sang = "0"
+        }else{
+            ls_j_sang = "1"
+        }
+        
+        const w_b_gubn = document.getElementById('w_b_gubn').value; 
+        
+        console.log(ls_w_b_gubn);
 
-        var x = document.getElementsByName('workdv');
+        return;
 
-        console.log(x);
-            for(var i=0; i<2; i++) {
-                console.log(x[i].value);
-                if(x[i].checked){
-                    ls_workdv = x[i].value;
-                    console.log("!!!!!!!!!!!!!!!!!!!" + ls_workdv);
-                    //break;
-                }
-            }
-
-            var y = document.getElementsByName('rwflag');
-
-            console.log(y);
-                for(var i=0; i<2; i++) {
-                    console.log(y[i].value);
-                    if(y[i].checked){
-                        ls_rwflag = y[i].value;
-                        console.log("!!!!!!!!!!!!!!!!!!!" + ls_rwflag);
-                        //break;
-                    }
-                }    
+        if(is_selected == "원자재"){
+            ls_w_b_gubn = "W"; 
+        }else if(is_selected == "부자재"){
+            ls_w_b_gubn = "B"; 
+        }else if(is_selected == "반제품"){
+            ls_w_b_gubn = "H"; 
+        }else{
+            ls_w_b_gubn = "G"; 
+        }   
         
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
                 }   
-            if(!ls_pcode){
-                alert("품목을 선택하세요")
+            if(!ls_jkey){
+                alert("제품코드를 입력하세요")
                     return ; 
             } 
-                     
+            if(!ls_jpum){
+                alert("제품명을 입력하세요") 
+                    return ;                 
+            }                 
             var inputdata = {  
-                "indate"        : ls_indate,
-                "prod_sdate"    : ls_prod_sdate , 
-                "prod_edate"    : ls_prod_edate, 
-                "lotno"         : ls_lotno , 
-                "cltcd"         : ls_cltcd, 
-                "qcdate"        : ls_qcdate,
-                "perid"         : ls_perid, 
-                "workdv"        : ls_workdv , 
-                "pcode"         : ls_pcode,
-                "dem_flag"      : ls_dem_flag,
-                "prod_qty"      : ls_prod_qty,
-                "cls_flag"      : ls_cls_flag,
-                "istore"        : ls_istore, 
-                "ostore"        : ls_ostore,
-                "rwflag"        : ls_rwflag,
-                "remark"        : ls_remark,        
+                "jkey"          : ls_jkey,
+                "j_dae"         : ls_j_dae , 
+                "j_jung"        : ls_j_jung, 
+                "jgugek"        : ls_jgugek , 
+                "jpum"          : ls_jpum, 
+                "jgugek2"       : ls_jgugek2,
+                "jpumcode"      : ls_jpumcode, 
+                "jsayang"       : ls_jsayang , 
+                "j_net"         : ls_j_net,
+                "jchajong"      : ls_jchajong,
+                "j_sr"          : ls_j_sr,
+                "j_ct"          : ls_j_ct,
+                "j_cavity"      : ls_j_cavity, 
+                "jdanwy"        : ls_jdanwy,
+                "w_b_gubn"      : ls_w_b_gubn,
+                "jbigo"         : ls_jbigo,
+                "jchgoga0"      : ls_jchgoga0,
+                "j_misayong"    : ls_j_misayong,
+                "j_sang"        : ls_j_sang,        
             } 
-      
             //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
             formData.delete("key");  
             console.log(inputdata);
@@ -752,7 +824,7 @@
         formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
         
             $.ajax({
-                    url: '/app02m/index10/save',
+                    url: '/app01m/index03/save',
                     type: "POST",   
                     processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
                     contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
@@ -817,7 +889,7 @@
         });         
         function searchList_rtn(arg1){    
             $.ajax({
-                        url: '/app02m/index10/list',  
+                        url: '/app01m/index03/list',  
                         type:"POST",
                         data: { 
                             "searchtxt" :arg1, 
@@ -831,6 +903,7 @@
                     }).done(function(fragment){           
 
                     })        
+
         }    
 
         //  tab01 grid data 수집
@@ -842,151 +915,226 @@
                 wtab01_data.push({
                     id: i, 
                     index: cnt, 
-                    indate: wtab01Dto[i]["indate"], 
-                    cltcd: wtab01Dto[i]["cltcd"], 
-                    pcode: wtab01Dto[i]["pcode"], 
+                    jkey: wtab01Dto[i]["jkey"], 
+                    j_dae: wtab01Dto[i]["j_dae"], 
+                    j_jung: wtab01Dto[i]["j_jung"], 
                     jgugek: wtab01Dto[i]["jgugek"], 
-                    prod_qty: wtab01Dto[i]["prod_qty"], 
-                    lotno: wtab01Dto[i]["lotno"], 
-                    prod_sdate: wtab01Dto[i]["prod_sdate"], 
-                    prod_edate: wtab01Dto[i]["prod_edate"], 
-                    cls_flag: wtab01Dto[i]["cls_flag"],  
-                    perid: wtab01Dto[i]["perid"],  
+                    jpum: wtab01Dto[i]["jpum"], 
+                    jgugek2: wtab01Dto[i]["jgugek2"], 
+                    jpumcode: wtab01Dto[i]["jpumcode"], 
+                    jsayang: wtab01Dto[i]["jsayang"], 
+                    j_net: wtab01Dto[i]["j_net"], 
+                    jchajong: wtab01Dto[i]["jchajong"], 
+                    j_sr: wtab01Dto[i]["j_sr"], 
+                    j_ct: wtab01Dto[i]["j_ct"], 
+                    j_cavity: wtab01Dto[i]["j_cavity"], 
+                    jdanwy: wtab01Dto[i]["jdanwy"],
+                    jbigo: wtab01Dto[i]["jbigo"],
+                    w_b_gubn: wtab01Dto[i]["w_b_gubn"],
+                    jchgoga0: wtab01Dto[i]["jchgoga0"], 
+                    j_misayong: wtab01Dto[i]["j_misayong"], 
+                    j_sang: wtab01Dto[i]["j_sang"],    
                 });
                 cnt++;
             }   
 
             // console.log(wtab01_data);
   
+
             wtab01Grid.columns.clear();  
             wtab01Grid.autoGenerateColumns = false; 
             view_p01tab01page.sourceCollection  = wtab01_data;
 
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'indate';
-            cols.header = '등록일자';
-            cols.align = "center";
-            cols.width = 100;           
-            wtab01Grid.columns.push(cols);  
-
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'cltcd';
-            cols.header = '거래처';
-            cols.align = "left";
-            cols.width = 250;           
-            wtab01Grid.columns.push(cols);  
-
             var cols = new wijmo.grid.Column(); 
-            cols.binding = 'pcode';
-            cols.header = '품목';
+            cols.binding = 'jkey';
+            cols.header = '제품코드';
             cols.align = "center";
-            cols.width = 200;
+            cols.width = 180;
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.pcode}</b>',
+                text: '<b>${item.jkey}</b>',
                 click: (e, ctx) => {
-                    wcifChk_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.cltcd,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark);            
+                    wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0 , ctx.item.j_misayong , ctx.item.j_sang);                 
+                    
                 }
             });
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'jgugek';
-            cols.header = '규격';
+            cols.binding = 'jpum';
+            cols.header = '제품명';
             cols.align = "left";
             cols.width = 250;           
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'prod_qty';
-            cols.header = '계획수량';
-            cols.align = "right";
-            cols.width = 100;                  
+            cols.binding = 'jgugek';
+            cols.header = '규격';
+            cols.align = "center";
+            cols.width = 200;                  
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'lotno';
-            cols.header = '로트번호';
+            cols.binding = 'jgugek2';
+            cols.header = '색상';
             cols.align = "center";
-            cols.width = 150;           
+            cols.width = 100;           
             wtab01Grid.columns.push(cols);
 
             
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'prod_sdate';
-            cols.header = '생산시작일'; 
+            cols.binding = 'jdanwy';
+            cols.header = '단위'; 
             cols.align = "center"; 
             cols.width = 100;
             wtab01Grid.columns.push(cols);  
             
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'prod_edate';
-            cols.header = '생산종료일'; 
+            cols.binding = 'jpumcode';
+            cols.header = '상대제품번호'; 
             cols.align = "center"; 
-            cols.width = 100;
+            cols.width = 200;
             wtab01Grid.columns.push(cols); 
             
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'cls_flag';
-            cols.header = '작지상태'; 
+            cols.binding = 'jsayang';
+            cols.header = '사양구분'; 
             cols.align = "center"; 
             cols.width = 100;
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'perid';
-            cols.header = '담당자'; 
+            cols.binding = 'j_net';
+            cols.header = '제품중량'; 
             cols.align = "center"; 
             cols.width = 100;
             wtab01Grid.columns.push(cols);  
 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'jchajong';
+            cols.header = '차종'; 
+            cols.align = "center"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_sr';
+            cols.header = '스프루'; 
+            cols.align = "center"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_ct';
+            cols.header = 'C/T'; 
+            cols.align = "center"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_cavity';
+            cols.header = 'CAVITY'; 
+            cols.align = "center"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'jbigo';
+            cols.header = '비고'; 
+            cols.align = "center"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'w_b_gubn';
+            cols.header = '품목분류'; 
+            cols.align = "center"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols);  
+
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'jchgoga0';
+            cols.header = '단가'; 
+            cols.align = "right"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols); 
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_dae';
+            cols.header = '대분류'; 
+            cols.align = "right"; 
+            cols.width = 0;
+            wtab01Grid.columns.push(cols); 
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_jung';
+            cols.header = '중분류'; 
+            cols.align = "right"; 
+            cols.width = 0;
+            wtab01Grid.columns.push(cols); 
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_misayong';
+            cols.header = '미사용여부'; 
+            cols.align = "right"; 
+            cols.width = 0;
+            wtab01Grid.columns.push(cols); 
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_sang';
+            cols.header = '규격중복체크'; 
+            cols.align = "right"; 
+            cols.width = 0;
+            wtab01Grid.columns.push(cols); 
         }        
 
 //             wcifChk_a(jkey, jpb_gubn, jgong_code, jdan_code, jmodel_code,jcolor_code, jcustomer_code, jbonsa_code, jsayong_gubn, jpum, jgugek,jsize, jchgoga0, jbigo );                             
         function wcifChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32){            
-            document.getElementById('indate').value = arg1;  
-            document.getElementById('prod_sdate').value = arg2;   
-            document.getElementById('prod_edate').value = arg3;
-            document.getElementById('lotno').value = arg4; 
-            document.getElementById('cltcd').value = arg5; 
-            document.getElementById('qcdate').value = arg6;   
-            document.getElementById('perid').value = arg7;
-            //document.getElementById('workdv').value = arg8;
-            document.getElementById('pcode').value = arg9; 
-            document.getElementById('jpum').value = arg10;   
-            document.getElementById('jgugek').value = arg11; 
-            document.getElementById('dem_flag').value = arg12; 
-            document.getElementById('jchajong').value = arg13; 
-            document.getElementById('jsayang').value = arg14;  
-            document.getElementById('jgugek2').value = arg15;
-            document.getElementById('j_sr').value = arg16;
-            document.getElementById('jpumcode').value = arg17;
-            document.getElementById('jdanwy').value = arg18;
-            document.getElementById('prod_qty').value = arg18;
-            document.getElementById('cls_flag').value = arg19;
-            document.getElementById('istore').value = arg20;
-            document.getElementById('ostore').value = arg21;
-            document.getElementById('rwflag').value = arg22;
-            document.getElementById('remark').value = arg23;
+            document.getElementById('jkey').value = arg1;  
+            document.getElementById('j_dae').value = arg2;   
+            document.getElementById('j_jung').value = arg3;
+            document.getElementById('jgugek').value = arg4; 
+            document.getElementById('jgugek2').value = arg5; 
+            document.getElementById('jpum').value = arg6;   
+            document.getElementById('jpumcode').value = arg7;
+            document.getElementById('jsayang').value = arg8; 
+            document.getElementById('j_net').value = arg9; 
+            document.getElementById('jchajong').value = arg10;   
+            document.getElementById('j_sr').value = arg11; 
+            document.getElementById('j_ct').value = arg12; 
+            document.getElementById('j_cavity').value = arg13; 
+            document.getElementById('jdanwy').value = arg14;  
+            document.getElementById('jbigo').value = arg15;
+            document.getElementById('w_b_gubn').value = arg16;
+            document.getElementById('jchgoga0').value = arg17;
+            document.getElementById('j_misayong').value = arg18;
+            document.getElementById('j_sang').value = arg19;
 
-            const dem_flag = document.getElementById('dem_flag'); 
-            if(arg12 == "0"){
-                dem_flag.checked = true; 
+            const j_misayong = document.getElementById('j_misayong'); 
+            if(arg18 == "0"){
+                j_misayong.checked = true; 
             }else{
-                dem_flag.checked = false; 
+                j_misayong.checked = false; 
             } 
   
-            var x = document.getElementsByName('workdv');
-
-            for(var i=0; i<2; i++) {
-                console.log("11111111111111111" + x[i].value);
-                console.log("333333333333333333" + arg8);
-                if(x[i].value == arg8){
-                console.log("22222222222222222" + x[i].value);
-                x[i].checked = true;
-                }else{
-                    x[i].checked = false;
-                }
+            const callbackflag = document.getElementById('j_sang'); 
+            if(arg19 == "1"){
+                j_sang.checked = true; 
+            }else{
+                j_sang.checked = false;  
             }
+            
+            const w_b_gubn = document.getElementById('w_b_gubn'); 
+            console.log("11111111111111" + arg16);
+            if(arg16 == "W"){
+                w_b_gubn.checked = "원자재"; 
+            }else if(arg16 == "B"){
+                w_b_gubn.checked = "부자재"; 
+            }else if(arg16 == "H"){
+                w_b_gubn.checked = "반제품"; 
+            }else{
+                w_b_gubn.checked = "기타"; 
+            }   
         }        
 
         function searchListTot_rtn(){ 
