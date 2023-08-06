@@ -30,6 +30,8 @@ public class Index10Service {
     public Boolean UpdateFplan(Index10Dto parm){  return  indexMapper.UpdateFplan(parm);  }
 
     public String GetFplanCheck(Index10Dto parm){  return  indexMapper.GetFplanCheck(parm);  }
-
+    public List<Index10Dto> GetJpumListTot(Index10Dto parm){
+        return  indexMapper.GetJpumListTot(parm);
+    }
 
 }

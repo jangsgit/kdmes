@@ -73,5 +73,6 @@ public class Index10Dto {
     private String jpumcode;
     private String jdanwy;
     private String j_sr;
-
+    private String Jpb_gubn;
+    private String Jmodel_code;
 }

@@ -21,6 +21,6 @@ public interface Index10Mapper {
     public Boolean UpdateFplan(Index10Dto  parm) ;
 
     public String GetFplanCheck(Index10Dto  parm) ;
-
+    public List<Index10Dto> GetJpumListTot(Index10Dto parm) ;
 
 }

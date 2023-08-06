@@ -38,7 +38,7 @@
     <insert id="InsertFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
         insert into TB_FPLAN ( plan_no, indate, prod_sdate, prod_edate, lotno, cltcd, qcdate, perid,
         workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark) values
-        (#{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{qcdate}, #{perid},
+        ('20230806' , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{qcdate}, #{perid},
         #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, #{cls_flag}, #{istore}, #{ostore}, #{rwflag}, #{remark})
     </insert>
 
@@ -86,5 +86,19 @@
         DELETE  TB_FPLAN where plan_no  = #{plan_no}
     </update>
 
+    <select id="GetJpumListTot" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
+        <![CDATA[
+        select jkey, jpb_gubn, jgong_code, jdan_code, jmodel_code, jcolor_code, jcustomer_code,
+               jbonsa_code, jsayong_gubn, jpum, jgugek, jsize,  convert ( MONEY , convert(int , jchgoga0) ) AS jchgoga0, jbigo,
+               E.jcifcodename as jcifcodename
+        from JCODE3 WITH (NOLOCK)
+            LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE3.jmodel_code = E.jcifcode)
+        WHERE isnull(jpum,'') Like concat('%',#{jpum},'%')
+          and isnull(delflag,'0')  = '0'
+          and isnull(jpb_gubn,'') Like concat('%',#{jpb_gubn},'%')
+          and isnull(jmodel_code,'') Like concat('%',#{jmodel_code},'%')
+        ORDER BY jpum
+        ]]>
+    </select>
 
 </mapper>

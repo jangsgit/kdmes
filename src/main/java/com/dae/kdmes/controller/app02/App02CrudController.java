@@ -413,13 +413,13 @@ public class App02CrudController {
             index10Dto.setPcode(searchtxt);
             index10ListDto = service10.GetFplanList(index10Dto);
 
-            model.addAttribute("index03List",index03List);
+            model.addAttribute("index10ListDto",index10ListDto);
 
         } catch (Exception ex) {
             log.info("App02List_index Exception =====>" + ex.toString());
         }
 
-        return index03List;
+        return index10ListDto;
     }
     @RequestMapping(value="/index10/save")
     public String index10Save(@RequestPart(value = "key") Map<String, Object> param
@@ -550,6 +550,44 @@ public class App02CrudController {
         }
 
         return index03List;
+    }
+
+    //거래처등록
+    @GetMapping(value="/index10/listtot")
+    public Object App03ListTot_index(@RequestParam("jpbgubn") String jpbgubn,
+                                     @RequestParam("jmodelcode") String jmodelcode,
+                                     @RequestParam("conagita") String conagita,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("제품등록");
+        CommDto.setMenuUrl("기준정보>제품정보");
+        CommDto.setMenuCode("index03");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            if(jpbgubn == null || jpbgubn.equals("")){
+                jpbgubn = "%";
+            }
+            if(jmodelcode == null || jmodelcode.equals("")){
+                jmodelcode = "%";
+            }
+            if(conagita == null || conagita.equals("")){
+                conagita = "%";
+            }
+            index10Dto.setJpb_gubn(jpbgubn);
+//            log.info("jpbgubn =====>" + jpbgubn);
+            index10Dto.setJmodel_code(jmodelcode);
+            index10Dto.setJpum(conagita);
+            index10ListDto = service10.GetJpumListTot(index10Dto);
+            model.addAttribute("index10ListDto",index10ListDto);
+
+        } catch (Exception ex) {
+            log.info("App02ListTot_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index10ListDto;
     }
 
 }

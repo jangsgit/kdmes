@@ -79,12 +79,22 @@
                                                 </td>                                      
                                             </tr>   
                                             <tr> 
-                                                <th>거래처</th>
+                                                <!-- <th>거래처</th>
                                                 <td colspan="2">
                                                     <div class="input_wrap">                                               
                                                         <input type="text"  id="cltcd" autocomplete="off"> 
                                                     </div>
-                                                </td>                                                                               
+                                                </td> -->
+                                                <th>거래처명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
+                                                <td colspan="2">
+                                                    <div class="input_wrap">
+                                                        <input type="text" id="cltcd" placeholder="거래처명"  >
+                                                        <!-- <input type="hidden" id="acorp1"  disabled> -->
+                                                        <!-- <input type="hidden" id="acorp2"  disabled> -->
+                                                        <input type="hidden" id="acorp3"  disabled>
+                                                        <input type="hidden" id="acode"  disabled>
+                                                    </div>
+                                                </td>                                                                                 
                                                 <th>출고예정일</th> 
                                                 <td colspan="2">
                                                     <div class="input_wrap">                                               
@@ -784,8 +794,8 @@
         fd[ prop ] = "";
         }
     }
-    }
 
+    }
 
     function listUp(){
         window.location.href = '/app01/index03';
@@ -1004,7 +1014,7 @@
                 ls_jpbgubn = "%";
             }
             $.ajax({
-                        url: '/app01m/index03/listtot',  
+                        url: '/app02m/index10/listtot',  
                         type:"POST",
                         data: { 
                             "jpbgubn" :ls_jpbgubn, 
