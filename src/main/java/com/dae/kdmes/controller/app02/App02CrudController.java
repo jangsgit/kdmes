@@ -60,6 +60,8 @@ public class App02CrudController {
 
     List<Index10Dto> index10ListDto = new ArrayList<>();
 
+    List<Index10Dto> index10List = new ArrayList<>();
+
     protected Log log =  LogFactory.getLog(this.getClass());
 
 
@@ -552,7 +554,6 @@ public class App02CrudController {
         return index03List;
     }
 
-    //거래처등록
     @GetMapping(value="/index10/listtot")
     public Object App03ListTot_index(@RequestParam("jpbgubn") String jpbgubn,
                                      @RequestParam("jmodelcode") String jmodelcode,
@@ -579,11 +580,76 @@ public class App02CrudController {
 //            log.info("jpbgubn =====>" + jpbgubn);
             index10Dto.setJmodel_code(jmodelcode);
             index10Dto.setJpum(conagita);
-            index10ListDto = service10.GetJpumListTot(index10Dto);
-            model.addAttribute("index10ListDto",index10ListDto);
+            index10List = service10.GetJpumListTot(index10Dto);
+            model.addAttribute("index10List",index10List);
 
         } catch (Exception ex) {
             log.info("App02ListTot_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index10List;
+    }
+
+    //거래처등록
+    @GetMapping(value="/index10/listot")
+    public Object App02ListTot_index(@RequestParam("conacorp1") String conacorp1,
+                                     @RequestParam("conacorp") String conacorp,
+                                     @RequestParam("conagita") String conagita,
+                                     @RequestParam("abonsadam1") String abonsadam1,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("거래처등록");
+        CommDto.setMenuUrl("기준정보>거래처정보");
+        CommDto.setMenuCode("index10");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            if(conacorp1 == null || conacorp1.equals("")){
+                conacorp1 = "%";
+            }
+            if(conacorp == null || conacorp.equals("")){
+                conacorp = "%";
+            }
+            if(conagita == null || conagita.equals("")){
+                conagita = "%";
+            }
+            if(abonsadam1 == null || abonsadam1.equals("")){
+                abonsadam1 = "%";
+            }
+            index10Dto.setAcorp1(conacorp1);
+//            log.info("conacorp1 =====>" + conacorp1);
+            index10Dto.setAcorp(conacorp);
+            index10Dto.setAgita(conagita);
+            index10Dto.setAbonsadam1(abonsadam1);
+            index10ListDto = service10.GetCifListTot(index10Dto);
+            model.addAttribute("index10List",index10ListDto);
+
+        } catch (Exception ex) {
+            log.info("App02ListTot_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index10ListDto;
+    }
+    //사원현황
+    @GetMapping(value="/index10/insalist")
+    public Object App02List_insalist(@RequestParam("searchtxt") String searchtxt,
+                                  Model model, HttpServletRequest request) throws Exception{
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index10Dto.setInname(searchtxt);
+            index10ListDto = service10.GetInsaList(index10Dto);
+//            log.info("popupDto =====>" );
+//            log.info(  popupDto);
+            model.addAttribute("insalistDto",index10ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }
 

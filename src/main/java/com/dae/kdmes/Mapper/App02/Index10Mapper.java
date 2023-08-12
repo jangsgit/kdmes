@@ -23,4 +23,7 @@ public interface Index10Mapper {
     public String GetFplanCheck(Index10Dto  parm) ;
     public List<Index10Dto> GetJpumListTot(Index10Dto parm) ;
 
+    public List<Index10Dto> GetCifListTot(Index10Dto parm) ;
+
+    public List<Index10Dto> GetInsaList(Index10Dto parm) ;
 }
