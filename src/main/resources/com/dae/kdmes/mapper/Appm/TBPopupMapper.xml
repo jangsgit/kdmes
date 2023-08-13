@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.Appm.TBPopupMapper">
+    <select id="GetWrmcList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        select  A.wflag, A.wrmc, B.machname, A.wperid,
+                DBO.DF_NM_RTN('TB_JA001', A.custcd, A.wperid, '', '') wpernm
+        FROM TB_FPLAN_WRMC A WITH(NOLOCK),  TB_PC110 B WITH(NOLOCK)
+        WHERE (A.wrmc = B.machnum) AND (wflag Like #{wflag} + '%')  AND  (A.wrmc lIKE '%' +  #{machname}  + '%' OR  B.machname  LIKE '%' +  #{machname}  + '%' )
+    </select>
+
+    <select id="GetWrmcList_blank" resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        select  '' as wflag, '' as wrmc, '' as machname, '' as wperid, '' wpernm
+        FROM  dual
+    </select>
+
+    <select id="FPLAN_OWORK_List" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        select A.custcd, A.spjangcd,
+               A.plan_no, A.wseq, A.wflag, A.seq, A.pcode,   Left(a.wotdt,4) + '-' +  substring(a.wotdt, 5,2) + '-' + substring(a.wotdt, 7,2) as wotdt,
+               A.wqty, A.lotno, A.wqty,    A.bqty as bqty, A.qty,  B.phm_pnam as pname, B.phm_size as psize
+        FROM  TB_FPLAN_OWORK A , TB_CA501 B
+        WHERE A.pcode = B.phm_pcod AND A.plan_no = #{plan_no} and A.pcode = #{pcode} and wflag=#{wflag} and lotno=#{lotno}
+    </select>
+
+    <select id="GetWfperidList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        SELECT B.com_code as linecd , B.com_cnam as linenm ,
+               C.com_code as wflagcd, C.com_cnam AS wflagnm,   A.wflag as wflag,
+               A.perid as wperid,  DBO.DF_NM_RTN('TB_JA001', A.custcd, A.perid, '', '') wpernm,
+               A.custcd, A.spjangcd
+        FROM TB_FPLAN_WPER A WITH (NOLOCK)
+        LEFT OUTER JOIN  TB_CA510 B ON B.com_cls = '040' and B.com_code != '00' and   LEFT(A.wflag,2) = B.com_code
+        LEFT OUTER JOIN  TB_CA510 C ON LEFT(C.com_cls,2) = '04' and SUBSTRING(C.com_cls, 3,1) = left( A.wflag ,1) and   C.com_code != '00'  and C.com_code = substring(A.wflag,3,6)
+        WHERE A.wflag Like #{wflag} + '%'
+        ORDER BY B.com_code, C.com_code, wpernm
+    </select>
+
+    <select id="GetWfbomList" parameterType="com.dae.kdmes.DTO.Appm.FPLANBOM_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANBOM_VO">
+        select  A.seq   seq ,
+                A.pcode pcode,
+                B.phm_pnam  pname,
+                B.phm_size  psize,
+                B.phm_unit  punit,
+                B.lotnodv   lotnodv,
+                A.qty   qty,
+                A.qty   gqty,
+                CAST(0.000 as DECIMAL(18, 3)) tqty
+        FROM TB_FPLAN_BOM A WITH(NOLOCK),
+             TB_CA501 B WITH(NOLOCK)
+        WHERE A.custcd   = B.phm_cust
+          AND A.pcode    = B.phm_pcod
+          AND A.plan_no  = #{plan_no}
+        ORDER BY A.seq
+    </select>
+
+    <select id="GetWfbomList_blank" resultType="com.dae.kdmes.DTO.Appm.FPLANBOM_VO">
+        select  '' as seq, '' as pcode, '' as pname, '' as psize, '' punit, '' as lotnodv, 0 as qty, 0 as gqty, 0 as tqty
+        FROM  dual
+    </select>
+
+
+    <select id="GetWfiworkList" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO">
+        SELECT A.custcd,
+               A.spjangcd,
+               A.plan_no,
+               A.wseq,
+               A.wflag,
+               A.seq,
+               A.pcode,
+               B.phm_pnam pname,
+               B.phm_size psize,
+               B.phm_unit punit,
+               A.lotno,
+               '' as  opcltnm,
+               A.store,
+               A.jqty,
+               A.sqty,
+               A.qty,
+               A.bqty,
+               A.indate,
+               A.inperid
+        FROM TB_FPLAN_IWORK A WITH(NOLOCK),
+             TB_CA501 B WITH(NOLOCK)
+        WHERE A.custcd   = B.phm_cust
+          AND A.pcode    = B.phm_pcod
+          AND A.plan_no  = #{plan_no}
+          AND A.wseq  = #{wseq}
+          AND A.wflag  = #{wflag}
+        ORDER BY A.seq
+    </select>
+    <select id="GetNewWfiworkList" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO">
+        { call  SP_POPUP_LOTNO_WFIWORK ('DAEBAK', 'ZZ', '%', '%', '%', '20000101', #{indate, mode=IN, jdbcType=VARCHAR, javaType=String} , #{plan_no, mode=IN, jdbcType=VARCHAR, javaType=String}, '', #{wflag, mode=IN, jdbcType=VARCHAR, javaType=String}, '%') }
+    </select>
+
+
+
+    <select id="GetWfiworkList_blank" resultType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO">
+        select '' as plan_no, '' as wseq, '' as wflag,  '' as seq, '' as pcode, '' as pname, '' as psize, '' punit, '' as lotno,
+               '' as opcltcd, '' as opcltnm, '' as opcono, '' as opdate, '' as store,
+               0 as jqty, 0 as sqty, 0 as qty, 0 as bqty, '' as indate, '' as inperid
+        FROM  dual
+    </select>
+    <select id="GetWscnt" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        SELECT TOP 1 isnull(msg, '0')  AS wscnt
+        FROM TB_FPLAN_WDATA WITH(NOLOCK) WHERE WRMC =#{wrmc} and CONVERT(CHAR(8), wrdate, 112) = #{sdate}
+        order by wrdate desc
+    </select>
+    <insert id="TB_Fplan_WtimeInsert" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" keyProperty="bankcd">
+        INSERT INTO TB_FPLAN_WTIME(custcd,  spjangcd, plan_no, wseq,   aseq,   seq, wflag, wfrdt,  wtrdt, wopdv,   wdtcd,  wrerm )
+        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wseq}, #{aseq}, #{seq}, #{wflag},#{wfrdt},#{wtrdt},#{wopdv},#{wdtcd},#{wrerm}          )
+    </insert>
+    <select id="GetWtimeSeq" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="String">
+        SELECT isnull(max(seq), '01') as seq
+        FROM TB_FPLAN_WTIME WITH(NOLOCK) WHERE plan_no =#{plan_no}
+    </select>
+    <select id="GetWtimeEndSeq" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="String">
+        SELECT TOP 1  seq
+        FROM TB_FPLAN_WTIME WITH(NOLOCK) WHERE plan_no =#{plan_no} and wtrdt is null order by wfrdt desc
+    </select>
+    <insert id="TB_Fplan_WtimeUpdate" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" keyProperty="bankcd">
+        UPDATE TB_FPLAN_WTIME SET wtrdt = #{wtrdt}
+        WHERE plan_no =#{plan_no} AND seq = #{seq}
+    </insert>
+
+    <select id="GetWBadList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        <![CDATA[
+        SELECT TB_CA510.com_code   as wcode,
+               TB_CA510.com_cnam   as wcdnm,
+               ISNULL(TB_FPLAN_WBAD.wbqty, 0) as wbqty,
+               TB_FPLAN_WBAD.wseq   as wseq ,
+               TB_FPLAN_WBAD.plan_no   as plan_no
+        FROM TB_CA510 WITH(NOLOCK) LEFT OUTER JOIN TB_FPLAN_WBAD WITH(NOLOCK)
+             ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag}
+            AND TB_FPLAN_WBAD.plan_no   = #{plan_no}
+        WHERE TB_CA510.com_cls = '05' + #{wclscode}
+          AND TB_CA510.com_code   != '00'
+        ]]>
+    </select>
+
+    <select id="GetWBadList_blank" resultType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO">
+        select '' as wcode, '' as wcdnm, 0 as wbqty
+        FROM  dual
+    </select>
+
+
+
+
+</mapper>

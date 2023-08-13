@@ -9,7 +9,7 @@
                     <li class="nav-item">
                         <!-- label-->
                         <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                            <div class="col-auto navbar-vertical-label">ACTAS MES
+                            <div class="col-auto navbar-vertical-label">KD MES
                             </div>
                             <div class="col ps-0">
                                 <hr class="mb-0 navbar-vertical-divider" />
@@ -25,31 +25,23 @@
                         <!-- th:if="${CommDto.MenuCode} == 'appcom01'" class="nav-link active"  -->
                         <ul class="nav collapse false" id="stdcode">
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/appcom01/list?line=00&wflag=00010&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
+                                <a class="nav-link" th:href="@{/appm/list?line=00&wflag=00010&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">절단공정</span> <!--절단공정-->
+                                        class="nav-link-text ps-1">사출공정</span> <!--절단공정-->
                                     </div>
                                 </a>
                                 <!-- more inner pages-->
                             </li> 
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/appcom02/list?line=00&wflag=00020&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
+                                <a class="nav-link" th:href="@{/appm/list?line=00&wflag=00020&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
-                                            class="nav-link-text ps-1">절곡공정</span> <!--절단공정-->
+                                            class="nav-link-text ps-1">조립공정</span> <!--절단공정-->
                                     </div>
                                 </a>
                                 <!-- more inner pages-->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/appcom03/list?line=00&wflag=00030&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text ps-1">용접공정</span> <!--절단공정-->
-                                    </div>
-                                </a>
-                                <!-- more inner pages-->
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/appcom04/list?line=00&wflag=00090&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
+                                <a class="nav-link" th:href="@{/appm/list?line=00&wflag=00030&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
                                             class="nav-link-text ps-1">검사공정</span> <!--절단공정-->
                                     </div>
@@ -57,14 +49,14 @@
                                 <!-- more inner pages-->
                             </li> 
                         </ul>                         
-                        <!-- parent pages--><a class="nav-link" th:href="@{/appcom01/plansearch?custcd=actas&spjangcd=ZZ&frdate=20000101&todate=20221231 }"  role="button"
+                        <!-- parent pages--><a class="nav-link" th:href="@{/appm/plansearch?custcd=actas&spjangcd=ZZ&frdate=20000101&todate=20221231 }"  role="button"
                             aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                         class="fas fa-comments"></span></span><span
                                     class="nav-link-text ps-1">생산계획현황</span>
                             </div>
                         </a>                         
-                        <!-- parent pages--><a class="nav-link" th:href="@{/appcom01/planviewsearch?custcd=actas&spjangcd=ZZ&frdate=20000101&todate=20221231 }"  role="button"
+                        <!-- parent pages--><a class="nav-link" th:href="@{/appm/planviewsearch?custcd=actas&spjangcd=ZZ&frdate=20000101&todate=20221231 }"  role="button"
                             aria-expanded="false">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                         class="fas fa-comments"></span></span><span
