@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Service("Appcom01Service")
+@Service("Appcom01Service01")
 public class Appcom01Service {
     private final FPLANW010_Mapper FPLANW010_mapper;
     protected Log log =  LogFactory.getLog(this.getClass());
