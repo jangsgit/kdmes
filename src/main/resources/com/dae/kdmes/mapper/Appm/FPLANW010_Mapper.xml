@@ -28,7 +28,7 @@
                A.lotno,
                A.plan_no,
                A.cltcd,
-               B.cltnm,
+               B.acorp as cltnm,
                A.pcode,
                C.phm_pnam AS pname,
                C.phm_size AS psize,
@@ -72,11 +72,11 @@
         FROM TB_FPLAN A WITH(NOLOCK)
              LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00010' ,
              TB_CA501 C WITH(NOLOCK),
-            TB_XCLIENT B WITH(NOLOCK)
+             CIF B WITH(NOLOCK)
         WHERE (A.custcd             = C.phm_cust)
           AND (A.pcode              = C.phm_pcod)
           AND (A.custcd             = B.custcd)
-          AND (A.cltcd              = B.cltcd)
+          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND (A.line               = #{line})
           AND (A.cls_flag          IN ('1', '2', '3', '4'))
           AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
@@ -89,13 +89,13 @@
     </select>
     <select id="GetFPLANW010_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  (select machname from TB_PC110 where machnum=A.wrmc) as machname,
-               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono, C.cltnm , D.phm_pcod AS pcode, D.phm_pnam AS pname,
+               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.phm_pcod AS pcode, D.phm_pnam AS pname,
                D.phm_size AS psize, D.phm_unit AS punit,
                (CASE WHEN A.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, A.wrps, '', '')  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, A.wrps, '', '') END ) wrpsnm
-        from TB_FPLAN_W010 A WITH (NOLOCK) , TB_FPLAN B WITH(NOLOCK), TB_XCLIENT C WITH(NOLOCK),  TB_CA501 D WITH(NOLOCK)
+        from TB_FPLAN_W010 A WITH (NOLOCK) , TB_FPLAN B WITH(NOLOCK), CIF C WITH(NOLOCK),  TB_CA501 D WITH(NOLOCK)
         where A.spjangcd = B.spjangcd
         AND   A.plan_no = B.plan_no
-        AND   B.cltcd = C.cltcd
+        AND   B.cltcd =  C.acorp1 + CAST(C.acorp2 as varchar)
         AND   B.pcode = D.phm_pcod
         AND   A.plan_no=#{plan_no} and A.wseq IN (#{wseq} , '02')
     </select>
