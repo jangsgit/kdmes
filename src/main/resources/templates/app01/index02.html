@@ -190,6 +190,7 @@
          var view_p01tab01page;
          var view_p01tab02page;
          var view_p01tab03page; 
+         var view_innamepage
          var wtab01Grid;
          var wtab02Grid;
          var wtab03Grid; 
@@ -376,11 +377,16 @@
             return winname_data;                                      
         } 
     } 
-
+    document.getElementById("searchCode").addEventListener("keyup", (e)=>{
+        if(e.keyCode === 13){  
+            document.getElementById("innamebtn").click();
+            insaSearchList_rtn("M"); 
+        }
+    }); 
     
     document.getElementById("wpernm").addEventListener("keyup", (e)=>{ 
         if(e.keyCode === 13){  
-            insaflag = "A"; 
+            document.getElementById("innamebtn").click();
             insaSearchList_rtn("A"); 
         }
     });  
@@ -446,11 +452,19 @@
  
             cols = new wijmo.grid.Column(); 
             cols.binding = 'inname';
-            cols.header = '사원명';
+            cols.header = '담당자명';
             cols.align = "center";
             cols.width = '*';  
             winnameGrid.columns.push(cols);  
-        }               
+        }
+        
+        function winsaChk_a(arg1, arg2){  
+
+            document.getElementById('wperid').value = arg2;  
+            document.getElementById('wpernm').value = arg1;
+
+            $("#winnamemodal_btn").trigger("click");
+        }
   
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //선택한 탭 체크 

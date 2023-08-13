@@ -240,8 +240,9 @@
                                         <tr>  
                                             <th>공정후검사</th>
                                             <td colspan="2">
-                                                <div class="input_wrap">                                                                                                                                          
-                                                </div>                                   
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" id="j_sang" value="j_sang" type="checkbox"/>                                         
+                                                </div>                                 
                                             </td>                                                                                  
                                         </tr>
                                         <tr>  
@@ -675,8 +676,6 @@
             return ; 
         }               
         var ls_jkey = document.getElementById('jkey').value;                                        
-                 console.log('ls_jkey') ;
-                 console.log(ls_jkey) ;
 
         $.ajax({
             url: '/app01m/index03/del',   
@@ -767,12 +766,9 @@
 
         var x = document.getElementsByName('w_b_gubn');
 
-        console.log(x);
             for(var i=0; i<4; i++) {
-                console.log(x[i].value);
                 if(x[i].checked){
                     ls_w_b_gubn = x[i].value;
-                    console.log("!!!!!!!!!!!!!!!!!!!" + ls_w_b_gubn);
                     //break;
                 }
             }

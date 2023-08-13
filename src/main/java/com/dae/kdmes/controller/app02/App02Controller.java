@@ -62,7 +62,9 @@ public class App02Controller {
 
         try {
             index10ListDto = service10.getFplanList(index10Dto);
+            popupListDto = service10.getCls_flagList(popupDto);
 
+            model.addAttribute("cls_flagList",popupListDto);
             model.addAttribute("fplanList",index10ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -446,6 +447,9 @@ public class App02CrudController {
                     case "cltcd":
                         index10Dto.setCltcd(values.toString());
                         break;
+                    case "pcode":
+                        index10Dto.setPcode(values.toString());
+                        break;
                     case "qcdate":
                         index10Dto.setQcdate(values.toString());
                         break;
@@ -456,13 +460,16 @@ public class App02CrudController {
                         index10Dto.setWorkdv(Integer.valueOf(values.toString()));
                         break;
                     case "dem_flag":
-                        index10Dto.setDem_flag(values.toString());
+                        index10Dto.setDem_flag(Integer.valueOf(values.toString()));
+                        break;
+                    case "ecltnm":
+                        index10Dto.setEcltnm(values.toString());
                         break;
                     case "prod_qty":
-                        index10Dto.setProd_qty(values.toString());
+                        index10Dto.setProd_qty(BigDecimal.valueOf(Long.parseLong(values.toString())));
                         break;
                     case "cls_flag":
-                        index10Dto.setCls_flag(values.toString());
+                        index10Dto.setCls_flag(Integer.valueOf(values.toString()));
                         break;
                     case "istore":
                         index10Dto.setIstore(values.toString());
@@ -512,12 +519,12 @@ public class App02CrudController {
     }
 
     @RequestMapping(value="/index10/del")
-    public String index10Delete(  @RequestParam("pcode") String pcode,
+    public String index10Delete(  @RequestParam("lotno") String lotno,
                                   Model model,   HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
-        index10Dto.setPcode(pcode);
+        index10Dto.setPlan_no(lotno);
         Boolean result = service10.DeleteFplan(index10Dto);
         if (!result) {
             return "error";
