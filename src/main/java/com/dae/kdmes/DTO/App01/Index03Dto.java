@@ -29,4 +29,6 @@ public class Index03Dto {
     private String j1_name;
     private String j_misayong;
     private String j_sang;
+    private String Jpb_gubn;
+    private String Jmodel_code;
 }

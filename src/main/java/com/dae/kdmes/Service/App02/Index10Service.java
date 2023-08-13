@@ -33,5 +33,12 @@ public class Index10Service {
     public List<Index10Dto> GetJpumListTot(Index10Dto parm){
         return  indexMapper.GetJpumListTot(parm);
     }
+    public List<Index10Dto> GetCifListTot(Index10Dto parm){
+        return  indexMapper.GetCifListTot(parm);
+    }
 
+    /** 사원 리스트 */
+    public List<Index10Dto> GetInsaList(Index10Dto parm){
+        return  indexMapper.GetInsaList(parm);
+    }
 }
