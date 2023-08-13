@@ -58,6 +58,9 @@ public class App01Controller {
     List<Index03Dto> index03List = new ArrayList<>();
 
     List<Index04Dto> index04ListDto = new ArrayList<>();
+    List<Index02Dto> index07List = new ArrayList<>();
+
+    Index02Dto index07Dto = new Index02Dto();
 
     protected Log log =  LogFactory.getLog(this.getClass());
     //공통코드등록
@@ -156,6 +159,34 @@ public class App01Controller {
         }
 
         return "App01/index04";
+    }
+    @GetMapping(value="/index07")
+    public String App01_index07(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("거래처등록");
+        CommDto.setMenuUrl("기준정보>거래처정보");
+        CommDto.setMenuCode("index02");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+//        userformDto.setPagetree01("거래처등록");
+//        userformDto.setPagenm("본사기준정보");
+//        model.addAttribute("CommDto", CommDto);
+
+        try {
+            index07Dto.setAcorp("%");
+            index07List = service02.GetCifList(index07Dto);
+            popupListDto = service02.getCifCodeList(popupDto);
+
+            model.addAttribute("index07List",index07List);
+            model.addAttribute("cifcodeList",popupListDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App03001Tab01Form Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index07";
     }
 
 }

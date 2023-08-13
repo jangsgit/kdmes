@@ -518,7 +518,7 @@
  
         // tab01검색 데이터 수집
         function getData_tab01(scnt, start){      
-            var wtab01Dto = [[${index02List}]];   
+            var wtab01Dto = [[${index07List}]];   
             var wactnm_data = [];          
             var cnt = 1;   
             if (!start)
@@ -658,7 +658,7 @@
  
         // tab01검색 데이터 수집
         function getData_tab02(){    
-            var wtab01Dto = [[${index02List}]];   
+            var wtab01Dto = [[${index07List}]];   
             var wactnm_data = [];   
             var cnt = 1;   
             for (var i = 0; i < wtab01Dto.length; i++) {
@@ -766,7 +766,7 @@
                  console.log(ls_acode) ;
 
         $.ajax({
-            url: '/app01m/index02/del',   
+            url: '/app01m/index07/del',   
             type:"POST", 
             data: {
                 "ascode" : ls_acode 
@@ -999,7 +999,7 @@
         formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
         
             $.ajax({
-                    url: '/app01m/index02/save',
+                    url: '/app01m/index07/save',
                     type: "POST",   
                     processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
                     contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
@@ -1035,7 +1035,7 @@
 
 
     function listUp(){
-        window.location.href = '/app01/index02';
+        window.location.href = '/app01/index07';
     }; 
 
 
@@ -1201,7 +1201,7 @@
         });         
         function searchList_rtn(arg1){    
             $.ajax({
-                        url: '/app01m/index02/list',  
+                        url: '/app01m/index07/list',  
                         type:"POST",
                         data: { 
                             "searchtxt" :arg1, 
@@ -1367,7 +1367,7 @@
             let ls_abonsadam1 = "%";
             let ls_conagita = '%'; //document.getElementById('conagita').value;   
             $.ajax({
-                        url: '/app01m/index02/listtot',  
+                        url: '/app01m/index07/listtot',  
                         type:"POST",
                         data: { 
                             "conacorp1" :ls_conacorp1, 

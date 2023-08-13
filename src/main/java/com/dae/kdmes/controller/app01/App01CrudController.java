@@ -54,6 +54,9 @@ public class App01CrudController {
 
     List<Index04Dto> index04ListDto = new ArrayList<>();
 
+    Index02Dto index07Dto = new Index02Dto();
+    List<Index02Dto> index07List = new ArrayList<>();
+
     protected Log log =  LogFactory.getLog(this.getClass());
 
 
@@ -725,4 +728,225 @@ public class App01CrudController {
         }
         return "success";
     }
+
+
+
+
+    //거래처등록
+    @GetMapping(value="/index07/list")
+    public Object App07List_index(@RequestParam("searchtxt") String searchtxt,
+                                  Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("거래처등록");
+        CommDto.setMenuUrl("기준정보>거래처정보");
+        CommDto.setMenuCode("index07");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index07Dto.setAcorp(searchtxt);
+            index07List = service02.GetCifList(index07Dto);
+            model.addAttribute("index07List",index07List);
+
+        } catch (Exception ex) {
+            log.info("App07List_index Exception =====>" + ex.toString());
+        }
+
+        return index07List;
+    }
+
+
+    //거래처등록
+    @GetMapping(value="/index07/listtot")
+    public Object App02ListTot_index(@RequestParam("conacorp1") String conacorp1,
+                                     @RequestParam("conacorp") String conacorp,
+                                     @RequestParam("conagita") String conagita,
+                                     @RequestParam("abonsadam1") String abonsadam1,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("거래처등록");
+        CommDto.setMenuUrl("기준정보>거래처정보");
+        CommDto.setMenuCode("index07");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            if(conacorp1 == null || conacorp1.equals("")){
+                conacorp1 = "%";
+            }
+            if(conacorp == null || conacorp.equals("")){
+                conacorp = "%";
+            }
+            if(conagita == null || conagita.equals("")){
+                conagita = "%";
+            }
+            if(abonsadam1 == null || abonsadam1.equals("")){
+                abonsadam1 = "%";
+            }
+            index07Dto.setAcorp1(conacorp1);
+//            log.info("conacorp1 =====>" + conacorp1);
+            index07Dto.setAcorp(conacorp);
+            index07Dto.setAgita(conagita);
+            index07Dto.setAbonsadam1(abonsadam1);
+            index07List = service02.GetCifListTot(index07Dto);
+            model.addAttribute("index07List",index07List);
+
+        } catch (Exception ex) {
+            log.info("App07ListTot_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index07List;
+    }
+
+
+    @RequestMapping(value="/index07/save")
+    public String index07Save(@RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
+
+        try {
+            param.forEach((key, values) -> {
+                switch (key) {
+                    case "acorp1":
+                        index07Dto.setAcorp1(values.toString());
+                        break;
+                    case "acorp2":
+                        index07Dto.setAcorp2(values.toString());
+                        break;
+                    case "acorp3":
+                        index07Dto.setAcorp3(values.toString());
+                        break;
+                    case "acode":
+                        index07Dto.setAcode(values.toString());
+                        log.info("setAcode");
+                        log.info(values.toString());
+                        break;
+                    case "acorp":
+                        index07Dto.setAcorp(values.toString());
+                        break;
+                    case "asano1":
+                        index07Dto.setAsano1(values.toString());
+                        break;
+                    case "asano2":
+                        index07Dto.setAsano2(values.toString());
+                        break;
+                    case "asano3":
+                        index07Dto.setAsano3(values.toString());
+                        break;
+                    case "aname":
+                        index07Dto.setAname(values.toString());
+                        break;
+                    case "aupte":
+                        index07Dto.setAupte(values.toString());
+                        break;
+                    case "ajong":
+                        index07Dto.setAjong(values.toString());
+                        break;
+                    case "apost1":
+                        index07Dto.setApost1(values.toString());
+                        break;
+                    case "ajuso1":
+                        index07Dto.setAjuso1(values.toString());
+                        break;
+                    case "ajuso2":
+                        index07Dto.setAjuso2(values.toString());
+                        break;
+                    case "abigo":
+                        index07Dto.setAbigo(values.toString());
+                        break;
+                    case "agita":
+                        index07Dto.setAgita(values.toString());
+                        break;
+                    case "ajumi1":
+                        index07Dto.setAjumi1(values.toString());
+                        break;
+                    case "ajumi2":
+                        index07Dto.setAjumi2(values.toString());
+                        break;
+                    case "aascode1":
+                        index07Dto.setAascode1(values.toString());
+                        break;
+                    case "aascode2":
+                        index07Dto.setAascode2(values.toString());
+                        break;
+                    case "atelno":
+                        index07Dto.setAtelno(values.toString());
+                        break;
+                    case "atelno2":
+                        index07Dto.setAtelno2(values.toString());
+                        break;
+                    case "aemail":
+                        index07Dto.setAemail(values.toString());
+                        break;
+                    case "ahand":
+                        index07Dto.setAhand(values.toString());
+                        break;
+                    case "abonsadam1":
+                        index07Dto.setAbonsadam1(values.toString());
+                        break;
+                    case "abonsadam2":
+                        index07Dto.setAbonsadam2(values.toString());
+                        break;
+                    case "abonsadam3":
+                        index07Dto.setAbonsadam3(values.toString());
+                        break;
+                    case "adomain":
+                        index07Dto.setAdomain(values.toString());
+                        break;
+                    case "afax":
+                        index07Dto.setAfax(values.toString());
+                        break;
+                    default:
+                        break;
+                }
+            });
+            HttpSession session = request.getSession();
+            UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+            model.addAttribute("userformDto",userformDto);
+
+            String ls_acode = index07Dto.getAcode();
+            String ls_acorp2 = "";
+            Boolean result = false;
+            if (ls_acode == null || ls_acode.equals("")) {
+                Integer ll_acorp2 = Integer.parseInt(service02.getIndex02MaxSeq(index07Dto.getAcorp1())) + 1;
+                ls_acorp2 = ll_acorp2.toString();
+                index07Dto.setAcorp2(ls_acorp2);
+                result = service02.InsertCif(index07Dto);
+                if (!result) {
+                    return "error";
+                }
+            } else {
+                result = service02.UpdateCif(index07Dto);
+                if (!result) {
+                    return "error";
+                }
+            }
+//            model.addAttribute("userformDto",userformDto);
+        }catch (IllegalStateException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
+        return "success";
+    }
+
+    @RequestMapping(value="/index07/del")
+    public String index07Delete(  @RequestParam("ascode") String ascode,
+                                  Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        index07Dto.setAcode(ascode);
+        Boolean result = service02.DeleteCif(index07Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+
 }
