@@ -3,6 +3,8 @@ package com.dae.kdmes.DTO.App02;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class Index10Dto {
@@ -11,6 +13,7 @@ public class Index10Dto {
     private String plan_no;
     private String pcode;
     private String wodv;
+    private String ecltnm;
     private String wdndv;
     private String wrmc;
     private String wono;
@@ -23,7 +26,7 @@ public class Index10Dto {
     private String woam;
     private String prod_sdate;
     private String prod_edate;
-    private String prod_qty;
+    private BigDecimal prod_qty;
     private String prod_dqty;
     private String qcdate;
     private String qcqty;
@@ -38,9 +41,10 @@ public class Index10Dto {
     private String close_date;
     private String close_perid;
     private String decision;
-    private String cls_flag;
+    private Integer cls_flag;
     private String work_flag;
-    private String dem_flag;
+    private Integer dem_flag;
+    private Integer rw_flag;
     private String qc_flag;
     private String close_flag;
     private String end_flag;
@@ -114,4 +118,5 @@ public class Index10Dto {
     private String acode;
     private String ajusotxt;
     private String inname;
+    private String insano;
 }

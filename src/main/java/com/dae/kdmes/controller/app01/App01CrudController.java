@@ -408,6 +408,7 @@ public class App01CrudController {
                 searchtxt = "%";
             }
             index03Dto.setJpum(searchtxt);
+            index03Dto.setJkey(searchtxt);
             index03List = service03.GetJpumList(index03Dto);
 
             model.addAttribute("index03List",index03List);

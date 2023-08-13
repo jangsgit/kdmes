@@ -2,6 +2,7 @@ package com.dae.kdmes.Service.App02;
 
 import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App02.Index10Dto;
+import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.Mapper.App02.Index10Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,9 @@ public class Index10Service {
     /** 사원 리스트 */
     public List<Index10Dto> GetInsaList(Index10Dto parm){
         return  indexMapper.GetInsaList(parm);
+    }
+
+    public List<PopupDto> getCls_flagList(PopupDto parm){
+        return  indexMapper.getCls_flagList(parm);
     }
 }

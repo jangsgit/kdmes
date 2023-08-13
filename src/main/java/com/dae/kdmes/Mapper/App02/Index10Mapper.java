@@ -2,6 +2,7 @@ package com.dae.kdmes.Mapper.App02;
 
 import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App02.Index10Dto;
+import com.dae.kdmes.DTO.Popup.PopupDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +27,6 @@ public interface Index10Mapper {
     public List<Index10Dto> GetCifListTot(Index10Dto parm) ;
 
     public List<Index10Dto> GetInsaList(Index10Dto parm) ;
+
+    public List<PopupDto> getCls_flagList(PopupDto parm) ;
 }

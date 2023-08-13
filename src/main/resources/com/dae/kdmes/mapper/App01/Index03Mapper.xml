@@ -86,7 +86,7 @@
                    E.jcifcodename as jcifcodename, j_misayong, j_sang
             from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey = E.jcifcode)
-            WHERE isnull(jpum,'') Like concat('%',#{jpum},'%')
+            WHERE isnull(jpum,'') Like concat('%',#{jpum},'%') or isnull(jkey,'') Like concat('%',#{jkey},'%')
             ORDER BY jkey
         ]]>
     </select>
