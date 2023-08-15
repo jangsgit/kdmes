@@ -25,8 +25,7 @@
             <!-- contents infor_bar -->
             <div class="infor_bar type2">                                
                 <div class="left">제품등록</div>
-                <ul class="right" >
-                   
+                <ul class="right" > 
                     <li style="clear: right;">
                     <h5 style="color:rgb(255, 166, 0); font-size: 17px; text-align: center;" ><b>★ : 필수 입력</b></h5>
                     </li>
@@ -50,7 +49,7 @@
                                 <button type="button" id="retrieveBtn" >검색</button>      
                             </div>                              
                             <!-- //여기서부터 그래프 -->
-                            <div class="table table_style2">
+                            <!-- <div class="table table_style2"> -->
                                 <div class="card-body bg-light">   
                                       <div class="tab-content" >                                        
                                         <div class="tab-pane fade show active"  >  
@@ -61,7 +60,7 @@
                                         </div>                                        
                                       </div>
                                 </div>
-                            </div>                       
+                            <!-- </div>                        -->
                                                         
                         </div>
                     </div>
@@ -498,20 +497,20 @@
             //     grid: wtab01Grid
             // }); 
             // 선택기 생성
-            let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
-                itemChecked: () => {
-                    showCheckedCount();
-                }
-            }); 
+            // let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
+            //     itemChecked: () => {
+            //         showCheckedCount();
+            //     }
+            // }); 
             // 헤더 열 전환
-            setHeaderColumn(true);
+            setHeaderColumn(false);
             function setHeaderColumn(headerOn) {
                 wtab01Grid.headersVisibility = headerOn
                 ? wijmo.grid.HeadersVisibility.All
                 : wijmo.grid.HeadersVisibility.Column;
-                selector.column = headerOn
-                ? wtab01Grid.rowHeaders.columns[0]
-                : wtab01Grid.columns[0];
+                // selector.column = headerOn
+                // ? wtab01Grid.rowHeaders.columns[0]
+                // : wtab01Grid.columns[0];
             } 
             wtab01Grid.showMarquee = true;
             wtab01Grid.focus();

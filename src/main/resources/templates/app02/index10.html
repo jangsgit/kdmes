@@ -28,29 +28,22 @@
             </div>           
             
              <!-- contents body 시작--> 
-             <!-- form 또는 action 으로 받아오기  -->
-             <div class="section regist">
-                <div class="sec_con" style="width: 100%; ">
-                    <div class="box_wrap" style = "height: 1000px;">
-                        <div class="box_input" >
-                            <div class="date_wrap">    
-                            </div>                              
-                            <!-- //여기서부터 그래프 -->
-                            <div class="table table_style2">
-                                <div class="card-body bg-light">
-                                    <ul class="nav nav-tabs">
-                                        <input type="hidden" id="tabvalue" value="A">
-                                      </ul>   
-                                    <div class="tab-content" >                                        
-                                        <div class="tab-pane fade show active"  >  
-                                                <div class="container-fluid" id="op1" >
-                                                <div id="wtab01Grid_div" style="overflow:scroll; height:200px"></div>
-                                                <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
-                                            </div>                                               
-                                        </div>      
-                                    </div>    
-                                </div>
-                            </div>
+             <!-- form 또는 action 으로 받아오기  -->  
+                        <div class="box_input" >             
+                            <!-- //여기서부터 그래프 --> 
+                            <div class="card-body bg-light">
+                                <ul class="nav nav-tabs">
+                                    <input type="hidden" id="tabvalue" value="A">
+                                    </ul>   
+                                <div class="tab-content" >                                        
+                                    <div class="tab-pane fade show active"  >  
+                                            <div class="container-fluid" id="op1" >
+                                            <div id="wtab01Grid_div" style="overflow:scroll; height:200px"></div>
+                                            <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
+                                        </div>                                               
+                                    </div>      
+                                </div>    
+                            </div> 
                             <form action="">
                                 <div class="table table_style1" style = "width: 90%; margin-left: 50px">
                                     <table>
@@ -245,10 +238,7 @@
                                 <div style="display: flex; margin: 0 auto; " id="tab02Pager"></div>
                             </div>                                               
                         </div>                            
-                        </div>
-                    </div>
-                </div>             
-            </div>       
+                        </div> 
 
 
         <!--  모달 처리 -->
@@ -483,20 +473,20 @@
 
         new FlexGridContextMenu(wtab01Grid); 
             // 선택기 생성
-            let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
-                itemChecked: () => {
-                    showCheckedCount();
-                }
-            }); 
+            // let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
+            //     itemChecked: () => {
+            //         showCheckedCount();
+            //     }
+            // }); 
         // 헤더 열 전환
-        setHeaderColumn(true);
+        setHeaderColumn(false);
         function setHeaderColumn(headerOn) {
             wtab01Grid.headersVisibility = headerOn
             ? wijmo.grid.HeadersVisibility.All
             : wijmo.grid.HeadersVisibility.Column;
-            selector.column = headerOn
-            ? wtab01Grid.rowHeaders.columns[0]
-            : wtab01Grid.columns[0];
+            // selector.column = headerOn
+            // ? wtab01Grid.rowHeaders.columns[0]
+            // : wtab01Grid.columns[0];
         } 
         wtab01Grid.showMarquee = true;
         wtab01Grid.focus();
