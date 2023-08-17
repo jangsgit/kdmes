@@ -35,7 +35,8 @@ public class Appm01Controller {
     private final AppPopupService appPopupService;
     protected Log log =  LogFactory.getLog(this.getClass());
     CommonDto CommDto = new CommonDto();
-    FPLANW010_VO workDto = new FPLANW010_VO();
+    FPLANW010_VO itemDto010 = new FPLANW010_VO();
+    List<FPLANW010_VO> itemDtoList = new ArrayList<>();
     //공통코드등록
     @GetMapping(value="/mainframemb")
     public String App01_index(Model model, HttpServletRequest request) throws Exception{
@@ -109,14 +110,16 @@ public class Appm01Controller {
             if(appcom01Service.GetFPLANW010_Detail(itemDto) == null){
                 model.addAttribute("itemDto", appcom01Service.FPLANW010_Blank());
             }else{
-                model.addAttribute("itemDto", appcom01Service.GetFPLANW010_Detail(itemDto));
+                itemDto010 = (FPLANW010_VO) appcom01Service.GetFPLANW010_Detail(itemDto);
+                model.addAttribute("itemDto", itemDto010);
             }
         }
 
         if(appcom01Service.GetFPLAN_List(fplanDto) == null){
             model.addAttribute("itemDtoList", appcom01Service.FPLAN_Blank());
         }else{
-            model.addAttribute("itemDtoList", appcom01Service.GetFPLAN_List(fplanDto));
+            itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
+            model.addAttribute("itemDtoList", itemDtoList);
         }
 
 

@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="layouts/APPHeader/apphead :: headFragment" /> 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>경덕산업MES</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>  
-</head> 
+<head th:replace="layouts/APPHeader/apphead :: headFragment" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery-barcode.js}"></script>
 
 <body style="background: #f5f9fa;">
     <div class="content flex"> 
@@ -36,149 +28,213 @@
             </div>            -->
             
              <!-- contents body 시작--> 
-             <!-- form 또는 action 으로 받아오기  -->   
-             
-             <!-- contents body 시작--> 
-             <!-- form 또는 action 으로 받아오기  -->
-             <div class="section regist">
-                <div class="sec_con" style="width: 55%; ">
-                    <div class="box_wrap">
-                        <div class="box_input" >
-                            <div class="date_wrap">
-                                <input type="text"  id="searchtxt" placeholder="품명"> 
-                                <button type="button" id="retrieveBtn" >검색</button>      
-                            </div>                              
-                            <!-- //여기서부터 그래프 -->  
-                            <!-- <div class="table table_style2"> --> 
-                            <div class="tab-content" >                                        
-                                <div class="tab-pane fade show active"  >   
-                                        <div class="container-fluid" id="op1" >
-                                        <div id="wtab01Grid_div" style="overflow:scroll; height:600px"></div>
-                                    </div>                                               
-                                </div>                                        
-                            </div> 
-                            <!-- </div>                        -->
-                                                        
-                        </div>
-                    </div>
+             <!-- form 또는 action 으로 받아오기  -->  
+            <div class="box_input" >             
+                <!-- //여기서부터 그래프 --> 
+                <div class="card-body bg-light">
+                    <ul class="nav nav-tabs">
+                        <input type="hidden" id="tabvalue" value="A">
+                        </ul>   
+                    <div class="tab-content" >                                        
+                        <div class="tab-pane fade show active"  >  
+                                <div class="container-fluid" id="op1" >
+                                <div id="wtab01Grid_div" style="overflow:scroll; height:200px"></div>
+                                <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
+                            </div>                                               
+                        </div>      
+                    </div>    
                 </div> 
-                
-                <div class="part2" style="width: 33%;">
-                    <div class="modal_box">
-                        <!-- <div class="title">
-                            생산계획등록
-                        </div> -->  
-                        <div class="date_wrap">
-                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">등록일자</span>                                                        
-                                <input type="text"  class="form-control datetimepicker" id="indate" autocomplete="off"  placeholder="Y-m-d"     >
-                            </div> 
-                        </div>  
-                        <form class="row g-3">
-                            <div class="col-md-6"> 
-                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">생산시작일자</span>
-                                    <input type="text"  class="form-control datetimepicker" id="prod_sdate" autocomplete="off"  placeholder="Y-m-d"     >                                                       
-                                </div> 
-                            </div>
-                            <div class="col-md-6"> 
-                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">생산종료일자</span> 
-                                    <input type="text"  class="form-control datetimepicker" id="prod_edate" autocomplete="off"  placeholder="Y-m-d"     >
-                                </div> 
-                            </div> 
-                        </form> 
-                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">LOTNO</span> 
-                            <input class="form-control form-control-sm" type="text" id="lotno" placeholder=""  autocomplete="off">                                             
-                        </div> 
-                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">거래처</span>  
-                            <input class="form-control form-control-sm" id="cltcd" type="text"    autocomplete="off"  placeholder="">
-                            <input class="form-control form-control-sm" id="acorp1" type="hidden"  />
-                            <input class="form-control form-control-sm" id="acorp2" type="hidden"  />
-                            <input class="form-control form-control-sm" id="acorp3" type="hidden"  />
-                            <input class="form-control form-control-sm" id="acode" type="hidden"  /> 
-                            <input class="form-control form-control-sm" id="jpbgubn" type="hidden"  />                   
-                        </div>   
-                        
-                        <form class="row g-3">
-                            <div class="col-md-6">    
-                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">출고예정일</span>
-                                    <input type="text"  class="form-control datetimepicker" id="qcdate" autocomplete="off"  placeholder="Y-m-d"     >
-                                </div> 
-                            </div>
-                            <div class="col-md-6"> 
-                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">담당자</span>                                                              
-                                    <input class="form-control form-control-sm" type="text" name="inname01" id="perid" placeholder=""   > 
-                                    <input type="hidden" name="abonsadam1" id="abonsadam1" placeholder=""  > 
-                                </div> 
-                            </div> 
-                        </form> 
-                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">납기구분</span>   
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" name="workdv" id="workdv" type="radio"  value="0" />
-                                <label class="form-check-label" for="inlineRadio1">일반</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" name="workdv" id="workdv" type="radio" value="1" />
-                                <label class="form-check-label" for="inlineRadio2">긴급</label>
-                            </div>   
-                             
-                        </div>    
-                        <form class="row g-3">
-                            <div class="col-md-6"> 
-                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품목코드</span> 
-                                    <input class="form-control form-control-sm" id="pcode" type="text"    autocomplete="off"  placeholder="">                                               
-                                </div> 
-                            </div>
-                            <div class="col-md-6"> 
-                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품목명</span> 
-                                    <input type="text" class="form-control form-control-sm"  id="jpum" autocomplete="off"  placeholder = "품목명" disabled >                                          
-                                </div>  
-                            </div> 
-                        </form> 
-                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">규격</span> 
-                            <input class="form-control form-control-sm" id="jgugek" type="text"    autocomplete="off"  placeholder="">                                               
-                        </div>
-                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">검사제외</span>   
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="dem_flag" value="dem_flag" type="checkbox" />
-                            </div> 
-                        </div> 
-                        <form class="row g-3">
-                            <div class="col-md-6"> 
-                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">차종</span>
-                                    <input type="text" class="form-control datetimepicker flatpickr-input" id="jchajong">
-                                </div>
-                            </div>
-                            <div class="col-md-6"> 
-                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">사양구분</span>
-                                    <input class="form-control" type="text"  id="jsayang" name="jsayang" aria-label="jsayang"  >
-                                </div>
-                            </div> 
-                        </form>    
-                        <form class="row g-3">
-                            <div class="col-md-6"> 
-                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">색상</span>
-                                    <input type="text" class="form-control datetimepicker flatpickr-input" id="jgugek2">
-                                </div>
-                            </div>
-                            <div class="col-md-6"> 
-                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">스푸루</span>
-                                    <input class="form-control" type="text"  id="j_sr" name="j_sr" aria-label="jsayang"  >
-                                </div>
-                            </div> 
-                        </form>      
-
-
-                        <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
-                            <div class="btns" >                                                        
-                                <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span>삭제 </button>
-                                <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span>신규</button>                                                                                                
-                                <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()">저장</button>                                    
-
-                            </div>                             
-                        </div>   
-                    </div>
-                </div>
-            </div>       
-
+                <form action="">
+                    <div class="table table_style1" style = "width: 90%; margin-left: 50px">
+                        <table>
+                            <tbody>   
+                                <tr> 
+                                    <th>등록일자</th>
+                                    <td colspan="2">
+                                            <input type="text"  class="form-control datetimepicker" id="indate" autocomplete="off"  placeholder="Y-m-d"     >
+                                        <!-- <div class="input_wrap"> 
+                                            <input type="text" id="indate" placeholder=""  autocomplete="off">                                        
+                                        </div>                                             -->
+                                    </td>
+                                    <th>생산시작일자</th>
+                                    <td colspan="2">
+                                        <input type="text"  class="form-control datetimepicker" id="prod_sdate" autocomplete="off"  placeholder="Y-m-d"     >                                                                                                                                                               
+                                    </td>                                                
+                                    <th>생산종료일자</th> 
+                                    <td colspan="2">
+                                        <div class="input_wrap">
+                                            <input type="text"  class="form-control datetimepicker" id="prod_edate" autocomplete="off"  placeholder="Y-m-d"     >
+                                        </div>
+                                    </td>                                             
+                                    <th>LOTNO</th> 
+                                    <td colspan="4">
+                                        <div class="input_wrap">
+                                            <input type="text" id="lotno" placeholder=""  autocomplete="off">
+                                        </div>
+                                    </td>                                      
+                                </tr>   
+                                <tr> 
+                                    <th>거래처<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
+                                    <td colspan="2">
+                                            <input class="form-control form-control-sm" id="cltcd" type="text"    autocomplete="off"  placeholder="">
+                                            <input class="form-control form-control-sm" id="acorp1" type="hidden"  />
+                                            <input class="form-control form-control-sm" id="acorp2" type="hidden"  />
+                                            <input class="form-control form-control-sm" id="acorp3" type="hidden"  />
+                                            <input class="form-control form-control-sm" id="acode" type="hidden"  /> 
+                                            <input class="form-control form-control-sm" id="jpbgubn" type="hidden"  />                                                        
+                                        </div>
+                                    </td>                                                                                 
+                                    <th>출고예정일</th> 
+                                    <td colspan="2">
+                                        <div class="input_wrap">
+                                            <input type="text"  class="form-control datetimepicker" id="qcdate" autocomplete="off"  placeholder="Y-m-d"     >                                                      
+                                        </div>
+                                    </td>
+                                    <th>담당자</th>
+                                    <td colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text" name="inname01" id="perid" placeholder=""   > 
+                                            <input type="hidden" name="abonsadam1" id="abonsadam1" placeholder=""  > 
+                                        </div>
+                                    </td>                                                                                                                      
+                                    <th>납기구분</th> 
+                                    <td  colspan="4">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="workdv" id="workdv" type="radio"  value="0" />
+                                            <label class="form-check-label" for="inlineRadio1">일반</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="workdv" id="workdv" type="radio" value="1" />
+                                            <label class="form-check-label" for="inlineRadio2">긴급</label>
+                                        </div>
+                                    </td>                                                             
+                                </tr>  
+                                <tr>                                            
+                                    <th>품목코드<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
+                                    <td  colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input class="form-control form-control-sm" id="pcode" type="text"    autocomplete="off"  placeholder=""> 
+                                        </div>                                                
+                                    </td>
+                                    <td  colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="jpum" autocomplete="off"  placeholder = "품목명"  > 
+                                        </div>
+                                    </td>    
+                                    <th>규격</th>
+                                    <td colspan="2">
+                                        <div class="input_wrap">
+                                            <input type="text" id="jgugek" placeholder=""  >
+                                        </div>
+                                    </td> 
+                                    <th>검사제외</th>
+                                    <td colspan="4"> 
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" id="dem_flag" value="dem_flag" type="checkbox"/>                                         
+                                        </div>
+                                    </td>                                                                                        
+                                </tr>       
+                                <tr>                                         
+                                    <th>차종</th>
+                                    <td colspan="2">
+                                        <div class="input_wrap">
+                                            <input type="text" id="jchajong" placeholder=""  >
+                                        </div>
+                                    </td>                                   
+                                    <th>사양구분</th>
+                                    <td colspan="2"> 
+                                        <div class="input_wrap">
+                                            <input type="text"  id="jsayang" autocomplete="off"  placeholder="" >                                        
+                                        </div>
+                                    </td>  
+                                    <th>색상</th>
+                                    <td colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="jgugek2" autocomplete="off"  placeholder="" >  
+                                        </div>
+                                    </td>
+                                    <th>스푸루</th>
+                                    <td colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="j_sr" autocomplete="off"  placeholder="" >  
+                                        </div>
+                                    </td>                                                    
+                                </tr>  
+                                <tr> 
+                                    <th>품번</th>
+                                    <td  colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="jpumcode" autocomplete="off"   > 
+                                        </div>
+                                    </td>                                        
+                                    <th>단위</th> 
+                                    <td  colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="jdanwy" autocomplete="off"   > 
+                                        </div>
+                                    </td>                                                                                            
+                                    <th>생산계획수량<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
+                                    <td  colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="prod_qty" autocomplete="off"   > 
+                                        </div>
+                                    </td>
+                                    <th>작지상태</th> 
+                                    <td  colspan="4">
+                                        <div class="input_wrap" style="max-width: 230px;"> 
+                                            <select th:field="*{cls_flagList}" name="cls_flag" id="cls_flag" :disabled="validated == 1">
+                                                <option th:each="val : ${cls_flagList}" th:value="${val.cls_key}" th:text="${val.cls_name}">
+                                            </select>                                              
+                                        </div>
+                                    </td>                                                     
+                                </tr>                                                                                                                                                                                    
+                                <tr>                                                                                                                        
+                                    <th>입고창고</th> 
+                                    <td>
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="istore" autocomplete="off"   > 
+                                        </div>
+                                    </td>   
+                                    <th>출고창고</th> 
+                                    <td colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="ostore" autocomplete="off"   > 
+                                        </div>
+                                    </td>    
+                                    <th>시간구분</th> 
+                                    <td colspan="4">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="rwflag" id="rwflag" type="radio"  value="D" />
+                                            <label class="form-check-label" for="inlineRadio1">주간</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="rwflag" id="rwflag" type="radio" value="N" />
+                                            <label class="form-check-label" for="inlineRadio2">야간</label>
+                                        </div>
+                                    </td>                                
+                                </tr>
+                                <tr> 
+                                    <th>주의사항</th>
+                                    <td  colspan="10">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="remark" autocomplete="off"   > 
+                                        </div>
+                                    </td>                                                                                            
+                                </tr>                                                                             
+                            </tbody>
+                        </table>
+                            <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
+                                <div class="btns" >                                                        
+                                    <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
+                                    <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
+                                    <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
+                                </div>                                     
+                            </div>                              
+                    </div>                           
+                </form>
+                                                              
+            </div>                            
+        </div> 
 
 
         <!--  모달 처리 -->
