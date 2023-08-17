@@ -25,7 +25,7 @@
                         <!-- th:if="${CommDto.MenuCode} == 'appcom01'" class="nav-link active"  -->
                         <ul class="nav collapse false" id="stdcode">
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/appm/list?line=00&wflag=00010&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
+                                <a class="nav-link" th:href="@{/appm/list01}" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
                                         class="nav-link-text ps-1">사출공정</span> <!--절단공정-->
                                     </div>
@@ -33,7 +33,7 @@
                                 <!-- more inner pages-->
                             </li> 
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/appm/list?line=00&wflag=00020&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
+                                <a class="nav-link" th:href="@{/appm/list02}" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
                                             class="nav-link-text ps-1">조립공정</span> <!--절단공정-->
                                     </div>
@@ -41,7 +41,7 @@
                                 <!-- more inner pages-->
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/appm/list?line=00&wflag=00030&fdate=20000101&tdate=20221231&cltcd=&pcode=&plan_no=''&wseq=''   }" aria-expanded="false" >
+                                <a class="nav-link" th:href="@{/appm/list03}" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
                                             class="nav-link-text ps-1">검사공정</span> <!--절단공정-->
                                     </div>
@@ -65,17 +65,14 @@
                         </a> 
                     </li>  
                 </ul>
-                <div class="settings mb-3">
-                    <div class="card alert p-0 shadow-none" role="alert">
-                        <!-- <div class="btn-close-falcon-container">
-                            <div class="btn-close-falcon" aria-label="Close" data-bs-dismiss="alert"></div>
-                        </div> -->
+                <!-- <div class="settings mb-3">
+                    <div class="card alert p-0 shadow-none" role="alert"> 
                         <div class="card-body text-center"><img th:src="@{assets/img/icons/spot-illustrations/navbar-vertical.png}" alt="" width="80" />
                             <p class="fs--2 mt-2">문의하고 싶으신가요? <br /><a href="#!">원격지원</a>을 통해 상담받으세요 </p>
                             <div class="d-grid"><a class="btn btn-sm btn-purchase" href="https://939.co.kr/onit" target="_blank">원격지원</a></div>
                         </div>
                     </div>
-                </div>   
+                </div>    -->
             </div>
         </div>
     </div>

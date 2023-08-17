@@ -54,7 +54,7 @@ public class Appcom01Service {
     public void FPLAN_WORK_Delete(FPLANW010_VO parm){FPLANW010_mapper.FPLAN_WORK_Delete(parm);}
 
 
-    public Object FPLANW010_Blank(){
+    public FPLANW010_VO FPLANW010_Blank(){
         return FPLANW010_mapper.GetFPLANW010_Blank();
     }
     public Object FPLAN_Blank(){

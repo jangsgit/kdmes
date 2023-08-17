@@ -22,20 +22,22 @@
                             document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
                         }
                     </script>
-                    <div class="d-flex align-items-center">
+                    <!-- <div class="d-flex align-items-center">
                         <div class="toggle-icon-wrapper">
 
                             <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle"
                                 data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span
                                     class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
 
-                        </div><a class="navbar-brand" th:href="@{/members/user}">
+                        </div>
+                            <a class="navbar-brand" th:href="@{/members/user}">
                             <div class="d-flex align-items-center py-3"><img class="me-2"
-                                    th:src="@{/assets/img/icons/spot-illustrations/falcon.png}" alt="" width="40" /><span
+                                    th:src="@{/assets/img/icons/spot-illustrations/falcon.png}" alt="" width="40" />
+                                    <span
                                     class="font-sans-serif">ActasErp</span>
                             </div>
                         </a>
-                    </div>
+                    </div> -->
                     <!------navbar vertical------>
                     <div th:replace="layouts/layout01/navbarMem :: navbar"></div>
                 </nav>
@@ -49,18 +51,167 @@
                                 style="background-image:url(../../assets/img/icons/spot-illustrations/corner-4.png);">
                             </div>
                             <div class="card border h-100 border-primary">
-                            <!--/.bg-holder-->
-                            <div class="card-body position-relative">
-                                <div class="row">
-                                    <form class="row gy-2 gx-4 align-items-center" role="form" th:object="${itemDto}" th:action="@{/appcom01/update}" method="post" enctype="multipart/form-data">
-                                        <div class="row mb-3  row-cols-lg-2 align-items-center">
-                                            <div class="col-auto">  
-                                                    <div class="card text-white bg-secondary">
-                                                      <div class="card-body">
-                                                        <div class="card-title"  ><h3 th:text="${CommDto.MenuTitle}" style="color:white; text-align: center; ">사출공정<!--절단공정--></h3> </div> 
-                                                      </div>
+                                <!--/.bg-holder-->
+                                <div class="card-body position-relative">
+                                    <div class="row">
+                                        <form class="row gy-2 gx-4 align-items-center" role="form"  method="post" enctype="multipart/form-data">
+                                            <div class="row mb-3  row-cols-lg-2 align-items-center">
+                                                <!-- <div class="col-auto">  
+                                                        <div class="card text-white bg-secondary">
+                                                        <div class="card-body">
+                                                            <div class="card-title"  ><h3 th:text="${CommDto.MenuTitle}" style="color:white; text-align: center; ">사출공정</h3> </div> 
+                                                        </div>
+                                                        </div> 
+                                                </div>                                -->              
+                                                <div class="col-auto">  
+                                                        <div class="col-auto">
+                                                            <div id="statusdis01"></div>
+                                                        </div>   
+                                                </div> 
+                                            </div>
+                                            <!------content ---------------------------------------------------------------------------------->
+                                            <div class="row mb-3 row-cols-sm-3 align-items-center">
+                                                <div class="col-sm">
+                                                    <label class="visually-hidden" for="autoSizingInputGroup">작지번호</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">작지번호</div>
+                                                        <input class="form-control form-control-sm" id="inwono"
+                                                            type="text" placeholder="작지번호"    disabled />
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inspjangcd"
+                                                            />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="incustcd"
+                                                                />       
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inplan_no"  
+                                                                />       
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwseq"    
+                                                                />         
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwflag"   
+                                                                />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwscnt"     
+                                                            value=0   />  
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="edwscnt"     
+                                                            value=0   />  
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwsyul"       
+                                                            value=0   />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inostore"         
+                                                            value=0   />   
+                                                        <div id='inwonobdg'></div>      
+                                                                                                                    
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">거래처</div>
+                                                        <input class="form-control form-control-sm" id="incltnm" type="text" disabled
+                                                            size="15" placeholder="거래처"     />
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="incltcd"    />  
+                                                    </div>
+                                                </div> 
+                                                <div class="col-sm">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">품목코드</div> 
+                                                        <input class="form-control form-control-sm" id="inpcode" type="text" disabled
+                                                            size="15"  /> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                                <div class="col-sm">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">품목명</div> 
+                                                        <input class="form-control form-control-sm" id="inpname" type="text" disabled
+                                                            size="15"  /> 
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="input-group"> 
+                                                        <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"  style=" height:40px;  "  >공정시작 </button>
+                                                        <input type="text"  class="form-control datetimepicker" id="startDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled> 
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="input-group"> 
+                                                        <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"  style=" height:40px;  "  >공정종료 </button>
+                                                        <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled > 
+                                                    </div>
+                                                </div>  
+                                                <div class="col-4">
+                                                    <div class="input-group"> 
+                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal" style=" height:40px;  " id="wrmcBtn" >작업설비 </button>
+                                                        <input class="form-control form-control-sm" id="inmachname" type="text"    disabled
+                                                            placeholder=""   />
+                                                        <input class="form-control form-control-sm" id="inwrmc" type="hidden"
+                                                            placeholder=""   />
+                                                        <div id='inwrmcbdg'></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3 row-cols-lg-3 align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="input-group">
+                                                        <!-- <div class="input-group-text">작업자</div> -->
+                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wperidmodal" style=" height:40px;  " id="wperidBtn">작업자 </button>
+                                                        <input class="form-control form-control-sm" id="inwrpsnm" type="text"  disabled
+                                                            placeholder=""  />
+                                                            <input class="form-control form-control-sm" id="inwrps" type="hidden"
+                                                                placeholder=""   />
+                                                            <input class="form-control form-control-sm" id="inwinps" type="hidden"
+                                                                placeholder=""   />
                                                     </div> 
-                                            </div>                               
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">투입량</div>
+                                                        <input class="form-control form-control-sm" id="inwinqt" type="number" data-bs-toggle="modal" data-bs-target="#wiworkmodal"  
+                                                            placeholder=""   />
+                                                        <div id='inwinqtbdg'></div>      
+                                                    </div>
+                                                </div>  
+                                                <div class="col-4">
+                                                    <div class="input-group">
+                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">생산량 </button>
+                                                        <input class="form-control form-control-sm"  type="number" id="inwotqt"
+                                                            placeholder=""    onchange="fnc_calvalue(this)"  disabled/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3 row-cols-lg-3 align-items-center"> 
+                                                <div class="col-auto">
+                                                    <div id="wscntdis01"></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div id="wscntdis02"></div>
+                                                </div>
+                                            </div> 
+                                            <div class="row mb-3  row-cols-lg-3 align-items-center">  
+                                                <div  class="col-3">
+                                                    <div class="input-group">
+                                                        <!-- <div class="input-group-text">불량내역</div> -->
+                                                        
+                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wbadqtymodal" style=" height:40px;  " id="wbadqtyBtn">불량내역 </button>
+                                                        <input class="form-control form-control-sm"  type="text" id="inwbdqt"  disabled
+                                                            placeholder=""  />
+                                                    </div>
+                                                </div> 
+                                                <div  class="col-3">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">완료량</div>
+                                                        <input class="form-control form-control-sm" id="inwokqt" type="number" disabled
+                                                            placeholder=""  />
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">비고</div>
+                                                        <input class="form-control form-control-sm" id="inwremark" type="text"
+                                                            placeholder=""  />
+                                                    </div>
+                                                </div> 
+                                            </div>  
+                                            
                                             <div class="col-auto"> 
                                                 <div class="row g-2" >
                                                     <div class="col-auto"> 
@@ -81,7 +232,7 @@
                                                     <div class="col-auto">
                                                         <div id="statusdis01"></div><input class="form-control form-control-sm"  type="hidden"  id="indecision"  />  
                                                     </div> 
- 
+
 
                                                     <!-- <div class="col-auto">
                                                         <button  class="btn btn-outline-primary me-1 mb-1" type="button" style=" height:50px;  ">공정생성 </button>
@@ -93,403 +244,241 @@
                                                         <button class="badge-soft-danger dropdown-item rounded-1" type="button"  onclick='del_btn()' >삭제 </button>
                                                     </div> -->
                                                 </div>      
-                                            </div>                              
-                                            <div class="col-auto">  
-                                                    <div class="col-auto">
-                                                        <div id="statusdis01"></div>
-                                                    </div>   
-                                            </div> 
-                                        </div>
-                                         <!------content ---------------------------------------------------------------------------------->
-                                        <div class="row mb-3 row-cols-sm-3 align-items-center">
-                                            <div class="col-sm">
-                                                <label class="visually-hidden" for="autoSizingInputGroup">작지번호</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-text">작지번호</div>
-                                                    <input class="form-control form-control-sm" id="inwono"
-                                                        type="text" placeholder="작지번호"  th:field="*{wono}" th:value="${itemDto.wono}" disabled />
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="inspjangcd"
-                                                        th:field="*{spjangcd}"  />   
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="incustcd"
-                                                        th:field="*{custcd}"    />       
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="inplan_no"  
-                                                        th:field="*{plan_no}"    />       
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="inwseq"    
-                                                        th:field="*{wseq}"     />         
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="inwflag"   
-                                                        th:field="*{wflag}"     />   
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="inwscnt"     
-                                                        th:field="*{wscnt}"  value=0   />  
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="edwscnt"     
-                                                           value=0   />  
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="inwsyul"       
-                                                        th:field="*{wsyul}"  value=0   />   
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="inostore"         
-                                                        th:field="*{ostore}"  value=0   />   
-                                                    <div id='inwonobdg'></div>      
-                                                                                                                   
-                                                </div>
-                                            </div>
-                                            <div class="col-sm">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">거래처</div>
-                                                    <input class="form-control form-control-sm" id="incltnm" type="text" disabled
-                                                        size="15" placeholder="거래처"   th:field="*{cltnm}"  th:value="${itemDto.cltnm}"/>
-                                                    <input class="form-control form-control-sm"  type="hidden"  id="incltcd"         
-                                                        th:field="*{cltcd}"  th:value="${itemDto.cltcd}"   />  
-                                                </div>
-                                            </div>
-                                            <!-- <div class="col-auto">
-                                                <label class="visually-hidden" for="autoSizingInputGroup">규격</label>
-                                                <div class="input-group"> 
-                                                    <input class="form-control form-control-sm" id="codenm03" type="text"
-                                                        size="15"  th:field="*{psize}"  th:value="${itemDto.psize}"/>
-                                                </div>
-                                            </div> -->
-                                        </div>
-                                        <div class="row mb-3 row-cols-lg-3 align-items-center">
-                                            <div class="col-sm">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">품목코드</div> 
-                                                    <input class="form-control form-control-sm" id="inpcode" type="text" disabled
-                                                        size="15"  th:field="*{pcode}"  th:value="${itemDto.pcode}"/> 
-                                                </div>
-                                            </div>
-                                            <div class="col-sm">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">품목명</div> 
-                                                    <input class="form-control form-control-sm" id="inpname" type="text" disabled
-                                                        size="15"  th:field="*{pname}"  th:value="${itemDto.pname}"/> 
-                                                </div>
-                                            </div>
-                                            <div class="col-sm">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">도면번호</div> 
-                                                    <input class="form-control form-control-sm" id="inphmmdoc" type="text" disabled
-                                                        size="15"  th:field="*{phmmdoc}"  th:value="${itemDto.phmmdoc}"/> 
-                                                </div>
-                                            </div>
-
-                                            <!-- <div class="col-auto">
-                                                <button class="btn btn-falcon-primary me-1 mb-1" id="wscntbtnStart" type="button">가동시작
-                                                </button> 
-                                            </div> -->
-                                         </div>
-                                        <div class="row mb-3 row-cols-lg-3 align-items-center">
-                                            <div class="col-auto">
-                                                <div class="input-group"> 
-                                                    <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"  style=" height:40px;  "  >공정시작 </button>
-                                                    <input type="text"  class="form-control datetimepicker" id="startDate" autocomplete="off" th:field="*{wfrdt}" placeholder="Y-m-d H:i"  th:value="${itemDto.wfrdt}" disabled>
-                                                    <!-- <input class="form-control datetimepicker" id="datetimepicker" type="text"    placeholder="Y-m-d H:i" data-options='{"enableTime":true,"dateFormat":"Y-m-d H:i","disableMobile":false}' />                                                                                                         -->
-                                                     <!-- <input class="form-control form-control-sm" id="codenm04" type="datetime"
-                                                        size="20" placeholder="" th:field="*{wfrdt}"   th:value="${itemDto.wfrdt}"/> -->   
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="input-group"> 
-                                                    <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"  style=" height:40px;  "  >공정종료 </button>
-                                                    <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off" th:field="*{wtrdt}" placeholder="Y-m-d H:i"  th:value="${itemDto.wtrdt}" disabled >
-                                                    <!-- <input class="form-control datetimepicker" id="datetimepicker" type="text"  th:value="${itemDto.wtrdt}" placeholder="Y-m-d H:i" data-options='{"enableTime":true,"dateFormat":"Y-m-d H:i","disableMobile":true}' />                                                     -->
-                                                    <!-- <input class="form-control form-control-sm" id="codenm05" type="datetime"
-                                                        placeholder=""  th:field="*{wtrdt}"  th:value="${itemDto.wtrdt}" /> --> 
-                                                </div>
-                                            </div> 
-
-                                            <!-- <div class="col-auto">
-                                                <button class="btn btn-falcon-primary me-1 mb-1" id="wscntbtnStart" type="button">가동시작
-                                                </button> 
-                                            </div> -->
-                                         </div>
-                                         <div class="row mb-3 row-cols-lg-3 align-items-center">
-                                            <!-- <div class="col-auto">
-                                                <button class="btn btn-falcon-warning me-1 mb-1"  id="wscntbtnStop"  type="button">가동중단
-                                                </button>
-                                            </div>  -->
-                                            <div class="col-auto">
-                                                <div id="wscntdis01"></div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div id="wscntdis02"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3 row-cols-lg-4 align-items-center"> 
-                                            <div class="col-4">
-                                                <div class="input-group"> 
-                                                    <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal" style=" height:40px;  " id="wrmcBtn" >작업설비 </button>
-                                                    <input class="form-control form-control-sm" id="inmachname" type="text"    disabled
-                                                        placeholder=""   th:field="*{machname}" th:value="${itemDto.machname}"/>
-                                                    <input class="form-control form-control-sm" id="inwrmc" type="hidden"
-                                                        placeholder=""   th:field="*{wrmc}" th:value="${itemDto.wrmc}"/>
-                                                    <div id='inwrmcbdg'></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="input-group">
-                                                    <!-- <div class="input-group-text">작업자</div> -->
-                                                    <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wperidmodal" style=" height:40px;  " id="wperidBtn">작업자 </button>
-                                                    <input class="form-control form-control-sm" id="inwrpsnm" type="text"  disabled
-                                                        placeholder="" th:field="*{wrpsnm}"  th:value="${itemDto.wrpsnm}"/>
-                                                        <input class="form-control form-control-sm" id="inwrps" type="hidden"
-                                                            placeholder=""   th:field="*{wrps}" th:value="${itemDto.wrps}"/>
-                                                        <input class="form-control form-control-sm" id="inwinps" type="hidden"
-                                                            placeholder=""   th:field="*{winps}" th:value="${itemDto.winps}"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">투입량</div>
-                                                    <input class="form-control form-control-sm" id="inwinqt" type="number" data-bs-toggle="modal" data-bs-target="#wiworkmodal"  
-                                                          placeholder=""   th:field="*{winqt}"   th:value="${itemDto.winqt}"/>
-                                                    <div id='inwinqtbdg'></div>      
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div class="row mb-3  row-cols-lg-3 align-items-center"> 
-                                            <div class="col-3">
-                                                <div class="input-group">
-                                                    <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">생산량 </button>
-                                                    <input class="form-control form-control-sm"  type="number" id="inwotqt"
-                                                         placeholder=""   th:field="*{wotqt}" th:value="${itemDto.wotqt}"  onchange="fnc_calvalue(this)"  disabled/>
-                                                </div>
-                                            </div> 
-                                            <div  class="col-3">
-                                                <div class="input-group">
-                                                    <!-- <div class="input-group-text">불량내역</div> -->
-                                                    
-                                                    <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wbadqtymodal" style=" height:40px;  " id="wbadqtyBtn">불량내역 </button>
-                                                    <input class="form-control form-control-sm"  type="text" id="inwbdqt"  disabled
-                                                        placeholder=""  th:field="*{wbdqt}"  th:value="${itemDto.wbdqt}"/>
-                                                </div>
-                                            </div> 
-                                        </div> 
-                                        <div class="row mb-3  row-cols-lg-3 align-items-center">  
-                                            <div  class="col-3">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">완료량</div>
-                                                    <input class="form-control form-control-sm" id="inwokqt" type="number" disabled
-                                                        placeholder=""  th:field="*{wokqt}"  th:value="${itemDto.wokqt}"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="input-group">
-                                                    <div class="input-group-text">비고</div>
-                                                    <input class="form-control form-control-sm" id="inwremark" type="text"
-                                                        placeholder=""   th:field="*{wremark}"  th:value="${itemDto.wremark}"/>
-                                                </div>
-                                            </div> 
-                                        </div> 
-                                        <!-- <div class="row mb-3  row-cols-lg-3 align-items-center"> 
-                                            <div class="col-auto">
-                                                <button class="btn btn-primary me-1 mb-1"   type="button" style="width: 250px; height:100px;  text-align: center;  line-height: 65px; font-size:30px; margin: 0 auto;"> 재시작 </button>
-                                            </div> 
-                                            <div class="col-auto">
-                                                <button class="btn btn-danger me-1 mb-1" type="button" style="width: 250px; height:100px;  text-align: center;  line-height: 65px; font-size:30px; margin: 0 auto;"> 중단 </button>
-                                            </div> 
-                                            <div class="col-auto">
-                                                <button class="btn btn-secondary me-1 mb-1" type="button" style="width: 250px; height:100px;  text-align: center;  font-size:30px; margin: 0 auto;"> 임시저장 </button>
-                                            </div> 
-                                        </div>   -->
-                                    </form>
-                                    <form    role="form"  th:object="${itemDtoInput}" th:action="@{/appcom01/list}" method="post" enctype="multipart/form-data">
-                                        <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
-                                        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                        aria-hidden="true">
-                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                                                style="max-width: 900px">
-                                                <div class="modal-content border-0">
-                                                    <div class="modal-body p-0" >
-                                                        <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-                                                            <h4 class="mb-1" id="staticBackdropLabel">작업지시리스트</h4> 
-                                                        </div>
-                                                        <div class="container-fluid">
-                                                            <div id="theGrid_div"></div>
-                                                            <div id="thePager01"></div>
-                                                        </div>      
-
-  
-                                                     </div>  
-                                                    <div class="modal-footer">
-                                                        <div class="row g-1">
-                                                            <div class="col-auto">
-                                                                <input type="text"  class="form-control datetimepicker" id="searchOrdDate" autocomplete="off"  placeholder="Y-m-d"   >
+                                            </div>                
+                                        </form>
+                                        <form    role="form"     enctype="multipart/form-data">
+                                            <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
+                                                data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                                                    style="max-width: 900px">
+                                                    <div class="modal-content border-0">
+                                                        <div class="modal-body p-0" >
+                                                            <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                                                                <h4 class="mb-1" id="staticBackdropLabel">작업지시리스트</h4> 
                                                             </div>
-                                                            <div class="col-auto">
-                                                                <button class="btn btn-primary" type="button"  id="searchBtn"  >조회 </button>
-                                                            </div>
-                                                            <div class="col-auto">
-                                                                <button class="btn btn-secondary me-1 mb-1" id="wlistBtn" type="button" data-bs-dismiss="modal">Close
-                                                                </button>
-                                                            </div>
-                                                            <!-- <div class="col-auto">
-                                                                <button class="badge-soft-info dropdown-item rounded-1"
-                                                                    type="submit">저장 </button>
-                                                            </div> -->
-                                                        </div>
-                                                    </div>   
-
-                                                </div>
-                                            </div> 
-                                        </div>         
-                                    </form>
-                                    <!--------------------------------------------------------------------------------------->
-                                    <form    role="form"   th:object="${wrmcDto}" th:action="@{/popup/wrmc}" method="post" enctype="multipart/form-data" >
-                                        <div class="modal fade" id="wrmcmodal" data-bs-keyboard="false"
-                                        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                        aria-hidden="true">
-                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm02"
-                                                style="max-width: 500px">
-                                                <div class="modal-content border-0">
-                                                    <div class="modal-body p-0" > 
-                                                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light"  >
-                                                             <h4 class="mb-1" id="modalExampleDemoLabel">작업설비</h4>
-                                                        </div>
-                                                        <!-- <div class="row mb-3 row-cols-lg-2 align-items-center"> 
-                                                            <div class="col-auto">
-                                                                <div class="input-group">
-                                                                    <div class="input-group-text">설비검색</div>
-                                                                    <input class="form-control form-control-sm" id="searchCode" type="text"  
-                                                                        placeholder="설비코드 / 설비명"     /> 
+                                                            <div class="container-fluid">
+                                                                <div id="theGrid_div"></div>
+                                                                <div id="thePager01"></div>
+                                                            </div>     
+                                                        </div>  
+                                                        <div class="modal-footer">
+                                                            <div class="row g-1">
+                                                                <div class="col-auto">
+                                                                    <input type="text"  class="form-control datetimepicker" id="searchOrdDate" autocomplete="off"  placeholder="Y-m-d"   >
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-auto">
-                                                                <button class="btn btn-falcon-warning me-1 mb-1" id="wrmcBtn" type="button" onclick="searchwrmc_fnc()">검색
-                                                                </button>
-                                                            </div> 
-                                                        </div>   -->
-
-                                                        <div class="container-fluid"> 
-                                                            <div class="col-auto">
-                                                                <div class="input-group">
-                                                                    <div class="input-group-text">설비검색</div>
-                                                                    <input class="form-control form-control-sm" id="searchCode" type="text"  
-                                                                        placeholder="설비코드 / 설비명"     /> 
-                                                                    <button class="btn btn-falcon-warning me-1 mb-1" id="wrmcBtn" type="button" >검색
+                                                                <div class="col-auto">
+                                                                    <button class="btn btn-primary" type="button"  id="searchBtn"  >조회 </button>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <button class="btn btn-secondary me-1 mb-1" id="wlistBtn" type="button" data-bs-dismiss="modal">Close
                                                                     </button>
                                                                 </div>
-                                                            </div> 
-                                                        </div>                             
-                                                        <div class="container-fluid"> 
-                                                            <div id="wrmcGrid_div" ></div>
-                                                            <div id="thePager02"></div>
-                                                        </div>                                                                 
- 
-                                                     </div>  
-                                                    <div class="modal-footer">
-                                                        <div class="row g-1">
-                                                            <div class="col-auto">
-                                                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                                                    type="button" id="wrmcmodal_btn" data-bs-dismiss="modal">Close</button>
+                                                                <!-- <div class="col-auto">
+                                                                    <button class="badge-soft-info dropdown-item rounded-1"
+                                                                        type="submit">저장 </button>
+                                                                </div> -->
                                                             </div>
-                                                            <!-- <div class="col-auto">
-                                                                <button class="badge-soft-info dropdown-item rounded-1"
-                                                                    type="submit">저장 </button>
-                                                            </div> -->
-                                                        </div>
-                                                    </div>   
+                                                        </div>   
 
-                                                </div>
-                                            </div> 
-                                        </div>           
-                                    </form>
-                                    <!--------------------------------------------------------------------------------------->   
-                                    <form    role="form"   th:object="${wperidDto}" th:action="@{/popup/wperid}" method="post" enctype="multipart/form-data" >
-                                        <div class="modal fade" id="wperidmodal" data-bs-keyboard="false"
-                                        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                        aria-hidden="true">
-                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm03"
+                                                    </div>
+                                                </div> 
+                                            </div>         
+                                        </form>
+                                        <!--------------------------------------------------------------------------------------->
+                                        <!--------------------------------------------------------------------------------------->  
+                                        <form    role="form"   th:object="${wrmcDto}" th:action="@{/popup/wrmc}" method="post" enctype="multipart/form-data" >
+                                            <div class="modal fade" id="wrmcmodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                                <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm02"
+                                                    style="max-width: 500px">
+                                                    <div class="modal-content border-0">
+                                                        <div class="modal-body p-0" > 
+                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light"  >
+                                                                <h4 class="mb-1" id="modalExampleDemoLabel">작업설비</h4>
+                                                            </div>
+                                                            <!-- <div class="row mb-3 row-cols-lg-2 align-items-center"> 
+                                                                <div class="col-auto">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-text">설비검색</div>
+                                                                        <input class="form-control form-control-sm" id="searchCode" type="text"  
+                                                                            placeholder="설비코드 / 설비명"     /> 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <button class="btn btn-falcon-warning me-1 mb-1" id="wrmcBtn" type="button" onclick="searchwrmc_fnc()">검색
+                                                                    </button>
+                                                                </div> 
+                                                            </div>   -->
+
+                                                            <div class="container-fluid"> 
+                                                                <div class="col-auto">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-text">설비검색</div>
+                                                                        <input class="form-control form-control-sm" id="searchCode" type="text"  
+                                                                            placeholder="설비코드 / 설비명"     /> 
+                                                                        <button class="btn btn-falcon-warning me-1 mb-1" id="wrmcBtn" type="button" >검색
+                                                                        </button>
+                                                                    </div>
+                                                                </div> 
+                                                            </div>                             
+                                                            <div class="container-fluid"> 
+                                                                <div id="wrmcGrid_div" ></div>
+                                                                <div id="thePager02"></div>
+                                                            </div>                                                                 
+    
+                                                        </div>  
+                                                        <div class="modal-footer">
+                                                            <div class="row g-1">
+                                                                <div class="col-auto">
+                                                                    <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                        type="button" id="wrmcmodal_btn" data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                                <!-- <div class="col-auto">
+                                                                    <button class="badge-soft-info dropdown-item rounded-1"
+                                                                        type="submit">저장 </button>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>   
+
+                                                    </div>
+                                                </div> 
+                                            </div>           
+                                        </form>
+                                        <!---------------------------------------------------------------------------------------> 
+                                        <!--------------------------------------------------------------------------------------->    
+                                        <form    role="form"   th:object="${wperidDto}" th:action="@{/popup/wperid}" method="post" enctype="multipart/form-data" >
+                                            <div class="modal fade" id="wperidmodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                                <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm03"
+                                                    style="max-width: 500px">
+                                                    <div class="modal-content border-0">
+                                                        <div class="modal-body p-0" > 
+                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                                <h4 class="mb-1" id="modalExampleDemoLabel">작업자</h4>
+                                                            </div> 
+                                                            <div  class="container-fluid"> 
+                                                                <div class="col-auto">
+                                                                        <p> 현재 <b><span id="checked-count">0</span></b> 명이 선택되었습니다. </p>
+                                                                    <!-- <div class="input-group">
+                                                                        <div class="input-group-text">작업자검색</div>
+                                                                        <input class="form-control form-control-sm" id="searchCode" type="text"  
+                                                                            placeholder="작업자명"     /> 
+                                                                        <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="searchwperid_fnc()">검색
+                                                                        </button> 
+                                                                    </div>  -->
+                                                                </div> 
+                                                            </div>     
+
+                                                            <div class="container-fluid"> 
+                                                                <div id="wperidGrid_div" ></div>
+                                                                <!-- <div id="thePager03"></div> -->
+                                                            </div>                                                                 
+    
+                                                        </div>  
+                                                        <div class="modal-footer">
+                                                            <div class="row g-1">
+                                                                <div class="col-auto">
+                                                                    <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                        type="button" id="wperidmodal_btn" data-bs-dismiss="modal">Close</button>
+                                                                </div> 
+                                                            </div>
+                                                        </div>   
+
+                                                    </div>
+                                                </div> 
+                                            </div>         
+                                        </form>
+                                        <!--------------------------------------------------------------------------------------->    
+                                            <div class="modal fade" id="wiworkmodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                                <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm04"
+                                                    style="max-width: 900px">
+                                                    <div class="modal-content border-0">
+                                                        <div class="modal-body p-0" > 
+                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                                <h4 class="mb-1" id="modalExampleDemoLabel">자재BOM</h4>
+                                                            </div> 
+                                                            <div  class="container-fluid"> 
+                                                                <div class="col-auto">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-text">작업계획번호</div>
+                                                                        <input class="form-control form-control-sm" id="searchPlanno" type="text"  
+                                                                            placeholder="작업자명"     /> 
+                                                                        <div class="input-group-text">품목코드</div>
+                                                                        <input class="form-control form-control-sm" id="searchPcode" type="text"  
+                                                                            placeholder="품목코드를 선택하세요"     /> 
+                                                                        <button class="btn btn-falcon-warning me-1 mb-1" id="plannoBtn"  type="button" >검색
+                                                                    
+                                                                    </div> 
+                                                                </div> 
+                                                            </div>     
+
+                                                            <div class="container-fluid"> 
+                                                                <div id="wbomGrid_div" ></div>
+                                                                <div id="thePager04"></div>
+                                                            </div>     
+
+                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                                <h4 class="mb-1" id="modalExampleDemoLabel">자재투입</h4>
+                                                        </div> 
+                                                            <div  class="container-fluid"> 
+                                                                <div class="col-auto">
+                                                                    <div class="input-group"> 
+                                                                        <!-- <button class="btn btn-falcon-warning me-1 mb-1" id="addBtn"  type="button" >행추가
+                                                                        </button>  -->
+                                                                        <button class="btn btn-falcon-warning me-1 mb-1" id="delBtn"  type="button" >행삭제
+                                                                        </button>                                                                      
+                                                                    </div> 
+                                                                    <div class="col-auto">
+                                                                        <div id="wqtydis01"></div>
+                                                                    </div>
+                                                                </div> 
+                                                            </div>    
+
+                                                            <div class="container-fluid"> 
+                                                                <div id="wiworkGrid_div" ></div>
+                                                                <!-- <div id="thePager05"></div> -->
+                                                            </div>                                                                
+    
+                                                        </div>  
+                                                        <div class="modal-footer">
+                                                            <div class="row g-1">
+                                                                <div class="col-auto">
+                                                                    <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                        type="button" data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                                <!-- <div class="col-auto">
+                                                                    <button class="badge-soft-info dropdown-item rounded-1"
+                                                                        type="submit">저장 </button>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>   
+
+                                                    </div>
+                                                </div> 
+                                            </div>          
+                                        <!--------------------------------------------------------------------------------------->    
+                                        <!--------------------------------------------------------------------------------------->    
+                                        <div class="modal fade" id="wbadqtymodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
                                                 style="max-width: 500px">
                                                 <div class="modal-content border-0">
                                                     <div class="modal-body p-0" > 
-                                                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                             <h4 class="mb-1" id="modalExampleDemoLabel">작업자</h4>
-                                                        </div> 
-                                                        <div  class="container-fluid"> 
-                                                            <div class="col-auto">
-                                                                    <p> 현재 <b><span id="checked-count">0</span></b> 명이 선택되었습니다. </p>
-                                                                <!-- <div class="input-group">
-                                                                    <div class="input-group-text">작업자검색</div>
-                                                                    <input class="form-control form-control-sm" id="searchCode" type="text"  
-                                                                        placeholder="작업자명"     /> 
-                                                                    <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="searchwperid_fnc()">검색
-                                                                    </button> 
-                                                                </div>  -->
-                                                            </div> 
-                                                        </div>     
-
-                                                        <div class="container-fluid"> 
-                                                            <div id="wperidGrid_div" ></div>
-                                                            <!-- <div id="thePager03"></div> -->
-                                                        </div>                                                                 
- 
-                                                     </div>  
-                                                    <div class="modal-footer">
-                                                        <div class="row g-1">
-                                                            <div class="col-auto">
-                                                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                                                    type="button" id="wperidmodal_btn" data-bs-dismiss="modal">Close</button>
-                                                            </div> 
-                                                        </div>
-                                                    </div>   
-
-                                                </div>
-                                            </div> 
-                                        </div>         
-                                    </form>
-                                    <!--------------------------------------------------------------------------------------->    
-                                        <div class="modal fade" id="wiworkmodal" data-bs-keyboard="false"
-                                        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                        aria-hidden="true">
-                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm04"
-                                                style="max-width: 900px">
-                                                <div class="modal-content border-0">
-                                                    <div class="modal-body p-0" > 
-                                                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                             <h4 class="mb-1" id="modalExampleDemoLabel">자재BOM</h4>
-                                                        </div> 
-                                                        <div  class="container-fluid"> 
-                                                            <div class="col-auto">
-                                                                <div class="input-group">
-                                                                    <div class="input-group-text">작업계획번호</div>
-                                                                    <input class="form-control form-control-sm" id="searchPlanno" type="text"  
-                                                                        placeholder="작업자명"     /> 
-                                                                    <div class="input-group-text">품목코드</div>
-                                                                    <input class="form-control form-control-sm" id="searchPcode" type="text"  
-                                                                        placeholder="품목코드를 선택하세요"     /> 
-                                                                    <button class="btn btn-falcon-warning me-1 mb-1" id="plannoBtn"  type="button" >검색
-                                                                   
-                                                                </div> 
-                                                            </div> 
-                                                        </div>     
-
-                                                        <div class="container-fluid"> 
-                                                            <div id="wbomGrid_div" ></div>
-                                                            <div id="thePager04"></div>
-                                                        </div>     
-
                                                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                            <h4 class="mb-1" id="modalExampleDemoLabel">자재투입</h4>
-                                                       </div> 
-                                                        <div  class="container-fluid"> 
-                                                            <div class="col-auto">
-                                                                <div class="input-group"> 
-                                                                    <!-- <button class="btn btn-falcon-warning me-1 mb-1" id="addBtn"  type="button" >행추가
-                                                                    </button>  -->
-                                                                    <button class="btn btn-falcon-warning me-1 mb-1" id="delBtn"  type="button" >행삭제
-                                                                    </button>                                                                      
-                                                                </div> 
-                                                                <div class="col-auto">
-                                                                    <div id="wqtydis01"></div>
-                                                                </div>
-                                                            </div> 
+                                                            <h4 class="mb-1" id="modalExampleDemoLabel">불량구분</h4>
                                                         </div>    
 
                                                         <div class="container-fluid"> 
-                                                            <div id="wiworkGrid_div" ></div>
-                                                            <!-- <div id="thePager05"></div> -->
-                                                        </div>                                                                
- 
-                                                     </div>  
+                                                            <div id="wbadGrid_div" ></div>
+                                                            <div id="thePager05"></div>
+                                                        </div>    
+                                                    </div>  
                                                     <div class="modal-footer">
                                                         <div class="row g-1">
                                                             <div class="col-auto">
@@ -506,98 +495,69 @@
                                                 </div>
                                             </div> 
                                         </div>          
-                                    <!--------------------------------------------------------------------------------------->    
-                                    <!--------------------------------------------------------------------------------------->    
-                                    <div class="modal fade" id="wbadqtymodal" data-bs-keyboard="false"
-                                    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
-                                            style="max-width: 500px">
-                                            <div class="modal-content border-0">
-                                                <div class="modal-body p-0" > 
-                                                     <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                         <h4 class="mb-1" id="modalExampleDemoLabel">불량구분</h4>
-                                                    </div>    
-
-                                                    <div class="container-fluid"> 
-                                                        <div id="wbadGrid_div" ></div>
-                                                        <div id="thePager05"></div>
-                                                    </div>    
-                                                 </div>  
-                                                <div class="modal-footer">
-                                                    <div class="row g-1">
-                                                        <div class="col-auto">
-                                                            <button class="badge-soft-primary dropdown-item rounded-1"
-                                                                type="button" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                        <!-- <div class="col-auto">
-                                                            <button class="badge-soft-info dropdown-item rounded-1"
-                                                                type="submit">저장 </button>
-                                                        </div> -->
-                                                    </div>
-                                                </div>   
-
-                                            </div>
-                                        </div> 
-                                    </div>          
-                                <!--------------------------------------------------------------------------------------->          
-                                <!--------------------------------------------------------------------------------------->    
-                                    <div class="modal fade" id="wotqtymodal" data-bs-keyboard="false"
-                                    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
-                                            style="max-width: 850px">
-                                            <div class="modal-content border-0">
-                                                <div class="modal-body p-0" > 
-                                                     <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                         <h4 class="mb-1" id="modalExampleDemoLabel"> 생산량등록</h4>
-                                                    </div>     
-                                                    <div  class="container-fluid"> 
-                                                        <div class="col-auto">
-                                                                <!-- <p> 현재 <b><span id="checked-count">0</span></b> 명이 선택되었습니다. </p> -->
-                                                            <div class="input-group">
-                                                                <div class="input-group-text">작업일자</div>
-                                                                <input type="text"  class="form-control datetimepicker" id="popwkotDate" autocomplete="off" placeholder="Y-m-d" >
-                                                                <div class="input-group-text">생산량</div>
-                                                                <input class="form-control form-control-sm"  type="number" id="popwotqt"  placeholder=""      />
-                                                                <!-- <div class="input-group-text">불량수량</div>
-                                                                <input class="form-control form-control-sm"  type="number" id="popwbdqt"  placeholder=""      />  -->
-                                                                <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="save_fnc()">등록
-                                                                </button> 
-                                                                <button class="btn btn-falcon-warning me-1 mb-1" type="button" id="popsearch01" >조회
-                                                                </button> 
-                                                                <input class="form-control form-control-sm" id="popseq" type="hidden"  /> 
-                                                                <input class="form-control form-control-sm" id="popwseq" type="hidden"  /> 
+                                        <!--------------------------------------------------------------------------------------->          
+                                        <!--------------------------------------------------------------------------------------->    
+                                        <div class="modal fade" id="wotqtymodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
+                                                style="max-width: 850px">
+                                                <div class="modal-content border-0">
+                                                    <div class="modal-body p-0" > 
+                                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                            <h4 class="mb-1" id="modalExampleDemoLabel"> 생산량등록</h4>
+                                                        </div>     
+                                                        <div  class="container-fluid"> 
+                                                            <div class="col-auto">
+                                                                    <!-- <p> 현재 <b><span id="checked-count">0</span></b> 명이 선택되었습니다. </p> -->
+                                                                <div class="input-group">
+                                                                    <div class="input-group-text">작업일자</div>
+                                                                    <input type="text"  class="form-control datetimepicker" id="popwkotDate" autocomplete="off" placeholder="Y-m-d" >
+                                                                    <div class="input-group-text">생산량</div>
+                                                                    <input class="form-control form-control-sm"  type="number" id="popwotqt"  placeholder=""      />
+                                                                    <!-- <div class="input-group-text">불량수량</div>
+                                                                    <input class="form-control form-control-sm"  type="number" id="popwbdqt"  placeholder=""      />  -->
+                                                                    <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="save_fnc()">등록
+                                                                    </button> 
+                                                                    <button class="btn btn-falcon-warning me-1 mb-1" type="button" id="popsearch01" >조회
+                                                                    </button> 
+                                                                    <input class="form-control form-control-sm" id="popseq" type="hidden"  /> 
+                                                                    <input class="form-control form-control-sm" id="popwseq" type="hidden"  /> 
+                                                                </div> 
                                                             </div> 
-                                                        </div> 
+                                                        </div>  
+                                                        <div class="container-fluid"> 
+                                                            <div id="wotqtGrid_div" ></div>
+                                                            <div id="thePager06"></div>
+                                                        </div>    
                                                     </div>  
-                                                    <div class="container-fluid"> 
-                                                        <div id="wotqtGrid_div" ></div>
-                                                        <div id="thePager06"></div>
-                                                    </div>    
-                                                 </div>  
-                                                <div class="modal-footer">
-                                                    <div class="row g-1">
-                                                        <div class="col-auto">
-                                                            <button class="badge-soft-primary dropdown-item rounded-1"
-                                                                type="button" data-bs-dismiss="modal">Close</button>
+                                                    <div class="modal-footer">
+                                                        <div class="row g-1">
+                                                            <div class="col-auto">
+                                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                    type="button" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <button class="badge-soft-info dropdown-item rounded-1"
+                                                                    type="submit">저장 </button>
+                                                            </div> -->
                                                         </div>
-                                                        <!-- <div class="col-auto">
-                                                            <button class="badge-soft-info dropdown-item rounded-1"
-                                                                type="submit">저장 </button>
-                                                        </div> -->
-                                                    </div>
-                                                </div>   
+                                                    </div>   
 
-                                            </div>
-                                        </div> 
-                                    </div>          
-                                <!--------------------------------------------------------------------------------------->                                                         
-                                </div>
+                                                </div>
+                                            </div> 
+                                        </div>          
+                                    <!--------------------------------------------------------------------------------------->                                                         
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </body>
+                    </body> 
+
+                    <!------footer ------>
+                    <footer th:replace="layouts/XDashBoard/XDashBoard_footer :: XDashBoard_footer"></footer>
+                    <!---------------------> 
+
 
 
                     
@@ -1030,8 +990,6 @@
                             wrmc_div.innerHTML     = "";    
                             wscntdis02_div.innerHTML  = "";    
                             wscntdis_div.innerHTML = "";    
-
-console.log("작업지시리스트 wflag", wflag);
                             $.ajax({
                                 url: '/input/w010',   
                                 type:"POST", 
@@ -1545,8 +1503,7 @@ console.log("작업지시리스트 wflag", wflag);
                                         itemsSource: view_flistpage
                                     }); 
                                      //작업지시서 데이타 
-                                    function getData_flist(){
-
+                                    function getData_flist(){ 
                                         var ListDto = [[${itemDtoList}]]; 
                                         // console.log("ListDto : ", ListDto);
                                         var data = [];
@@ -2937,186 +2894,7 @@ console.log("작업지시리스트 wflag", wflag);
                                       button_wfrdt.disabled = true;
                                       button_wtrdt.disabled = true;
                                  })
- 
-                                
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-                                //가동시작버튼클릭                             
-                            //     document.getElementById("wscntbtnStart").addEventListener("click",function(){   
-                            //         var ls_custcd   = document.getElementById('incustcd').value; 
-                            //         var ls_spjangcd = document.getElementById('inspjangcd').value; 
-                            //         var ls_plan_no   = document.getElementById('inplan_no').value; 
-                            //         var startDate   = document.getElementById('startDate').value;
-                            //         var ls_inwrmc   = document.getElementById('inwrmc').value;
-                            //         var ll_inwinqt  = document.getElementById('inwinqt').value;  
-                            //         var ls_inwflag  = document.getElementById('inwflag').value;  
-
-                            //         const wono_div = document.getElementById('inwonobdg');  
-                            //         if(!ls_plan_no){                                    
-                            //             var ls_text = "<div style='color:red'><span class='badge rounded-pill bg-danger'>작업지시를 먼저 선택하세요</span></div>";
-                            //             wono_div.innerHTML  = ls_text; 
-                            //             return false
-                            //         }else{
-                            //             wono_div.innerHTML  = ""; 
-                            //         }                  
-                            //         const wrmc_div = document.getElementById('inwrmcbdg');  
-                            //         if(!ls_inwrmc){                                    
-                            //             var ls_text = "<div style='color:red'><span class='badge rounded-pill bg-danger'>작업설비를 선택하세요</span></div>";
-                            //             wrmc_div.innerHTML  = ls_text; 
-                            //             return false
-                            //         }else{
-                            //             wrmc_div.innerHTML  = ""; 
-                            //         }                          
-                            //         const winqt_div = document.getElementById('inwinqtbdg');     
-                            //         if(!ll_inwinqt || ll_inwinqt == 0){ 
-                            //             var ls_text = "<div style='color:red'><span class='badge rounded-pill bg-danger'>투입량을 입력하세요</span></div>";
-                            //             winqt_div.innerHTML  = ls_text;  
-                            //             return  false
-                            //         }else{
-                            //             winqt_div.innerHTML  = ""; 
-                            //         }      
-                            //         year = startDate.substr (0, 4)   
-                            //         month = startDate.substr (5, 2)   
-                            //         day = startDate.substr (8, 2)                         
-                            //         wrdate  = year +  month +  day   
-                            //         $.ajax({
-                            //                     url: '/popup/wscnt',  
-                            //                     type:"GET",
-                            //                     data: {
-                            //                         "custcd"  : ls_custcd,
-                            //                         "spjangcd": ls_spjangcd, 
-                            //                         "wrmc"    : ls_inwrmc,
-                            //                         "sdate"   : wrdate , 
-                            //                         "wfrdt"   : startDate,
-                            //                         "plan_no" : ls_plan_no, 
-                            //                         "wflag"   : ls_inwflag 
-                            //                     },
-                            //                     async:false,
-                            //                     success:function(data){
-                            //                         //console.log('data ', data )  
-                            //                         var WscnthDto  = data; 
-                            //                         var cnt = data[0]["wscnt"];   
-                            //                         if(!cnt){cnt = 0;}
-                            //                         // console.log('wscnt ', cnt )
-                            //                         document.getElementById('inwscnt').value = parseFloat(cnt); 
-                            //                         const wscntdis_div = document.getElementById('wscntdis01');  
-                            //                         const wscntdis02_div = document.getElementById('wscntdis02');     
-                            //                         if(cnt > 0){ 
-                            //                             var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>시작카운트는 " + cnt + " 입니다.</span></div>";
-                            //                             wscntdis_div.innerHTML  = ls_text;  
-                            //                             wscntdis02_div.innerHTML  = ""; 
-                            //                             return  false
-                            //                         }else{
-                            //                             wscntdis_div.innerHTML  = ""; 
-                            //                         }       
-                            //                     },error:function(e){
-                            //                         alert(data.code);
-                            //                         alert(data.message);
-                            //                     }
-                            //                 }).done(function(fragment){           
-
-                            //                 })                                                                 
-                            //         // console.log('e',convert_time(e.timeStamp)); 
-                            //     })   
-
-                            //    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-                            //     //가동중단버튼클릭                             
-                            //     document.getElementById("wscntbtnStop").addEventListener("click",function(){   
-                            //         var ls_custcd   = document.getElementById('incustcd').value; 
-                            //         var ls_spjangcd = document.getElementById('inspjangcd').value; 
-                            //         var ls_plan_no   = document.getElementById('inplan_no').value; 
-                            //         var endDate   = document.getElementById('endDate').value;
-                            //         var ls_inwrmc   = document.getElementById('inwrmc').value;
-                            //         var ll_inwinqt  = document.getElementById('inwinqt').value;  
-                            //         var ls_inwflag  = document.getElementById('inwflag').value;  
-                            //         var ls_wscnt  = document.getElementById('inwscnt').value;    
-                            //         var ll_inwbdqt = document.getElementById('inwbdqt').value;    
-                            //         const wono_div = document.getElementById('inwonobdg');  
-
-                            //         var ll_wokqt  = 0
-                            //         if(!ls_plan_no){                                    
-                            //             var ls_text = "<div style='color:red'><span class='badge rounded-pill bg-danger'>작업지시를 먼저 선택하세요</span></div>";
-                            //             wono_div.innerHTML  = ls_text; 
-                            //             return false
-                            //         }else{
-                            //             wono_div.innerHTML  = ""; 
-                            //         }                  
-                            //         const wrmc_div       = document.getElementById('inwrmcbdg');     
-                            //         if(!ls_inwrmc){                                    
-                            //             var ls_text = "<div style='color:red'><span class='badge rounded-pill bg-danger'>작업설비를 선택하세요</span></div>";
-                            //             wrmc_div.innerHTML  = ls_text; 
-                            //             return false
-                            //         }else{
-                            //             wrmc_div.innerHTML  = "";  
-                            //         }     
-                            //         year = endDate.substr (0, 4)   
-                            //         month = endDate.substr (5, 2)   
-                            //         day = endDate.substr (8, 2)                         
-                            //         wrdate  = year +  month +  day   
-                            //         $.ajax({
-                            //                     url: '/popup/wgadongend',  
-                            //                     type:"GET",
-                            //                     data: {
-                            //                         "custcd"  : ls_custcd,
-                            //                         "spjangcd": ls_spjangcd, 
-                            //                         "wrmc"    : ls_inwrmc,
-                            //                         "sdate"   : wrdate , 
-                            //                         "wtrdt"   : endDate,
-                            //                         "plan_no" : ls_plan_no, 
-                            //                         "wflag"   : ls_inwflag 
-                            //                     },
-                            //                     async:false,
-                            //                     success:function(data){  
-                            //                         var WscnthDto  = data; 
-                            //                         var cnt = data[0]["wscnt"];   
-                            //                         if(!cnt){cnt = 0;}
-                            //                         // console.log('wscnt ', cnt )
-                            //                         document.getElementById('edwscnt').value = parseFloat(cnt); 
-                            //                         const wscntdis02_div = document.getElementById('wscntdis02');  
-                            //                         //console.log('ls_wscnt', ls_wscnt);     
-                            //                         if(cnt > 0){ 
-                            //                             var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>종료카운트는 " + cnt + " 입니다.</span></div>";
-                            //                             wscntdis02_div.innerHTML  = ls_text;   
-                            //                             ll_wotqt = cnt - ls_wscnt;
-                            //                             // console.log('ls_wscnt', ls_wscnt);
-                            //                             // console.log('ll_wokqt', ll_wokqt); 
-                            //                         }else{
-                            //                             wscntdis02_div.innerHTML  = ""; 
-                            //                             ll_wotqt = 0;
-                            //                         }       
-                            //                         if(!ll_inwbdqt){ll_inwbdqt = 0;}        // 불량수량  
-                            //                         //console.log('ll_inwbdqt', ll_inwbdqt);                                                
-                            //                         document.getElementById('inwotqt').value = ll_wotqt;        //완료량
-                            //                         ll_wokqt = ll_wotqt - ll_inwbdqt;   
-                            //                         // console.log('ll_wokqt2', ll_wokqt);
-                            //                         document.getElementById('inwokqt').value = ll_wokqt;        //생산량
-                            //                     },error:function(e){
-                            //                         alert(data.code);
-                            //                         alert(data.message);
-                            //                     }
-                            //                 }).done(function(fragment){           
-
-                            //                 })                                                                 
-                            //         // console.log('e',convert_time(e.timeStamp)); 
-                            //     })   
-
+  
 
                         }  
  
@@ -3170,7 +2948,7 @@ console.log("작업지시리스트 wflag", wflag);
                         }
  
 
-                        function fn_egov_init_date(){
+                        function fn_egov_init_date(){ 
                             var $startDate = $('#startDate');
                             var $endDate = $('#endDate');
                             var $searchOrdDate = $('#searchOrdDate');
@@ -3232,21 +3010,9 @@ console.log("작업지시리스트 wflag", wflag);
                             
 
                         }
-                    </script>
-
-
-
-
-
-
-
-
-
-
-                    <!------footer ------>
-                    <footer th:replace="layouts/XDashBoard/XDashBoard_footer :: XDashBoard_footer"></footer>
-                    <!--------------------->
+                    </script>                    
                 </div>
             </div>
         </main>
+    </div>
 </header>

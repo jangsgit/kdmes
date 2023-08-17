@@ -1,6 +1,5 @@
 package com.dae.kdmes.Mapper.Appm;
 
-import com.dae.kdmes.DTO.*;
 import com.dae.kdmes.DTO.Appm.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

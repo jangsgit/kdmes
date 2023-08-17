@@ -1,6 +1,5 @@
 package com.dae.kdmes.controller.appm;
 
-import com.dae.kdmes.DTO.Appm.FPLANBOM_VO;
 import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
 import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.DTO.Appm.TBPopupVO;
@@ -35,8 +34,11 @@ public class Appm01Controller {
     private final AppPopupService appPopupService;
     protected Log log =  LogFactory.getLog(this.getClass());
     CommonDto CommDto = new CommonDto();
-    FPLANW010_VO itemDto010 = new FPLANW010_VO();
-    List<FPLANW010_VO> itemDtoList = new ArrayList<>();
+    FPLANW010_VO itemDto = new FPLANW010_VO();
+    FPLAN_VO fplanDto = new FPLAN_VO();
+    List<FPLAN_VO> itemDtoList = new ArrayList<>();
+    TBPopupVO wrmcDto = new TBPopupVO();
+    TBPopupVO wperidDto = new TBPopupVO();
     //공통코드등록
     @GetMapping(value="/mainframemb")
     public String App01_index(Model model, HttpServletRequest request) throws Exception{
@@ -60,67 +62,26 @@ public class Appm01Controller {
 
 
     //사업장정보조회
-    @GetMapping(value="/list")
-    public String Appcom01_index(@RequestParam("line") String line
-            ,@RequestParam("wflag") String wflag
-            ,@RequestParam("fdate") String fdate
-            ,@RequestParam("tdate") String tdate
-            ,@RequestParam("cltcd") String cltcd
-            ,@RequestParam("pcode") String pcode
-            ,@RequestParam("plan_no") String plan_no
-            ,@RequestParam("wseq") String wseq
-            ,Model model, HttpServletRequest request) throws Exception{
+    @GetMapping(value="/list01")
+    public String Appcom01_index(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("사출공정");  //
         CommDto.setMenuUrl("생산공정>사출공정");
         CommDto.setMenuCode("appcom01");
-        FPLAN_VO fplanDto = new FPLAN_VO();
-        FPLANW010_VO itemDto = new FPLANW010_VO();
-        FPLANW010_VO itemDtoInput = new FPLANW010_VO();
-        List<FPLAN_VO> itemDtoList = new ArrayList<>();
-        TBPopupVO wrmcDto = new TBPopupVO();
-        TBPopupVO wperidDto = new TBPopupVO();
-        FPLANBOM_VO wbomDto = new FPLANBOM_VO();
-        fdate = getFrDate();
-        tdate = getToDate();
-        if (cltcd == null || cltcd.equals("")){
-            cltcd = "%";
-        }
-        if (pcode == null || pcode.equals("")){
-            pcode = "%";
-        }
-        fplanDto.setLine(line);
-        fplanDto.setWflag(wflag);
-
-
+        String fdate = getFrDate();
+        String tdate = getToDate();
+        String cltcd = "%";
+        String pcode = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00010");
         fplanDto.setFdate(fdate);
         fplanDto.setTdate(tdate);
         fplanDto.setCltcd(cltcd);
         fplanDto.setPcode(pcode);
-
-        itemDto.setPlan_no(plan_no);
-        itemDto.setWseq(wseq);
-//        itemDtoList = appcom01Service.GetFPLANW010_List(fplanDto);
-        if(line == "99"){
-            if(appcom01Service.GetFPLANW010_ListOne() == null){
-                model.addAttribute("itemDto", appcom01Service.FPLANW010_Blank());
-            }else{
-                model.addAttribute("itemDto", appcom01Service.GetFPLANW010_ListOne());
-            }
-        }else{
-            if(appcom01Service.GetFPLANW010_Detail(itemDto) == null){
-                model.addAttribute("itemDto", appcom01Service.FPLANW010_Blank());
-            }else{
-                itemDto010 = (FPLANW010_VO) appcom01Service.GetFPLANW010_Detail(itemDto);
-                model.addAttribute("itemDto", itemDto010);
-            }
-        }
-
-        if(appcom01Service.GetFPLAN_List(fplanDto) == null){
-            model.addAttribute("itemDtoList", appcom01Service.FPLAN_Blank());
-        }else{
-            itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
-            model.addAttribute("itemDtoList", itemDtoList);
-        }
+        itemDto.setPlan_no("%");
+//        itemDto = appcom01Service.FPLANW010_Blank();
+        itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
+//        model.addAttribute("itemDto", itemDto);
+        model.addAttribute("itemDtoList", itemDtoList);
 
 
         wrmcDto.setMachname("%");
@@ -129,7 +90,6 @@ public class Appm01Controller {
         wrmcDto.setWseq("%");
         wrmcDto.setWflag("00010");
         wrmcDto.setWclscode("1");
-        model.addAttribute("itemDtoInput", itemDtoInput);
         model.addAttribute("CommDto", CommDto);
         model.addAttribute("wrmcDto", appPopupService.GetWrmcList(wrmcDto));
         model.addAttribute("wperidDto", appPopupService.GetWfperidList(wperidDto));
