@@ -18,9 +18,9 @@
     <select id="FPLAN_OWORK_List" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
         select A.custcd, A.spjangcd,
                A.plan_no, A.wseq, A.wflag, A.seq, A.pcode,   Left(a.wotdt,4) + '-' +  substring(a.wotdt, 5,2) + '-' + substring(a.wotdt, 7,2) as wotdt,
-               A.wqty, A.lotno, A.wqty,    A.bqty as bqty, A.qty,  B.phm_pnam as pname, B.phm_size as psize
-        FROM  TB_FPLAN_OWORK A , TB_CA501 B
-        WHERE A.pcode = B.phm_pcod AND A.plan_no = #{plan_no} and A.pcode = #{pcode} and wflag=#{wflag} and lotno=#{lotno}
+               A.wqty, A.lotno, A.wqty,    A.bqty as bqty, A.qty,  B.JPUM as pname, B.jgugek as psize
+        FROM  TB_FPLAN_OWORK A , JCODE B
+        WHERE A.pcode = B.JKEY AND A.plan_no = #{plan_no} and A.pcode = #{pcode} and wflag=#{wflag} and lotno=#{lotno}
     </select>
 
     <select id="GetWfperidList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
@@ -35,20 +35,57 @@
         ORDER BY B.com_code, C.com_code, wpernm
     </select>
 
+
+    <select id="GetPernmList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        SELECT  A.com_rem2 as linecd , A.com_work as linenm ,
+             A.com_code as wperid,  A.com_rem1 AS  wpernm
+        FROM TB_CA510 A WITH (NOLOCK)
+        WHERE A.com_code != '00' AND A.com_cls = '002'
+         AND  A.com_rem1  Like #{wpernm} + '%'
+         AND  A.com_rem2  Like #{wflag} + '%'
+        ORDER BY A.com_rem1
+    </select>
+
+    <select id="GetWrmcList01" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        select  A.wflag, A.wrmc,  A.wperid,
+                A.wrmcnm wpernm
+        FROM TB_FPLAN_WRMC A WITH(NOLOCK)
+        WHERE  (A.wflag Like #{wflag} + '%')  AND  (A.wrmc lIKE '%' +  #{machname}  + '%'   )
+    </select>
+
+
+    <select id="GetWBadList01" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        <![CDATA[
+        SELECT TB_CA510.com_code   as wcode,
+               TB_CA510.com_rem1   as wcdnm,
+               ISNULL(TB_FPLAN_WBAD.wbqty, 0) as wbqty,
+               TB_FPLAN_WBAD.wseq   as wseq ,
+               TB_FPLAN_WBAD.plan_no   as plan_no
+        FROM TB_CA510 WITH(NOLOCK) LEFT OUTER JOIN TB_FPLAN_WBAD WITH(NOLOCK)
+        ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag}
+        WHERE TB_CA510.com_cls = '005'
+          AND TB_CA510.com_code   != '00'
+          AND TB_CA510.com_REM2  = #{wflag}
+        ]]>
+    </select>
+
+
+
+
+
     <select id="GetWfbomList" parameterType="com.dae.kdmes.DTO.Appm.FPLANBOM_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANBOM_VO">
         select  A.seq   seq ,
                 A.pcode pcode,
-                B.phm_pnam  pname,
-                B.phm_size  psize,
-                B.phm_unit  punit,
+                B.jpum  pname,
+                B.jgugek  psize,
+                B.jdanwy  punit,
                 B.lotnodv   lotnodv,
                 A.qty   qty,
                 A.qty   gqty,
                 CAST(0.000 as DECIMAL(18, 3)) tqty
         FROM TB_FPLAN_BOM A WITH(NOLOCK),
-             TB_CA501 B WITH(NOLOCK)
-        WHERE A.custcd   = B.phm_cust
-          AND A.pcode    = B.phm_pcod
+             JCODE B WITH(NOLOCK)
+        WHERE  A.pcode    = B.jkey
           AND A.plan_no  = #{plan_no}
         ORDER BY A.seq
     </select>
@@ -67,9 +104,9 @@
                A.wflag,
                A.seq,
                A.pcode,
-               B.phm_pnam pname,
-               B.phm_size psize,
-               B.phm_unit punit,
+               B.jpum pname,
+               B.jgugek psize,
+               B.jdanwy punit,
                A.lotno,
                '' as  opcltnm,
                A.store,
@@ -80,9 +117,8 @@
                A.indate,
                A.inperid
         FROM TB_FPLAN_IWORK A WITH(NOLOCK),
-             TB_CA501 B WITH(NOLOCK)
-        WHERE A.custcd   = B.phm_cust
-          AND A.pcode    = B.phm_pcod
+             JCODE B WITH(NOLOCK)
+        WHERE  A.pcode    = B.jkey
           AND A.plan_no  = #{plan_no}
           AND A.wseq  = #{wseq}
           AND A.wflag  = #{wflag}
@@ -132,7 +168,7 @@
         FROM TB_CA510 WITH(NOLOCK) LEFT OUTER JOIN TB_FPLAN_WBAD WITH(NOLOCK)
              ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag}
             AND TB_FPLAN_WBAD.plan_no   = #{plan_no}
-        WHERE TB_CA510.com_cls = '05' + #{wclscode}
+        WHERE TB_CA510.com_cls = '005'
           AND TB_CA510.com_code   != '00'
         ]]>
     </select>

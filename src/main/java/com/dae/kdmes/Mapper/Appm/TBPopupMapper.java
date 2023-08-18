@@ -29,4 +29,9 @@ public interface TBPopupMapper {
      public List<TBPopupVO> FPLAN_OWORK_List(TBPopupVO bankBoard);         //생산량 리스트
 
 
+     public List<TBPopupVO> GetPernmList(TBPopupVO bankBoard);           //작업자
+     public List<TBPopupVO> GetWrmcList01(TBPopupVO bankBoard); //가동종료
+     public List<TBPopupVO> GetWBadList01(TBPopupVO bankBoard);
+
+
 }

@@ -62,7 +62,10 @@
                                                             <div class="card-title"  ><h3 th:text="${CommDto.MenuTitle}" style="color:white; text-align: center; ">사출공정</h3> </div> 
                                                         </div>
                                                         </div> 
-                                                </div>                                -->              
+                                                </div>                                -->  
+                                                <div class="col-auto"> 
+                                                    <button  class="btn btn-outline-info me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" height:50px;  ">작업지시리스트 </button>
+                                                </div>             
                                                 <div class="col-auto">  
                                                         <div class="col-auto">
                                                             <div id="statusdis01"></div>
@@ -123,7 +126,26 @@
                                                             size="15"  /> 
                                                     </div>
                                                 </div> 
-                                            </div>
+                                                <div class="col-sm">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">LOTNO</div> 
+                                                        <input class="form-control form-control-sm" id="inlotno" type="text" disabled
+                                                            size="15"  /> 
+                                                    </div>
+                                                </div> 
+                                                <div class="col-auto">
+                                                    <div class="input-group">
+                                                        <!-- <div class="input-group-text">작업자</div> -->
+                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wperidmodal" style=" height:40px;  " id="wperidBtn">작업자 </button>
+                                                        <input class="form-control form-control-sm" id="inwrpsnm" type="text"  disabled
+                                                            placeholder=""  />
+                                                            <input class="form-control form-control-sm" id="inwrps" type="hidden"
+                                                                placeholder=""   />
+                                                            <input class="form-control form-control-sm" id="inwinps" type="hidden"
+                                                                placeholder=""   />
+                                                    </div> 
+                                                </div>
+                                            </div> 
                                             <div class="row mb-3 row-cols-lg-3 align-items-center">
                                                 <div class="col-auto">
                                                     <div class="input-group"> 
@@ -150,47 +172,26 @@
                                                 </div>
                                             </div>
                                             <div class="row mb-3 row-cols-lg-3 align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="input-group">
-                                                        <!-- <div class="input-group-text">작업자</div> -->
-                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wperidmodal" style=" height:40px;  " id="wperidBtn">작업자 </button>
-                                                        <input class="form-control form-control-sm" id="inwrpsnm" type="text"  disabled
-                                                            placeholder=""  />
-                                                            <input class="form-control form-control-sm" id="inwrps" type="hidden"
-                                                                placeholder=""   />
-                                                            <input class="form-control form-control-sm" id="inwinps" type="hidden"
-                                                                placeholder=""   />
-                                                    </div> 
-                                                </div>
-                                                <div class="col-auto">
+                                                <!-- <div class="col-auto">
                                                     <div class="input-group">
                                                         <div class="input-group-text">투입량</div>
-                                                        <input class="form-control form-control-sm" id="inwinqt" type="number" data-bs-toggle="modal" data-bs-target="#wiworkmodal"  
+                                                        <input class="form-control form-control-sm" id="inwinqt" type="hidden" data-bs-toggle="modal" data-bs-target="#wiworkmodal"  
                                                             placeholder=""   />
                                                         <div id='inwinqtbdg'></div>      
                                                     </div>
-                                                </div>  
+                                                </div>   -->
                                                 <div class="col-4">
                                                     <div class="input-group">
                                                         <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">생산량 </button>
                                                         <input class="form-control form-control-sm"  type="number" id="inwotqt"
                                                             placeholder=""    onchange="fnc_calvalue(this)"  disabled/>
+                                                        <input class="form-control form-control-sm" id="inwinqt" type="hidden" data-bs-toggle="modal" data-bs-target="#wiworkmodal"    placeholder=""   />
+                                                         <div id='inwinqtbdg'></div>     
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-3 row-cols-lg-3 align-items-center"> 
-                                                <div class="col-auto">
-                                                    <div id="wscntdis01"></div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div id="wscntdis02"></div>
-                                                </div>
-                                            </div> 
-                                            <div class="row mb-3  row-cols-lg-3 align-items-center">  
                                                 <div  class="col-3">
                                                     <div class="input-group">
-                                                        <!-- <div class="input-group-text">불량내역</div> -->
-                                                        
+                                                        <!-- <div class="input-group-text">불량내역</div> --> 
                                                         <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wbadqtymodal" style=" height:40px;  " id="wbadqtyBtn">불량내역 </button>
                                                         <input class="form-control form-control-sm"  type="text" id="inwbdqt"  disabled
                                                             placeholder=""  />
@@ -203,6 +204,17 @@
                                                             placeholder=""  />
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row mb-3 row-cols-lg-3 align-items-center"> 
+                                                <div class="col-auto">
+                                                    <div id="wscntdis01"></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div id="wscntdis02"></div>
+                                                </div>
+                                            </div> 
+                                            <div class="row mb-3  row-cols-lg-3 align-items-center">  
+                                                
                                                 <div class="col-3">
                                                     <div class="input-group">
                                                         <div class="input-group-text">비고</div>
@@ -212,11 +224,8 @@
                                                 </div> 
                                             </div>  
                                             
-                                            <div class="col-auto"> 
+                                            <div  class="col-auto" > 
                                                 <div class="row g-2" >
-                                                    <div class="col-auto"> 
-                                                        <button  class="btn btn-outline-info me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" height:50px;  ">작업지시리스트 </button>
-                                                    </div> 
                                                     <div class="col-auto">
                                                         <button  class="btn btn-warning me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("2")' id="workstBtn"  >작업시작</button>
                                                     </div> 
@@ -258,8 +267,8 @@
                                                                 <h4 class="mb-1" id="staticBackdropLabel">작업지시리스트</h4> 
                                                             </div>
                                                             <div class="container-fluid">
-                                                                <div id="theGrid_div"></div>
-                                                                <div id="thePager01"></div>
+                                                                <div id="theGrid_div" style="overflow:scroll;   height:300px;    margin:0 auto; "></div>
+                                                                <!-- <div id="thePager01"></div> -->
                                                             </div>     
                                                         </div>  
                                                         <div class="modal-footer">
@@ -555,7 +564,7 @@
                     </body> 
 
                     <!------footer ------>
-                    <footer th:replace="layouts/XDashBoard/XDashBoard_footer :: XDashBoard_footer"></footer>
+                    <!-- <footer th:replace="layouts/XDashBoard/XDashBoard_footer :: XDashBoard_footer"></footer> -->
                     <!---------------------> 
 
 
@@ -933,9 +942,12 @@
                             document.getElementById('popwseq').value= arg4;  
                             document.getElementById('popseq').value= arg5;  
                         }
-                        function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18 ){ 
+                        function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19 ){ 
                             // /, ctx.item.owqty ,ctx.item.obqty
-                            
+                             //selectChk(custcd, spjangcd, wono, cltnm, pname, 
+                             //          ostore, plan_no, cltcd, pcode, wseq,
+                             //            wflag, phmmdoc, otqty, wrpsnm, owqty ,
+                             //              obqty,winps,wrps,lotno );
                             var button_workstBtn = document.getElementById('workstBtn');
                             var button_workedBtn = document.getElementById('workedBtn'); 
                                 button_workstBtn.disabled = false;
@@ -953,8 +965,9 @@
                             document.getElementById('inpcode').value= arg9;   
                             document.getElementById('inwseq').value= arg10;  
                             document.getElementById('inwflag').value= arg11;  
-                            document.getElementById('inphmmdoc').value= arg12;  
-                        // console.log('arg13', arg13); 
+                            document.getElementById('inlotno').value= arg19;  
+                            
+                        // document.getElementById('inphmmdoc').value= arg12;  
                             wflag = arg11; //document.getElementById('inwflag').value;
                             if(!wflag){wflag = "00010";} 
                             wrmc = document.getElementById('inwrmc').value; 
@@ -1215,7 +1228,8 @@
                                             otqty: ListDto[i]["otqty"] ,
                                             wrpsnm: ListDto[i]["wrpsnm"]  ,
                                             winps: ListDto[i]["winps"]  ,
-                                            wrps: ListDto[i]["wrps"] 
+                                            wrps: ListDto[i]["wrps"]  ,
+                                            lotno: ListDto[i]["lotno"] 
                                         });
                                         cnt++;
                                     }  
@@ -1228,7 +1242,7 @@
                                     cols.binding = 'prod_sdate';
                                     cols.header = '일자';
                                     cols.align = "center";
-                                    cols.width = '2*' ; 
+                                    cols.width = 100 ; 
                                     wtab01Grid.columns.push(cols);   
                                     cols = new wijmo.grid.Column(); 
                                     cols.binding = 'wono';
@@ -1237,46 +1251,52 @@
                                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                         text: '<b>${item.wono}</b>',
                                         click: (e, ctx) => {
-                                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc , ctx.item.otqty , ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps );
+                                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc , ctx.item.otqty , ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
                                         }
                                     });
-                                    cols.width = '2*';  
+                                    cols.width = 150 ; 
                                     wtab01Grid.columns.push(cols);  
                                     cols = new wijmo.grid.Column(); 
-                                    cols.binding = 'cltnm';
-                                    cols.header = '거래처';
+                                    cols.binding = 'lotno';
+                                    cols.header = 'LOTNO';
                                     cols.align = "center";
-                                    cols.width = '1*' ;  
+                                    cols.width = 100 ; 
                                     wtab01Grid.columns.push(cols);  
-                                    cols = new wijmo.grid.Column(); 
-                                    cols.binding = 'pcode';
-                                    cols.header = '품목코드';
-                                    cols.align = "center";
-                                    cols.width = '2*' ;  
-                                    wtab01Grid.columns.push(cols);  
+                                    // cols = new wijmo.grid.Column(); 
+                                    // cols.binding = 'cltnm';
+                                    // cols.header = '거래처';
+                                    // cols.align = "center";
+                                    // cols.width = 100 ; 
+                                    // wtab01Grid.columns.push(cols);  
+                                    // cols = new wijmo.grid.Column(); 
+                                    // cols.binding = 'pcode';
+                                    // cols.header = '품목코드';
+                                    // cols.align = "center";
+                                    // cols.width = '2*' ;  
+                                    // wtab01Grid.columns.push(cols);  
                                     cols = new wijmo.grid.Column(); 
                                     cols.binding = 'pname';
                                     cols.header = '품목명';
                                     cols.align = "center";
-                                    cols.width = '2*' ;  
+                                    cols.width = 100 ; 
                                     wtab01Grid.columns.push(cols);  
-                                    cols = new wijmo.grid.Column(); 
-                                    cols.binding = 'phmmdoc';
-                                    cols.header = '도면번호';
-                                    cols.align = "center";
-                                    cols.width = '2*' ;  
-                                    wtab01Grid.columns.push(cols);  
+                                    // cols = new wijmo.grid.Column(); 
+                                    // cols.binding = 'phmmdoc';
+                                    // cols.header = '도면번호';
+                                    // cols.align = "center";
+                                    // cols.width = '2*' ;  
+                                    // wtab01Grid.columns.push(cols);  
                                     cols = new wijmo.grid.Column(); 
                                     cols.binding = 'psize';
                                     cols.header = '규격';
                                     cols.align = "center";
-                                    cols.width = '*' ;  
+                                    cols.width = 100 ; 
                                     wtab01Grid.columns.push(cols);  
                                     cols = new wijmo.grid.Column(); 
                                     cols.binding = 'prod_qty';
                                     cols.header = '계획량';
                                     cols.align = "center";
-                                    cols.width = '*' ;  
+                                    cols.width = 100 ; 
                                     wtab01Grid.columns.push(cols);  
 
 
@@ -1459,15 +1479,15 @@
                         window.onload = function() {  
                                     //작업지시 list
                                     var ll_bomchkrow = 0;
-                                    view_flistpage = new wijmo.collections.CollectionView(getData_flist(), {
-                                        pageSize: 8
-                                    });
-                                    // 작업지시 페이지 이동,
-                                    new wijmo.input.CollectionViewNavigator('#thePager01', {
-                                        byPage: true,
-                                        headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                                        cv: view_flistpage
-                                    });                          
+                                    // view_flistpage = new wijmo.collections.CollectionView(getData_flist(), {
+                                    //     pageSize: 8
+                                    // });
+                                    // // 작업지시 페이지 이동,
+                                    // new wijmo.input.CollectionViewNavigator('#thePager01', {
+                                    //     byPage: true,
+                                    //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                                    //     cv: view_flistpage
+                                    // });                          
                                     wtab01Grid = new wijmo.grid.FlexGrid('#theGrid_div', {
                                         autoGenerateColumns: false,
                                         isReadOnly: true, 
@@ -1475,32 +1495,30 @@
                                         alternatingRowStep: 0,
                                         columns: [
                                             // { binding: 'index', header: 'seq', width: '*' },
-                                            { binding: 'prod_sdate', header: '일자', width: '2*', align:"center", format: 'yyyy-MM-dd' },
+                                            { binding: 'prod_sdate', header: '일자',  width: 100, align:"center", format: 'yyyy-MM-dd' },
                                             {
                                                 binding: 'wono',
-                                                width: '2*',
+                                                width: 150,
                                                 header: '작지번호', 
                                                 align:"center",
                                                 cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                                     text: '<b>${item.wono}</b>',
                                                     click: (e, ctx) => {
-                                                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps );
+                                                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
                                                     }
                                                 })
                                             }, 
-                                            { binding: 'cltnm', header: '거래처',   align:"center", width: '1*' },
-                                            { binding: 'pcode', header: '품목코드',   align:"center",width: '2*' },
-                                            { binding: 'pname', header: '품목명',   align:"center",width: '2*' },
-                                            { binding: 'phmmdoc', header: '도면번호',   align:"center",width: '2*' },
-                                            
-                                            { binding: 'psize', header: '규격',     align:"center", width: '*' },
-                                            { binding: 'prod_qty', header: '계획량',align:"center", width: '*' },
+                                            { binding: 'lotno', header: 'LOTNO',   align:"center", width: 150  },
+                                            // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
+                                            { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
+                                            { binding: 'psize', header: '규격',     align:"center",  width: 100 },
+                                            { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
                                             // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
                                             // { binding: 'wotqt', header: '완료량',   align:"center",width: '*' } ,
                                             // { binding: 'decision', header: '임시여부', align:"center", width: '*' }
 
                                         ],
-                                        itemsSource: view_flistpage
+                                        itemsSource: getData_flist()
                                     }); 
                                      //작업지시서 데이타 
                                     function getData_flist(){ 
@@ -1537,11 +1555,15 @@
                                                 wremark: ListDto[i]["wremark"] ,
                                                 phmmdoc: ListDto[i]["phmmdoc"]  ,
                                                 winps: ListDto[i]["winps"]  ,
-                                                wrps: ListDto[i]["wrps"] 
+                                                wrps: ListDto[i]["wrps"]  ,
+                                                lotno: ListDto[i]["lotno"]  ,
+                                                wrpsnm: ListDto[i]["wrpsnm"],
+                                                obqty: ListDto[i]["obqty"]
+                                                
                                                 
                                             });
                                             cnt++;
-                                        }  
+                                        }   
                                         return data                                          
                                     }             
 
@@ -1605,6 +1627,8 @@
                                             });
                                             cnt++;
                                         }  
+                                        console.log('data02');
+                                        console.log(data02);
                                         return data02                                          
                                     }    
 
@@ -1875,6 +1899,8 @@
                                             });
                                             cnt++;
                                         }  
+                                        console.log('data03');
+                                        console.log(data03);
                                         return data03                                          
                                     } 
 
@@ -1944,6 +1970,8 @@
                                             if (cnt == 1) {document.getElementById('searchPcode').value= WbomDto[i]["pcode"];}  
                                             cnt++;
                                         }  
+                                        console.log('data04')
+                                        console.log(data04)
                                         return data04                                          
                                     } 
 
@@ -2296,7 +2324,7 @@
                                                 plan_no : WbadDto[i]["plan_no"]          
                                             });
                                             cnt++;
-                                        }  
+                                        }   
                                         return data05                                          
                                     }         
                                     
@@ -2455,7 +2483,7 @@
                                         // document.getElementById('inwbdqt').value= 0; 
                                         // document.getElementById('inwokqt').value= 0;  
                                         // console.log("plannoBtn click")
-                                        wbom_list(searchText);       //TB_FPLAN_BOM    list
+                                        //wbom_list(searchText);       //TB_FPLAN_BOM    list
                                         wiwork_list(searchText);     //TB_FPLAN_IWORK  list
                                         wbadqty_list(searchText);     //TB_FPLAN_IWORK  list
 
@@ -2902,16 +2930,16 @@
  
 
                         $(document).ready(function() {
-                            fn_egov_init_date()
+                            //fn_egov_init_date()
                             getToday()
-                            $('datetimepicker').datetimepicker({
+                            // $('datetimepicker').datetimepicker({
                                 
-                            }); 
+                            // }); 
 
-                            $("#startDate").change(function(e){ 
-                                console.log("달력클릭");
-                                console.log(convert_time(e.timestamp));
-                            })
+                            // $("#startDate").change(function(e){ 
+                            //     console.log("달력클릭");
+                            //     console.log(convert_time(e.timestamp));
+                            // })
 
                         })
 
@@ -2943,6 +2971,7 @@
                             if(month > 0 && month < 10) {month = "0" + month};
                             let ls_frday = year + '-' + month + '-01'
                             let ls_today = year + '-' + month + '-' + date
+                            console.log(ls_today); 
                             document.getElementById('popwkotDate').value = ls_today;
                             document.getElementById('searchOrdDate').value = ls_today; 
                         }

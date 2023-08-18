@@ -291,11 +291,10 @@
 
     <select id="GetWIworkDetail" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         SELECT   A.custcd, A.spjangcd, A.plan_no,  A.wseq, '' as aseq, A.wflag, A.seq, A.pcode, A.lotno,
-                 A.store, Isnull(A.jqty, 0) as jqty, Isnull(A.sqty, 0) as sqty, Isnull(A.qty, 0) as qty, 0 as bqty, D.phm_pnam AS pname,
-                 D.phm_size AS psize, D.phm_unit AS punit
-        FROM TB_FPLAN_IWORK A WITH(NOLOCK) ,  TB_CA501 D WITH(NOLOCK)
-        where A.custcd = D.phm_cust
-          AND   A.pcode = D.phm_pcod
+                 A.store, Isnull(A.jqty, 0) as jqty, Isnull(A.sqty, 0) as sqty, Isnull(A.qty, 0) as qty, 0 as bqty, D.jpum AS pname,
+                 D.jgugek AS psize, D.jdanwy AS punit
+        FROM TB_FPLAN_IWORK A WITH(NOLOCK) ,  JCODE D WITH(NOLOCK)
+        where A.pcode = D.jkey
           AND A.plan_no =#{plan_no} and A.wflag = #{wflag}
     </select>
 

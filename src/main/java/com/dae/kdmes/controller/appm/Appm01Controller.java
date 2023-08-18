@@ -86,19 +86,21 @@ public class Appm01Controller {
 
         wrmcDto.setMachname("%");
         wperidDto.setWflag("00010");  //첫번째공정
+        wperidDto.setWpernm("%");
         wrmcDto.setPlan_no("%");      //불량구분 팝업
         wrmcDto.setWseq("%");
         wrmcDto.setWflag("00010");
         wrmcDto.setWclscode("1");
         model.addAttribute("CommDto", CommDto);
-        model.addAttribute("wrmcDto", appPopupService.GetWrmcList(wrmcDto));
-        model.addAttribute("wperidDto", appPopupService.GetWfperidList(wperidDto));
+        model.addAttribute("wrmcDto", appPopupService.GetWrmcList01(wrmcDto));          //설비명
+//        log.info("Exception =====>" + appPopupService.GetPernmList(wperidDto).toString());
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
 //        wbomDto.setPlan_no("202108120027");
         model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
 //        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
         model.addAttribute("wfiworkDto", appPopupService.GetWfiworkList_blank());
 
-        model.addAttribute("wbadDto", appPopupService.GetWBadList(wrmcDto));
+        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));          //불량구분
 
         return "AppCom/LayFPLAN_W010";
     }

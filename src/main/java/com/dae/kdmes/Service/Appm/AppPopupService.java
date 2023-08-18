@@ -44,6 +44,19 @@ public class AppPopupService {
         return Popupmapper.GetWBadList(parm);
     }
     public Object GetWBadList_blank(){ return Popupmapper.GetWBadList_blank(); }
-
     public List<TBPopupVO> FPLAN_OWORK_List(TBPopupVO parm){return Popupmapper.FPLAN_OWORK_List(parm);}
+
+
+    public Object GetPernmList(TBPopupVO parm){
+        return Popupmapper.GetPernmList(parm);
+    }
+    public Object GetWrmcList01(TBPopupVO parm){
+        return Popupmapper.GetWrmcList01(parm);
+    }
+    public Object GetWBadList01(TBPopupVO parm){
+        return Popupmapper.GetWBadList01(parm);
+    }
+
+
+
 }
