@@ -110,9 +110,32 @@ public class App01Controller {
         return "App01/index02";
     }
 
+
+    //재고실사등록
+    @GetMapping(value="/index03")
+    public String App03_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("재고등록");
+        CommDto.setMenuUrl("기준정보>재고등록");
+        CommDto.setMenuCode("index03");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("index03 Exception ================================================================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index03";
+    }
+
     //제품등록
     @GetMapping(value="/index05")
-    public String App03_index( Model model, HttpServletRequest request) throws Exception{
+    public String App05_index( Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("제품등록");
         CommDto.setMenuUrl("기준정보>제품정보");
         CommDto.setMenuCode("index05");

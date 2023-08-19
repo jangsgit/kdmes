@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 // @RestController : return을 텍스트로 반환함.
 //@Controller
@@ -114,8 +111,8 @@ public class Appm01CrudController {
             ,Model model, HttpServletRequest request) throws Exception {
 
 
-        CommDto.setMenuTitle("절단공정");  //
-        CommDto.setMenuUrl("생산공정>절단공정");
+        CommDto.setMenuTitle("사출공정");  //
+        CommDto.setMenuUrl("생산공정>사출공정");
         CommDto.setMenuCode("appcom01");
         FPLAN_VO fplanDto = new FPLAN_VO();
         List<FPLAN_VO> itemDtoList = new ArrayList<>();
@@ -198,41 +195,34 @@ public class Appm01CrudController {
 
 
     @RequestMapping(value="/w020ordlist", method = RequestMethod.POST)
-    public Object AppW020OrdList_index(@RequestParam("frdate") String frdate
+    public Object AppW020OrdList_index(@RequestParam("lotno") String lotno
             ,Model model, HttpServletRequest request) throws Exception {
 
 
-        CommDto.setMenuTitle("절단공정");  //
-        CommDto.setMenuUrl("생산공정>절단공정");
+        CommDto.setMenuTitle("검사공정");  //
+        CommDto.setMenuUrl("생산공정>검사공정");
         CommDto.setMenuCode("appcom01");
         FPLAN_VO fplanDto = new FPLAN_VO();
         List<FPLAN_VO> itemDtoList = new ArrayList<>();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-        Calendar frcal = Calendar.getInstance();
-        Calendar tocal = Calendar.getInstance();
-        Date ldFrdate = df.parse(frdate);
-        frcal.setTime(ldFrdate);
-        tocal.setTime(ldFrdate);
-
-//            System.out.println("current: " + df.format(cal.getTime()));
-
-        frcal.add(Calendar.DATE, -14);
-        tocal.add(Calendar.DATE, 7);
-        System.out.println("frdate: " + df.format(frcal.getTime()));
-        frdate = df.format(frcal.getTime()).toString();
-        String todate = df.format(tocal.getTime()).toString();
-
-        frdate = setDateFormat(frdate);
-        todate = setDateFormat(todate);
-
+        String fdate = getFrDate();
+        String tdate = getToDate();
         fplanDto.setLine("00");
-        fplanDto.setWflag("00010");
-        fplanDto.setFdate(frdate);
-        fplanDto.setTdate(todate);
+        fplanDto.setWflag("00020");
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
         fplanDto.setCltcd("%");
         fplanDto.setPcode("%");
-        //itemDtoList = appcom02Service.GetFPLAN_List(fplanDto);
+        if(lotno.length() == 0 ){
+            log.info("lotno.length() == 0 =====>"  );
+            itemDtoList = appcom01Service.GetFPLAN_List02(fplanDto);
+        }else{
+            String[] arrLotno = lotno.split(",");
+            HashMap hm = new HashMap();
+            hm.put("itemcdArr", arrLotno) ;
+            fplanDto.setCltcd("%");
+            fplanDto.setPcode("%");
+            itemDtoList = appcom01Service.GetFPLAN_List02Arr(hm);
+        }
 
         return itemDtoList;
     }
@@ -1501,8 +1491,7 @@ public class Appm01CrudController {
         itemDto.setPlan_no(plan_no);
         itemDto.setWflag(wflag);
         itemDto.setWseq("02");
-        return null;
-//        return appcom02Service.GetFPLANW020_Detail(itemDto);
+        return appcom01Service.GetFPLANW020_Detail(itemDto);
 
     }
 
@@ -2113,6 +2102,14 @@ public class Appm01CrudController {
         String month = arg.substring(5,7) ;
         String day   = arg.substring(8,10) ;
         return arg = year + month + day ;
+    }
+    private String getFrDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, -14); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
     }
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

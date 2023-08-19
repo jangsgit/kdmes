@@ -3,35 +3,9 @@
 
 <!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
 <mapper namespace="com.dae.kdmes.Mapper.App01.Index03Mapper">
-    <select id="GetJcustomCode" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
-        <![CDATA[
-        select   jcustomer_code as jcustomer_code
-        from JCODE WITH (NOLOCK)
-        WHERE isnull(jcustomer_code,'')   NOT IN ('X')
-        Group by jcustomer_code
-        ORDER BY jcustomer_code
-        ]]>
-    </select>
-
-    <select id="GetJcustomCodeTot" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
-        <![CDATA[
-        select   jcustomer_code as jcustomer_code
-        from JCODE WITH (NOLOCK)
-        Group by jcustomer_code
-        ORDER BY jcustomer_code
-        ]]>
-    </select>
 
 
-    <select id="GetJpumCustList" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
-        <![CDATA[
-            select   jcustomer_code, jmodel_code
-            from JCODE WITH (NOLOCK)
-            WHERE isnull(jcustomer_code,'')   = #{jcustomer_code}
-            Group by jcustomer_code, jmodel_code
-            ORDER BY jcustomer_code, jmodel_code
-        ]]>
-    </select>
+
 
 
     <select id="GetJpumCustJaegoList" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
@@ -195,6 +169,38 @@
             select j2_key, j2_name from jcode2  where 1=1 and isnull(j2_key,'') Like concat('%',#{j2_key},'%') order by j2_key
         ]]>
     </select>
+
+
+
+
+
+
+    <select id="SelectJegoIpgo"  parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
+        <![CDATA[ select A.jepm, A.acorp, A.key1, A.jepm_size, A.ijaego_su1 as jqty , B.jpum as jpumnm, B.jgugek as jgugek , B.jsize as jsize,
+                         B.jmodel_code as jmodel_code, B.jcolor_code as jcolor_code, B.jcustomer_code as jcustomer_code
+           from JEGO_JEPMJANAK A WITH (NOLOCK) , JCODE B WITH (NOLOCK)
+           where A.jepm = B.jkey
+           AND A.key1 = #{key1}   ]]>
+    </select>
+
+
+    <select id="SelectJegoList"  parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
+        <![CDATA[ select B.jkey,  B.jpum as jpumnm, B.jgugek as jgugek , B.jsize as jsize,
+                         B.jmodel_code as jmodel_code, B.jcolor_code as jcolor_code, B.jcustomer_code as jcustomer_code,
+                         convert(integer, DBO.DF_TB_PCODE_JQTY(B.jkey,  #{frdate},  #{todate}) ) as jqty
+           from  JCODE B WITH (NOLOCK)
+           where  isnull(B.jkey,'') Like concat('%',#{jkey},'%')     ]]>
+    </select>
+
+    <insert id="InsertJegoIpgo" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
+        insert into JEGO_JEPMJANAK (jepm, acorp, key1, jepm_size, ijaego_su1) values
+        (#{jepm}, #{acorp}, #{key1}, #{jepm_size}, #{ijaego_su1})
+    </insert>
+
+
+    <delete id="DeleteJaegoIpgo" parameterType="com.dae.kdmes.DTO.App01.Index03Dto">
+        DELETE  JEGO_JEPMJANAK  where key1  = #{key1}
+    </delete>
 
 
 

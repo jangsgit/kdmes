@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,12 +22,26 @@ public class Appcom01Service {
 //        log.debug("xxxxxxxxxxxxxxxxxxxxxxxxxx");
         return FPLANW010_mapper.GetFPLAN_List(parm);
     }
+    public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO parm){
+
+//        log.debug("xxxxxxxxxxxxxxxxxxxxxxxxxx");
+        return FPLANW010_mapper.GetFPLAN_List02(parm);
+    }
+    public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm){
+
+//        log.debug("xxxxxxxxxxxxxxxxxxxxxxxxxx");
+        return FPLANW010_mapper.GetFPLAN_List02Arr(parm);
+    }
     public Object GetFPLANW010_ListOne(){
         return FPLANW010_mapper.GetFPLANW010_ListOne();
     }
     public Object GetFPLANW010_Detail (FPLANW010_VO parm){
         return FPLANW010_mapper.GetFPLANW010_Detail(parm);
     }
+    public Object GetFPLANW020_Detail (FPLANW010_VO parm){
+        return FPLANW010_mapper.GetFPLANW020_Detail(parm);
+    }
+
     public void FPLANW010_Insert(FPLANW010_VO parm){
         FPLANW010_mapper.FPLANW010_Insert(parm);
     }

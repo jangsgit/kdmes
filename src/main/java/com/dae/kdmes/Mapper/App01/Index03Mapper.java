@@ -33,4 +33,11 @@ public interface Index03Mapper {
     public String GetJpumCheck(Index03Dto  parm) ;
 
 
+
+    public List<Index03Dto> SelectJegoIpgo(Index03Dto parm) ;
+    public Boolean InsertJegoIpgo(Index03Dto parm) ;
+    public Boolean DeleteJaegoIpgo(Index03Dto parm) ;
+    public List<Index03Dto> SelectJegoList(Index03Dto parm) ;
+
+
 }

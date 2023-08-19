@@ -62,4 +62,16 @@ public class Index03Service {
     public String GetJpumCheck(Index03Dto parm){  return  appMapper.GetJpumCheck(parm);  }
 
 
+
+    public List<Index03Dto> SelectJegoIpgo(Index03Dto parm){
+        return  appMapper.SelectJegoIpgo(parm);
+    }
+    public Boolean InsertJegoIpgo(Index03Dto parm){ return  appMapper.InsertJegoIpgo(parm);}
+    public Boolean DeleteJaegoIpgo(Index03Dto parm){ return  appMapper.DeleteJaegoIpgo(parm);}
+
+    public List<Index03Dto> SelectJegoList(Index03Dto parm){
+        return  appMapper.SelectJegoList(parm);
+    }
+
+
 }

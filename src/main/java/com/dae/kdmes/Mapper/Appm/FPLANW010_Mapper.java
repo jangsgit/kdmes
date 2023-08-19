@@ -4,14 +4,20 @@ import com.dae.kdmes.DTO.Appm.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
 @Mapper
 public interface FPLANW010_Mapper {
-     public List<FPLAN_VO> GetFPLAN_List(FPLAN_VO xfplanBoard);           //list
+     public List<FPLAN_VO> GetFPLAN_List(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm);
+     //list
      public FPLANW010_VO GetFPLANW010_ListOne();   //한건 조회
-     public FPLANW010_VO GetFPLANW010_Detail(FPLANW010_VO xa012Board);   //조회
+     public FPLANW010_VO GetFPLANW010_Detail(FPLANW010_VO xa012Board);   //
+     public FPLANW010_VO GetFPLANW020_Detail(FPLANW010_VO xa012Board);   //
+     // 조회
      public void FPLANW010_Insert(FPLANW010_VO xa012Board);    //입력
      public void FPLANW010_Update(FPLANW010_VO xa012Board);    //수정
      public void FPLANW010_WrmcUpdate(FPLANW010_VO xa012Board);    //수정

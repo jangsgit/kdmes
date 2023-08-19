@@ -31,4 +31,22 @@ public class Index03Dto {
     private String j_sang;
     private String Jpb_gubn;
     private String Jmodel_code;
+
+
+    private String acorp;
+    private String key1;
+    private Integer ijaego_su1;
+    private Integer ijaego_su2;
+    private Integer ijaego_su3;
+    private Integer jqty;
+    private String jpumnm;
+    private String jsize;
+    private String jepm;
+    private String jepm_size;
+
+
+
+
+
+
 }

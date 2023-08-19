@@ -77,5 +77,29 @@ public class App02Controller {
     }
 
 
+    @GetMapping(value="/index12")
+    public String App12_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("바코드이력");
+        CommDto.setMenuUrl("생산계획>바코드이력");
+        CommDto.setMenuCode("index12");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            index10ListDto = service10.getFplanList(index10Dto);
+            popupListDto = service10.getCls_flagList(popupDto);
+
+            model.addAttribute("cls_flagList",popupListDto);
+            model.addAttribute("fplanList",index10ListDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App12_index Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index12";
+    }
 
 }
