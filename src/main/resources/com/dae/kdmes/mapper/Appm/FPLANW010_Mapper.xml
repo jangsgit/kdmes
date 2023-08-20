@@ -80,6 +80,7 @@
           AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
           AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
           AND ( ISNULL(A.line,'')  = '00' )
+           AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
           AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00010', '', '') <> '00' OR ISNULL(A.wflag, '00010') <= '00010')
           ORDER BY A.prod_sdate desc, A.wono
         ]]>

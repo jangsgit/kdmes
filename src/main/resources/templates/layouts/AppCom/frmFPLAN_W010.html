@@ -255,7 +255,7 @@
                                                 </div>      
                                             </div>                
                                         </form>
-                                        <form    role="form"     enctype="multipart/form-data">
+                                         
                                             <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
                                                 data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                                 aria-hidden="true">
@@ -274,7 +274,7 @@
                                                         <div class="modal-footer">
                                                             <div class="row g-1">
                                                                 <div class="col-auto">
-                                                                    <input type="text"  class="form-control datetimepicker" id="searchOrdDate" autocomplete="off"  placeholder="Y-m-d"   >
+                                                                    <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter(event)" id="searchOrdDate" autocomplete="off"  placeholder="Lot No"   >
                                                                 </div>
                                                                 <div class="col-auto">
                                                                     <button class="btn btn-primary" type="button"  id="searchBtn"  >조회 </button>
@@ -293,7 +293,7 @@
                                                     </div>
                                                 </div> 
                                             </div>         
-                                        </form>
+                                         
                                         <!--------------------------------------------------------------------------------------->
                                         <!--------------------------------------------------------------------------------------->  
                                         <form    role="form"   th:object="${wrmcDto}" th:action="@{/popup/wrmc}" method="post" enctype="multipart/form-data" >
@@ -581,6 +581,13 @@
     var view_wotqtpage;
 
 
+    function barcode_enter(e){ 
+           if(e.keyCode == 13){
+            var ls_searchOrdDate = document.getElementById('searchOrdDate').value;  
+            searchList_rtn(ls_searchOrdDate);
+              return ;
+           }
+        }
 
     window.onload = function() {  
         //작업지시 list
@@ -602,20 +609,20 @@
             alternatingRowStep: 0,
             columns: [
                 // { binding: 'index', header: 'seq', width: '*' },
-                { binding: 'prod_sdate', header: '일자',  width: 100, align:"center", format: 'yyyy-MM-dd' },
+                { binding: 'prod_sdate', header: '일자',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                 {
-                    binding: 'wono',
+                    binding: 'lotno',
                     width: 150,
-                    header: '작지번호', 
+                    header: 'LOTNO', 
                     align:"center",
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.wono}</b>',
+                        text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {
                             selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
                         }
                     })
                 }, 
-                { binding: 'lotno', header: 'LOTNO',   align:"center", width: 150  },
+                { binding: 'wono', header: '작지번호',   align:"center", width: 150  },
                 // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                 { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
                 { binding: 'psize', header: '규격',     align:"center",  width: 100 },
@@ -627,6 +634,17 @@
             ],
             itemsSource: view_flistpage
         }); 
+        
+        setHeaderColumn01(false);
+        // document.getElementById('header').addEventListener('click', e => {
+        //     setHeaderColumn(e.target.checked);
+        // });
+        function setHeaderColumn01(headerOn) {
+            wtab01Grid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        }
+
             //작업지시서 데이타 
         function getData_flist(){ 
             var ListDto = [[${itemDtoList}]]; 
@@ -2634,15 +2652,13 @@
         var ls_searchdate = arg;  
         
         if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){ 
-                alert("조회일자를 입력하세요") 
-                document.getElementById("searchOrdDate").focus(); 
-                return ;               
+            ls_searchdate = "%";
         }     
         $.ajax({
             url: '/input/w010ordlist',  
             type:"POST",
             data: { 
-                "frdate"      : ls_searchdate,  
+                    "lotno"      : ls_searchdate,  
             }, 
             async:false,
             success:function(data){ 
@@ -2655,11 +2671,11 @@
                 for (var i = 0; i < ListDto.length; i++) {
                     var psdate = ListDto[i]["prod_sdate"];
                     psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
-                    var date_format = new Date(psdate);
+                    // var date_format = new Date(psdate);
                     dataArr.push({
                         id: i, 
                         index: cnt,                                                                
-                        prod_sdate: wijmo.DateTime.addDays(date_format, 0),
+                        prod_sdate: psdate,
                         wono: ListDto[i]["wono"], 
                         cltnm: ListDto[i]["cltnm"], 
                         pname: ListDto[i]["pname"], 
@@ -2697,14 +2713,14 @@
                 cols.binding = 'prod_sdate';
                 cols.header = '일자';
                 cols.align = "center";
-                cols.width = 100 ; 
+                cols.width = 120 ; 
                 wtab01Grid.columns.push(cols);   
                 cols = new wijmo.grid.Column(); 
-                cols.binding = 'wono';
-                cols.header = '작지번호';
+                cols.binding = 'lotno';
+                cols.header = 'LotNo';
                 cols.align = "center";
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    text: '<b>${item.wono}</b>',
+                    text: '<b>${item.lotno}</b>',
                     click: (e, ctx) => {
                         selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc , ctx.item.otqty , ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
                     }
@@ -2712,10 +2728,10 @@
                 cols.width = 150 ; 
                 wtab01Grid.columns.push(cols);  
                 cols = new wijmo.grid.Column(); 
-                cols.binding = 'lotno';
-                cols.header = 'LOTNO';
+                cols.binding = 'wono';
+                cols.header = '작지번호';
                 cols.align = "center";
-                cols.width = 100 ; 
+                cols.width = 150 ; 
                 wtab01Grid.columns.push(cols);  
                 // cols = new wijmo.grid.Column(); 
                 // cols.binding = 'cltnm';
@@ -2733,7 +2749,7 @@
                 cols.binding = 'pname';
                 cols.header = '품목명';
                 cols.align = "center";
-                cols.width = 100 ; 
+                cols.width = 150 ; 
                 wtab01Grid.columns.push(cols);  
                 // cols = new wijmo.grid.Column(); 
                 // cols.binding = 'phmmdoc';
@@ -2974,7 +2990,7 @@
         let ls_today = year + '-' + month + '-' + date
         console.log(ls_today); 
         document.getElementById('popwkotDate').value = ls_today;
-        document.getElementById('searchOrdDate').value = ls_today; 
+        // document.getElementById('searchOrdDate').value = ls_today; 
     }
 
 

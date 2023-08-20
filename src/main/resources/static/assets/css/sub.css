@@ -16,8 +16,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     background: transparent;   
     color: transparent;
     
-  }
-
+  } 
 .alert{
     margin-top: 10px;
     color: #c22d05;
