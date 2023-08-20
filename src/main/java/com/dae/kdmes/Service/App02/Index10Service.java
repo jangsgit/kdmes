@@ -43,6 +43,14 @@ public class Index10Service {
         return  indexMapper.GetInsaList(parm);
     }
 
+    public String SelectCheckIndate(Index10Dto parm){
+        return  indexMapper.SelectCheckIndate(parm);
+    }
+
+    public String SelectMaxSeq(Index10Dto parm){
+        return  indexMapper.SelectMaxSeq(parm);
+    }
+
     public List<PopupDto> getCls_flagList(PopupDto parm){
         return  indexMapper.getCls_flagList(parm);
     }

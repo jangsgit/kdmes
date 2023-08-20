@@ -27,6 +27,9 @@ public interface Index10Mapper {
     public List<Index10Dto> GetCifListTot(Index10Dto parm) ;
 
     public List<Index10Dto> GetInsaList(Index10Dto parm) ;
+    public String getIndex10MaxSeq(String  parm) ;
 
+    public String SelectMaxSeq(Index10Dto parm) ;
+    public String SelectCheckIndate(Index10Dto  parm) ;
     public List<PopupDto> getCls_flagList(PopupDto parm) ;
 }

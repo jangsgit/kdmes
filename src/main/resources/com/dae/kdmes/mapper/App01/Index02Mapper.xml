@@ -7,19 +7,25 @@
 
     <select id="getWflagList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-            select com_code, com_work from TB_CA510  where com_cls = '001'
+            select com_code, com_work, com_cnam , com_rem1 from TB_CA510  where com_cls = '001'
+        ]]>
+    </select>
+
+    <select id="getWrcmList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
+        <![CDATA[
+            select  TB.com_rem1, WR.wrmcnm from TB_CA510 TB Inner join TB_FPLAN_WRMC WR on WR.wflag = TB.com_rem1 where com_cls = '001'
         ]]>
     </select>
 
     <select id="GetFplanDetailList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-            select * from TB_FPLAN_WRMC where wflag = #{com_code}
+           select * from TB_FPLAN_WRMC TB inner join TB_CA510 CA on TB.wperid = CA.com_code where wflag = #{com_code}
         ]]>
     </select>
 
     <insert id="InsertFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto" >
-        insert into TB_FPLAN_WRMC (custcd,spjangcd, wflag, wrmc, wrmcnm, wperid ) values
-        ('KDMES', 'ZZ',#{com_code}, #{wrmc}, #{wrmcnm}, #{wperid})
+        insert into TB_FPLAN_WRMC (custcd,spjangcd, wflag, wrmc, wrmcnm, wperid , inperid) values
+        ('KDMES', 'ZZ',#{com_code}, #{wrmc}, #{wrmcnm}, #{wperid}, #{wpernm})
     </insert>
 
     <update id="UpdateFplanDetail" parameterType="com.dae.kdmes.DTO.App01.Index02Dto">

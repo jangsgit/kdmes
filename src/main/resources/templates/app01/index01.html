@@ -191,10 +191,10 @@
             //tab03 차트그리기
             // Tab03Chartinit()
             //tab01검색 popup list
-            // view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-            //     pageSize: 12
-            // });
-            // // tab01검색 페이지 이동
+            view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+             //   pageSize: 12
+            });
+            // tab01검색 페이지 이동
             // new wijmo.input.CollectionViewNavigator('#tab01Pager', {
             //     byPage: true,
             //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
@@ -219,10 +219,10 @@
                     width: 300},  
                     // { binding: 'psize', header: '규격', width: '*', format: '*' }  
                 ], 
-                itemsSource: getData_tab01()
+                itemsSource: view_p01tab01page
             });  
 
-            // new FlexGridContextMenu(wtab01Grid); 
+            new FlexGridContextMenu(wtab01Grid); 
             // // 선택기 생성
             // let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
             //     itemChecked: () => {
@@ -450,6 +450,7 @@
                         success:function(data){   
                             if(data == "success"){
                                 alert("저장되었습니다.") 
+                                console.log(data);
                                 searchList_rtn(ls_tab);  
                                 clear_rtn(ls_tab);
                                 searchGrid(ls_tab);                                
@@ -599,7 +600,8 @@
                                 alert("삭제되었습니다.") 
                                 searchList_rtn(ls_tab);  
                                 clear_rtn(ls_tab);             
-                            }else{                       
+                            }else{ 
+                                console.log(data);                      
                                 alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
                             }
                            
@@ -678,11 +680,13 @@
                         url: '/app01m/comcodelist',  
                         type:"POST",
                         data: { 
-                            "searchtxt"      : "%"  
+                            "searchtxt"      : "%" ,
+                            "com_cls" :ls_code,  
                         }, 
                         async:false,
                         success:function(data){   
                             tabA_grid(data);
+                            console.log(data);
                         },error:function(e){
                             console.log("error");
                             // alert(data.code);
@@ -752,8 +756,8 @@
                 });
                 cnt++;
             }   
-            // console.log("wtab01_data",wactnm_data) +
-            // console.log(wtab01_data.length);
+            console.log("wtab01_data",wtab01_data);
+            console.log(wtab01_data.length);
             wtab01Grid.columns.clear();  
             wtab01Grid.autoGenerateColumns = false; 
             view_p01tab01page.sourceCollection  = wtab01_data;
@@ -764,11 +768,12 @@
             cols.width = 100; 
             wtab01Grid.columns.push(cols);    
             // console.log("cols", cols);  
+
             cols = new wijmo.grid.Column(); 
             cols.binding = 'com_cnam';
             cols.header = '대분류명칭';
             cols.align = "center";
-            cols.width = 200; 
+            cols.width = 300; 
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.com_cnam}</b>',
                 click: (e, ctx) => {

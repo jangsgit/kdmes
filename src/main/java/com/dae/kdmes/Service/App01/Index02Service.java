@@ -20,6 +20,9 @@ public class Index02Service {
     public List<Index02Dto> getWflagList(Index02Dto parm){
         return indexMapper.getWflagList(parm);
     }
+    public List<Index02Dto> getWrcmList(Index02Dto parm){
+        return indexMapper.getWrcmList(parm);
+    }
 
     public List<Index02Dto> GetFplanDetailList(Index02Dto parm){
         return  indexMapper.GetFplanDetailList(parm);

@@ -425,77 +425,61 @@ public class App02CrudController {
         return index10ListDto;
     }
     @RequestMapping(value="/index10/save")
-    public String index10Save(@RequestPart(value = "key") Map<String, Object> param
+    public String index10Save( @RequestParam("indate") String indate
+            ,@RequestParam("lotno") String lotno
+            ,@RequestParam("prod_sdate") String prod_sdate
+            ,@RequestParam("prod_edate") String prod_edate
+            ,@RequestParam("cltcd") String cltcd
+            ,@RequestParam("qcdate") String qcdate
+            ,@RequestParam("perid") String perid
+            ,@RequestParam("ecltnm") String ecltnm
+            ,@RequestParam("workdv") Integer workdv
+            ,@RequestParam("pcode") String pcode
+            ,@RequestParam("dem_flag") Integer dem_flag
+            ,@RequestParam("prod_qty") BigDecimal prod_qty
+            ,@RequestParam("istore") String istore
+            ,@RequestParam("ostore") String ostore
+            ,@RequestParam("rwflag") String rwflag
+            ,@RequestParam("remark") String remark
+            ,@RequestParam("plan_no") String plan_no
+
             , Model model
             , HttpServletRequest request){
 
-        try {
-            param.forEach((key, values) -> {
-                switch (key) {
-                    case "indate":
-                        index10Dto.setIndate(values.toString());
-                        break;
-                    case "prod_sdate":
-                        index10Dto.setProd_sdate(values.toString());
-                        break;
-                    case "prod_edate":
-                        index10Dto.setProd_edate(values.toString());
-                        break;
-                    case "lotno":
-                        index10Dto.setLotno(values.toString());
-                        break;
-                    case "cltcd":
-                        index10Dto.setCltcd(values.toString());
-                        break;
-                    case "pcode":
-                        index10Dto.setPcode(values.toString());
-                        break;
-                    case "qcdate":
-                        index10Dto.setQcdate(values.toString());
-                        break;
-                    case "perid":
-                        index10Dto.setPerid(values.toString());
-                        break;
-                    case "workdv":
-                        index10Dto.setWorkdv(Integer.valueOf(values.toString()));
-                        break;
-                    case "dem_flag":
-                        index10Dto.setDem_flag(Integer.valueOf(values.toString()));
-                        break;
-                    case "ecltnm":
-                        index10Dto.setEcltnm(values.toString());
-                        break;
-                    case "prod_qty":
-                        index10Dto.setProd_qty(BigDecimal.valueOf(Long.parseLong(values.toString())));
-                        break;
-                    case "cls_flag":
-                        index10Dto.setCls_flag(Integer.valueOf(values.toString()));
-                        break;
-                    case "istore":
-                        index10Dto.setIstore(values.toString());
-                        break;
-                    case "ostore":
-                        index10Dto.setOstore(values.toString());
-                        break;
-                    case "rwflag":
-                        index10Dto.setRwflag(values.toString());
-                        break;
-                    case "remark":
-                        index10Dto.setRemark(values.toString());
-                        break;
-                    default:
-                        break;
-                }
-            });
+
+            index10Dto.setIndate(indate);
+            index10Dto.setLotno(lotno);
+            index10Dto.setProd_sdate(prod_sdate);
+            index10Dto.setProd_edate(prod_edate);
+            index10Dto.setCltcd(cltcd);
+            index10Dto.setQcdate(qcdate);
+            index10Dto.setPerid(perid);
+            index10Dto.setEcltnm(ecltnm);
+            index10Dto.setWorkdv(workdv);
+            index10Dto.setPcode(pcode);
+            index10Dto.setDem_flag(dem_flag);
+            index10Dto.setProd_qty(prod_qty);
+           // index10Dto.setCls_flag(cls_flag);
+            index10Dto.setIstore(istore);
+            index10Dto.setOstore(ostore);
+            index10Dto.setRwflag(rwflag);
+            index10Dto.setRemark(remark);
+
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             model.addAttribute("userformDto",userformDto);
 
-            String ls_pcode = service10.GetFplanCheck(index10Dto);
+
+            log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!" + indate.toString());
+
+            //String ls_pcode = service10.GetFplanCheck(index10Dto);
+            //String ls_chknull = service10.SelectCheckIndate(index10Dto);
             Boolean result = false;
             log.info("ls_pcode");
             log.info(index10Dto.getRemark());
-            if (ls_pcode == null || ls_pcode.equals("")) {
+            if (plan_no == null || plan_no.equals("")) {
+                plan_no = GetMaxSeq(indate);
+                index10Dto.setPlan_no(plan_no);
                 result = service10.InsertFplan(index10Dto);
                 log.info("result1");
                 log.info(result);
@@ -503,6 +487,7 @@ public class App02CrudController {
                     return "error";
                 }
             } else {
+                index10Dto.setPlan_no(plan_no);
                 result = service10.UpdateFplan(index10Dto);
                 log.info("result2");
                 log.info(result);
@@ -511,10 +496,7 @@ public class App02CrudController {
                 }
             }
 //            model.addAttribute("userformDto",userformDto);
-        }catch (IllegalStateException e){
-            model.addAttribute("errorMessage", e.getMessage());
-            return "error";
-        }
+
         return "success";
     }
 
@@ -649,6 +631,7 @@ public class App02CrudController {
                 searchtxt = "%";
             }
             index10Dto.setInname(searchtxt);
+            index10Dto.setInsano(searchtxt);
             index10ListDto = service10.GetInsaList(index10Dto);
 //            log.info("popupDto =====>" );
 //            log.info(  popupDto);
@@ -661,6 +644,18 @@ public class App02CrudController {
         }
 
         return index10ListDto;
+    }
+
+    public String GetMaxSeq(String agDate){
+
+        String ls_seq = service10.SelectMaxSeq(index10Dto);
+        if(ls_seq == null){
+            ls_seq = agDate + "0001";
+        }else{
+            Integer ll_misnum = Integer.parseInt(ls_seq) + 1;
+            ls_seq = ll_misnum.toString();
+        }
+        return ls_seq;
     }
 
 }

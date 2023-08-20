@@ -50,6 +50,7 @@
                             </div>                              
                             <!-- //여기서부터 그래프 -->  
                             <!-- <div class="table table_style2"> --> 
+                                <input type="hidden" id="tabvalue" value="A">
                             <div class="tab-content" >                                        
                                 <div class="tab-pane fade show active"  >   
                                         <div class="container-fluid" id="op1" >
@@ -144,7 +145,7 @@
                         <form class="row g-3">
                             <div class="col-md-6"> 
                                 <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">차종</span>
-                                    <input type="text" class="form-control datetimepicker flatpickr-input" id="jchajong">
+                                    <input type="text" class="form-control" id="jchajong">
                                 </div>
                             </div>
                             <div class="col-md-6"> 
@@ -156,7 +157,7 @@
                         <form class="row g-3">
                             <div class="col-md-6"> 
                                 <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">색상</span>
-                                    <input type="text" class="form-control datetimepicker flatpickr-input" id="jgugek2">
+                                    <input type="text" class="form-control" id="jgugek2">
                                 </div>
                             </div>
                             <div class="col-md-6"> 
@@ -164,9 +165,64 @@
                                     <input class="form-control" type="text"  id="j_sr" name="j_sr" aria-label="jsayang"  >
                                 </div>
                             </div> 
-                        </form>      
-
-
+                        </form>
+                        <form class="row g-3">
+                            <div class="col-md-6"> 
+                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">품번</span>
+                                    <input type="text" class="form-control" id="jpumcode">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">단위</span>
+                                    <input class="form-control" type="text"  id="jdanwy" name="jdanwy" aria-label="jdanwy"  >
+                                </div>
+                            </div> 
+                        </form>       
+                        <form class="row g-3">
+                            <div class="col-md-6"> 
+                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">생산계획수량</span>
+                                    <input type="number" class="form-control" id="prod_qty">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <th>작지상태</th> 
+                                    <td  colspan="4">
+                                        <div class="input_wrap" style="max-width: 230px;"> 
+                                            <select th:field="*{cls_flagList}" name="cls_flag" id="cls_flag" :disabled="validated == 1">
+                                                <option th:each="val : ${cls_flagList}" th:value="${val.cls_key}" th:text="${val.cls_name}">
+                                            </select>                                              
+                                        </div>
+                                    </td>                     
+                            </div> 
+                        </form> 
+                        <form class="row g-3">
+                            <div class="col-md-6"> 
+                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">입고창고</span>
+                                    <input type="text" class="form-control" id="istore">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">출고창고</span>
+                                    <input type="text" class="form-control" id="ostore"> 
+                                </div>
+                            </div> 
+                        </form>
+                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">시간구분</span>   
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="rwflag" id="rwflag" type="radio"  value="D" />
+                                <label class="form-check-label" for="inlineRadio1">주간</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="rwflag" id="rwflag" type="radio" value="N" />
+                                <label class="form-check-label" for="inlineRadio2">야간</label>
+                            </div>                           
+                        </div>
+                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">주의사항</span> 
+                            <input class="form-control form-control-sm" id="remark" type="text"    autocomplete="off"  placeholder="">                                               
+                        </div> 
+                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">키</span> 
+                            <input class="form-control form-control-sm" id="plan_no" type="hidden"    autocomplete="off"  placeholder="">                                               
+                        </div>
                         <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
                             <div class="btns" >                                                        
                                 <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span>삭제 </button>
@@ -260,12 +316,23 @@
                                 <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >                                   
                                     <li style ="float:left; list-style-type:none; margin-left:300px;">
                                         <div class="input-group mb-3">  
-                                            <span class="input-group-text" style="max-height:30px;">품목분류</span>                                            
-                                            <select class="form-select"  name="jpbgubn" id="jpbgubn"> 
-                                                <option selected="">품목구분</option>
-                                                <option value="P">피오비노</option>
-                                                <option value="B">블리스</option>  
-                                            </select>
+                                            <th>품목분류</th>
+                                            <td >
+                                                <div class="input_wrap" style="max-width: 230px;"> 
+                                                    <select th:field="*{j1_keyList}" name="j_dae" id="j_dae">
+                                                        <option value="">선택</option>
+                                                        <option th:each="val : ${j1_keyList}" th:value="${val.j1_key}" th:text="${val.j1_name}">
+                                                    </select>                                              
+                                                </div>                                            
+                                            </td>
+                                            <td >
+                                                <div class="input_wrap" style="max-width: 225px;"> 
+                                                    <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
+                                                        <option value="">선택</option>
+                                                        <option th:each="val : ${j2_keyList}" th:value="${val.j2_key}" th:text="${val.j2_name}">
+                                                    </select>                                              
+                                                </div>                                                                                                           
+                                            </td>     
                                         </div>
                                     </li>                                    
                                     <!-- <li style ="float:left; list-style-type:none; margin-left:40px;">
@@ -278,7 +345,7 @@
                                         <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
                                             <input class="form-control form-control-sm" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
                                         </div>
-                                    </li>                                   
+                                    </li>                                                                           
                                 </ul>
                            </div>                            
                         </div>   
@@ -370,8 +437,21 @@
 
     window.onload = function() {   
             //tab01 grid list
+        var today = new Date();
+
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2);
+        var day = ('0' + today.getDate()).slice(-2);
+
+        var dateString = year + '-' + month  + '-' + day; 
+
+        document.getElementById('workdv').value = "0";
+        document.getElementById('indate').value = dateString;
+        document.getElementById('prod_sdate').value = dateString;
+        
+
         view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-            pageSize: 21
+           // pageSize: 21
         });
        // tab01 grid page
         // new wijmo.input.CollectionViewNavigator('#tab01Pager', {
@@ -387,10 +467,10 @@
             allowSorting: 'MultiColumn',
             alternatingRowStep: 0,
             columns: [     
-                { binding: 'indate', header: '등록일자', align: "center", width: 100 }, 
-                { binding: 'cltcd', header: '거래처', align: "left", width: 250 }, 
+                { binding: 'indate', header: '등록일자', align: "center", width: 100 ,  format: "YYYY-MM-DD"}, 
+                { binding: 'lotno', header: '로트번호', align: "center", width: 150 },
                 { binding: 'pcode', 
-                    header: '품목', 
+                    header: '품목코드', 
                     align: "center", 
                     width: 200,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
@@ -400,13 +480,9 @@
                         }
                     }) 
                 },   
-                { binding: 'jgugek', header: '규격', align: "left", width: 250 },   
-                { binding: 'prod_qty', header: '계획수량', align: "right", width: 100 },  
-                { binding: 'lotno', header: '로트번호', align: "center", width: 150 },
-                { binding: 'prod_sdate', header: '생산시작일', align: "center", width: 100 },
-                { binding: 'prod_edate', header: '생산종료일', align: "center", width: 100 },
-                { binding: 'cls_flag', header: '작지상태', align: "center", width: 100 },
-                { binding: 'perid', header: '담당자', align: "center", width: 100 },            
+                { binding: 'jpum', header: '품목명', align: "left", width: 250 },   
+                { binding: 'jgugek', header: '규격', align: "left", width: 200 }, 
+                { binding: 'prod_qty', header: '계획수량', align: "right", width: 100 },                        
             ], 
             itemsSource: view_p01tab01page
         });        
@@ -435,7 +511,10 @@
 
  
         // tab01검색 데이터 수집
-        function getData_tab01(){        
+        function getData_tab01(){  
+                  
+            var cifdto = [[${cls_flagList}]];
+            console.log("!!!!!!!!!!!!!" + cifdto);
             var wtab01Dto = [[${fplanList}]];   
             var wactnm_data = [];       
             var cnt = 1;   
@@ -628,11 +707,11 @@
             pageSize: 18
         });
        // tab02 grid page
-        new wijmo.input.CollectionViewNavigator('#tab03Pager', {
-            byPage: true,
-            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-            cv: view_p01tab03page
-        });      
+        // new wijmo.input.CollectionViewNavigator('#tab03Pager', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_p01tab03page
+        // });      
         wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
             autoGenerateColumns: false,
             showMarquee: true,
@@ -755,11 +834,11 @@
                 // pageSize: 12
             });
          // 담당자 페이지 이동
-         new wijmo.input.CollectionViewNavigator('#thePager04', {
-            byPage: true,
-            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-            cv: view_innamepage2
-        });        
+        //  new wijmo.input.CollectionViewNavigator('#thePager04', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_innamepage2
+        // });        
         winnameGrid2 = new wijmo.grid.FlexGrid('#winnameGrid2_div', {  
             autoGenerateColumns: false,
             isReadOnly: false, 
@@ -792,7 +871,8 @@
                 cnt++;
             }    
             return winname_data;                                      
-        }   
+        }  
+        
     } //window 호출 끝
 
     
@@ -852,6 +932,7 @@
         document.getElementById('ostore').value = ""; 
         document.getElementById('rwflag').value = "0"; 
         document.getElementById('remark').value = ""; 
+        document.getElementById('plan_no').value = ""; 
     }
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
@@ -872,7 +953,8 @@
         var ls_istore =  document.getElementById('istore').value;  
         var ls_ostore   =  document.getElementById('ostore').value; 
         var ls_rwflag    =  document.getElementById('rwflag').value;
-        var ls_remark =  document.getElementById('remark').value;  
+        var ls_remark =  document.getElementById('remark').value; 
+        var ls_plan_no =  document.getElementById('plan_no').value; 
         
         const dem_flag = document.getElementById('dem_flag'); 
         const is_checked = dem_flag.checked;
@@ -935,7 +1017,8 @@
                 "istore"        : ls_istore, 
                 "ostore"        : ls_ostore,
                 "rwflag"        : ls_rwflag,
-                "remark"        : ls_remark,        
+                "remark"        : ls_remark, 
+                "plan_no"        : ls_plan_no,        
             } 
       
             //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -947,10 +1030,7 @@
             $.ajax({
                     url: '/app02m/index10/save',
                     type: "POST",   
-                    processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
-                    contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
-                    data: formData,                   
-                    async:false,
+                    data:  inputdata,
                 success:function(data){
                     if(data == "success"){
                         alert("저장되었습니다.")
@@ -1090,7 +1170,7 @@
             cols.binding = 'indate';
             cols.header = '등록일자';
             cols.align = "center";
-            cols.width = 100;           
+            cols.width = 100;         
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
@@ -1108,7 +1188,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.pcode}</b>',
                 click: (e, ctx) => {
-                    wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark);           
+                    wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.plan_no);           
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1181,7 +1261,7 @@
             document.getElementById('cltcd').value = arg5; 
             document.getElementById('qcdate').value = arg6;   
             document.getElementById('perid').value = arg7;
-            //document.getElementById('workdv').value = arg8;
+            document.getElementById('workdv').value = arg8;
             document.getElementById('pcode').value = arg9; 
             document.getElementById('jpum').value = arg10;   
             document.getElementById('jgugek').value = arg11; 
@@ -1198,6 +1278,7 @@
             document.getElementById('ostore').value = arg22;
             document.getElementById('rwflag').value = arg23;
             document.getElementById('remark').value = arg24;
+            document.getElementById('plan_no').value = arg25;
 
             const dem_flag = document.getElementById('dem_flag'); 
             if(arg12 == "0"){

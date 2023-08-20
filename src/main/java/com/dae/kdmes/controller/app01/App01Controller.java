@@ -98,8 +98,10 @@ public class App01Controller {
 
         try {
             index02ListDto = service02.getWflagList(index02Dto);
+         //   index02ListDto = service02.getWrcmList(index02Dto);
 
             model.addAttribute("WflagList",index02ListDto);
+        //    model.addAttribute("WrcmList",index02ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App02_index Exception =============================");
