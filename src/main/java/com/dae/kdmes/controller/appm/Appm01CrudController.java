@@ -107,7 +107,7 @@ public class Appm01CrudController {
     }
 
     @RequestMapping(value="/w010ordlist", method = RequestMethod.POST)
-    public Object AppW010OrdList_index(@RequestParam("frdate") String frdate
+    public Object AppW010OrdList_index(@RequestParam("lotno") String lotno
             ,Model model, HttpServletRequest request) throws Exception {
 
 
@@ -116,31 +116,20 @@ public class Appm01CrudController {
         CommDto.setMenuCode("appcom01");
         FPLAN_VO fplanDto = new FPLAN_VO();
         List<FPLAN_VO> itemDtoList = new ArrayList<>();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-        Calendar frcal = Calendar.getInstance();
-        Calendar tocal = Calendar.getInstance();
-        Date ldFrdate = df.parse(frdate);
-        frcal.setTime(ldFrdate);
-        tocal.setTime(ldFrdate);
-
-//            System.out.println("current: " + df.format(cal.getTime()));
-
-        frcal.add(Calendar.DATE, -14);
-        tocal.add(Calendar.DATE, 7);
-        System.out.println("frdate: " + df.format(frcal.getTime()));
-        frdate = df.format(frcal.getTime()).toString();
-        String todate = df.format(tocal.getTime()).toString();
-
-        frdate = setDateFormat(frdate);;
-        todate = setDateFormat(todate);
+        String fdate = getFrDate();
+        String tdate = getToDate();
 
         fplanDto.setLine("00");
         fplanDto.setWflag("00010");
-        fplanDto.setFdate(frdate);
-        fplanDto.setTdate(todate);
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
         fplanDto.setCltcd("%");
         fplanDto.setPcode("%");
+        fplanDto.setLotno(lotno);
+
+
+
         itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
 
         return itemDtoList;

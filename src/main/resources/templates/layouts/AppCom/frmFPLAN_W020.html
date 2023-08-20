@@ -246,8 +246,7 @@
                                                     </div> -->
                                                 </div>      
                                             </div>                
-                                        </form>
-                                        <form    role="form"     enctype="multipart/form-data">
+                                        </form> 
                                             <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
                                                 data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                                 aria-hidden="true">
@@ -266,7 +265,7 @@
                                                         <div class="modal-footer">
                                                             <div class="row g-1">
                                                                 <div class="col-auto">
-                                                                    <input type="text"  class="form-control datetimepicker" id="searchOrdDate" autocomplete="off"  placeholder="Lot No"   >
+                                                                    <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter(event)" id="searchOrdDate" autocomplete="off"  placeholder="Lot No"   >
                                                                 </div>
                                                                 <div class="col-auto">
                                                                     <button class="btn btn-primary" type="button"  id="searchBtn"  >조회 </button>
@@ -287,8 +286,7 @@
 
                                                     </div>
                                                 </div> 
-                                            </div>         
-                                        </form>
+                                            </div>   
                                         <!--------------------------------------------------------------------------------------->
                                         <!--------------------------------------------------------------------------------------->  
                                         <form    role="form"   th:object="${wrmcDto}" th:action="@{/popup/wrmc}" method="post" enctype="multipart/form-data" >
@@ -513,7 +511,13 @@
         var ll_sumotqty = 0; 
 
 
-
+        function barcode_enter(e){ 
+           if(e.keyCode == 13){
+            var ls_searchOrdDate = document.getElementById('searchOrdDate').value;  
+            searchList_rtn(ls_searchOrdDate);
+              return ;
+           }
+        }
 
         window.onload = function() {  
                     //작업지시 list
@@ -531,18 +535,18 @@
                             // { binding: 'index', header: 'seq', width: '*' },
                             { binding: 'prod_sdate', header: '일자',  width: 100, align:"center", format: 'yyyy-MM-dd' },
                             {
-                                binding: 'wono',
+                                binding: 'lotno',
                                 width: 150,
-                                header: '작지번호', 
+                                header: 'LotNo', 
                                 align:"center",
                                 cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                                    text: '<b>${item.wono}</b>',
+                                    text: '<b>${item.lotno}</b>',
                                     click: (e, ctx) => {
                                         selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
                                     }
                                 })
                             }, 
-                            { binding: 'lotno', header: 'LOTNO',   align:"center", width: 150  },
+                            { binding: 'wono', header: '작지번호',   align:"center", width: 150  },
                             // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                             { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
                             { binding: 'psize', header: '규격',     align:"center",  width: 100 },
@@ -1256,25 +1260,16 @@
 
                     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     
                     //BOM 검색   
-                    document.getElementById("plannoBtn").addEventListener("click",function(){
-                        let searchText = '';   
-                        searchText = document.getElementById('searchPlanno').value; 
-                        if(!searchText){
-                            alert("작업지시서를 먼저 선택하세요");
-                            return 
-                        }
-                        // document.getElementById('inmachname').value= "";  
-                        // document.getElementById('inwrmc').value= "";  
-                        
-                        // document.getElementById('inwinqt').value= 0;  
-                        // document.getElementById('inwbdqt').value= 0; 
-                        // document.getElementById('inwokqt').value= 0;  
-                        // console.log("plannoBtn click")
-                        //wbom_list(searchText);       //TB_FPLAN_BOM    list
-                        // wiwork_list(searchText);     //TB_FPLAN_IWORK  list
-                        wbadqty_list(searchText);     //TB_FPLAN_IWORK  list
+                    // document.getElementById("plannoBtn").addEventListener("click",function(){
+                    //     let searchText = '';   
+                    //     searchText = document.getElementById('searchPlanno').value; 
+                    //     if(!searchText){
+                    //         alert("작업지시서를 먼저 선택하세요");
+                    //         return 
+                    //     } 
+                    //     wbadqty_list(searchText);     //TB_FPLAN_IWORK  list
 
-                    })    
+                    // })    
 
                     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$                                    
                     // TB_FPLAN_BOM LIST
@@ -1881,7 +1876,7 @@
             document.getElementById('inpname').value= arg5; 
             document.getElementById('inostore').value= arg6; 
             document.getElementById('inplan_no').value= arg7;
-            document.getElementById('searchPlanno').value= arg7; 
+            // document.getElementById('searchPlanno').value= arg7; 
             document.getElementById('incltcd').value= arg8;  
             document.getElementById('inpcode').value= arg9;   
             document.getElementById('inwseq').value= arg10;  
@@ -1894,7 +1889,7 @@
             wrmc = document.getElementById('inwrmc').value; 
 
             $("#wlistBtn").trigger("click"); 
-            $("#plannoBtn").trigger("click"); 
+            // $("#plannoBtn").trigger("click"); 
             
             // 초기화
             var gridrow = wperidGrid.rows.length; 
@@ -1925,7 +1920,7 @@
             wscntdis02_div.innerHTML  = "";    
             wscntdis_div.innerHTML = "";    
             $.ajax({
-                url: '/input/w010',   
+                url: '/input/w020',   
                 type:"POST", 
                 data: {
                     "custcd"    : arg1,
@@ -2064,7 +2059,7 @@
             plan_no = document.getElementById('inplan_no').value;
             if(!wflag){ wflag = "00020"; } 
             $("#wlistBtn").trigger("click"); 
-            $("#plannoBtn").trigger("click"); 
+            // $("#plannoBtn").trigger("click"); 
             // console.log("WRMC UPDATE");
             
             $.ajax({
@@ -2239,11 +2234,11 @@
                     cols.width = 120 ; 
                     wtab01Grid.columns.push(cols);   
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'wono';
-                    cols.header = '작지번호';
+                    cols.binding = 'lotno';
+                    cols.header = 'LotNo';
                     cols.align = "center";
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.wono}</b>',
+                        text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {
                             selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc , ctx.item.otqty , ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
                         }
@@ -2251,8 +2246,8 @@
                     cols.width = 150 ; 
                     wtab01Grid.columns.push(cols);  
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'lotno';
-                    cols.header = 'LOTNO';
+                    cols.binding = 'wono';
+                    cols.header = '작지번호';
                     cols.align = "center";
                     cols.width = 150 ; 
                     wtab01Grid.columns.push(cols);  

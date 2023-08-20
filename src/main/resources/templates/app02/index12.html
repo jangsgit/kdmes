@@ -55,11 +55,15 @@
                                 </button> 
                             </div>  
                             <div class="col-auto"><span class="input-group-text" id="inputGroup-sizing-sm">매수</span> 
-                                <input class="form-control form-control-sm" id="prtnum" type="number"    autocomplete="off"  placeholder="">                                               
+                                <input class="form-control form-control-sm" id="prtnum01" type="number"    autocomplete="off"  placeholder="">                                               
                             </div>
                             <div class="col-auto">   
                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="prt_btn()">인쇄
                                 </button>
+                            </div>  
+                            <div class="col-auto">   
+                                <div id="barcode"></div>  
+                                <div id="qrcode_value"></div> 
                             </div>  
                         </div> 
                         <div class="container-fluid">   
@@ -84,11 +88,14 @@
                                 </button> 
                             </div>  
                             <div class="col-auto"><span class="input-group-text" id="inputGroup-sizing-sm">매수</span> 
-                                <input class="form-control form-control-sm" id="prtnum" type="number"    autocomplete="off"  placeholder="">                                               
+                                <input class="form-control form-control-sm" id="prtnum02" type="number"    autocomplete="off"  placeholder="">                                               
                             </div>
                             <div class="col-auto">   
                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="prt_btn()">인쇄
                                 </button>
+                            </div>  
+                            <div class="col-auto">   
+                                <div id="barcode02"></div>  
                             </div>  
                         </div> 
                         <div class="container-fluid">
@@ -135,12 +142,31 @@
     </div>
       
 
-    <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />  
-    <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  /> 
+    <!-- <input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#actnmmodal"  />  
+    <input class="form-control form-control-sm"  type="hidden" id="actcontnmbtn" data-bs-toggle="modal" data-bs-target="#actcontnmmodal"  />  -->
 
+    <!--  모달 처리 -->
+    <!-- <input class="form-control form-control-sm"  type="hidden" id="inbarcodebtn" data-bs-toggle="modal" data-bs-target="#cifmodal"  />      
+     <div class="modal fade" id="barcodemodal" data-bs-keyboard="false"
+     data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+         <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm10" >
+             <div class="modal-content border-0">
+                 <div class="modal-body p-0" >
+                    <span>------------------------------<br></span>  
+                    <div id="barcode"></div> 
+                    <span>------------------------------<br></span>  
+                    <div id="qrcode_value"></div> 
+                    <span>------------------------------</span>  
+                 </div>   
  
+             </div>
+         </div> 
+     </div>   -->
 <!--------------------------------------------------------------------------------------->     
  
+           
+
 
 <script type="text/javascript" th:inline="javascript">
     var view_p01tab01page;
@@ -156,11 +182,36 @@
     var treemap;
     let barchart;
     let ani;
+    let barcode ;
+    let barcode02 ;
+    let doc ;
    var wseries_data = [0]; 
+    var lotno = new Array();
+    var prod_qty = new Array();
+    var linenm = new Array();
+    var cltnm = new Array();
+    var pname = new Array();
    let includeColumnHeader = false;
-
+   var initBody; 
+   var div_barcode;
     window.onload = function() {  
        localStorage.setItem("setpage", "app03p001"); 
+       
+        // QR 코드 샘플
+        // barcode = new wijmo.barcode.common.QrCode('#barcode', {
+        //     value: 'QR code Demo',
+        //     renderType : 'Svg'
+        // });
+       barcode = new wijmo.barcode.common.Code128('#barcode', {
+                    value: 'Code128Demo',
+                    autoWidthZoom: 2,
+                    autoWidth: true    
+                });  
+       barcode02 = new wijmo.barcode.common.Code128('#barcode02', {
+                    value: 'Code128Demo',
+                    autoWidthZoom: 2,
+                    autoWidth: true    
+                }); 
        view_p01tab01page = new wijmo.collections.CollectionView(getData_wlist(), {
             // pageSize: 21
         });
@@ -206,9 +257,24 @@
        // 선택기 생성
        let selector01 = new wijmo.grid.selector.Selector(wtab01Grid, {
            itemChecked: () => {
-               // showCheckedCount();
+                showCheckedCount01();
            }
        }); 
+         
+       function showCheckedCount01() {
+        
+            let cnt = document.getElementById('checked-count'), sel = wtab01Grid.rows.filter(r => r.isSelected);  
+            
+            for (var i = 0; i < sel.length; i++) { 
+                console.log(sel[i]._data); 
+                lotno   [i]   = sel[i]._data.lotno; 
+                cltnm[i]      = sel[i]._data.ecltnm;
+                pname[i]      = sel[i]._data.jpum; 
+                prod_qty[i]      = sel[i]._data.prod_qty;  
+            }   
+            barcode.value = lotno   [0]  
+            // document.getElementById("qrcode_value").innerText = lotno   [0]  ;
+        }
        setHeaderColumn(true);
        function setHeaderColumn(headerOn) {
            wtab01Grid.headersVisibility = headerOn
@@ -272,9 +338,23 @@
        // 선택기 생성
        let selector = new wijmo.grid.selector.Selector(wtab02Grid, {
            itemChecked: () => {
-               // showCheckedCount();
+            showCheckedCount02();
            }
        }); 
+       function showCheckedCount02() {
+        
+            let cnt = document.getElementById('checked-count'), sel = wtab02Grid.rows.filter(r => r.isSelected);  
+            
+            for (var i = 0; i < sel.length; i++) { 
+                console.log(sel[i]._data); 
+                lotno   [i]   = sel[i]._data.lotno; 
+                cltnm[i]      = sel[i]._data.ecltnm;
+                pname[i]      = sel[i]._data.jpum; 
+                prod_qty[i]      = sel[i]._data.prod_qty;  
+            }   
+            barcode02.value = lotno   [0]  
+            // document.getElementById("qrcode_value").innerText = lotno   [0]  ;
+        }
        // 헤더 열 전환
        setHeaderColumn2(true);
        function setHeaderColumn2(headerOn) {
@@ -531,49 +611,74 @@
 
    function prt_btn(arg){
        var ls_tab = document.getElementById('tabvalue').value;
-       var ls_ipdate = document.getElementById('ipdate').value; 
-   
+       var ls_ipdate = document.getElementById('ipdate').value;     
        if (!confirm("인쇄하시겠습니까?")) {
                return ; 
        }   
        
        switch(ls_tab){
-           case 'A':
+           case 'A': 
+                if(lotno.length == 0){return } 
+                // document.getElementById("inbarcodebtn").click(); 
+                // const html = document.querySelector('html');
+                // const printContents = document.querySelector('.modal').innerHTML;
+                // console.log(printContents)
+                // const printDiv = document.createElement('barcode');
+                // printDiv.className = 'print-div';
+                // html.appendChild(printDiv);
+                // printDiv.innerHTML = printContents;
+                // document.body.style.display = 'none';
+                // window.print();
+                // document.body.style.display = 'block';
+                // printDiv.style.display = 'none';
+                // barcode.value = lotno[0];
+  
+                doc = new wijmo.PrintDocument({ 
+                    copyCss: false 
+                });
+                doc.append('<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">');
+                doc.append(`
+                        <style>
+                            .wj-barcode-qrcode {
+                                width: 100px;
+                                height: 100px;
+                            }
+                        </style>
+                    `);
+                doc.append(document.querySelector('#barcode')); 
+                doc.append(barcode.value);
+                // <div id="barcode" class="wj-barcode wj-control wj-barcode-code128 wj-state-focus wj-state-focused" tabindex="0" style="line-height: 0px;"><canvas width="308" height="60"></canvas></div>
+                doc.print(); 
+               break;   
+           case 'B': 
+                var ll_prtnum02 = document.getElementById('prtnum02').value;  
 
-           if(ls_ipdate == null || ls_ipdate.length == 0 || ls_ipdate == ""){ 
-               alert("입고일자를 등록하세요") 
-               document.getElementById("ipdate").focus(); 
-               return ;               
-           }   
-
-               $.ajax({
-                   url: '/app03m/index03/del',  
-                   type:"POST",
-                   data: { 
-                       "ipdate"      : ls_ipdate,    
-                   }, 
-                   async:false,
-                   success:function(data){   
-                       if(data == "success"){
-                           alert("삭제되었습니다.") 
-                           searchList_rtn(ls_tab);  
-                           clear_rtn(ls_tab);             
-                       }else{                       
-                           alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
-                       }
-                      
-                   },error:function(e){
-                       console.log("error"); 
-                   }
-               }).done(function(fragment){           
-
-               })  
-               break;                
+                if(lotno.length == 0){return }  
+  
+                doc = new wijmo.PrintDocument({ 
+                    copyCss: false 
+                });
+                doc.append('<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">');
+                doc.append(`
+                        <style>
+                            .wj-barcode-qrcode {
+                                width: 100px;
+                                height: 100px;
+                            }
+                        </style>
+                    `);
+                doc.append(document.querySelector('#barcode02')); 
+                doc.append(barcode02.value);
+                // <div id="barcode" class="wj-barcode wj-control wj-barcode-code128 wj-state-focus wj-state-focused" tabindex="0" style="line-height: 0px;"><canvas width="308" height="60"></canvas></div>
+                doc.print(); 
+               break;               
            default:    
                break;                
        } 
 
-   }         
+   }    
+    
+
    function clear_rtn(arg){
        switch(arg){
            case 'A': 
@@ -863,7 +968,7 @@
        if(date > 0 && date < 10) {date = "0" + date};
        let ls_frday = year + '-' + month + '-01' 
        let ls_today = year + '-' + month + '-' + date 
-       document.getElementById('frdate').value = ls_today;
+    //    document.getElementById('frdate').value = ls_today;
        document.getElementById('todate').value = ls_today;
        document.getElementById('ipdate').value = ls_today;
        document.getElementById('tridate').value = ls_today;
