@@ -136,7 +136,7 @@
         D.wrps as wrps,
         (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
         FROM TB_FPLAN A WITH(NOLOCK)
-        LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00010' ,
+        LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00020' ,
         JCODE C WITH(NOLOCK),
         CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
@@ -401,8 +401,6 @@
         SPJANGCD = 'ZZ'
         <if test="wflag != null ">,</if>
         <if test="wflag != null">wflag=#{wflag}</if>
-        <if test="prod_qty != null ">,</if>
-        <if test="prod_qty != null">prod_qty=#{prod_qty}</if>
         <if test="bqty != null ">,</if>
         <if test="bqty != null">prod_dqty=#{bqty}</if>
         <if test="end_qty != null ">,</if>
@@ -459,12 +457,6 @@
 
     <select id="FPLAN_OWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="String">
         SELECT MAX(seq) FROM  TB_FPLAN_OWORK
-        WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
-          and plan_no = #{plan_no} and wflag = #{wflag} and wseq = #{wseq}
-    </select>
-
-    <select id="FPLAN_IWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="String">
-        SELECT MAX(seq) FROM  TB_FPLAN_IWORK
         WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
           and plan_no = #{plan_no} and wflag = #{wflag} and wseq = #{wseq}
     </select>
@@ -551,7 +543,7 @@
         FROM dual
     </select>
 
-    <select id="GetWIworkWseq" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="String">
+    <select id="GetWIworkWseq" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" resultType="String">
         SELECT wseq
         FROM TB_FPLAN_IWORK WITH(NOLOCK) WHERE plan_no =#{plan_no} and lotno=#{lotno} and wflag=#{wflag}
     </select>
@@ -654,12 +646,15 @@
           and plan_no = #{plan_no} and wflag = #{wflag} and wseq=#{wseq} AND wtrdt IS NULL
     </update>
 
-<!--    <insert id="FPLAN_IWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" keyProperty="plan_no">-->
-<!--        INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no,  wseq, seq, wflag, pcode, lotno, store, qty, bqty,  indate, inperid )-->
-<!--        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq}, #{seq},  #{wflag},  #{pcode}, #{lotno},  #{store},   #{qty}, #{bqty},  #{indate}, #{inperid})-->
-<!--    </insert>-->
-<!--    <delete id="FPLAN_OWORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" >-->
-<!--        DELETE  from TB_FPLAN_IWORK-->
-<!--        where plan_no=#{plan_no} and wseq=#{wseq}-->
-<!--    </delete>-->
+
+    <select id="FPLAN_IWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" resultType="String">
+        SELECT MAX(seq) FROM  TB_FPLAN_IWORK
+        WHERE   plan_no = #{plan_no} and wflag = #{wflag} and wseq = #{wseq}
+    </select>
+
+
+    <insert id="FPLAN_IWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" keyProperty="plan_no">
+        INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no,  wseq, seq, wflag, pcode, lotno, store, qty, bqty,  indate, inperid )
+        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq}, #{seq},  #{wflag},  #{pcode}, #{lotno},  #{store},   #{qty}, #{bqty},  #{indate}, #{inperid})
+    </insert>
 </mapper>

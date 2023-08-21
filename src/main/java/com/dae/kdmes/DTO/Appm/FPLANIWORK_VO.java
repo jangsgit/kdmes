@@ -35,6 +35,7 @@ public class FPLANIWORK_VO {
     private String wendt;
     private String wtable;
     private String wrps;
+    private String keyplanno;
     private float   qty;
     private float   jqty;
     private float sqty;
