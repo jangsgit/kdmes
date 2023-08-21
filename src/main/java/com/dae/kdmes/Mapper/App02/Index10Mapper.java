@@ -30,6 +30,8 @@ public interface Index10Mapper {
     public String getIndex10MaxSeq(String  parm) ;
 
     public String SelectMaxSeq(Index10Dto parm) ;
+
+    public String SelectMaxLot(Index10Dto parm) ;
     public String SelectCheckIndate(Index10Dto  parm) ;
     public List<PopupDto> getCls_flagList(PopupDto parm) ;
 }

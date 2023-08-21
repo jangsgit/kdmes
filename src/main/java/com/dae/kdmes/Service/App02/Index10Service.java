@@ -51,6 +51,10 @@ public class Index10Service {
         return  indexMapper.SelectMaxSeq(parm);
     }
 
+    public String SelectMaxLot(Index10Dto parm){
+        return  indexMapper.SelectMaxLot(parm);
+    }
+
     public List<PopupDto> getCls_flagList(PopupDto parm){
         return  indexMapper.getCls_flagList(parm);
     }

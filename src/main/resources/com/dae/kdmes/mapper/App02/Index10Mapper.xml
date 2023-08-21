@@ -33,59 +33,76 @@
         <![CDATA[
         select   plan_no
         from TB_FPLAN WITH (NOLOCK)
-        WHERE isnull(plan_no,'')   = #{lotno}
+        WHERE isnull(plan_no,'')   = #{plan_no}
         ORDER BY plan_no
         ]]>
     </select>
 
     <insert id="InsertFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
-        insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd, qcdate, perid, ecltnm , line,
-        workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark) values
-        ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{plan_no}, #{cltcd}, #{qcdate}, #{perid}, #{ecltnm}, '00',
-        #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark})
+        insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd, qcdate, perid, ecltnm , line, wono ,
+        workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,
+         wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv
+        ) values
+        ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{qcdate}, #{perid}, #{ecltnm}, '00', #{wono},
+        #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark} ,
+        '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1'
+        )
     </insert>
 
 
     <update id="UpdateFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto">
         update TB_FPLAN
         set pcode = #{pcode}
-        <if test="indate != null ">,</if>
-        <if test="indate != null">indate=#{indate}</if>
-        <if test="prod_sdate != null ">,</if>
-        <if test="prod_sdate != null">prod_sdate=#{prod_sdate}</if>
-        <if test="prod_edate != null ">,</if>
-        <if test="prod_edate != null">prod_edate=#{prod_edate}</if>
-        <if test="lotno != null ">,</if>
-        <if test="lotno != null">lotno=#{lotno}</if>
-        <if test="cltcd != null ">,</if>
-        <if test="cltcd != null">cltcd=#{cltcd}</if>
-        <if test="qcdate != null ">,</if>
-        <if test="qcdate != null">qcdate=#{qcdate}</if>
-        <if test="perid != null ">,</if>
-        <if test="perid != null">perid=#{perid}</if>
-        <if test="ecltnm != null ">,</if>
-        <if test="ecltnm != null">ecltnm=#{ecltnm}</if>
-        <if test="workdv != null ">,</if>
-        <if test="workdv != null">workdv=#{workdv}</if>
-        <if test="dem_flag != null ">,</if>
-        <if test="dem_flag != null">dem_flag=#{dem_flag}</if>
-        <if test="prod_qty != null ">,</if>
-        <if test="prod_qty != null">prod_qty=#{prod_qty}</if>
-        <if test="cls_flag != null ">,</if>
-        <if test="cls_flag != null">cls_flag=#{cls_flag}</if>
-        <if test="istore != null ">,</if>
-        <if test="istore != null">istore=#{istore}</if>
-        <if test="ostore != null ">,</if>
-        <if test="ostore != null">ostore=#{ostore}</if>
-        <if test="rwflag != null ">,</if>
-        <if test="rwflag != null">rwflag=#{rwflag}</if>
-        <if test="remark != null ">,</if>
-        <if test="remark != null">remark=#{remark}</if>
-        where plan_no   = #{lotno}
+        , indate=#{indate}
+        , prod_sdate=#{prod_sdate}
+        , prod_edate=#{prod_edate}
+        , cltcd=#{cltcd}
+        , qcdate=#{qcdate}
+        , perid=#{perid}
+        , ecltnm=#{ecltnm}
+        , workdv=#{workdv}
+        , dem_flag=#{dem_flag}
+        , prod_qty=#{prod_qty}
+        , cls_flag=#{cls_flag}
+        , istore=#{istore}
+        , ostore=#{ostore}
+        , rwflag=#{rwflag}
+        , remark=#{remark}
+<!--        <if test="indate != null ">,</if>-->
+<!--        <if test="indate != null">indate=#{indate}</if>-->
+<!--        <if test="prod_sdate != null ">,</if>-->
+<!--        <if test="prod_sdate != null">prod_sdate=#{prod_sdate}</if>-->
+<!--        <if test="prod_edate != null ">,</if>-->
+<!--        <if test="prod_edate != null">prod_edate=#{prod_edate}</if>-->
+<!--        <if test="cltcd != null ">,</if>-->
+<!--        <if test="cltcd != null">cltcd=#{cltcd}</if>-->
+<!--        <if test="qcdate != null ">,</if>-->
+<!--        <if test="qcdate != null">qcdate=#{qcdate}</if>-->
+<!--        <if test="perid != null ">,</if>-->
+<!--        <if test="perid != null">perid=#{perid}</if>-->
+<!--        <if test="ecltnm != null ">,</if>-->
+<!--        <if test="ecltnm != null">ecltnm=#{ecltnm}</if>-->
+<!--        <if test="workdv != null ">,</if>-->
+<!--        <if test="workdv != null">workdv=#{workdv}</if>-->
+<!--        <if test="dem_flag != null ">,</if>-->
+<!--        <if test="dem_flag != null">dem_flag=#{dem_flag}</if>-->
+<!--        <if test="prod_qty != null ">,</if>-->
+<!--        <if test="prod_qty != null">prod_qty=#{prod_qty}</if>-->
+<!--        <if test="cls_flag != null ">,</if>-->
+<!--        <if test="cls_flag != null">cls_flag=#{cls_flag}</if>-->
+<!--        <if test="istore != null ">,</if>-->
+<!--        <if test="istore != null">istore=#{istore}</if>-->
+<!--        <if test="ostore != null ">,</if>-->
+<!--        <if test="ostore != null">ostore=#{ostore}</if>-->
+<!--        <if test="rwflag != null ">,</if>-->
+<!--        <if test="rwflag != null">rwflag=#{rwflag}</if>-->
+<!--        <if test="remark != null ">,</if>-->
+<!--        <if test="remark != null">remark=#{remark}</if>-->
+        where plan_no   = #{plan_no}
     </update>
 
 
-    <update id="DeleteFplan" parameterType="com.dae.kdmes.DTO.App01.Index03Dto">
+    <update id="DeleteFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto">
         DELETE  TB_FPLAN where plan_no  = #{plan_no}
     </update>
 
@@ -145,6 +162,10 @@
     </select>
 
     <select id="SelectMaxSeq" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
-        <![CDATA[  select  max(plan_no)  from TB_FPLAN where indate = #{indate}     ]]>
+        <![CDATA[  select  Max(plan_no)   from TB_FPLAN where Left(plan_no,8) = #{indate}      ]]>
+    </select>
+
+    <select id="SelectMaxLot" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
+        <![CDATA[  select  substring(max(lotno), 10,4)   from TB_FPLAN where Left(lotno,9) = #{indate} + #{rwflag}     ]]>
     </select>
 </mapper>
