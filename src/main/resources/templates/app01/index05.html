@@ -357,42 +357,15 @@
                                 </div>
                                     <ul class="right">
                                         <li>
-                                        <button type="button" class="color2" id="wciflistBtn">
-                                            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
-                                        </button>
+                                            <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
+                                                <input class="form-control form-control-sm" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
+                                            </div><br><br>
+                                            <button type="button" class="color2" id="wciflistBtn">
+                                                <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+                                            </button>
                                         </li>                                   
                                     </ul>
-                            </div>
-                            <div class="box_wrap">
-                                <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >                                   
-                                    <li style ="float:left; list-style-type:none; margin-left:300px;">
-                                        <div class="input-group mb-3">  
-                                            <th>품목분류</th>
-                                            <td >
-                                                <div class="input_wrap" style="max-width: 230px;"> 
-                                                    <select th:field="*{j1_keyList}" name="j_dae" id="j_dae">
-                                                        <option value="">선택</option>
-                                                        <option th:each="val : ${j1_keyList}" th:value="${val.j1_key}" th:text="${val.j1_name}">
-                                                    </select>                                              
-                                                </div>                                            
-                                            </td>
-                                            <td >
-                                                <div class="input_wrap" style="max-width: 225px;"> 
-                                                    <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
-                                                        <option value="">선택</option>
-                                                        <option th:each="val : ${j2_keyList}" th:value="${val.j2_key}" th:text="${val.j2_name}">
-                                                    </select>                                              
-                                                </div>                                                                                                           
-                                            </td>     
-                                        </div>
-                                    </li>                                                                           
-                                    <li style ="float:left; list-style-type:none; margin-left:40px;">
-                                        <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
-                                            <input class="form-control" type="text"   aria-describedby="inputGroup-sizing-default"  id="conacorp" placeholder="제품명/ 제품코드"/>
-                                        </div>
-                                    </li>                                   
-                                </ul>
-                           </div>                            
+                            </div>           
                         </div>   
                         <div class="box_wrap with_tit" style="padding: 10px;">
                             <div class="container-fluid" style="padding: 10px;">

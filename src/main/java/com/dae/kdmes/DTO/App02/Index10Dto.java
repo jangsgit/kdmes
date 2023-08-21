@@ -40,7 +40,7 @@ public class Index10Dto {
     private String outtm;
     private String close_date;
     private String close_perid;
-    private String decision;
+    private Integer decision;
     private Integer cls_flag;
     private String work_flag;
     private Integer dem_flag;
@@ -119,4 +119,10 @@ public class Index10Dto {
     private String ajusotxt;
     private String inname;
     private String insano;
+
+    private Integer decision2;
+    private Integer decision1;
+    private Integer decision3;
+    private Integer decision4;
+
 }

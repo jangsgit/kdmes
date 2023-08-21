@@ -470,16 +470,18 @@ public class App02CrudController {
             model.addAttribute("userformDto",userformDto);
 
 
-            log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!" + indate.toString());
-
-            //String ls_pcode = service10.GetFplanCheck(index10Dto);
+            String wono = "";
             //String ls_chknull = service10.SelectCheckIndate(index10Dto);
             Boolean result = false;
             log.info("ls_pcode");
             log.info(index10Dto.getRemark());
             if (plan_no == null || plan_no.equals("")) {
                 plan_no = GetMaxSeq(indate);
+                lotno = GetMaxSeq1(indate , rwflag);
                 index10Dto.setPlan_no(plan_no);
+                index10Dto.setLotno(lotno);
+                wono = "P" + plan_no;
+                index10Dto.setWono(wono);
                 result = service10.InsertFplan(index10Dto);
                 log.info("result1");
                 log.info(result);
@@ -487,7 +489,6 @@ public class App02CrudController {
                     return "error";
                 }
             } else {
-                index10Dto.setPlan_no(plan_no);
                 result = service10.UpdateFplan(index10Dto);
                 log.info("result2");
                 log.info(result);
@@ -646,16 +647,43 @@ public class App02CrudController {
         return index10ListDto;
     }
 
-    public String GetMaxSeq(String agDate){
+    public String GetMaxSeq(String indate){
 
         String ls_seq = service10.SelectMaxSeq(index10Dto);
+
         if(ls_seq == null){
-            ls_seq = agDate + "0001";
+            ls_seq = indate + "0001";
         }else{
             Integer ll_misnum = Integer.parseInt(ls_seq) + 1;
             ls_seq = ll_misnum.toString();
         }
+        log.info("GetMaxSeq Exception =====>" + ls_seq);
         return ls_seq;
+    }
+
+    public String GetMaxSeq1(String indate, String rwflag){
+
+        String ls_seq1 = service10.SelectMaxLot(index10Dto);
+
+        if(ls_seq1 == null){
+            ls_seq1 = indate + rwflag + "0001";
+        }else{
+            Integer ll_misnum = Integer.parseInt(ls_seq1) + 1;
+            ls_seq1 = ll_misnum.toString();
+            switch (ls_seq1.length()){
+                case 1:
+                    ls_seq1 = "000" + ls_seq1;
+                case 2:
+                    ls_seq1 = "00" + ls_seq1;
+                case 3:
+                    ls_seq1 = "0" + ls_seq1;
+                default:
+                    break;
+            }
+            ls_seq1 =  indate + rwflag + ls_seq1;
+        }
+        log.info("GetMaxSeq1 Exception =====>" + ls_seq1);
+        return ls_seq1;
     }
 
 }

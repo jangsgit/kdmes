@@ -71,7 +71,7 @@
                         </div> -->  
                         <div class="date_wrap">
                             <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">등록일자</span>                                                        
-                                <input type="text"  class="form-control datetimepicker" id="indate" autocomplete="off"  placeholder="Y-m-d"     >
+                                <input type="text"  class="form-control datetimepicker" id="indate" autocomplete="off"  placeholder="Y-m-d"    disabled >
                             </div> 
                         </div>  
                         <form class="row g-3">
@@ -87,7 +87,7 @@
                             </div> 
                         </form> 
                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">LOTNO</span> 
-                            <input class="form-control form-control-sm" type="text" id="lotno" placeholder=""  autocomplete="off">                                             
+                            <input class="form-control form-control-sm" type="text" id="lotno" placeholder=""  autocomplete="off" disabled>                                             
                         </div> 
                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">거래처</span>  
                             <input class="form-control form-control-sm" id="cltcd" type="text"    autocomplete="off"  placeholder="">
@@ -220,9 +220,7 @@
                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">주의사항</span> 
                             <input class="form-control form-control-sm" id="remark" type="text"    autocomplete="off"  placeholder="">                                               
                         </div> 
-                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">키</span> 
                             <input class="form-control form-control-sm" id="plan_no" type="hidden"    autocomplete="off"  placeholder="">                                               
-                        </div>
                         <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
                             <div class="btns" >                                                        
                                 <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span>삭제 </button>
@@ -306,15 +304,18 @@
                                 </div>
                                     <ul class="right">
                                         <li>
-                                        <button type="button" class="color2" id="wciflistBtn">
-                                            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
-                                        </button>
+                                            <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
+                                                <input class="form-control form-control-sm" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
+                                            </div><br><br>
+                                            <button type="button" class="color2" id="wciflistBtn">
+                                                <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
+                                            </button>
                                         </li>                                   
                                     </ul>
                             </div>
-                            <div class="box_wrap">
+                            <!-- <div class="box_wrap">
                                 <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >                                   
-                                    <li style ="float:left; list-style-type:none; margin-left:300px;">
+                                   <li style ="float:left; list-style-type:none; margin-left:300px;">
                                         <div class="input-group mb-3">  
                                             <th>품목분류</th>
                                             <td >
@@ -324,7 +325,7 @@
                                                         <option th:each="val : ${j1_keyList}" th:value="${val.j1_key}" th:text="${val.j1_name}">
                                                     </select>                                              
                                                 </div>                                            
-                                            </td>
+                                            </td> 
                                             <td >
                                                 <div class="input_wrap" style="max-width: 225px;"> 
                                                     <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
@@ -334,20 +335,18 @@
                                                 </div>                                                                                                           
                                             </td>     
                                         </div>
-                                    </li>                                    
+                                    </li>                                     -->
                                     <!-- <li style ="float:left; list-style-type:none; margin-left:40px;">
                                         <div class="input-group mb-3" >
                                             <span class="input-group-text" style="max-height:30px;" >모델라인</span>
                                             <input class="form-control" type="text"   aria-describedby="inputGroup-sizing-default"  id="jmodelcode" placeholder="모델라인"/>
                                         </div>
-                                    </li>            -->
+                                    </li>           
                                     <li style ="float:left; list-style-type:none; margin-left:40px;">
-                                        <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
-                                            <input class="form-control form-control-sm" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
-                                        </div>
+                                        
                                     </li>                                                                           
                                 </ul>
-                           </div>                            
+                           </div>                             -->
                         </div>   
                         <div class="box_wrap with_tit" style="padding: 10px;">
                             <div class="container-fluid" style="padding: 10px;">
@@ -445,9 +444,27 @@
 
         var dateString = year + '-' + month  + '-' + day; 
 
-        document.getElementById('workdv').value = "0";
         document.getElementById('indate').value = dateString;
         document.getElementById('prod_sdate').value = dateString;
+    
+        var x = document.getElementsByName('workdv');
+
+            for(var i=0; i<2; i++) {
+                if(x[i].value == "0"){
+                x[i].checked = true;
+                }else{
+                    x[i].checked = false;
+                }
+            }
+        var y = document.getElementsByName('rwflag');
+
+            for(var i=0; i<2; i++) {
+                if(y[i].value == "D"){
+                y[i].checked = true;
+                }else{
+                    y[i].checked = false;
+                }
+            }        
         
 
         view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
@@ -476,7 +493,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pcode}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark);                    
+                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark , ctx.item.plan_no);                    
                         }
                     }) 
                 },   
@@ -892,7 +909,7 @@
             success:function(data){ 
                 if(data == "success"){  
                     alert("삭제되었습니다.")
-                    // console.log("delete", data);                     
+                    searchList_rtn("%");                    
                     clear_rtn(); 
                     // listUp();   
                 }else{
@@ -986,18 +1003,18 @@
                     return ; 
             } 
             if(ls_prod_qty == null || ls_prod_qty.length == 0 || ls_prod_qty == ""){ 
-                        alert("생산계획수량을 입력하세요") 
-                        document.getElementById("prod_qty").focus(); 
-                        return ;               
+                alert("생산계획수량을 입력하세요") 
+                document.getElementById("prod_qty").focus(); 
+                return ;               
             }
-            if(ls_cltcd == null || ls_cltcd.length == 0 || ls_cltcd == ""){ 
-                        alert("거래처를 입력하세요") 
-                        document.getElementById("clt_cd").focus(); 
-                        return ;               
+            if(ls_ecltnm == null || ls_ecltnm.length == 0 || ls_ecltnm == ""){ 
+                alert("거래처를 입력하세요") 
+                document.getElementById("clt_cd").focus(); 
+                return ;               
             }      
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
-                }   
+            }   
             
                      
             var inputdata = {  
@@ -1140,7 +1157,7 @@
                     prod_sdate: wtab01Dto[i]["prod_sdate"], 
                     prod_edate: wtab01Dto[i]["prod_edate"], 
                     cls_flag: wtab01Dto[i]["cls_flag"],  
-                    perid: wtab01Dto[i]["lotno"],
+                    perid: wtab01Dto[i]["perid"],
                     workdv: wtab01Dto[i]["workdv"],
                     ecltnm: wtab01Dto[i]["ecltnm"],
                     dem_flag: wtab01Dto[i]["dem_flag"],
@@ -1158,7 +1175,8 @@
                     jpum: wtab01Dto[i]["jpum"],
                 });
                 cnt++;
-            }   
+            }
+               
 
             // console.log(wtab01_data);
   
