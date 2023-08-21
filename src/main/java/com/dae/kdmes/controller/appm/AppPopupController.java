@@ -142,11 +142,12 @@ public class AppPopupController {
         winworkDto.setWflag(wflag);
         winworkDto.setIndate(toDate);
 
-        if(appPopupService.GetNewWfiworkList(winworkDto) == null){
-            return appPopupService.GetWfiworkList_blank();
-        }else{
-            return  appPopupService.GetNewWfiworkList(winworkDto);
-        }
+//        if(appPopupService.GetNewWfiworkList(winworkDto) == null){
+//            return appPopupService.GetWfiworkList_blank();
+//        }else{
+//            return  appPopupService.GetNewWfiworkList(winworkDto);
+//        }
+        return null;
     }
 
     //fplan iwork  LIST
@@ -232,10 +233,10 @@ public class AppPopupController {
         wbadDto.setPlan_no(plan_no);
         wbadDto.setWseq(wseq);
         wbadDto.setWflag(wflag);
-        if(appPopupService.GetWBadList(wbadDto) == null){
+        if(appPopupService.GetWBadList01(wbadDto) == null){
             return appPopupService.GetWBadList_blank();
         }else{
-            return  appPopupService.GetWBadList(wbadDto);
+            return  appPopupService.GetWBadList01(wbadDto);
         }
     }
 

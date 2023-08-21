@@ -63,7 +63,7 @@
                CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
                A.tordqty,
                isnull(D.wotqt,0) as owqty,
-               (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00010' group by plan_no,wseq,wflag ) as obqty,
+               (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no  and wflag= '00010' group by plan_no,wseq,wflag ) as obqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
                D.winps as winps,
                D.wrps as wrps,

@@ -39,10 +39,10 @@
     </select>
 
     <insert id="InsertFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
-        insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd, qcdate, perid, ecltnm ,
+        insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd, qcdate, perid, ecltnm , line,
         workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark) values
-        ('KDMES' ,'ZZ','20230806' , #{indate}, #{prod_sdate}, #{prod_edate}, '20230806', #{cltcd}, #{qcdate}, #{perid}, #{ecltnm},
-        #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, #{cls_flag}, #{istore}, #{ostore}, #{rwflag}, #{remark})
+        ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{plan_no}, #{cltcd}, #{qcdate}, #{perid}, #{ecltnm}, '00',
+        #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark})
     </insert>
 
 
@@ -140,4 +140,11 @@
         ]]>
     </select>
 
+    <select id="SelectCheckIndate" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
+        <![CDATA[  select top 1 plan_no  from TB_FPLAN where indate = #{indate} order by indate, plan_no     ]]>
+    </select>
+
+    <select id="SelectMaxSeq" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
+        <![CDATA[  select  max(plan_no)  from TB_FPLAN where indate = #{indate}     ]]>
+    </select>
 </mapper>

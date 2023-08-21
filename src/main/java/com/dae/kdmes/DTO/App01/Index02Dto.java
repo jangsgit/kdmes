@@ -18,6 +18,7 @@ public class Index02Dto {
     private String com_cnam;
     private String com_work;
     private String com_code;
+    private String com_rem1;
 
 
     private String acorp1;

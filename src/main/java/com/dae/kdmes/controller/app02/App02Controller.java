@@ -7,6 +7,7 @@ import com.dae.kdmes.DTO.App01.Index04Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
+import com.dae.kdmes.Service.App01.Index03Service;
 import com.dae.kdmes.Service.App02.Index10Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
@@ -28,6 +29,7 @@ import java.util.List;
 @RequestMapping(value = "/app02", method = RequestMethod.POST)
 public class App02Controller {
     private final Index10Service service10;
+    private final Index03Service service03;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
@@ -63,6 +65,11 @@ public class App02Controller {
         try {
             index10ListDto = service10.getFplanList(index10Dto);
             popupListDto = service10.getCls_flagList(popupDto);
+            popupListDto = service03.getj1_keyList(popupDto);
+            popupListDto1 = service03.getj2_keyList(popupDto);
+
+            model.addAttribute("j1_keyList",popupListDto);
+            model.addAttribute("j2_keyList",popupListDto1);
 
             model.addAttribute("cls_flagList",popupListDto);
             model.addAttribute("fplanList",index10ListDto);
