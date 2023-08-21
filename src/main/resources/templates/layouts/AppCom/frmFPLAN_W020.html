@@ -1538,6 +1538,7 @@
             var startDate   = document.getElementById('startDate').value; 
             var endDate   = document.getElementById('endDate').value;
             var ls_plan_no   = document.getElementById('inplan_no').value; 
+                ls_plan_no = ls_plan_no.trim();
             var ls_inwrmc   = document.getElementById('inwrmc').value;
             var ll_inwinqt  = document.getElementById('inwinqt').value;         //투입
             var ll_inwbdqt  = document.getElementById('inwbdqt').value;         //불량
@@ -1668,7 +1669,7 @@
                     },
                     async:false,
                     success:function(data){
-                        // console.log("등록OK", data); 
+                         console.log("등록OK", data); 
                         // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
                         const statusdis_div = document.getElementById('statusdis01'); 
                         if(arg1 == "0"){
@@ -1699,12 +1700,12 @@
                                     type:"POST", 
                                     data: {  
                                         "startDate" : startDate , 
+                                        "keyplan"     : ls_plan_no     ,  
                                         "plan_no"   : plan_no,
                                         "lotno"      : lotno      ,
                                         "pcode"     : pcode     ,
                                         "prodqty"     : prod_qty     ,
                                         "wflag"     : ls_inwflag     , 
-                                        "keyplan"     : ls_plan_no     ,  
                                     },
                                     async:false,
                                     success:function(data){

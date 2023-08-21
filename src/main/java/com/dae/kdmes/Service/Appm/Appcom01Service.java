@@ -50,10 +50,10 @@ public class Appcom01Service {
     }
 
     public void FPLANW020_Insert(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW010_Insert(parm);
+        FPLANW010_mapper.FPLANW020_Insert(parm);
     }
     public void FPLANW020_Update(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW010_Update(parm);
+        FPLANW010_mapper.FPLANW020_Update(parm);
     }
 
     public void FPLAN_Update(FPLANW010_VO parm){

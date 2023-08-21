@@ -713,15 +713,15 @@ public class Appm01CrudController {
         return "TB_FPLAN_W020 UPDATE OK";
     }
 
-    @RequestMapping(value="/w020iwkupd")
+    @RequestMapping(value="/w020iwkupd", method = RequestMethod.POST)
     public String AppW020IworkUpdate_index(
-            @RequestParam("startDate") String frdate
+            @RequestParam("startDate") String startDate
             ,@RequestParam("keyplan") String keyplan
+            ,@RequestParam("wflag") String wflag
             ,@RequestParam( value =  "plan_no[]") List<String> plan_no
             ,@RequestParam( value =  "lotno[]") List<String> lotno
             ,@RequestParam( value =  "pcode[]") List<String> pcode
             ,@RequestParam( value =  "prodqty[]") List<String> prodqty
-            ,@RequestParam( value =  "wflag[]") List<String> wflag
             , Model model
             , HttpServletRequest request){
 
@@ -730,51 +730,48 @@ public class Appm01CrudController {
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
             model.addAttribute("userformDto",userformDto);
-
-            String year = frdate.substring(0,4) ;
-            String month = frdate.substring(5,7) ;
-            String day   = frdate.substring(8,10) ;
-            frdate = year + month + day ;
-            IworkDto.setIndate(frdate);
+            String lsWseq = "";
+            String ls_seq = "";
+            String ls_wseq = "";
+            String year = startDate.substring(0,4) ;
+            String month = startDate.substring(5,7) ;
+            String day   = startDate.substring(8,10) ;
+            startDate = year + month + day ;
+            IworkDto.setIndate(startDate);
             Boolean result = false;
             if( lotno.size() > 0){
                 for(int i = 0; i < lotno.size(); i++){
-
+                    IworkDto.setCustcd("KDMES");
+                    IworkDto.setSpjangcd("ZZ");
                     IworkDto.setPlan_no(keyplan);
                     IworkDto.setLotno(lotno.get(i));
-                    IworkDto.setWflag(wflag.get(i));
+                    IworkDto.setWflag(wflag);
                     IworkDto.setPcode(pcode.get(i));
                     IworkDto.setQty(Integer.parseInt(prodqty.get(i)));
+                    IworkDto.setSqty(0);
+                    IworkDto.setBqty(0);
+                    IworkDto.setIndate(getToDate());
+                    IworkDto.setWseq("01");
+//                    if (i == 0){ ls_wseq = appcom01Service.GetWIworkWseq(IworkDto); }
+//                     String ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
 
-                    String ls_wseq = appcom01Service.GetWIworkWseq(IworkDto);
-                    if(ls_wseq == null) {
-                        IworkDto.setWseq("01");
-                    }else{
-                        IworkDto.setWseq(ls_wseq);
-                    }
-                    String ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
-                    int ll_seq =  Integer.parseInt(ls_seq) + 1;
-                    ls_seq = Integer.toString(ll_seq);
-                    if(ls_seq.length() == 1){
-                        ls_seq = "00" + ls_seq;
-                    }else if(ls_seq.length() == 2){
-                        ls_seq = "0" + ls_seq;
-                    }
+                        int ll_seq =  i + 1;
+                        ls_seq = Integer.toString(ll_seq);
+                        if(ls_seq.length() == 1){
+                            ls_seq = "00" + ls_seq;
+                        }else if(ls_seq.length() == 2){
+                            ls_seq = "0" + ls_seq;
+                        }
                     IworkDto.setSeq(ls_seq);
-                    if(ls_wseq == null) {
-                        result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
-                    }else{
-                        result = appcom01Service.FPLANI_IWORK_update(IworkDto);
-                    }
+                    result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
+
+//                  result = appcom01Service.FPLANI_IWORK_update(IworkDto);
                     if (!result){
                         return "error";
                     }
-
 //                    log.info("frdate Exception =====>" + frdate);
 //                    log.info("jcode  Exception =====>" + jcode.get(i));
 //                    log.info("jqty  Exception =====>" + jqty.get(i));
-
-
                 }
             }
 
