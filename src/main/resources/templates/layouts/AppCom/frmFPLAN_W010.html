@@ -78,13 +78,13 @@
                                                     <label class="visually-hidden" for="autoSizingInputGroup">작지번호</label>
                                                     <div class="input-group">
                                                         <div class="input-group-text">작지번호</div>
-                                                        <input class="form-control form-control-sm" id="inwono"
+                                                        <input class="form-control form-control-sm" id="inplan_no"
                                                             type="text" placeholder="작지번호"    disabled />
                                                         <input class="form-control form-control-sm"  type="hidden"  id="inspjangcd"
                                                             />   
                                                         <input class="form-control form-control-sm"  type="hidden"  id="incustcd"
                                                                 />       
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inplan_no"  
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwono"  
                                                                 />       
                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwseq"    
                                                                 />         
@@ -180,6 +180,13 @@
                                                         <div id='inwinqtbdg'></div>      
                                                     </div>
                                                 </div>   -->
+                                                <div  class="col-3">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">계획량</div>
+                                                        <input class="form-control form-control-sm" id="prod_qty" type="number" disabled
+                                                            placeholder=""  />
+                                                    </div>
+                                                </div>
                                                 <div class="col-4">
                                                     <div class="input-group">
                                                         <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">생산량 </button>
@@ -197,13 +204,6 @@
                                                             placeholder=""  />
                                                     </div>
                                                 </div> 
-                                                <div  class="col-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text">완료량</div>
-                                                        <input class="form-control form-control-sm" id="inwokqt" type="number" disabled
-                                                            placeholder=""  />
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="row mb-3 row-cols-lg-3 align-items-center"> 
                                                 <div class="col-auto">
@@ -214,6 +214,13 @@
                                                 </div>
                                             </div> 
                                             <div class="row mb-3  row-cols-lg-3 align-items-center">  
+                                                <div  class="col-3">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">완료량</div>
+                                                        <input class="form-control form-control-sm" id="inwokqt" type="number" disabled
+                                                            placeholder=""  />
+                                                    </div>
+                                                </div>
                                                 
                                                 <div class="col-3">
                                                     <div class="input-group">
@@ -260,14 +267,14 @@
                                                 data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                                                    style="max-width: 900px">
+                                                    style="max-width: 1000px">
                                                     <div class="modal-content border-0">
                                                         <div class="modal-body p-0" >
                                                             <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
                                                                 <h4 class="mb-1" id="staticBackdropLabel">작업지시리스트</h4> 
                                                             </div>
                                                             <div class="container-fluid"> 
-                                                                <div id="theGrid_div" style="overflow:scroll;   height:300px;    margin:0 auto; "></div>
+                                                                <div id="theGrid_div" style="overflow:scroll; width: 950px;  height:300px;    margin:0 auto; "></div>
                                                                 <!-- <div id="thePager01"></div> -->
                                                             </div>     
                                                         </div>  
@@ -618,15 +625,16 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {
-                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty   );
                         }
                     })
                 }, 
-                { binding: 'wono', header: '작지번호',   align:"center", width: 150  },
+                { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
                 // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                 { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
                 { binding: 'psize', header: '규격',     align:"center",  width: 100 },
                 { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
+                { binding: 'end_qty', header: '생산량',   align:"center",width: 100 } ,
                 // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
                 // { binding: 'wotqt', header: '완료량',   align:"center",width: '*' } ,
                 // { binding: 'decision', header: '임시여부', align:"center", width: '*' }
@@ -683,7 +691,8 @@
                     wrps: ListDto[i]["wrps"]  ,
                     lotno: ListDto[i]["lotno"]  ,
                     wrpsnm: ListDto[i]["wrpsnm"],
-                    obqty: ListDto[i]["obqty"]
+                    obqty: ListDto[i]["obqty"],
+                    end_qty: ListDto[i]["end_qty"]
                     
                     
                 });
@@ -1024,9 +1033,7 @@
                     wpernm: WperidDto[i]["wpernm"]                                                    
                 });
                 cnt++;
-            }  
-            console.log('data03');
-            console.log(data03);
+            }   
             return data03                                          
         } 
 
@@ -2415,12 +2422,12 @@
         document.getElementById('popwseq').value= arg4;  
         document.getElementById('popseq').value= arg5;  
     }
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19 ){ 
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20 ){ 
         // /, ctx.item.owqty ,ctx.item.obqty
             //selectChk(custcd, spjangcd, wono, cltnm, pname, 
             //          ostore, plan_no, cltcd, pcode, wseq,
             //            wflag, phmmdoc, otqty, wrpsnm, owqty ,
-            //              obqty,winps,wrps,lotno );
+            //              obqty,winps,wrps,lotno , prod_qty);
         var button_workstBtn = document.getElementById('workstBtn');
         var button_workedBtn = document.getElementById('workedBtn'); 
             button_workstBtn.disabled = false;
@@ -2439,6 +2446,7 @@
         document.getElementById('inwseq').value= arg10;  
         document.getElementById('inwflag').value= arg11;  
         document.getElementById('inlotno').value= arg19;  
+        document.getElementById('prod_qty').value= arg20;  
         
     // document.getElementById('inphmmdoc').value= arg12;  
         wflag = arg11; //document.getElementById('inwflag').value;
@@ -2700,12 +2708,11 @@
                         wrpsnm: ListDto[i]["wrpsnm"]  ,
                         winps: ListDto[i]["winps"]  ,
                         wrps: ListDto[i]["wrps"]  ,
-                        lotno: ListDto[i]["lotno"] 
+                        lotno: ListDto[i]["lotno"] ,
+                        end_qty: ListDto[i]["end_qty"] 
                     });
                     cnt++;
-                }  
-                
-
+                }   
                 wtab01Grid.columns.clear();  
                 wtab01Grid.autoGenerateColumns = false; 
                 view_flistpage.sourceCollection  = dataArr;
@@ -2766,6 +2773,12 @@
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'prod_qty';
                 cols.header = '계획량';
+                cols.align = "center";
+                cols.width = 100 ; 
+                wtab01Grid.columns.push(cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'end_qty';
+                cols.header = '생산량';
                 cols.align = "center";
                 cols.width = 100 ; 
                 wtab01Grid.columns.push(cols);  
