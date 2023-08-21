@@ -89,9 +89,7 @@
                                                         <input class="form-control form-control-sm"  type="hidden"  id="inspjangcd"
                                                             />   
                                                         <input class="form-control form-control-sm"  type="hidden"  id="incustcd"
-                                                                />       
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inplan_no"  
-                                                                />       
+                                                                />        
                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwseq"    
                                                                 />         
                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwflag"   
@@ -118,12 +116,9 @@
                                                 </div>   
                                                 <div class="col-sm">
                                                     <div class="input-group"> 
-                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal" style=" height:40px;  " id="wrmcBtn" >작업설비 </button>
-                                                        <input class="form-control form-control-sm" id="inmachname" type="text"    disabled
-                                                            placeholder=""   />
-                                                        <input class="form-control form-control-sm" id="inwrmc" type="hidden"
-                                                            placeholder=""   />
-                                                        <div id='inwrmcbdg'></div>
+                                                        <div class="input-group-text">작업지시번호</div> 
+                                                        <input class="form-control form-control-sm" id="inplan_no" type="text"    disabled
+                                                            placeholder=""   /> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,6 +141,16 @@
                                                             <input class="form-control form-control-sm" id="inwinps" type="hidden"
                                                                 placeholder=""   />
                                                     </div> 
+                                                </div> 
+                                                <div class="col-sm">
+                                                    <div class="input-group"> 
+                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal" style=" height:40px;  " id="wrmcBtn" >작업설비 </button>
+                                                        <input class="form-control form-control-sm" id="inmachname" type="text"    disabled
+                                                            placeholder=""   />
+                                                        <input class="form-control form-control-sm" id="inwrmc" type="hidden"
+                                                            placeholder=""   />
+                                                        <div id='inwrmcbdg'></div>
+                                                    </div>
                                                 </div>
                                             </div> 
                                             <div class="row mb-3 row-cols-lg-3 align-items-center">
@@ -251,9 +256,9 @@
                                                 data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                                                    style="max-width: 900px">
+                                                    style="max-width: 1000px">
                                                     <div class="modal-content border-0">
-                                                        <div class="modal-body p-0" >
+                                                        <div class="modal-body p-0" >  
                                                             <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
                                                                 <h4 class="mb-1" id="staticBackdropLabel">사출완료리스트</h4> 
                                                             </div>
@@ -507,7 +512,9 @@
         var linenm = new Array();
         var cltnm = new Array();
         var pname = new Array();
+        var pcode = new Array();
         var addlotno = new Array(); 
+        
         var ll_sumotqty = 0; 
 
 
@@ -533,7 +540,7 @@
                         alternatingRowStep: 0,
                         columns: [
                             // { binding: 'index', header: 'seq', width: '*' },
-                            { binding: 'prod_sdate', header: '일자',  width: 100, align:"center", format: 'yyyy-MM-dd' },
+                            { binding: 'prod_sdate', header: '일자',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                             {
                                 binding: 'lotno',
                                 width: 150,
@@ -546,11 +553,12 @@
                                     }
                                 })
                             }, 
-                            { binding: 'wono', header: '작지번호',   align:"center", width: 150  },
+                            { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
                             // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                             { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
-                            { binding: 'psize', header: '규격',     align:"center",  width: 100 },
+                            { binding: 'psize', header: '규격',     align:"center",  width: 130 },
                             { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
+                            // { binding: 'plan_no', header: '투입량',   align:"center",width: '*' }, 
                             // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
                             // { binding: 'wotqt', header: '완료량',   align:"center",width: '*' } ,
                             // { binding: 'decision', header: '임시여부', align:"center", width: '*' }
@@ -612,13 +620,15 @@
                     });   
                     function showCheckedCount02() {
                         let cnt = document.getElementById('checked-count'), sel = wtab01Grid.rows.filter(r => r.isSelected);  
+                        ll_sumotqty = 0
                         for (var i = 0; i < sel.length; i++) { 
-                            // console.log(sel[i]._data);
+                            //  console.log(sel[i]._data);
                             plan_no [i]   = sel[i]._data.plan_no;
                             lotno   [i]   = sel[i]._data.lotno; 
                             cltnm[i]      = sel[i]._data.cltnm;
                             pname[i]      = sel[i]._data.pname; 
                             prod_qty[i]      = sel[i]._data.prod_qty; 
+                            pcode[i]      = sel[i]._data.pcode; 
                             ll_sumotqty = ll_sumotqty + parseFloat(prod_qty[i]);  
                         }  
                         // plan_no =  document.getElementById('inplan_no').value; 
@@ -635,6 +645,7 @@
                             lotno = []; 
                             cltnm = [];
                             pname = []; 
+                            pcode = [];
                             prod_qty = []; 
                             document.getElementById('inpname').value  = ''; 
                             document.getElementById('incltnm').value  = '';
@@ -987,7 +998,7 @@
                     var count = 0;
                     for (var j =0; j <  wperidGrid.rows.length - 1; j++) {
                         if (wperidGrid.rows[j].hasChildren) { // 자식 행이 있는 경우
-                            if(wperidGrid.rows[j].level=== 0 ){ //계층 수준이 1이고 computer이면
+                            if(wperidGrid.rows[j].level=== 1 ){ //계층 수준이 1이고 computer이면
                                 wperidGrid.rows[j].isCollapsed = false;
                             } 
                         }
@@ -1632,7 +1643,7 @@
             //   공정시작  공정종료 작업중단
             if(arg1 == "0" || arg1 == "1" || arg1 == "4"){
                 $.ajax({
-                    url: '/input/w010upd',   
+                    url: '/input/w020upd',   
                     type:"POST", 
                     data: {
                         "custcd"    : ls_custcd ,
@@ -1652,7 +1663,8 @@
                         "winps"     : ls_inwinps     ,
                         "decision"  : ls_decision    ,
                         "pcode"     : ls_inpcode     ,
-                        "wono"      : ls_inwono
+                        "wono"      : ls_inwono     ,
+                        "arrplanno"   : plan_no,
                     },
                     async:false,
                     success:function(data){
@@ -1680,7 +1692,33 @@
                             button_wperidBtn.disabled = false;
                             button_wotqtyBtn.disabled = false;
                             button_wbadqtyBtn.disabled = false; 
-                            var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";                                        
+                            var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";         
+                             
+                            $.ajax({
+                                    url: '/input/w020iwkupd',   
+                                    type:"POST", 
+                                    data: {  
+                                        "startDate" : startDate , 
+                                        "plan_no"   : plan_no,
+                                        "lotno"      : lotno      ,
+                                        "pcode"     : pcode     ,
+                                        "prodqty"     : prod_qty     ,
+                                        "wflag"     : ls_inwflag     , 
+                                        "keyplan"     : ls_plan_no     ,  
+                                    },
+                                    async:false,
+                                    success:function(data){
+                                        console.log("등록OK", data);  
+                                },error:function(e){
+                                    console.log('error',e);
+                                }
+                                }).done(function(fragment){           
+
+                                })                              
+
+
+
+
                         } 
                         statusdis_div.innerHTML  = ls_text;  
                 
@@ -1881,7 +1919,7 @@
             document.getElementById('inpcode').value= arg9;   
             document.getElementById('inwseq').value= arg10;  
             document.getElementById('inwflag').value= arg11;  
-            document.getElementById('inlotno').value= arg19;  
+            // document.getElementById('inlotno').value= arg19;  
             
         // document.getElementById('inphmmdoc').value= arg12;  
             wflag = arg11; //document.getElementById('inwflag').value;
@@ -1899,22 +1937,20 @@
 
             document.getElementById('inwrmc').value = ""; 
             document.getElementById('inmachname').value = ""; 
-            document.getElementById('inwinqt').value = 0;         //투입량
-            document.getElementById('inwotqt').value = arg15;         //검사수량
-            document.getElementById('inwbdqt').value = arg16;         //불량수량
-            document.getElementById('inwokqt').value = arg13;         //완료량
+            // document.getElementById('inwinqt').value = 0;         //투입량
+            document.getElementById('inwotqt').value = 0;         //검사수량   arg15
+            document.getElementById('inwbdqt').value = 0;         //불량수량   arg16
+            document.getElementById('inwokqt').value = 0;         //완료량     arg13
             document.getElementById('inwremark').value = "";     //비고
             document.getElementById('startDate').value = "";     //
             document.getElementById('endDate').value = "";     //
-            document.getElementById('inwrpsnm').value = arg14;     //
-            document.getElementById('inwinps').value = arg17;     //
-            document.getElementById('inwrps').value = arg18;     //
-            const wqtydis_div = document.getElementById('wqtydis01');  
+            // document.getElementById('inwrpsnm').value = arg14;     //  작업자명
+            // document.getElementById('inwinps').value = arg17;     //   작업자코드
+            // document.getElementById('inwrps').value = arg18;     //     설비코드 
             const wono_div    = document.getElementById('inwonobdg');  
             const wrmc_div       = document.getElementById('inwrmcbdg');
             const wscntdis02_div = document.getElementById('wscntdis02');   
-            const wscntdis_div   = document.getElementById('wscntdis01');
-            wqtydis_div.innerHTML  = "";    
+            const wscntdis_div   = document.getElementById('wscntdis01'); 
             wono_div.innerHTML     = "";    
             wrmc_div.innerHTML     = "";    
             wscntdis02_div.innerHTML  = "";    

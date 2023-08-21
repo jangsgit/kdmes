@@ -20,6 +20,11 @@ public interface FPLANW010_Mapper {
      // 조회
      public void FPLANW010_Insert(FPLANW010_VO xa012Board);    //입력
      public void FPLANW010_Update(FPLANW010_VO xa012Board);    //수정
+
+
+     public void FPLANW020_Insert(FPLANW010_VO xa012Board);    //입력
+     public void FPLANW020_Update(FPLANW010_VO xa012Board);    //수정
+
      public void FPLANW010_WrmcUpdate(FPLANW010_VO xa012Board);    //수정
      public void FPLANW010_Delete(FPLANW010_VO parm);       //삭제
 
@@ -37,14 +42,14 @@ public interface FPLANW010_Mapper {
      public void FPLAN_Update(FPLANW010_VO parm);
      public void FPLAN_OWORK_Insert(FPLANW010_VO parm);     //blank data
      public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO bankBoard);
-     public String FPLAN_IWORK_MAXWSEQ(FPLANW010_VO bankBoard);
+     public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO bankBoard);
 
 
-     public String GetWIworkWseq(TBPopupVO bankBoard);
+     public String GetWIworkWseq(FPLANIWORK_VO bankBoard);
      public List<FPLANW010_VO> GetWIworkDetail_blank(TBPopupVO parm);   //조회
      public List<FPLANW010_VO> GetWIworkDetail(TBPopupVO parm);   //조회
-     public void FPLANI_IWORK_Insert(FPLANW010_VO parm);
-     public void FPLANI_IWORK_update(FPLANW010_VO parm);
+     public Boolean FPLANI_IWORK_Insert(FPLANIWORK_VO parm);
+     public Boolean FPLANI_IWORK_update(FPLANIWORK_VO parm);
 
 
      public List<FPLANWPERID_VO> FPLAN_WPERID_SELECT(FPLANW010_VO parm);

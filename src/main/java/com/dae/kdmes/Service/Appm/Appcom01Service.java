@@ -48,6 +48,14 @@ public class Appcom01Service {
     public void FPLANW010_Update(FPLANW010_VO parm){
         FPLANW010_mapper.FPLANW010_Update(parm);
     }
+
+    public void FPLANW020_Insert(FPLANW010_VO parm){
+        FPLANW010_mapper.FPLANW010_Insert(parm);
+    }
+    public void FPLANW020_Update(FPLANW010_VO parm){
+        FPLANW010_mapper.FPLANW010_Update(parm);
+    }
+
     public void FPLAN_Update(FPLANW010_VO parm){
         FPLANW010_mapper.FPLAN_Update(parm);
     }
@@ -55,7 +63,7 @@ public class Appcom01Service {
         FPLANW010_mapper.FPLAN_OWORK_Insert(parm);
     }
     public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_OWORK_MAXWSEQ(parm);}
-    public String FPLAN_IWORK_MAXWSEQ(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_IWORK_MAXWSEQ(parm);}
+    public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLAN_IWORK_MAXWSEQ(parm);}
 
     public void FPLANW010_WrmcUpdate(FPLANW010_VO parm){
         FPLANW010_mapper.FPLANW010_WrmcUpdate(parm);
@@ -82,15 +90,15 @@ public class Appcom01Service {
     }
 
 
-    public String GetWIworkWseq(TBPopupVO parm){
+    public String GetWIworkWseq(FPLANIWORK_VO parm){
         return FPLANW010_mapper.GetWIworkWseq(parm);
     }
     public Object GetWIworkDetail(TBPopupVO parm){return FPLANW010_mapper.GetWIworkDetail(parm); }
     public Object GetWIworkDetail_blank(TBPopupVO parm){return FPLANW010_mapper.GetWIworkDetail_blank(parm); }
 
 
-    public void FPLANI_IWORK_Insert(FPLANW010_VO parm){ FPLANW010_mapper.FPLANI_IWORK_Insert(parm); }
-    public void FPLANI_IWORK_update(FPLANW010_VO parm){ FPLANW010_mapper.FPLANI_IWORK_update(parm); }
+    public Boolean FPLANI_IWORK_Insert(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLANI_IWORK_Insert(parm); }
+    public Boolean FPLANI_IWORK_update(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLANI_IWORK_update(parm); }
 
 
     public List<FPLANWPERID_VO> FPLAN_WPERID_SELECT (FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_WPERID_SELECT(parm);}
