@@ -515,6 +515,39 @@ public class Appm01CrudController {
         return "TB_FPLAN_W010 UPDATE OK";
     }
 
+
+    //절단공정삭제
+    @RequestMapping(value="/w010del", method = RequestMethod.GET)
+    public String Appcom01_delete(@RequestParam("plan_no") String plan_no,  HttpServletRequest request){
+        FPLANW010_VO workDto = new FPLANW010_VO();
+        workDto.setPlan_no(plan_no);
+        workDto.setWflag("00010");
+        workDto.setWseq("01");
+
+        wperDto.setPlan_no(plan_no);
+        wperDto.setWseq("01");
+        wperDto.setWflag("00010");
+        appcom01Service.FPLANW010_Delete(workDto);
+        appcom01Service.FPLAN_OWORK_Delete(workDto);
+        appcom01Service.FPLAN_IWORK_Delete(workDto);
+        appcom01Service.FPLAN_WORK_Delete(workDto);
+        appcom01Service.FPLAN_WTIME_Delete(workDto);
+        appcom01Service.FPLAN_WTIME_Delete(workDto);
+        appcom01Service.FPLAN_WPERID_Delete(wperDto);
+
+
+
+        workDto.setDecision("0");
+        workDto.setDecision1("0");
+        workDto.setClsflag("1");
+        appcom01Service.FPLAN_Update(workDto);
+
+        var ls_line = "99";
+        return "redirect:/appcom01/list?line=" + ls_line;
+    }
+
+
+
     @RequestMapping(value="/wtimeupd", method = RequestMethod.POST)
     public String AppWTimeUpdate_index(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
@@ -1834,7 +1867,7 @@ public class Appm01CrudController {
         if(appPopupService.GetWBadList(wscntDto) == null){
             return appcom01Service.FPLAN_WBAD_SELECT_blank(wbadDto);
         }else{
-            return appPopupService.GetWBadList(wscntDto);
+            return appPopupService.GetWBadList01(wscntDto);
         }
     }
 
