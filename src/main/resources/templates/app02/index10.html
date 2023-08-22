@@ -568,7 +568,7 @@
                     istore: wtab01Dto[i]["istore"], 
                     ostore: wtab01Dto[i]["ostore"], 
                     rwflag: wtab01Dto[i]["rwflag"],    
-                    remark: wtab01Dto[i]["remark"],                                 
+                    remark: wtab01Dto[i]["remark"],                                        
                 });
                 cnt++;
             }      
@@ -945,7 +945,6 @@
         document.getElementById('cltcd').value =  "";  
         document.getElementById('qcdate').value =  "";    
         document.getElementById('perid').value =  ""; 
-        document.getElementById('workdv').value = "0"; 
         document.getElementById('pcode').value =  ""; 
         document.getElementById('jpum').value =  "";   
         document.getElementById('jgugek').value =  ""; 
@@ -959,10 +958,28 @@
         document.getElementById('prod_qty').value = ""; 
         document.getElementById('cls_flag').value = "0"; 
         document.getElementById('istore').value = ""; 
-        document.getElementById('ostore').value = ""; 
-        document.getElementById('rwflag').value = "0"; 
+        document.getElementById('ostore').value = "";  
         document.getElementById('remark').value = ""; 
         document.getElementById('plan_no').value = ""; 
+
+        var x = document.getElementsByName('workdv');
+
+            for(var i=0; i<2; i++) {
+                if(x[i].value == "0"){
+                x[i].checked = true;
+                }else{
+                    x[i].checked = false;
+                }
+            }
+        var y = document.getElementsByName('rwflag');
+
+            for(var i=0; i<2; i++) {
+                if(y[i].value == "D"){
+                y[i].checked = true;
+                }else{
+                    y[i].checked = false;
+                }
+            } 
     }
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
