@@ -130,13 +130,15 @@
         CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
         A.tordqty,
         isnull(D.wotqt,0) as owqty,
-        (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00010' group by plan_no,wseq,wflag ) as obqty,
+        (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00020' group by plan_no,wseq,wflag ) as obqty,
         isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
         D.winps as winps,
         D.wrps as wrps,
-        (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
+        (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm,
+            Left(E.indate,4) + '-' + substring(E.indate, 5,2)+ '-' + substring(E.indate, 7,2) as   qcdate
         FROM TB_FPLAN A WITH(NOLOCK)
-        LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00020' ,
+            LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00020'
+            LEFT OUTER JOIN  TB_FPLAN_IWORK E ON A.lotno   = E.lotno AND E.wflag = '00020' ,
         JCODE C WITH(NOLOCK),
         CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
@@ -217,6 +219,76 @@
           ORDER BY A.prod_sdate desc, A.wono
 
     </select>
+
+    <select id="GetFPLAN_List03"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
+        <![CDATA[
+        SELECT A.custcd,
+               A.spjangcd,
+               A.wodv,
+               A.wono,
+               D.lotno AS lotno,
+               A.plan_no,
+               A.cltcd,
+               B.acorp as cltnm,
+               A.pcode,
+               C.jpum AS pname,
+               C.jgugek AS psize,
+               C.jdanwy AS punit,
+               A.line,
+               A.opcod,
+               A.prod_sdate as prod_sdate,
+               A.prod_edate,
+               (select sum(qty) from tb_fplan_iwork where plan_no = A.plan_no and wflag = '00020' ) as prod_qty,
+               A.end_qty,
+               A.orddate,
+               A.ordnum,
+               A.ordseq,
+               A.ordqty,
+               A.ord_edate,
+               A.close_date,
+               isnull(A.decision,'') as  decision,
+               A.cls_flag,
+               A.work_flag,
+               A.dem_flag,
+               A.qc_flag,
+               A.close_flag,
+               A.end_flag,
+               A.istore,
+               A.ostore,
+               A.rwflag,
+               A.perid,
+               A.remark,
+               A.workdv,
+               D.wflag wflag,
+               A.wseq  wseq,
+               CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
+               A.tordqty,
+               isnull(D.wotqt,0) as owqty,
+               (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00020' group by plan_no,wseq,wflag ) as obqty,
+               isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
+               D.winps as winps,
+               D.wrps as wrps,
+               Left(D.indate,4) + '-' + substring(D.indate, 5,2)+ '-' + substring(D.indate, 7,2) as   qcdate,
+               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
+        FROM TB_FPLAN A WITH(NOLOCK),
+             TB_FPLAN_W020 D WITH(NOLOCK) ,
+            JCODE C WITH(NOLOCK),
+            CIF B WITH(NOLOCK)
+        WHERE (A.pcode              = C.JKEY)
+          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+          AND (A.line               = #{line})
+          AND (A.cls_flag          IN ('1', '2', '3' ))
+          AND A.plan_no = D.plan_no
+          AND D.wflag = '00020'
+          AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
+          AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
+          AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
+          AND ( ISNULL(A.line,'')  = '00' )
+          AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') <= '00020')
+          AND ( Len( ISNULL(A.wflag,'') ) > 0  )
+        ORDER BY A.prod_sdate desc, A.wono
+        ]]>
+    </select>
     <select id="GetFPLANW010_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  (select machname from TB_PC110 where machnum=A.wrmc) as machname,
                A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
@@ -275,9 +347,9 @@
 
     <insert id="FPLANW020_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
         INSERT INTO TB_FPLAN_W020(custcd, spjangcd, plan_no, wseq, wflag, wfrdt, wtrdt, wrmc, winqt, wotqt, wqcqt,
-        wbdqt, wscnt, winps, wsyul, wrps, wremark, decision,indate, inperid )
+        wbdqt, wscnt, winps, wsyul, wrps, wremark, decision,indate, inperid , lotno)
         VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wseq}, #{wflag}, #{wfrdt}, #{wtrdt}, #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt},
-        #{wbdqt}, #{wscnt}, #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid})
+        #{wbdqt}, #{wscnt}, #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid}, #{lotno})
     </insert>
 
     <insert id="FPLANW030_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">

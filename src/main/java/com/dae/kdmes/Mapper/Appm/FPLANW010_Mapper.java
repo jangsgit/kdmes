@@ -12,6 +12,7 @@ import java.util.List;
 public interface FPLANW010_Mapper {
      public List<FPLAN_VO> GetFPLAN_List(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm);
      //list
      public FPLANW010_VO GetFPLANW010_ListOne();   //한건 조회

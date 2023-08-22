@@ -633,7 +633,7 @@ public class Appm01CrudController {
             wtimeDto.setWopdv("1"); //비가동
         }
 
-
+        log.info("frdate Exception =====>" + arrplanno.size());
         workDto.setCustcd(custcd);
         workDto.setSpjangcd(spjangcd);
         workDto.setWseq("02");
@@ -704,13 +704,14 @@ public class Appm01CrudController {
         }
         if( arrplanno.size() > 0) {
             for (int i = 0; i < arrplanno.size(); i++) {
+                if (arrplanno.get(i).equals("0")) {break;}
                 workDto.setPlan_no(arrplanno.get(i));
                 appcom01Service.FPLAN_Update(workDto);
             }
         }else{
             appcom01Service.FPLAN_Update(workDto);
         }
-        return "TB_FPLAN_W020 UPDATE OK";
+        return ls_lotno;
     }
 
     @RequestMapping(value="/w020iwkupd", method = RequestMethod.POST)

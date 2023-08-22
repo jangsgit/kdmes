@@ -18,18 +18,15 @@ public class Appcom01Service {
 
 
     public List<FPLAN_VO> GetFPLAN_List(FPLAN_VO parm){
-
-//        log.debug("xxxxxxxxxxxxxxxxxxxxxxxxxx");
         return FPLANW010_mapper.GetFPLAN_List(parm);
     }
     public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO parm){
-
-//        log.debug("xxxxxxxxxxxxxxxxxxxxxxxxxx");
         return FPLANW010_mapper.GetFPLAN_List02(parm);
     }
+    public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List03(parm);
+    }
     public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm){
-
-//        log.debug("xxxxxxxxxxxxxxxxxxxxxxxxxx");
         return FPLANW010_mapper.GetFPLAN_List02Arr(parm);
     }
     public Object GetFPLANW010_ListOne(){

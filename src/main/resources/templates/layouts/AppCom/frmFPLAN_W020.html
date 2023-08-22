@@ -64,7 +64,7 @@
                                                         </div> 
                                                 </div>                                -->                                
                                                 <div class="col-auto"> 
-                                                    <button  class="btn btn-outline-primary me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" height:50px;  ">검사진행리스트 </button>
+                                                    <button  class="btn btn-outline-primary me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop02" style=" height:50px;  ">검사진행리스트 </button>
                                                 </div>   
                                                 <div class="col-auto"> 
                                                     <button  class="btn btn-outline-warning me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" height:50px;  ">사출완료리스트 </button>
@@ -293,6 +293,47 @@
                                                 </div> 
                                             </div>   
                                         <!--------------------------------------------------------------------------------------->
+                                            <div class="modal fade" id="staticBackdrop02" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                                                style="max-width: 1000px">
+                                                <div class="modal-content border-0">
+                                                    <div class="modal-body p-0" >  
+                                                        <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                                                            <h4 class="mb-1" id="staticBackdropLabel">검사진행리스트</h4> 
+                                                        </div>
+                                                        <div class="container-fluid">
+                                                            <div id="theGrid_div02" style="overflow:scroll;   height:300px;    margin:0 auto; "></div>
+                                                            <!-- <div id="thePager01"></div> -->
+                                                        </div>     
+                                                    </div>  
+                                                    <div class="modal-footer">
+                                                        <div class="row g-1">
+                                                            <div class="col-auto">
+                                                                <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter02(event)" id="searchOrdDate" autocomplete="off"  placeholder="Lot No"   >
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-primary" type="button"  id="searchBtn"  >조회 </button>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-primary" type="button"  id="newBtn"  >초기화 </button>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-secondary me-1 mb-1" id="wlistBtn02" type="button" data-bs-dismiss="modal">Close
+                                                                </button>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <button class="badge-soft-info dropdown-item rounded-1"
+                                                                    type="submit">저장 </button>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>   
+
+                                                </div>
+                                            </div> 
+                                        </div>   
+                                    <!--------------------------------------------------------------------------------------->
                                         <!--------------------------------------------------------------------------------------->  
                                         <form    role="form"   th:object="${wrmcDto}" th:action="@{/popup/wrmc}" method="post" enctype="multipart/form-data" >
                                             <div class="modal fade" id="wrmcmodal" data-bs-keyboard="false"
@@ -502,9 +543,11 @@
         var wperidGrid ;
         var wiworkGrid ; 
         var wtab01Grid;
+        var wtab02Grid;
         var wbadGrid ;
         var wbomGrid ;
         var view_flistpage;
+        var view_flistpage02;
         var view_wotqtpage;
         var plan_no = new Array();
         var lotno = new Array();
@@ -540,7 +583,8 @@
                         alternatingRowStep: 0,
                         columns: [
                             // { binding: 'index', header: 'seq', width: '*' },
-                            { binding: 'prod_sdate', header: '일자',  width: 130, align:"center", format: 'yyyy-MM-dd' },
+                            { binding: 'qcdate', header: '검사일',align:"center",  width: 130 },
+                            { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                             {
                                 binding: 'lotno',
                                 width: 150,
@@ -549,11 +593,11 @@
                                 cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                     text: '<b>${item.lotno}</b>',
                                     click: (e, ctx) => {
-                                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
+                                        selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
                                     }
                                 })
                             }, 
-                            { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
+                            // { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
                             // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                             { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
                             { binding: 'psize', header: '규격',     align:"center",  width: 130 },
@@ -604,14 +648,107 @@
                                 wrps: ListDto[i]["wrps"]  ,
                                 lotno: ListDto[i]["lotno"]  ,
                                 wrpsnm: ListDto[i]["wrpsnm"],
-                                obqty: ListDto[i]["obqty"]
+                                obqty: ListDto[i]["obqty"],
+                                qcdate: ListDto[i]["qcdate"]
                                 
                                 
                             });
                             cnt++;
                         }   
                         return data                                          
-                    }       
+                    }     //작업지시서 데이타 
+
+
+                    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                    //검사진행리스트 popup list
+
+                    view_flistpage02 = new wijmo.collections.CollectionView(getData_flist02(), {
+                            // pageSize: 100
+                        });   
+                    wtab02Grid = new wijmo.grid.FlexGrid('#theGrid_div02', {
+                        autoGenerateColumns: false,
+                        isReadOnly: true, 
+                        selectionMode: 'RowRange',
+                        alternatingRowStep: 0,
+                        columns: [
+                            // { binding: 'index', header: 'seq', width: '*' },
+                            { binding: 'qcdate', header: '검사일',  width: 130, align:"center", format: 'yyyy-MM-dd' },
+                            { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd' },
+                            {
+                                binding: 'lotno',
+                                width: 150,
+                                header: 'LotNo', 
+                                align:"center",
+                                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                    text: '<b>${item.lotno}</b>',
+                                    click: (e, ctx) => {
+                                        selectChk("B", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
+                                    }
+                                })
+                            }, 
+                            // { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
+                            // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
+                            { binding: 'pname', header: '품목명',   align:"center",  width: 180 }, 
+                            { binding: 'psize', header: '규격',     align:"center",  width: 150 },
+                            { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
+                            { binding: 'otqty', header: '검사량',align:"center",  width: 100 },
+                            // { binding: 'plan_no', header: '투입량',   align:"center",width: '*' }, 
+                            // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
+                            // { binding: 'wotqt', header: '완료량',   align:"center",width: '*' } ,
+                            // { binding: 'decision', header: '임시여부', align:"center", width: '*' }
+
+                        ],
+                        itemsSource: view_flistpage02
+                    }); 
+
+
+                    function getData_flist02(){ 
+                        var ListDto = [[${itemDtoList02}]]; 
+                        // console.log("ListDto : ", ListDto);
+                        var data = [];
+                        var cnt = 1;
+                        // var today = new Date()
+                        // console.log("today->" + today);
+                        for (var i = 0; i < ListDto.length; i++) {
+                            var psdate = ListDto[i]["prod_sdate"];
+                            psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
+                            var date_format = new Date(psdate);
+                            data.push({
+                                id: i, 
+                                index: cnt,                                                                
+                                prod_sdate: wijmo.DateTime.addDays(date_format, 0),
+                                wono: ListDto[i]["wono"], 
+                                cltnm: ListDto[i]["cltnm"], 
+                                pname: ListDto[i]["pname"], 
+                                psize: ListDto[i]["psize"], 
+                                prod_qty: ListDto[i]["prod_qty"],
+                                winqt: ListDto[i]["winqt"] , 
+                                wotqt: ListDto[i]["wotqt"] ,     
+                                decision: ListDto[i]["decision"] ,    
+                                plan_no: ListDto[i]["plan_no"] ,
+                                ostore: ListDto[i]["ostore"] ,
+                                custcd: ListDto[i]["custcd"] ,
+                                spjangcd: ListDto[i]["spjangcd"] ,
+                                cltcd: ListDto[i]["cltcd"] ,
+                                wseq: ListDto[i]["wseq"]  ,
+                                pcode: ListDto[i]["pcode"] ,
+                                wflag: ListDto[i]["wflag"] ,
+                                wremark: ListDto[i]["wremark"] ,
+                                phmmdoc: ListDto[i]["phmmdoc"]  ,
+                                winps: ListDto[i]["winps"]  ,
+                                wrps: ListDto[i]["wrps"]  ,
+                                lotno: ListDto[i]["lotno"]  ,
+                                wrpsnm: ListDto[i]["wrpsnm"],
+                                obqty: ListDto[i]["obqty"],
+                                otqty: ListDto[i]["otqty"],
+                                qcdate: ListDto[i]["qcdate"]
+                                
+                                
+                            });
+                            cnt++;
+                        }   
+                        return data                                          
+                    }      
                     // 선택기 생성
                     let selector01 = new wijmo.grid.selector.Selector(wtab01Grid, {
                         itemChecked: () => {
@@ -660,37 +797,7 @@
                         if(!plan_no ){
                             return 
                         }
-
-                        // $.ajax({
-                        //     url: '/input/w010perid',  
-                        //     type:"post",
-                        //     data: {"custcd" : custcd,
-                        //            "spjangcd": spjangcd,
-                        //            "linecd" : linecd,
-                        //            "linenm" : linenm,
-                        //            "wflagcd" : wflagcd,
-                        //            "wflagnm" : wflagnm,
-                        //            "wperid" : wperid,
-                        //            "wpernm" : wpernm,
-                        //            "plan_no" : plan_no
-                        //           },
-                        //     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
-                        //     success:function(data){
-                        //         var result  = data;   
-                        //         // console.log("result", result);
-                        //     },error:function(e){
-                        //         alert(data.code);
-                        //         alert(data.message);
-                        //     }
-                        // }).done(function(fragment){           
-
-                        // }) 
-
-
-
-                        //투입인원        
-                        // cnt.textContent = sel.length.toString();
-                        // document.getElementById('inwinps').value = parseInt(sel.length.toString()); 
+  
                     }
 
 
@@ -1640,7 +1747,10 @@
             var ls_decision = arg1; 
 
             if(!endDate)  {endDate = "  "}
-            //   console.log(endDate);
+            if(plan_no.length == 0){
+                plan_no[0] = "0";
+              console.log(plan_no);
+            }
             //   공정시작  공정종료 작업중단
             if(arg1 == "0" || arg1 == "1" || arg1 == "4"){
                 $.ajax({
@@ -1668,8 +1778,9 @@
                         "arrplanno"   : plan_no,
                     },
                     async:false,
-                    success:function(data){
+                    success:function(data){ 
                          console.log("등록OK", data); 
+                         document.getElementById('inlotno').value= data;  
                         // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
                         const statusdis_div = document.getElementById('statusdis01'); 
                         if(arg1 == "0"){
@@ -1695,6 +1806,10 @@
                             button_wbadqtyBtn.disabled = false; 
                             var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";         
                              
+                            if(plan_no[0] == "0"){ 
+                                console.log("exit")
+                                return; 
+                            }
                             $.ajax({
                                     url: '/input/w020iwkupd',   
                                     type:"POST", 
@@ -1897,7 +2012,7 @@
             document.getElementById('popwseq').value= arg4;  
             document.getElementById('popseq').value= arg5;  
         }
-        function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19 ){ 
+        function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19 ){ 
             // /, ctx.item.owqty ,ctx.item.obqty
                 //selectChk(custcd, spjangcd, wono, cltnm, pname, 
                 //          ostore, plan_no, cltcd, pcode, wseq,
@@ -1920,7 +2035,9 @@
             document.getElementById('inpcode').value= arg9;   
             document.getElementById('inwseq').value= arg10;  
             document.getElementById('inwflag').value= arg11;  
-            // document.getElementById('inlotno').value= arg19;  
+            if(arg0 == "B"){
+                document.getElementById('inlotno').value= arg19;  
+            }
             
         // document.getElementById('inphmmdoc').value= arg12;  
             wflag = arg11; //document.getElementById('inwflag').value;
@@ -1928,6 +2045,7 @@
             wrmc = document.getElementById('inwrmc').value; 
 
             $("#wlistBtn").trigger("click"); 
+            $("#wlistBtn02").trigger("click"); 
             // $("#plannoBtn").trigger("click"); 
             
             // 초기화
@@ -2096,6 +2214,7 @@
             plan_no = document.getElementById('inplan_no').value;
             if(!wflag){ wflag = "00020"; } 
             $("#wlistBtn").trigger("click"); 
+            $("#wlistBtn02").trigger("click"); 
             // $("#plannoBtn").trigger("click"); 
             // console.log("WRMC UPDATE");
             

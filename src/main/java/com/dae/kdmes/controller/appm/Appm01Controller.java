@@ -37,6 +37,7 @@ public class Appm01Controller {
     FPLANW010_VO itemDto = new FPLANW010_VO();
     FPLAN_VO fplanDto = new FPLAN_VO();
     List<FPLAN_VO> itemDtoList = new ArrayList<>();
+    List<FPLAN_VO> itemDtoList02 = new ArrayList<>();
     TBPopupVO wrmcDto = new TBPopupVO();
     TBPopupVO wperidDto = new TBPopupVO();
     //공통코드등록
@@ -125,8 +126,10 @@ public class Appm01Controller {
         itemDto.setPlan_no("%");
 //        itemDto = appcom01Service.FPLANW010_Blank();
         itemDtoList = appcom01Service.GetFPLAN_List02(fplanDto);
+        itemDtoList02 = appcom01Service.GetFPLAN_List03(fplanDto);
 //        model.addAttribute("itemDto", itemDto);
         model.addAttribute("itemDtoList", itemDtoList);
+        model.addAttribute("itemDtoList02", itemDtoList02);
 
 
         wrmcDto.setMachname("%");

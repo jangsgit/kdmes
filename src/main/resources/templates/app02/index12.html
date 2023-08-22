@@ -105,18 +105,18 @@
                     </div>
                     <div class="tab-pane fade" id="step03">    
                         <div class="row gx-3" style="  margin: 10px 10px 10px;">   
-                            <div class="col-2 col-sm-2">
+                            <!-- <div class="col-2 col-sm-2">
                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">조회일자</span>
                                     <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
                                 </div>
-                            </div> 
+                            </div>  -->
                             <div class="col-2 col-sm-2">
                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">바코드</span> 
                                     <input class="form-control form-control-sm" id="jpumname" type="text"    autocomplete="off"  placeholder=""     > 
                                 </div>
                             </div>
                             <div class="col-1 col-sm-1">  
-                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
+                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="searchList_rtn()">조회
                                 </button>
                             </div>  
                         </div> 
@@ -500,7 +500,7 @@
    //재고현황 선택     
    function wcustcodeChk_a(arg){   
        var ls_tab = document.getElementById('tabvalue').value;
-       var ls_todate = document.getElementById('todate').value; 
+    //    var ls_todate = document.getElementById('todate').value; 
        // console.log(arg)
        // console.log(ls_todate)
        $.ajax({
@@ -733,15 +733,12 @@
                })    
                break;
            case 'C':
-               var ls_jpumname = document.getElementById('jpumname').value; 
-               var ls_ipdate = document.getElementById('todate').value; 
+               var ls_jpumname = document.getElementById('jpumname').value;  
                $.ajax({
-                   url: '/app03m/index03/jaegocustlist',  
+                   url: '/app02m/index10/tabclist',  
                    type:"POST",
                    data: { 
-                       "searchtxt" : ls_jpumname,
-                       "jcustcd" :'%', 
-                       "todate" :ls_todate, 
+                       "searchtxt" : ls_jpumname 
                    }, 
                    async:false,
                    success:function(data){   
@@ -968,8 +965,7 @@
        if(date > 0 && date < 10) {date = "0" + date};
        let ls_frday = year + '-' + month + '-01' 
        let ls_today = year + '-' + month + '-' + date 
-    //    document.getElementById('frdate').value = ls_today;
-       document.getElementById('todate').value = ls_today;
+    //    document.getElementById('frdate').value = ls_today; 
        document.getElementById('ipdate').value = ls_today;
        document.getElementById('tridate').value = ls_today;
        

@@ -647,6 +647,23 @@ public class App02CrudController {
         return index10ListDto;
     }
 
+
+
+    @GetMapping(value="/index10/tabclist")
+    public String App12List_barcode(  @RequestParam("searchtxt") String searchtxt,
+                                                Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Boolean result = false;
+        result = service01.DeleteComCodeDetail(index01Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
     public String GetMaxSeq(String indate){
 
         String ls_seq = service10.SelectMaxSeq(index10Dto);
