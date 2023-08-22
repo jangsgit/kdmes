@@ -24,7 +24,7 @@
                 TB.prod_qty, TB.cls_flag, TB.istore, TB.ostore, TB.rwflag, TB.remark
              from TB_FPLAN TB
             INNER JOIN JCODE E WITH(NOLOCK) ON (TB.PCODE = E.jkey)
-             WHERE 1=1
+              WHERE isnull(TB.pcode,'') Like concat('%',#{pcode},'%') or isnull(E.jpum,'') Like concat('%',#{jpum},'%')
             ORDER BY TB.pcode
         ]]>
     </select>

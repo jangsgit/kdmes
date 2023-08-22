@@ -414,6 +414,7 @@ public class App02CrudController {
                 searchtxt = "%";
             }
             index10Dto.setPcode(searchtxt);
+            index10Dto.setJpum(searchtxt);
             index10ListDto = service10.GetFplanList(index10Dto);
 
             model.addAttribute("index10ListDto",index10ListDto);
