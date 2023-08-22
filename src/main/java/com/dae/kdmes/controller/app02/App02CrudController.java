@@ -508,7 +508,7 @@ public class App02CrudController {
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
-        index10Dto.setPlan_no(lotno);
+        index10Dto.setLotno(lotno);
         Boolean result = service10.DeleteFplan(index10Dto);
         if (!result) {
             return "error";

@@ -103,7 +103,7 @@
 
 
     <update id="DeleteFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto">
-        DELETE  TB_FPLAN where plan_no  = #{plan_no}
+        DELETE  TB_FPLAN where lotno  = #{lotno}
     </update>
 
     <select id="GetJpumListTot" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
