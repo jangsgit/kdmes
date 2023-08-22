@@ -55,7 +55,7 @@
                                         <div class="tab-pane fade show active"  >  
                                                 <div class="container-fluid" id="op1" >
                                                 <div id="wtab01Grid_div" style="height: 600px; " ></div>
-                                                <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div>
+                                                <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
                                             </div>                                               
                                         </div>                                        
                                       </div>
@@ -357,10 +357,10 @@
                                 </div>
                                     <ul class="right">
                                         <li>
-                                            <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
-                                                <input class="form-control form-control-sm" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
+                                            <div class="input-group mb-3" style="margin-right: 10px; margin-top: 15px"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
+                                                <input class="form-control" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
                                             </div><br><br>
-                                            <button type="button" class="color2" id="wciflistBtn">
+                                            <button type="button" class="color2" id="wciflistBtn" style="width: 100px">
                                                 <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
                                             </button>
                                         </li>                                   
@@ -370,7 +370,7 @@
                         <div class="box_wrap with_tit" style="padding: 10px;">
                             <div class="container-fluid" style="padding: 10px;">
                                 <div id="wtab02Grid_div" ></div>
-                                <div  id="tab02Pager"></div>
+                                <!-- <div  id="tab02Pager"></div> -->
                             </div>   
                         </div>
                     </div>  
@@ -413,7 +413,7 @@
             //tab01 grid list
         view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
             sortDescriptions: [new wijmo.collections.SortDescription("acode", false)],
-            pageSize: 21
+            //pageSize: 21
         });
        // tab01 grid page
         // new wijmo.input.CollectionViewNavigator('#tab01Pager', {
@@ -532,7 +532,7 @@
 
         view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
             sortDescriptions: [new wijmo.collections.SortDescription("acode", false)],
-            pageSize: 18
+           // pageSize: 18
         });
        // tab02 grid page
         // new wijmo.input.CollectionViewNavigator('#tab02Pager', {

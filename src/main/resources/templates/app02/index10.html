@@ -259,7 +259,7 @@
                         </div>   
                         <div class="container-fluid"> 
                             <div id="winnameGrid_div" ></div>
-                            <div id="thePager03"></div>
+                            <!-- <div id="thePager03"></div> -->
                         </div>   
                     </div>  
 
@@ -304,10 +304,10 @@
                                 </div>
                                     <ul class="right">
                                         <li>
-                                            <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
-                                                <input class="form-control form-control-sm" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
-                                            </div><br><br>
-                                            <button type="button" class="color2" id="wciflistBtn">
+                                            <div class="input-group mb-3"  style="margin-right: 10px; margin-top: 15px" ><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
+                                                <input class="form-control" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
+                                            </div>
+                                            <button type="button" class="color2" id="wciflistBtn" style="width: 100px">
                                                 <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
                                             </button>
                                         </li>                                   
@@ -441,11 +441,14 @@
         var year = today.getFullYear();
         var month = ('0' + (today.getMonth() + 1)).slice(-2);
         var day = ('0' + today.getDate()).slice(-2);
+        var day1 = ('0' + (today.getDate()+7)).slice(-2); 
 
-        var dateString = year + '-' + month  + '-' + day; 
+        var dateString = year + '-' + month  + '-' + day;
+        var dateString1 = year + '-' + month  + '-' + day1;  
 
         document.getElementById('indate').value = dateString;
         document.getElementById('prod_sdate').value = dateString;
+        document.getElementById('prod_edate').value = dateString1;
     
         var x = document.getElementsByName('workdv');
 
@@ -577,14 +580,14 @@
         // // ################################################################
         //거래처현황 Modalㅁ
         view_innamepage = new wijmo.collections.CollectionView(getData_wlist2(), {
-            pageSize: 12
+           // pageSize: 12
         });
         // 거래처 페이지 이동
-        new wijmo.input.CollectionViewNavigator('#thePager03', {
-            byPage: true,
-            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-            cv: view_innamepage
-        });     
+        // new wijmo.input.CollectionViewNavigator('#thePager03', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_innamepage
+        // });     
         winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
             autoGenerateColumns: false,
             isReadOnly: false, 
@@ -925,9 +928,19 @@
     
     //초기화 function
     function clear_rtn(){
-        document.getElementById('indate').value =  ""; 
-        document.getElementById('prod_sdate').value =  "";   
-        document.getElementById('prod_edate').value =  ""; 
+        var today = new Date();
+
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2);
+        var day = ('0' + today.getDate()).slice(-2);
+        var day1 = ('0' + (today.getDate()+7)).slice(-2);
+
+        var dateString = year + '-' + month  + '-' + day; 
+        var dateString1 = year + '-' + month  + '-' + day1; 
+
+        document.getElementById('indate').value = dateString;
+        document.getElementById('prod_sdate').value = dateString;
+        document.getElementById('prod_edate').value =  dateString1; 
         document.getElementById('lotno').value =  "";
         document.getElementById('cltcd').value =  "";  
         document.getElementById('qcdate').value =  "";    
@@ -936,7 +949,7 @@
         document.getElementById('pcode').value =  ""; 
         document.getElementById('jpum').value =  "";   
         document.getElementById('jgugek').value =  ""; 
-        document.getElementById('dem_flag').value =  "0"; 
+        document.getElementById('dem_flag').value =  ""; 
         document.getElementById('jchajong').value =  ""; 
         document.getElementById('jsayang').value = "";  
         document.getElementById('jgugek2').value = "";  
@@ -1114,6 +1127,19 @@
                 insaSearchList_rtn("A"); 
             }
         });
+        document.getElementById("retrieveBtn").addEventListener("click",function(){
+            let arg1 = document.getElementById("searchtxt").value   
+            searchList_rtn(arg1);  
+        })
+        document.getElementById("searchtxt").addEventListener("keyup", (e)=>{ 
+            let arg1 = document.getElementById("searchtxt").value
+            if(e.keyCode === 13){  
+                searchList_rtn(arg1); 
+            }      
+        }) 
+        document.getElementById("prod_sdate").addEventListener("click",function(){   
+            document.getElementById('prod_edate').value = document.getElementById("prod_sdate").value +7;
+        }) 
         // // 거래처검색   
         // document.getElementById("retrieveBtn").addEventListener("click",function(){  
         //     let ls_searchtxt = document.getElementById('searchtxt').value;  
@@ -1299,7 +1325,7 @@
             document.getElementById('plan_no').value = arg25;
 
             const dem_flag = document.getElementById('dem_flag'); 
-            if(arg12 == "0"){
+            if(arg12 == "1"){
                 dem_flag.checked = true; 
             }else{
                 dem_flag.checked = false; 
