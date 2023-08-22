@@ -351,7 +351,7 @@
                         <div class="box_wrap with_tit" style="padding: 10px;">
                             <div class="container-fluid" style="padding: 10px;">
                                 <div id="wtab03Grid_div" ></div>
-                                <div  id="tab03Pager"></div>
+                                <!-- <div  id="tab03Pager"></div> -->
                             </div>   
                         </div>
                     </div>  
@@ -724,7 +724,7 @@
 
         view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
             sortDescriptions: [new wijmo.collections.SortDescription("acode", false)],
-            pageSize: 18
+           // pageSize: 18
         });
        // tab02 grid page
         // new wijmo.input.CollectionViewNavigator('#tab03Pager', {
@@ -984,7 +984,7 @@
         var ls_ostore   =  document.getElementById('ostore').value; 
         var ls_rwflag    =  document.getElementById('rwflag').value;
         var ls_remark =  document.getElementById('remark').value; 
-        var ls_plan_no =  document.getElementById('plan_no').value; 
+        var ls_plan_no =  document.getElementById('plan_no').value;
         
         const dem_flag = document.getElementById('dem_flag'); 
         const is_checked = dem_flag.checked;
@@ -1218,13 +1218,13 @@
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'cltcd';
-            cols.header = '거래처';
-            cols.align = "left";
-            cols.width = 250;           
-            wtab01Grid.columns.push(cols);  
+            cols.binding = 'lotno';
+            cols.header = '로트번호';
+            cols.align = "center";
+            cols.width = 150;           
+            wtab01Grid.columns.push(cols);
 
-            var cols = new wijmo.grid.Column(); 
+            cols = new wijmo.grid.Column(); 
             cols.binding = 'pcode';
             cols.header = '품목';
             cols.align = "center";
@@ -1235,7 +1235,14 @@
                     wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.plan_no);           
                 }
             });
-            wtab01Grid.columns.push(cols);  
+            wtab01Grid.columns.push(cols); 
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'jpum';
+            cols.header = '품목명';
+            cols.align = "center";
+            cols.width = 150;           
+            wtab01Grid.columns.push(cols);
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'jgugek';
@@ -1250,42 +1257,6 @@
             cols.align = "right";
             cols.width = 100;                  
             wtab01Grid.columns.push(cols);  
-
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'lotno';
-            cols.header = '로트번호';
-            cols.align = "center";
-            cols.width = 150;           
-            wtab01Grid.columns.push(cols);
-
-            
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'prod_sdate';
-            cols.header = '생산시작일'; 
-            cols.align = "center"; 
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);  
-            
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'prod_edate';
-            cols.header = '생산종료일'; 
-            cols.align = "center"; 
-            cols.width = 100;
-            wtab01Grid.columns.push(cols); 
-            
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'cls_flag';
-            cols.header = '작지상태'; 
-            cols.align = "center"; 
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);  
-
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'perid';
-            cols.header = '담당자'; 
-            cols.align = "center"; 
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'ecltnm';

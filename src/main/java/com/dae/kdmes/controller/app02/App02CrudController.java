@@ -465,6 +465,7 @@ public class App02CrudController {
             index10Dto.setOstore(ostore);
             index10Dto.setRwflag(rwflag);
             index10Dto.setRemark(remark);
+            //index10Dto.setJpum(jpum);
 
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
