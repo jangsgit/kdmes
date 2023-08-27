@@ -77,7 +77,14 @@
                                             </div>
                                             <!------content ---------------------------------------------------------------------------------->
                                             <div class="row mb-3 row-cols-sm-3 align-items-center">
-                                                 
+                                                   
+                                                <div class="col-sm">
+                                                    <div class="input-group"> 
+                                                        <div class="input-group-text">작지번호</div> 
+                                                        <input class="form-control form-control-sm" id="inplan_no" type="text"    disabled
+                                                            placeholder=""   /> 
+                                                    </div>
+                                                </div>
                                                 <div class="col-sm">
                                                     <div class="input-group">
                                                         <div class="input-group-text">거래처</div>
@@ -113,14 +120,7 @@
                                                         <input class="form-control form-control-sm" id="inpcode" type="hidden" disabled
                                                         size="15"  />    
                                                     </div>
-                                                </div>   
-                                                <div class="col-sm">
-                                                    <div class="input-group"> 
-                                                        <div class="input-group-text">작업지시번호</div> 
-                                                        <input class="form-control form-control-sm" id="inplan_no" type="text"    disabled
-                                                            placeholder=""   /> 
-                                                    </div>
-                                                </div>
+                                                </div> 
                                             </div>
                                             <div class="row mb-3 row-cols-lg-3 align-items-center"> 
                                                 <div class="col-sm">
@@ -130,6 +130,21 @@
                                                             size="15"  /> 
                                                     </div>
                                                 </div> 
+                                                <div class="col-auto">
+                                                    <div class="input-group"> 
+                                                        <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"  style=" height:40px;  "  >공정시작 </button>
+                                                        <input type="text"  class="form-control datetimepicker" id="startDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled> 
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="input-group"> 
+                                                        <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"  style=" height:40px;  "  >공정종료 </button>
+                                                        <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled > 
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="row mb-3 row-cols-lg-3 align-items-center">
                                                 <div class="col-auto">
                                                     <div class="input-group">
                                                         <!-- <div class="input-group-text">작업자</div> -->
@@ -152,31 +167,16 @@
                                                         <div id='inwrmcbdg'></div>
                                                     </div>
                                                 </div>
-                                            </div> 
-                                            <div class="row mb-3 row-cols-lg-3 align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="input-group"> 
-                                                        <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"  style=" height:40px;  "  >공정시작 </button>
-                                                        <input type="text"  class="form-control datetimepicker" id="startDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled> 
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="input-group"> 
-                                                        <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"  style=" height:40px;  "  >공정종료 </button>
-                                                        <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled > 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3 row-cols-lg-3 align-items-center">
                                                 <div class="col-auto">
                                                     <div class="input-group">
                                                         <div class="input-group-text">투입량</div>  <!-- data-bs-toggle="modal" data-bs-target="#wiworkmodal"  -->
                                                         <input class="form-control form-control-sm" id="inwinqt" type="number"  
-                                                            placeholder=""   />
+                                                            placeholder=""  disabled />
                                                         <div id='inwinqtbdg'></div>      
                                                     </div>
                                                 </div>  
+                                            </div>
+                                            <div class="row mb-3 row-cols-lg-3 align-items-center">
                                                 <div class="col-4">
                                                     <div class="input-group">
                                                         <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">검사량 </button>
@@ -194,8 +194,6 @@
                                                             placeholder=""  />
                                                     </div>
                                                 </div> 
-                                            </div>
-                                            <div class="row mb-3  row-cols-lg-3 align-items-center">  
                                                 <div  class="col-3">
                                                     <div class="input-group">
                                                         <div class="input-group-text">완료량</div>
@@ -203,6 +201,8 @@
                                                             placeholder=""  />
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row mb-3  row-cols-lg-3 align-items-center">  
                                                 
                                                 <div class="col-3">
                                                     <div class="input-group">
