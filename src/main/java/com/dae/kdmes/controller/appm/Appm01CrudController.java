@@ -922,12 +922,23 @@ public class Appm01CrudController {
             workDto.setClsflag("4");
         }
         appcom01Service.FPLAN_Update(workDto);
-
-
-
         return "TB_FPLAN_W040 UPDATE OK";
     }
 
+
+    //작업설비 update 조회
+    @RequestMapping(value="/qcsearch", method = RequestMethod.POST)
+    public Object AppQcSearch_index(@RequestParam("searchcode") String searchcode
+                , Model model, HttpServletRequest request) throws Exception {
+
+        FPLANIWORK_VO fplanDto = new FPLANIWORK_VO();
+        List<FPLANIWORK_VO> fplanListDto = new ArrayList<>();
+        fplanDto.setLotno(searchcode);
+        fplanListDto =   appcom01Service.GetPlanSearch(fplanDto);
+        model.addAttribute("fplanListDto",fplanListDto);
+        return fplanListDto;
+
+    }
 
     @ResponseBody
     @RequestMapping(value="/w010perid", method = RequestMethod.POST)
@@ -1354,55 +1365,6 @@ public class Appm01CrudController {
 
     }
 
-    //IWORK INSERT
-    @RequestMapping(value="/w040wiwork", method = RequestMethod.POST)
-    public String AppW040WIwork_index(@RequestParam("custcd") String custcd
-            ,@RequestParam("spjangcd") String spjangcd
-            ,@RequestParam("plan_no") String plan_no
-            ,@RequestParam("wflag") String wflag
-            ,@RequestParam("pcode") String pcode
-            ,@RequestParam("lotno") String lotno
-            ,@RequestParam("opcltcd") String opcltcd
-            ,@RequestParam("opdate") String opdate
-            ,@RequestParam("store") String store
-            ,@RequestParam("jqty") float jqty
-            ,@RequestParam("qty") float qty
-            ,@RequestParam("bqty") float bqty) throws Exception {
-
-        FPLANW010_VO itemDto = new FPLANW010_VO();
-        TBPopupVO wscntDto = new TBPopupVO();
-
-        itemDto.setCustcd(custcd);
-        itemDto.setSpjangcd(spjangcd);
-        itemDto.setWflag(wflag);
-        itemDto.setPcode(pcode);
-        itemDto.setPlan_no(plan_no);
-        itemDto.setLotno(lotno);
-        itemDto.setOpcltcd(opcltcd);
-        itemDto.setOpdate(opdate);
-        itemDto.setStore(store);
-        itemDto.setQty(qty);
-        itemDto.setJqty(jqty);
-        itemDto.setBqty(bqty);
-        itemDto.setWseq("01");
-        itemDto.setAseq("01");
-        itemDto.setIndate(getToDate());
-        wscntDto.setPlan_no(plan_no);
-        wscntDto.setLotno(lotno);
-//        String ls_wseq = appcom04Service.GetWIworkWseq(wscntDto);
-//        if(ls_wseq == null) {
-//            itemDto.setWseq("01");
-//            itemDto.setSeq("01");
-//            appcom04Service.FPLANI_IWORK_Insert(itemDto);
-//        }else{
-//            itemDto.setWseq(ls_wseq);
-//            itemDto.setSeq("01");
-//            appcom04Service.FPLANI_IWORK_update(itemDto);
-//        }
-
-        return "UPDATE OK";
-
-    }
 
     //작지번호 조회
     @RequestMapping(value="/SELW010", method = RequestMethod.POST)

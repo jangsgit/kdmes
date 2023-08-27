@@ -1,8 +1,6 @@
 package com.dae.kdmes.controller.appm;
 
-import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
-import com.dae.kdmes.DTO.Appm.FPLAN_VO;
-import com.dae.kdmes.DTO.Appm.TBPopupVO;
+import com.dae.kdmes.DTO.Appm.*;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.Service.Appm.AppPopupService;
@@ -153,6 +151,47 @@ public class Appm01Controller {
         return "AppCom/LayFPLAN_W020";
     }
 
+    //검사공정
+    @GetMapping(value="/list03")
+    public String Appcom03_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("검사이력조회");  //
+        CommDto.setMenuUrl("생산공정>검사이력조회");
+        CommDto.setMenuCode("appcom03");
+
+        FPLANIWORK_VO fplanDto = new FPLANIWORK_VO();
+        List<FPLANIWORK_VO> fplanListDto = new ArrayList<>();
+        fplanDto.setLotno("%");
+        fplanListDto =   appcom01Service.GetPlanSearch(fplanDto);
+        model.addAttribute("fplanListDto", fplanListDto );
+        return "AppCom/LayFPLAN_PlanSearch";
+    }
+    //생산현황
+    @GetMapping(value="/list04")
+    public String Appcom04_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("생산현황조회");  //
+        CommDto.setMenuUrl("생산공정>생산현황조회");
+        CommDto.setMenuCode("appcom04");
+
+        TBFplanNowVO viewDto = new TBFplanNowVO();
+        Date nowData = new Date();
+        SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
+        String startDate = endDate.format(nowData).toString();
+        String toDate = endDate.format(nowData).toString();
+//        startDate = startDate.substring(0, 4) + "0101";
+        startDate = "20210801";
+
+        SimpleDateFormat yymm = new SimpleDateFormat("yyyyMMdd");
+        Calendar ci = Calendar.getInstance();
+        String strToday = yymm.format(ci.getTime());
+        viewDto.setCustcd("KDMES");
+        viewDto.setSpjangcd("ZZ");
+        viewDto.setFdate(startDate);
+        viewDto.setTdate(toDate);
+        List<TBFplanNowVO> fplanViewListDto = (List<TBFplanNowVO>) appcom01Service.GetPlanViewnow(viewDto);
+        model.addAttribute("fplanViewListDto", fplanViewListDto );
+
+        return "AppCom/LayFPLAN_PlanViewSearch";
+    }
 
 
     private String getFrDate() {

@@ -729,4 +729,34 @@
         INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no,  wseq, seq, wflag, pcode, lotno, store, qty, bqty,  indate, inperid )
         VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq}, #{seq},  #{wflag},  #{pcode}, #{lotno},  #{store},   #{qty}, #{bqty},  #{indate}, #{inperid})
     </insert>
+
+
+    <select id="GetPlanSearch" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO">
+        <![CDATA[
+        SELECT A.plan_no,
+            A.wseq,
+            A.seq,
+            A.lotno,
+            A.qty ,
+            B.jpum as pname,
+            B.jgugek as psize ,
+            A.indate,
+            C.lotno as glotno,
+           (select isnull(WOTQT,0)  from TB_FPLAN where plan_no=C.plan_no   and wflag= '00020'   ) as woqty
+        FROM TB_FPLAN_IWORK A WITH(NOLOCK),
+             JCODE B WITH(NOLOCK) ,
+             TB_FPLAN_W020 C
+        WHERE (A.pcode     = B.jkey)
+            AND (A.plan_no      = C.plan_no)
+            AND (ISNULL(C.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+        ]]>
+    </select>
+
+
+    <select id="GetPlanViewnow" parameterType="com.dae.kdmes.DTO.Appm.TBFplanNowVO"  resultType="com.dae.kdmes.DTO.Appm.TBFplanNowVO">
+        {
+        call  SP_TB_FPLAN_NOW_VIEW(#{custcd} , #{spjangcd},   #{fdate}, #{tdate} )
+        }
+    </select>
+
 </mapper>

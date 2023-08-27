@@ -123,4 +123,10 @@ public class Appcom01Service {
     public FPLANW010_VO FPLAN_OWORK_SUMQTY(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_OWORK_SUMQTY(parm); }
 
 
+    public List<FPLANIWORK_VO> GetPlanSearch(FPLANIWORK_VO parm){
+        return FPLANW010_mapper.GetPlanSearch(parm);
+    }
+    public List<TBFplanNowVO> GetPlanViewnow(TBFplanNowVO parm){
+        return FPLANW010_mapper.GetPlanViewnow(parm);
+    }
 }

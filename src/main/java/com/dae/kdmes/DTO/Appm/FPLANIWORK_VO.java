@@ -22,6 +22,7 @@ public class FPLANIWORK_VO {
     private String psize;
     private String punit;
     private String lotno;
+    private String glotno;
     private String opcltcd;
     private String opcltnm;
     private String opcono;

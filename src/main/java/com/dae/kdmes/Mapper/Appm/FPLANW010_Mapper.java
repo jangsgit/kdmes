@@ -75,6 +75,8 @@ public interface FPLANW010_Mapper {
      public void FPLAN_OWORK_Update(FPLANW010_VO parm);
      public FPLANW010_VO FPLAN_OWORK_SUMQTY(FPLANW010_VO parm);
 
+     public List<FPLANIWORK_VO> GetPlanSearch(FPLANIWORK_VO parm);   //
+     public List<TBFplanNowVO> GetPlanViewnow(TBFplanNowVO parm);   //조
 
 
 }
