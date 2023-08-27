@@ -48,7 +48,8 @@
 
     <select id="GetWrmcList01" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
         select  A.wflag, A.wrmc,  A.wperid,
-                A.wrmcnm wpernm
+                A.wrmcnm wrmcnm,
+                (SELECT com_rem1 from tb_ca510 where com_code=A.wperid and com_cls = '002') AS wpernm
         FROM TB_FPLAN_WRMC A WITH(NOLOCK)
         WHERE  (A.wflag Like #{wflag} + '%')  AND  (A.wrmc lIKE '%' +  #{machname}  + '%'   )
     </select>
@@ -62,7 +63,7 @@
                TB_FPLAN_WBAD.wseq   as wseq ,
                TB_FPLAN_WBAD.plan_no   as plan_no
         FROM TB_CA510 WITH(NOLOCK) LEFT OUTER JOIN TB_FPLAN_WBAD WITH(NOLOCK)
-        ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag}
+        ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag} and TB_FPLAN_WBAD.plan_no = #{plan_no}
         WHERE TB_CA510.com_cls = '005'
           AND TB_CA510.com_code   != '00'
           AND TB_CA510.com_REM2  = #{wflag}

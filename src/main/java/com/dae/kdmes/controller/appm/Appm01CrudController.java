@@ -969,8 +969,8 @@ public class Appm01CrudController {
                     ls_seq = "0" + ls_seq;
                 }
 
-                wperDto.setCustcd(custcd.get(i));
-                wperDto.setSpjangcd(spjangcd.get(i));
+                wperDto.setCustcd("KDMES");
+                wperDto.setSpjangcd("ZZ");
                 wperDto.setWflag(wflagcd.get(i));
                 wperDto.setSeq(ls_seq);
                 wperDto.setPerid(wperid.get(i));

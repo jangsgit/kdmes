@@ -21,6 +21,7 @@ public class FPLAN_VO {
     private String wodv;
     private String wdndv;
     private String wrmc;
+    private String wrmcnm;
     private String wono;
     private String lotno;
     private String line;

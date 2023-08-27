@@ -44,10 +44,10 @@ public class AppPopupController {
         }
         wrmcDto.setMachname(machname);
         wrmcDto.setWflag(wflag);
-        if(appPopupService.GetWrmcList(wrmcDto) == null){
+        if(appPopupService.GetWrmcList01(wrmcDto) == null){
             return appPopupService.GetWrmcList_blank(wrmcDto);
         }else{
-            return  appPopupService.GetWrmcList(wrmcDto);
+            return  appPopupService.GetWrmcList01(wrmcDto);
         }
 
     }
@@ -217,21 +217,17 @@ public class AppPopupController {
 
     //wbad  LIST
     @GetMapping(value="/wbad")
-    public Object Appwiwork_index(  @RequestParam("custcd") String custcd
-            ,@RequestParam("spjangcd") String spjangcd
-            ,@RequestParam("wrmc") String wrmc
-            ,@RequestParam("wseq") String wseq
-            ,@RequestParam("plan_no") String plan_no
+    public Object Appwiwork_index(
+             @RequestParam("plan_no") String plan_no
             ,@RequestParam("wflag") String wflag
             ,Model model, HttpServletRequest request) throws Exception{
         TBPopupVO wbadDto = new TBPopupVO();
         if (plan_no == null || plan_no.equals("")){
             plan_no = "%";
         }
-        wbadDto.setCustcd(custcd);
-        wbadDto.setSpjangcd(spjangcd);
+        wbadDto.setCustcd("KDMES");
+        wbadDto.setSpjangcd("ZZ");
         wbadDto.setPlan_no(plan_no);
-        wbadDto.setWseq(wseq);
         wbadDto.setWflag(wflag);
         if(appPopupService.GetWBadList01(wbadDto) == null){
             return appPopupService.GetWBadList_blank();

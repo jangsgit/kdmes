@@ -59,6 +59,7 @@ public class TBPopupVO {
     private long   bqty ;
 
     private String wclscode;
+    private String wrmcnm;
 
 }
 

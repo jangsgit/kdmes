@@ -67,7 +67,7 @@ public class Appm01Controller {
         CommDto.setMenuUrl("생산공정>사출공정");
         CommDto.setMenuCode("appcom01");
         String fdate = getFrDate();
-        String tdate = getToDate();
+        String tdate = getAddDate();
         String cltcd = "%";
         String pcode = "%";
         fplanDto.setLine("00");
@@ -112,7 +112,7 @@ public class Appm01Controller {
         CommDto.setMenuUrl("생산공정>검사공정");
         CommDto.setMenuCode("appcom02");
         String fdate = getFrDate();
-        String tdate = getToDate();
+        String tdate = getAddDate();
         String cltcd = "%";
         String pcode = "%";
         fplanDto.setLine("00");
@@ -210,6 +210,14 @@ public class Appm01Controller {
     }
 
 
+    private String getAddDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, 14); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
 
 
 

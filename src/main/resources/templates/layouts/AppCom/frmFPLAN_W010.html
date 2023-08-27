@@ -336,14 +336,14 @@
                                                                         <div class="input-group-text">설비검색</div>
                                                                         <input class="form-control form-control-sm" id="searchCode" type="text"  
                                                                             placeholder="설비코드 / 설비명"     /> 
-                                                                        <button class="btn btn-falcon-warning me-1 mb-1" id="wrmcBtn" type="button" >검색
+                                                                        <button class="btn btn-falcon-warning me-1 mb-1" id="wrmcSearchBtn" type="button" >검색
                                                                         </button>
                                                                     </div>
                                                                 </div> 
                                                             </div>                             
                                                             <div class="container-fluid"> 
                                                                 <div id="wrmcGrid_div" ></div>
-                                                                <div id="thePager02"></div>
+                                                                <!-- <div id="thePager02"></div> -->
                                                             </div>                                                                 
     
                                                         </div>  
@@ -410,76 +410,7 @@
                                             </div>         
                                         </form>
                                         <!--------------------------------------------------------------------------------------->    
-                                            <div class="modal fade" id="wiworkmodal" data-bs-keyboard="false"
-                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                            aria-hidden="true">
-                                                <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm04"
-                                                    style="max-width: 900px">
-                                                    <div class="modal-content border-0">
-                                                        <div class="modal-body p-0" > 
-                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                                <h4 class="mb-1" id="modalExampleDemoLabel">자재BOM</h4>
-                                                            </div> 
-                                                            <div  class="container-fluid"> 
-                                                                <div class="col-auto">
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-text">작업계획번호</div>
-                                                                        <input class="form-control form-control-sm" id="searchPlanno" type="text"  
-                                                                            placeholder="작업자명"     /> 
-                                                                        <div class="input-group-text">품목코드</div>
-                                                                        <input class="form-control form-control-sm" id="searchPcode" type="text"  
-                                                                            placeholder="품목코드를 선택하세요"     /> 
-                                                                        <button class="btn btn-falcon-warning me-1 mb-1" id="plannoBtn"  type="button" >검색
-                                                                    
-                                                                    </div> 
-                                                                </div> 
-                                                            </div>     
-
-                                                            <div class="container-fluid"> 
-                                                                <div id="wbomGrid_div" ></div>
-                                                                <div id="thePager04"></div>
-                                                            </div>     
-
-                                                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                                <h4 class="mb-1" id="modalExampleDemoLabel">자재투입</h4>
-                                                        </div> 
-                                                            <div  class="container-fluid"> 
-                                                                <div class="col-auto">
-                                                                    <div class="input-group"> 
-                                                                        <!-- <button class="btn btn-falcon-warning me-1 mb-1" id="addBtn"  type="button" >행추가
-                                                                        </button>  -->
-                                                                        <button class="btn btn-falcon-warning me-1 mb-1" id="delBtn"  type="button" >행삭제
-                                                                        </button>                                                                      
-                                                                    </div> 
-                                                                    <div class="col-auto">
-                                                                        <div id="wqtydis01"></div>
-                                                                    </div>
-                                                                </div> 
-                                                            </div>    
-
-                                                            <div class="container-fluid"> 
-                                                                <div id="wiworkGrid_div" ></div>
-                                                                <!-- <div id="thePager05"></div> -->
-                                                            </div>                                                                
-    
-                                                        </div>  
-                                                        <div class="modal-footer">
-                                                            <div class="row g-1">
-                                                                <div class="col-auto">
-                                                                    <button class="badge-soft-primary dropdown-item rounded-1"
-                                                                        type="button" data-bs-dismiss="modal">Close</button>
-                                                                </div>
-                                                                <!-- <div class="col-auto">
-                                                                    <button class="badge-soft-info dropdown-item rounded-1"
-                                                                        type="submit">저장 </button>
-                                                                </div> -->
-                                                            </div>
-                                                        </div>   
-
-                                                    </div>
-                                                </div> 
-                                            </div>          
-                                        <!--------------------------------------------------------------------------------------->    
+ 
                                         <!--------------------------------------------------------------------------------------->    
                                         <div class="modal fade" id="wbadqtymodal" data-bs-keyboard="false"
                                             data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -588,7 +519,17 @@
     var wbomGrid ;
     var view_flistpage;
     var view_wotqtpage;
-
+    var view_wrmcpage ;
+    var view_wbadpage ;
+    var button_workstBtn = document.getElementById('workstBtn');
+    var button_workedBtn = document.getElementById('workedBtn');
+    var button_wfrdt = document.getElementById('wfrdt');
+    var button_wtrdt = document.getElementById('wtrdt');
+    var button_wrmcBtn = document.getElementById('wrmcBtn');
+    var button_wperidBtn = document.getElementById('wperidBtn');
+    var button_wotqtyBtn = document.getElementById('wotqtyBtn');
+    var button_wbadqtyBtn = document.getElementById('wbadqtyBtn');  
+    const statusdis_div = document.getElementById('statusdis01'); 
 
     function barcode_enter(e){ 
            if(e.keyCode == 13){
@@ -627,7 +568,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {
-                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty   );
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm   );
                         }
                     })
                 }, 
@@ -645,10 +586,7 @@
             itemsSource: view_flistpage
         }); 
         
-        setHeaderColumn01(false);
-        // document.getElementById('header').addEventListener('click', e => {
-        //     setHeaderColumn(e.target.checked);
-        // });
+        setHeaderColumn01(false); 
         function setHeaderColumn01(headerOn) {
             wtab01Grid.headersVisibility = headerOn
             ? wijmo.grid.HeadersVisibility.All
@@ -677,7 +615,8 @@
                     psize: ListDto[i]["psize"], 
                     prod_qty: ListDto[i]["prod_qty"],
                     winqt: ListDto[i]["winqt"] , 
-                    wotqt: ListDto[i]["wotqt"] ,     
+                    owqty: ListDto[i]["owqty"] ,  
+                    otqty: ListDto[i]["otqty"] ,     
                     decision: ListDto[i]["decision"] ,    
                     plan_no: ListDto[i]["plan_no"] ,
                     ostore: ListDto[i]["ostore"] ,
@@ -694,94 +633,98 @@
                     lotno: ListDto[i]["lotno"]  ,
                     wrpsnm: ListDto[i]["wrpsnm"],
                     obqty: ListDto[i]["obqty"],
-                    end_qty: ListDto[i]["end_qty"]
+                    end_qty: ListDto[i]["end_qty"],
+                    wrmc: ListDto[i]["wrmc"],
+                    wrmcnm: ListDto[i]["wrmcnm"]
                     
                     
                 });
                 cnt++;
-            }   
+            }    
             return data                                          
         }             
 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //작업설비 popup list
-        var view_wrmcpage = new wijmo.collections.CollectionView(getData_wlist(), {
-            pageSize: 6
+        view_wrmcpage = new wijmo.collections.CollectionView(getData_wrmc(), {
+            ///pageSize: 6
         });
         // 작업설비 페이지 이동
-        new wijmo.input.CollectionViewNavigator('#thePager02', {
-            byPage: true,
-            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-            cv: view_wrmcpage
-        });     
-            wrmcGrid = new wijmo.grid.FlexGrid('#wrmcGrid_div', {  
-            autoGenerateColumns: false,
-            isReadOnly: true, 
-            selectionMode: 'RowRange',
-            alternatingRowStep: 0,
-            columns: [   
+        // new wijmo.input.CollectionViewNavigator('#thePager02', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_wrmcpage
+        // });     
+        wrmcGrid = new wijmo.grid.FlexGrid('#wrmcGrid_div', {  
+        autoGenerateColumns: false,
+        isReadOnly: true, 
+        selectionMode: 'RowRange',
+        alternatingRowStep: 0,
+        columns: [   
 
-                { binding: 'wrmc',
-                    header: '코드', 
-                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.wrmc}</b>',
-                        click: (e, ctx) => {
-                            wrmcChk(ctx.item.wrmc, ctx.item.machname);
-                        }
-                    }),  
-                }, 
-                {
-                    binding: 'machname',
-                    header: '설비명', 
-                    align:"center",
-                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.machname}</b>',
-                        click: (e, ctx) => {
-                            wrmcChk(ctx.item.wrmc, ctx.item.machname);
-                        }
-                    })
-                },
+            { binding: 'wrmc',
+                header: '코드', 
+                align:"center",
+                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.wrmc}</b>',
+                    click: (e, ctx) => {
+                        wrmcChk(ctx.item.wrmc, ctx.item.wrmcnm);
+                    }
+                }),  
+            }, 
+            {
+                binding: 'wrmcnm',
+                header: '설비명', 
+                align:"center",
+                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.wrmcnm}</b>',
+                    click: (e, ctx) => {
+                        wrmcChk(ctx.item.wrmc, ctx.item.wrmcnm);
+                    }
+                })
+            },
 
-                { binding: 'wpernm', header: '작업자', width: '*', format: 'n1' } 
+            { binding: 'wpernm', header: '작업자', width: '*', format: 'n1' } 
 
-            ], 
-            itemsSource: view_wrmcpage
+        ], 
+             itemsSource: view_wrmcpage
         });  
         // 작업설비 데이터 수집
-        function getData_wlist(){
+        function getData_wrmc(){
 
             var WrmcDto = [[${wrmcDto}]];  
-            var data02 = [];
+            var data02 = []; 
             var cnt = 1;
             for (var i = 0; i < WrmcDto.length; i++) {
                 data02.push({
                     id: i, 
                     index: cnt,
                     wrmc:WrmcDto[i]["wrmc"],
-                    machname: WrmcDto[i]["machname"], 
+                    wrmcnm: WrmcDto[i]["wrmcnm"], 
                     wpernm: WrmcDto[i]["wpernm"]                                                    
                 });
                 cnt++;
-            }  
-            console.log('data02');
-            console.log(data02);
+            }    
             return data02                                          
-        }    
-
-
-
+        }     
+        setHeaderColumn02(false); 
+        function setHeaderColumn02(headerOn) {
+            wrmcGrid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        }
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //생산량등록 popup list
         view_wotqtpage = new wijmo.collections.CollectionView(getData_wlist(), {
-            pageSize: 6
+            // pageSize: 6
         });
         // 생산량등록 페이지 이동
-        new wijmo.input.CollectionViewNavigator('#thePager06', {
-            byPage: true,
-            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-            cv: view_wotqtpage
-        });     
-            wotqtGrid = new wijmo.grid.FlexGrid('#wotqtGrid_div', {  
+        // new wijmo.input.CollectionViewNavigator('#thePager06', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_wotqtpage
+        // });     
+        wotqtGrid = new wijmo.grid.FlexGrid('#wotqtGrid_div', {  
             autoGenerateColumns: false,
             isReadOnly: true, 
             selectionMode: 'RowRange',
@@ -821,27 +764,33 @@
         // 작업설비 데이터 수집
         function getData_wlist(){
 
-            // var WrmcDto = [[${wrmcDto}]];  
+            var WrmcDto = [[${wrmcDto}]];  
             var data02 = [];
             var cnt = 1;
-            for (var i = 0; i < 10; i++) {
-                data02.push({
-                    id: i, 
-                    index: cnt,
-                    pcode:WrmcDto[i]["pcode"],
-                    pname: WrmcDto[i]["pname"], 
-                    pgugek: WrmcDto[i]["pgugek"],
-                    wotdt: WrmcDto[i]["wotdt"],
-                    wqty: WrmcDto[i]["wqty"],
-                    bqty: WrmcDto[i]["bqty"],
-                    qty: WrmcDto[i]["qty"],
-                });
-                cnt++;
-            }  
+            // for (var i = 0; i < 10; i++) {
+            //     data02.push({
+            //         id: i, 
+            //         index: cnt,
+            //         pcode:WrmcDto[i]["pcode"],
+            //         pname: WrmcDto[i]["pname"], 
+            //         pgugek: WrmcDto[i]["pgugek"],
+            //         wotdt: WrmcDto[i]["wotdt"],
+            //         wqty: WrmcDto[i]["wqty"],
+            //         bqty: WrmcDto[i]["bqty"],
+            //         qty: WrmcDto[i]["qty"],
+            //     });
+            //     cnt++;
+            // }  
             return data02                                          
         }    
 
 
+        setHeaderColumn03(false); 
+        function setHeaderColumn03(headerOn) {
+            wotqtGrid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        }
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //작업자 popup list 
         let view_wperidpage = new wijmo.collections.CollectionView(getData_wperid()); 
@@ -1045,335 +994,11 @@
         function randBetween(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
-
-        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-        //bom popup list
-        var view_wbompage = new wijmo.collections.CollectionView(getData_wbom(), {
-            pageSize: 3
-        });
-        // 페이지 이동
-        new wijmo.input.CollectionViewNavigator('#thePager04', {
-            byPage: true,
-            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-            cv: view_wbompage
-        });   
-        var rowCount = 5; 
-        var cellCount = 60; 
-        var wbomGrid = new wijmo.grid.FlexGrid('#wbomGrid_div', {
-            autoGenerateColumns: false,
-            isReadOnly: true, 
-            selectionMode: 'RowRange',
-            selectionMode: wijmo.grid.SelectionMode.MultiRange,
-            alternatingRowStep: 0,
-            columns: [    
-                { binding: 'seq', header: 'NO', width: '*', align:"center", format: '*' }, 
-                { binding: 'pname', header: '품목',  align:"center", width: '*' }, 
-                { binding: 'psize', header: '규격',     align:"center",  width: '*' }, 
-                { binding: 'qty', header: '소요량',     align:"center", width: '*', format :'n3' }, 
-                { binding: 'gqty', header: '계산량',    align:"center", width: '*', format :'n3' }, 
-                { binding: 'tqty', header: '투입량',    align:"center", width: '*', format :'n3' } ,
-                { binding: 'pcode', header: '코드',    align:"center", width: '*' } 
-            ], 
-            itemsSource: view_wbompage,                                    
-            selectionChanged: (s, e) => {
-                // calculate aggregates
-                let tally = { cnt: 0, cntAll: 0, sum: 0, avg: 0 }, ranges = s.selectedRanges; 
-                data = s.getCellData(e.row, 6, false); 
-                document.getElementById('searchPcode').value= data;  
-                ll_bomchkrow = e.row;
-
-            }   
-                                    
-        });   
-
-        function getData_wbom(){ 
-            var WbomDto = [[${wfbomDto}]];   
-            var data04 = [];
-            var cnt = 1;
-            for (var i = 0; i < WbomDto.length; i++) {
-                data04.push({
-                    id: i, 
-                    index: cnt,
-                    seq:WbomDto[i]["seq"],  
-                    pname: WbomDto[i]["pname"],
-                    psize: WbomDto[i]["psize"],
-                    qty: WbomDto[i]["qty"],
-                    gqty: WbomDto[i]["gqty"],
-                    tqty: WbomDto[i]["tqty"],
-                    pcode: WbomDto[i]["pcode"],
-                });
-                if (cnt == 1) {document.getElementById('searchPcode').value= WbomDto[i]["pcode"];}  
-                cnt++;
-            }  
-            console.log('data04')
-            console.log(data04)
-            return data04                                          
-        } 
-
-        //투입량 popup list
-        var view_wiworkpage = new wijmo.collections.CollectionView(getData_wiwork(), {
-            pageSize: 6, 
-            //유효성검사  투입량                                      
-            getError: (item, prop, parsing) => {   
-                if(prop == 'qty' && item.qty > item.jqty){ 
-                    alert("투입량은 재고량을 초과할 수 없습니다.");
-                    return  "투입량은 재고량을 초과할 수 없습니다. ";
-                }  
-                // if(prop == 'qty' && item.qty == 0){ 
-                //     return  "투입량을 입력하세요. ";
-                // }  
-                // var pcode = item.pcode; 
-                // if(prop == 'pcode' && pcode == ""){ 
-                //     return  "투입품목을 선택하세요 ";
-                // } 
-                // 에러 없음
-                return null;
-            }
-        });
-        // // 페이지 이동
-        // new wijmo.input.CollectionViewNavigator('#thePager05', {
-        //     byPage: true,
-        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-        //     cv: view_wiworkpage
-        // });   
-        
-        
-        var rowCount = 5; 
-        var cellCount = 60;  
-            wiworkGrid = new wijmo.grid.FlexGrid('#wiworkGrid_div', {
-            autoGenerateColumns: false,                                        
-            selectionMode: 'RowRange',
-            alternatingRowStep: 0,
-            columns: [    
-                { binding: 'lotno', header: 'LOTNO0', width: '*', format: '*' ,  isRequired:false}, 
-                { binding: 'pcode', header: '품목코드', width: '*' , isReadOnly: true, isRequired:false}, 
-                { binding: 'pname', header: '투입품목', width: '*', isReadOnly: true, isRequired:false}, 
-                { binding: 'psize', header: '규격', width: '*' , isReadOnly: true, isRequired:false}, 
-                { binding: 'wjqty', header: '재고량', width: '*' , isReadOnly: true, isRequired:false}, 
-                { binding: 'qty', header: '투입량', width: '*' , isRequired:false}, 
-                { binding: 'bqty', header: '불량수량', width: '*' , isRequired:false} 
-            ],       
-
-            cellEditEnding: function (s, e) {
-                // row : 0  col : 1  => pname
-                // s => event
-                var col = s.columns[e.col];   
-                var jatodata = [];
-                var pcode = '';
-                var ll_intqty = 0;
-                    if (col.binding == 'lotno') {
-                        lotno     = s.activeEditor.value; 
-                        custcd    = document.getElementById('incustcd').value;
-                        spjangcd  = document.getElementById('inspjangcd').value;
-                        ostore    = document.getElementById('inostore').value; 
-                        pcode     = document.getElementById('searchPcode').value; 
-                        if (!lotno){return }
-                        //jatodata = wsearch_pcode(custcd, spjangcd, s.activeEditor.value, ostore, pcode );  
-                        $.ajax({
-                            url: '/jaego/lothqty',  
-                            type:"GET", 
-                            data: {
-                                "custcd"     : custcd,
-                                "spjangcd"   : spjangcd,
-                                "lotno"      : lotno,
-                                "ostore"     : ostore,
-                                "pcode"      : pcode
-                            },
-                            async:false,
-                            success:function(data){
-                                var WlothDto  = data;  
-                                var wloth_data = [];
-                                var cnt = 1;     
-                                var ll_tqty = 0;
-                                var ll_soyoqty = wbomGrid.getCellData(ll_bomchkrow, 3, false);  //소요량                                                            
-                                // console.log('ll_soyoqty->',ll_soyoqty); 
-                                wiworkGrid.setCellData(e.row,4,data.wjqty);
-                                wiworkGrid.setCellData(e.row,1,data.pcode);
-                                wiworkGrid.setCellData(e.row,2,data.pname);
-                                wiworkGrid.setCellData(e.row,3,data.psize);
-                                ls_pcode = data.pcode;
-                                ll_wjqty = data.wjqty; 
-                                if(data.wjqty > ll_soyoqty){
-                                    wiworkGrid.setCellData(e.row,5,ll_soyoqty); 
-                                    
-                                    var rows = e._p._rows.length - 1;  
-                                    for (var i = 0; i < rows ; i++) {  
-                                        if (ll_row == i){
-                                            ll_qty = parseFloat(ll_soyoqty);   //parseFloat(값)  
-                                        }else{
-                                            
-                                            ll_qty = parseFloat(e._p._rows[i]._data.qty);  
-                                        }   
-                                        //if(!isNaN(ll_qty)){ 
-                                        //if(ll_qty > 0 ){ 
-                                            ll_tqty = ll_tqty + ll_qty;
-                                        //}  
-                                    }  
-                                    // tqty = Number(wbomGrid.getCellData(ll_bomchkrow, 5, false));  
-                                    if(!ll_tqty){ll_tqty = 0 }; 
-                                    
-                                    const wqtydis_div = document.getElementById('wqtydis01'); 
-                                    if (ll_soyoqty < ll_tqty){  
-                                            var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>투입량이 소요량을 초과합니다.</span></div>";
-                                            wqtydis_div.innerHTML  = ls_text;   
-                                            return  false  
-                                    }else{
-                                        wqtydis_div.innerHTML  = "";                                                                     
-                                        wbomGrid.setCellData(ll_bomchkrow,5,ll_soyoqty); 
-                                        ll_intqty = ll_soyoqty;
-                                        document.getElementById('inwinqt').value= ll_tqty;  
-                                    }
-
-
-                                }
-                            },error:function(e){
-                                console.log('error',e);
-                            }
-                        }).done(function(fragment){           
-
-                        })   
-                        
-                        fnc_wiwork_insert(ll_wjqty, ll_intqty );
-                        
-                    }
-                    if (col.binding == 'qty') {
-                        var ll_qty = 0;
-                        var ll_tqty = 0;
-                        var ll_inputqty = s.activeEditor.value;
-                        var ll_row = e.row;
-                        var ll_soyoqty = wbomGrid.getCellData(ll_bomchkrow, 3, false); 
-                        var ls_pname   = wiworkGrid.getCellData(ll_row, 1, false); 
-                        var ls_pcode  =  wiworkGrid.getCellData(ll_row, 1, false); 
-                        var ll_wjqty =    wiworkGrid.getCellData(ll_row, 4, false); 
-                        var ls_lotno =    wiworkGrid.getCellData(ll_row, 0, false);  
-                        // console.log('qty',s.activeEditor.value);  
-                        if (!ls_pname){
-                            wbomGrid.setCellData(ll_bomchkrow,5,ll_inputqty); 
-                            document.getElementById('inwinqt').value= ll_inputqty; 
-                            return 
-                        }
-                        var rows = e._p._rows.length - 1;  
-                        for (var i = 0; i < rows ; i++) {  
-                            if (ll_row == i){
-                                ll_qty = parseFloat(ll_inputqty);   //parseFloat(값)  
-                            }else{
-                                    
-                                ll_qty = parseFloat(e._p._rows[i]._data.qty);  
-                            }  
-                                
-                            if(!isNaN(ll_qty)){ 
-                                ll_tqty = ll_tqty + ll_qty;
-                            } 
-                        }  
-                        // tqty = Number(wbomGrid.getCellData(ll_bomchkrow, 5, false));  
-                        if(!ll_tqty){ll_tqty = 0 }; 
-                        // console.log("ll_tqty===>" + ll_tqty);
-                        if (ll_soyoqty < ll_tqty){
-                            alert("투입량이 소요량을 초과합니다.")
-                            return
-                        }else{
-                            wbomGrid.setCellData(ll_bomchkrow,5,ll_tqty); 
-                            document.getElementById('inwinqt').value= ll_tqty; 
-                            fnc_wiwork_insert(ll_wjqty, ll_tqty , ls_pcode, ls_lotno );
-                        }
-                        
-                    }
-            },
-
-            itemsSource: view_wiworkpage,
-            gotFocus: s => startEditing(s),
-            selectionChanged: s => startEditing(s),
-            allowAddNew: true,
-            allowDelete: true                          
-        });  
-        function startEditing(grid) { 
-            let index = grid.selection.col, col = index > -1 ? grid.columns[index] : null;
-            if (col && !col.isReadOnly && col.dataType != wijmo.DataType.Boolean) {
-            setTimeout(() => {
-                grid.startEditing(false); // 빠른 모드
-            }, 50); // 그리드 업데이트
-            }
-        } 
-
-        function getData_wiwork(){ 
-            var WiworkDto = [[${wfiworkDto}]];   
-            var data05 = [];
-            var cnt = 1;
-            for (var i = 0; i < WiworkDto.length; i++) {
-                data05.push({
-                    id: i, 
-                    index: cnt,
-                    lotno:WiworkDto[i]["lotno"],  
-                    pcode: WiworkDto[i]["pcode"],
-                    pname: WiworkDto[i]["pname"],
-                    psize: WiworkDto[i]["psize"],
-                    jqty: WiworkDto[i]["jqty"],
-                    qty: WiworkDto[i]["qty"],
-                    bqty: WiworkDto[i]["bqty"],
-                });
-                cnt++;
-            }  
-            return data05                                          
-        }                                                     
-        // document.getElementById("addBtn").addEventListener("click",function(){ 
-        //     wiworkGrid.allowAddNew = true;
-        // });                                                   
-        document.getElementById("delBtn").addEventListener("click",function(){
-            wiworkGrid.allowDelete = true;
-        });  
-
-        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-        //TB_FPLAN_IWORK 등록
-        function fnc_wiwork_insert(arg1, arg2, arg3, arg4){  
-            //TB_FPLAN_IWORK LOTNO 등록    
-            var ls_custcd   = document.getElementById('incustcd').value; 
-            var ls_spjangcd = document.getElementById('inspjangcd').value; 
-            var ls_cltcd   = document.getElementById('incltcd').value; 
-            var ls_plan_no   = document.getElementById('inplan_no').value; 
-            var startDate   = document.getElementById('startDate').value;
-            var ls_inwrmc   = document.getElementById('inwrmc').value;
-            var ll_inwinqt  = document.getElementById('inwinqt').value;  
-            var ls_inwflag  = document.getElementById('inwflag').value;   
-            var ls_inostore  = document.getElementById('inostore').value; 
-            var wflag = document.getElementById('inwflag').value;
-            if(!wflag){wflag = "00010";} 
-            ls_year = startDate.substr(0,4);
-            ls_mon = startDate.substr(5,2);
-            ls_day = startDate.substr(8,2);
-            startDate = ls_year + ls_mon + ls_day;    //arg1 - ll_wjqty  arg2 - ll_intqty
-            $.ajax({
-                url: '/input/w010wiwork',  
-                type:"post",
-                data: {"custcd" : ls_custcd,
-                    "spjangcd"  : ls_spjangcd,
-                    "wflag"     : wflag,
-                    "plan_no"   : ls_plan_no,
-                    "pcode"     : arg3,
-                    "lotno"     : arg4,
-                    "opcltcd"   : ls_cltcd,
-                    "opdate"    : startDate,
-                    "store"     : ls_inostore,
-                    "jqty"      : arg1,
-                    "qty"       : arg2,
-                    "bqty"      : 0
-                    },
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
-                success:function(data){
-                    var result  = data;   
-                    // console.log("투입량등록", result);
-                },error:function(e){
-                    alert(data.code);
-                    alert(data.message);
-                }
-            }).done(function(fragment){           
-
-            })                                           
-        }     
-
+ 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //불량구분 popup list
-        var view_wbadpage = new wijmo.collections.CollectionView(getData_wlist(), {
-            pageSize: 6
+        view_wbadpage = new wijmo.collections.CollectionView(getBadData_wlist(), {
+            // pageSize: 6
         });
         // // 작업설비 페이지 이동
         // new wijmo.input.CollectionViewNavigator('#thePager02', {
@@ -1381,69 +1006,105 @@
         //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
         //     cv: view_wbadpage
         // });     
-            wbadGrid = new wijmo.grid.FlexGrid('#wbadGrid_div', {  
+        wbadGrid = new wijmo.grid.FlexGrid('#wbadGrid_div', {  
             autoGenerateColumns: false, 
             selectionMode: 'RowRange',
             alternatingRowStep: 0,
             columns: [   
 
-                { binding: 'wcode', header: '코드', width: '*', format: '*' , isReadOnly: true}, 
-                { binding: 'wcdnm', header: '불량구분', width: '*', format: '*', isReadOnly: true },   
-                { binding: 'wbqty', header: '불량수량', width: '*', format: 'n1', isReadOnly: false } ,  
-                { binding: 'wseq', header: '순번', width: '*', format: 'n1', isReadOnly: false } 
+                { binding: 'wcode', header: '코드', align: 'center', width: '*', format: '*' , isReadOnly: true}, 
+                { binding: 'wcdnm', header: '불량구분', width: '*', align: 'left', format: '*', isReadOnly: true },   
+                { binding: 'wbqty', header: '불량수량', width: '*', align: 'right', format: 'n1', isReadOnly: false } ,  
+                { binding: 'wseq', header: '순번', width: '*', align: 'center', format: 'n1', isReadOnly: false } 
 
             ],       
 
-                cellEditEnding: function (s, e) {
-                    // row : 0  col : 1  => pname
-                    // s => event
-                    var col = s.columns[e.col];   
-                    var jatodata = [];
-                    var pcode = ''; 
-                        if (col.binding == 'wbqty') {
-                            var ll_qty = 0;
-                            var ll_tqty = 0;
-                            var ll_inputqty = s.activeEditor.value;
-                            var ll_row = e.row;
-                            var ll_wotqt = document.getElementById('inwotqt').value
-                            if(!ll_wotqt){ll_wotqt = 0}  //생산량
-                            if(ll_wotqt == 0){
-                                alert("생산량이 없습니다.")
-                                return 
-                            } 
-                            // console.log('qty',s.activeEditor.value);  
-                            var rows = e._p._rows.length - 1;  
-                            for (var i = 0; i < rows ; i++) {  
+            cellEditEnding: function (s, e) {
+                // row : 0  col : 1  => pname
+                // s => event
+                var col = s.columns[e.col];   
+                var jatodata = [];
+                var pcode = ''; 
+                    if (col.binding == 'wbqty') {
+                        var ll_qty = 0;
+                        var ll_tqty = 0;
+                        var ll_inputqty = s.activeEditor.value;
+                        var ll_row = e.row;
+                        var ll_wotqt = document.getElementById('inwotqt').value
+                        if(!ll_wotqt){ll_wotqt = 0}  //생산량
+                        if(ll_wotqt == 0){
+                            alert("생산량이 없습니다.")
+                            return 
+                        } 
+                        // console.log('qty',s.activeEditor.value); 
+                        var ls_plan_no   = document.getElementById('inplan_no').value;  
+                        var ls_inpcode   = document.getElementById('inpcode').value; 
+                        var rows = e._p._rows.length  ;   
+                        for (var i = 0; i < rows ; i++) {  
+                            if (ll_row == i){
+                                ll_qty = parseFloat(ll_inputqty);   //parseFloat(값) 
+                                ls_wcode = e._p._rows[i]._data.wcode ;
+                                ls_wseq  = e._p._rows[i]._data.wseq ;
+                            }else{
+                                
+                                ll_qty = parseFloat(e._p._rows[i]._data.wbqty);  
+                            }  
+                                
+                            if(!isNaN(ll_qty)){ 
+                                ll_tqty = ll_tqty + ll_qty;
+                            }  
+                        }  
+                        // tqty = Number(wbomGrid.getCellData(ll_bomchkrow, 5, false));  
+                        if(!ll_tqty){ll_tqty = 0 }; 
+                        if (ll_wotqt < ll_tqty){
+                            alert("불량수량이 생산수량을 초과합니다.")
+                            return
+                        }else{  
+                            for (var i = 0; i < rows ; i++) {   
                                 if (ll_row == i){
                                     ll_qty = parseFloat(ll_inputqty);   //parseFloat(값) 
-                                    ls_wcode = e._p._rows[i]._data.wcode ;
-                                    ls_wseq  = e._p._rows[i]._data.wseq ;
-                                }else{
+                                }else{   
+                                    ll_qty = parseFloat(e._p._rows[i]._data.wbqty);
+                                }
+                                ls_wcode = e._p._rows[i]._data.wcode ;
+                                ls_wseq  = e._p._rows[i]._data.wseq ; 
+                                if(ll_qty > 0){ 
+                                    $.ajax({
+                                        url: '/input/w010wbad',   
+                                        type:"POST", 
+                                        data: {
+                                            "custcd"    : "KDMES" ,
+                                            "spjangcd"  : "ZZ",
+                                            "plan_no"      : ls_plan_no ,
+                                            "wflag" : "00010" ,
+                                            "wbqty"   : ll_qty   ,
+                                            "wcode"   : ls_wcode,
+                                            "wseq"      : "00"      ,
+                                            "pcode"     : ls_inpcode      
+                                        },
+                                        async:false,
+                                        success:function(data){
+                                            console.log("등록OK", data);   
                                     
-                                    ll_qty = parseFloat(e._p._rows[i]._data.wbqty);  
-                                }  
-                                    
-                                if(!isNaN(ll_qty)){ 
-                                    ll_tqty = ll_tqty + ll_qty;
-                                } 
+                                    },error:function(e){
+                                        console.log('error',e);
+                                    }
+                                    }).done(function(fragment){           
+
+                                    })  
+                                }
                             }  
-                            // tqty = Number(wbomGrid.getCellData(ll_bomchkrow, 5, false));  
-                            if(!ll_tqty){ll_tqty = 0 }; 
-                            if (ll_wotqt < ll_tqty){
-                                alert("불량수량이 생산수량을 초과합니다.")
-                                return
-                            }else{ 
-                                document.getElementById('inwbdqt').value= ll_tqty; 
-                                document.getElementById('inwokqt').value = ll_wotqt - ll_tqty       //완료량 
-                                wbadqty_int(ll_tqty, ls_wcode, ls_wseq);   //불량구분 등록
-                            }
-                            
+                            document.getElementById('inwbdqt').value= ll_tqty; 
+                            document.getElementById('inwokqt').value = ll_wotqt - ll_tqty       //완료량 
+                            // wbadqty_int(ll_tqty, ls_wcode, ls_wseq);   //불량구분 등록
                         }
-                },
+                        
+                    }
+            },
             itemsSource: view_wbadpage
         });  
         // 불량구분 데이터 수집
-        function getData_wlist(){
+        function getBadData_wlist(){
 
             var WbadDto = [[${wbadDto}]];  
             var data05 = [];
@@ -1463,81 +1124,94 @@
             return data05                                          
         }         
         
-        //불량구분 등록 
-        function wbadqty_int(arg1, arg2, arg3){
-            // TB_FPLAN_WBAD 불량구분등록
-            var wflag = document.getElementById('inwflag').value;
-            var ls_custcd   = document.getElementById('incustcd').value; 
-            var ls_spjangcd = document.getElementById('inspjangcd').value;  
-            var ls_inplan_no = document.getElementById('inplan_no').value;  
-            var ls_pcode     = document.getElementById('inpcode').value;  
-            if(!wflag){wflag = "00010"} ;
-            if(!arg3) {arg3 = ""} ;
-            $.ajax({
-                url: '/input/w010wbad',  
-                type:"POST",
-                data: {
-                    "custcd"     : ls_custcd,
-                    "spjangcd"   : ls_spjangcd,
-                    "plan_no"    : ls_inplan_no,
-                    "wflag"      : wflag,
-                    "wbqty"      : arg1,
-                    "wcode"      : arg2, 
-                    "wseq"       : arg3,
-                    "pcode"      : ls_pcode
-                },
-                async:true,
-                success:function(data){
-                    var wrmcDto  = data;  
-                    var wrmc_data = [];
-                    var cnt = 1;
-                    for (var i = 0; i < wrmcDto.length; i++) {
-                        wrmc_data.push({
-                            id: i, 
-                            index: cnt,
-                            wrmc:wrmcDto[i]["wrmc"],
-                            machname: wrmcDto[i]["machname"], 
-                            wpernm: wrmcDto[i]["wpernm"]                                                  
-                        });
-                        cnt++;
-                    }   
-                    // console.log("wrmc_data",wrmc_data) 
-                    wrmcGrid.columns.clear();   
-                    wrmcGrid.autoGenerateColumns = false; 
-                    view_wrmcpage.sourceCollection  = wrmc_data;
-                    var cols = new wijmo.grid.Column(); 
-                    cols.binding = 'wrmc';
-                    cols.header = '코드';
-                    cols.width = '*';
-                    wrmcGrid.columns.push(cols);    
-                    // console.log("cols", cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'machname';
-                    cols.header = '설비명';
-                    cols.width = '*';
-                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.machname}</b>',
-                        click: (e, ctx) => {
-                            wrmcChk(ctx.item.wrmc, ctx.item.machname);
-                        }
-                    });
-                    wrmcGrid.columns.push(cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'wpernm';
-                    cols.header = '작업자';
-                    cols.width = '*';
-                    wrmcGrid.columns.push(cols);  
-                },error:function(e){
-                    alert(data.code);
-                    alert(data.message);
-                }
-            }).done(function(fragment){           
-
-            }) 
+        // 헤더 열 전환
+        setHeaderColumn04(false); 
+        function setHeaderColumn04(headerOn) {
+            wbadGrid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
         }
+        //불량구분 등록  
+
+//불량수량 조회 
+
+    document.getElementById("wbadqtyBtn").addEventListener("click",function(){
+            searchbdqty_fnc()
+        })    
+
+    function searchbdqty_fnc(){
+        var ls_plan_no   = document.getElementById('inplan_no').value;  
+        var ls_wflag = '00010'  
+
+        if(ls_plan_no == null || ls_plan_no.length == 0 || ls_plan_no == ""){ 
+                alert("작업지시서를 선택 하세요")  
+                return ;               
+        }     
+
+        $.ajax({
+            url: '/popup/wbad',  
+            type:"POST",
+            data: {
+                "plan_no" : ls_plan_no, 
+                "wflag" : ls_wflag ,
+            },
+            success:function(data){ 
+                var WbadDto = data;  
+                var dataBad = [];
+                var cnt = 1;
+                console.log('WbadDto')
+                console.log(WbadDto)
+                for (var i = 0; i < WbadDto.length; i++) {
+                    dataBad.push({
+                        id: i, 
+                        index: cnt,
+                        wcode:WbadDto[i]["wcode"],
+                        wcdnm: WbadDto[i]["wcdnm"], 
+                        wbqty: WbadDto[i]["wbqty"],
+                        wseq : WbadDto[i]["wseq"] ,         
+                    });
+                    cnt++;
+                }             
+
+                wbadGrid.columns.clear();   
+                wbadGrid.autoGenerateColumns = false; 
+                view_wbadpage.sourceCollection  = dataBad;  
+                var cols = new wijmo.grid.Column(); 
+                cols.binding = 'wcode';
+                cols.header = '코드';
+                cols.width = 100;
+                cols.align = "center"
+                wbadGrid.columns.push(cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'wcdnm';
+                cols.header = '불량구분';
+                cols.width = 150;
+                cols.align = "center"
+                wbadGrid.columns.push(cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'wbqty';
+                cols.header = '불량수량';
+                cols.align = "right";
+                cols.width = 120; 
+                wbadGrid.columns.push(cols);    
+                // console.log("cols", cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'wseq';
+                cols.header = '순번';
+                cols.align = "center"
+                cols.width = 80; 
+                wbadGrid.columns.push(cols);    
+            },error:function(e){
+                alert(data.code); 
+            }
+        }).done(function(fragment){           
+
+        }) 
+    }
+ 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //작업설비 검색   
-        document.getElementById("wrmcBtn").addEventListener("click",function(){
+        document.getElementById("wrmcSearchBtn").addEventListener("click",function(){
             let searchText = '';  
             searchText = document.getElementById('searchCode').value; 
             $.ajax({
@@ -1551,12 +1225,13 @@
                     var wrmcDto  = data;  
                     var wrmc_data = [];
                     var cnt = 1;
+                    console.log("wrmc_data-->" + wrmc_data)
                     for (var i = 0; i < wrmcDto.length; i++) {
                         wrmc_data.push({
                             id: i, 
                             index: cnt,
                             wrmc:wrmcDto[i]["wrmc"],
-                            machname: wrmcDto[i]["machname"], 
+                            wrmcnm: wrmcDto[i]["wrmcnm"], 
                             wpernm: wrmcDto[i]["wpernm"]                                                  
                         });
                         cnt++;
@@ -1569,22 +1244,24 @@
                     cols.binding = 'wrmc';
                     cols.header = '코드';
                     cols.width = '*';
+                    cols.align = 'center';
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.wrmc}</b>',
                         click: (e, ctx) => {
-                            wrmcChk(ctx.item.wrmc, ctx.item.machname);
+                            wrmcChk(ctx.item.wrmc, ctx.item.wrmcnm);
                         }
                     });
                     wrmcGrid.columns.push(cols);    
                     // console.log("cols", cols);  
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'machname';
+                    cols.binding = 'wrmcnm';
                     cols.header = '설비명';
                     cols.width = '*';
+                    cols.align = 'center';
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.machname}</b>',
+                        text: '<b>${item.wrmcnm}</b>',
                         click: (e, ctx) => {
-                            wrmcChk(ctx.item.wrmc, ctx.item.machname);
+                            wrmcChk(ctx.item.wrmc, ctx.item.wrmcnm);
                         }
                     });
                     wrmcGrid.columns.push(cols);  
@@ -1592,6 +1269,7 @@
                     cols.binding = 'wpernm';
                     cols.header = '작업자';
                     cols.width = '*';
+                    cols.align = 'center';
                     wrmcGrid.columns.push(cols);  
                 },error:function(e){
                     alert(data.code);
@@ -1602,299 +1280,7 @@
             }) 
         })    
 
-        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     
-        //BOM 검색   
-        document.getElementById("plannoBtn").addEventListener("click",function(){
-            let searchText = '';   
-            searchText = document.getElementById('searchPlanno').value; 
-            if(!searchText){
-                alert("작업지시서를 먼저 선택하세요");
-                return 
-            }
-            // document.getElementById('inmachname').value= "";  
-            // document.getElementById('inwrmc').value= "";  
-            
-            // document.getElementById('inwinqt').value= 0;  
-            // document.getElementById('inwbdqt').value= 0; 
-            // document.getElementById('inwokqt').value= 0;  
-            // console.log("plannoBtn click")
-            //wbom_list(searchText);       //TB_FPLAN_BOM    list
-            wiwork_list(searchText);     //TB_FPLAN_IWORK  list
-            wbadqty_list(searchText);     //TB_FPLAN_IWORK  list
-
-        })    
-
-        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$                                    
-        // TB_FPLAN_BOM LIST
-        function wbom_list(arg){
-            $.ajax({
-                url: '/popup/wbom',  
-                type:"GET",
-                data: {"plan_no" : arg},
-                success:function(data){
-                    var wbomDto  = data;  
-                    var wbom_data = [];
-                    var cnt = 1;
-                    // console.log('_wbom'  , data); 
-                    for (var i = 0; i < wbomDto.length; i++) {
-                        wbom_data.push({
-                            id: i, 
-                            index: cnt,
-                            seq:wbomDto[i]["seq"],
-                            pcode: wbomDto[i]["pcode"], 
-                            pname: wbomDto[i]["pname"],
-                            psize: wbomDto[i]["psize"],
-                            punit: wbomDto[i]["punit"],
-                            lotnodv: wbomDto[i]["lotnodv"],
-                            qty: wbomDto[i]["qty"],
-                            gqty: wbomDto[i]["gqty"],
-                            tqty: wbomDto[i]["tqty"],
-                            pcode: wbomDto[i]["pcode"],
-                        });                                                    
-                        if (cnt == 1) {document.getElementById('searchPcode').value= wbom_data[0].pcode;}                                                      
-                        cnt++;
-                    }   
-                    //  console.log(wbom_data);
-
-                    wbomGrid.columns.clear();   
-                    wbomGrid.autoGenerateColumns = false; 
-                    view_wbompage.sourceCollection  = wbom_data;
-                    var cols = new wijmo.grid.Column(); 
-                    cols.binding = 'seq';
-                    cols.header = 'NO';
-                    cols.width = '*';
-                    cols.align = 'center';
-                    wbomGrid.columns.push(cols);    
-                    // console.log("cols", cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'pname';
-                    cols.header = '투입품목';
-                    cols.width = '*';
-                    cols.align = 'center'; 
-                    wbomGrid.columns.push(cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'psize';
-                    cols.header = '규격';
-                    cols.width = '*';
-                    cols.align = 'center';
-                    wbomGrid.columns.push(cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'qty';
-                    cols.header = '소요량';
-                    cols.width = '*';
-                    cols.align = 'center';
-                    cols.format = 'n3' ;
-                    wbomGrid.columns.push(cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'gqty';
-                    cols.header = '계산량';
-                    cols.width = '*';
-                    cols.align = 'center';
-                    cols.format = 'n3' ;
-                    wbomGrid.columns.push(cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'tqty';
-                    cols.header = '투입량';
-                    cols.width = '*';  
-                    cols.align = 'center';
-                    cols.format = 'n3' ;
-                    wbomGrid.columns.push(cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'pcode';
-                    cols.header = '품목코드';
-                    cols.width = '*';  
-                    cols.align = 'center';
-                    wbomGrid.columns.push(cols); 
-                },error:function(e){
-                    alert(data.code);
-                    alert(data.message);
-                }
-            }).done(function(fragment){           
-
-            })     
-        }
-
-        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-        //TB_FPLAN_IWORK List 
-        function wiwork_list(arg){
-            var wflag = document.getElementById('inwflag').value;
-            var ls_custcd   = document.getElementById('incustcd').value; 
-            var ls_spjangcd = document.getElementById('inspjangcd').value;  
-            if(!wflag){wflag = "00010";}  
-            
-            // FPLAN_WIWORK LOT별투입량 리스트 
-            $.ajax({
-                url: '/input/SELWIWORK',  
-                type:"POST",
-                data: {
-                    "custcd"     : ls_custcd,
-                    "spjangcd"   : ls_spjangcd,
-                    "plan_no"    : arg,
-                    "wflag"      : wflag
-                },
-                async:true,
-                success:function(data){
-                    // console.log("SELWIWORK", data.length);
-
-                    wiworkGrid.columns.clear();   
-                    wiworkGrid.autoGenerateColumns = false; 
-                    var colsa = new wijmo.grid.Column(); 
-                    if(data.length > 0){ 
-                        view_wiworkpage.sourceCollection  = data;
-                        colsa.binding = 'lotno';
-                        colsa.header = 'LOTNO1';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        wiworkGrid.columns.push(colsa);    
-                        // console.log("colsa", colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'pcode';
-                        colsa.header = '품목코드';
-                        colsa.width = '*';
-                        colsa.align = 'center'; 
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'pname';
-                        colsa.header = '투입품목';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'psize';
-                        colsa.header = '규격';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'jqty';
-                        colsa.header = '재고량';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        colsa.format = 'n1' ;
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'qty';
-                        colsa.header = '투입량';
-                        colsa.width = '*';  
-                        colsa.align = 'center';
-                        colsa.format = 'n1' ;
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'bqty';
-                        colsa.header = '불량수량';
-                        colsa.width = '*';  
-                        colsa.align = 'center';
-                        colsa.format = 'n1' ;
-                        wiworkGrid.columns.push(colsa);                                                  
-                        return 
-                    }  
-                    var wiworkDto  = data;  
-                    var wiwork_data = []; 
-                    var cnt = 0;  
-                    if(wiworkDto.length > 0){ 
-                        for (var i = 0; i < wiworkDto.length; i++) {
-                            wiwork_data.push({
-                                id: i, 
-                                index: cnt,
-                                lotno:wiworkDto[i]["lotno"],
-                                pcode: wiworkDto[i]["pcode"], 
-                                pname: wiworkDto[i]["pname"],
-                                psize: wiworkDto[i]["psize"],
-                                jqty: wiworkDto[i]["jqty"],
-                                qty: wiworkDto[i]["qty"],
-                                bqty: wiworkDto[i]["bqty"]
-                            });                             
-                            cnt++;                        
-                        }   
-
-                    }else{
-                        $.ajax({
-                            url: '/popup/wfiwork',   
-                            type:"POST", 
-                            data: { 
-                                "plan_no"    : arg,
-                                "wflag"      : wflag
-                            },
-                            async:false,
-                            success:function(data){ 
-                                // console.log("wfiwork", data);
-                                wiworkDto  = data; 
-                                wiwork_data = [];
-                                cnt = 1;  
-                                for (var i = 0; i < wiworkDto.length; i++) {
-                                    wiwork_data.push({
-                                        id: i, 
-                                        index: cnt,
-                                        lotno:wiworkDto[i]["lotno"],
-                                        pcode: wiworkDto[i]["pcode"], 
-                                        pname: wiworkDto[i]["pname"],
-                                        psize: wiworkDto[i]["psize"],
-                                        wjqty: wiworkDto[i]["wjqty"],
-                                        qty: wiworkDto[i]["qty"],
-                                        bqty: wiworkDto[i]["bqty"]
-                                    });
-                                    cnt++;
-                                }                                                               
-                            }
-                        })
-                    } 
- 
-                    view_wiworkpage.sourceCollection  = wiwork_data; 
-                        colsa.binding = 'lotno';
-                        colsa.header = 'LOTNO1';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        wiworkGrid.columns.push(colsa);    
-                        // console.log("colsa", colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'pcode';
-                        colsa.header = '품목코드';
-                        colsa.width = '*';
-                        colsa.align = 'center'; 
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'pname';
-                        colsa.header = '투입품목';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'psize';
-                        colsa.header = '규격';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'wjqty';
-                        colsa.header = '재고량';
-                        colsa.width = '*';
-                        colsa.align = 'center';
-                        colsa.format = 'n1' ;
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'qty';
-                        colsa.header = '투입량';
-                        colsa.width = '*';  
-                        colsa.align = 'center';
-                        colsa.format = 'n1' ;
-                        wiworkGrid.columns.push(colsa);  
-                        colsa = new wijmo.grid.Column(); 
-                        colsa.binding = 'bqty';
-                        colsa.header = '불량수량';
-                        colsa.width = '*';  
-                        colsa.align = 'center';
-                        colsa.format = 'n1' ;
-                        wiworkGrid.columns.push(colsa);   
-                    
-                },error:function(e){
-                    alert(data.code);
-                    alert(data.message);
-                }
-            }).done(function(fragment){           
-
-            })                                         
-        }
-
+   
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$                                    
         // TB_FPLAN_WBAD LIST
         function wbadqty_list(arg){
@@ -2104,20 +1490,16 @@
         var ls_inwinps  = document.getElementById('inwinps').value; 
         var ls_inwrps   = document.getElementById('inwrps').value; 
         var ls_inpcode   = document.getElementById('inpcode').value; 
-        var ls_inwono   = document.getElementById('inwono').value; 
-        
-        var button_workstBtn = document.getElementById('workstBtn');
-        var button_workedBtn = document.getElementById('workedBtn');
-        var button_wfrdt = document.getElementById('wfrdt');
-        var button_wtrdt = document.getElementById('wtrdt');
-        var button_wrmcBtn = document.getElementById('wrmcBtn');
-        var button_wperidBtn = document.getElementById('wperidBtn');
-        var button_wotqtyBtn = document.getElementById('wotqtyBtn');
-        var button_wbadqtyBtn = document.getElementById('wbadqtyBtn');
-        var button_winqtBtn = document.getElementById('winqtBtn');
+        var ls_inwono   = document.getElementById('inwono').value;  
 
-
-
+        button_workstBtn.disabled = false;
+        button_workedBtn.disabled = false;
+        button_wfrdt.disabled = false;
+        button_wtrdt.disabled = false; 
+        button_wrmcBtn.disabled = false;
+        button_wperidBtn.disabled = false;
+        button_wotqtyBtn.disabled = false;
+        button_wbadqtyBtn.disabled = false; 
 
         if(arg1 == "1" || arg1 == "4"){  //공정시작 작업시작
             button_workstBtn.disabled = true;
@@ -2223,7 +1605,6 @@
                 success:function(data){
                     // console.log("등록OK", data); 
                     // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
-                    const statusdis_div = document.getElementById('statusdis01'); 
                     if(arg1 == "0"){
                         // alert("완료 처리 되었습니다.");
                         button_workstBtn.disabled = true;
@@ -2270,8 +1651,7 @@
                 async:false,
                 success:function(data){
                     // console.log("등록OK", data); 
-                    // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
-                    const statusdis_div = document.getElementById('statusdis01'); 
+                    // console.log("wperidGrid_Data", wperidGrid.rows.length );   
                     if(arg1 == "2"){
                         // alert("완료 처리 되었습니다.");
                         var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>작업시작</span></div>";                                        
@@ -2345,8 +1725,7 @@
             async:false,
             success:function(data){
                 // console.log("등록OK", data); 
-                // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
-                const statusdis_div = document.getElementById('statusdis01'); 
+                // console.log("wperidGrid_Data", wperidGrid.rows.length );  
                 if(data == "success"){
                     // alert("완료 처리 되었습니다.");
                     searchotqty_fnc();
@@ -2423,17 +1802,16 @@
         document.getElementById('popwseq').value= arg4;  
         document.getElementById('popseq').value= arg5;  
     }
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20 ){ 
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22 ){ 
         // /, ctx.item.owqty ,ctx.item.obqty
             //selectChk(custcd, spjangcd, wono, cltnm, pname, 
             //          ostore, plan_no, cltcd, pcode, wseq,
             //            wflag, phmmdoc, otqty, wrpsnm, owqty ,
-            //              obqty,winps,wrps,lotno , prod_qty);
+            //              obqty,winps,wrps,lotno , prod_qty, wrmc, wrmcnm);
         var button_workstBtn = document.getElementById('workstBtn');
         var button_workedBtn = document.getElementById('workedBtn'); 
             button_workstBtn.disabled = false;
-            button_workedBtn.disabled = false; 
-
+            button_workedBtn.disabled = false;  
         document.getElementById('incustcd').value= arg1; 
         document.getElementById('inspjangcd').value= arg2; 
         document.getElementById('inwono').value= arg3; 
@@ -2441,7 +1819,7 @@
         document.getElementById('inpname').value= arg5; 
         document.getElementById('inostore').value= arg6; 
         document.getElementById('inplan_no').value= arg7;
-        document.getElementById('searchPlanno').value= arg7; 
+        // document.getElementById('searchPlanno').value= arg7; 
         document.getElementById('incltcd').value= arg8;  
         document.getElementById('inpcode').value= arg9;   
         document.getElementById('inwseq').value= arg10;  
@@ -2461,10 +1839,9 @@
         var gridrow = wperidGrid.rows.length; 
         for( i=0; i < gridrow; i++){ 
             wperidGrid.rows[i].isSelected = false;
-        }
-
-        document.getElementById('inwrmc').value = ""; 
-        document.getElementById('inmachname').value = ""; 
+        } 
+        document.getElementById('inwrmc').value = arg21; 
+        document.getElementById('inmachname').value = arg22; 
         document.getElementById('inwinqt').value = 0;         //투입량
         document.getElementById('inwotqt').value = arg15;         //생산수량
         document.getElementById('inwbdqt').value = arg16;         //불량수량
@@ -2475,16 +1852,26 @@
         document.getElementById('inwrpsnm').value = arg14;     //
         document.getElementById('inwinps').value = arg17;     //
         document.getElementById('inwrps').value = arg18;     //
-        const wqtydis_div = document.getElementById('wqtydis01');  
+        button_workstBtn.disabled = false;
+        button_workedBtn.disabled = false;
+        button_wfrdt.disabled = false;
+        button_wtrdt.disabled = false; 
+        button_wrmcBtn.disabled = false;
+        button_wperidBtn.disabled = false;
+        button_wotqtyBtn.disabled = false;
+        button_wbadqtyBtn.disabled = false; 
+        // const wqtydis_div = document.getElementById('wqtydis01');  
         const wono_div    = document.getElementById('inwonobdg');  
         const wrmc_div       = document.getElementById('inwrmcbdg');
         const wscntdis02_div = document.getElementById('wscntdis02');   
         const wscntdis_div   = document.getElementById('wscntdis01');
-        wqtydis_div.innerHTML  = "";    
+        // wqtydis_div.innerHTML  = "";    
         wono_div.innerHTML     = "";    
         wrmc_div.innerHTML     = "";    
         wscntdis02_div.innerHTML  = "";    
         wscntdis_div.innerHTML = "";    
+        var ls_text = "<div style='color:red'><span class='badge badge-soft-info'></span></div>"; 
+        statusdis_div.innerHTML  = ls_text;   
         $.ajax({
             url: '/input/w010',   
             type:"POST", 
@@ -2549,26 +1936,16 @@
                 startDate   =  data.wfrdt;  
                 endDate     =  data.wtrdt;  
                 wrpsnm      =  data.wrpsnm;
-                document.getElementById('inwrmc').value = inwrmc; 
-                document.getElementById('inmachname').value = inmachname; 
+                // document.getElementById('inwrmc').value = inwrmc; 
+                // document.getElementById('inmachname').value = inmachname; 
                 document.getElementById('inwinqt').value = inwinqt;         //투입량
                 // document.getElementById('inwotqt').value = inwotqt;         //완료량
-                // document.getElementById('inwbdqt').value = inwbdqt;         //불량수량
+                document.getElementById('inwbdqt').value = inwbdqt;         //불량수량
                 // document.getElementById('inwokqt').value = inwokqt;         //생산수량
                 document.getElementById('inwremark').value = inwremark;     //비고
                 document.getElementById('startDate').value = startDate;     //
                 document.getElementById('endDate').value = endDate;     //
-                document.getElementById('inwrpsnm').value = wrpsnm;     //
-                var button_workstBtn = document.getElementById('workstBtn');
-                var button_workedBtn = document.getElementById('workedBtn');
-                var button_wfrdt = document.getElementById('wfrdt');
-                var button_wtrdt = document.getElementById('wtrdt');
-                var button_wrmcBtn = document.getElementById('wrmcBtn');
-                var button_wperidBtn = document.getElementById('wperidBtn');
-                var button_wotqtyBtn = document.getElementById('wotqtyBtn');
-                var button_wbadqtyBtn = document.getElementById('wbadqtyBtn'); 
-
-                const statusdis_div = document.getElementById('statusdis01');  
+                document.getElementById('inwrpsnm').value = wrpsnm;     // 
                 if (decision == "1"){  
                         button_workstBtn.disabled = false;
                         button_workedBtn.disabled = false;
@@ -2624,8 +2001,8 @@
         wflag = document.getElementById('inwflag').value;
         plan_no = document.getElementById('inplan_no').value;
         if(!wflag){ wflag = "00010"; } 
-        $("#wlistBtn").trigger("click");  
-        $("#plannoBtn").trigger("click"); 
+        // $("#wlistBtn").trigger("click");  
+        // $("#plannoBtn").trigger("click"); 
         // console.log("WRMC UPDATE");
         
         $.ajax({
@@ -2800,6 +2177,8 @@
 
 
 
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //생산량 조회 
 
