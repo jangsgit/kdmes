@@ -54,6 +54,8 @@ public class App01Controller {
     List<PopupDto> popupListDto1 = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
 
+    List<Index01Dto> index01ListDto1 = new ArrayList<>();
+
     List<Index02Dto> index02ListDto = new ArrayList<>();
     List<Index03Dto> index03List = new ArrayList<>();
 
@@ -75,8 +77,11 @@ public class App01Controller {
 
         try {
             index01ListDto = service01.getComCodeList(index01Dto);
+            index01ListDto1 = service01.getCom_rem2_keyList(index01Dto);
 
+            model.addAttribute("com_rem2_keyList",index01ListDto1);
             model.addAttribute("comcodeList",index01ListDto);
+
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App01_index Exception =============================");

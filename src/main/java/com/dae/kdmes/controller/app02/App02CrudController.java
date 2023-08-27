@@ -705,4 +705,49 @@ public class App02CrudController {
         return ls_seq1;
     }
 
+    //입고창고현황
+    @GetMapping(value="/index10/istorelist")
+    public Object App02istoreList_index(@RequestParam("searchtxt") String searchtxt,
+                                        Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index01Dto.setCom_cls(searchtxt);
+            index01ListDto = service10.GetIstorelist(index01Dto);
+
+            model.addAttribute("istoreList",index01ListDto);
+            log.info("istoreList Exception =====>" + searchtxt);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("istoreList Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+        log.info("istoreList Exception =====>" + index01ListDto);
+        return index01ListDto;
+    }
+
+    //입고창고현황
+    @GetMapping(value="/index10/ostorelist")
+    public Object App02ostoreList_index(@RequestParam("searchtxt") String searchtxt,
+                                        Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index01Dto.setCom_cls(searchtxt);
+            index01ListDto = service10.Getostorelist(index01Dto);
+
+            model.addAttribute("ostoreList",index01ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("ostoreList Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index01ListDto;
+    }
 }

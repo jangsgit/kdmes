@@ -15,5 +15,11 @@ public class Index01Dto {
     private String com_work;
     private String insano;
     private String inname;
+    private String istore;
+    private String istorenm;
+    private String ostore;
+    private String ostorenm;
+    private String com_rem2_key;
+    private String com_rem2_name;
 
 }

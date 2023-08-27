@@ -35,7 +35,7 @@
                         <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공정별설비등록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">공정별설비현황</a>
+                        <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">공정별가동현황</a>
                     </li> 
                     <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">분류상세등록</a>
@@ -215,7 +215,7 @@
                     </div>   
                     <div class="container-fluid"> 
                         <div id="winnameGrid_div" ></div>
-                        <div id="thePager03"></div>
+                        <!-- <div id="thePager03"></div> -->
                     </div>   
                 </div>  
 
@@ -258,7 +258,7 @@
             // Tab03Chartinit()
             //tab01검색 popup list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-                pageSize: 12
+               // pageSize: 12
             });
             // tab01검색 페이지 이동
             // new wijmo.input.CollectionViewNavigator('#tab01Pager', {
@@ -288,23 +288,23 @@
                 itemsSource: view_p01tab01page
             });  
 
-            new FlexGridContextMenu(wtab01Grid); 
-            // 선택기 생성
-            // let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
-            //     itemChecked: () => {
-            //         showCheckedCount();
-            //     }
-            // }); 
-            // 헤더 열 전환
-            setHeaderColumn(true);
-            function setHeaderColumn(headerOn) {
-                wtab01Grid.headersVisibility = headerOn
-                ? wijmo.grid.HeadersVisibility.All
-                : wijmo.grid.HeadersVisibility.Column;
-                // selector.column = headerOn
-                // ? wtab01Grid.rowHeaders.columns[0]
-                // : wtab01Grid.columns[0];
-            } 
+            // new FlexGridContextMenu(wtab01Grid); 
+            // // 선택기 생성
+            // // let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
+            // //     itemChecked: () => {
+            // //         showCheckedCount();
+            // //     }
+            // // }); 
+            // // 헤더 열 전환
+            // setHeaderColumn(true);
+            // function setHeaderColumn(headerOn) {
+            //     wtab01Grid.headersVisibility = headerOn
+            //     ? wijmo.grid.HeadersVisibility.All
+            //     : wijmo.grid.HeadersVisibility.Column;
+            //     // selector.column = headerOn
+            //     // ? wtab01Grid.rowHeaders.columns[0]
+            //     // : wtab01Grid.columns[0];
+            // } 
             wtab01Grid.showMarquee = true;
             wtab01Grid.focus();
             wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
@@ -386,14 +386,14 @@
             
         //담당자현황 Modaㅣ
         view_innamepage = new wijmo.collections.CollectionView(getData_wlist2(), {
-                pageSize: 12
+              //  pageSize: 12
             });
         // 담당자 페이지 이동
-        new wijmo.input.CollectionViewNavigator('#thePager03', {
-            byPage: true,
-            headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-            cv: view_innamepage
-        });     
+        // new wijmo.input.CollectionViewNavigator('#thePager03', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_innamepage
+        // });     
         winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
             autoGenerateColumns: false,
             isReadOnly: false, 

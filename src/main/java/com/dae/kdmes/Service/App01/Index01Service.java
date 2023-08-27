@@ -1,6 +1,7 @@
 package com.dae.kdmes.Service.App01;
 
 import com.dae.kdmes.DTO.App01.Index01Dto;
+import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.Mapper.App01.Index01Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,9 @@ public class Index01Service {
     public Boolean DeleteComCodeDetail(Index01Dto parm){  return  indexMapper.DeleteComCodeDetail(parm);}
 
     public String GetComCodeCheck(Index01Dto parm){  return  indexMapper.GetComCodeCheck(parm);  }
+
+    public List<Index01Dto> getCom_rem2_keyList(Index01Dto parm){
+        return  indexMapper.getCom_rem2_keyList(parm);
+    }
 
 }
