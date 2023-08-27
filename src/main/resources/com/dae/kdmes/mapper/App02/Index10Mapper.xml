@@ -168,4 +168,20 @@
     <select id="SelectMaxLot" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
         <![CDATA[  select  substring(max(lotno), 10,4)   from TB_FPLAN where Left(lotno,9) = #{indate} + #{rwflag}     ]]>
     </select>
+
+    <select id="GetIstorelist"  parameterType="com.dae.kdmes.DTO.App01.Index01Dto" resultType="com.dae.kdmes.DTO.App01.Index01Dto">
+        <![CDATA[
+            select
+            com_code as istore, com_rem1 as istorenm
+             from TB_CA510  where com_cls = '006'
+        ]]>
+    </select>
+
+    <select id="GetOstorelist"  parameterType="com.dae.kdmes.DTO.App01.Index01Dto" resultType="com.dae.kdmes.DTO.App01.Index01Dto">
+        <![CDATA[
+            select
+            com_code as ostore, com_rem1 as ostorenm
+             from TB_CA510  where com_cls = '006'
+        ]]>
+    </select>
 </mapper>

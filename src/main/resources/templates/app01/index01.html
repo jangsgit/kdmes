@@ -112,9 +112,17 @@
                                                 <input class="form-control form-control-sm" id="com_rem1" type="text"    autocomplete="off"> 
                                             </div>
                                         </div>
-                                        <div class="col-2 col-sm-2">
-                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">항목2</span> 
+                                        <!-- <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정구분</span> 
                                                 <input class="form-control form-control-sm" id="com_rem2" type="text"    autocomplete="off"> 
+                                            </div>
+                                        </div> -->
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정구분</span> 
+                                                <select th:field="*{com_rem2_keyList}" name="com_rem2" id="com_rem2" class="form-control form-control-sm">
+                                                    <option value="">선택</option>
+                                                    <option th:each="val : ${com_rem2_keyList}" th:value="${val.com_rem2_key}" th:text="${val.com_rem2_name}">
+                                                </select>   
                                             </div>
                                         </div>
                                         <div class="col-2 col-sm-2">

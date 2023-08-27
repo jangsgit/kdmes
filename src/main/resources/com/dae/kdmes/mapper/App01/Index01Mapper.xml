@@ -66,5 +66,10 @@
         ]]>
     </select>
 
+    <select id="getCom_rem2_keyList"  parameterType="com.dae.kdmes.DTO.App01.Index01Dto" resultType="com.dae.kdmes.DTO.App01.Index01Dto">
+        <![CDATA[
+           select com_code as com_rem2_key, com_rem1 as com_rem2_name from TB_CA510 where com_cls = '001'
+        ]]>
+    </select>
 
 </mapper>

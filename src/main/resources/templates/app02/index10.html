@@ -196,15 +196,23 @@
                             </div> 
                         </form> 
                         <form class="row g-3">
-                            <div class="col-md-6"> 
-                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">입고창고</span>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">입고창고</span>                                                              
+                                    <input class="form-control form-control-sm" type="text" name="istore" id="istore" placeholder=""   > 
+                                    <input type="hidden" name="istorenm" id="istorenm" placeholder=""  > 
+                                </div>  
+                                <!-- <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">입고창고</span>
                                     <input type="text" class="form-control" id="istore">
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="col-md-6"> 
-                                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">출고창고</span>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">출고창고</span>                                                              
+                                    <input class="form-control form-control-sm" type="text" name="ostore" id="ostore" placeholder=""   > 
+                                    <input type="hidden" name="ostorenm" id="ostorenm" placeholder=""  > 
+                                </div>  
+                                <!-- <div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">출고창고</span>
                                     <input type="text" class="form-control" id="ostore"> 
-                                </div>
+                                </div> -->
                             </div> 
                         </form>
                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">시간구분</span>   
@@ -407,7 +415,87 @@
 
                 </div>
             </div> 
-        </div>    
+        </div>
+        
+        <!--  입고창고 모달 처리 -->
+        <input class="form-control form-control-sm"  type="hidden" id="istorebtn1" data-bs-toggle="modal" data-bs-target="#istoremodal"  /> 
+        <!--------------------------------------------------------------------------------------->   
+        <div class="modal fade" id="istoremodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                style="max-width: 600px">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0" > 
+                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                            
+                            <div class="search">
+                                <div class="input_wrap">  
+                                    <input class="form-control form-control-sm" id="searchCode2" type="text"   onkeyup="if(window.event.keyCode==13){istoreSearchList_rtn('M')}"
+                                    placeholder="입고창고"     />                                      
+                                </div>
+                                <button id="wistoreBtn">
+                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                </button>
+                            </div>                             
+                        </div>   
+                        <div class="container-fluid"> 
+                            <div id="wistoreGrid_div" ></div>
+                            <!-- <div id="thePager04"></div> -->
+                        </div>   
+                    </div>  
+
+                    <div class="modal-footer">
+                        <div class="row g-1">
+                            <div class="col-auto">
+                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wistoremodal_btn" data-bs-dismiss="modal">Close</button>
+                            </div> 
+                        </div>
+                    </div>   
+
+                </div>
+            </div> 
+        </div> 
+        
+        <!--  출고창고 모달 처리 -->
+        <input class="form-control form-control-sm"  type="hidden" id="ostorebtn1" data-bs-toggle="modal" data-bs-target="#ostoremodal"  /> 
+        <!--------------------------------------------------------------------------------------->   
+        <div class="modal fade" id="ostoremodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                style="max-width: 600px">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0" > 
+                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                            
+                            <div class="search">
+                                <div class="input_wrap">  
+                                    <input class="form-control form-control-sm" id="searchCode3" type="text"   onkeyup="if(window.event.keyCode==13){ostoreSearchList_rtn('M')}"
+                                    placeholder="출고창고 "     />                                      
+                                </div>
+                                <button id="wostoreBtn">
+                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                </button>
+                            </div>                             
+                        </div>   
+                        <div class="container-fluid"> 
+                            <div id="wostoreGrid_div" ></div>
+                            <!-- <div id="thePager04"></div> -->
+                        </div>   
+                    </div>  
+
+                    <div class="modal-footer">
+                        <div class="row g-1">
+                            <div class="col-auto">
+                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                    type="button"  id="wostoremodal_btn" data-bs-dismiss="modal">Close</button>
+                            </div> 
+                        </div>
+                    </div>   
+
+                </div>
+            </div> 
+        </div> 
 <!--------------------------------------------------------------------------------------->     
 
 <!--########################################자바 스크립트 시작-->
@@ -416,13 +504,17 @@
     var view_p01tab01page;
     var view_innamepage;  
     var view_innamepage2;
+    var view_istorepage;
+    var view_ostorepage;
     var view_p01tab02page;
     var view_p01tab03page;
     var wtab01Grid;        
     var wtab02Grid;
     var wtab03Grid;         
     var winnameGrid;
-    var winnameGrid2;  
+    var winnameGrid2;
+    var wistoreGrid;
+    var wostoreGrid;  
     var typeMenu;  
     var treemap; 
     var insaflag = "";
@@ -507,7 +599,7 @@
             itemsSource: view_p01tab01page
         });        
 
-        new FlexGridContextMenu(wtab01Grid); 
+        //new FlexGridContextMenu(wtab01Grid); 
             // 선택기 생성
             // let selector = new wijmo.grid.selector.Selector(wtab01Grid, {
             //     itemChecked: () => {
@@ -515,15 +607,15 @@
             //     }
             // }); 
         // 헤더 열 전환
-        setHeaderColumn(false);
-        function setHeaderColumn(headerOn) {
-            wtab01Grid.headersVisibility = headerOn
-            ? wijmo.grid.HeadersVisibility.All
-            : wijmo.grid.HeadersVisibility.Column;
-            // selector.column = headerOn
-            // ? wtab01Grid.rowHeaders.columns[0]
-            // : wtab01Grid.columns[0];
-        } 
+        // setHeaderColumn(false);
+        // function setHeaderColumn(headerOn) {
+        //     wtab01Grid.headersVisibility = headerOn
+        //     ? wijmo.grid.HeadersVisibility.All
+        //     : wijmo.grid.HeadersVisibility.Column;
+        //     // selector.column = headerOn
+        //     // ? wtab01Grid.rowHeaders.columns[0]
+        //     // : wtab01Grid.columns[0];
+        // } 
         wtab01Grid.showMarquee = true;
         wtab01Grid.focus();
         wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
@@ -790,15 +882,15 @@
         //         }
         //     }); 
             // 헤더 열 전환
-            setHeaderColumn03(true);
-            function setHeaderColumn03(headerOn) {
-                wtab03Grid.headersVisibility = headerOn
-                ? wijmo.grid.HeadersVisibility.All
-                : wijmo.grid.HeadersVisibility.Column;
-                // selector.column = headerOn
-                // ? wtab03Grid.rowHeaders.columns[0]
-                // : wtab03Grid.columns[0];
-            } 
+            // setHeaderColumn03(true);
+            // function setHeaderColumn03(headerOn) {
+            //     wtab03Grid.headersVisibility = headerOn
+            //     ? wijmo.grid.HeadersVisibility.All
+            //     : wijmo.grid.HeadersVisibility.Column;
+            //     // selector.column = headerOn
+            //     // ? wtab03Grid.rowHeaders.columns[0]
+            //     // : wtab03Grid.columns[0];
+            // } 
             wtab03Grid.showMarquee = true;
             wtab03Grid.focus();
             wijmo.toggleClass(wtab03Grid.hostElement, 'highlightActive', true);
@@ -891,6 +983,92 @@
                 cnt++;
             }    
             return winname_data;                                      
+        }
+        
+        view_istorepage = new wijmo.collections.CollectionView(getData_wlist4(), {
+                // pageSize: 12
+            });
+         // 담당자 페이지 이동
+        //  new wijmo.input.CollectionViewNavigator('#thePager04', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_innamepage2
+        // });        
+        wistorerGrid = new wijmo.grid.FlexGrid('#wistoreGrid_div', {  
+            autoGenerateColumns: false,
+            isReadOnly: false, 
+            allowSorting: 'MultiColumn',
+            selectionMode: 'MultiRange',
+            alternatingRowStep: 0,
+            columns: [     
+                { binding: 'istore', header: '코드', align: "center", width: '1*' },
+                { binding: 'istorenm', header: '입고창고명', align: "center", width: '1*' },
+            ], 
+            itemsSource: view_istorepage
+        });  
+            
+        wistorerGrid.showMarquee = true;
+        wistorerGrid.focus();
+        wijmo.toggleClass(wistorerGrid.hostElement, 'highlightActive', true);
+        wistorerGrid.focus();
+
+        // 담당자 데이터 수집
+        function getData_wlist4(){   
+            var wistore_data = []; 
+            var cnt = 1;
+            for (var i = 0; i < 12; i++) {
+                wistore_data.push({
+                    id: i, 
+                    index: cnt,
+                    istore:"",
+                    istorenm: "",                            
+                });
+                cnt++;
+            }    
+            return wistore_data;                                      
+        }  
+
+        view_ostorepage = new wijmo.collections.CollectionView(getData_wlist5(), {
+                // pageSize: 12
+            });
+         // 담당자 페이지 이동
+        //  new wijmo.input.CollectionViewNavigator('#thePager04', {
+        //     byPage: true,
+        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+        //     cv: view_innamepage2
+        // });        
+        wostorerGrid = new wijmo.grid.FlexGrid('#wostoreGrid_div', {  
+            autoGenerateColumns: false,
+            isReadOnly: false, 
+            allowSorting: 'MultiColumn',
+            selectionMode: 'MultiRange',
+            alternatingRowStep: 0,
+            columns: [     
+                { binding: 'ostore', header: '코드', align: "center", width: '1*' },
+                { binding: 'ostorenm', header: '출고창고명', align: "center", width: '1*' },
+            ], 
+            itemsSource: view_ostorepage
+        });  
+            
+        wostorerGrid.showMarquee = true;
+        wostorerGrid.focus();
+        wijmo.toggleClass(wostorerGrid.hostElement, 'highlightActive', true);
+        wostorerGrid.focus();
+
+        // 담당자 데이터 수집
+        function getData_wlist5(){   
+            var wostore_data = []; 
+            var cnt = 1;
+            for (var i = 0; i < 12; i++) {
+                wostore_data.push({
+                    id: i, 
+                    index: cnt,
+                    ostore:"",
+                    ostorenm: "",                            
+                });
+                cnt++;
+            }    
+            return wostore_data;                                      
         }  
         
     } //window 호출 끝
@@ -979,7 +1157,7 @@
                 }else{
                     y[i].checked = false;
                 }
-            } 
+            }        
     }
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
@@ -1041,7 +1219,12 @@
                 alert("거래처를 입력하세요") 
                 document.getElementById("clt_cd").focus(); 
                 return ;               
-            }      
+            }
+            if(ls_rwflag == null || ls_rwflag.length == 0 || ls_rwflag == ""){ 
+                alert("시간구분을 선택하세요") 
+                document.getElementById("rwflag").focus(); 
+                return ;               
+            }        
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
             }   
@@ -1142,6 +1325,24 @@
                 document.getElementById("innamebtn1").click();
                 insaflag = "A"; 
                 insaSearchList_rtn("A"); 
+            }
+        });
+        //입고창고검색 
+        //
+        document.getElementById("istore").addEventListener("keyup", (e)=>{ 
+            if(e.keyCode === 13){  
+                document.getElementById("istorebtn1").click();
+                insaflag = "A"; 
+                istoreSearchList_rtn("A"); 
+            }
+        });
+        //출고창고검색 
+        //
+        document.getElementById("ostore").addEventListener("keyup", (e)=>{ 
+            if(e.keyCode === 13){  
+                document.getElementById("ostorebtn1").click();
+                insaflag = "A"; 
+                ostoreSearchList_rtn("A"); 
             }
         });
         document.getElementById("retrieveBtn").addEventListener("click",function(){
@@ -1888,6 +2089,164 @@
             
             $("#winnamemodal_btn2").trigger("click");
         }   
+
+        function ostoreSearchList_rtn(arg){  
+            var ostoreText = "";
+            if(arg == "M"){
+                ostoreText = document.getElementById('searchCode3').value; 
+            }
+            if(arg == "A"){
+                ostoreText = document.getElementById('ostore').value;   
+            }
+            
+            $.ajax({
+                        url: '/app02m/index10/ostorelist',  
+                        type:"POST",
+                        data: { 
+                            "searchtxt" :ostoreText, 
+                        }, 
+                        async:false,
+                        success:function(data){  
+                            tabO_grid(data);
+                        },error:function(e){
+                            console.log("error");                            
+                        }
+                    }).done(function(fragment){           
+
+                    })     
+        }   
+
+        function tabO_grid(data){
+            var wtab01Dto  = data;    
+            var wtab01_data = [];
+            var cnt = 1;
+            for (var i = 0; i < wtab01Dto.length; i++) {
+                wtab01_data.push({
+                    id: i, 
+                    index: cnt, 
+                    ostore: wtab01Dto[i]["ostore"], 
+                    ostorenm: wtab01Dto[i]["ostorenm"]       
+                });
+                cnt++;
+            }    
+            // console.log(wtab01_data); 
+            wostoreGrid.columns.clear();  
+            wostoreGrid.autoGenerateColumns = false; 
+            view_ostorepage.sourceCollection  = wtab01_data;
+
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'ostore';
+            cols.header = '코드';
+            cols.align = "center";
+            cols.width = '*';  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.ostore}</b>',
+                click: (e, ctx) => {
+                    winsaChk_a(ctx.item.ostorenm, ctx.item.ostore);  
+                }
+            });
+            winnameGrid2.columns.push(cols);  
+ 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'ostorenm';
+            cols.header = '출고창고명';
+            cols.align = "center";
+            cols.width = '*';  
+            winnameGrid2.columns.push(cols);  
+      
+        }     
+        function winsaChk_a(arg1, arg2){  
+            switch (insaflag){
+                case "A":
+                    document.getElementById('ostore').value = arg1;  
+                    document.getElementById('ostorenm').value = arg2; 
+                    break;
+                default:
+                    break;
+            } 
+            
+            $("#wostoremodal_btn").trigger("click");
+        } 
+        
+        function istoreSearchList_rtn(arg){  
+            var istoreText = "";
+            if(arg == "M"){
+                istoreText = document.getElementById('searchCode2').value; 
+            }
+            if(arg == "A"){
+                istoreText = document.getElementById('istore').value;   
+            }
+            
+            $.ajax({
+                        url: '/app02m/index10/istorelist',  
+                        type:"POST",
+                        data: { 
+                            "searchtxt" :istoreText, 
+                        }, 
+                        async:false,
+                        success:function(data){
+                            console.log("!!!!!!!" + data);  
+                            tabI_grid(data);                          
+                        },error:function(e){
+                            console.log("error");                            
+                        }
+                    }).done(function(fragment){           
+
+                    })     
+        }   
+
+        function tabI_grid(data){
+            var wtab01Dto  = data;    
+            var wtab01_data = [];
+            var cnt = 1;
+            console.log("!!!!!!!!!"  + data);
+            for (var i = 0; i < wtab01Dto.length; i++) {
+                wtab01_data.push({
+                    id: i, 
+                    index: cnt, 
+                    istore: wtab01Dto[i]["istore"], 
+                    istorenm: wtab01Dto[i]["istorenm"]       
+                });
+                cnt++;
+            }    
+            // console.log(wtab01_data); 
+            wistoreGrid.columns.clear();  
+            wistoreGrid.autoGenerateColumns = false; 
+            view_istorepage.sourceCollection  = wtab01_data;
+
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'istore';
+            cols.header = '코드';
+            cols.align = "center";
+            cols.width = '*';  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.istore}</b>',
+                click: (e, ctx) => {
+                    wistoreChk_a(ctx.item.inname, ctx.item.istore);  
+                }
+            });
+            wistoreGrid.columns.push(cols);  
+ 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'istorenm';
+            cols.header = '입고창고명';
+            cols.align = "center";
+            cols.width = '*';  
+            wistoreGrid.columns.push(cols);  
+      
+        }     
+        function wistoreChk_a(arg1, arg2){  
+            switch (insaflag){
+                case "A":
+                    document.getElementById('istore').value = arg1;  
+                    document.getElementById('istorenm').value = arg2; 
+                    break;
+                default:
+                    break;
+            } 
+            
+            $("#wistoremodal_btn2").trigger("click");
+        } 
 
 
 

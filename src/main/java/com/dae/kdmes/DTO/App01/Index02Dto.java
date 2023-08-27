@@ -14,6 +14,7 @@ public class Index02Dto {
     private Integer wperid;
     private String indate;
     private String inperid;
+    private String wpernm;
     private String com_cls;
     private String com_cnam;
     private String com_work;

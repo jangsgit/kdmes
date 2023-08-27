@@ -27,4 +27,6 @@ public interface Index01Mapper {
     public Boolean DeleteComCodeDetail(Index01Dto  parm) ;
 
     public String GetComCodeCheck(Index01Dto  parm) ;
+
+    public List<Index01Dto> getCom_rem2_keyList(Index01Dto parm) ;
 }
