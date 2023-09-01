@@ -587,12 +587,11 @@
                         });   
                     wtab01Grid = new wijmo.grid.FlexGrid('#theGrid_div', {
                         autoGenerateColumns: false,
-                        isReadOnly: true, 
-                        selectionMode: 'RowRange',
+                        isReadOnly: true,  
                         alternatingRowStep: 0,
                         columns: [
                             // { binding: 'index', header: 'seq', width: '*' },
-                            { binding: 'qcdate', header: '검사일',align:"center",  width: 130 },
+                            { binding: 'qcdate', header: '검사시작일',align:"center",  width: 120 },
                             { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                             {
                                 binding: 'lotno',
@@ -602,23 +601,26 @@
                                 cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                     text: '<b>${item.lotno}</b>',
                                     click: (e, ctx) => {
-                                        selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
+                                        selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty    );
                                     }
                                 })
-                            }, 
-                            // { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
+                            },                             
                             // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                             { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
                             { binding: 'psize', header: '규격',     align:"center",  width: 130 },
-                            { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
-                            // { binding: 'plan_no', header: '투입량',   align:"center",width: '*' }, 
-                            // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
-                            // { binding: 'wotqt', header: '완료량',   align:"center",width: '*' } ,
-                            // { binding: 'decision', header: '임시여부', align:"center", width: '*' }
+                            { binding: 'prod_qty', header: '계획량',align:"center",  width: 90 },
+                            { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  } 
 
                         ],
                         itemsSource: view_flistpage
                     }); 
+                    // 헤더 열 전환
+                    setHeaderColumn01(false); 
+                    function setHeaderColumn01(headerOn) {
+                        wtab01Grid.headersVisibility = headerOn
+                        ? wijmo.grid.HeadersVisibility.All
+                        : wijmo.grid.HeadersVisibility.Column; 
+                    }
                         //작업지시서 데이타 
                     function getData_flist(){ 
                         var ListDto = [[${itemDtoList}]]; 
@@ -630,6 +632,13 @@
                         for (var i = 0; i < ListDto.length; i++) {
                             var psdate = ListDto[i]["prod_sdate"];
                             psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
+                            var ls_qcdate = ListDto[i]["qcdate"];
+                            if(ls_qcdate.length > 0){
+                                ls_qcdate = ls_qcdate.substr(0,2) + '-' + ls_qcdate.substr(2,2)+ '-' + ls_qcdate.substr(4,2);
+                            }else{
+                                ls_qcdate = "";
+                            }
+                            
                             var date_format = new Date(psdate);
                             data.push({
                                 id: i, 
@@ -659,7 +668,7 @@
                                 lotno: ListDto[i]["lotno"]  ,
                                 wrpsnm: ListDto[i]["wrpsnm"],
                                 obqty: ListDto[i]["obqty"],
-                                qcdate: ListDto[i]["qcdate"]
+                                qcdate: ls_qcdate
                                 
                                 
                             });
@@ -711,6 +720,13 @@
                         itemsSource: view_flistpage02
                     }); 
 
+                    // 헤더 열 전환
+                    setHeaderColumn02(false); 
+                    function setHeaderColumn02(headerOn) {
+                        wtab02Grid.headersVisibility = headerOn
+                        ? wijmo.grid.HeadersVisibility.All
+                        : wijmo.grid.HeadersVisibility.Column; 
+                    }
 
                     function getData_flist02(){ 
                         var ListDto = [[${itemDtoList02}]]; 
@@ -760,55 +776,55 @@
                         return data                                          
                     }      
                     // 선택기 생성
-                    let selector01 = new wijmo.grid.selector.Selector(wtab01Grid, {
-                        itemChecked: () => {
-                            showCheckedCount02();
-                        }
-                    });   
-                    function showCheckedCount02() {
-                        let cnt = document.getElementById('checked-count'), sel = wtab01Grid.rows.filter(r => r.isSelected);  
-                        ll_sumotqty = 0
-                        for (var i = 0; i < sel.length; i++) { 
-                            //  console.log(sel[i]._data);
-                            plan_no [i]   = sel[i]._data.plan_no;
-                            lotno   [i]   = sel[i]._data.lotno; 
-                            cltnm[i]      = sel[i]._data.cltnm;
-                            pname[i]      = sel[i]._data.pname; 
-                            prod_qty[i]      = sel[i]._data.prod_qty; 
-                            pcode[i]      = sel[i]._data.pcode; 
-                            ll_sumotqty = ll_sumotqty + parseFloat(prod_qty[i]);  
-                        }  
-                        // plan_no =  document.getElementById('inplan_no').value; 
-                        if(sel.length > 0){
-                            if(sel.length == 1){ 
-                                document.getElementById('inpname').value  = pname [0]; 
-                            }else{                                                 
-                                document.getElementById('inpname').value  = pname [0] + ' 외 '; 
-                            }  
-                            document.getElementById('incltnm').value  = cltnm [0];
-                            document.getElementById('inwinqt').value = ll_sumotqty;     
-                        }else{
-                            plan_no = [];
-                            lotno = []; 
-                            cltnm = [];
-                            pname = []; 
-                            pcode = [];
-                            prod_qty = []; 
-                            document.getElementById('inpname').value  = ''; 
-                            document.getElementById('incltnm').value  = '';
-                            document.getElementById('inwinqt').value = 0;    
-                            return ;
-                        }
+                    // let selector01 = new wijmo.grid.selector.Selector(wtab01Grid, {
+                    //     itemChecked: () => {
+                    //         showCheckedCount02();
+                    //     }
+                    // });   
+                    // function showCheckedCount02() {
+                    //     let cnt = document.getElementById('checked-count'), sel = wtab01Grid.rows.filter(r => r.isSelected);  
+                    //     ll_sumotqty = 0
+                    //     for (var i = 0; i < sel.length; i++) { 
+                    //         //  console.log(sel[i]._data);
+                    //         plan_no [i]   = sel[i]._data.plan_no;
+                    //         lotno   [i]   = sel[i]._data.lotno; 
+                    //         cltnm[i]      = sel[i]._data.cltnm;
+                    //         pname[i]      = sel[i]._data.pname; 
+                    //         prod_qty[i]      = sel[i]._data.prod_qty; 
+                    //         pcode[i]      = sel[i]._data.pcode; 
+                    //         ll_sumotqty = ll_sumotqty + parseFloat(prod_qty[i]);  
+                    //     }  
+                    //     // plan_no =  document.getElementById('inplan_no').value; 
+                    //     if(sel.length > 0){
+                    //         if(sel.length == 1){ 
+                    //             document.getElementById('inpname').value  = pname [0]; 
+                    //         }else{                                                 
+                    //             document.getElementById('inpname').value  = pname [0] + ' 외 '; 
+                    //         }  
+                    //         document.getElementById('incltnm').value  = cltnm [0];
+                    //         document.getElementById('inwinqt').value = ll_sumotqty;     
+                    //     }else{
+                    //         plan_no = [];
+                    //         lotno = []; 
+                    //         cltnm = [];
+                    //         pname = []; 
+                    //         pcode = [];
+                    //         prod_qty = []; 
+                    //         document.getElementById('inpname').value  = ''; 
+                    //         document.getElementById('incltnm').value  = '';
+                    //         document.getElementById('inwinqt').value = 0;    
+                    //         return ;
+                    //     }
                         
-                        if(!plan_no && sel.length > 0 ){
-                            alert("작지번호를 선택하세요");
-                            return 
-                        } 
-                        if(!plan_no ){
-                            return 
-                        }
+                    //     if(!plan_no && sel.length > 0 ){
+                    //         alert("작지번호를 선택하세요");
+                    //         return 
+                    //     } 
+                    //     if(!plan_no ){
+                    //         return 
+                    //     }
   
-                    }
+                    // }
 
 
 
@@ -1602,6 +1618,13 @@
                         const date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
                         const time = d.toTimeString().split(' ')[0]; 
                         document.getElementById('endDate').value = date + ' ' + time;
+                        var ll_inwokqt = document.getElementById('inwokqt').value;
+                        console.log(ll_inwokqt);
+                        if(!ll_inwokqt || ll_inwokqt ==0){
+                            alert("생산량을 등록하고 공정종료 버튼을 클릭하세요.")
+                            return 
+                        }
+                        return 
                         save_btn("0")
                         button_wfrdt.disabled = true;
                         button_wtrdt.disabled = true;
@@ -1978,21 +2001,18 @@
         }       
         function del_btn()  {
             let result = '';
-            // result = document.getElementById('spcode').value;
-            //  alert(result);
             if (!confirm("삭제하시겠습니까?")) {
                 return ; 
-                // } else { 
-                //     window.location.href = '/appcom01/delete?spcode=' + result; 
             } 
             var ls_plan_no   = document.getElementById('inplan_no').value; 
+            var ls_inlotno   = document.getElementById('inlotno').value; 
 
             if(ls_plan_no == null || ls_plan_no.length == 0 || ls_plan_no == ""){ 
                     alert("삭제할 데이타를 선택하세요") 
                     return ;               
             }     
             $.ajax({
-                url: '/appcom01/delete',   
+                url: '/input/w020del',   
                 type:"POST", 
                 data: {
                     "plan_no"    : ls_plan_no  
@@ -2015,7 +2035,7 @@
             document.getElementById('popwseq').value= arg4;  
             document.getElementById('popseq').value= arg5;  
         }
-        function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19 ){ 
+        function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20 ){ 
             // /, ctx.item.owqty ,ctx.item.obqty
                 //selectChk(custcd, spjangcd, wono, cltnm, pname, 
                 //          ostore, plan_no, cltcd, pcode, wseq,
@@ -2067,7 +2087,7 @@
 
             document.getElementById('inwrmc').value = ""; 
             document.getElementById('inmachname').value = ""; 
-            // document.getElementById('inwinqt').value = 0;         //투입량
+            document.getElementById('inwinqt').value = arg20;         //투입량
             document.getElementById('inwotqt').value = 0;         //검사수량   arg15
             document.getElementById('inwbdqt').value = 0;         //불량수량   arg16
             document.getElementById('inwokqt').value = 0;         //완료량     arg13
@@ -2153,7 +2173,7 @@
                     wrpsnm      =  data.wrpsnm;
                     document.getElementById('inwrmc').value = inwrmc; 
                     document.getElementById('inmachname').value = inmachname; 
-                    document.getElementById('inwinqt').value = inwinqt;         //투입량
+                    //document.getElementById('inwinqt').value = inwinqt;         //투입량
                     // document.getElementById('inwotqt').value = inwotqt;         //완료량
                     // document.getElementById('inwbdqt').value = inwbdqt;         //불량수량
                     // document.getElementById('inwokqt').value = inwokqt;         //검사수량
