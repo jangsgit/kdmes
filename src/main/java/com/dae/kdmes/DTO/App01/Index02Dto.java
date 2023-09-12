@@ -11,7 +11,7 @@ public class Index02Dto {
     private String wflag;
     private String wrmc;
     private String wrmcnm;
-    private Integer wperid;
+    private String wperid;
     private String indate;
     private String inperid;
     private String wpernm;

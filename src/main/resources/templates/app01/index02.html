@@ -757,19 +757,19 @@
             var ls_codenm = document.getElementById('com_rem1').value;
             switch(arg1){
                 case 'A':
-                    $.ajax({
-                        url: '/app01m/getWflagList',  
+                $.ajax({
+                        url: '/app01m/fplandetaillist',  
                         type:"POST",
                         data: { 
-                            "searchtxt"      : "%"  
+                            "searchtxt" : '%',
+                            "com_code" :arg1, 
                         }, 
                         async:false,
-                        success:function(data){   
-                            tabA_grid(data);
+                        success:function(data){  
+                            console.log(data);
+                            tabC_grid(data);
                         },error:function(e){
-                            console.log("error");
-                            // alert(data.code);
-                            // alert(data.message);
+                            console.log("error");                            
                         }
                     }).done(function(fragment){           
 
@@ -920,62 +920,62 @@
             wtab02Grid.columns.push(cols);
         }
 
-        // function tabC_grid(data){
-        //     var wtab03Dto  = data;    
-        //     var wtab03_data = [];
-        //     var cnt = 1;
-        //     for (var i = 0; i < wtab03Dto.length; i++) {
-        //         wtab03_data.push({
-        //             id: i, 
-        //             index: cnt,
-        //             com_cls: wtab03Dto[i]["com_cls"],
-        //             com_code: wtab03Dto[i]["com_code"],
-        //             com_cnam: wtab03Dto[i]["com_cnam"],
-        //             com_rem1: wtab03Dto[i]["com_rem1"],
-        //             com_rem2: wtab03Dto[i]["com_rem2"],
-        //             com_work: wtab03Dto[i]["com_work"]              
-        //         });
-        //         cnt++;
-        //     }     
-        //     // console.log(wtab03_data.length);
-        //     wtab03Grid.columns.clear();  
-        //     wtab03Grid.autoGenerateColumns = false; 
-        //     view_p01tab03page.sourceCollection  = wtab03_data;
-        //     var cols = new wijmo.grid.Column(); 
-        //     cols.binding = 'com_code';
-        //     cols.header = '코드';
-        //     cols.align = "center";
-        //     cols.width = 250; 
-        //     wtab03Grid.columns.push(cols);  
+        function tabC_grid(data){
+            var wtab03Dto  = data;    
+            var wtab03_data = [];
+            var cnt = 1;
+            for (var i = 0; i < wtab03Dto.length; i++) {
+                wtab03_data.push({
+                    id: i, 
+                    index: cnt,
+                    com_cls: wtab03Dto[i]["com_cls"],
+                    com_code: wtab03Dto[i]["com_code"],
+                    com_cnam: wtab03Dto[i]["com_cnam"],
+                    com_rem1: wtab03Dto[i]["com_rem1"],
+                    com_rem2: wtab03Dto[i]["com_rem2"],
+                    com_work: wtab03Dto[i]["com_work"]              
+                });
+                cnt++;
+            }     
+            // console.log(wtab03_data.length);
+            wtab03Grid.columns.clear();  
+            wtab03Grid.autoGenerateColumns = false; 
+            view_p01tab03page.sourceCollection  = wtab03_data;
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'com_code';
+            cols.header = '코드';
+            cols.align = "center";
+            cols.width = 250; 
+            wtab03Grid.columns.push(cols);  
 
-        //     cols = new wijmo.grid.Column(); 
-        //     cols.binding = 'com_cnam';
-        //     cols.header = '코드명';
-        //     cols.align = "center";
-        //     cols.width = 250;  
-        //     wtab03Grid.columns.push(cols);   
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'com_cnam';
+            cols.header = '코드명';
+            cols.align = "center";
+            cols.width = 250;  
+            wtab03Grid.columns.push(cols);   
 
-        //     cols = new wijmo.grid.Column(); 
-        //     cols.binding = 'com_rem1';
-        //     cols.header = '항목1';
-        //     cols.align = "center";
-        //     cols.width = 250;  
-        //     wtab03Grid.columns.push(cols);
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'com_rem1';
+            cols.header = '항목1';
+            cols.align = "center";
+            cols.width = 250;  
+            wtab03Grid.columns.push(cols);
             
-        //     cols = new wijmo.grid.Column(); 
-        //     cols.binding = 'com_rem2';
-        //     cols.header = '항목2';
-        //     cols.align = "center";
-        //     cols.width = 250;  
-        //     wtab03Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'com_rem2';
+            cols.header = '항목2';
+            cols.align = "center";
+            cols.width = 250;  
+            wtab03Grid.columns.push(cols);  
 
-        //     cols = new wijmo.grid.Column(); 
-        //     cols.binding = 'com_work';
-        //     cols.header = '업무구분';
-        //     cols.align = "center";
-        //     cols.width = 250;  
-        //     wtab03Grid.columns.push(cols);  
-        // } 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'com_work';
+            cols.header = '업무구분';
+            cols.align = "center";
+            cols.width = 250;  
+            wtab03Grid.columns.push(cols);  
+        } 
 
         function wactnmChk1(arg1,arg2,arg3,arg4){   
             document.getElementById('wrmc').value = arg1; 

@@ -35,6 +35,7 @@
             select
             com_code as insano, com_rem1 as inname
              from TB_CA510  where com_cls = '002'
+                and isnull(com_rem1,'') Like concat('%',#{com_rem1},'%')
         ]]>
     </select>
 

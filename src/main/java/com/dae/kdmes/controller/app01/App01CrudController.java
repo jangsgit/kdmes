@@ -158,7 +158,8 @@ public class App01CrudController {
             if(searchtxt == null || searchtxt.equals("")){
                 searchtxt = "%";
             }
-            index01Dto.setCom_cls(searchtxt);
+            index01Dto.setCom_code(searchtxt);
+            index01Dto.setCom_rem1(searchtxt);
             index01ListDto = service01.getWperidlist(index01Dto);
 
             model.addAttribute("wperidList",index01ListDto);
@@ -316,7 +317,7 @@ public class App01CrudController {
                                                  @RequestParam("com_rem1") String com_rem1,
                                                  @RequestParam("wrmcnm") String wrmcnm,
                                                  @RequestParam("wrmc") String wrmc,
-                                                 @RequestParam("wperid") Integer wperid,
+                                                 @RequestParam("wperid") String wperid,
                                                  Model model,   HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -343,7 +344,7 @@ public class App01CrudController {
     @RequestMapping(value="/fplandetaildel")
     public String App01FplanDetailDel_index(  @RequestParam("wrmc") String wrmc,
                                                 @RequestParam("wrmcnm") String wrmcnm,
-                                                @RequestParam("wperid") Integer wperid,
+                                                @RequestParam("wperid") String wperid,
                                                 Model model,   HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");

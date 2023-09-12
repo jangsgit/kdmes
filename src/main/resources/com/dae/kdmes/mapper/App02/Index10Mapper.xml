@@ -39,13 +39,14 @@
     </select>
 
     <insert id="InsertFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
-        insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd, qcdate, perid, ecltnm , line, wono ,
+        insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd,  perid, ecltnm , line, wono ,
         workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,
-        wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv
+        wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv ,wodv , opcod
+        , prod_dqty , ord_edate, wflag
         ) values
-        ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{qcdate}, #{perid}, #{ecltnm}, '00', #{wono},
+        ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{perid}, #{ecltnm}, '00', #{wono},
         #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark} ,
-        '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1'
+        '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , #{pcode} , '0' ,sysdate , '00010'
         )
     </insert>
 

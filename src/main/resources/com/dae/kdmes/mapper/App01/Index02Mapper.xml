@@ -7,7 +7,7 @@
 
     <select id="getWflagList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-            select com_code, com_work, com_cnam , com_rem1 from TB_CA510  where com_cls = '001'
+            select com_code, com_work, com_cnam , com_rem1 from TB_CA510  where com_cls = '001' order by com_code asc
         ]]>
     </select>
 

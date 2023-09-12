@@ -579,7 +579,7 @@
             allowSorting: 'MultiColumn',
             alternatingRowStep: 0,
             columns: [     
-                { binding: 'indate', header: '등록일자', align: "center", width: 100 ,  format: "YYYY-MM-DD"}, 
+                { binding: 'indate', header: '등록일자', align: "center", width: 100 , format: "yyyy-MM-dd"}, 
                 { binding: 'lotno', header: '로트번호', align: "center", width: 150 },
                 { binding: 'pcode', 
                     header: '품목코드', 
@@ -1139,6 +1139,7 @@
         document.getElementById('ostore').value = "";  
         document.getElementById('remark').value = ""; 
         document.getElementById('plan_no').value = ""; 
+        document.getElementById('rwflag').value = "D";
 
         var x = document.getElementsByName('workdv');
 
@@ -1224,7 +1225,17 @@
                 alert("시간구분을 선택하세요") 
                 document.getElementById("rwflag").focus(); 
                 return ;               
-            }        
+            }
+            if(ls_istore == null || ls_istore.length == 0 || ls_istore == ""){ 
+                alert("입고창고를 입력하세요") 
+                document.getElementById("istore").focus(); 
+                return ;               
+            }   
+            if(ls_ostore == null || ls_ostore.length == 0 || ls_ostore == ""){ 
+                alert("출고창고를 입력하세요") 
+                document.getElementById("ostore").focus(); 
+                return ;               
+            }           
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
             }   
@@ -2018,8 +2029,11 @@
                 insaText = document.getElementById('searchCode1').value; 
             }
             if(arg == "A"){
-                insaText = document.getElementById('perid').value;   
+                insaText = document.getElementById('perid').value;                
             }
+            if(insaText == null || insaText.length == 0 || insaText == ""){ 
+                insaText = "%";
+            } 
             
             $.ajax({
                         url: '/app01m/wperidlist',  
@@ -2142,7 +2156,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.ostore}</b>',
                 click: (e, ctx) => {
-                    winsaChk_a(ctx.item.ostorenm, ctx.item.ostore);  
+                    wostoreChk_a(ctx.item.ostorenm, ctx.item.ostore);  
                 }
             });
             winnameGrid2.columns.push(cols);  
@@ -2155,7 +2169,7 @@
             winnameGrid2.columns.push(cols);  
       
         }     
-        function winsaChk_a(arg1, arg2){  
+        function wostoreChk_a(arg1, arg2){  
             switch (insaflag){
                 case "A":
                     document.getElementById('ostore').value = arg1;  
