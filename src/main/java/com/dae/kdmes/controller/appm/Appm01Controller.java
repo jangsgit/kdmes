@@ -197,7 +197,7 @@ public class Appm01Controller {
     private String getFrDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Calendar cal1 = Calendar.getInstance();
-        cal1.add(Calendar.DATE, -14); // 빼고 싶다면 음수 입력
+        cal1.add(Calendar.DATE, -100); // 빼고 싶다면 음수 입력
         Date date      = new Date(cal1.getTimeInMillis());
 
         return formatter.format(date);

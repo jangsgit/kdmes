@@ -159,7 +159,7 @@
                                                 </div> 
                                                 <div class="col-sm">
                                                     <div class="input-group"> 
-                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal" style=" height:40px;  " id="wrmcBtn" >작업설비 </button>
+                                                        <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal" style=" height:40px;  " id="wrmcBtn" disabled >작업설비 </button>
                                                         <input class="form-control form-control-sm" id="inmachname" type="text"    disabled
                                                             placeholder=""   />
                                                         <input class="form-control form-control-sm" id="inwrmc" type="hidden"
@@ -223,12 +223,12 @@
                                             
                                             <div  class="col-auto" > 
                                                 <div class="row g-2" >
-                                                    <div class="col-auto">
-                                                        <button  class="btn btn-warning me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("2")' id="workstBtn"  >작업시작</button>
+                                                    <!-- <div class="col-auto">
+                                                        <button  class="btn btn-warning me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("2")' id="workstBtn" disabled >작업시작</button>
                                                     </div> 
                                                     <div class="col-auto">
-                                                        <button  class="btn btn-danger me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("3")' id="workedBtn"  >작업중단</button>
-                                                    </div>   
+                                                        <button  class="btn btn-danger me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("3")' id="workedBtn"  disabled >작업중단</button>
+                                                    </div>    -->
                                                     <div class="col-auto">
                                                         <button  class="btn btn-outline-dark me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("4")' id="worksaveBtn">저&nbsp;&nbsp;&nbsp;장</button>
                                                     </div>                                                   
@@ -557,8 +557,8 @@
         var pname = new Array();
         var pcode = new Array();
         var addlotno = new Array(); 
-        var button_workstBtn = document.getElementById('workstBtn');
-        var button_workedBtn = document.getElementById('workedBtn');
+        // var button_workstBtn = document.getElementById('workstBtn');
+        // var button_workedBtn = document.getElementById('workedBtn');
         var button_wfrdt = document.getElementById('wfrdt');
         var button_wtrdt = document.getElementById('wtrdt');
         var button_wrmcBtn = document.getElementById('wrmcBtn');
@@ -1692,33 +1692,33 @@
             var ls_inpcode   = document.getElementById('inpcode').value; 
             var ls_inwono   = document.getElementById('inwono').value;   
 
-            button_workstBtn.disabled = false;
-            button_workedBtn.disabled = false;
+            // button_workstBtn.disabled = false;
+            // button_workedBtn.disabled = false;
             button_wfrdt.disabled = false;
             button_wtrdt.disabled = false; 
-            button_wrmcBtn.disabled = false;
+            // button_wrmcBtn.disabled = false;
             button_wperidBtn.disabled = false;
             button_wotqtyBtn.disabled = false;
             button_wbadqtyBtn.disabled = false; 
 
             if(arg1 == "1" || arg1 == "4"){  //공정시작 작업시작
-                button_workstBtn.disabled = true;
-                button_workedBtn.disabled = false;
+                // button_workstBtn.disabled = true;
+                // button_workedBtn.disabled = false;
                 button_wfrdt.disabled = true;
                 button_wtrdt.disabled = false;   
                 endDate = "";
                 document.getElementById('endDate').value = null;
             }else if(arg1 == "0"){  //공정종료 작업중단
-                button_workstBtn.disabled = true;
-                button_workedBtn.disabled = true;   
+                // button_workstBtn.disabled = true;
+                // button_workedBtn.disabled = true;   
             }else if(arg1 == "2"){  //  작업시작
-                button_workstBtn.disabled = true;
-                button_workedBtn.disabled = false; 
+                // button_workstBtn.disabled = true;
+                // button_workedBtn.disabled = false; 
                 endDate = "";
                 document.getElementById('endDate').value = null;
             }else{ // 작업중단
-                button_workstBtn.disabled = false;
-                button_workedBtn.disabled = true; 
+                // button_workstBtn.disabled = false;
+                // button_workedBtn.disabled = true; 
                 endDate = "";
                 document.getElementById('endDate').value = null;
             }   
@@ -1813,22 +1813,22 @@
                         // console.log("wperidGrid_Data", wperidGrid.rows.length );  
                         if(arg1 == "0"){
                             // alert("완료 처리 되었습니다.");
-                            button_workstBtn.disabled = true;
-                            button_workedBtn.disabled = true;
+                            // button_workstBtn.disabled = true;
+                            // button_workedBtn.disabled = true;
                             button_wfrdt.disabled = true;
                             button_wtrdt.disabled = true;   
-                            button_wrmcBtn.disabled = true;
+                            // button_wrmcBtn.disabled = true;
                             button_wperidBtn.disabled = true;
                             button_wotqtyBtn.disabled = true;
                             button_wbadqtyBtn.disabled = true;
                             var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>공정 완료</span></div>";                                        
                         }else{
                             // alert("저장되었습니다.");
-                            button_workstBtn.disabled = false;
-                            button_workedBtn.disabled = false;
+                            // button_workstBtn.disabled = false;
+                            // button_workedBtn.disabled = false;
                             button_wfrdt.disabled = true;
                             button_wtrdt.disabled = false; 
-                            button_wrmcBtn.disabled = false;
+                            // button_wrmcBtn.disabled = false;
                             button_wperidBtn.disabled = false;
                             button_wotqtyBtn.disabled = false;
                             button_wbadqtyBtn.disabled = false; 
@@ -2041,10 +2041,10 @@
                 //          ostore, plan_no, cltcd, pcode, wseq,
                 //            wflag, phmmdoc, otqty, wrpsnm, owqty ,
                 //              obqty,winps,wrps,lotno );
-            var button_workstBtn = document.getElementById('workstBtn');
-            var button_workedBtn = document.getElementById('workedBtn'); 
-                button_workstBtn.disabled = false;
-                button_workedBtn.disabled = false; 
+            // var button_workstBtn = document.getElementById('workstBtn');
+            // var button_workedBtn = document.getElementById('workedBtn'); 
+            //     button_workstBtn.disabled = false;
+            //     button_workedBtn.disabled = false; 
 
             document.getElementById('incustcd').value= arg1; 
             document.getElementById('inspjangcd').value= arg2; 
@@ -2061,11 +2061,11 @@
             if(arg0 == "B"){
                 document.getElementById('inlotno').value= arg19;  
             }
-            button_workstBtn.disabled = false;
-            button_workedBtn.disabled = false;
+            // button_workstBtn.disabled = false;
+            // button_workedBtn.disabled = false;
             button_wfrdt.disabled = false;
             button_wtrdt.disabled = false; 
-            button_wrmcBtn.disabled = false;
+            // button_wrmcBtn.disabled = false;
             button_wperidBtn.disabled = false;
             button_wotqtyBtn.disabled = false;
             button_wbadqtyBtn.disabled = false; 
@@ -2182,31 +2182,31 @@
                     document.getElementById('endDate').value = endDate;     //
                     document.getElementById('inwrpsnm').value = wrpsnm;     //  
                     if (decision == "1"){  
-                            button_workstBtn.disabled = false;
-                            button_workedBtn.disabled = false;
+                            // button_workstBtn.disabled = false;
+                            // button_workedBtn.disabled = false;
                             button_wfrdt.disabled = true;
                             button_wtrdt.disabled = false; 
-                            button_wrmcBtn.disabled = false;
+                            // button_wrmcBtn.disabled = false;
                             button_wperidBtn.disabled = false;
                             button_wotqtyBtn.disabled = false;
                             button_wbadqtyBtn.disabled = false; 
                             ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";
                     }else if(decision == "0"){
-                            button_workstBtn.disabled = true;
-                            button_workedBtn.disabled = true;
+                            // button_workstBtn.disabled = true;
+                            // button_workedBtn.disabled = true;
                             button_wfrdt.disabled = true;
                             button_wtrdt.disabled = true;   
-                            button_wrmcBtn.disabled = true;
+                            // button_wrmcBtn.disabled = true;
                             button_wperidBtn.disabled = true;
                             button_wotqtyBtn.disabled = true;
                             button_wbadqtyBtn.disabled = true; 
                             ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>공정 완료</span></div>";
                     }else{
-                            button_workstBtn.disabled = false;
-                            button_workedBtn.disabled = false;
+                            // button_workstBtn.disabled = false;
+                            // button_workedBtn.disabled = false;
                             button_wfrdt.disabled = false;
                             button_wtrdt.disabled = false;  
-                            button_wrmcBtn.disabled = false;
+                            // button_wrmcBtn.disabled = false;
                             button_wperidBtn.disabled = false;
                             button_wotqtyBtn.disabled = false;
                             button_wbadqtyBtn.disabled = false; 

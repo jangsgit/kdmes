@@ -197,16 +197,16 @@
     window.onload = function() {  
        localStorage.setItem("setpage", "app03p001"); 
        
-        //QR 코드 샘플
-        barcode = new wijmo.barcode.common.QrCode('#barcode', {
-            value: 'QR code Demo',
-            renderType : 'Svg'
-        });
-    //    barcode = new wijmo.barcode.common.Code128('#barcode', {
-    //                 value: 'Code128Demo',
-    //                 autoWidthZoom: 2,
-    //                 autoWidth: true    
-    //             });  
+        // //QR 코드 샘플
+        // barcode = new wijmo.barcode.common.QrCode('#barcode', {
+        //     value: 'QR code Demo',
+        //     renderType : 'Svg'
+        // });
+       barcode = new wijmo.barcode.common.Code128('#barcode', {
+                    value: 'Code128Demo',
+                    autoWidthZoom: 2,
+                    autoWidth: true    
+                });  
        barcode02 = new wijmo.barcode.common.Code128('#barcode02', {
                     value: 'Code128Demo',
                     autoWidthZoom: 2,
