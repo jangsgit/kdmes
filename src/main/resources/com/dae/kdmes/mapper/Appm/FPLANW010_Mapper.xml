@@ -38,7 +38,7 @@
                A.prod_sdate as prod_sdate,
                A.prod_edate,
                A.prod_qty,
-               A.end_qty,
+               D.wotqt  - D.wbdqt as end_qty,
                A.orddate,
                A.ordnum,
                A.ordseq,
@@ -65,6 +65,7 @@
                isnull(D.wotqt,0) as owqty,
                (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no  and wflag= '00010' group by plan_no,wseq,wflag ) as obqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
+               D.partcode  as partcode,
                D.winps as winps,
                D.wrps as wrps,
                D.wrmc as wrmc,
@@ -78,7 +79,8 @@
         WHERE (A.pcode              = C.JKEY)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND (A.line               = #{line})
-          AND (A.cls_flag          IN ('1', '2', '3', '4'))
+          AND (A.cls_flag          IN ('1', '2' ))
+          AND (A.decision1 in ('0', '1', '2'))
           AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
           AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
           AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
@@ -108,7 +110,7 @@
         A.prod_sdate as prod_sdate,
         A.prod_edate,
         A.end_qty as prod_qty,
-        A.end_qty,
+        D.wotqt  - D.wbdqt as end_qty,
         A.orddate,
         A.ordnum,
         A.ordseq,
@@ -135,6 +137,7 @@
         isnull(D.wotqt,0) as owqty,
         (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00020' group by plan_no,wseq,wflag ) as obqty,
         isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
+        D.partcode ,
         D.winps as winps,
         D.wrps as wrps,
         (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm,
@@ -153,7 +156,7 @@
         AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
         AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
         AND ( ISNULL(A.line,'')  = '00' )
-        AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') <= '00020')
+        AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
         AND ( Len( ISNULL(A.wflag,'') ) > 0  )
         ORDER BY A.prod_sdate desc, A.wono
          ]]>
@@ -295,7 +298,7 @@
     </select>
     <select id="GetFPLANW010_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
-               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
+               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision,B.decision1, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
                D.jgugek AS psize, D.jdanwy AS punit,
                (CASE WHEN A.winps > 1 THEN E.inname  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  E.inname END ) wrpsnm
         from TB_FPLAN_W010 A WITH (NOLOCK)
@@ -346,9 +349,9 @@
 
     <insert id="FPLANW010_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
         INSERT INTO TB_FPLAN_W010(custcd, spjangcd, plan_no, wseq, wflag, wfrdt, wtrdt, wrmc, winqt, wotqt, wqcqt,
-                             wbdqt,   winps, wsyul, wrps, wremark, decision,indate, inperid )
+                             wbdqt,   winps, wsyul, wrps, wremark, decision,indate, inperid, partcode )
         VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wseq}, #{wflag}, #{wfrdt}, #{wtrdt}, #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt},
-                 #{wbdqt},   #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid})
+                 #{wbdqt},   #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid}, #{partcode})
     </insert>
 
     <insert id="FPLANW020_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
@@ -371,6 +374,8 @@
         wtrdt=#{wtrdt}
         <if test="wfrdt != null ">,</if>
         <if test="wfrdt != null">wfrdt=#{wfrdt}</if>
+        <if test="partcode != null ">,</if>
+        <if test="partcode != null">partcode=#{partcode}</if>
         <if test="winqt != null ">,</if>
         <if test="winqt != null">winqt=#{winqt}</if>
         <if test="wotqt != null ">,</if>
@@ -485,6 +490,8 @@
         <if test="end_qty != null">end_qty=#{end_qty}</if>
         <if test="clsflag != null ">,</if>
         <if test="clsflag != null">cls_flag=#{clsflag}</if>
+        <if test="workdv != null ">,</if>
+        <if test="workdv != null">workdv=#{workdv}</if>
         <if test="decision != null ">,</if>
         <if test="decision != null">decision=#{decision}</if>
         <if test="decision1 != null ">,</if>
@@ -532,6 +539,10 @@
         where plan_no=#{plan_no} and wotdt=#{wotdt} and lotno=#{lotno} and wflag=#{wflag} and wseq=#{wseq} and seq=#{seq}
     </update>
 
+    <delete id="FPLAN_OWORK_PERDELETE" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
+        DELETE  from TB_FPLAN_OWORK
+        where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag} AND seq =#{seq}
+    </delete>
 
     <select id="FPLAN_OWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="String">
         SELECT MAX(seq) FROM  TB_FPLAN_OWORK
@@ -547,6 +558,7 @@
         WHERE  A.plan_no =#{plan_no} and A.wflag =#{wflag} and A.wseq =#{wseq}
         group by A.plan_no, A.wflag, A.wseq
     </select>
+
 
 
     <delete id="FPLANW010_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >

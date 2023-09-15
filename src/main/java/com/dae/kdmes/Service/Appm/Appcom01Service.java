@@ -39,39 +39,39 @@ public class Appcom01Service {
         return FPLANW010_mapper.GetFPLANW020_Detail(parm);
     }
 
-    public void FPLANW010_Insert(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW010_Insert(parm);
+    public Boolean FPLANW010_Insert(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW010_Insert(parm);
     }
-    public void FPLANW010_Update(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW010_Update(parm);
-    }
-
-    public void FPLANW020_Insert(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW020_Insert(parm);
-    }
-    public void FPLANW020_Update(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW020_Update(parm);
+    public Boolean FPLANW010_Update(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW010_Update(parm);
     }
 
-    public void FPLAN_Update(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLAN_Update(parm);
+    public Boolean FPLANW020_Insert(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW020_Insert(parm);
     }
-    public void FPLAN_OWORK_Insert(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLAN_OWORK_Insert(parm);
+    public Boolean FPLANW020_Update(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW020_Update(parm);
+    }
+
+    public Boolean FPLAN_Update(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLAN_Update(parm);
+    }
+    public Boolean FPLAN_OWORK_Insert(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLAN_OWORK_Insert(parm);
     }
     public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_OWORK_MAXWSEQ(parm);}
     public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLAN_IWORK_MAXWSEQ(parm);}
 
-    public void FPLANW010_WrmcUpdate(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW010_WrmcUpdate(parm);
+    public Boolean FPLANW010_WrmcUpdate(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW010_WrmcUpdate(parm);
     }
-    public void FPLANW010_Delete(FPLANW010_VO parm){
-        FPLANW010_mapper.FPLANW010_Delete(parm);
+    public Boolean FPLANW010_Delete(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW010_Delete(parm);
     }
 
-    public void FPLAN_OWORK_Delete(FPLANW010_VO parm){FPLANW010_mapper.FPLAN_OWORK_Delete(parm);}
-    public void FPLAN_IWORK_Delete(FPLANW010_VO parm){FPLANW010_mapper.FPLAN_IWORK_Delete(parm);}
-    public void FPLAN_WORK_Delete(FPLANW010_VO parm){FPLANW010_mapper.FPLAN_WORK_Delete(parm);}
+    public Boolean FPLAN_OWORK_Delete(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_OWORK_Delete(parm);}
+    public Boolean FPLAN_IWORK_Delete(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_IWORK_Delete(parm);}
+    public Boolean FPLAN_WORK_Delete(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_WORK_Delete(parm);}
 
 
     public FPLANW010_VO FPLANW010_Blank(){
@@ -80,8 +80,8 @@ public class Appcom01Service {
     public Object FPLAN_Blank(){
         return FPLANW010_mapper.GetFPLAN_Blank();
     }
-    public void FPLANWORK_Insert(FPLANW010_VO parm){ FPLANW010_mapper.FPLANWORK_Insert(parm); }
-    public void FPLANWORK_Update(FPLANW010_VO parm){ FPLANW010_mapper.FPLANWORK_update(parm); }
+    public Boolean FPLANWORK_Insert(FPLANW010_VO parm){ return FPLANW010_mapper.FPLANWORK_Insert(parm); }
+    public Boolean FPLANWORK_Update(FPLANW010_VO parm){ return FPLANW010_mapper.FPLANWORK_update(parm); }
     public String GetWtimeWseq(TBPopupVO parm){
         return FPLANW010_mapper.GetWtimeWseq(parm);
     }
@@ -99,8 +99,8 @@ public class Appcom01Service {
 
 
     public List<FPLANWPERID_VO> FPLAN_WPERID_SELECT (FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_WPERID_SELECT(parm);}
-    public void FPLAN_WPERID_Insert(FPLANWPERID_VO parm){ FPLANW010_mapper.FPLAN_WPERID_Insert(parm); }
-    public void FPLAN_WPERID_Delete(FPLANWPERID_VO parm){ FPLANW010_mapper.FPLAN_WPERID_Delete(parm); }
+    public Boolean FPLAN_WPERID_Insert(FPLANWPERID_VO parm){ return FPLANW010_mapper.FPLAN_WPERID_Insert(parm); }
+    public Boolean FPLAN_WPERID_Delete(FPLANWPERID_VO parm){ return FPLANW010_mapper.FPLAN_WPERID_Delete(parm); }
 
 
     public List<FPLANWBAD_VO> FPLAN_WBAD_SELECT_blank(FPLANWBAD_VO parm){return FPLANW010_mapper.FPLAN_WBAD_SELECT_blank(parm);}
@@ -109,18 +109,20 @@ public class Appcom01Service {
     public String FPLAN_WBAD_MAXWSEQ(FPLANWBAD_VO parm){
         return FPLANW010_mapper.FPLAN_WBAD_MAXWSEQ(parm);
     }
-    public void FPLAN_WBAD_Insert(FPLANWBAD_VO parm){ FPLANW010_mapper.FPLAN_WBAD_Insert(parm); }
-    public void FPLAN_WBAD_Update(FPLANWBAD_VO parm){ FPLANW010_mapper.FPLAN_WBAD_Update(parm); }
+    public Boolean FPLAN_WBAD_Insert(FPLANWBAD_VO parm){ return FPLANW010_mapper.FPLAN_WBAD_Insert(parm); }
+    public Boolean FPLAN_WBAD_Update(FPLANWBAD_VO parm){ return FPLANW010_mapper.FPLAN_WBAD_Update(parm); }
 
-    public void FPLAN_WBAD_Delete(FPLANW010_VO parm){ FPLANW010_mapper.FPLAN_WBAD_Delete(parm); }
+    public Boolean FPLAN_WBAD_Delete(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_WBAD_Delete(parm); }
 
     public String FPLAN_WTIME_MAXSEQ(FPLANWTIME_VO parm){ return FPLANW010_mapper.FPLAN_WTIME_MAXSEQ(parm); }
-    public void FPLAN_WTIME_Insert(FPLANWTIME_VO parm){ FPLANW010_mapper.FPLAN_WTIME_Insert(parm); }
-    public void FPLAN_WTIME_Delete(FPLANW010_VO parm){ FPLANW010_mapper.FPLAN_WTIME_Delete(parm); }
-    public void FPLAN_WTIME_Update(FPLANWTIME_VO parm){ FPLANW010_mapper.FPLAN_WTIME_Update(parm); }
+    public Boolean FPLAN_WTIME_Insert(FPLANWTIME_VO parm){ return FPLANW010_mapper.FPLAN_WTIME_Insert(parm); }
+    public Boolean FPLAN_WTIME_Delete(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_WTIME_Delete(parm); }
+    public Boolean FPLAN_WTIME_Update(FPLANWTIME_VO parm){ return FPLANW010_mapper.FPLAN_WTIME_Update(parm); }
 
-    public void FPLAN_OWORK_Update(FPLANW010_VO parm){ FPLANW010_mapper.FPLAN_OWORK_Update(parm); }
+    public Boolean FPLAN_OWORK_Update(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_OWORK_Update(parm); }
     public FPLANW010_VO FPLAN_OWORK_SUMQTY(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_OWORK_SUMQTY(parm); }
+    public Boolean FPLAN_OWORK_PERDELETE(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_OWORK_PERDELETE(parm); }
+
 
 
     public List<FPLANIWORK_VO> GetPlanSearch(FPLANIWORK_VO parm){

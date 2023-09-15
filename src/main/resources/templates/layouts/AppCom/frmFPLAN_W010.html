@@ -222,12 +222,18 @@
                                                     <div id="wscntdis02"></div>
                                                 </div>
                                             </div> 
-                                            <div class="row mb-3  row-cols-lg-3 align-items-center">  
-                                                
+                                            <div class="row mb-3  row-cols-lg-3 align-items-center">   
                                                 <div class="col-3">
                                                     <div class="input-group">
                                                         <div class="input-group-text">비고</div>
                                                         <input class="form-control form-control-sm" id="inwremark" type="text"
+                                                            placeholder=""  />
+                                                    </div>
+                                                </div>  
+                                                <div class="col-3">
+                                                    <div class="input-group">
+                                                        <div class="input-group-text">자재바코드</div>
+                                                        <input class="form-control form-control-sm" id="inpartcode" type="text"
                                                             placeholder=""  />
                                                     </div>
                                                 </div> 
@@ -464,11 +470,13 @@
                                                                     <input type="text"  class="form-control datetimepicker" id="popwkotDate" autocomplete="off" placeholder="Y-m-d" >
                                                                     <div class="input-group-text">생산량</div>
                                                                     <input class="form-control form-control-sm"  type="number" id="popwotqt"  placeholder=""      />
-                                                                    <!-- <div class="input-group-text">불량수량</div>
-                                                                    <input class="form-control form-control-sm"  type="number" id="popwbdqt"  placeholder=""      />  -->
+                                                                    <!-- <div class="input-group-text">불량수량</div> -->
+                                                                    <input class="form-control form-control-sm"  type="hidden" id="popwbdqt"  placeholder=""      /> 
                                                                     <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="save_fnc()">등록
                                                                     </button> 
                                                                     <button class="btn btn-falcon-warning me-1 mb-1" type="button" id="popsearch01" >조회
+                                                                    </button> 
+                                                                    <button class="btn btn-falcon-danger me-1 mb-1" type="button" id="popsearch02" onclick="woworkDel()">삭제
                                                                     </button> 
                                                                     <input class="form-control form-control-sm" id="popseq" type="hidden"  /> 
                                                                     <input class="form-control form-control-sm" id="popwseq" type="hidden"  /> 
@@ -483,7 +491,7 @@
                                                     <div class="modal-footer">
                                                         <div class="row g-1">
                                                             <div class="col-auto">
-                                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                <button class="badge-soft-primary dropdown-item rounded-1"  id="wotqtymodal_btn"
                                                                     type="button" data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                             <!-- <div class="col-auto">
@@ -528,7 +536,9 @@
     var button_wrmcBtn = document.getElementById('wrmcBtn');
     var button_wperidBtn = document.getElementById('wperidBtn');
     var button_wotqtyBtn = document.getElementById('wotqtyBtn');
-    var button_wbadqtyBtn = document.getElementById('wbadqtyBtn');  
+    var button_wbadqtyBtn = document.getElementById('wbadqtyBtn');
+    var button_worksaveBtn = document.getElementById('worksaveBtn');
+      
     const statusdis_div = document.getElementById('statusdis01'); 
 
     function barcode_enter(e){ 
@@ -568,7 +578,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {
-                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm   );
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode   );
                         }
                     })
                 }, 
@@ -635,7 +645,8 @@
                     obqty: ListDto[i]["obqty"],
                     end_qty: ListDto[i]["end_qty"],
                     wrmc: ListDto[i]["wrmc"],
-                    wrmcnm: ListDto[i]["wrmcnm"]
+                    wrmcnm: ListDto[i]["wrmcnm"],
+                    partcode: ListDto[i]["partcode"]
                     
                     
                 });
@@ -1416,7 +1427,7 @@
         }
 
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-    //작업시작
+    //공정시작
     var button_wfrdt = document.getElementById('wfrdt');
     var button_wtrdt = document.getElementById('wtrdt');
     document.getElementById("wfrdt").addEventListener("click",function(){ 
@@ -1431,7 +1442,7 @@
     })
 
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-    //작업종료
+    //공정종료
     document.getElementById("wtrdt").addEventListener("click",function(){    
             const TIME_ZONE = 3240 * 10000;  
             const d =  new Date(); 
@@ -1491,6 +1502,7 @@
         var ls_inwrps   = document.getElementById('inwrps').value; 
         var ls_inpcode   = document.getElementById('inpcode').value; 
         var ls_inwono   = document.getElementById('inwono').value;  
+        var ls_inpartcode  = document.getElementById('inpartcode').value;  
 
         button_workstBtn.disabled = false;
         button_workedBtn.disabled = false;
@@ -1500,25 +1512,30 @@
         button_wperidBtn.disabled = false;
         button_wotqtyBtn.disabled = false;
         button_wbadqtyBtn.disabled = false; 
-
+        button_worksaveBtn.disabled = false; 
         if(arg1 == "1" || arg1 == "4"){  //공정시작 작업시작
             button_workstBtn.disabled = true;
             button_workedBtn.disabled = false;
             button_wfrdt.disabled = true;
-            button_wtrdt.disabled = false;   
+            button_wtrdt.disabled = false;               
             endDate = "";
             document.getElementById('endDate').value = null;
-        }else if(arg1 == "0"){  //공정종료 작업중단
+        }else if(arg1 == "0"){  //공정종료  
             button_workstBtn.disabled = true;
-            button_workedBtn.disabled = true;   
-        }else if(arg1 == "2"){  //  작업시작
-            button_workstBtn.disabled = true;
-            button_workedBtn.disabled = false; 
-            endDate = "";
-            document.getElementById('endDate').value = null;
-        }else{ // 작업중단
-            button_workstBtn.disabled = false;
             button_workedBtn.disabled = true; 
+            button_worksaveBtn.disabled = true;   
+        }else if(arg1 == "2"){  //  작업시작 
+            button_workstBtn.disabled = true; 
+            button_wfrdt.disabled = true;  
+            button_wtrdt.disabled = false;    
+
+            endDate = "";
+            document.getElementById('endDate').value = null;
+        }else{ // 작업중단 
+            button_workedBtn.disabled = true;
+            button_wfrdt.disabled = true;  
+
+
             endDate = "";
             document.getElementById('endDate').value = null;
         }   
@@ -1576,7 +1593,7 @@
         var ls_decision = arg1; 
 
         if(!endDate)  {endDate = "  "}
-        //   console.log(endDate);
+        //  공정종료  공정시작  저장 
         if(arg1 == "0" || arg1 == "1" || arg1 == "4"){
             $.ajax({
                 url: '/input/w010upd',   
@@ -1599,7 +1616,9 @@
                     "winps"     : ls_inwinps     ,
                     "decision"  : ls_decision    ,
                     "pcode"     : ls_inpcode     ,
-                    "wono"      : ls_inwono
+                    "wono"      : ls_inwono ,
+                    "partcode"      : ls_inpartcode , 
+                    "workdv"      : arg1
                 },
                 async:false,
                 success:function(data){
@@ -1638,6 +1657,8 @@
             })     
 
         }else{
+            // 작업시작 작업중단 
+            // console.log("workdv-->" + arg1)
             $.ajax({
                 url: '/input/wtimeupd',   
                 type:"POST", 
@@ -1646,7 +1667,8 @@
                     "spjangcd"  : ls_spjangcd, 
                     "plan_no"   : ls_plan_no, 
                     "wflag"     : ls_inwflag     , 
-                    "decision"  : ls_decision    
+                    "decision"  : ls_decision  ,
+                    "workdv"      : arg1  
                 },
                 async:false,
                 success:function(data){
@@ -1743,7 +1765,61 @@
 
     }   
     
-    
+    function woworkDel(){
+        //ctx.item.plan_no, ctx.item.wseq, ctx.item.seq, ctx.item.pcode, ctx.item.lotno
+        
+        var ls_custcd   = document.getElementById('incustcd').value; 
+        var ls_spjangcd = document.getElementById('inspjangcd').value; 
+        var ls_plan_no   = document.getElementById('inplan_no').value; 
+        var ls_inpcode   = document.getElementById('inpcode').value;  
+        var ls_popwotqt   = document.getElementById('popwotqt').value;  
+        var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
+        var ls_popseq   = document.getElementById('popseq').value; 
+        var ls_popwseq   = document.getElementById('popwseq').value; 
+        var ls_wflag = '00010' 
+
+        if(!ls_popwotqt){
+            ls_popwotqt = 0;
+        }else{ 
+            if(isNaN(ls_popwotqt)){
+                ls_popwotqt = 0;
+            }else{
+                ls_popwotqt = Number(ls_popwotqt);
+            } 
+        } 
+        if(ls_popwotqt == 0) {
+            alert("생산수량을 입력하세요")
+            return 
+        }
+
+        let result = '';
+            if (!confirm("삭제하시겠습니까?")) {
+                return ; 
+            }  
+            $.ajax({
+                url: '/input/oworkdel',   
+                type:"POST", 
+                data: {
+                    "plan_no"    : ls_plan_no , 
+                    "wseq"    : ls_popwseq,  
+                    "seq"    : ls_popseq,  
+                    "pcode"    : ls_inpcode ,  
+                    "wflag"    : ls_wflag  
+                },
+                async:false,
+                success:function(data){
+                    // console.log("등록OK", data); 
+                    searchotqty_fnc();
+                    
+                    $("#wotqtymodal_btn").trigger("click"); 
+                    
+                },error:function(e){
+                    console.log('error',e);
+                }
+            }).done(function(fragment){           
+
+            })  
+    }
     function getCheckboxValue(event)  {
         let result = '';
         if(event.target.checked)  {
@@ -1799,7 +1875,7 @@
         document.getElementById('popwseq').value= arg4;  
         document.getElementById('popseq').value= arg5;  
     }
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22 ){ 
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23 ){ 
         // /, ctx.item.owqty ,ctx.item.obqty
             //selectChk(custcd, spjangcd, wono, cltnm, pname, 
             //          ostore, plan_no, cltcd, pcode, wseq,
@@ -1822,7 +1898,8 @@
         document.getElementById('inwseq').value= arg10;  
         document.getElementById('inwflag').value= arg11;  
         document.getElementById('inlotno').value= arg19;  
-        document.getElementById('prod_qty').value= arg20;  
+        document.getElementById('prod_qty').value= arg20;   
+        document.getElementById('inpartcode').value= arg23; 
         
     // document.getElementById('inphmmdoc').value= arg12;  
         wflag = arg11; //document.getElementById('inwflag').value;
@@ -1857,6 +1934,7 @@
         button_wperidBtn.disabled = false;
         button_wotqtyBtn.disabled = false;
         button_wbadqtyBtn.disabled = false; 
+        button_worksaveBtn.disabled = false; 
         // const wqtydis_div = document.getElementById('wqtydis01');  
         const wono_div    = document.getElementById('inwonobdg');  
         const wrmc_div       = document.getElementById('inwrmcbdg');
@@ -1943,6 +2021,7 @@
                 document.getElementById('startDate').value = startDate;     //
                 document.getElementById('endDate').value = endDate;     //
                 document.getElementById('inwrpsnm').value = wrpsnm;     // 
+                //공정시작
                 if (decision == "1"){  
                         button_workstBtn.disabled = false;
                         button_workedBtn.disabled = false;
@@ -1962,7 +2041,28 @@
                         button_wperidBtn.disabled = true;
                         button_wotqtyBtn.disabled = true;
                         button_wbadqtyBtn.disabled = true; 
+                        button_worksaveBtn.disabled = true;                          
                     var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>공정 완료</span></div>";
+                }else if(decision == "2"){
+                        button_workstBtn.disabled = true;
+                        button_workedBtn.disabled = false;
+                        button_wfrdt.disabled = true;
+                        button_wtrdt.disabled = false;   
+                        button_wrmcBtn.disabled = false;
+                        button_wperidBtn.disabled = false;
+                        button_wotqtyBtn.disabled = false;
+                        button_wbadqtyBtn.disabled = false; 
+                    var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>작업시작</span></div>";
+                }else if(decision == "3"){
+                        button_workstBtn.disabled = false;
+                        button_workedBtn.disabled = true;
+                        button_wfrdt.disabled = true;
+                        button_wtrdt.disabled = false;   
+                        button_wrmcBtn.disabled = false;
+                        button_wperidBtn.disabled = false;
+                        button_wotqtyBtn.disabled = false;
+                        button_wbadqtyBtn.disabled = false; 
+                    var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>작업중단</span></div>";                                        
                 }else{
                         button_workstBtn.disabled = false;
                         button_workedBtn.disabled = false;

@@ -701,7 +701,7 @@
                                 cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                     text: '<b>${item.lotno}</b>',
                                     click: (e, ctx) => {
-                                        selectChk("B", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
+                                        selectChk("B", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno, ctx.item.prod_qty );
                                     }
                                 })
                             }, 
@@ -1203,6 +1203,7 @@
                                 if (col.binding == 'wbqty') {
                                     var ll_qty = 0;
                                     var ll_tqty = 0;
+                                    var ls_wcode = "";
                                     var ll_inputqty = s.activeEditor.value;
                                     var ll_row = e.row;
                                     var ll_wotqt = document.getElementById('inwotqt').value
@@ -1211,9 +1212,10 @@
                                         alert("검사량이 없습니다.")
                                         return 
                                     } 
-                                    // console.log('qty',s.activeEditor.value);  
-                                    var rows = e._p._rows.length - 1;  
+                                    // console.log('qty',s.activeEditor.value);                                      
+                                    var rows = e._p._rows.length;                                      
                                     for (var i = 0; i < rows ; i++) {  
+                                        console.log(e._p._rows[i]);
                                         if (ll_row == i){
                                             ll_qty = parseFloat(ll_inputqty);   //parseFloat(값) 
                                             ls_wcode = e._p._rows[i]._data.wcode ;
@@ -1229,6 +1231,7 @@
                                     }  
                                     // tqty = Number(wbomGrid.getCellData(ll_bomchkrow, 5, false));  
                                     if(!ll_tqty){ll_tqty = 0 }; 
+                                    console.log("ls_wcode--->" + ls_wcode);
                                     if (ll_wotqt < ll_tqty){
                                         alert("불량수량이 검사수량을 초과합니다.")
                                         return
@@ -1394,7 +1397,7 @@
                                 cols.width = '*';
                                 wrmcGrid.columns.push(cols);  
                             },error:function(e){
-                                alert(data.code);
+                                // alert(data.code);
                                 alert(data.message);
                             }
                         }).done(function(fragment){           
@@ -1783,7 +1786,7 @@
             //   공정시작  공정종료 작업중단
             if(arg1 == "0" || arg1 == "1" || arg1 == "4"){
                 $.ajax({
-                    url: '/input/w020upd',   
+                    url: '/input02/w020upd',   
                     type:"POST", 
                     data: {
                         "custcd"    : ls_custcd ,
@@ -1804,7 +1807,8 @@
                         "decision"  : ls_decision    ,
                         "pcode"     : ls_inpcode     ,
                         "wono"      : ls_inwono     ,
-                        "arrplanno"   : plan_no,
+                        "arrplanno"   : plan_no, 
+                        "workdv"      : arg1
                     },
                     async:false,
                     success:function(data){ 
@@ -1839,7 +1843,7 @@
                                 return; 
                             }
                             $.ajax({
-                                    url: '/input/w020iwkupd',   
+                                    url: '/input02/w020iwkupd',   
                                     type:"POST", 
                                     data: {  
                                         "startDate" : startDate , 
@@ -2012,7 +2016,7 @@
                     return ;               
             }     
             $.ajax({
-                url: '/input/w020del',   
+                url: '/input02/w020del',   
                 type:"POST", 
                 data: {
                     "plan_no"    : ls_plan_no  
@@ -2040,12 +2044,12 @@
                 //selectChk(custcd, spjangcd, wono, cltnm, pname, 
                 //          ostore, plan_no, cltcd, pcode, wseq,
                 //            wflag, phmmdoc, otqty, wrpsnm, owqty ,
-                //              obqty,winps,wrps,lotno );
+                //              obqty,winps,wrps,lotno,prod_qty );
             // var button_workstBtn = document.getElementById('workstBtn');
             // var button_workedBtn = document.getElementById('workedBtn'); 
             //     button_workstBtn.disabled = false;
             //     button_workedBtn.disabled = false; 
-
+            
             document.getElementById('incustcd').value= arg1; 
             document.getElementById('inspjangcd').value= arg2; 
             document.getElementById('inwono').value= arg3; 
@@ -2060,6 +2064,8 @@
             document.getElementById('inwflag').value= arg11;  
             if(arg0 == "B"){
                 document.getElementById('inlotno').value= arg19;  
+            }else{
+                document.getElementById('inlotno').value= "";  
             }
             // button_workstBtn.disabled = false;
             // button_workedBtn.disabled = false;
@@ -2108,7 +2114,7 @@
             var ls_text = "<div style='color:red'><span class='badge badge-soft-info'></span></div>"; 
             statusdis_div.innerHTML  = ls_text;   
             $.ajax({
-                url: '/input/w020',   
+                url: '/input02/w020',   
                 type:"POST", 
                 data: {
                     "custcd"    : arg1,
@@ -2147,7 +2153,7 @@
                 
             // 사출완료 상단 리스트
             $.ajax({
-                url: '/input/SELW020',   
+                url: '/input02/SELW020',   
                 type:"POST", 
                 data: {
                     "custcd"    : arg1,
@@ -2174,9 +2180,9 @@
                     document.getElementById('inwrmc').value = inwrmc; 
                     document.getElementById('inmachname').value = inmachname; 
                     //document.getElementById('inwinqt').value = inwinqt;         //투입량
-                    // document.getElementById('inwotqt').value = inwotqt;         //완료량
-                    // document.getElementById('inwbdqt').value = inwbdqt;         //불량수량
-                    // document.getElementById('inwokqt').value = inwokqt;         //검사수량
+                    document.getElementById('inwotqt').value = inwotqt;         //완료량
+                    document.getElementById('inwbdqt').value = inwbdqt;         //불량수량
+                    document.getElementById('inwokqt').value = inwokqt;         //검사수량
                     document.getElementById('inwremark').value = inwremark;     //비고
                     document.getElementById('startDate').value = startDate;     //
                     document.getElementById('endDate').value = endDate;     //
@@ -2280,7 +2286,7 @@
  
             if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){ 
                 $.ajax({
-                url: '/input/w020ordlist',  
+                url: '/input02/w020ordlist',  
                 type:"POST",
                 data: { 
                     "lotno"      : ls_searchdate,  
@@ -2339,7 +2345,7 @@
                 })                                  
             }else{
                 $.ajax({
-                url: '/input/w020ordlist',  
+                url: '/input02/w020ordlist',  
                 type:"POST",
                 data: { 
                     "lotno"      : addlotno,  

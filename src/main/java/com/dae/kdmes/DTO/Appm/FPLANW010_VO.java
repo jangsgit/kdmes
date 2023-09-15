@@ -56,7 +56,7 @@ public class FPLANW010_VO {
     private String opdate;
     private String phmmdoc;
     private String wotdt;
-
+    private String workdv;
 
     private float wokqt;
     private float jqty;
@@ -71,4 +71,5 @@ public class FPLANW010_VO {
     private String machname;
     private String crudflag;
     private String clsflag;
+    private String partcode;
 }
