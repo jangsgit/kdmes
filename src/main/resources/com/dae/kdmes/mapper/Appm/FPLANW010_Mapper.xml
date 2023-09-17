@@ -97,7 +97,7 @@
         A.spjangcd,
         A.wodv,
         A.wono,
-        A.lotno,
+        D.lotno AS lotno,
         A.plan_no,
         A.cltcd,
         B.acorp as cltnm,
@@ -109,7 +109,7 @@
         A.opcod,
         A.prod_sdate as prod_sdate,
         A.prod_edate,
-        A.end_qty as prod_qty,
+        E.wotqt  - E.wbdqt as prod_qty,
         D.wotqt  - D.wbdqt as end_qty,
         A.orddate,
         A.ordnum,
@@ -130,22 +130,22 @@
         A.perid,
         A.remark,
         A.workdv,
-        D.wflag wflag,
+        A.wflag wflag,
         A.wseq  wseq,
         CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
         A.tordqty,
         isnull(D.wotqt,0) as owqty,
         (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00020' group by plan_no,wseq,wflag ) as obqty,
         isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
-        D.partcode ,
+        '' AS partcode ,
         D.winps as winps,
         D.wrps as wrps,
         (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm,
         isnull(CONVERT(CHAR(8), F.wfrdt,12), '') as   qcdate
         FROM TB_FPLAN A WITH(NOLOCK)
-            LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00020'
+            LEFT OUTER JOIN  TB_FPLAN_W020 D ON A.plan_no = D.plan_no AND D.wflag = '00020'
             LEFT OUTER JOIN  TB_FPLAN_WTIME F ON A.plan_no = F.plan_no AND F.wflag = '00020' AND F.WSEQ = '02' AND F.SEQ = '001'
-            LEFT OUTER JOIN  TB_FPLAN_IWORK E ON A.lotno   = E.lotno AND E.wflag = '00020' ,
+            LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010' ,
         JCODE C WITH(NOLOCK),
         CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
@@ -492,6 +492,10 @@
         <if test="clsflag != null">cls_flag=#{clsflag}</if>
         <if test="workdv != null ">,</if>
         <if test="workdv != null">workdv=#{workdv}</if>
+        <if test="qcdate != null ">,</if>
+        <if test="qcdate != null">qcdate=#{qcdate}</if>
+        <if test="qcqty != null ">,</if>
+        <if test="qcqty != null">qcqty=#{qcqty}</if>
         <if test="decision != null ">,</if>
         <if test="decision != null">decision=#{decision}</if>
         <if test="decision1 != null ">,</if>
@@ -511,9 +515,9 @@
     </select>
 
     <insert id="FPLANWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_WORK(custcd, spjangcd, plan_no, wono, wseq, wflag, wrmc, winqt, wotqt, wqcqt,
+        INSERT INTO TB_FPLAN_WORK(custcd, spjangcd, plan_no, wono, wseq, wflag, wrmc, winqt, wotqt, wqcqt,wstdt, wfrdt,
                                   wbdqt,  winps, wsyul, wrps, wremark, decision, indate, inperid )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wono}, #{wseq}, #{wflag},  #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt},
+        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wono}, #{wseq}, #{wflag},  #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt}, #{wstdt},#{wfrdt},
                 #{wbdqt},   #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid})
     </insert>
 

@@ -287,7 +287,7 @@ public class Appm01CrudController {
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update 02");
-                return "error";
+                //return "error";
             }
         }
         result = appcom01Service.FPLAN_Update(workDto);
@@ -401,7 +401,7 @@ public class Appm01CrudController {
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update");
-                return "error";
+                ///return "error";
             }
             wtimeDto.setWtrdt(null);
             result = appcom01Service.FPLAN_WTIME_Insert(wtimeDto);
@@ -414,7 +414,7 @@ public class Appm01CrudController {
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update");
-                return "error";
+                //return "error";
             }
         }
         workDto.setPlan_no(plan_no);
@@ -568,6 +568,7 @@ public class Appm01CrudController {
             wbadDto.setWcode(wcode);
             wbadDto.setWseq(wseq);
             wbadDto.setPcode(pcode);
+            wbadDto.setIndate(getToDate());
             String lsChkseq = appcom01Service.FPLAN_WBAD_SELECT(wbadDto);
             if (lsChkseq == null  || lsChkseq.equals("")){
                 String ls_seq = appcom01Service.FPLAN_WBAD_MAXWSEQ(wbadDto);

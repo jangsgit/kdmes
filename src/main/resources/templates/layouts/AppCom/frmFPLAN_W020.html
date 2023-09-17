@@ -63,11 +63,11 @@
                                                         </div>
                                                         </div> 
                                                 </div>                                -->                                
-                                                <div class="col-auto"> 
+                                                <!-- <div class="col-auto"> 
                                                     <button  class="btn btn-outline-primary me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop02" style=" height:50px;  ">검사진행리스트 </button>
-                                                </div>   
+                                                </div>    -->
                                                 <div class="col-auto"> 
-                                                    <button  class="btn btn-outline-warning me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" height:50px;  ">사출완료리스트 </button>
+                                                    <button  class="btn btn-outline-warning me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" height:50px;  ">검사리스트 </button>
                                                 </div>             
                                                 <div class="col-auto">  
                                                         <div class="col-auto">
@@ -260,7 +260,7 @@
                                                     <div class="modal-content border-0">
                                                         <div class="modal-body p-0" >  
                                                             <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-                                                                <h4 class="mb-1" id="staticBackdropLabel">사출완료리스트</h4> 
+                                                                <h4 class="mb-1" id="staticBackdropLabel">검사리스트</h4> 
                                                             </div>
                                                             <div class="container-fluid">
                                                                 <div id="theGrid_div" style="overflow:scroll;   height:300px;    margin:0 auto; "></div>
@@ -492,11 +492,13 @@
                                                                     <input type="text"  class="form-control datetimepicker" id="popwkotDate" autocomplete="off" placeholder="Y-m-d" >
                                                                     <div class="input-group-text">검사량</div>
                                                                     <input class="form-control form-control-sm"  type="number" id="popwotqt"  placeholder=""      />
-                                                                    <!-- <div class="input-group-text">불량수량</div>
-                                                                    <input class="form-control form-control-sm"  type="number" id="popwbdqt"  placeholder=""      />  -->
+                                                                    <!-- <div class="input-group-text">불량수량</div> -->
+                                                                    <input class="form-control form-control-sm"  type="hidden" id="popwbdqt"  placeholder=""      /> 
                                                                     <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="save_fnc()">등록
                                                                     </button> 
                                                                     <button class="btn btn-falcon-warning me-1 mb-1" type="button" id="popsearch01" >조회
+                                                                    </button> 
+                                                                    <button class="btn btn-falcon-danger me-1 mb-1" type="button" id="popsearch02" onclick="woworkDel()">삭제
                                                                     </button> 
                                                                     <input class="form-control form-control-sm" id="popseq" type="hidden"  /> 
                                                                     <input class="form-control form-control-sm" id="popwseq" type="hidden"  /> 
@@ -606,9 +608,21 @@
                                 })
                             },                             
                             // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
-                            { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
+                            {
+                                binding: 'pname',
+                                width: 150,
+                                header: '품목명', 
+                                align:"center",
+                                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                    text: '<b>${item.pname}</b>',
+                                    click: (e, ctx) => {
+                                        selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty    );
+                                    }
+                                })
+                            },                              
                             { binding: 'psize', header: '규격',     align:"center",  width: 130 },
                             { binding: 'prod_qty', header: '계획량',align:"center",  width: 90 },
+                            { binding: 'prod_qty', header: '검사량',align:"center",  width: 90 },
                             { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  } 
 
                         ],
@@ -707,7 +721,18 @@
                             }, 
                             // { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
                             // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
-                            { binding: 'pname', header: '품목명',   align:"center",  width: 180 }, 
+                            {
+                                 binding: 'pname', 
+                                 header: '품목명',   
+                                 align:"center",  
+                                 width: 180 , 
+                                cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                    text: '<b>${item.pname}</b>',
+                                    click: (e, ctx) => {
+                                        selectChk("B", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno, ctx.item.prod_qty );
+                                    }
+                                })
+                            }, 
                             { binding: 'psize', header: '규격',     align:"center",  width: 150 },
                             { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
                             { binding: 'otqty', header: '검사량',align:"center",  width: 100 },
@@ -1621,13 +1646,11 @@
                         const date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
                         const time = d.toTimeString().split(' ')[0]; 
                         document.getElementById('endDate').value = date + ' ' + time;
-                        var ll_inwokqt = document.getElementById('inwokqt').value;
-                        console.log(ll_inwokqt);
+                        var ll_inwokqt = document.getElementById('inwokqt').value; 
                         if(!ll_inwokqt || ll_inwokqt ==0){
-                            alert("생산량을 등록하고 공정종료 버튼을 클릭하세요.")
+                            alert("검사량을 등록하고 공정종료 버튼을 클릭하세요.")
                             return 
-                        }
-                        return 
+                        } 
                         save_btn("0")
                         button_wfrdt.disabled = true;
                         button_wtrdt.disabled = true;
@@ -1704,6 +1727,7 @@
             button_wotqtyBtn.disabled = false;
             button_wbadqtyBtn.disabled = false; 
 
+            console.log(ls_plan_no);
             if(arg1 == "1" || arg1 == "4"){  //공정시작 작업시작
                 // button_workstBtn.disabled = true;
                 // button_workedBtn.disabled = false;
@@ -1712,8 +1736,9 @@
                 endDate = "";
                 document.getElementById('endDate').value = null;
             }else if(arg1 == "0"){  //공정종료 작업중단
-                // button_workstBtn.disabled = true;
-                // button_workedBtn.disabled = true;   
+                button_wotqtyBtn.disabled = true;  
+                button_wperidBtn.disabled = true;
+                button_wbadqtyBtn.disabled = true;    
             }else if(arg1 == "2"){  //  작업시작
                 // button_workstBtn.disabled = true;
                 // button_workedBtn.disabled = false; 
@@ -1781,8 +1806,7 @@
             if(!endDate)  {endDate = "  "}
             if(plan_no.length == 0){
                 plan_no[0] = "0";
-              console.log(plan_no);
-            }
+            } 
             //   공정시작  공정종료 작업중단
             if(arg1 == "0" || arg1 == "1" || arg1 == "4"){
                 $.ajax({
@@ -1836,37 +1860,7 @@
                             button_wperidBtn.disabled = false;
                             button_wotqtyBtn.disabled = false;
                             button_wbadqtyBtn.disabled = false; 
-                            var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";         
-                             
-                            if(plan_no[0] == "0"){ 
-                                console.log("exit")
-                                return; 
-                            }
-                            $.ajax({
-                                    url: '/input02/w020iwkupd',   
-                                    type:"POST", 
-                                    data: {  
-                                        "startDate" : startDate , 
-                                        "keyplan"     : ls_plan_no     ,  
-                                        "plan_no"   : plan_no,
-                                        "lotno"      : lotno      ,
-                                        "pcode"     : pcode     ,
-                                        "prodqty"     : prod_qty     ,
-                                        "wflag"     : ls_inwflag     , 
-                                    },
-                                    async:false,
-                                    success:function(data){
-                                        console.log("등록OK", data);  
-                                },error:function(e){
-                                    console.log('error',e);
-                                }
-                                }).done(function(fragment){           
-
-                                })                              
-
-
-
-
+                            var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";   
                         } 
                         statusdis_div.innerHTML  = ls_text;  
                 
@@ -1878,6 +1872,7 @@
                 })     
 
             }else{
+            // 작업시작 작업중단 
                 $.ajax({
                     url: '/input/wtimeupd',   
                     type:"POST", 
@@ -1918,12 +1913,16 @@
             var ls_plan_no   = document.getElementById('inplan_no').value; 
             var ls_inpcode   = document.getElementById('inpcode').value; 
             var ls_inwono   = document.getElementById('inwono').value; 
-            var ls_popwotqt   = document.getElementById('popwotqt').value; 
+            var ls_popwotqt   = document.getElementById('popwotqt').value; //등록량
             var ls_popwbdqt   = 0 ; //document.getElementById('popwbdqt').value;  
             var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
             var ls_popseq   = document.getElementById('popseq').value; 
             var ls_popwseq   = document.getElementById('popwseq').value; 
-            var ls_wflag = '00020' 
+            var ls_inwinqt   = document.getElementById('inwinqt').value; //투입량
+            var ls_inwotqt   = document.getElementById('inwotqt').value; //검사량
+            
+            var ls_wflag = '00020'  
+            
             if(!ls_popwotqt){
                 ls_popwotqt = 0;
             }else{ 
@@ -1936,6 +1935,13 @@
             if(ls_popwotqt == 0) {
                 alert("검사수량을 입력하세요")
                 return 
+            }
+            ls_inwinqt = Number(ls_inwinqt);
+            ls_inwotqt = Number(ls_inwotqt); 
+            if(ls_inwinqt < ls_inwotqt + ls_popwotqt){ 
+                if (!confirm("투입량을 초과했습니다. 등록하시겠습니까?")) {
+                    return ; 
+                }  
             }
             if(!ls_popwbdqt){
                 ls_popwbdqt = 0;
@@ -1983,7 +1989,63 @@
 
         }   
         
-        
+
+        function woworkDel(){
+            //ctx.item.plan_no, ctx.item.wseq, ctx.item.seq, ctx.item.pcode, ctx.item.lotno
+            
+            var ls_custcd   = document.getElementById('incustcd').value; 
+            var ls_spjangcd = document.getElementById('inspjangcd').value; 
+            var ls_plan_no   = document.getElementById('inplan_no').value; 
+            var ls_inpcode   = document.getElementById('inpcode').value;  
+            var ls_popwotqt   = document.getElementById('popwotqt').value;  
+            var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
+            var ls_popseq   = document.getElementById('popseq').value; 
+            var ls_popwseq   = document.getElementById('popwseq').value; 
+            var ls_wflag = '00020' 
+
+            if(!ls_popwotqt){
+                ls_popwotqt = 0;
+            }else{ 
+                if(isNaN(ls_popwotqt)){
+                    ls_popwotqt = 0;
+                }else{
+                    ls_popwotqt = Number(ls_popwotqt);
+                } 
+            } 
+            if(ls_popwotqt == 0) {
+                alert("생산수량을 입력하세요")
+                return 
+            }
+
+            let result = '';
+                if (!confirm("삭제하시겠습니까?")) {
+                    return ; 
+                }  
+                $.ajax({
+                    url: '/input/oworkdel',   
+                    type:"POST", 
+                    data: {
+                        "plan_no"    : ls_plan_no , 
+                        "wseq"    : ls_popwseq,  
+                        "seq"    : ls_popseq,  
+                        "pcode"    : ls_inpcode ,  
+                        "wflag"    : ls_wflag  
+                    },
+                    async:false,
+                    success:function(data){
+                        // console.log("등록OK", data); 
+                        searchotqty_fnc();
+                        
+                        $("#wotqtymodal_btn").trigger("click"); 
+                        
+                    },error:function(e){
+                        console.log('error',e);
+                    }
+                }).done(function(fragment){           
+
+                })  
+        }
+            
         function getCheckboxValue(event)  {
             let result = '';
             if(event.target.checked)  {
@@ -2062,11 +2124,7 @@
             document.getElementById('inpcode').value= arg9;   
             document.getElementById('inwseq').value= arg10;  
             document.getElementById('inwflag').value= arg11;  
-            if(arg0 == "B"){
-                document.getElementById('inlotno').value= arg19;  
-            }else{
-                document.getElementById('inlotno').value= "";  
-            }
+            document.getElementById('inlotno').value= arg19;  
             // button_workstBtn.disabled = false;
             // button_workedBtn.disabled = false;
             button_wfrdt.disabled = false;

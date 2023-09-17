@@ -479,7 +479,7 @@
                                                                     <button class="btn btn-falcon-danger me-1 mb-1" type="button" id="popsearch02" onclick="woworkDel()">삭제
                                                                     </button> 
                                                                     <input class="form-control form-control-sm" id="popseq" type="hidden"  /> 
-                                                                    <input class="form-control form-control-sm" id="popwseq" type="hidden"  /> 
+                                                                    <input class="form-control form-control-sm" id="popwseq" type="hidden"  />  
                                                                 </div> 
                                                             </div> 
                                                         </div>  
@@ -1491,7 +1491,7 @@
         var endDate   = document.getElementById('endDate').value;
         var ls_plan_no   = document.getElementById('inplan_no').value; 
         var ls_inwrmc   = document.getElementById('inwrmc').value;
-        var ll_inwinqt  = document.getElementById('inwinqt').value;         //투입
+        var ll_inwinqt  = document.getElementById('prod_qty').value;         //계획
         var ll_inwbdqt  = document.getElementById('inwbdqt').value;         //불량
         var ll_inwotqt = document.getElementById('inwotqt').value;          //생산     
         var ll_inwokqt = document.getElementById('inwokqt').value;          //완료
@@ -1705,6 +1705,8 @@
         var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
         var ls_popseq   = document.getElementById('popseq').value; 
         var ls_popwseq   = document.getElementById('popwseq').value; 
+        var ls_inwinqt   = document.getElementById('prod_qty').value; //계획량
+        var ls_inwotqt   = document.getElementById('inwotqt').value; //생산량
         var ls_wflag = '00010' 
         if(!ls_popwotqt){
             ls_popwotqt = 0;
@@ -1718,6 +1720,16 @@
         if(ls_popwotqt == 0) {
             alert("생산수량을 입력하세요")
             return 
+        }
+        ls_inwinqt = Number(ls_inwinqt);
+        ls_inwotqt = Number(ls_inwotqt); 
+        console.log(ls_inwinqt)
+        console.log(ls_inwotqt)
+        console.log(ls_popwotqt)
+        if(ls_inwinqt < ls_inwotqt + ls_popwotqt){ 
+            if (!confirm("계획량을 초과했습니다. 등록하시겠습니까?")) {
+                return ; 
+            }  
         }
         if(!ls_popwbdqt){
             ls_popwbdqt = 0;

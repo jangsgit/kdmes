@@ -22,10 +22,12 @@ public class FPLANW010_VO {
     private String wtrdt;
     private String wstdt;
     private String wendt;
+    private String qcdate;
     private String wrmc;
     private float   winqt;
     private float wotqt;
     private float wqcqt;
+    private float qcqty;
     private float wbdqt;
     private float wscnt;
     private Integer winps;

@@ -279,10 +279,10 @@ public class Appm02CrudController {
         }
         //공정종료
         if(workdv.equals("0")){
-            workDto.setClsflag("3");        // 생산완료
-            workDto.setWorkdv("3");
-            workDto.setDecision("3");
-            workDto.setDecision2("3");
+            workDto.setClsflag("4");        // 검사완료
+            workDto.setWorkdv("4");
+            workDto.setDecision("4");
+            workDto.setDecision2("4");
         }else{
             workDto.setClsflag("2");        // 공정중
         }
@@ -301,7 +301,6 @@ public class Appm02CrudController {
         }else{
             workDto.setWendt(endDate);
         }
-
         workDto.setIndate(getToDate());
         workDto.setWtable("TB_FPLAN_W020");
 
@@ -342,26 +341,38 @@ public class Appm02CrudController {
                 return "error";
             }
         }
+        workDto.setQcdate(wstdt);
+        workDto.setQcqty(wotqt - wbdqt);
+        workDto.setWqcqt(wotqt - wbdqt);
         if(decision.equals("0")){
             wtimeDto.setWtrdt(getToDateTime());
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result){
                 log.info("error Exception =====> FPLAN_WTIME_Update" );
-                return "error";
             }
             workDto.setWflag("00040");
         }
-        if( arrplanno.size() > 0) {
-            for (int i = 0; i < arrplanno.size(); i++) {
-                if (arrplanno.get(i).equals("0")) {break;}
-                workDto.setPlan_no(arrplanno.get(i));
+        if( arrplanno.size() > 0 ) {
+            if(arrplanno.get(0).equals("0")){
                 result = appcom01Service.FPLAN_Update(workDto);
                 if (!result){
-                    log.info("error Exception =====> FPLAN_Update array" );
+                    log.info("error Exception =====> FPLAN_Update" );
                     return "error";
+                }
+            }else{
+                for (int i = 0; i < arrplanno.size(); i++) {
+                    if (arrplanno.get(i).equals("0")) {break;}
+                    workDto.setPlan_no(arrplanno.get(i));
+                    result = appcom01Service.FPLAN_Update(workDto);
+                    if (!result){
+                        log.info("error Exception =====> FPLAN_Update array" );
+                        return "error";
+                    }
                 }
             }
         }else{
+            log.info("getDecision2 =====> " + workDto.getDecision2() );
+            log.info("getEnd_qty =====> " + workDto.getEnd_qty() );
             result = appcom01Service.FPLAN_Update(workDto);
             if (!result){
                 log.info("error Exception =====> FPLAN_Update" );
