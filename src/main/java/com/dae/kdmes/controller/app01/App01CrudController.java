@@ -173,6 +173,29 @@ public class App01CrudController {
         return index01ListDto;
     }
 
+    @GetMapping(value="/wbadlist")
+    public Object App01WbadList_index(@RequestParam("searchtxt") String searchtxt,
+                                        Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            index01Dto.setCom_code(searchtxt);
+            index01Dto.setCom_rem1(searchtxt);
+            index01ListDto = service01.getWbadlist(index01Dto);
+
+            model.addAttribute("wbadlist",index01ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index01ListDto;
+    }
+
     @RequestMapping(value="/comcodedetailsave")
     public String App01ComCodeDetailSave_index(  @RequestParam("com_cls") String com_cls,
                                            @RequestParam("com_code") String com_code,

@@ -35,6 +35,10 @@ public class Index01Service {
         return  indexMapper.getWperidlist(parm);
     }
 
+    public List<Index01Dto> getWbadlist(Index01Dto parm){
+        return  indexMapper.getWbadlist(parm);
+    }
+
     public Boolean InsertComCodeDetail(Index01Dto parm){ return  indexMapper.InsertComCodeDetail(parm);}
     public Boolean UpdateComCodeDetail(Index01Dto parm){  return  indexMapper.UpdateComCodeDetail(parm);}
     public Boolean DeleteComCodeDetail(Index01Dto parm){  return  indexMapper.DeleteComCodeDetail(parm);}

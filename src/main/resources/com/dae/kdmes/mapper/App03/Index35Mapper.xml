@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.App03.Index35Mapper">
+
+
+    <select id="getList"  parameterType="com.dae.kdmes.DTO.app03.Index35Dto" resultType="com.dae.kdmes.DTO.app03.Index35Dto">
+        <![CDATA[
+        select D.wstdt , A.indate,
+        (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
+        A.ecltnm,
+        (CASE WHEN D.wflag='00010' then (DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')) WHEN D.wflag='00020' then (DBO.DF_NM_RTN('TB_JA001', A.custcd, d.wrps, '', '')) ELSE '' END) as pernm ,
+        isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = A.wflag and wrmc = D.wrmc),'') as wrmcnm ,
+        ISNULL(DBO.DF_NM_RTN('TB_WFLAG', D.custcd, D.wflag, '', ''),'') as wflagnm,
+        C.jpum,
+        C.jchajong,
+        A.lotno,
+        (CASE WHEN D.wflag = '00010' THEN A.prod_qty WHEN D.wflag='00020' THEN E.wotqt - E.wbdqt ELSE 0 END) as prod_qty ,
+        d.wotqt,
+        D.wbdqt,
+        d.wotqt - D.wbdqt AS WJQTY,
+        D.wfrdt,
+        D.wtrdt,
+        DATEDIFF(mi, D.wfrdt,D.wtrdt) / 60 AS GAPTIME
+        FROM
+        TB_FPLAN A WITH (NOLOCK)
+        LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no
+        LEFT OUTER JOIN TB_FPLAN_W020 F ON F.plan_no = A.plan_no ,
+        TB_FPLAN_work D WITH (NOLOCK) ,
+        jcode C WITH (NOLOCK)
+        WHERE A.pcode = C.jkey
+        and A.plan_no = D.plan_no
+        and A.indate between '20230701' and '20230930' and D.wflag LIKE '%' AND A.lotno Like '%'
+        and D.wrps like '%'
+        ORDER BY A.LOTNO , f.WFLAG, D.WFRDT
+        ]]>
+    </select>
+
+
+</mapper>

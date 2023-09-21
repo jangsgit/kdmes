@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.App03.Index33Mapper">
+
+
+    <select id="getList"  parameterType="com.dae.kdmes.DTO.app03.Index33Dto" resultType="com.dae.kdmes.DTO.app03.Index33Dto">
+        <![CDATA[
+        select A.qcdate , A.ecltnm, C.jchajong, C.jpum, A.lotno,
+        ISNULL(DBO.DF_NM_RTN('TB_JA001', A.custcd, B.wrps, '', ''),'') as pernm ,
+        B.wotqt - B.wbdqt AS wjqty
+        FROM
+        TB_FPLAN A WITH (NOLOCK) ,
+        TB_FPLAN_W020 B WITH (NOLOCK) ,
+        jcode C WITH (NOLOCK)
+        WHERE A.plan_no = B.plan_no
+        AND A.pcode = C.jkey
+        and A.qcdate between '20230701' and '20230930' and b.wrps LIKE '%' AND A.pcode Like '%'
+        ]]>
+    </select>
+
+
+</mapper>

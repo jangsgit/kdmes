@@ -1,14 +1,18 @@
 package com.dae.kdmes.controller.app02;
 
+import com.dae.kdmes.DTO.App01.Index01Dto;
 import com.dae.kdmes.DTO.App02.Index10Dto;
+import com.dae.kdmes.DTO.App02.Index11Dto;
 import com.dae.kdmes.DTO.App01.Index02Dto;
 import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App01.Index04Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
+import com.dae.kdmes.Service.App01.Index01Service;
 import com.dae.kdmes.Service.App01.Index03Service;
 import com.dae.kdmes.Service.App02.Index10Service;
+import com.dae.kdmes.Service.App02.Index11Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,11 +33,16 @@ import java.util.List;
 @RequestMapping(value = "/app02", method = RequestMethod.POST)
 public class App02Controller {
     private final Index10Service service10;
+    private final Index11Service service11;
     private final Index03Service service03;
+
+    private final Index01Service service01;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
-
+    Index01Dto index01Dto = new Index01Dto();
     Index10Dto index10Dto = new Index10Dto();
+
+    Index11Dto index11Dto = new Index11Dto();
 
     Index02Dto index02Dto = new Index02Dto();
 
@@ -46,7 +55,9 @@ public class App02Controller {
     List<PopupDto> popupListDto1 = new ArrayList<>();
     List<Index10Dto> index10ListDto = new ArrayList<>();
 
-    List<Index02Dto> index02ListDto = new ArrayList<>();
+    List<Index11Dto> index11ListDto = new ArrayList<>();
+
+    List<Index01Dto> index01ListDto = new ArrayList<>();
     List<Index03Dto> index03List = new ArrayList<>();
 
     List<Index04Dto> index04ListDto = new ArrayList<>();
@@ -107,6 +118,31 @@ public class App02Controller {
         }
 
         return "App02/index12";
+    }
+
+    @GetMapping(value="/index11")
+    public String App02_index11(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("주간생산계획현황");
+        CommDto.setMenuUrl("생산계획>주간생산계획현황");
+        CommDto.setMenuCode("index11");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            index11ListDto = service11.getWflagList(index11Dto);
+            index01ListDto = service01.getCom_rem2_keyList(index01Dto);
+
+            model.addAttribute("com_rem2_keyList",index01ListDto);
+            model.addAttribute("wflagList",index11ListDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App02_index Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index11";
     }
 
 }

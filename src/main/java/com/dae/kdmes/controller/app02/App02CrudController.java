@@ -5,10 +5,12 @@ import com.dae.kdmes.DTO.App01.Index02Dto;
 import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App01.Index04Dto;
 import com.dae.kdmes.DTO.App02.Index10Dto;
+import com.dae.kdmes.DTO.App02.Index11Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.Service.App02.Index10Service;
+import com.dae.kdmes.Service.App02.Index11Service;
 import com.dae.kdmes.Service.App01.Index01Service;
 import com.dae.kdmes.Service.App01.Index02Service;
 import com.dae.kdmes.Service.App01.Index03Service;
@@ -33,6 +35,8 @@ import java.util.Map;
 public class App02CrudController {
     private final Index10Service service10;
 
+    private final Index11Service service11;
+
     private final Index01Service service01;
 
     private final Index02Service service02;
@@ -53,6 +57,8 @@ public class App02CrudController {
 
     Index10Dto index10Dto = new Index10Dto();
 
+    Index11Dto index11Dto = new Index11Dto();
+
     List<PopupDto> popupListDto = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
 
@@ -60,6 +66,8 @@ public class App02CrudController {
     List<Index03Dto> index03List = new ArrayList<>();
 
     List<Index10Dto> index10ListDto = new ArrayList<>();
+
+    List<Index11Dto> index11ListDto = new ArrayList<>();
 
     List<Index10Dto> index10List = new ArrayList<>();
 
@@ -749,5 +757,27 @@ public class App02CrudController {
         }
 
         return index01ListDto;
+    }
+
+    //주간생산계획현황
+    @GetMapping(value="/getList")
+    public Object getList(@RequestParam("frdate") String frdate,
+                          @RequestParam("todate") String todate,
+                               Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11ListDto = service11.getList(index11Dto);
+
+            model.addAttribute("getList",index11ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("insalist Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11ListDto;
     }
 }
