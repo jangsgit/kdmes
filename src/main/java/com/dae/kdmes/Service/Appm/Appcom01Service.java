@@ -38,6 +38,9 @@ public class Appcom01Service {
     public Object GetFPLANW020_Detail (FPLANW010_VO parm){
         return FPLANW010_mapper.GetFPLANW020_Detail(parm);
     }
+    public Object GetFPLANW030_Detail (FPLANW010_VO parm){
+        return FPLANW010_mapper.GetFPLANW030_Detail(parm);
+    }
 
     public Boolean FPLANW010_Insert(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW010_Insert(parm);
@@ -51,6 +54,13 @@ public class Appcom01Service {
     }
     public Boolean FPLANW020_Update(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW020_Update(parm);
+    }
+
+    public Boolean FPLANW030_Insert(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW030_Insert(parm);
+    }
+    public Boolean FPLANW030_Update(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW030_Update(parm);
     }
 
     public Boolean FPLAN_Update(FPLANW010_VO parm){
@@ -67,6 +77,12 @@ public class Appcom01Service {
     }
     public Boolean FPLANW010_Delete(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW010_Delete(parm);
+    }
+    public Boolean FPLANW020_Delete(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW020_Delete(parm);
+    }
+    public Boolean FPLANW030_Delete(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW030_Delete(parm);
     }
 
     public Boolean FPLAN_OWORK_Delete(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_OWORK_Delete(parm);}

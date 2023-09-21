@@ -19,11 +19,11 @@
     </select>
     <select id="GetUserInfo" parameterType="com.dae.kdmes.DTO.UserFormDto"  resultType="com.dae.kdmes.DTO.UserFormDto">
         select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, perid, pernm, useyn, role, dbnm, wrongnum, custcd, custnm, perid, pushid
-         from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1} and flag = #{flag}
+         from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
     </select>
     <select id="GetAdminInfo" parameterType="com.dae.kdmes.DTO.UserFormDto"  resultType="com.dae.kdmes.DTO.UserFormDto">
         select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, perid, pernm, useyn, role, dbnm, wrongnum, custcd, custnm, dbnm, psuhid
-        from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1} and flag = #{flag} AND custcd = #{custcd}
+        from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
     </select>
     <select id="GetUserInfoDto" parameterType="com.dae.kdmes.DTO.UserFormDto"  resultType="com.dae.kdmes.DTO.UserFormDto">
         select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone,  perid, pernm, useyn, role, dbnm, wrongnum, custcd, custnm, pushid

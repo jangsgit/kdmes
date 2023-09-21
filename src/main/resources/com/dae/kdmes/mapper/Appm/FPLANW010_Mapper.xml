@@ -227,7 +227,7 @@
 
     </select>
 
-    <select id="GetFPLAN_List03"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
+    <select id="GetFPLAN_List03_old"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
         SELECT A.custcd,
                A.spjangcd,
@@ -296,6 +296,82 @@
         ORDER BY A.prod_sdate desc, A.wono
         ]]>
     </select>
+
+
+    <select id="GetFPLAN_List03"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
+        <![CDATA[
+        SELECT A.custcd,
+               A.spjangcd,
+               A.wodv,
+               A.wono,
+               A.lotno,
+               A.plan_no,
+               A.cltcd,
+               B.acorp as cltnm,
+               A.pcode,
+               C.jpum AS pname,
+               C.jgugek AS psize,
+               C.jdanwy AS punit,
+               A.line,
+               A.opcod,
+               A.prod_sdate as prod_sdate,
+               A.prod_edate,
+               E.wotqt  - E.wbdqt as prod_qty,
+               D.wotqt  - D.wbdqt as end_qty,
+               A.orddate,
+               A.ordnum,
+               A.ordseq,
+               A.ordqty,
+               A.ord_edate,
+               A.close_date,
+               isnull(A.decision,'') as  decision,
+               A.cls_flag,
+               A.work_flag,
+               A.dem_flag,
+               A.qc_flag,
+               A.close_flag,
+               A.end_flag,
+               A.istore,
+               A.ostore,
+               A.rwflag,
+               A.perid,
+               A.remark,
+               A.workdv,
+               A.wflag wflag,
+               A.wseq  wseq,
+               CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
+               A.tordqty,
+               isnull(D.wotqt,0) as owqty,
+               (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00020' group by plan_no,wseq,wflag ) as obqty,
+               isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
+               '' AS partcode ,
+               D.winps as winps,
+               D.wrps as wrps,
+               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm,
+               isnull(CONVERT(CHAR(8), F.wfrdt,12), '') as   qcdate
+        FROM TB_FPLAN A WITH(NOLOCK)
+            LEFT OUTER JOIN  TB_FPLAN_W030 D ON A.plan_no = D.plan_no AND D.wflag = '00030'
+            LEFT OUTER JOIN  TB_FPLAN_WTIME F ON A.plan_no = F.plan_no AND F.wflag = '00030' AND F.WSEQ = '03' AND F.SEQ = '001'
+            LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010' ,
+            JCODE C WITH(NOLOCK),
+            CIF B WITH(NOLOCK)
+        WHERE (A.pcode              = C.JKEY)
+          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+          AND (A.line               = #{line})
+          AND (A.cls_flag          IN ('1', '2', '3' ))
+          AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
+          AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
+          AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
+          AND ( ISNULL(A.line,'')  = '00' )
+          AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
+          AND (A.plan_no not in (SELECT plan_no from TB_FPLAN_W020 WITH (NOLOCK)  ) )
+          AND ( Len( ISNULL(A.wflag,'') ) > 0  )
+        ORDER BY A.prod_sdate desc, A.wono
+        ]]>
+    </select>
+
+
+
     <select id="GetFPLANW010_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
                A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision,B.decision1, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
@@ -342,7 +418,7 @@
         AND   A.plan_no = B.plan_no
         AND   B.cltcd = C.acorp1 + CAST(C.acorp2 as varchar)
         AND   B.pcode = D.JKEY
-        AND   A.plan_no=#{plan_no} and A.wseq=#{wseq}
+        AND   A.plan_no=#{plan_no}  and A.wseq in (#{wseq}, '03')
     </select>
 
 
@@ -567,6 +643,16 @@
 
     <delete id="FPLANW010_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         DELETE  from TB_FPLAN_W010
+        where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag}
+    </delete>
+
+    <delete id="FPLANW020_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
+        DELETE  from TB_FPLAN_W020
+        where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag}
+    </delete>
+
+    <delete id="FPLANW030_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
+        DELETE  from TB_FPLAN_W030
         where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag}
     </delete>
 

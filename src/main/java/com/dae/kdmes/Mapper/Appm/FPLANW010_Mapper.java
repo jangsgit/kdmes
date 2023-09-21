@@ -18,6 +18,7 @@ public interface FPLANW010_Mapper {
      public FPLANW010_VO GetFPLANW010_ListOne();   //한건 조회
      public FPLANW010_VO GetFPLANW010_Detail(FPLANW010_VO xa012Board);   //
      public FPLANW010_VO GetFPLANW020_Detail(FPLANW010_VO xa012Board);   //
+     public FPLANW010_VO GetFPLANW030_Detail(FPLANW010_VO xa012Board);   //
      // 조회
      public Boolean FPLANW010_Insert(FPLANW010_VO xa012Board);    //입력
      public Boolean FPLANW010_Update(FPLANW010_VO xa012Board);    //수정
@@ -26,8 +27,14 @@ public interface FPLANW010_Mapper {
      public Boolean FPLANW020_Insert(FPLANW010_VO xa012Board);    //입력
      public Boolean FPLANW020_Update(FPLANW010_VO xa012Board);    //수정
 
+
+     public Boolean FPLANW030_Insert(FPLANW010_VO xa012Board);    //입력
+     public Boolean FPLANW030_Update(FPLANW010_VO xa012Board);    //수정
+
      public Boolean FPLANW010_WrmcUpdate(FPLANW010_VO xa012Board);    //수정
      public Boolean FPLANW010_Delete(FPLANW010_VO parm);       //삭제
+     public Boolean FPLANW020_Delete(FPLANW010_VO parm);       //삭제
+     public Boolean FPLANW030_Delete(FPLANW010_VO parm);       //삭제
 
      public Boolean FPLAN_OWORK_Delete(FPLANW010_VO parm);         //
      public Boolean FPLAN_IWORK_Delete(FPLANW010_VO parm);         //

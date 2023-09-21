@@ -132,31 +132,31 @@ public class AuthCrudController {
             , HttpServletRequest request) throws Exception{
         userformDto.setUserid(loginid);
         userformDto.setPasswd1(logpass);
-        userformDto.setFlag(select);
         UserFormDto userReturnDto = authService.GetUserInfo(userformDto);
 
-        if(userReturnDto.getWrongnum().equals("3")){
-            return userReturnDto;
-        }
+//        if(userReturnDto.getWrongnum().equals("3")){
+//            return userReturnDto;
+//        }
 
         authService.TB_XUSERS_LOGSUCC(userReturnDto);
 
         model.addAttribute("UserInfo", userReturnDto );
-        userformDto.setUserid(loginid);
-        userformDto.setFlag(select);
 
+        //userformDto.setFlag(userReturnDto.getFlag());
+        log.info(userReturnDto.getFlag());
+        log.info(userReturnDto.getUsername());
 //        log.info("memberLoginForm Exception ================================================================");
 //        log.info(userformDto);
-        userformDto =  authService.GetUserInfoDto(userformDto);
+        //userformDto =  authService.GetUserInfoDto(userformDto);
 
         HttpSession session = request.getSession();
-        session.setAttribute("userformDto",userformDto);
-        if(select.equals(userformDto.getFlag()) == false){
+        session.setAttribute("userformDto",userReturnDto);
+        if(userReturnDto.getFlag() == null){
+            log.info("memberLoginForm Exception =================>");
             userReturnDto = null;
             return userReturnDto;
         }else {
-
-
+            log.info("userReturnDto  =================>");
             return userReturnDto;
         }
     }
