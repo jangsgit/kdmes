@@ -39,6 +39,15 @@
         ]]>
     </select>
 
+    <select id="getWbadlist"  parameterType="com.dae.kdmes.DTO.App01.Index01Dto" resultType="com.dae.kdmes.DTO.App01.Index01Dto">
+        <![CDATA[
+            select
+            com_code as insano, com_rem1 as inname
+             from TB_CA510  where com_cls = '005'
+                and isnull(com_rem1,'') Like concat('%',#{com_rem1},'%')
+        ]]>
+    </select>
+
     <insert id="InsertComCodeDetail" parameterType="com.dae.kdmes.DTO.App01.Index01Dto" >
         insert into TB_CA510 (com_cls, com_code, com_cnam ,com_rem1, com_rem2, com_work) values
         (#{com_cls}, #{com_code}, #{com_cnam},#{com_rem1}, #{com_rem2},#{com_work})

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.App02.Index11Mapper">
+
+
+    <select id="getWflagList"  parameterType="com.dae.kdmes.DTO.App02.Index11Dto" resultType="com.dae.kdmes.DTO.App02.Index11Dto">
+        <![CDATA[
+           SELECT A.plan_no, A.indate, A.prod_sdate, A.prod_edate, ISNULL(DBO.DF_NM_RTN('TB_WFLAG', A.custcd, A.wflag, '', ''),'') as wflagnm,
+                (CASE WHEN A.wflag = '00010' THEN A.decision1
+                WHEN A.wflag = '00020' THEN A.decision2
+                WHEN A.wflag = '00030' THEN A.decision3
+                WHEN A.wflag = '00040' THEN A.decision4
+                ELSE A.decision END ) AS STATUSCD,
+                isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = A.wflag and wrmc = C.wrmc),'') as wrmcnm ,
+                (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
+                A.lotno ,
+                F.lotno as qclotno,
+                D.jpum,
+                D.jgugek ,
+                D.jchajong,
+                (CASE WHEN A.wflag = '00010' THEN A.prod_qty WHEN A.wflag='00020' THEN E.wotqt - E.wbdqt ELSE 0 END) as prod_qty ,
+                (CASE WHEN A.wflag = '00010' THEN E.wotqt WHEN A.wflag='00020' THEN F.wotqt ELSE 0 END) as wotqt,
+                (CASE WHEN A.wflag = '00010' THEN E.wbdqt WHEN A.wflag='00020' THEN F.wbdqt ELSE 0 END) as wbdqt,
+                (CASE WHEN A.wflag = '00010' THEN E.wotqt - E.wbdqt WHEN A.wflag='00020' THEN F.wotqt - F.wbdqt ELSE 0 END) as wjqty
+                FROM TB_FPLAN A WITH (NOLOCK)
+                LEFT OUTER JOIN TB_FPLAN_work C ON A.plan_no = c.plan_no AND A.wflag = c.wflag
+                LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey
+                LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no
+                LEFT OUTER JOIN TB_FPLAN_W020 F ON F.plan_no = A.plan_no
+                WHERE A.indate between #{frdate} and #{todate}
+                and A.lotno LIKE '%'
+                and A.wflag LIKE '%
+        ]]>
+    </select>
+
+    <select id="getList"  parameterType="com.dae.kdmes.DTO.App02.Index11Dto" resultType="com.dae.kdmes.DTO.App02.Index11Dto">
+        <![CDATA[
+           SELECT A.plan_no, A.indate, A.prod_sdate, A.prod_edate, ISNULL(DBO.DF_NM_RTN('TB_WFLAG', A.custcd, A.wflag, '', ''),'') as wflagnm,
+                (CASE WHEN A.wflag = '00010' THEN A.decision1
+                WHEN A.wflag = '00020' THEN A.decision2
+                WHEN A.wflag = '00030' THEN A.decision3
+                WHEN A.wflag = '00040' THEN A.decision4
+                ELSE A.decision END ) AS STATUSCD,
+                isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = A.wflag and wrmc = C.wrmc),'') as wrmcnm ,
+                (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
+                A.lotno ,
+                F.lotno as qclotno,
+                D.jpum,
+                D.jgugek ,
+                D.jchajong,
+                (CASE WHEN A.wflag = '00010' THEN A.prod_qty WHEN A.wflag='00020' THEN E.wotqt - E.wbdqt ELSE 0 END) as prod_qty ,
+                (CASE WHEN A.wflag = '00010' THEN E.wotqt WHEN A.wflag='00020' THEN F.wotqt ELSE 0 END) as wotqt,
+                (CASE WHEN A.wflag = '00010' THEN E.wbdqt WHEN A.wflag='00020' THEN F.wbdqt ELSE 0 END) as wbdqt,
+                (CASE WHEN A.wflag = '00010' THEN E.wotqt - E.wbdqt WHEN A.wflag='00020' THEN F.wotqt - F.wbdqt ELSE 0 END) as wjqty
+                FROM TB_FPLAN A WITH (NOLOCK)
+                LEFT OUTER JOIN TB_FPLAN_work C ON A.plan_no = c.plan_no AND A.wflag = c.wflag
+                LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey
+                LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no
+                LEFT OUTER JOIN TB_FPLAN_W020 F ON F.plan_no = A.plan_no
+                WHERE A.indate between #{frdate} and #{todate}
+                and A.lotno LIKE '%'
+                and A.wflag LIKE '%
+        ]]>
+    </select>
+
+
+</mapper>

@@ -22,6 +22,8 @@ public interface Index01Mapper {
 
     public List<Index01Dto> getWperidlist(Index01Dto parm) ;
 
+    public List<Index01Dto> getWbadlist(Index01Dto parm) ;
+
     public Boolean InsertComCodeDetail(Index01Dto parm) ;
     public Boolean UpdateComCodeDetail(Index01Dto  parm) ;
     public Boolean DeleteComCodeDetail(Index01Dto  parm) ;
