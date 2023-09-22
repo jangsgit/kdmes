@@ -348,7 +348,7 @@
                D.winps as winps,
                D.wrps as wrps,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm,
-               isnull(CONVERT(CHAR(8), F.wfrdt,12), '') as   qcdate
+               isnull(CONVERT(CHAR(8), D.wfrdt,12), '') as   qcdate
         FROM TB_FPLAN A WITH(NOLOCK)
             LEFT OUTER JOIN  TB_FPLAN_W030 D ON A.plan_no = D.plan_no AND D.wflag = '00030'
             LEFT OUTER JOIN  TB_FPLAN_WTIME F ON A.plan_no = F.plan_no AND F.wflag = '00030' AND F.WSEQ = '03' AND F.SEQ = '001'
@@ -360,11 +360,9 @@
           AND (A.line               = #{line})
           AND (A.cls_flag          IN ('1', '2', '3' ))
           AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
-          AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
-          AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
+          AND (ISNULL(C.jpum,'')   lIKE  concat('%',#{pcode},'%')  or ISNULL(A.lotno,'')   lIKE  concat('%',#{pcode},'%')   )
           AND ( ISNULL(A.line,'')  = '00' )
-          AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
-          AND (A.plan_no not in (SELECT plan_no from TB_FPLAN_W020 WITH (NOLOCK)  ) )
+          AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020' OR ISNULL(A.wflag, '00030') = '00030')           AND (A.plan_no not in (SELECT plan_no from TB_FPLAN_W020 WITH (NOLOCK)  ) )
           AND ( Len( ISNULL(A.wflag,'') ) > 0  )
         ORDER BY A.prod_sdate desc, A.wono
         ]]>
@@ -539,7 +537,7 @@
         <if test="wrps != null ">,</if>
         <if test="wrps != null">wrps=#{wrps}</if>
         <if test="wrmc != null ">,</if>
-        <if test="wremark != null">wrmc=#{wrmc}</if>
+        <if test="wrmc != null">wrmc=#{wrmc}</if>
         <if test="indate != null ">,</if>
         <if test="indate != null">indate=#{indate}</if>
         <if test="inperid != null ">,</if>

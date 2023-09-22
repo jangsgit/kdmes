@@ -38,6 +38,8 @@ public class Appm02CrudController {
     String ToDate = endDate.format(nowData).toString();
     CommonDto CommDto = new CommonDto();
     FPLANW010_VO workDtoDetail = new FPLANW010_VO();
+    FPLAN_VO fplanDto = new FPLAN_VO();
+    List<FPLAN_VO> itemDtoList = new ArrayList<>();
     Boolean result = false;
 
     @RequestMapping(value="/w020", method = RequestMethod.POST)
@@ -120,48 +122,26 @@ public class Appm02CrudController {
     }
 
     @RequestMapping(value="/w030", method = RequestMethod.POST)
-    public Object AppW030_index(@RequestParam("custcd") String custcd
-            ,@RequestParam("spjangcd") String spjangcd
-            ,@RequestParam("wono") String wono
-            ,@RequestParam("cltnm") String cltnm
-            ,@RequestParam("pname") String pname
-            ,@RequestParam("ostore") String ostore
-            ,@RequestParam("plan_no") String plan_no
-            ,@RequestParam("wflag") String wflag
-            ,@RequestParam("wrmc") String wrmc
+    public Object AppW030_index(@RequestParam("searchtxt") String searchtxt
             ,Model model, HttpServletRequest request) throws Exception {
 
-        TBPopupVO wscntDto = new TBPopupVO();
-        FPLANW010_VO workDto = new FPLANW010_VO();
-        FPLANWPERID_VO wperDto = new FPLANWPERID_VO();
-        workDto.setCustcd(custcd);
-        workDto.setSpjangcd(spjangcd);
-        workDto.setWono(wono);
-        workDto.setPlan_no(plan_no);
-        wflag = "00030";
-        workDto.setWflag(wflag);
-        workDto.setWrmc(wrmc);
-        workDto.setWseq("03");
-        workDto.setAseq("0");
-        workDto.setDecision("1");
-        workDto.setDecision3("1");
-        workDto.setWtable("TB_FPLAN_W030");
+        CommDto.setMenuTitle("조립공정");  //
+        CommDto.setMenuUrl("생산공정>조립공정");
+        CommDto.setMenuCode("appcom21");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String cltcd = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00020");
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(searchtxt);
+        fplanDto.setPlan_no("%");
+        itemDtoList = appcom01Service.GetFPLAN_List03(fplanDto);
 
-        wperDto.setCustcd(custcd);
-        wperDto.setSpjangcd(spjangcd);
-        wperDto.setWseq("03");
-        wperDto.setWflag(wflag);
-        wperDto.setSeq("001");
-        wperDto.setPlan_no(plan_no);
-
-        wtimeDto.setCustcd(custcd);
-        wtimeDto.setSpjangcd(spjangcd);
-        wtimeDto.setPlan_no(plan_no);
-        wtimeDto.setWseq("03");
-        wtimeDto.setSeq("001");
-        wtimeDto.setWflag(wflag);
-        return null;
-        //return appcom03Service.FPLAN_WPERID_SELECT(workDto);
+        model.addAttribute("itemDtoList", itemDtoList);
+        return itemDtoList;
     }
 
 
@@ -541,12 +521,17 @@ public class Appm02CrudController {
 
 
         FPLANW010_VO workDto = new FPLANW010_VO();
+        String ls_yeare = inputdate.substring(0,4);
+        String ls_mm = inputdate.substring(5,7);
+        String ls_dd = inputdate.substring(8,10);
+        inputdate =  ls_yeare + ls_mm + ls_dd;
         workDto.setCustcd(custcd);
         workDto.setSpjangcd(spjangcd);
         workDto.setWseq("03");
         workDto.setWfrdt(inputdate);
         workDto.setWtrdt(inputdate);
         workDto.setPlan_no(plan_no);
+        workDto.setQcdate(inputdate);
 
         workDto.setWinqt(winqt);
         workDto.setWqty(wotqt);
@@ -556,7 +541,7 @@ public class Appm02CrudController {
         workDto.setWotqt(wotqt);
         workDto.setJqty(wotqt);
 
-        workDto.setWflag("00050");  //조립완료
+        workDto.setWflag("00030");  //조립완료
         workDto.setWsyul(0);
         workDto.setWremark(wremark);
         workDto.setDecision("5");
@@ -597,7 +582,7 @@ public class Appm02CrudController {
             return "error";
         }
 
-        return lotno;
+        return "success";
     }
 
 
@@ -836,7 +821,7 @@ public class Appm02CrudController {
     private String getFrDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Calendar cal1 = Calendar.getInstance();
-        cal1.add(Calendar.DATE, -14); // 빼고 싶다면 음수 입력
+        cal1.add(Calendar.DATE, -100); // 빼고 싶다면 음수 입력
         Date date      = new Date(cal1.getTimeInMillis());
 
         return formatter.format(date);
@@ -844,6 +829,14 @@ public class Appm02CrudController {
     private String getToDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date      = new Date(System.currentTimeMillis());
+
+        return formatter.format(date);
+    }
+    private String getAddDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, 14); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
 
         return formatter.format(date);
     }
