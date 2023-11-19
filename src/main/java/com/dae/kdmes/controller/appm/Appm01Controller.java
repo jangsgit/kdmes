@@ -188,6 +188,29 @@ public class Appm01Controller {
         return "App01/index21";
     }
 
+
+    //검사공정
+    @GetMapping(value="/index41")
+    public String Appcom41_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("검사공정");  //
+        CommDto.setMenuUrl("생산공정>검사공정");
+        CommDto.setMenuCode("appcom02");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String cltcd = "%";
+        String pcode = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00020");
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(pcode);
+        itemDto.setPlan_no("%");
+        itemDtoList = appcom01Service.GetFPLAN_List03(fplanDto);
+        model.addAttribute("itemDtoList", itemDtoList);
+        return "App01/index41";
+    }
+
     //생산현황
     @GetMapping(value="/list04")
     public String Appcom04_index(Model model, HttpServletRequest request) throws Exception{
