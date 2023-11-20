@@ -206,8 +206,11 @@ public class Appm01Controller {
         fplanDto.setCltcd(cltcd);
         fplanDto.setPcode(pcode);
         itemDto.setPlan_no("%");
-        itemDtoList = appcom01Service.GetFPLAN_List03(fplanDto);
+        itemDtoList   = appcom01Service.GetFPLAN_List02(fplanDto);
+        itemDtoList02 = appcom01Service.GetFPLAN_List03(fplanDto);
+
         model.addAttribute("itemDtoList", itemDtoList);
+        model.addAttribute("itemDtoList02", itemDtoList02);
         return "App01/index41";
     }
 
