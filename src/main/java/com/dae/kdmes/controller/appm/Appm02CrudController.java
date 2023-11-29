@@ -380,7 +380,7 @@ public class Appm02CrudController {
             }else{
                 ll_lotno = Integer.parseInt(ls_lotno) + 1;
                 ls_lotno = ll_lotno.toString() + 'G';
-            } 
+            }
         }else{
             ls_lotno = lotno;
         }
