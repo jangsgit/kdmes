@@ -74,4 +74,7 @@ public class FPLANW010_VO {
     private String crudflag;
     private String clsflag;
     private String partcode;
+    private String glotnono;
+    private float gqty01;
+    private float gqty02;
 }

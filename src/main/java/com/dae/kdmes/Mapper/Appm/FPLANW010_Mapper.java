@@ -12,6 +12,7 @@ import java.util.List;
 public interface FPLANW010_Mapper {
      public List<FPLAN_VO> GetFPLAN_List(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02_REG(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm);
      //list
@@ -19,9 +20,11 @@ public interface FPLANW010_Mapper {
      public FPLANW010_VO GetFPLANW010_Detail(FPLANW010_VO xa012Board);   //
      public FPLANW010_VO GetFPLANW020_Detail(FPLANW010_VO xa012Board);   //
      public FPLANW010_VO GetFPLANW030_Detail(FPLANW010_VO xa012Board);   //
+     public List<FPLANW010_VO>  GetFPLANW020_LIST(FPLANW010_VO xa012Board);   //
      // 조회
      public Boolean FPLANW010_Insert(FPLANW010_VO xa012Board);    //입력
-     public Boolean FPLANW010_Update(FPLANW010_VO xa012Board);    //수정
+     public Boolean FPLANW010_Update(FPLANW010_VO xa012Board);    //입력
+     public Boolean FPLANW010_Update_GQTY(FPLANW010_VO xa012Board);    //수정
 
 
      public Boolean FPLANW020_Insert(FPLANW010_VO xa012Board);    //입력
@@ -51,6 +54,7 @@ public interface FPLANW010_Mapper {
      public Boolean FPLAN_OWORK_Insert(FPLANW010_VO parm);     //blank data
      public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO bankBoard);
      public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO bankBoard);
+     public String FPLAN_W020_MAXLOT(FPLANW010_VO bankBoard);
 
 
      public String GetWIworkWseq(FPLANIWORK_VO bankBoard);
