@@ -79,6 +79,8 @@ public class FPLAN_VO {
     private String wfrdt;
     private String wtrdt;
     private String wrpsnm;
+    private String wrpsnm01;
+    private String wrpsnm02;
     private String winps;
     private String wrps;
     private String partcode;
@@ -86,4 +88,9 @@ public class FPLAN_VO {
     private float tqty;
     private float owqty;
     private float obqty;
+    private String glotnono;
+    private float gqty01;
+    private float gqty02;
+
+
 }

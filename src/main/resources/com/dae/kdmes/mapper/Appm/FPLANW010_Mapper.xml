@@ -93,72 +93,55 @@
 
     <select id="GetFPLAN_List02"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
-        SELECT A.custcd,
-        A.spjangcd,
-        A.wodv,
-        A.wono,
-        A.lotno AS lotno,
-        A.plan_no,
-        A.cltcd,
-        B.acorp as cltnm,
-        A.pcode,
-        C.jpum AS pname,
-        C.jgugek AS psize,
-        C.jdanwy AS punit,
-        A.line,
-        A.opcod,
-        A.prod_sdate as prod_sdate,
-        A.prod_edate,
-        E.wotqt  - E.wbdqt as prod_qty,
-        D.wotqt  - D.wbdqt as end_qty,
-        A.orddate,
-        A.ordnum,
-        A.ordseq,
-        A.ordqty,
-        A.ord_edate,
-        A.close_date,
-        isnull(A.decision,'') as  decision,
-        A.cls_flag,
-        A.work_flag,
-        A.dem_flag,
-        A.qc_flag,
-        A.close_flag,
-        A.end_flag,
-        A.istore,
-        A.ostore,
-        A.rwflag,
-        A.perid,
-        A.remark,
-        A.workdv,
-        A.wflag wflag,
-        A.wseq  wseq,
-        CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
-        A.tordqty,
-        isnull(D.wotqt,0) as owqty,
-        (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag= '00020' group by plan_no,wseq,wflag ) as obqty,
-        isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
-        '' AS partcode ,
-        D.winps as winps,
-        D.wrps as wrps,
-        (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm,
-        isnull(CONVERT(CHAR(8), F.wfrdt,12), '') as   qcdate
-        FROM TB_FPLAN A WITH(NOLOCK)
-            LEFT OUTER JOIN  TB_FPLAN_W020 D ON A.plan_no = D.plan_no AND D.wflag = '00020'
-            LEFT OUTER JOIN  TB_FPLAN_WTIME F ON A.plan_no = F.plan_no AND F.wflag = '00020' AND F.WSEQ = '02' AND F.SEQ = '001'
-            LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010' ,
-        JCODE C WITH(NOLOCK),
-        CIF B WITH(NOLOCK)
-        WHERE (A.pcode              = C.JKEY)
-        AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
-        AND (A.line               = #{line})
-        AND (A.cls_flag          IN ('1', '2', '3' ))
-        AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
-        AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
-        AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
-        AND ( ISNULL(A.line,'')  = '00' )
-        AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
-        AND ( Len( ISNULL(A.wflag,'') ) > 0  )
-        ORDER BY A.prod_sdate desc, A.wono
+    SELECT	F.wono,
+              F.lotno,
+              F.plan_no,
+              F.cltcd,
+              F.cltnm,
+              F.pcode,
+              F.pname,
+              F.psize,
+              F.punit,
+              F.prod_sdate,
+              F.prod_edate,
+              F.prod_qty,
+              F.otqty,
+              F.wflag,
+              F.wseq,
+              F.prod_qty - F.otqty as obqty
+        FROM (
+                 SELECT	A.wono,
+                       A.lotno AS lotno,
+                       A.plan_no,
+                       A.cltcd,
+                       B.acorp as cltnm,
+                       A.pcode,
+                       C.jpum AS pname,
+                       C.jgugek AS psize,
+                       C.jdanwy AS punit,
+                       A.prod_sdate as prod_sdate,
+                       A.prod_edate,
+                       (E.wotqt)  - (E.wbdqt) as prod_qty,
+                       ISNULL(E.gqty01,0)  as otqty,
+                       A.wflag wflag,
+                       A.wseq  wseq
+                 FROM TB_FPLAN A WITH(NOLOCK)
+				LEFT OUTER JOIN  TB_FPLAN_W020 D ON A.plan_no = D.plan_no AND D.wflag = '00020'
+                     LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010' ,
+                     JCODE C WITH(NOLOCK),
+                     CIF B WITH(NOLOCK)
+                 WHERE (A.pcode              = C.JKEY)
+                   AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+                   AND (A.cls_flag          IN ('1', '2', '3' ))
+                   AND ( ISNULL(A.line,'')  = '00' )
+                   AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
+                   AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+                   AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
+                   AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
+                   AND ( Len( ISNULL(A.wflag,'') ) > 0  )
+             ) F
+        WHERE F.prod_qty - F.otqty > 0
+        ORDER BY F.prod_sdate desc, F.wono
          ]]>
     </select>
     <select id="GetFPLAN_List02Arr"  parameterType="hashmap" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
@@ -230,45 +213,18 @@
         <![CDATA[
         SELECT A.custcd,
                A.spjangcd,
-               A.wodv,
-               A.wono,
                D.lotno AS lotno,
-               A.plan_no,
-               A.cltcd,
-               B.acorp as cltnm,
-               A.pcode,
-               C.jpum AS pname,
-               C.jgugek AS psize,
-               C.jdanwy AS punit,
-               A.line,
-               A.opcod,
-               A.prod_sdate as prod_sdate,
-               A.prod_edate,
+               MAX(A.plan_no) AS plan_no,
+               MAX(A.cltcd) cltcd ,
+               MAX(B.acorp)  as cltnm,
+               MAX(A.pcode) as pcode,
+               MAX(C.jpum) AS pname,
+               MAX(C.jgugek) AS psize,
+               MAX(C.jdanwy) AS punit,
+               MAX(A.prod_sdate) as prod_sdate,
+               MAX(A.prod_edate) AS prod_edate,
                D.wotqt  - D.wbdqt as prod_qty,
                D.wotqt  - D.wbdqt as end_qty,
-               A.orddate,
-               A.ordnum,
-               A.ordseq,
-               A.ordqty,
-               A.ord_edate,
-               A.close_date,
-               isnull(A.decision,'') as  decision,
-               A.cls_flag,
-               A.work_flag,
-               A.dem_flag,
-               A.qc_flag,
-               A.close_flag,
-               A.end_flag,
-               A.istore,
-               A.ostore,
-               A.rwflag,
-               A.perid,
-               A.remark,
-               A.workdv,
-               A.wflag wflag,
-               A.wseq  wseq,
-               CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
-               A.tordqty,
                isnull(D.wotqt,0) as owqty,
                0 as obqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
@@ -276,22 +232,66 @@
                D.winps as winps,
                D.wrps as wrps,
                D.indate as qcdate,
-               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
+               D.wremark as wremark,
+               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm
         FROM TB_FPLAN A WITH(NOLOCK),
              TB_FPLAN_W020 D  WITH(NOLOCK) ,
-             JCODE C WITH(NOLOCK),
-             CIF B WITH(NOLOCK)
+            TB_FPLAN_W010 E  WITH(NOLOCK) ,
+            JCODE C WITH(NOLOCK),
+            CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.plan_no              = D.plan_no)
-          AND ( D.wflag = '00020')
+          AND (A.plan_no              = E.plan_no)
+          AND (D.lotno              = E.glotnono)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
-          AND (A.cls_flag          IN ('1', '2', '3' ))
-          AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
-          AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+          AND (C.jpum               lIKE  concat('%',#{lotno},'%') or  ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
           AND ( Len( ISNULL(A.wflag,'') ) > 0  )
-        ORDER BY A.prod_sdate desc, A.wono
+        GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt, D.winps, D.wrps, D.indate, D.wremark
+        ORDER BY D.lotno desc
         ]]>
     </select>
+
+    <select id="GetFPLAN_List02_HIS"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
+        <![CDATA[
+        SELECT A.custcd,
+               A.spjangcd,
+               (A.plan_no) AS plan_no,
+               A.cltcd,
+               B.acorp as cltnm,
+               A.pcode,
+               C.jpum AS pname,
+               C.jgugek AS psize,
+               C.jdanwy AS punit,
+               A.lotno as lotno,
+               (A.prod_sdate) as prod_sdate,
+               (A.prod_edate) AS prod_edate,
+               E.wfrdt as wfrdt,
+               E.wtrdt as wtrdt,
+               E.wotqt - E.wbdqt as prod_qty,
+               E.gqty01 as end_qty,
+               D.lotno AS glotnono,
+               D.indate as qcdate,
+               isnull(D.wotqt,0) as owqty,
+               isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
+               D.winps as winps,
+               D.wrps as wrps,
+               D.wremark as wremark,
+               (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '') END ) wrpsnm01,
+               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
+        FROM TB_FPLAN A WITH(NOLOCK),
+             TB_FPLAN_W020 D  WITH(NOLOCK)
+            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono   ,
+            JCODE C WITH(NOLOCK),
+            CIF B WITH(NOLOCK)
+        WHERE (A.pcode              = C.JKEY)
+          AND (A.plan_no              = E.plan_no)
+          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+          AND ( ISNULL(D.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+          AND ( Len( ISNULL(A.wflag,'') ) > 0  )
+        ORDER BY D.lotno
+        ]]>
+    </select>
+
+
     <select id="GetFPLAN_List03_old"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
         SELECT A.custcd,
@@ -568,6 +568,14 @@
         where plan_no=#{plan_no} and wseq=#{wseq} and wflag=#{wflag}
     </update>
 
+
+    <update id="FPLANW010_Update_GDEL" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
+        UPDATE TB_FPLAN_W010 SET
+               glotnono='',
+               gqty01= 0
+        where plan_no IN (SELECT plan_no FROM  TB_FPLAN_W010 WITH (NOLOCK) WHERE glotnono = #{glotnono} )
+    </update>
+
     <update id="FPLANW020_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_W020 SET
         wflag=#{wflag},
@@ -662,6 +670,37 @@
         where plan_no=#{plan_no}
     </update>
 
+
+    <update id="FPLAN_Update_GDEL" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
+        UPDATE TB_FPLAN SET
+        SPJANGCD = 'ZZ'
+        <if test="wflag != null ">,</if>
+        <if test="wflag != null">wflag=#{wflag}</if>
+        <if test="bqty != null ">,</if>
+        <if test="bqty != null">prod_dqty=#{bqty}</if>
+        <if test="end_qty != null ">,</if>
+        <if test="end_qty != null">end_qty=#{end_qty}</if>
+        <if test="clsflag != null ">,</if>
+        <if test="clsflag != null">cls_flag=#{clsflag}</if>
+        <if test="workdv != null ">,</if>
+        <if test="workdv != null">workdv=#{workdv}</if>
+        <if test="qcdate != null ">,</if>
+        <if test="qcdate != null">qcdate=#{qcdate}</if>
+        <if test="qcqty != null ">,</if>
+        <if test="qcqty != null">qcqty=#{qcqty}</if>
+        <if test="decision != null ">,</if>
+        <if test="decision != null">decision=#{decision}</if>
+        <if test="decision1 != null ">,</if>
+        <if test="decision1 != null">decision1=#{decision1}</if>
+        <if test="decision2 != null ">,</if>
+        <if test="decision2 != null">decision2=#{decision2}</if>
+        <if test="decision3 != null ">,</if>
+        <if test="decision3 != null">decision3=#{decision3}</if>
+        <if test="decision4 != null ">,</if>
+        <if test="decision4 != null">decision4=#{decision4}</if>
+        where plan_no IN (select plan_no from TB_FPLAN_W010 where glotnono =#{glotnono})
+    </update>
+
     <select id="GetWtimeWseq" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="String">
         SELECT wseq as seq
         FROM TB_FPLAN_WORK WITH(NOLOCK) WHERE plan_no =#{plan_no}
@@ -725,7 +764,7 @@
 
     <delete id="FPLANW020_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         DELETE  from TB_FPLAN_W020
-        where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag}
+        where lotno=#{lotno}
     </delete>
 
     <delete id="FPLANW030_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >

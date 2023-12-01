@@ -26,6 +26,10 @@ public class Appcom01Service {
     public List<FPLAN_VO> GetFPLAN_List02_REG(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_REG(parm);
     }
+    public List<FPLAN_VO> GetFPLAN_List02_HIS(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_HIS(parm);
+    }
+
     public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List03(parm);
     }
@@ -57,6 +61,9 @@ public class Appcom01Service {
     public Boolean FPLANW010_Update_GQTY(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW010_Update_GQTY(parm);
     }
+    public Boolean FPLANW010_Update_GDEL(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW010_Update_GDEL(parm);
+    }
 
     public Boolean FPLANW020_Insert(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW020_Insert(parm);
@@ -75,6 +82,10 @@ public class Appcom01Service {
     public Boolean FPLAN_Update(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLAN_Update(parm);
     }
+    public Boolean FPLAN_Update_GDEL(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLAN_Update_GDEL(parm);
+    }
+
     public Boolean FPLAN_OWORK_Insert(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLAN_OWORK_Insert(parm);
     }

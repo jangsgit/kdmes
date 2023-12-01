@@ -13,6 +13,8 @@ public interface FPLANW010_Mapper {
      public List<FPLAN_VO> GetFPLAN_List(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_REG(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02_HIS(FPLAN_VO xfplanBoard);
+
      public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm);
      //list
@@ -25,6 +27,7 @@ public interface FPLANW010_Mapper {
      public Boolean FPLANW010_Insert(FPLANW010_VO xa012Board);    //입력
      public Boolean FPLANW010_Update(FPLANW010_VO xa012Board);    //입력
      public Boolean FPLANW010_Update_GQTY(FPLANW010_VO xa012Board);    //수정
+     public Boolean FPLANW010_Update_GDEL(FPLANW010_VO xa012Board);    //수정
 
 
      public Boolean FPLANW020_Insert(FPLANW010_VO xa012Board);    //입력
@@ -51,6 +54,8 @@ public interface FPLANW010_Mapper {
      public Boolean FPLANWORK_Insert(FPLANW010_VO parm);
      public Boolean FPLANWORK_update(FPLANW010_VO parm);
      public Boolean FPLAN_Update(FPLANW010_VO parm);
+     public Boolean FPLAN_Update_GDEL(FPLANW010_VO parm);
+
      public Boolean FPLAN_OWORK_Insert(FPLANW010_VO parm);     //blank data
      public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO bankBoard);
      public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO bankBoard);

@@ -52,7 +52,7 @@
                                             <!-- <div class="box_input" > -->
                                                 <div class="date_wrap">
                                                     <input type="text"  id="searchtxt" placeholder="품명 / LOTNO"> 
-                                                    <button type="button" id="retrieveBtn" >검색</button>      
+                                                    <button type="button" id="searchTabABtn" >검색</button>      
                                                 </div>                              
                                                 <!-- //여기서부터 그래프 -->
                                                 <!-- <div class="table table_style2"> -->
@@ -191,25 +191,33 @@
 
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="step02">
-                        <div class="row gx-3" style="  margin: 10px 10px 10px;"> 
-                            <!-- <div class="col-6 col-sm-3">
-                                <label class="form-label ls text-uppercase text-600 fw-semi-bold mb-0 fs--1" for="expDate">대분류명칭</label>
-                                <input class="form-control" id="com_cnam"   type="text">
-                            </div>  -->
+                    <div class="tab-pane fade" id="step02">  
+                        <div class="row gx-3" style="  margin: 10px 10px 10px;">   
+                            <div class="col-2 col-sm-2">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">바코드</span> 
+                                    <input class="form-control form-control-sm" id="jpumname" type="text"    autocomplete="off"  placeholder=""     > 
+                                </div>
+                            </div>
+                            <div class="col-1 col-sm-1">  
+                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="searchTabBBtn"  type="button" onclick="searchList_rtn()">조회
+                                </button>
+                            </div>  
                         </div> 
-                        <!-- <div class="container-fluid">
-                            <div id="wtab02Grid_div" ></div>
-                            <div id="tab02Pager"></div>
-                            </div> -->
-                    </div>
-                    <!-- <div class="tab-pane fade" id="step03">
-                        <div class="container-fluid">
-                            <div id="wtab03Grid_div" ></div>
-                            <div id="tab03Pager"></div>
-                        </div>
-                    </div> -->
-                    </div>
+                        <div class="table-responsive">
+                            <table class="table table-borderless" style="height: 100px;" >
+                                <tbody>
+                                <tr>  
+                                    <td class="align-top">                                                         
+                                    <div class="container-fluid"  >                                                         
+                                        <div id="wtab02Grid_div"  style="overflow:scroll;   height:600px;     margin:0 auto; "></div> 
+                                        </div>  
+                                    </td> 
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>  
+                    </div> 
+                </div>
             </div> 
     </div>
      
@@ -420,6 +428,52 @@
             
             
 
+            //====================================================================================================================================     
+            //====================================================================================================================================
+            //현황  list
+            view_p01tab02page = new wijmo.collections.CollectionView(getData_wlist(), { 
+            }); 
+            wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
+                    autoGenerateColumns: false,
+                    showMarquee: true,
+                    isReadOnly: false, 
+                    // selectionMode: 'RowRange',
+                    allowSorting: 'MultiColumn',
+                    alternatingRowStep: 0,
+                    columns: [      
+                        { binding: 'cltnm', header: '거래처', align: "center", width: 150 },
+                        { binding: 'pcode', header: '품목', align: "center", width: 150 },  
+                        { binding: 'jgugek', header: '규격', align: "left", width: 150 },    
+                        { binding: 'wfrdt', header: '사출시작일', align: "right", width: 100 }, 
+                        { binding: 'wtrdt', header: '사출종료일', align: "right", width: 100 }, 
+                        { binding: 'prod_qty', header: '사출수량', align: "right", width: 100 },  
+                        { binding: 'wrpsnm01', header: '사출담당자', align: "center", width: 150 },
+                        { binding: 'lotno', header: '사출바코드', align: "left", width: 150 }, 
+                        { binding: 'qcdate', header: '검사일', align: "center", width: 100 }, 
+                        { binding: 'glotnono', header: '검사바코드', align: "left", width: 150 },
+                        { binding: 'otqty', header: '검사수량', align: "center", width: 100 },
+                        { binding: 'wrpsnm02', header: '검사담당자', align: "center", width: 100 },     
+                    ], 
+                    itemsSource: view_p01tab02page
+                });   
+
+
+            new FlexGridContextMenu(wtab02Grid);  
+            // 헤더 열 전환
+            setHeaderColumn2(false);
+            function setHeaderColumn2(headerOn) {
+                wtab02Grid.headersVisibility = headerOn
+                ? wijmo.grid.HeadersVisibility.All
+                : wijmo.grid.HeadersVisibility.Column; 
+            } 
+            wtab02Grid.showMarquee = true;
+            wtab02Grid.focus();
+            wijmo.toggleClass(wtab02Grid.hostElement, 'highlightActive', true);
+            wtab02Grid.focus();
+
+
+            //====================================================================================================================================     
+            //====================================================================================================================================
 
             view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
              //   pageSize: 12
@@ -438,7 +492,7 @@
                     { binding: 'prod_qty', header: '사출완료량',align:"center",  width: 130, isReadOnly: true  },
                     { binding: 'otqty', header: '기검사량',align:"center",  width: 90, isReadOnly: true },
                     { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: false },
-                    //{ binding: 'plan_no', header: '작지번호',   align:"center", width: 150  } 
+                    { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  } 
 
                 ],
                 itemsSource: view_p01tab03page
@@ -447,20 +501,19 @@
 
             // tab01검색 데이터 수집
             function getData_tab03(){  
-                var ListDto = [[${itemDtoList}]]; 
-                // console.log("ListDto : ", ListDto);
+                var ListDto = [[${itemDtoList}]];  
                 var data = [];
                 var cnt = 1; 
                 var ll_obqty = 0
                 for (var i = 0; i < ListDto.length; i++) {
                     var psdate = ListDto[i]["prod_sdate"];
                     psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
-                    var ls_qcdate = ListDto[i]["qcdate"];
-                    if(ls_qcdate.length > 0){
-                        ls_qcdate = ls_qcdate.substr(0,2) + '-' + ls_qcdate.substr(2,2)+ '-' + ls_qcdate.substr(4,2);
-                    }else{
-                        ls_qcdate = "";
-                    }
+                    // var ls_qcdate = ListDto[i]["qcdate"];
+                    // if(ls_qcdate.length > 0){
+                    //     ls_qcdate = ls_qcdate.substr(0,2) + '-' + ls_qcdate.substr(2,2)+ '-' + ls_qcdate.substr(4,2);
+                    // }else{
+                    //     ls_qcdate = "";
+                    // }
 
                     ll_obqty = 0;
                     ll_obqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];   //잔여수량
@@ -470,34 +523,21 @@
                         index: cnt,                                                                
                         prod_sdate: wijmo.DateTime.addDays(date_format, 0),
                         wono: ListDto[i]["wono"], 
+                        lotno: ListDto[i]["lotno"]  ,       
+                        plan_no: ListDto[i]["plan_no"] ,   
+                        cltcd: ListDto[i]["cltcd"] , 
                         cltnm: ListDto[i]["cltnm"], 
+                        pcode: ListDto[i]["pcode"] , 
                         pname: ListDto[i]["pname"], 
                         psize: ListDto[i]["psize"], 
-                        prod_qty: ListDto[i]["prod_qty"],
-                        winqt: ListDto[i]["winqt"] , 
-                        owqty: ListDto[i]["owqty"] ,  
-                        otqty: ListDto[i]["otqty"] ,     
-                        decision: ListDto[i]["decision"] ,    
-                        plan_no: ListDto[i]["plan_no"] ,
-                        ostore: ListDto[i]["ostore"] ,
-                        custcd: ListDto[i]["custcd"] ,
-                        spjangcd: ListDto[i]["spjangcd"] ,
-                        cltcd: ListDto[i]["cltcd"] ,
-                        wseq: ListDto[i]["wseq"]  ,
-                        pcode: ListDto[i]["pcode"] ,
-                        wflag: ListDto[i]["wflag"] ,
-                        wremark: ListDto[i]["wremark"] ,
-                        phmmdoc: ListDto[i]["phmmdoc"]  ,
-                        winps: ListDto[i]["winps"]  ,
-                        wrps: ListDto[i]["wrps"]  ,
-                        lotno: ListDto[i]["lotno"]  ,
-                        wrpsnm: ListDto[i]["wrpsnm"],
-                        obqty: ll_obqty,
-                        qcdate: ls_qcdate 
+                        prod_qty: ListDto[i]["prod_qty"], 
+                        otqty: ListDto[i]["otqty"] ,   
+                        obqty: ll_obqty 
                         
                     });
                     cnt++;
                 }   
+                console.log(data)
                 return data                                                         
             } 
 
@@ -768,7 +808,6 @@
                         success:function(data){   
                             if(data == "success"){
                                 alert("저장되었습니다.") 
-                                console.log(data);
                                 searchList_rtn(ls_tab);  
                                 clear_rtn(ls_tab);             
                             }else{                       
@@ -795,7 +834,7 @@
         function delete_btn(){
             var ls_tab = document.getElementById('tabvalue').value; 
             var ls_inlotno   = document.getElementById('inlotno').value; 
-                ls_inlotno = ls_plan_no.trim(); 
+                ls_inlotno = ls_inlotno.trim(); 
 
             if(ls_inlotno == null || ls_inlotno.length == 0 || ls_inlotno == ""){ 
                     alert("삭제할 자료를 선택하세요")  
@@ -807,14 +846,7 @@
             }   
             
             switch(ls_tab){
-                case 'A':
-
-                if(ls_code == null || ls_code.length == 0 || ls_code == ""){ 
-                    alert("대분류코드를 확인하세요") 
-                    document.getElementById("com_cls").focus(); 
-                    return ;               
-                }    
-
+                case 'A': 
                     $.ajax({
                         url: '/input02/w020del',   
                         type:"POST", 
@@ -877,15 +909,21 @@
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                                      
         // tab01 검색   
-        document.getElementById("retrieveBtn").addEventListener("click",function(){ 
+        document.getElementById("searchTabABtn").addEventListener("click",function(){ 
             
             var ls_tab = document.getElementById('tabvalue').value;   
             searchList_rtn(ls_tab);
-        })                      
+        })          
+        document.getElementById("searchTabBBtn").addEventListener("click",function(){ 
+            
+            var ls_tab = document.getElementById('tabvalue').value;   
+            searchList_rtn(ls_tab);
+        })        
+                      
         // Modal 검색   
         document.getElementById("searchBtn").addEventListener("click",function(){ 
-             
-            searchList_rtn_barcode('');
+            var ls_searchOrdDate = document.getElementById('searchOrdDate').value;  
+            searchList_rtn_barcode(ls_searchOrdDate);
         })   
 
         
@@ -898,59 +936,53 @@
         }
 
         function searchList_rtn_barcode(arg){ 
-            var ls_searchdate = arg;   
-            if(addlotno.length > 0){
-                addlotno = addlotno + ',' + ls_searchdate;
+            var ls_searchdate = arg;  
+            var ls_flag = "0" ; 
+            if(addlotno.length == 0){
+                ls_flag = "2"  //단순조회 
             }else{
-                addlotno =  ls_searchdate ;
+                addlotno = addlotno + ',' + ls_searchdate;
+                ls_flag = "1";  //바코드 스캔
             }
-             
-            if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){ 
+            //if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){  
+            if(ls_flag == "2"){ 
+                if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){
+                    ls_searchdate = "%";
+                }
                 $.ajax({
                 url: '/input02/w020ordlist',  
                 type:"POST",
                 data: { 
                     "lotno"      : ls_searchdate,  
+                    "flag"      : ls_flag, 
                 }, 
                 async:false,
                 success:function(data){ 
                         var ListDto = data;  
                         var dataArr = [];
                         var cnt = 1; 
-                        console.log(ListDto)
+                        var ll_obqty = 0; 
                         for (var i = 0; i < ListDto.length; i++) {
                             var psdate = ListDto[i]["prod_sdate"];
                             psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
+                            ll_obqty = 0;
+                            ll_obqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];   //잔여수량
                             var date_format = new Date(psdate);  //wijmo.DateTime.addDays(date_format, 0),
                             dataArr.push({
                                 id: i, 
                                 index: cnt,                                                                
                                 prod_sdate: psdate, 
                                 wono: ListDto[i]["wono"], 
+                                lotno: ListDto[i]["lotno"]  ,       
+                                plan_no: ListDto[i]["plan_no"] ,   
+                                cltcd: ListDto[i]["cltcd"] , 
                                 cltnm: ListDto[i]["cltnm"], 
+                                pcode: ListDto[i]["pcode"] , 
                                 pname: ListDto[i]["pname"], 
                                 psize: ListDto[i]["psize"], 
-                                prod_qty: ListDto[i]["prod_qty"],
-                                winqt: ListDto[i]["winqt"] , 
-                                wotqt: ListDto[i]["wotqt"] ,     
-                                decision: ListDto[i]["decision"] ,    
-                                plan_no: ListDto[i]["plan_no"] ,
-                                ostore: ListDto[i]["ostore"] ,
-                                custcd: ListDto[i]["custcd"] ,
-                                spjangcd: ListDto[i]["spjangcd"] ,
-                                cltcd: ListDto[i]["cltcd"] ,
-                                wseq: ListDto[i]["wseq"]  ,
-                                pcode: ListDto[i]["pcode"] ,
-                                wflag: ListDto[i]["wflag"] ,
-                                wremark: ListDto[i]["wremark"] ,
-                                phmmdoc: ListDto[i]["phmmdoc"]  ,
-                                owqty: ListDto[i]["owqty"] ,
-                                obqty: ListDto[i]["obqty"] ,
-                                otqty: ListDto[i]["otqty"] ,
-                                wrpsnm: ListDto[i]["wrpsnm"]  ,
-                                winps: ListDto[i]["winps"]  ,
-                                wrps: ListDto[i]["wrps"]  ,
-                                lotno: ListDto[i]["lotno"] 
+                                prod_qty: ListDto[i]["prod_qty"], 
+                                otqty: ListDto[i]["otqty"] ,   
+                                obqty: ll_obqty  
                             });
                             cnt++;
                         }  
@@ -970,7 +1002,8 @@
                 url: '/input02/w020ordlist',  
                 type:"POST",
                 data: { 
-                    "lotno"      : addlotno,  
+                    "lotno"      : addlotno,   
+                    "flag"      : ls_flag, 
                 }, 
                 async:false,
                 success:function(data){ 
@@ -1065,11 +1098,24 @@
             wtab03Grid.columns.push(cols);  
             cols = new wijmo.grid.Column(); 
             cols.binding = 'otqty';
-            cols.header = '검사량';
+            cols.header = '기검사량';
+            cols.align = "center";
+            cols.width = 90 ; 
+            wtab03Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'obqty';
+            cols.header = '잔여량';
             cols.align = "center";
             cols.width = 90 ; 
             cols.isReadOnly = false ; 
             wtab03Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'plan_no';
+            cols.header = '작지번호';
+            cols.align = "center";
+            cols.width = 150 ; 
+            cols.isReadOnly = false ; 
+            wtab03Grid.columns.push(cols); 
         }
 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -1101,16 +1147,19 @@
                     })  
                     break;
                 case 'B': 
+                    var ls_searchtxt = document.getElementById('jpumname').value; 
+                    if(ls_searchtxt == null || ls_searchtxt.length == 0 || ls_searchtxt == ""){  
+                        ls_searchtxt = "%";
+                    }   
                     $.ajax({
-                        url: '/input02/w020list',  
+                        url: '/input02/w020his',  
                         type:"POST",
                         data: { 
-                            "searchtxt" : '%', 
+                            "searchtxt" : ls_searchtxt, 
                         }, 
                         async:false,
                         success:function(data){  
-                            console.log(data);
-                            tabC_grid(data);
+                            tabB_grid(data);
                         },error:function(e){
                             console.log("error");                            
                         }
@@ -1128,54 +1177,40 @@
         function tabA_grid(data){ 
             var wtab01Dto  = data;    
             var wtab01_data = [];
-            var cnt = 1; 
-            // console.log(wtab01Dto)
-            for (var i = 0; i < wtab01Dto.length; i++) {
-                    var ls_psdate = wtab01Dto[i]["prod_sdate"];
-                    ls_psdate = ls_psdate.substr(0,4) + '-' + ls_psdate.substr(4,2)+ '-' + ls_psdate.substr(6,2);
-                    if(ls_psdate.length > 0){
-                        ls_psdate = ls_psdate.substr(0,2) + '-' + ls_psdate.substr(2,2)+ '-' + ls_psdate.substr(4,2);
-                    }else{
-                        ls_psdate = "";
-                    } 
-                    var ls_qcdate = wtab01Dto[i]["qcdate"];
-                    if(ls_qcdate.length > 0){
-                        ls_qcdate = ls_qcdate.substr(0,2) + '-' + ls_qcdate.substr(2,2)+ '-' + ls_qcdate.substr(4,2);
-                    }else{
-                        ls_qcdate = "";
-                    } 
-                    var date_format = new Date(psdate);
-                    data.push({
+            var cnt = 1;   
+            console.log(wtab01Dto)
+            for (var i = 0; i < wtab01Dto.length; i++) { 
+                    var psdate = wtab01Dto[i]["prod_sdate"];
+                        psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
+                        var ls_qcdate = wtab01Dto[i]["qcdate"];
+                        if(ls_qcdate.length > 0){
+                            ls_qcdate = ls_qcdate.substr(0,4) + '-' + ls_qcdate.substr(4,2)+ '-' + ls_qcdate.substr(6,2);
+                        }else{
+                            ls_qcdate = "";
+                        }
+ 
+                    wtab01_data.push({
                         id: i, 
                         index: cnt,                                                                
-                        prod_sdate: ls_psdate,
-                        wono: wtab01Dto[i]["wono"], 
+                        prod_sdate: psdate,
+                        cltcd: wtab01Dto[i]["cltcd"] ,
+                        spjangcd: wtab01Dto[i]["spjangcd"] ,
+                        lotno: wtab01Dto[i]["lotno"]  ,  
+                        plan_no: wtab01Dto[i]["plan_no"] ,
                         cltnm: wtab01Dto[i]["cltnm"], 
+                        pcode: wtab01Dto[i]["pcode"] ,
                         pname: wtab01Dto[i]["pname"], 
                         psize: wtab01Dto[i]["psize"], 
+                        wono: wtab01Dto[i]["wono"], 
                         prod_qty: wtab01Dto[i]["prod_qty"],
-                        winqt: wtab01Dto[i]["winqt"] , 
-                        owqty: wtab01Dto[i]["owqty"] ,  
-                        otqty: wtab01Dto[i]["otqty"] ,     
-                        decision: wtab01Dto[i]["decision"] ,    
-                        plan_no: wtab01Dto[i]["plan_no"] ,
-                        ostore: wtab01Dto[i]["ostore"] ,
-                        custcd: wtab01Dto[i]["custcd"] ,
-                        spjangcd: wtab01Dto[i]["spjangcd"] ,
-                        cltcd: wtab01Dto[i]["cltcd"] ,
-                        wseq: wtab01Dto[i]["wseq"]  ,
-                        pcode: wtab01Dto[i]["pcode"] ,
-                        wflag: wtab01Dto[i]["wflag"] ,
-                        wremark: wtab01Dto[i]["wremark"] ,
-                        phmmdoc: wtab01Dto[i]["phmmdoc"]  ,
+                        end_qty: wtab01Dto[i]["end_qty"],
+                        otqty: wtab01Dto[i]["wotqt"] , 
+                        obqty: wtab01Dto[i]["obqty"],   
                         winps: wtab01Dto[i]["winps"]  ,
                         wrps: wtab01Dto[i]["wrps"]  ,
-                        lotno: wtab01Dto[i]["lotno"]  ,
-                        wrpsnm: wtab01Dto[i]["wrpsnm"],
-                        obqty: wtab01Dto[i]["obqty"], 
-                        end_qty: wtab01Dto[i]["end_qty"], 
-                        qcdate: ls_qcdate
-                        
+                        wrpsnm: wtab01Dto[i]["wrpsnm"],  
+                        wremark: wtab01Dto[i]["wremark"] , 
+                        qcdate: ls_qcdate 
                         
                     });
                     cnt++;
@@ -1205,10 +1240,16 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.lotno}</b>',
                 click: (e, ctx) => {
-                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate  );
+                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm  );
                 }
             });
-            wtab01Grid.columns.push(cols);    
+            wtab01Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'cltnm';
+            cols.header = '거래처';
+            cols.align = "center";
+            cols.width = 100;  
+            wtab01Grid.columns.push(cols);      
             cols = new wijmo.grid.Column(); 
             cols.binding = 'pname';
             cols.header = '품목명';
@@ -1217,7 +1258,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.pname}</b>',
                 click: (e, ctx) => {
-                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate  );
+                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm  );
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1228,10 +1269,10 @@
             cols.width = 130;  
             wtab01Grid.columns.push(cols);    
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'prod_qty';
-            cols.header = '계획량';
+            cols.binding = 'wrpsnm';
+            cols.header = '검사자';
             cols.align = "center";
-            cols.width = 90; 
+            cols.width = 130; 
             cols.format = 'yyyy-MM-dd'; 
             wtab01Grid.columns.push(cols);    
             cols = new wijmo.grid.Column(); 
@@ -1252,46 +1293,135 @@
         function tabB_grid(data){
             var wtab02Dto  = data;    
             var wtab02_data = [];
-            var cnt = 1;
-            for (var i = 0; i < wtab02Dto.length; i++) {
-                wtab02_data.push({
-                    id: i, 
-                    index: cnt,
-                    com_cls: wtab02Dto[i]["com_cls"],
-                    com_cnam: wtab02Dto[i]["com_cnam"],                              
-                });
-                cnt++;
-            }   
-            // console.log("wtab01_data",wactnm_data) +
-            // console.log(wtab01_data.length);
+            var cnt = 1;    
+            var glotno = "";
+            var ls_qcdate = "";
+            var ls_glotno = "";
+            var ls_otqty = 0;    
+
+            for (var i = 0; i < wtab02Dto.length; i++) { 
+                    var psdate = wtab02Dto[i]["prod_sdate"];
+                        psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
+                        var ls_qcdate = wtab02Dto[i]["qcdate"];
+                        if(ls_qcdate.length > 0){
+                            ls_qcdate = ls_qcdate.substr(0,4) + '-' + ls_qcdate.substr(4,2)+ '-' + ls_qcdate.substr(6,2);
+                        }else{
+                            ls_qcdate = "";
+                        }
+                    if( glotno == wtab02Dto[i]["glotnono"] ){
+                        ls_otqty = 0;
+                        ls_qcdate = "";
+                        ls_glotno = "";
+                    }else{
+                        ls_otqty = wtab02Dto[i]["otqty"];    
+                        ls_qcdate = wtab02Dto[i]["qcdate"];    
+                        ls_glotno = wtab02Dto[i]["glotnono"];  
+                    }
+                    glotno = wtab02Dto[i]["glotnono"];
+                    wtab02_data.push({
+                        id: i, 
+                        index: cnt,                                                                
+                        prod_sdate: psdate,
+                        cltcd: wtab02Dto[i]["cltcd"] ,
+                        cltnm: wtab02Dto[i]["cltnm"] ,
+                        lotno: wtab02Dto[i]["lotno"]  ,    
+                        pcode: wtab02Dto[i]["pcode"] ,
+                        pname: wtab02Dto[i]["pname"], 
+                        psize: wtab02Dto[i]["psize"],  
+                        wfrdt: wtab02Dto[i]["wfrdt"],
+                        wtrdt: wtab02Dto[i]["wtrdt"],
+                        prod_qty: wtab02Dto[i]["prod_qty"] , 
+                        wrpsnm01: wtab02Dto[i]["wrpsnm01"],   
+                        lotno: wtab02Dto[i]["lotno"]  ,
+                        qcdate: ls_qcdate  ,
+                        glotnono: ls_glotno,  
+                        otqty: ls_otqty , 
+                        wrpsnm02: wtab02Dto[i]["wrpsnm02"] , 
+                        qcdate: ls_qcdate 
+                        
+                    });
+                    cnt++;
+                }    
+ 
             wtab02Grid.columns.clear();  
             wtab02Grid.autoGenerateColumns = false; 
             view_p01tab02page.sourceCollection  = wtab02_data;
-            var cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cls';
-            cols.header = '대분류코드';
+            var cols = new wijmo.grid.Column();  
+            cols.binding = 'cltnm';
+            cols.header = '거래처';
             cols.align = "center";
-            cols.width = 100; 
-            wtab02Grid.columns.push(cols);    
-            // console.log("cols", cols);  
+            cols.width = 150;  
+            wtab02Grid.columns.push(cols);      
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cnam';
-            cols.header = '대분류명칭';
+            cols.binding = 'pname';
+            cols.header = '품목명';
+            cols.align = "left";
+            cols.width = 250;  
+            wtab02Grid.columns.push(cols);  
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'psize';
+            cols.header = '규격';
+            cols.align = "left";
+            cols.width = 150;  
+            wtab02Grid.columns.push(cols); 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wfrdt';
+            cols.header = '사출시작일';
             cols.align = "center";
-            cols.width = 200; 
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.com_cnam}</b>',
-                click: (e, ctx) => {
-                    wactnmChks(ctx.item.com_cls, ctx.item.com_cnam);
-                }
-            });
-            wtab02Grid.columns.push(cols);
-        }
-
-           
-         
-        
-
+            cols.width = 130;  
+            cols.format = 'yyyy-MM-dd'; 
+            wtab01Grid.columns.push(cols);   
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wtrdt';
+            cols.header = '사출종료일';
+            cols.align = "center";
+            cols.width = 130;  
+            cols.format = 'yyyy-MM-dd'; 
+            wtab01Grid.columns.push(cols);   
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'prod_qty';
+            cols.header = '사출수량';
+            cols.align = "right";
+            cols.width = 130;  
+            wtab02Grid.columns.push(cols);    
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wrpsnm01';
+            cols.header = '사출담당자';
+            cols.align = "center";
+            cols.width = 120;  
+            wtab02Grid.columns.push(cols);      
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'lotno';
+            cols.header = '사출바코드';
+            cols.align = "center";
+            cols.width = 150;  
+            wtab02Grid.columns.push(cols);    
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'qcdate';
+            cols.header = '검사일';
+            cols.align = "center";
+            cols.format = 'yyyy-MM-dd'; 
+            cols.width = 120;   
+            wtab02Grid.columns.push(cols);     
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'glotnono';
+            cols.header = '검사바코드';
+            cols.align = "center";
+            cols.width = 150;  
+            wtab02Grid.columns.push(cols);       
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'otqty';
+            cols.header = '검사수량';
+            cols.align = "right";
+            cols.width = 90;  
+            wtab02Grid.columns.push(cols);      
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wrpsnm02';
+            cols.header = '검사담당자';
+            cols.align = "center";
+            cols.width = 120;  
+            wtab02Grid.columns.push(cols);    
+        } 
   
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 

@@ -54,17 +54,17 @@
                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
                                 </button> 
                             </div>  
-                            <div class="col-auto"><span class="input-group-text" id="inputGroup-sizing-sm">매수</span> 
+                            <!-- <div class="col-auto"><span class="input-group-text" id="inputGroup-sizing-sm">매수</span> 
                                 <input class="form-control form-control-sm" id="prtnum01" type="number"    autocomplete="off"  placeholder="">                                               
-                            </div>
-                            <div class="col-auto">   
+                            </div> -->
+                            <!-- <div class="col-auto">   
                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="prt_btn()">인쇄
                                 </button>
                             </div>  
                             <div class="col-auto">   
                                 <div id="barcode"></div>  
                                 <div id="qrcode_value"></div> 
-                            </div>  
+                            </div>   -->
                         </div> 
                         <div class="container-fluid">   
                             <div id="wtab01Grid_div" style="overflow:scroll;   height:680px;    margin:0 auto; "></div> 
@@ -87,7 +87,7 @@
                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
                                 </button> 
                             </div>  
-                            <div class="col-auto"><span class="input-group-text" id="inputGroup-sizing-sm">매수</span> 
+                            <!-- <div class="col-auto"><span class="input-group-text" id="inputGroup-sizing-sm">매수</span> 
                                 <input class="form-control form-control-sm" id="prtnum02" type="number"    autocomplete="off"  placeholder="">                                               
                             </div>
                             <div class="col-auto">   
@@ -96,7 +96,7 @@
                             </div>  
                             <div class="col-auto">   
                                 <div id="barcode02"></div>  
-                            </div>  
+                            </div>   -->
                         </div> 
                         <div class="container-fluid">
                             <div id="wtab02Grid_div" style="overflow:scroll;   height:600px;  margin:0 auto; "></div>
@@ -202,16 +202,16 @@
         //     value: 'QR code Demo',
         //     renderType : 'Svg'
         // });
-       barcode = new wijmo.barcode.common.Code128('#barcode', {
-                    value: 'Code128Demo',
-                    autoWidthZoom: 2,
-                    autoWidth: true    
-                });  
-       barcode02 = new wijmo.barcode.common.Code128('#barcode02', {
-                    value: 'Code128Demo',
-                    autoWidthZoom: 2,
-                    autoWidth: true    
-                }); 
+    //    barcode = new wijmo.barcode.common.Code128('#barcode', {
+    //                 value: 'Code128Demo',
+    //                 autoWidthZoom: 2,
+    //                 autoWidth: true    
+    //             });  
+    //    barcode02 = new wijmo.barcode.common.Code128('#barcode02', {
+    //                 value: 'Code128Demo',
+    //                 autoWidthZoom: 2,
+    //                 autoWidth: true    
+    //             }); 
        view_p01tab01page = new wijmo.collections.CollectionView(getData_wlist(), {
             // pageSize: 21
         });
@@ -352,7 +352,7 @@
                 pname[i]      = sel[i]._data.jpum; 
                 prod_qty[i]      = sel[i]._data.prod_qty;  
             }   
-            barcode02.value = lotno   [0]  
+            //barcode02.value = lotno   [0]  
             // document.getElementById("qrcode_value").innerText = lotno   [0]  ;
         }
        // 헤더 열 전환
@@ -633,44 +633,44 @@
                 // printDiv.style.display = 'none';
                 // barcode.value = lotno[0];
   
-                doc = new wijmo.PrintDocument({ 
-                    copyCss: false 
-                });
-                doc.append('<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">');
-                doc.append(`
-                        <style>
-                            .wj-barcode-qrcode {
-                                width: 100px;
-                                height: 100px;
-                            }
-                        </style>
-                    `);
-                doc.append(document.querySelector('#barcode')); 
-                doc.append(barcode.value);
-                // <div id="barcode" class="wj-barcode wj-control wj-barcode-code128 wj-state-focus wj-state-focused" tabindex="0" style="line-height: 0px;"><canvas width="308" height="60"></canvas></div>
-                doc.print(); 
+                // doc = new wijmo.PrintDocument({ 
+                //     copyCss: false 
+                // });
+                // doc.append('<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">');
+                // doc.append(`
+                //         <style>
+                //             .wj-barcode-qrcode {
+                //                 width: 100px;
+                //                 height: 100px;
+                //             }
+                //         </style>
+                //     `);
+                // doc.append(document.querySelector('#barcode')); 
+                // doc.append(barcode.value);
+                // // <div id="barcode" class="wj-barcode wj-control wj-barcode-code128 wj-state-focus wj-state-focused" tabindex="0" style="line-height: 0px;"><canvas width="308" height="60"></canvas></div>
+                // doc.print(); 
                break;   
            case 'B': 
-                var ll_prtnum02 = document.getElementById('prtnum02').value;  
+                // var ll_prtnum02 = document.getElementById('prtnum02').value;  
 
-                if(lotno.length == 0){return }  
+                // if(lotno.length == 0){return }  
   
-                doc = new wijmo.PrintDocument({ 
-                    copyCss: false 
-                });
-                doc.append('<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">');
-                doc.append(`
-                        <style>
-                            .wj-barcode-qrcode {
-                                width: 100px;
-                                height: 100px;
-                            }
-                        </style>
-                    `);
-                doc.append(document.querySelector('#barcode02')); 
-                doc.append(barcode02.value);
-                // <div id="barcode" class="wj-barcode wj-control wj-barcode-code128 wj-state-focus wj-state-focused" tabindex="0" style="line-height: 0px;"><canvas width="308" height="60"></canvas></div>
-                doc.print(); 
+                // doc = new wijmo.PrintDocument({ 
+                //     copyCss: false 
+                // });
+                // doc.append('<link href="https://cdn.grapecity.com/wijmo/5.latest/styles/wijmo.min.css" rel="stylesheet">');
+                // doc.append(`
+                //         <style>
+                //             .wj-barcode-qrcode {
+                //                 width: 100px;
+                //                 height: 100px;
+                //             }
+                //         </style>
+                //     `);
+                // doc.append(document.querySelector('#barcode02')); 
+                // doc.append(barcode02.value);
+                // // <div id="barcode" class="wj-barcode wj-control wj-barcode-code128 wj-state-focus wj-state-focused" tabindex="0" style="line-height: 0px;"><canvas width="308" height="60"></canvas></div>
+                // doc.print(); 
                break;               
            default:    
                break;                
