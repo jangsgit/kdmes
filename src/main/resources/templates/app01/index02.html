@@ -34,9 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">공정별설비등록</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">공정별가동현황</a>
-                    </li> 
+                    </li>  -->
                     <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">분류상세등록</a>
                     </li> -->
@@ -91,6 +91,10 @@
                                     </div>
                                         <div class="col-auto">  
                                             <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
+                                            </button>
+                                        </div>  
+                                        <div class="col-auto">  
+                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="new_btn()">신규
                                             </button>
                                         </div>  
                                         <div class="col-auto">  
@@ -295,16 +299,13 @@
             // //         showCheckedCount();
             // //     }
             // // }); 
-            // // 헤더 열 전환
-            // setHeaderColumn(true);
-            // function setHeaderColumn(headerOn) {
-            //     wtab01Grid.headersVisibility = headerOn
-            //     ? wijmo.grid.HeadersVisibility.All
-            //     : wijmo.grid.HeadersVisibility.Column;
-            //     // selector.column = headerOn
-            //     // ? wtab01Grid.rowHeaders.columns[0]
-            //     // : wtab01Grid.columns[0];
-            // } 
+            // 헤더 열 전환
+            setHeaderColumn(false);
+            function setHeaderColumn(headerOn) {
+                wtab01Grid.headersVisibility = headerOn
+                ? wijmo.grid.HeadersVisibility.All
+                : wijmo.grid.HeadersVisibility.Column; 
+            } 
             wtab01Grid.showMarquee = true;
             wtab01Grid.focus();
             wijmo.toggleClass(wtab01Grid.hostElement, 'highlightActive', true);
@@ -365,6 +366,12 @@
             });   
             // 첫번째 항목(정렬/그룹화한 후)을 선택
             wtab02Grid.select(new wijmo.grid.CellRange(0, 0), true); 
+            setHeaderColumn02(false);
+            function setHeaderColumn02(headerOn) {
+                wtab02Grid.headersVisibility = headerOn
+                ? wijmo.grid.HeadersVisibility.All
+                : wijmo.grid.HeadersVisibility.Column; 
+            } 
                 // tab01검색 데이터 수집
             function getData_tab02(){        
                 var wactnm_data = [];
@@ -440,6 +447,10 @@
             insaSearchList_rtn("A"); 
         }
     });  
+    document.getElementById("wpernm").addEventListener("click", (e)=>{  
+            document.getElementById("innamebtn").click();
+            insaSearchList_rtn("A"); 
+    });   
 
     function insaSearchList_rtn(arg){  
         var insaText = "";
@@ -549,6 +560,12 @@
 
         }   
 
+        function new_btn(arg){ ;
+            document.getElementById('wrmc').value = "";
+            document.getElementById('wrmcnm').value = "";
+            document.getElementById('wperid').value = "";
+            document.getElementById('wpernm').value = "";
+        }
         function save_btn(arg){
             var ls_tab = document.getElementById('tabvalue').value;
             var ls_code = document.getElementById('com_code').value;

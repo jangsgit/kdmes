@@ -137,6 +137,7 @@
                    AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
                    AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
                    AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
+                   AND ( ISNULL(A.dem_flag,'')  = '0' )
                    AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
                    AND ( Len( ISNULL(A.wflag,'') ) > 0  )
              ) F
@@ -552,7 +553,7 @@
         <if test="wrps != null ">,</if>
         <if test="wrps != null">wrps=#{wrps}</if>
         <if test="wrmc != null ">,</if>
-        <if test="wremark != null">wrmc=#{wrmc}</if>
+        <if test="wrmc != null">wrmc=#{wrmc}</if>
         <if test="indate != null ">,</if>
         <if test="indate != null">indate=#{indate}</if>
         <if test="inperid != null ">,</if>

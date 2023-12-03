@@ -228,7 +228,7 @@
                                                 </div>
                                             </td>                                                                                   
                                         </tr>                                                                                                                                                                                       
-                                        <tr>                                        
+                                        <!-- <tr>                                        
                                             <th>영업담당(현)</th>
                                             <td>
                                                 <div class="input_wrap">
@@ -250,7 +250,7 @@
                                                     <input type="hidden" name="abonsadam3" id="abonsadam3" placeholder=""  >                             
                                                 </div>
                                             </td>                                                                                   
-                                        </tr>                                                                                                                                                                                     
+                                        </tr>                                                                                                                                                                                      -->
                                         <tr>                                        
                                             <th>홈페이지</th>
                                             <td colspan="2"> 
@@ -815,14 +815,14 @@
             document.getElementById('atelno2').value = "";
             document.getElementById('aemail').value = "";
             document.getElementById('ahand').value = "";
-            document.getElementById('abonsadam1').value = "";
-            document.getElementById('abonsadam2').value = "";
-            document.getElementById('abonsadam3').value = "";
+            // document.getElementById('abonsadam1').value = "";
+            // document.getElementById('abonsadam2').value = "";
+            // document.getElementById('abonsadam3').value = "";
             document.getElementById('adomain').value = "";
             document.getElementById('afax').value = "";
-            document.getElementById('inname01').value = "";
-            document.getElementById('inname02').value = "";
-            document.getElementById('inname03').value = "";  
+            // document.getElementById('inname01').value = "";
+            // document.getElementById('inname02').value = "";
+            // document.getElementById('inname03').value = "";  
     }
     // <!-- 저장 스크립트 시작 -->
     function save_btn(){   
@@ -851,24 +851,24 @@
         var ls_atelno2 = document.getElementById('atelno2').value; 
         var ls_aemail = document.getElementById('aemail').value ; 
         var ls_ahand = document.getElementById('ahand').value; 
-        var ls_abonsadam1 = document.getElementById('abonsadam1').value; 
-        var ls_abonsadam2 = document.getElementById('abonsadam2').value ; 
-        var ls_abonsadam3 = document.getElementById('abonsadam3').value; 
+        // var ls_abonsadam1 = document.getElementById('abonsadam1').value; 
+        // var ls_abonsadam2 = document.getElementById('abonsadam2').value ; 
+        // var ls_abonsadam3 = document.getElementById('abonsadam3').value; 
         var ls_adomain = document.getElementById('adomain').value; 
         var ls_afax = document.getElementById('afax').value ; 
-        var ls_inname01 = document.getElementById('inname01').value ; 
-        var ls_inname02 = document.getElementById('inname02').value ; 
-        var ls_inname03 = document.getElementById('inname03').value;  
+        // var ls_inname01 = document.getElementById('inname01').value ; 
+        // var ls_inname02 = document.getElementById('inname02').value ; 
+        // var ls_inname03 = document.getElementById('inname03').value;  
              
-        if(ls_inname01 == null || ls_inname01.length == 0 || ls_inname01 == ""){ 
-            ls_abonsadam1 = "";
-        }                      
-        if(ls_inname02 == null || ls_inname02.length == 0 || ls_inname02 == ""){ 
-            ls_abonsadam2 = "";
-        }                      
-        if(ls_inname03 == null || ls_inname03.length == 0 || ls_inname03 == ""){ 
-            ls_abonsadam3 = "";
-        }                                      
+        // if(ls_inname01 == null || ls_inname01.length == 0 || ls_inname01 == ""){ 
+        //     ls_abonsadam1 = "";
+        // }                      
+        // if(ls_inname02 == null || ls_inname02.length == 0 || ls_inname02 == ""){ 
+        //     ls_abonsadam2 = "";
+        // }                      
+        // if(ls_inname03 == null || ls_inname03.length == 0 || ls_inname03 == ""){ 
+        //     ls_abonsadam3 = "";
+        // }                                      
         
 
         
@@ -910,27 +910,27 @@
                     return ;                 
                 }
             }      
-            if(ls_inname01 != null && ls_inname01.length > 0 && ls_inname01 != ""){ 
-                if(ls_abonsadam1 == null || ls_abonsadam1.length == 0 || ls_abonsadam1 == ""){ 
-                    alert(ls_inname01 + " : 담당사원의 코드를 선택하세요.")    
-                    document.getElementById("inname01").focus();  
-                    return ;               
-                } 
-            }    
-            if(ls_inname02 != null && ls_inname02.length > 0 && ls_inname02 != ""){ 
-                if(ls_abonsadam2 == null || ls_abonsadam2.length == 0 || ls_abonsadam2 == ""){ 
-                    alert(ls_inname02 + " : 담당사원의 코드를 선택하세요.")     
-                    document.getElementById("inname02").focus();  
-                    return ;               
-                } 
-            }     
-            if(ls_inname03 != null && ls_inname03.length > 0 && ls_inname03 != ""){ 
-                if(ls_abonsadam3 == null || ls_abonsadam3.length == 0 || ls_abonsadam3 == ""){ 
-                    alert(ls_inname03 + " : 담당사원의 코드를 선택하세요.")     
-                    document.getElementById("inname03").focus();  
-                    return ;               
-                } 
-            }   
+            // if(ls_inname01 != null && ls_inname01.length > 0 && ls_inname01 != ""){ 
+            //     if(ls_abonsadam1 == null || ls_abonsadam1.length == 0 || ls_abonsadam1 == ""){ 
+            //         alert(ls_inname01 + " : 담당사원의 코드를 선택하세요.")    
+            //         document.getElementById("inname01").focus();  
+            //         return ;               
+            //     } 
+            // }    
+            // if(ls_inname02 != null && ls_inname02.length > 0 && ls_inname02 != ""){ 
+            //     if(ls_abonsadam2 == null || ls_abonsadam2.length == 0 || ls_abonsadam2 == ""){ 
+            //         alert(ls_inname02 + " : 담당사원의 코드를 선택하세요.")     
+            //         document.getElementById("inname02").focus();  
+            //         return ;               
+            //     } 
+            // }     
+            // if(ls_inname03 != null && ls_inname03.length > 0 && ls_inname03 != ""){ 
+            //     if(ls_abonsadam3 == null || ls_abonsadam3.length == 0 || ls_abonsadam3 == ""){ 
+            //         alert(ls_inname03 + " : 담당사원의 코드를 선택하세요.")     
+            //         document.getElementById("inname03").focus();  
+            //         return ;               
+            //     } 
+            // }   
             if(ls_ajumi1 != null && ls_ajumi1.length > 0 && ls_ajumi1 != ""){
                 if(ls_ajumi1.length != 6){
                     alert("법인번호 첫번째 자리는 6자리로 입력해주세요")     
@@ -986,9 +986,9 @@
                 "atelno2" : ls_atelno2,
                 "aemail"   : ls_aemail,
                 "ahand" : ls_ahand,
-                "abonsadam1" : ls_abonsadam1,
-                "abonsadam2" : ls_abonsadam2,
-                "abonsadam3" : ls_abonsadam3, 
+                // "abonsadam1" : ls_abonsadam1,
+                // "abonsadam2" : ls_abonsadam2,
+                // "abonsadam3" : ls_abonsadam3, 
                 "adomain" : ls_adomain,                
                 "afax" : ls_afax          
             } 
@@ -1044,27 +1044,27 @@
          
 //사원검색 
 //
-        document.getElementById("inname01").addEventListener("keyup", (e)=>{ 
-            if(e.keyCode === 13){  
-                document.getElementById("innamebtn").click();
-                insaflag = "A"; 
-                insaSearchList_rtn("A"); 
-            }
-        });    
-        document.getElementById("inname02").addEventListener("keyup", (e)=>{ 
-            if(e.keyCode === 13){ 
-                document.getElementById("innamebtn").click();
-                insaflag = "B"; 
-                insaSearchList_rtn("B"); 
-            }
-        });    
-        document.getElementById("inname03").addEventListener("keyup", (e)=>{ 
-            if(e.keyCode === 13){ 
-                document.getElementById("innamebtn").click();
-                insaflag = "C"; 
-                insaSearchList_rtn("C"); 
-            }
-        });    
+        // document.getElementById("inname01").addEventListener("keyup", (e)=>{ 
+        //     if(e.keyCode === 13){  
+        //         document.getElementById("innamebtn").click();
+        //         insaflag = "A"; 
+        //         insaSearchList_rtn("A"); 
+        //     }
+        // });    
+        // document.getElementById("inname02").addEventListener("keyup", (e)=>{ 
+        //     if(e.keyCode === 13){ 
+        //         document.getElementById("innamebtn").click();
+        //         insaflag = "B"; 
+        //         insaSearchList_rtn("B"); 
+        //     }
+        // });    
+        // document.getElementById("inname03").addEventListener("keyup", (e)=>{ 
+        //     if(e.keyCode === 13){ 
+        //         document.getElementById("innamebtn").click();
+        //         insaflag = "C"; 
+        //         insaSearchList_rtn("C"); 
+        //     }
+        // });    
  
         document.getElementById("winnameBtn").addEventListener("click",function(){   
             insaSearchList_rtn("M");  
@@ -1349,14 +1349,14 @@
             document.getElementById('atelno2').value = arg22;
             document.getElementById('aemail').value = arg23;
             document.getElementById('ahand').value = arg24;
-            document.getElementById('abonsadam1').value = arg25; 
-            document.getElementById('abonsadam2').value = arg26;
-            document.getElementById('abonsadam3').value = arg27;
+            // document.getElementById('abonsadam1').value = arg25; 
+            // document.getElementById('abonsadam2').value = arg26;
+            // document.getElementById('abonsadam3').value = arg27;
             document.getElementById('adomain').value = arg28;
             document.getElementById('afax').value = arg29; 
-            document.getElementById('inname01').value = arg30; 
-            document.getElementById('inname02').value = arg31; 
-            document.getElementById('inname03').value = arg32; 
+            // document.getElementById('inname01').value = arg30; 
+            // document.getElementById('inname02').value = arg31; 
+            // document.getElementById('inname03').value = arg32; 
         }      
 
 

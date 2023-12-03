@@ -18,6 +18,7 @@ import com.dae.kdmes.Service.App01.Index04Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -439,7 +440,7 @@ public class App02CrudController {
             ,@RequestParam("prod_sdate") String prod_sdate
             ,@RequestParam("prod_edate") String prod_edate
             ,@RequestParam("cltcd") String cltcd
-            ,@RequestParam("qcdate") String qcdate
+            ,@RequestParam("orddate") String orddate
             ,@RequestParam("perid") String perid
             ,@RequestParam("ecltnm") String ecltnm
             ,@RequestParam("workdv") Integer workdv
@@ -461,7 +462,7 @@ public class App02CrudController {
             index10Dto.setProd_sdate(prod_sdate);
             index10Dto.setProd_edate(prod_edate);
             index10Dto.setCltcd(cltcd);
-            index10Dto.setQcdate(qcdate);
+            index10Dto.setOrddate(orddate);
             index10Dto.setPerid(perid);
             index10Dto.setEcltnm(ecltnm);
             index10Dto.setWorkdv(workdv);
@@ -473,6 +474,7 @@ public class App02CrudController {
             index10Dto.setOstore(ostore);
             index10Dto.setRwflag(rwflag);
             index10Dto.setRemark(remark);
+            index10Dto.setPlan_no(plan_no);
             //index10Dto.setJpum(jpum);
 
             HttpSession session = request.getSession();
@@ -487,7 +489,7 @@ public class App02CrudController {
             log.info(index10Dto.getRemark());
             if (plan_no == null || plan_no.equals("")) {
                 plan_no = GetMaxSeq(indate);
-                lotno = GetMaxSeq1(indate , rwflag);
+                lotno = indate  + rwflag + plan_no.substring(8,12); //GetMaxSeq1(indate , rwflag);
                 index10Dto.setPlan_no(plan_no);
                 index10Dto.setLotno(lotno);
                 wono = "P" + plan_no;
@@ -683,6 +685,21 @@ public class App02CrudController {
         }else{
             Integer ll_misnum = Integer.parseInt(ls_seq) + 1;
             ls_seq = ll_misnum.toString();
+            switch (ls_seq.length()){
+                case 1:
+                    ls_seq = "000" + ls_seq;
+                    break;
+                case 2:
+                    ls_seq = "00" + ls_seq;
+                    break;
+                case 3:
+                    ls_seq = "0" + ls_seq;
+                    break;
+                default:
+                    break;
+            }
+
+            ls_seq = indate + ls_seq;
         }
         log.info("GetMaxSeq Exception =====>" + ls_seq);
         return ls_seq;

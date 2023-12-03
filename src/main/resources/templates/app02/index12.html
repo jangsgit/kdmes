@@ -214,13 +214,7 @@
     //             }); 
        view_p01tab01page = new wijmo.collections.CollectionView(getData_wlist(), {
             // pageSize: 21
-        });
-       // tab01 grid page
-        // new wijmo.input.CollectionViewNavigator('#tab01Pager', {
-        //     byPage: true,
-        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-        //     cv: view_p01tab01page
-        // });      
+        }); 
         wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
             autoGenerateColumns: false,
             showMarquee: true,
@@ -230,18 +224,8 @@
             alternatingRowStep: 0,
             columns: [     
                 { binding: 'indate', header: '등록일자', align: "center", width: 100 }, 
-                { binding: 'cltcd', header: '거래처', align: "left", width: 150 }, 
-                { binding: 'pcode', 
-                    header: '품목', 
-                    align: "center", 
-                    width: 200,
-                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.pcode}</b>',
-                        click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark);                    
-                        }
-                    }) 
-                },   
+                { binding: 'ecltnm', header: '거래처', align: "left", width: 150 }, 
+                { binding: 'jpum', header: '품목', align: "center", width: 200 },  
                 { binding: 'jgugek', header: '규격', align: "left", width: 150 },   
                 { binding: 'prod_qty', header: '계획수량', align: "right", width: 100 },  
                 { binding: 'lotno', header: '로트번호', align: "center", width: 150 },
@@ -253,29 +237,8 @@
             itemsSource: view_p01tab01page
         });   
         
-       new FlexGridContextMenu(wtab01Grid); 
-       // 선택기 생성
-       let selector01 = new wijmo.grid.selector.Selector(wtab01Grid, {
-           itemChecked: () => {
-                showCheckedCount01();
-           }
-       }); 
-         
-       function showCheckedCount01() {
-        
-            let cnt = document.getElementById('checked-count'), sel = wtab01Grid.rows.filter(r => r.isSelected);  
-            
-            for (var i = 0; i < sel.length; i++) { 
-                console.log(sel[i]._data); 
-                lotno   [i]   = sel[i]._data.lotno; 
-                cltnm[i]      = sel[i]._data.ecltnm;
-                pname[i]      = sel[i]._data.jpum; 
-                prod_qty[i]      = sel[i]._data.prod_qty;  
-            }   
-            barcode.value = lotno   [0]  
-            // document.getElementById("qrcode_value").innerText = lotno   [0]  ;
-        }
-       setHeaderColumn(true);
+       new FlexGridContextMenu(wtab01Grid);  
+       setHeaderColumn(false);
        function setHeaderColumn(headerOn) {
            wtab01Grid.headersVisibility = headerOn
            ? wijmo.grid.HeadersVisibility.All
@@ -298,7 +261,7 @@
        } 
 
    
-       //일자별입고현황 popup list
+       //검사현황 popup list
        view_p01tab02page = new wijmo.collections.CollectionView(getData_wlist(), { 
        }); 
        wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
@@ -310,18 +273,8 @@
             alternatingRowStep: 0,
             columns: [     
                 { binding: 'indate', header: '등록일자', align: "center", width: 100 }, 
-                { binding: 'cltcd', header: '거래처', align: "left", width: 150 }, 
-                { binding: 'pcode', 
-                    header: '품목', 
-                    align: "center", 
-                    width: 150,
-                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.pcode}</b>',
-                        click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark);                    
-                        }
-                    }) 
-                },   
+                { binding: 'ecltnm', header: '거래처', align: "left", width: 150 }, 
+                { binding: 'pname', header: '품목', align: "center", width: 150 },  
                 { binding: 'jgugek', header: '규격', align: "left", width: 150 },   
                 { binding: 'prod_qty', header: '계획수량', align: "right", width: 100 },  
                 { binding: 'lotno', header: '로트번호', align: "center", width: 150 },
@@ -334,29 +287,9 @@
         });   
 
 
-       new FlexGridContextMenu(wtab02Grid); 
-       // 선택기 생성
-       let selector = new wijmo.grid.selector.Selector(wtab02Grid, {
-           itemChecked: () => {
-            showCheckedCount02();
-           }
-       }); 
-       function showCheckedCount02() {
-        
-            let cnt = document.getElementById('checked-count'), sel = wtab02Grid.rows.filter(r => r.isSelected);  
-            
-            for (var i = 0; i < sel.length; i++) { 
-                console.log(sel[i]._data); 
-                lotno   [i]   = sel[i]._data.lotno; 
-                cltnm[i]      = sel[i]._data.ecltnm;
-                pname[i]      = sel[i]._data.jpum; 
-                prod_qty[i]      = sel[i]._data.prod_qty;  
-            }   
-            //barcode02.value = lotno   [0]  
-            // document.getElementById("qrcode_value").innerText = lotno   [0]  ;
-        }
+       new FlexGridContextMenu(wtab02Grid);  
        // 헤더 열 전환
-       setHeaderColumn2(true);
+       setHeaderColumn2(false);
        function setHeaderColumn2(headerOn) {
            wtab02Grid.headersVisibility = headerOn
            ? wijmo.grid.HeadersVisibility.All
@@ -382,6 +315,7 @@
                     cltcd: wtab01Dto[i]["cltcd"],
                     ecltnm: wtab01Dto[i]["ecltnm"], 
                     pcode: wtab01Dto[i]["pcode"], 
+                    jpum: wtab01Dto[i]["jpum"], 
                     jgugek: wtab01Dto[i]["jgugek"], 
                     prod_qty: wtab01Dto[i]["prod_qty"], 
                     lotno: wtab01Dto[i]["lotno"], 
