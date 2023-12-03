@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.PDA.KdpdaDBMapper">
+
+    <select id="GetUserInfoPDA" parameterType="com.dae.kdmes.DTO.UserFormDto"  resultType="com.dae.kdmes.DTO.UserFormDto">
+        select top 1 userid, passwd1,  custnm, pernm, useyn, perid, username
+        from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1} and useyn = 'Y'
+    </select>
+
+    <select id="getDa036MaxSeq" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto"   resultType="java.lang.String">
+        select max(delnum) from TB_DA036 where deldate = #{fdeldate}
+    </select>
+
+    <insert id="InsertDA036" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto" >
+        insert into tb_da036 (custcd, spjangcd, deldate, delnum, deltype, cltcd, cltnm, perid, divicd, taxcls, setcls, store,domcls,
+        sunflag, taxflag, indate, inperid)
+        (SELECT A.custcd,
+                A.spjangcd,
+                #{fdeldate} AS deldate,
+                #{fdelnum} as delnum,
+                '1' as deltype,
+                MAX(A.cltcd) as cltcd ,
+                MAX(B.acorp)  as cltnm,
+                #{perid} as perid,
+                '' as divicd,
+                '01' as taxcls,
+                '01' as setcls,
+                'P01' AS store,
+                '0' as domcls,
+                '1' as sunflag,
+                '1' as taxflag,
+                '' as indate,
+                '' as inperid
+                FROM TB_FPLAN A WITH(NOLOCK),
+                TB_FPLAN_W020 D  WITH(NOLOCK) ,
+                TB_FPLAN_W010 E  WITH(NOLOCK) ,
+                JCODE C WITH(NOLOCK),
+                CIF B WITH(NOLOCK)
+                WHERE (A.pcode              = C.JKEY)
+                AND (A.plan_no              = E.plan_no)
+                AND (D.lotno              = E.glotnono)
+                AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+                AND (D.lotno = #{lotno} )
+                AND ( Len( ISNULL(A.wflag,'') ) > 0  )
+                GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt, D.winps, D.wrps, D.indate, D.wremark  )
+    </insert>
+
+
+    <insert id="InsertDa037" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto" >
+      INSERT INTO TB_DA037( custcd, spjangcd, deldate, delnum, delseq, pcode, pname, psize, punit, qty, seqty,  uamt, samt, tamt, mamt,  indate,inperid, glotno, glasslotno, gperid, gpernm  )
+     ( SELECT A.custcd,
+            A.spjangcd,
+            #{fdeldate} AS deldate,
+            #{fdelnum} as delnum,
+            #{fdelseq} as delseq,
+            MAX(A.pcode) as pcode,
+            MAX(C.jpum) AS pname,
+            MAX(C.jgugek) AS psize,
+            MAX(C.jdanwy) AS punit,
+            1 as qty,
+            isnull(D.wotqt,0) as seqty,
+            0 as uamt,
+            0 as samt,
+            0 as tamt,
+            0 as mamt,
+            #{indate} as indate,
+            #{perid} as inperid,
+            #{lotno} as glotno,
+            '' as glassiotno,
+            D.wrps as gperid,
+            (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) as gpernm
+
+            FROM TB_FPLAN A WITH(NOLOCK),
+            TB_FPLAN_W020 D  WITH(NOLOCK) ,
+            TB_FPLAN_W010 E  WITH(NOLOCK) ,
+            JCODE C WITH(NOLOCK),
+            CIF B WITH(NOLOCK)
+            WHERE (A.pcode              = C.JKEY)
+            AND (A.plan_no              = E.plan_no)
+            AND (D.lotno              = E.glotnono)
+            AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+            AND (D.lotno = #{lotno}  )
+            AND ( Len( ISNULL(A.wflag,'') ) > 0  )
+            GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt, D.winps, D.wrps, D.indate, D.wremark )
+
+    </insert>
+
+    <update id="UpdateDA037" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto">
+        update TB_DA037 set glasslotno = #{glasslotno}
+        where deldate = #{fdeldate} and delnum=#{fdelnum} and delseq=#{fdelseq}
+    </update>
+
+    <update id="UpdateW020" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto">
+        update TB_FPLAN_W020 set decision = '9', deldate = #{fdeldate},  delnum=#{fdelnum}, delseq=#{fdelseq}
+        where lotno =  #{lotno}
+    </update>
+
+    <delete id="DeleteDA036" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto">
+        delete from tb_da036
+        where deldate = #{deldate} and delnum = #{delnum}
+          and deldate + delnum not in (select deldate + delnum from tb_da037 where deldate = #{deldate} and delnum=#{delnum} )
+    </delete>
+
+    <delete id="DeleteDA037" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto">
+        delete from tb_da037
+        where deldate = #{deldate} and delnum=#{delnum} and delseq=#{delseq}
+    </delete>
+
+
+    <select id="GetTBDA037List" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto"  resultType="com.dae.kdmes.DTO.PDA.KosepPopDto">
+        select  A.custcd AS custcd, A.spjangcd as spjangcd, B.cltcd as cltcd,
+        substring(A.deldate, 5,2) + '/' + substring(A.deldate, 7,2) as fdeldate, A.deldate  as deldate,
+        A.delnum as delnum, A.delseq as delseq, isnull(A.pcode,'') as pcode, isnull(A.pname,'') as pname, isnull(A.psize,'') as psize,
+        isnull(A.qty,0) as qty, isnull(A.uamt,0) as uamt, isnull(A.samt,0) as samt,  isnull(B.cltnm,'') as cltnm,
+        isnull(A.seqty,0) as seqty,  isnull(A.glotno,'') as lotno,  isnull(A.glasslotno,'') as glasslotno
+        from TB_DA037 A WITH (NOLOCK) , TB_DA036 B WITH (NOLOCK)
+        where A.spjangcd = B.spjangcd and A.deldate = B.deldate and A.delnum=B.delnum
+        AND A.deldate = #{todate}
+        ORDER BY A.deldate, A.delnum, A.delseq
+    </select>
+
+</mapper>

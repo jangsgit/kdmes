@@ -97,5 +97,7 @@ public class UserFormDto {
     private String pushid;
 
     private Integer seq;
+    private Integer setDbnm;
+
 
 }
