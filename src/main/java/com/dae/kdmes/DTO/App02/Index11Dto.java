@@ -11,12 +11,13 @@ public class Index11Dto {
     private String indate;
     private String prod_sdate;
     private String prod_edate;
+    private String ecltnm;
     private String wflagnm;
     private String statuscd;
     private String wrmcnm;
     private String rwflagnm;
     private String lotno;
-    private String qclotno;
+    private String glotno;
     private String jpum;
     private String jchajong;
     private String jgugek;
@@ -28,5 +29,6 @@ public class Index11Dto {
 
     private String frdate;
     private String todate;
+    private String wrpsnm;
 
 }

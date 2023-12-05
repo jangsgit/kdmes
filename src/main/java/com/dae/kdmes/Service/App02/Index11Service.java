@@ -17,8 +17,8 @@ public class Index11Service {
     @Autowired
     Index11Mapper indexMapper;
 
-    public List<Index11Dto> getWflagList(Index11Dto parm){
-        return indexMapper.getWflagList(parm);
+    public List<Index11Dto> getIndex11List(Index11Dto parm){
+        return indexMapper.getIndex11List(parm);
     }
 
     public List<Index11Dto> getList(Index11Dto parm){

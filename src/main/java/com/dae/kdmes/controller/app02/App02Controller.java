@@ -43,13 +43,6 @@ public class App02Controller {
     Index10Dto index10Dto = new Index10Dto();
 
     Index11Dto index11Dto = new Index11Dto();
-
-    Index02Dto index02Dto = new Index02Dto();
-
-    Index03Dto index03Dto = new Index03Dto();
-
-    Index04Dto index04Dto = new Index04Dto();
-
     List<PopupDto> popupListDto = new ArrayList<>();
 
     List<PopupDto> popupListDto1 = new ArrayList<>();
@@ -58,9 +51,6 @@ public class App02Controller {
     List<Index11Dto> index11ListDto = new ArrayList<>();
 
     List<Index01Dto> index01ListDto = new ArrayList<>();
-    List<Index03Dto> index03List = new ArrayList<>();
-
-    List<Index04Dto> index04ListDto = new ArrayList<>();
 
     protected Log log =  LogFactory.getLog(this.getClass());
     //공통코드등록
@@ -86,12 +76,39 @@ public class App02Controller {
             model.addAttribute("fplanList",index10ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
-            log.info("App02_index Exception =============================");
-            log.info("Exception =====>" + ex.toString());
+            log.info("App02_index Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }
 
         return "App02/index10";
+    }
+
+    @GetMapping(value="/index11")
+    public String App11_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("생산계획현황");
+        CommDto.setMenuUrl("생산계획>생산계획현황");
+        CommDto.setMenuCode("index11");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+            //index11ListDto = service11.getWflagList(index11Dto);
+            //index01ListDto = service01.getCom_rem2_keyList(index01Dto);
+
+//            model.addAttribute("com_rem2_keyList",index01ListDto);
+//            model.addAttribute("wflagList",index11ListDto);
+
+
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App11_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index11";
     }
 
 
@@ -120,29 +137,5 @@ public class App02Controller {
         return "App02/index12";
     }
 
-    @GetMapping(value="/index11")
-    public String App02_index11(Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("주간생산계획현황");
-        CommDto.setMenuUrl("생산계획>주간생산계획현황");
-        CommDto.setMenuCode("index11");
-        HttpSession session = request.getSession();
-        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
-        model.addAttribute("userformDto",userformDto);
-
-        try {
-            index11ListDto = service11.getWflagList(index11Dto);
-            index01ListDto = service01.getCom_rem2_keyList(index01Dto);
-
-            model.addAttribute("com_rem2_keyList",index01ListDto);
-            model.addAttribute("wflagList",index11ListDto);
-        } catch (Exception ex) {
-//                dispatchException = ex;
-            log.info("App02_index Exception =============================");
-            log.info("Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
-        }
-
-        return "App02/index11";
-    }
 
 }

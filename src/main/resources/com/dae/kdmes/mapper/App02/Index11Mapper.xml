@@ -5,33 +5,35 @@
 <mapper namespace="com.dae.kdmes.Mapper.App02.Index11Mapper">
 
 
-    <select id="getWflagList"  parameterType="com.dae.kdmes.DTO.App02.Index11Dto" resultType="com.dae.kdmes.DTO.App02.Index11Dto">
+    <select id="getIndex11List"  parameterType="com.dae.kdmes.DTO.App02.Index11Dto" resultType="com.dae.kdmes.DTO.App02.Index11Dto">
         <![CDATA[
-           SELECT A.plan_no, A.indate, A.prod_sdate, A.prod_edate, ISNULL(DBO.DF_NM_RTN('TB_WFLAG', A.custcd, A.wflag, '', ''),'') as wflagnm,
+           SELECT A.plan_no, A.ecltnm,  Left(A.indate,4) + '-' + substring(A.indate, 5,2)+ '-' + substring(A.indate, 7,2) as indate,
+                 Left(A.prod_sdate,4) + '-' + substring(A.prod_sdate, 5,2)+ '-' + substring(A.prod_sdate, 7,2) as prod_sdate,
+                 Left(A.prod_edate,4) + '-' + substring(A.prod_edate, 5,2)+ '-' + substring(A.prod_edate, 7,2) as prod_edate,
+                  ISNULL(DBO.DF_NM_RTN('TB_WFLAG', A.custcd, A.wflag, '', ''),'') as wflagnm,
                 (CASE WHEN A.wflag = '00010' THEN A.decision1
                 WHEN A.wflag = '00020' THEN A.decision2
                 WHEN A.wflag = '00030' THEN A.decision3
                 WHEN A.wflag = '00040' THEN A.decision4
                 ELSE A.decision END ) AS STATUSCD,
                 isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = A.wflag and wrmc = C.wrmc),'') as wrmcnm ,
+                (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '')  + '외 ' + CAST(E.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '') END ) as wrpsnm,
                 (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
                 A.lotno ,
-                F.lotno as qclotno,
+                isnull(E.glotnono, '') as qlotno,
                 D.jpum,
                 D.jgugek ,
                 D.jchajong,
-                (CASE WHEN A.wflag = '00010' THEN A.prod_qty WHEN A.wflag='00020' THEN E.wotqt - E.wbdqt ELSE 0 END) as prod_qty ,
-                (CASE WHEN A.wflag = '00010' THEN E.wotqt WHEN A.wflag='00020' THEN F.wotqt ELSE 0 END) as wotqt,
-                (CASE WHEN A.wflag = '00010' THEN E.wbdqt WHEN A.wflag='00020' THEN F.wbdqt ELSE 0 END) as wbdqt,
-                (CASE WHEN A.wflag = '00010' THEN E.wotqt - E.wbdqt WHEN A.wflag='00020' THEN F.wotqt - F.wbdqt ELSE 0 END) as wjqty
+                (CASE WHEN A.wflag = '00010' THEN A.prod_qty WHEN A.wflag='00020' THEN isnull(E.wotqt, 0) - isnull(E.wbdqt, 0) ELSE 0 END) as prod_qty ,
+                (CASE WHEN A.wflag = '00010' THEN isnull(E.wotqt, 0) WHEN A.wflag='00020' THEN isnull(E.gqty01, 0) ELSE 0 END) as wotqt,
+                (CASE WHEN A.wflag = '00010' THEN isnull(E.wbdqt, 0) WHEN A.wflag='00020' THEN 0 ELSE 0 END) as wbdqt,
+                (CASE WHEN A.wflag = '00010' THEN isnull(E.wotqt, 0) - isnull(E.wbdqt, 0) WHEN A.wflag='00020' THEN isnull(E.gqty01, 0)  ELSE 0 END) as wjqty
                 FROM TB_FPLAN A WITH (NOLOCK)
                 LEFT OUTER JOIN TB_FPLAN_work C ON A.plan_no = c.plan_no AND A.wflag = c.wflag
                 LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey
                 LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no
-                LEFT OUTER JOIN TB_FPLAN_W020 F ON F.plan_no = A.plan_no
                 WHERE A.indate between #{frdate} and #{todate}
-                and A.lotno LIKE '%'
-                and A.wflag LIKE '%
+                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
         ]]>
     </select>
 
@@ -60,8 +62,7 @@
                 LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no
                 LEFT OUTER JOIN TB_FPLAN_W020 F ON F.plan_no = A.plan_no
                 WHERE A.indate between #{frdate} and #{todate}
-                and A.lotno LIKE '%'
-                and A.wflag LIKE '%
+                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
         ]]>
     </select>
 

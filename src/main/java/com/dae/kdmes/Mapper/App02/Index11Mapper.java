@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface Index11Mapper {
 
-    public List<Index11Dto> getWflagList(Index11Dto parm) ;
+    public List<Index11Dto> getIndex11List(Index11Dto parm) ;
 
     public List<Index11Dto> getList(Index11Dto parm) ;
 

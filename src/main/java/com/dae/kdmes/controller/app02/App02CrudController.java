@@ -35,41 +35,24 @@ import java.util.Map;
 @RequestMapping(value = "/app02m", method = RequestMethod.POST)
 public class App02CrudController {
     private final Index10Service service10;
-
     private final Index11Service service11;
-
     private final Index01Service service01;
-
     private final Index02Service service02;
-
     private final Index03Service service03;
-
-    private final Index04Service service04;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
-
     Index01Dto index01Dto = new Index01Dto();
-
     Index02Dto index02Dto = new Index02Dto();
-
     Index03Dto index03Dto = new Index03Dto();
-
     Index04Dto index04Dto = new Index04Dto();
-
     Index10Dto index10Dto = new Index10Dto();
-
     Index11Dto index11Dto = new Index11Dto();
-
     List<PopupDto> popupListDto = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
-
     List<Index02Dto> index02ListDto = new ArrayList<>();
     List<Index03Dto> index03List = new ArrayList<>();
-
     List<Index10Dto> index10ListDto = new ArrayList<>();
-
     List<Index11Dto> index11ListDto = new ArrayList<>();
-
     List<Index10Dto> index10List = new ArrayList<>();
 
     protected Log log =  LogFactory.getLog(this.getClass());
@@ -704,6 +687,9 @@ public class App02CrudController {
         log.info("GetMaxSeq Exception =====>" + ls_seq);
         return ls_seq;
     }
+
+
+
 
     public String GetMaxSeq1(String indate, String rwflag){
 
