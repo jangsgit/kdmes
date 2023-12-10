@@ -13,6 +13,44 @@
         select max(delnum) from TB_DA036 where deldate = #{fdeldate}
     </select>
 
+
+    <select id="getIndex03PDAList"  parameterType="com.dae.kdmes.DTO.PDA.KosepList01Dto" resultType="com.dae.kdmes.DTO.PDA.KosepList01Dto">
+        <![CDATA[
+        SELECT A.custcd,
+               A.spjangcd,
+               (A.plan_no) AS plan_no,
+               B.acorp as cltnm,
+               A.pcode,
+               C.jpum AS pname,
+               C.jgugek AS psize,
+               C.jdanwy AS punit,
+               A.lotno as lotno,
+               E.wfrdt as wfrdt,
+               E.wtrdt as wtrdt,
+               E.wotqt - E.wbdqt as prod_qty,
+               E.gqty01 as end_qty,
+               D.lotno AS glotnono,
+               D.indate as qcdate,
+               isnull(D.wotqt,0) as owqty,
+               isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
+               D.winps as winps,
+               D.wrps as wrps,
+               D.wremark as wremark,
+               (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '') END ) wrpsnm01,
+               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
+        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
+            JCODE C WITH(NOLOCK),
+            CIF B WITH(NOLOCK)
+        WHERE (A.pcode              = C.JKEY)
+          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+          AND ( ISNULL(D.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+        ORDER BY D.lotno, A.LOTNO
+        ]]>
+    </select>
+
+
     <insert id="InsertDA036" parameterType="com.dae.kdmes.DTO.PDA.KosepPopDto" >
         insert into tb_da036 (custcd, spjangcd, deldate, delnum, deltype, cltcd, cltnm, perid, divicd, taxcls, setcls, store,domcls,
         sunflag, taxflag, indate, inperid)

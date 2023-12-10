@@ -1,5 +1,6 @@
 package com.dae.kdmes.Service.PDA;
 
+import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.DTO.PDA.*;
 import com.dae.kdmes.Mapper.PDA.KdpdaDBMapper;
 import lombok.RequiredArgsConstructor;
@@ -64,60 +65,10 @@ public class KdpdaAppService {
         return kdpdaMapper.GetTBDA037List(parm);
     }
 
-
-
-    public  KosepPopDto GetPcodeDataList02(KosepPopDto parm){
-        return kdpdaMapper.GetPcodeDataList02(parm);
-
+    public List<KosepList01Dto> getIndex03PDAList(KosepList01Dto parm){
+        return kdpdaMapper.getIndex03PDAList(parm);
     }
 
-    public  KosepPopDto GetPcodeDataList03(KosepPopDto parm){
-        return kdpdaMapper.GetPcodeDataList03(parm);
-    }
-
-
-    public List<KosepPopDto> GetTBCA510IpStoreList(KosepPopDto parm){
-        return kdpdaMapper.GetTBCA510IpStoreList(parm);
-    }
-
-
-    public KosepDa037Dto GetLotNoData(HashMap<String,String> parm){
-        return kdpdaMapper.GetLotNoData(parm);
-    }
-    public KosepDa037Dto GetLotNoList(KosepPopDto parm){
-        return kdpdaMapper.GetLotNoList(parm);
-    }
-
-
-    public String getCa635MaxSeq(KosepCa635Dto parm){
-        return kdpdaMapper.getCa635MaxSeq(parm);
-    }
-
-
-    public int UpdateTBda035(KosepPopDto parm) {
-        int queryResult = 1;
-        queryResult = kdpdaMapper.UpdateTBda035(parm);
-        if (queryResult < 1) {
-            queryResult = 0;
-        }
-        return queryResult;
-    }
-    public int UpdateDA006PANNEL(KosepPopDto parm) {
-        int queryResult = 1;
-        queryResult = kdpdaMapper.UpdateDA006PANNEL(parm);
-        if (queryResult < 1) {
-            queryResult = 0;
-        }
-        return queryResult;
-    }
-    public int UpdateDA006WINGBADY(KosepPopDto parm) {
-        int queryResult = 1;
-        queryResult = kdpdaMapper.UpdateDA006WINGBADY(parm);
-        if (queryResult < 1) {
-            queryResult = 0;
-        }
-        return queryResult;
-    }
 
 
     public int DeleteDA036(KosepPopDto parm) {
@@ -136,15 +87,6 @@ public class KdpdaAppService {
         }
         return queryResult;
     }
-    public int DeleteDA037H(KosepPopDto parm) {
-        int queryResult = 1;
-        queryResult = kdpdaMapper.DeleteDA037H(parm);
-        if (queryResult < 1) {
-            queryResult = 0;
-        }
-        return queryResult;
-    }
-
 
     public int DeleteCA636(KosepCa636Dto parm) {
         int queryResult = 1;
@@ -163,33 +105,6 @@ public class KdpdaAppService {
         }
         return queryResult;
     }
- /*   public int DeleteDA035(KosepPopDto parm) {
-        int queryResult = 1;
-        queryResult = TheMoonDBMapper.DeleteDA035(parm);
-        if (queryResult < 1) {
-            queryResult = 0;
-        }
-        return queryResult;
-    }*/
-    public int DeleteDA006PAN(KosepPopDto parm) {
-        int queryResult = 1;
-        queryResult = kdpdaMapper.DeleteDA006PAN(parm);
-        if (queryResult < 1) {
-            queryResult = 0;
-        }
-        return queryResult;
-    }
-    public int DeleteDA006WIN(KosepPopDto parm) {
-        int queryResult = 1;
-        queryResult = kdpdaMapper.DeleteDA006WIN(parm);
-        if (queryResult < 1) {
-            queryResult = 0;
-        }
-        return queryResult;
-    }
-
-
-
 
 
 

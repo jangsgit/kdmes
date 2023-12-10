@@ -1,5 +1,6 @@
 package com.dae.kdmes.controller.pda;
 
+import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.DTO.PDA.*;
 import com.dae.kdmes.Service.PDA.KdpdaAppService;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,10 @@ import java.util.*;
 public class Appkdpda01Controller {
     protected Log log =  LogFactory.getLog(this.getClass());
     KosepPopDto popDto = new KosepPopDto();
-    KosepPopDto DeFpopDto = new KosepPopDto();
-    KosepCa635Dto Ca635Dto = new KosepCa635Dto();
-    List<KosepCa636Dto> Ca636ListDto = new ArrayList<>();
     KosepCa636Dto Ca636Dto = new KosepCa636Dto();
-    KosepDa037Dto da037LotDto = new KosepDa037Dto();
-    KosepDa037HDto da037HDto = new KosepDa037HDto();
     List<KosepPopDto> list01Dto = new ArrayList<>();
-    List<KosepPopDto> popDtoList = new ArrayList<>();
+    List<KosepList01Dto> fplanDtoList = new ArrayList<>();
+    KosepList01Dto fplanDto = new KosepList01Dto();
     private final KdpdaAppService authService;
 
 
@@ -230,6 +227,27 @@ public class Appkdpda01Controller {
     }
 
 
+    // 검사로트 이력조회
+    @RequestMapping(value="/list04",method = RequestMethod.POST,
+            headers = ("content-type=multipart/*"),
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Object Appcom04_index(@RequestParam Map<String, String> param
+            , Model model
+            , HttpServletRequest request) throws Exception{
+        param.forEach((key, values) -> {
+            switch (key){
+                case "lotno":
+                    fplanDto.setLotno(values.toString());
+                default:
+                    break;
+            }
+        });
+        String ls_code = fplanDto.getLotno();
+        ls_code = ls_code.replaceAll("\n", "");
+        fplanDto.setLotno(ls_code);
+        fplanDtoList = authService.getIndex03PDAList(fplanDto);
+        return fplanDtoList;
+    }
 
     public String GetDa036MaxNum(){
 
