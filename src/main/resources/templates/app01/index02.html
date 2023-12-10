@@ -24,11 +24,11 @@
             <!-- ## header top include -->
             <th:block th:include="layouts/APPHeader/appheadTop" /> 
              
-            <div class="infor_bar type2"> 
+            <!-- <div class="infor_bar type2"> 
                 <div class="left">
                     공정별설비등록
                 </div>
-            </div> 
+            </div>  -->
             <div class="card-body bg-light">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -538,7 +538,7 @@
             
             document.getElementById('com_code').value = arg1;
             document.getElementById('com_rem1').value = arg2;
-             console.log(arg2);
+             
             // console.log(ls_todate)
             $.ajax({
                 url: '/app01m/fplandetaillist',  
@@ -548,8 +548,7 @@
                     "com_code" :arg1, 
                 }, 
                 async:false,
-                success:function(data){  
-                     console.log(data);
+                success:function(data){   
                     tabB_grid(data);
                 },error:function(e){
                     console.log("error");                            
@@ -618,7 +617,8 @@
                         success:function(data){   
                             if(data == "success"){
                                 alert("저장되었습니다.") 
-                                searchList_rtn(ls_tab);  
+                                wactnmChk(ls_code, ls_codenm)
+                                //searchList_rtn(ls_tab);  
                                 clear_rtn(ls_tab);        
                             }else{                       
                                 alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
@@ -631,27 +631,7 @@
                     }).done(function(fragment){           
 
                     })  
-                    break;
-                case 'C':
-                    $.ajax({
-                        url: '/app03/p001tab03',  
-                        type:"POST",
-                        data: { 
-                            "frdate"      : arg2,  
-                            "todate"      : arg3 ,  
-                            "actcdz"      : arg4 ,  
-                            "actcontcdz"  : arg5  
-                        }, 
-                        async:false,
-                        success:function(data){   
-                            tabC_grid(data);
-                        },error:function(e){
-                            console.log("error"); 
-                        }
-                    }).done(function(fragment){           
-
-                    })  
-                    break;                
+                    break;           
                 default:    
                     break;                
             } 
@@ -693,7 +673,8 @@
                         success:function(data){   
                             if(data == "success"){
                                 alert("삭제되었습니다.") 
-                                searchList_rtn(ls_tab);  
+                                wactnmChk(ls_code, ls_codenm)
+                                //searchList_rtn(ls_tab);  
                                 clear_rtn(ls_tab);             
                             }else{                       
                                 alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
@@ -742,8 +723,8 @@
         function clear_rtn(arg){
             switch(arg){
                 case 'A': 
-                    document.getElementById('com_code').value = "";
-                    document.getElementById('com_rem1').value = "";
+                    //document.getElementById('com_code').value = "";
+                    //document.getElementById('com_rem1').value = "";
                     document.getElementById('wrmc').value = "";
                     document.getElementById('wrmcnm').value = "";
                     document.getElementById('wperid').value = "";
@@ -769,7 +750,7 @@
         })   
 
         function searchList_rtn(arg1){ 
-
+            arg = "A";
             var ls_code = document.getElementById('com_code').value;
             var ls_codenm = document.getElementById('com_rem1').value;
             switch(arg1){
@@ -906,13 +887,7 @@
             cols.binding = 'wrmc';
             cols.header = '설비코드';
             cols.align = "center";
-            cols.width = 300;
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.wrmc}</b>',
-                click: (e, ctx) => {
-                    wactnmChk1(ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.com_rem1, ctx.item.com_rem1);
-                }
-            });   
+            cols.width = 300; 
             wtab02Grid.columns.push(cols);   
 
             cols = new wijmo.grid.Column(); 
@@ -920,6 +895,12 @@
             cols.header = '설비명';
             cols.align = "center";
             cols.width = 300;  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.wrmcnm}</b>',
+                click: (e, ctx) => {
+                    wactnmChk1(ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.wperid, ctx.item.com_rem1);
+                }
+            });  
             wtab02Grid.columns.push(cols);
             
             cols = new wijmo.grid.Column(); 
@@ -936,69 +917,12 @@
             cols.width = 300;  
             wtab02Grid.columns.push(cols);
         }
-
-        function tabC_grid(data){
-            var wtab03Dto  = data;    
-            var wtab03_data = [];
-            var cnt = 1;
-            for (var i = 0; i < wtab03Dto.length; i++) {
-                wtab03_data.push({
-                    id: i, 
-                    index: cnt,
-                    com_cls: wtab03Dto[i]["com_cls"],
-                    com_code: wtab03Dto[i]["com_code"],
-                    com_cnam: wtab03Dto[i]["com_cnam"],
-                    com_rem1: wtab03Dto[i]["com_rem1"],
-                    com_rem2: wtab03Dto[i]["com_rem2"],
-                    com_work: wtab03Dto[i]["com_work"]              
-                });
-                cnt++;
-            }     
-            // console.log(wtab03_data.length);
-            wtab03Grid.columns.clear();  
-            wtab03Grid.autoGenerateColumns = false; 
-            view_p01tab03page.sourceCollection  = wtab03_data;
-            var cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_code';
-            cols.header = '코드';
-            cols.align = "center";
-            cols.width = 250; 
-            wtab03Grid.columns.push(cols);  
-
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_cnam';
-            cols.header = '코드명';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);   
-
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_rem1';
-            cols.header = '항목1';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);
-            
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_rem2';
-            cols.header = '항목2';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);  
-
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'com_work';
-            cols.header = '업무구분';
-            cols.align = "center";
-            cols.width = 250;  
-            wtab03Grid.columns.push(cols);  
-        } 
-
+ 
         function wactnmChk1(arg1,arg2,arg3,arg4){   
             document.getElementById('wrmc').value = arg1; 
             document.getElementById('wrmcnm').value = arg2;
             document.getElementById('wperid').value = arg3;
-            document.getElementById('wpernm').value = arg4;      
+            document.getElementById('wpernm').value = arg4;     
         }
         
 

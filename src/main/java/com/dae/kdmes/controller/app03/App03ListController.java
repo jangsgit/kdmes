@@ -1,6 +1,7 @@
 package com.dae.kdmes.controller.app03;
 
 import com.dae.kdmes.DTO.App02.Index11Dto;
+import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.Service.App02.Index11Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
@@ -21,7 +22,9 @@ public class App03ListController {
 
     private final Index11Service service11;
     Index11Dto index11Dto = new Index11Dto();
+    FPLAN_VO fplanDto = new FPLAN_VO();
     List<Index11Dto> index11DtoList = new ArrayList<>();
+    List<FPLAN_VO> fplanDtoList = new ArrayList<>();
 
     protected Log log =  LogFactory.getLog(this.getClass());
 
@@ -60,6 +63,217 @@ public class App03ListController {
 
         return index11DtoList;
     }
+
+
+
+    //사출공정현황
+    @GetMapping(value="/index12/list01")
+    public Object App12List01_index(@RequestParam("frdate") String frdate,
+                          @RequestParam("todate") String todate,
+                          @RequestParam("lotno") String lotno,
+                          Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            String ls_yeare = frdate.substring(0,4);
+            String ls_mm = frdate.substring(5,7);
+            String ls_dd = frdate.substring(8,10);
+            frdate =  ls_yeare + ls_mm + ls_dd;
+            ls_yeare = todate.substring(0,4);
+            ls_mm = todate.substring(5,7);
+            ls_dd = todate.substring(8,10);
+            todate =  ls_yeare + ls_mm + ls_dd;
+
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11Dto.setLotno(lotno);
+
+            index11DtoList = service11.getIndex12List01(index11Dto);
+
+            model.addAttribute("itemList",index11DtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("index11/list Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11DtoList;
+    }
+
+
+    //검사공정현황
+    @GetMapping(value="/index12/list02")
+    public Object App12List02_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("lotno") String lotno,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            String ls_yeare = frdate.substring(0,4);
+            String ls_mm = frdate.substring(5,7);
+            String ls_dd = frdate.substring(8,10);
+            frdate =  ls_yeare + ls_mm + ls_dd;
+            ls_yeare = todate.substring(0,4);
+            ls_mm = todate.substring(5,7);
+            ls_dd = todate.substring(8,10);
+            todate =  ls_yeare + ls_mm + ls_dd;
+
+            fplanDto.setFrdate(frdate);
+            fplanDto.setTodate(todate);
+            fplanDto.setLotno(lotno);
+
+            fplanDtoList = service11.getIndex12List02(fplanDto);
+
+            model.addAttribute("itemList",fplanDtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("index11/list Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return fplanDtoList;
+    }
+
+
+    //사원별 사출현황
+    @GetMapping(value="/index13/list01")
+    public Object App13List01_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("inwrps") String inwrps,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            String ls_yeare = frdate.substring(0,4);
+            String ls_mm = frdate.substring(5,7);
+            String ls_dd = frdate.substring(8,10);
+            frdate =  ls_yeare + ls_mm + ls_dd;
+            ls_yeare = todate.substring(0,4);
+            ls_mm = todate.substring(5,7);
+            ls_dd = todate.substring(8,10);
+            todate =  ls_yeare + ls_mm + ls_dd;
+
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11Dto.setWrps(inwrps);
+
+            index11DtoList = service11.getIndex13List01(index11Dto);
+
+            model.addAttribute("itemList",index11DtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App13List01 Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11DtoList;
+    }
+
+    //사원별 사출현황
+    @GetMapping(value="/index13/list02")
+    public Object App13List02_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("inwrps") String inwrps,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            String ls_yeare = frdate.substring(0,4);
+            String ls_mm = frdate.substring(5,7);
+            String ls_dd = frdate.substring(8,10);
+            frdate =  ls_yeare + ls_mm + ls_dd;
+            ls_yeare = todate.substring(0,4);
+            ls_mm = todate.substring(5,7);
+            ls_dd = todate.substring(8,10);
+            todate =  ls_yeare + ls_mm + ls_dd;
+
+            fplanDto.setFrdate(frdate);
+            fplanDto.setTodate(todate);
+            fplanDto.setWrps(inwrps);
+
+            fplanDtoList = service11.getIndex13List02(fplanDto);
+
+            model.addAttribute("itemList",fplanDtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App13List01 Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return fplanDtoList;
+    }
+
+
+    //불량별 사출현황
+    @GetMapping(value="/index14/list01")
+    public Object App14List01_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("wcode") String wcode,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            String ls_yeare = frdate.substring(0,4);
+            String ls_mm = frdate.substring(5,7);
+            String ls_dd = frdate.substring(8,10);
+            frdate =  ls_yeare + ls_mm + ls_dd;
+            ls_yeare = todate.substring(0,4);
+            ls_mm = todate.substring(5,7);
+            ls_dd = todate.substring(8,10);
+            todate =  ls_yeare + ls_mm + ls_dd;
+
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11Dto.setWcode(wcode);
+
+            index11DtoList = service11.getIndex14List01(index11Dto);
+
+            model.addAttribute("itemList",index11DtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App13List01 Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11DtoList;
+    }
+
+
+    //출하현황
+    @GetMapping(value="/index16/list01")
+    public Object App16List01_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("lotno") String lotno,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+            String ls_yeare = frdate.substring(0,4);
+            String ls_mm = frdate.substring(5,7);
+            String ls_dd = frdate.substring(8,10);
+            frdate =  ls_yeare + ls_mm + ls_dd;
+            ls_yeare = todate.substring(0,4);
+            ls_mm = todate.substring(5,7);
+            ls_dd = todate.substring(8,10);
+            todate =  ls_yeare + ls_mm + ls_dd;
+
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11Dto.setLotno(lotno);
+
+            index11DtoList = service11.getIndex16List01(index11Dto);
+
+            model.addAttribute("itemList",index11DtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App13List01 Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11DtoList;
+    }
+
 
 
 }

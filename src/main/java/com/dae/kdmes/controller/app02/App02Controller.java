@@ -6,6 +6,7 @@ import com.dae.kdmes.DTO.App02.Index11Dto;
 import com.dae.kdmes.DTO.App01.Index02Dto;
 import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App01.Index04Dto;
+import com.dae.kdmes.DTO.Appm.TBPopupVO;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
@@ -13,6 +14,7 @@ import com.dae.kdmes.Service.App01.Index01Service;
 import com.dae.kdmes.Service.App01.Index03Service;
 import com.dae.kdmes.Service.App02.Index10Service;
 import com.dae.kdmes.Service.App02.Index11Service;
+import com.dae.kdmes.Service.Appm.AppPopupService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,7 +35,7 @@ import java.util.List;
 @RequestMapping(value = "/app02", method = RequestMethod.POST)
 public class App02Controller {
     private final Index10Service service10;
-    private final Index11Service service11;
+    private final AppPopupService appPopupService;
     private final Index03Service service03;
 
     private final Index01Service service01;
@@ -114,19 +116,19 @@ public class App02Controller {
 
     @GetMapping(value="/index12")
     public String App12_index(Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("바코드이력");
-        CommDto.setMenuUrl("생산계획>바코드이력");
+        CommDto.setMenuTitle("공정현황");
+        CommDto.setMenuUrl("생산계획>공정현황");
         CommDto.setMenuCode("index12");
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
 
         try {
-            index10ListDto = service10.getFplanList(index10Dto);
-            popupListDto = service10.getCls_flagList(popupDto);
-
-            model.addAttribute("cls_flagList",popupListDto);
-            model.addAttribute("fplanList",index10ListDto);
+//            index10ListDto = service10.getFplanList(index10Dto);
+//            popupListDto = service10.getCls_flagList(popupDto);
+//
+//            model.addAttribute("cls_flagList",popupListDto);
+//            model.addAttribute("fplanList",index10ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App12_index Exception =============================");
@@ -137,5 +139,79 @@ public class App02Controller {
         return "App02/index12";
     }
 
+    @GetMapping(value="/index13")
+    public String App13_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("사원별검사현황");
+        CommDto.setMenuUrl("생산계획>사원별검사현황");
+        CommDto.setMenuCode("index13");
+        TBPopupVO wperidDto = new TBPopupVO();
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        try {
+            wperidDto.setWflag("%");
+            wperidDto.setWpernm("%");
+
+            model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("index13 Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index13";
+    }
+
+
+    @GetMapping(value="/index14")
+    public String App14_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("불량현황");
+        CommDto.setMenuUrl("생산계획>불량현황");
+        CommDto.setMenuCode("index14");
+        TBPopupVO wrmcDto = new TBPopupVO();
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        try {
+            wrmcDto.setMachname("%");
+            wrmcDto.setPlan_no("%");      //불량구분 팝업
+            wrmcDto.setWseq("%");
+            wrmcDto.setWflag("00010");
+            wrmcDto.setWclscode("1");
+
+            model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("index14 Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index14";
+    }
+
+
+    @GetMapping(value="/index16")
+    public String App16_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("출하현황");
+        CommDto.setMenuUrl("생산계획>출하현황");
+        CommDto.setMenuCode("index16");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        try {
+
+
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("index16 Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index16";
+    }
 
 }

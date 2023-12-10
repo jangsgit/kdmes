@@ -23,11 +23,11 @@
         <div class="con">
             <!-- ## header top include -->
             <th:block th:include="layouts/APPHeader/appheadTop" /> 
-            <div class="infor_bar type2"> 
+            <!-- <div class="infor_bar type2"> 
                 <div class="left">
                     공통코드등록
                 </div>
-            </div> 
+            </div>  -->
             <div class="card-body bg-light">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -446,7 +446,6 @@
                     document.getElementById("com_cnam").focus(); 
                     return ;               
                 }   
-
                     $.ajax({
                         url: '/app01m/comcodesave',  
                         type:"POST",
@@ -487,7 +486,7 @@
                         document.getElementById("com_rem1").focus(); 
                         return ;               
                     }
-
+ 
                     $.ajax({
                         url: '/app01m/comcodedetailsave',  
                         type:"POST",
@@ -857,12 +856,6 @@
             cols.header = '코드';
             cols.align = "center";
             cols.width = 300; 
-            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                text: '<b>${item.com_code}</b>',
-                click: (e, ctx) => {
-                    wactnmChk1(ctx.item.com_code, ctx.item.com_rem1, ctx.item.com_rem2, ctx.item.com_work);
-                }
-            });  
             wtab03Grid.columns.push(cols);  
 
             // cols = new wijmo.grid.Column(); 
@@ -877,6 +870,12 @@
             cols.header = '코드상세';
             cols.align = "center";
             cols.width = 300;  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.com_rem1}</b>',
+                click: (e, ctx) => {
+                    wactnmChk1(ctx.item.com_code, ctx.item.com_rem1, ctx.item.com_rem2, ctx.item.com_work);
+                }
+            });  
             wtab03Grid.columns.push(cols);
             
             cols = new wijmo.grid.Column(); 

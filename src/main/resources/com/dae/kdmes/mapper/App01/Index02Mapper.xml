@@ -19,7 +19,7 @@
 
     <select id="GetFplanDetailList"  parameterType="com.dae.kdmes.DTO.App01.Index02Dto" resultType="com.dae.kdmes.DTO.App01.Index02Dto">
         <![CDATA[
-           select * from TB_FPLAN_WRMC TB inner join TB_CA510 CA on TB.wperid = CA.com_code where wflag = #{com_code}
+           select * from TB_FPLAN_WRMC TB inner join TB_CA510 CA on TB.wperid = CA.com_code where wflag = #{com_code} order by wflag, wrmc
         ]]>
     </select>
 

@@ -2,6 +2,7 @@ package com.dae.kdmes.DTO.App02;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 
@@ -18,17 +19,35 @@ public class Index11Dto {
     private String rwflagnm;
     private String lotno;
     private String glotno;
+    private String glotnono;
     private String jpum;
     private String jchajong;
     private String jgugek;
-    private String prod_qty;
-    private String wotqt;
-    private String wbdqt;
-    private String wjqty;
+    private Integer prod_qty;
+    private Integer winqt;
+    private Integer wotqt;
+    private Integer wbdqt;
+    private Integer wjqty;
+    private Integer gumqty;
+
     private String GAPTIME;
 
     private String frdate;
     private String todate;
     private String wrpsnm;
+    private String wrps;
+    private String gumwrpsnm;
+    private String wfrdt;
+    private String wtrdt;
+    private String ginputdate;
+    private String wbdnm;
+    private String wcode;
+
+
+    private String deldate;
+    private String delnum;
+    private String delseq;
+
+
 
 }

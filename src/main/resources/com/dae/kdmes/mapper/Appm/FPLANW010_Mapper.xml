@@ -278,19 +278,19 @@
                D.wremark as wremark,
                (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '') END ) wrpsnm01,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
-        FROM TB_FPLAN A WITH(NOLOCK),
-             TB_FPLAN_W020 D  WITH(NOLOCK)
-            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono   ,
+        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
             JCODE C WITH(NOLOCK),
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.plan_no              = E.plan_no)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND ( ISNULL(D.lotno,'')   lIKE  concat('%',#{lotno},'%') )
-          AND ( Len( ISNULL(A.wflag,'') ) > 0  )
-        ORDER BY D.lotno
+        ORDER BY D.lotno, A.LOTNO
         ]]>
     </select>
+
+
 
 
     <select id="GetFPLAN_List03_old"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">

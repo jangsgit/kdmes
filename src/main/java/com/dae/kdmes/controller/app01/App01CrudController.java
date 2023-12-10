@@ -199,7 +199,7 @@ public class App01CrudController {
     @RequestMapping(value="/comcodedetailsave")
     public String App01ComCodeDetailSave_index(  @RequestParam("com_cls") String com_cls,
                                            @RequestParam("com_code") String com_code,
-                                           @RequestParam("com_code") String com_cnam,
+                                           @RequestParam("com_cnam") String com_cnam,
                                            @RequestParam("com_rem1") String com_rem1,
                                            @RequestParam("com_rem2") String com_rem2,
                                            @RequestParam("com_work") String com_work,

@@ -441,6 +441,10 @@
                     allowSorting: 'MultiColumn',
                     alternatingRowStep: 0,
                     columns: [      
+                        { binding: 'qcdate', header: '검사일', align: "center", width: 100 }, 
+                        { binding: 'glotnono', header: '검사바코드', align: "left", width: 150 },
+                        { binding: 'otqty', header: '검사수량', align: "center", width: 100 },
+                        { binding: 'wrpsnm02', header: '검사담당자', align: "center", width: 100 },  
                         { binding: 'cltnm', header: '거래처', align: "center", width: 150 },
                         { binding: 'pcode', header: '품목', align: "center", width: 150 },  
                         { binding: 'jgugek', header: '규격', align: "left", width: 150 },    
@@ -448,11 +452,7 @@
                         { binding: 'wtrdt', header: '사출종료일', align: "right", width: 100 }, 
                         { binding: 'prod_qty', header: '사출수량', align: "right", width: 100 },  
                         { binding: 'wrpsnm01', header: '사출담당자', align: "center", width: 150 },
-                        { binding: 'lotno', header: '사출바코드', align: "left", width: 150 }, 
-                        { binding: 'qcdate', header: '검사일', align: "center", width: 100 }, 
-                        { binding: 'glotnono', header: '검사바코드', align: "left", width: 150 },
-                        { binding: 'otqty', header: '검사수량', align: "center", width: 100 },
-                        { binding: 'wrpsnm02', header: '검사담당자', align: "center", width: 100 },     
+                        { binding: 'lotno', header: '사출바코드', align: "left", width: 150 },    
                     ], 
                     itemsSource: view_p01tab02page
                 });   
@@ -1345,8 +1345,37 @@
  
             wtab02Grid.columns.clear();  
             wtab02Grid.autoGenerateColumns = false; 
-            view_p01tab02page.sourceCollection  = wtab02_data;
-            var cols = new wijmo.grid.Column();  
+            view_p01tab02page.sourceCollection  = wtab02_data; 
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'qcdate';
+            cols.header = '검사일';
+            cols.align = "center";
+            cols.format = 'yyyy-MM-dd'; 
+            cols.width = 120;   
+            wtab02Grid.columns.push(cols);     
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'glotnono';
+            cols.header = '검사바코드';
+            cols.align = "center";
+            cols.width = 150;  
+            wtab02Grid.columns.push(cols);     
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'otqty';
+            cols.header = '검사수량';
+            cols.align = "right";
+            cols.width = 90;  
+            wtab02Grid.columns.push(cols);    
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wrpsnm02';
+            cols.header = '검사담당자';
+            cols.align = "center";
+            cols.width = 120;  
+            wtab02Grid.columns.push(cols);    
+
+            cols = new wijmo.grid.Column();  
             cols.binding = 'cltnm';
             cols.header = '거래처';
             cols.align = "center";
@@ -1395,32 +1424,7 @@
             cols.header = '사출바코드';
             cols.align = "center";
             cols.width = 150;  
-            wtab02Grid.columns.push(cols);    
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'qcdate';
-            cols.header = '검사일';
-            cols.align = "center";
-            cols.format = 'yyyy-MM-dd'; 
-            cols.width = 120;   
-            wtab02Grid.columns.push(cols);     
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'glotnono';
-            cols.header = '검사바코드';
-            cols.align = "center";
-            cols.width = 150;  
-            wtab02Grid.columns.push(cols);       
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'otqty';
-            cols.header = '검사수량';
-            cols.align = "right";
-            cols.width = 90;  
-            wtab02Grid.columns.push(cols);      
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'wrpsnm02';
-            cols.header = '검사담당자';
-            cols.align = "center";
-            cols.width = 120;  
-            wtab02Grid.columns.push(cols);    
+            wtab02Grid.columns.push(cols);   
         } 
   
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
