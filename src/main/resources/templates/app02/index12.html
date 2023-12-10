@@ -682,8 +682,7 @@
             var ls_otqty = 0;   
             for (var i = 0; i < wtab02Dto.length; i++) { 
                     var psdate = wtab02Dto[i]["prod_sdate"];
-                        psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
-                        var ls_qcdate = wtab02Dto[i]["qcdate"]; 
+                        psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2); 
                         var ls_qcdate = wtab02Dto[i]["qcdate"];
                         if(ls_qcdate.length > 0){
                             ls_qcdate = ls_qcdate.substr(0,4) + '-' + ls_qcdate.substr(4,2)+ '-' + ls_qcdate.substr(6,2);
@@ -698,6 +697,11 @@
                         ls_otqty = wtab02Dto[i]["otqty"];    
                         ls_qcdate = wtab02Dto[i]["qcdate"];    
                         ls_glotno = wtab02Dto[i]["glotnono"];  
+                        if(ls_qcdate.length > 0){
+                            ls_qcdate = ls_qcdate.substr(0,4) + '-' + ls_qcdate.substr(4,2)+ '-' + ls_qcdate.substr(6,2);
+                        }else{
+                            ls_qcdate = "";
+                        }
                     }
                     glotno = wtab02Dto[i]["glotnono"];
                     wtab02_data.push({

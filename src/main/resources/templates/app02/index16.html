@@ -244,6 +244,11 @@
            var ls_delnum = "";
            ls_deldate = wtab01Dto[i]["deldate"];
            ls_delnum = wtab01Dto[i]["delnum"];
+            if(ls_deldate == null || ls_deldate.length == 0 || ls_deldate == ""){  
+                    ls_deldate = "";
+            }else{
+                    ls_deldate = ls_deldate.substr(0,4) + '-' + ls_deldate.substr(4,2) + '-' + ls_deldate.substr(6,2);
+            }  
         //    if (ls_flagnm != ls_deldate + ls_delnum ){
         //         ls_flagnm = ls_deldate + ls_delnum;
         //         if(ls_deldate == null || ls_deldate.length == 0 || ls_deldate == ""){  
