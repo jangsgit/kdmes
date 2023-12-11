@@ -238,6 +238,9 @@ public class Appm02CrudController {
 
         if( plan_no.size() > 0){
             for(int i = 0; i < plan_no.size(); i++){
+                if (plan_no.get(i).equals("0000")){
+                    continue;
+                }
                 workDto.setPlan_no(plan_no.get(i));
                 workDto.setWono(wono.get(i));
                 workDto.setWqty(wotqt.get(i));

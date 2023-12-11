@@ -582,11 +582,7 @@
     <update id="FPLANW020_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_W020 SET
         wflag=#{wflag},
-        wtrdt=#{wtrdt}
-        <if test="winqt != null ">,</if>
-        <if test="winqt != null">winqt=#{winqt}</if>
-        <if test="wotqt != null ">,</if>
-        <if test="wotqt != null">wotqt=#{wotqt}</if>
+        spjangcd=#{spjangcd}
         <if test="wremark != null ">,</if>
         <if test="wremark != null">wremark=#{wremark}</if>
         <if test="winps != null ">,</if>
@@ -597,7 +593,7 @@
         <if test="indate != null">indate=#{indate}</if>
         <if test="inperid != null ">,</if>
         <if test="inperid != null">inperid=#{inperid}</if>
-        where lotno=#{lotno} and wseq=#{wseq} and wflag=#{wflag}
+        where lotno=#{lotno}   and wflag=#{wflag}
     </update>
 
     <update id="FPLANW030_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >

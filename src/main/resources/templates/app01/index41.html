@@ -308,9 +308,10 @@
          var wtab01Grid;
          var wtab02Grid;
          var wtab03Grid; 
-         var typeMenu;  
+         var chkTabA;  
          var treemap;
          let barchart;
+         let chkTabA_row = 0;
          let ani;
         var wseries_data = [0]; 
         var addlotno = new Array(); 
@@ -336,7 +337,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.lotno}</b>',
                             click: (e, ctx) => {
-                                selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm  );
+                                selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark  );
                             }
                         })
                     },                             
@@ -349,7 +350,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.pname}</b>',
                             click: (e, ctx) => {
-                                selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm);
+                                selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark);
                             }
                         })
                     },                              
@@ -587,6 +588,7 @@
                 document.getElementById('inwotqt').value= Number(_ls_qty); 
                 document.getElementById('incltnm').value= _ls_cltnm;  
                 document.getElementById('incltcd').value= _ls_cltcd;  
+                chkTabA_row = sel.length;
                 if(sel.length > 1 ){
                     document.getElementById('inpname').value= _ls_pname; 
                 }else{
@@ -708,10 +710,11 @@
          function tabchk_rtn(arg){
             document.getElementById('tabvalue').value = arg; 
         } 
-        function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18){ 
-            console.log(arg14)
+        function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19){ 
+            //console.log(arg14)
             //ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, 1-7
-            //ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty  ctx.item.end_qty ctx.item.end_qty 8-15
+            //ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty  ctx.item.otqty ctx.item.otqty 8-15
+            //ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark   16-19 
             document.getElementById('incustcd').value= arg1; 
             document.getElementById('inspjangcd').value= arg2; 
             document.getElementById('inwono').value= arg3; 
@@ -731,6 +734,7 @@
             document.getElementById('inputdate').value= arg16;  
             document.getElementById('inwinps').value= arg17;  
             document.getElementById('inwrpsnm').value= arg18;  
+            document.getElementById('inwremark').value= arg19;  
             
         }
         function save_btn(arg){
@@ -762,24 +766,33 @@
             if (!confirm("저장하시겠습니까?")) {
                     return ; 
             }    
-
-            var gridrow = chkTabA.length ;
+console.log(chkTabA_row)
             var ls_plan_no = []; 
             var ll_prdqty = []; 
             var ll_obqty = []; 
             var ls_wono = []; 
             var ls_salotno = []; 
-            for( i=0; i < gridrow; i++){ 
-                ls_plan_no[i] =  chkTabA[i]._data.plan_no;  
-                ls_wono[i]   =  chkTabA[i]._data.wono;  
-                ls_salotno[i]   =  chkTabA[i]._data.lotno;  
-                ll_prdqty[i]   =  parseInt(chkTabA[i]._data.prod_qty);  //사출량 
-                ll_obqty[i]    =  parseInt(chkTabA[i]._data.obqty);  //검사량
-                if(!ll_obqty[i] ){ 
-                    alert("수량을 등록하세요") 
-                    return                                           
-                }  
-            }     
+            if(chkTabA_row > 0){
+                var gridrow = chkTabA.length ; 
+                for( i=0; i < gridrow; i++){ 
+                    ls_plan_no[i] =  chkTabA[i]._data.plan_no;  
+                    ls_wono[i]   =  chkTabA[i]._data.wono;  
+                    ls_salotno[i]   =  chkTabA[i]._data.lotno;  
+                    ll_prdqty[i]   =  parseInt(chkTabA[i]._data.prod_qty);  //사출량 
+                    ll_obqty[i]    =  parseInt(chkTabA[i]._data.obqty);  //검사량
+                    if(!ll_obqty[i] ){ 
+                        alert("수량을 등록하세요") 
+                        return                                           
+                    }  
+                }     
+
+            }else{ 
+                ls_plan_no[0] =  '0000';
+                ls_wono[0]   =  '0000';
+                ls_salotno[0]   =  '0000';
+                ll_prdqty[0]  = 0; 
+                ll_obqty[0]  = 0; 
+            }
             switch(ls_tab){
                 case 'A': 
                     if(ls_inputdate == null || ls_inputdate.length == 0 || ls_inputdate == ""){ 
@@ -1242,7 +1255,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.lotno}</b>',
                 click: (e, ctx) => {
-                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm  );
+                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark  );
                 }
             });
             wtab01Grid.columns.push(cols);  
@@ -1260,7 +1273,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.pname}</b>',
                 click: (e, ctx) => {
-                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.end_qty, ctx.item.end_qty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm  );
+                    selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm , ctx.item.wremark  );
                 }
             });
             wtab01Grid.columns.push(cols);  

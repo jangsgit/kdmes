@@ -86,6 +86,8 @@ public class FPLAN_VO {
     private String partcode;
     private String frdate;
     private String todate;
+    private String wremark;
+
     private float wbdqt;
     private float tqty;
     private float owqty;
