@@ -728,6 +728,7 @@
                         end_qty: wtab02Dto[i]["end_qty"] , 
                         wrpsnm01: wtab02Dto[i]["wrpsnm01"],   
                         lotno: wtab02Dto[i]["lotno"]  ,
+                        prod_qty: wtab02Dto[i]["prod_qty"]  ,
                         qcdate: ls_qcdate  ,
                         glotnono: ls_glotno,  
                         otqty: ls_otqty , 
@@ -803,7 +804,7 @@
             cols.format = 'yyyy-MM-dd'; 
             wtab01Grid.columns.push(cols);   
             cols = new wijmo.grid.Column(); 
-            cols.binding = 'end_qty';
+            cols.binding = 'prod_qty';
             cols.header = '사출수량';
             cols.align = "right";
             cols.width = 130;  

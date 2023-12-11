@@ -327,7 +327,7 @@
                 columns: [
                     // { binding: 'index', header: 'seq', width: '*' },
                     { binding: 'qcdate', header: '검사일',align:"center",  width: 120, format: 'yyyy-MM-dd' },
-                    { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd' },
+                    // { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                     {
                         binding: 'lotno',
                         width: 150,
@@ -1180,8 +1180,7 @@
         function tabA_grid(data){ 
             var wtab01Dto  = data;    
             var wtab01_data = [];
-            var cnt = 1;   
-            console.log(wtab01Dto)
+            var cnt = 1;    
             for (var i = 0; i < wtab01Dto.length; i++) { 
                     var psdate = wtab01Dto[i]["prod_sdate"];
                         psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
@@ -1206,9 +1205,9 @@
                         psize: wtab01Dto[i]["psize"], 
                         wono: wtab01Dto[i]["wono"], 
                         prod_qty: wtab01Dto[i]["prod_qty"],
-                        end_qty: wtab01Dto[i]["end_qty"],
-                        otqty: wtab01Dto[i]["wotqt"] , 
-                        obqty: wtab01Dto[i]["obqty"],   
+                        end_qty: wtab01Dto[i]["end_qty"], 
+                        obqty: wtab01Dto[i]["obqty"],    
+                        otqty: wtab01Dto[i]["otqty"] , 
                         winps: wtab01Dto[i]["winps"]  ,
                         wrps: wtab01Dto[i]["wrps"]  ,
                         wrpsnm: wtab01Dto[i]["wrpsnm"],  
@@ -1228,13 +1227,13 @@
             cols.align = "center";
             cols.width = 120; 
             wtab01Grid.columns.push(cols);   
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'prod_sdate';
-            cols.header = '생산시작일';
-            cols.align = "center";
-            cols.width = 130; 
-            cols.format = 'yyyy-MM-dd'; 
-            wtab01Grid.columns.push(cols);    
+            // cols = new wijmo.grid.Column(); 
+            // cols.binding = 'prod_sdate';
+            // cols.header = '생산시작일';
+            // cols.align = "center";
+            // cols.width = 130; 
+            // cols.format = 'yyyy-MM-dd'; 
+            // wtab01Grid.columns.push(cols);    
             cols = new wijmo.grid.Column(); 
             cols.binding = 'lotno';
             cols.header = 'LotNo';

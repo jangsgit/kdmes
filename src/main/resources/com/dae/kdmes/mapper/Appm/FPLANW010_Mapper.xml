@@ -126,8 +126,8 @@
                        A.wflag wflag,
                        A.wseq  wseq
                  FROM TB_FPLAN A WITH(NOLOCK)
-				LEFT OUTER JOIN  TB_FPLAN_W020 D ON A.plan_no = D.plan_no AND D.wflag = '00020'
-                     LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010' ,
+                         LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010'
+                          LEFT OUTER JOIN  TB_FPLAN_W020 D ON E.glotnono = D.lotno AND D.wflag = '00020' ,
                      JCODE C WITH(NOLOCK),
                      CIF B WITH(NOLOCK)
                  WHERE (A.pcode              = C.JKEY)
@@ -225,7 +225,7 @@
                MAX(A.prod_sdate) as prod_sdate,
                MAX(A.prod_edate) AS prod_edate,
                D.wotqt  - D.wbdqt as prod_qty,
-               D.wotqt  - D.wbdqt as end_qty,
+               D.wotqt   as otqty,
                isnull(D.wotqt,0) as owqty,
                0 as obqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
@@ -280,8 +280,9 @@
                (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '') END ) wrpsnm01,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
         FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
-            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono
-			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = D.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
+			LEFT OUTER JOIN  TB_FPLAN_IWORK F ON D.lotno   = F.glotno
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = F.plan_no AND Len( ISNULL(A.wflag,'') ) > 0
+            LEFT OUTER JOIN  TB_FPLAN_W010  E ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
             JCODE C WITH(NOLOCK),
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
