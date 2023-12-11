@@ -42,6 +42,7 @@ public class Index11Dto {
     private String ginputdate;
     private String wbdnm;
     private String wcode;
+    private String partcode;
 
 
     private String deldate;

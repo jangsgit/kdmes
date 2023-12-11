@@ -235,19 +235,20 @@
                D.indate as qcdate,
                D.wremark as wremark,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm
-        FROM TB_FPLAN A WITH(NOLOCK),
-             TB_FPLAN_W020 D  WITH(NOLOCK) ,
-            TB_FPLAN_W010 E  WITH(NOLOCK) ,
+
+        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = D.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
             JCODE C WITH(NOLOCK),
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.plan_no              = E.plan_no)
-          AND (D.lotno              = E.glotnono)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
-          AND (C.jpum               lIKE  concat('%',#{lotno},'%') or  ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+          AND ( ISNULL(D.lotno,'')   lIKE  concat('%',#{lotno},'%') )
           AND ( Len( ISNULL(A.wflag,'') ) > 0  )
         GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt, D.winps, D.wrps, D.indate, D.wremark
         ORDER BY D.lotno desc
+
+
         ]]>
     </select>
 
@@ -280,7 +281,7 @@
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
         FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
             LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono
-			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = D.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
             JCODE C WITH(NOLOCK),
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
@@ -778,9 +779,9 @@
         where plan_no=#{plan_no}   AND wflag =#{wflag}
     </delete>
 
-    <delete id="FPLAN_IWORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" >
+    <delete id="FPLAN_IWORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" >
         DELETE  from TB_FPLAN_IWORK
-        where plan_no=#{plan_no}   AND wflag =#{wflag}
+        where  wflag =#{wflag} AND wseq = '01' AND glotno = #{glotno}
     </delete>
 
     <delete id="FPLAN_WORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" >
@@ -846,9 +847,9 @@
     </select>
 
     <insert id="FPLANI_IWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no,  wseq,  wflag, seq, pcode, lotno,
+        INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no,  wseq,  wflag, seq, pcode, lotno, glotno,
                                      store, jqty, sqty, qty, bqty, indate, styn, inperid )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq},  #{wflag},  #{seq}, #{pcode}, #{lotno},
+        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq},  #{wflag},  #{seq}, #{pcode}, #{lotno}, #{glotno},
                   #{store}, #{jqty},  #{sqty}, #{qty}, #{bqty}, #{indate}, '0', #{inperid})
     </insert>
 

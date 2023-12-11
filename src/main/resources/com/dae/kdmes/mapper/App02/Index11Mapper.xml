@@ -71,7 +71,8 @@
                     isnull(E.winqt, 0) - isnull(E.wbdqt, 0) as wjqty,
                     isnull(E.gqty01, 0) AS gumqty,
                     E.wfrdt,
-                    E.wtrdt
+                    E.wtrdt,
+                    E.partcode
                 FROM TB_FPLAN A WITH (NOLOCK)
                     LEFT OUTER JOIN TB_FPLAN_work C ON A.plan_no = c.plan_no AND A.wflag = c.wflag
                     LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey,

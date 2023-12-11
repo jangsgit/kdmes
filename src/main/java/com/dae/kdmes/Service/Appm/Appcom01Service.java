@@ -108,7 +108,6 @@ public class Appcom01Service {
     }
 
     public Boolean FPLAN_OWORK_Delete(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_OWORK_Delete(parm);}
-    public Boolean FPLAN_IWORK_Delete(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_IWORK_Delete(parm);}
     public Boolean FPLAN_WORK_Delete(FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_WORK_Delete(parm);}
 
 
@@ -134,6 +133,7 @@ public class Appcom01Service {
 
     public Boolean FPLANI_IWORK_Insert(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLANI_IWORK_Insert(parm); }
     public Boolean FPLANI_IWORK_update(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLANI_IWORK_update(parm); }
+    public Boolean FPLAN_IWORK_Delete(FPLANIWORK_VO parm){return FPLANW010_mapper.FPLAN_IWORK_Delete(parm);}
 
 
     public List<FPLANWPERID_VO> FPLAN_WPERID_SELECT (FPLANW010_VO parm){return FPLANW010_mapper.FPLAN_WPERID_SELECT(parm);}

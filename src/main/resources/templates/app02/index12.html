@@ -245,6 +245,7 @@
                 { binding: 'wjqty', header: '완료', align: "right", format: 'n0', width: 80 }, 
                 { binding: 'wyul', header: '달성률', align: "center",  format: 'n2', width: 80 },
                 { binding: 'wrpsnm', header: '사출담당', align: "center", width: 80 },           
+                { binding: 'partcode', header: '원자재바코드', align: "center", width: 80 },           
             ], 
             itemsSource: view_p01tab01page
         });   
@@ -544,6 +545,7 @@
                gumwrpsnm: wtab01Dto[i]["gumwrpsnm"], 
                wfrdt: wtab01Dto[i]["wfrdt"], 
                wtrdt: wtab01Dto[i]["wtrdt"], 
+               partcode: wtab01Dto[i]["partcode"], 
                ginputdate: ls_gindate,  
                
            });
@@ -668,7 +670,14 @@
        cols.header = '사출담당';
        cols.align = "center";
        cols.width = 80;  
-       wtab01Grid.columns.push(cols);                      
+       wtab01Grid.columns.push(cols);     
+       
+       cols = new wijmo.grid.Column(); 
+       cols.binding = 'partcode';
+       cols.header = '원자재바코드';
+       cols.align = "center";
+       cols.width = 120;  
+       wtab01Grid.columns.push(cols);                    
     } 
             
    

@@ -42,8 +42,7 @@ public interface FPLANW010_Mapper {
      public Boolean FPLANW020_Delete(FPLANW010_VO parm);       //삭제
      public Boolean FPLANW030_Delete(FPLANW010_VO parm);       //삭제
 
-     public Boolean FPLAN_OWORK_Delete(FPLANW010_VO parm);         //
-     public Boolean FPLAN_IWORK_Delete(FPLANW010_VO parm);         //
+     public Boolean FPLAN_OWORK_Delete(FPLANW010_VO parm);          //
      public Boolean FPLAN_WORK_Delete(FPLANW010_VO parm);         //
 
 
@@ -66,7 +65,8 @@ public interface FPLANW010_Mapper {
      public List<FPLANW010_VO> GetWIworkDetail_blank(TBPopupVO parm);   //조회
      public List<FPLANW010_VO> GetWIworkDetail(TBPopupVO parm);   //조회
      public Boolean FPLANI_IWORK_Insert(FPLANIWORK_VO parm);
-     public Boolean FPLANI_IWORK_update(FPLANIWORK_VO parm);
+     public Boolean FPLANI_IWORK_update(FPLANIWORK_VO parm);     //
+     public Boolean FPLAN_IWORK_Delete(FPLANIWORK_VO parm);
 
 
      public List<FPLANWPERID_VO> FPLAN_WPERID_SELECT(FPLANW010_VO parm);

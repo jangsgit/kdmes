@@ -768,26 +768,28 @@
             var ll_prdqty = []; 
             var ll_obqty = []; 
             var ls_wono = []; 
+            var ls_salotno = []; 
             for( i=0; i < gridrow; i++){ 
                 ls_plan_no[i] =  chkTabA[i]._data.plan_no;  
                 ls_wono[i]   =  chkTabA[i]._data.wono;  
+                ls_salotno[i]   =  chkTabA[i]._data.lotno;  
                 ll_prdqty[i]   =  parseInt(chkTabA[i]._data.prod_qty);  //사출량 
                 ll_obqty[i]    =  parseInt(chkTabA[i]._data.obqty);  //검사량
                 if(!ll_obqty[i] ){ 
                     alert("수량을 등록하세요") 
                     return                                           
                 }  
-            }    
+            }     
             switch(ls_tab){
                 case 'A': 
-                if(ls_inputdate == null || ls_inputdate.length == 0 || ls_inputdate == ""){ 
-                    alert("작업일자를 등록하세요")  
-                    return ;               
-                }  
-                if(ll_inwotqt == null || ll_inwotqt == 0 ){ 
-                    alert("작업수량을를 등록하세요")  
-                    return ;               
-                }   
+                    if(ls_inputdate == null || ls_inputdate.length == 0 || ls_inputdate == ""){ 
+                        alert("작업일자를 등록하세요")  
+                        return ;               
+                    }  
+                    if(ll_inwotqt == null || ll_inwotqt == 0 ){ 
+                        alert("작업수량을를 등록하세요")  
+                        return ;               
+                    }   
                     $.ajax({
                         url: '/input02/w020upd',   
                         type:"POST", 
@@ -802,7 +804,8 @@
                             "wflag"     : ls_inwflag     ,
                             "wremark"   : ls_inwremark   ,  
                             "wrps"      : ls_inwinps     ,
-                            "wono"      : ls_wono    
+                            "wono"      : ls_wono     ,
+                            "salotno"   : ls_salotno    
                         },
                         async:false,
                         success:function(data){   

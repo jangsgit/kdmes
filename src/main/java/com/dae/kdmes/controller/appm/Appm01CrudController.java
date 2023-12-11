@@ -320,11 +320,11 @@ public class Appm01CrudController {
             log.info("error =====> FPLAN_OWORK_Delete");
             return "error";
         }
-        result = appcom01Service.FPLAN_IWORK_Delete(workDto);
-        if (!result) {
-            log.info("error =====> FPLAN_IWORK_Delete");
-            return "error";
-        }
+//        result = appcom01Service.FPLAN_IWORK_Delete(workDto);
+//        if (!result) {
+//            log.info("error =====> FPLAN_IWORK_Delete");
+//            return "error";
+//        }
         result = appcom01Service.FPLAN_WORK_Delete(workDto);
         if (!result) {
             log.info("error =====> FPLAN_WORK_Delete");

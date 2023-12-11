@@ -188,15 +188,18 @@ public class Appm02CrudController {
             ,@RequestParam( value =  "winqt[]") List<Integer> winqt
             ,@RequestParam( value =  "wotqt[]") List<Integer> wotqt
             ,@RequestParam( value =  "wono[]") List<String> wono
+            ,@RequestParam( value =  "salotno[]") List<String> salotno
             ,Model model, HttpServletRequest request) throws Exception {
         FPLANW010_VO workDto = new FPLANW010_VO();
         String ls_yeare = inputdate.substring(0,4);
         String ls_mm = inputdate.substring(5,7);
         String ls_dd = inputdate.substring(8,10);
         String ls_lotno = "";
+        String ls_seq = "";
         Integer ll_lotno =  0;
         Integer ll_wotqty = 0;          //투입량
         Integer ll_winqty = 0;          //검사량
+
         inputdate =  ls_yeare + ls_mm + ls_dd;
         workDto.setCustcd(custcd);
         workDto.setSpjangcd(spjangcd);
@@ -250,6 +253,37 @@ public class Appm02CrudController {
                 result = appcom01Service.FPLANW010_Update_GQTY(workDto);
                 if (!result){
                     log.info("error Exception =====> FPLANW010_Update_GQTY" );
+                    return "error";
+                }
+
+                IworkDto.setCustcd("KDMES");
+                IworkDto.setSpjangcd("ZZ");
+                IworkDto.setPlan_no(plan_no.get(i));
+                IworkDto.setLotno(salotno.get(i));
+                IworkDto.setWflag("00010");
+                IworkDto.setGlotno(ls_lotno);
+                IworkDto.setQty(wotqt.get(i));
+                IworkDto.setSqty(0);
+                IworkDto.setBqty(0);
+                IworkDto.setIndate(getToDate());
+                IworkDto.setWseq("01");
+                ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
+                if(ls_seq == null || ls_seq.length() == 0 || ls_seq.equals("")){
+                    ls_seq = "001";
+                }else{
+                    int ll_seq = Integer.parseInt(ls_seq) + 1;
+                    ls_seq = Integer.toString(ll_seq);
+                    if(ls_seq.length() == 1){
+                        ls_seq = "00" + ls_seq;
+                    }else if(ls_seq.length() == 2){
+                        ls_seq = "0" + ls_seq;
+                    }
+                }
+                IworkDto.setSeq(ls_seq);
+
+                result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
+                if (!result){
+                    log.info("error Exception =====> FPLANI_IWORK_Insert" );
                     return "error";
                 }
 
@@ -313,20 +347,31 @@ public class Appm02CrudController {
         workDto.setDecision1("3");
         result = appcom01Service.FPLAN_Update_GDEL(workDto);
         if (!result) {
-            log.info("error =====> FPLAN_Update_GDEL");
-            return "error";
+           // log.info("error =====> FPLAN_Update_GDEL");
+           // return "error";
         }
+
+        IworkDto.setCustcd("KDMES");
+        IworkDto.setSpjangcd("ZZ");
+        IworkDto.setWflag("00010");
+        IworkDto.setGlotno(lotno);
 
         result = appcom01Service.FPLANW010_Update_GDEL(workDto);
         if (!result){
-            log.info("error Exception =====> FPLANW010_Update_GDEL" );
-            return "error";
+            //log.info("error Exception =====> FPLANW010_Update_GDEL" );
+            //return "error";
         }
         workDto.setLotno(lotno);
         result = appcom01Service.FPLANW020_Delete(workDto);
         if (!result) {
             log.info("error =====> FPLANW020_Delete");
             return "error";
+        }
+
+        result = appcom01Service.FPLAN_IWORK_Delete(IworkDto);
+        if (!result){
+            //log.info("error Exception =====> FPLAN_IWORK_Delete" );
+            //return "error";
         }
 
         var ls_line = "99";
