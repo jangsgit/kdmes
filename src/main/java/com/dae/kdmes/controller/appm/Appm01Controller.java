@@ -210,12 +210,21 @@ public class Appm01Controller {
         wperidDto.setWflag("00020");  //첫번째공정
         wperidDto.setWpernm("%");
 
+        wrmcDto.setMachname("%");
+        wrmcDto.setPlan_no("%");      //불량구분 팝업
+        wrmcDto.setWseq("%");
+        wrmcDto.setWflag("00020");
+        wrmcDto.setWclscode("1");
+
+
+
         itemDtoList   = appcom01Service.GetFPLAN_List02(fplanDto);      //사출완료
         itemDtoList02 = appcom01Service.GetFPLAN_List02_REG(fplanDto);      //검사등록완료
 
         model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
         model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
         model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
         return "App01/index41";
     }
 
