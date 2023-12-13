@@ -85,7 +85,7 @@
                                                              
                                                             <tr> 
                                                                 <th>제품LOTNO</th>
-                                                                <td >
+                                                                <td colspan="3">
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm" id="inlotno" type="text"  size="15" disabled /> 
                                                                         <input class="form-control form-control-sm" id="inplan_no" type="hidden"    disabled  placeholder=""   />  
@@ -99,9 +99,16 @@
                                                                         <input class="form-control form-control-sm" id="insalotno01" type="text"  size="15"  /> 
                                                                         <input class="form-control form-control-sm" id="insaplan_no01" type="hidden"    disabled  placeholder=""   />  
                                                                     </div>                                           
-                                                                </td>                                  
+                                                                </td>   
+                                                                <th>생산<br>LotNo(2)</th>
+                                                                <td >
+                                                                    <div class="input_wrap" style="max-width: 230px;"> 
+                                                                        <input class="form-control form-control-sm" id="insalotno02" type="text"  size="15"  /> 
+                                                                        <input class="form-control form-control-sm" id="insaplan_no02" type="hidden"    disabled  placeholder=""   />  
+                                                                    </div>                                           
+                                                                </td>                                
                                                             </tr>                                                              
-                                                            <tr> 
+                                                            <!-- <tr> 
                                                                 <th>생산<br>LotNo(2)</th>
                                                                 <td >
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
@@ -109,10 +116,10 @@
                                                                         <input class="form-control form-control-sm" id="insaplan_no02" type="hidden"    disabled  placeholder=""   />  
                                                                     </div>                                           
                                                                 </td>                                  
-                                                            </tr>                                                              
+                                                            </tr>                                                               -->
                                                             <tr> 
                                                                 <th>거래처</th>
-                                                                <td >
+                                                                <td colspan="3">
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         
                                                                         <input class="form-control form-control-sm" id="incltnm" type="text" disabled
@@ -130,7 +137,7 @@
                                                             </tr>   
                                                             <tr> 
                                                                 <th>품목명</th>
-                                                                <td >
+                                                                <td colspan="3">
                                                                     <div class="input_wrap" style="max-width: 230px;">  
                                                                         <input class="form-control form-control-sm" id="inpname" type="text" disabled
                                                                             size="15"  /> 
@@ -138,25 +145,7 @@
                                                                         size="15"  />                                         
                                                                     </div>                                            
                                                                 </td>                                  
-                                                            </tr>  
-                                                            <!-- <tr> 
-                                                                <th>작업종료</th>
-                                                                <td >
-                                                                    <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled >                                        
-                                                                    </div>                                            
-                                                                </td>                                  
-                                                            </tr>    -->
-                                                            <!-- <tr> 
-                                                                <th>계획량</th>
-                                                                <td >
-                                                                    <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input class="form-control form-control-sm" id="inwinqt" type="number"  
-                                                                        placeholder=""  disabled />
-                                                                        <div id='inwinqtbdg'></div>                                             
-                                                                    </div>                                            
-                                                                </td>                                  
-                                                            </tr>    -->
+                                                            </tr>   
                                                             <tr> 
                                                                 <th>박스수량</th>
                                                                 <td >
@@ -164,9 +153,7 @@
                                                                         <input class="form-control form-control-sm"  type="number" id="inboxwotqt" placeholder=""    /> 
                                                                         <div id='inwinqtbdg'></div>                                             
                                                                     </div>                                            
-                                                                </td>                                  
-                                                            </tr>                                                               
-                                                            <tr> 
+                                                                </td>   
                                                                 <th>개별수량</th>
                                                                 <td >
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
@@ -176,7 +163,7 @@
                                                                         <div id='inwinqtbdg'></div>                                             
                                                                     </div>                                            
                                                                 </td>                                  
-                                                            </tr>   
+                                                            </tr>    
                                                             <tr> 
                                                                 <th>불량구분</th>
                                                                 <td >                                                                    
@@ -185,30 +172,34 @@
                                                                         <input class="form-control form-control-sm" id="inwcode" type="hidden"
                                                                             placeholder=""   />                                                                               
                                                                     </div>                                            
-                                                                </td>                                  
-                                                            </tr>                                                               
-                                                            <tr> 
+                                                                </td>  
                                                                 <th>불량수량</th>
                                                                 <td >
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm"  type="number" id="inwbdqt" placeholder=""    />  
                                                                     </div>                                            
-                                                                </td>                                  
+                                                                </td>                                 
                                                             </tr>   
                                                             <tr> 
                                                                 <th>작업자</th>
-                                                                <td >                                                                    
+                                                                <td >                                                                   
                                                                     <div class="input_wrap" style="max-width: 230px;">  
                                                                         <input class="form-control form-control-sm" id="inwrpsnm" type="text"  
                                                                             size="15"  /> 
                                                                         <input class="form-control form-control-sm" id="inwinps" type="hidden" disabled
                                                                         size="15"  />                                         
                                                                     </div>                                            
-                                                                </td>                                  
-                                                            </tr> 
+                                                                </td>   
+                                                                <th>검사완료</th>
+                                                                <td >     
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" id="dem_flag" value="dem_flag" type="checkbox" />
+                                                                    </div>
+                                                                </td>                                
+                                                            </tr>  
                                                             <tr> 
                                                                 <th>비고</th>
-                                                                <td >
+                                                                <td colspan="3">
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm" id="inwremark" type="text" placeholder=""  />                                    
                                                                     </div>                                            
