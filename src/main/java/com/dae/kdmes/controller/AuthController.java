@@ -67,6 +67,19 @@ public class AuthController {
             SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
             String indate = endDate.format(nowData).toString();
 
+            CommDto.setMenuTitle("공통코드등록");
+            CommDto.setMenuUrl("기준정보>공통코드등록");
+            CommDto.setMenuCode("index01");
+            model.addAttribute("userformDto",userformDto);
+
+            userformDto.setPernm(userformDto.getUsername());
+            userformDto.setUsername(userformDto.getUsername());
+            userformDto.setUserid(userformDto.getUserid());
+            userformDto.setCustcd(userformDto.getCustcd());
+            userformDto.setFlag(userformDto.getFlag());
+
+            model.addAttribute("userDto", userformDto );
+
             return "mainframe";
         } else if (userformDto == null) {
             model.addAttribute("msg", "로그인실패");

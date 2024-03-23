@@ -13,13 +13,14 @@
                         </a>
                     </div>
                     <ul>
-                        <li><a th:href="@{/app01/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>공통코드등록</a></li>
-                        <li><a th:href="@{/app01/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>공정별설비등록</a></li> 
-                        <li><a th:href="@{/app01/index03}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>재고실사등록</a></li>
-                        <!-- <li><a th:href="@{/app01/index04}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>품목그룹등록</a></li> -->
-                        <li><a th:href="@{/app01/index05}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>품목등록</a></li>
-                        <li><a th:href="@{/app01/index06}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>제품BOM</a></li>
                         <li><a th:href="@{/app01/index07}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>거래처등록</a></li>
+                        <li><a th:href="@{/app01/index05}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>품목등록</a></li>
+                        <li><a th:href="@{/app01/index05}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>원자재관리</a></li>
+                        <li><a th:href="@{/app01/index05}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>부자재관리</a></li>
+                        <li><a th:href="@{/app01/index01}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>공통코드등록</a></li>
+                        <li><a th:href="@{/app01/index06}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>소모량관리</a></li>
+                        <li><a th:href="@{/app01/index02}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>공정별설비등록</a></li> 
+                        <!-- <li><a th:href="@{/app01/index04}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>품목그룹등록</a></li> -->
                     </ul>
                 </div>     
             </li>
@@ -34,9 +35,32 @@
                         </a>
                     </div> 
                     <ul>
-                        <li class="on"><a th:href="@{/app02/index10}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>생산계획등록</a></li>
-                        <li><a th:href="@{/app02/index11}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>생산현황</a></li>
+                        <li class="on"><a th:href="@{/app02/index11}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>실시간생산현황</a></li>
+                        <li><a th:href="@{/app02/index12}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>실시간불량현황</a></li>
+                        <li><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>제품별완료수량</a></li>
+                        <li><a th:href="@{/app02/index10}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>주간생산계획관리</a></li>
+                        <li><a th:href="@{/app02/index15}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>일별생산계획관리</a></li>
+                        <li><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>월별생산계획관리</a></li>
+                        <li><a th:href="@{/app02/index14}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>생산계획대비현황</a></li>
                         <!-- <li><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>생산실시간현황</a></li>                         -->
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button type="button"><img th:src="@{/assets/images/header_icon2.png}" alt=""></button>
+                <div class="depth2 on">
+                    <div class="dep_main">
+                        <a href="">    
+                            <button type="button">
+                                작업지시관리
+                            </button>
+                        </a>
+                    </div> 
+                    <ul>
+                        <li class="on"><a th:href="@{/app03/index21}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>작업지시등록</a></li>
+                        <li><a th:href="@{/app03/index22}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>업체별작업지시현황</a></li>
+                        <li><a th:href="@{/app03/index23}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>제품별작업지시현황</a></li>
+                        <li><a th:href="@{/app03/index24}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>사원별작업지시현황</a></li> 
                     </ul>
                 </div>
             </li>
@@ -51,8 +75,21 @@
                         </a>
                     </div> 
                     <ul>
-                        <li class="on"><a th:href="@{/appm/index41}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>검사등록</a></li>
-                        <li><a th:href="@{/app02/index12}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>공정현황</a></li>
+                        <li><a th:href="@{/app01/index05}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>원자재입출고관리</a></li>
+                        <li class="on"><a th:href="@{/appm/index41}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>사출등록</a></li>
+                        <li><a th:href="@{/app02/index15}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>사출일지조회</a></li>
+                        <li><a th:href="@{/app02/index14}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>불량현황조회</a></li>
+                        <li><a th:href="@{/app02/index12}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>사출기수집알림</a></li>
+                        <li><a th:href="@{/app02/index15}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>생산현황조회</a></li>
+                        <li><a th:href="@{/app02/index12}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>불량추이도조회</a></li>
+                        <li><a th:href="@{/app02/index15}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>생산현황조회</a></li>
+                        <li><a th:href="@{/appm/index41}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>검사등록</a></li>            
+                        <li ><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>일별검사일보</a></li>
+                        <li ><a th:href="@{/app02/index14}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>월별검사불량</a></li>
+                        <li ><a th:href="@{/app02/index14}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>일별검사불량</a></li>
+                        <li ><a th:href="@{/app02/index14}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>유형별검사불량</a></li>
+                        <li ><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>일별사원검사일보</a></li>
+                        <li ><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>월별사원검사일보</a></li>
                         <!-- <li><a th:href="@{/app02/index22}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>외주현황</a></li> -->
                     </ul>
                 </div>
@@ -63,18 +100,46 @@
                     <div class="dep_main">
                         <a href="">    
                             <button type="button">
-                                생산현황
+                                출하관리
                             </button>
                         </a>
                     </div> 
                     <ul>
+                        <li  class="on"><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>출하등록</a></li>
+                        <li><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>출하현황</a></li>                        
+                        <li><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>지역별출하내역</a></li>
                         <!-- <li class="on"><a th:href="@{/app03/index31}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>BOM일자별소요량집계</a></li> -->
                         <!-- <li><a th:href="@{/app03/index32}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>Lot 이력원장</a></li> -->
-                        <li class="on"><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>사원별검사일보</a></li>
+                        <!-- <li class="on"><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>사원별검사일보</a></li>
                         <li><a th:href="@{/app02/index14}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>일별/유형별불량현황</a></li>
-                        <li><a th:href="@{/app02/index15}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>작업일지(사출공정일지)</a></li>                        
+                        <li><a th:href="@{/app02/index15}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>작업일지(사출공정일지)</a></li>                         -->
                         <!-- <li><a th:href="@{/app03/index34}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>제품별수불원장</a></li>                         -->
-                        <li><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>출하현황</a></li>
+
+                    </ul>
+                </div>
+            </li>  
+            <li>
+                <button type="button"><img th:src="@{/assets/images/header_icon2.png}" alt=""></button>
+                <div class="depth2 on">
+                    <div class="dep_main">
+                        <a href="">    
+                            <button type="button">
+                                재고관리
+                            </button>
+                        </a>
+                    </div> 
+                    <ul>
+                        <li  class="on"><a th:href="@{/app01/index03}"><i><img class="dot1" th:src="@{/assets/images/i_dot_header.png}" alt=""><img class="dot2" th:src="@{/assets/images/i_dot_header2.png}" alt=""></i>기초재고</a></li>                        
+                        <li><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>제품별재고현황</a></li>
+                        <li><a th:href="@{/app01/index03}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>재고조정</a></li>                        
+                        <li><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>재고설정</a></li>
+                        <li><a th:href="@{/app02/index16}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>제품수불원장</a></li>
+                        <!-- <li class="on"><a th:href="@{/app03/index31}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>BOM일자별소요량집계</a></li> -->
+                        <!-- <li><a th:href="@{/app03/index32}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>Lot 이력원장</a></li> -->
+                        <!-- <li class="on"><a th:href="@{/app02/index13}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>사원별검사일보</a></li>
+                        <li><a th:href="@{/app02/index14}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>일별/유형별불량현황</a></li>
+                        <li><a th:href="@{/app02/index15}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>작업일지(사출공정일지)</a></li>                         -->
+                        <!-- <li><a th:href="@{/app03/index34}"><i><img class="dot1" src="/images/i_dot_header.png" alt=""><img class="dot2" src="/images/i_dot_header2.png" alt=""></i>제품별수불원장</a></li>                         -->
 
                     </ul>
                 </div>
