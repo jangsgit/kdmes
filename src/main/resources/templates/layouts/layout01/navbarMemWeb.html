@@ -14,7 +14,7 @@
                             <div class="col ps-0">
                                 <hr class="mb-0 navbar-vertical-divider" /> 
                             </div>
-                        </div> 
+                        </div>  
                         <!-- parent pages-->
                         <a class="nav-link dropdown-indicator" href="#menucd01" role="button"
                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="withdraw">
@@ -39,21 +39,7 @@
                                         class="nav-link-text ps-1">품목등록</span>  
                                     </div>
                                 </a> 
-                            </li> 
-                            <li class="nav-item"> 
-                                <a class="nav-link" th:href="@{/app01/index05}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">원자재관리</span>  
-                                    </div>
-                                </a> 
-                            </li> 
-                            <li class="nav-item"> 
-                                <a class="nav-link" th:href="@{/app01/index05}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">부자재관리</span>  
-                                    </div>
-                                </a> 
-                            </li> 
+                            </li>  
                             <li class="nav-item"> 
                                 <a class="nav-link" th:href="@{/app01/index01}" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
@@ -64,7 +50,7 @@
                             <li class="nav-item"> 
                                 <a class="nav-link" th:href="@{/app01/index06}" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">소모량관리</span>  
+                                        class="nav-link-text ps-1">소요량관리</span>  
                                     </div>
                                 </a> 
                             </li> 
@@ -78,7 +64,7 @@
                         </ul>  
                         <!-- label-->
                         <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                            <div class="col-auto navbar-vertical-label">생산계획
+                            <div class="col-auto navbar-vertical-label">모니터링
                             </div>
                             <div class="col ps-0">
                                 <hr class="mb-0 navbar-vertical-divider" /> 
@@ -89,7 +75,7 @@
                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="withdraw">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                         class="fas fa-envelope-open"></span></span><span
-                                    class="nav-link-text ps-1">생산계획</span>  
+                                    class="nav-link-text ps-1">실시간모니터링</span>  
                             </div>
                         </a>    
                         <ul class="nav collapse false" id="menucd02">
@@ -114,36 +100,16 @@
                                         class="nav-link-text ps-1">제품별완료수량</span>  
                                     </div>
                                 </a>  
-                            </li>  
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app02/}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">주간생산계획관리</span>  
-                                    </div>
-                                </a>  
-                            </li>  
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app02/}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">일별생산계획관리</span>  
-                                    </div>
-                                </a>  
-                            </li>  
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app02/}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">월별생산계획관리</span>  
-                                    </div>
-                                </a>  
-                            </li>  
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app02/}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">생산계획대비현황</span>  
-                                    </div>
-                                </a>  
-                            </li>  
+                            </li> 
                         </ul>  
+                        <!-- label-->
+                        <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
+                            <div class="col-auto navbar-vertical-label">생산계획
+                            </div>
+                            <div class="col ps-0">
+                                <hr class="mb-0 navbar-vertical-divider" /> 
+                            </div>
+                        </div> 
                         <!-- parent pages-->
                         <a class="nav-link dropdown-indicator" href="#menucd03" role="button"
                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="withdraw">
@@ -151,38 +117,23 @@
                                         class="fas fa-envelope-open"></span></span><span
                                     class="nav-link-text ps-1">작업지시관리</span>  
                             </div>
-                        </a>     
-                        <ul class="nav collapse false" id="menucd03">
+                        </a>    
+                        <ul class="nav collapse false" id="menucd03"> 
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app03/index21}" aria-expanded="false" >
+                                <a class="nav-link" th:href="@{/app02/index10}" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">작업지시등록</span>  
+                                        class="nav-link-text ps-1">주간생산계획등록</span>  
                                     </div>
-                                </a> 
-                                <!-- more inner pages-->
+                                </a>  
+                            </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/app02/}" aria-expanded="false" >
+                                    <div class="d-flex align-items-center"><span
+                                        class="nav-link-text ps-1">주간생산계획조회</span>  
+                                    </div>
+                                </a>  
                             </li>  
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app03/index22}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">업체별작업지시현황</span>  
-                                    </div>
-                                </a>  
-                            </li>   
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app03/index23}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">제품별작업지시현황</span>  
-                                    </div>
-                                </a>  
-                            </li>   
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/app03/index24}" aria-expanded="false" >
-                                    <div class="d-flex align-items-center"><span
-                                        class="nav-link-text ps-1">사원별작업지시현황</span>  
-                                    </div>
-                                </a>  
-                            </li>   
-                        </ul>    
+                        </ul>   
                         <!-- label-->
                         <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
                             <div class="col-auto navbar-vertical-label">공정관리
