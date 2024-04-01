@@ -219,4 +219,44 @@ public class App01Controller {
         return "App01/index07";
     }
 
+
+    @GetMapping(value="/indexds01")
+    public String App01_indexds01(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("공정기준등록");
+        CommDto.setMenuUrl("기준정보>공정기준등록");
+        CommDto.setMenuCode("index02");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+
+        return "App01/indexds01";
+    }
+
+    @GetMapping(value="/indexds02")
+    public String App01_indexds02(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("공정기준등록");
+        CommDto.setMenuUrl("기준정보>공정기준등록");
+        CommDto.setMenuCode("index02");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+
+        return "App01/indexds02";
+    }
+
+    @GetMapping(value="/indexds03")
+    public String App01_indexds03(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("공정기준등록");
+        CommDto.setMenuUrl("기준정보>공정기준등록");
+        CommDto.setMenuCode("index02");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+
+        return "App01/indexds03";
+    }
+
 }
