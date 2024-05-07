@@ -71,249 +71,248 @@
     </div>  
     <!-- contents body 시작--> 
     <!-- form 또는 action 으로 받아오기  -->
-    <div class="section regist">
-    <div class="sec_con" style="width: 80%;">
-        <div class="box_wrap">
-            <div class="box_input" >
-                <div class="date_wrap">
-                    <input type="text"  id="searchtxt" placeholder="거래처명"> 
-                    <button type="button" id="retrieveBtn" >검색</button>      
-                </div>                              
-                <!-- //여기서부터 그래프 -->
-                <div class="table table_style2">
-                    <div class="card-body bg-light">    
-                            <div class="tab-content" >                                        
-                            <div class="tab-pane fade show active"  >  
-                                    <div class="container-fluid" id="op1" >
-                                    <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px;    margin:0 auto; "></div>
-                                    <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
-                                </div>                                               
-                            </div>                                        
-                            </div>
-                    </div>
-                </div>                       
-                                            
+    <div class="section regist"> 
+        <div class="sec_con" style="width: 80%;">
+            <div class="box_wrap">
+                <div class="box_input" >
+                    <div class="date_wrap">
+                        <input type="text"  id="searchtxt" placeholder="거래처명"> 
+                        <button type="button" id="retrieveBtn" >검색</button>      
+                    </div>                              
+                    <!-- //여기서부터 그래프 -->
+                    <div class="table table_style2">
+                        <div class="card-body bg-light">    
+                                <div class="tab-content" >                                        
+                                <div class="tab-pane fade show active"  >  
+                                        <div class="container-fluid" id="op1" >
+                                        <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px;    margin:0 auto; "></div>
+                                        <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
+                                    </div>                                               
+                                </div>                                        
+                                </div>
+                        </div>
+                    </div>                       
+                </div>  <!---  <div class="box_input" >  -->
+            </div>    <!--  <div class="box_wrap"> -->
+        </div>
+        <!-- 우측 전체 테이블 -->
+        <div class="sec_con" style="width: 65%;">
+            <div class="box_wrap" style="padding-bottom: 100px;">
+                <form action="">
+                    <div class="table table_style1" >
+                        <table>
+                            <tbody>   
+                                <tr> 
+                                    <th>업체구분</th>
+                                    <td  colspan="4">
+                                        <div class="input_wrap" style="max-width: 235px;">
+                                            <select th:field="*{cifcodeList}" name="acorp1" id="acorp1">
+                                                <option value="">선택</option>
+                                                <option th:each="val : ${cifcodeList}" th:value="${val.cifcode}" th:text="${val.cifcodename}">
+                                            </select>
+                                        </div>
+                                    </td>            
+                                    <td>
+                                        <div class="input_wrap">                                    
+                                            <input type="text"   name="acorp2" id="acorp2" autocomplete="off"  disabled >  
+                                        </div>
+                                    </td>                                        
+                                </tr>    
+                                <tr>
+                                    <th>거래처명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
+                                    <td colspan="3">
+                                        <div class="input_wrap">
+                                            <input type="text" id="acorp" placeholder="거래처명"  >
+                                            <!-- <input type="hidden" id="acorp1"  disabled> -->
+                                            <!-- <input type="hidden" id="acorp2"  disabled> -->
+                                            <input type="hidden" id="acorp3"  disabled>
+                                            <input type="hidden" id="acode"  disabled>
+                                        </div>
+                                    </td>  
+                                    <th>대표자</th>
+                                    <td>
+                                        <div class="input_wrap">
+                                            <input type="text" id="aname" placeholder="대표자"  >
+                                        </div>
+                                    </td>                                                  
+                                </tr>
+                                <tr> 
+                                    <th>사업자번호</th>
+                                    <td>
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="asano1" autocomplete="off"  placeholder="3자리숫자" >  
+                                        </div>
+                                    </td>            
+                                    <td>
+                                        <div class="input_wrap">                                    
+                                            <input type="text"  id="asano2" autocomplete="off"  placeholder="2자리숫자" >  
+                                        </div>
+                                    </td>            
+                                    <td>
+                                        <div class="input_wrap">                                   
+                                            <input type="text"  id="asano3" autocomplete="off"  placeholder="5자리숫자"  >
+                                        </div>
+                                    </td>                                        
+                                    <th>구분</th> 
+                                    <td >
+                                        <select class="form-select" id="agita" aria-label="Default select example" >  <!--onchange="CahngeSlect(this.value)"-->
+                                            <option selected="">거래구분</option>
+                                            <option value="1">크레딧</option>
+                                            <option value="2">비거래</option> 
+                                            </select>                                                                  
+                                    </td>                                                     
+                                </tr>
+                                <tr> 
+                                    <th>법인번호</th>
+                                    <td>
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="ajumi1" autocomplete="off"   >  
+                                        </div>
+                                    </td>            
+                                    <td>
+                                        <div class="input_wrap">                                    
+                                            <input type="text"  id="ajumi2" autocomplete="off"   >  
+                                        </div>
+                                    </td>    
+                                    <th>주민번호</th>
+                                    <td>
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="aascode1" autocomplete="off"   >  
+                                        </div>
+                                    </td>            
+                                    <td>
+                                        <div class="input_wrap">                                    
+                                            <input type="text"  id="aascode2" autocomplete="off"   >  
+                                        </div>
+                                    </td>                                                   
+                                </tr>
+                                <tr> 
+                                    <th>업태</th>
+                                    <td  colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="aupte" autocomplete="off"   > 
+                                        </div>
+                                    </td>                                        
+                                    <th>종목</th> 
+                                    <td  colspan="2">
+                                        <div class="input_wrap">                                               
+                                            <input type="text"  id="ajong" autocomplete="off"   > 
+                                        </div>
+                                    </td>                                                        
+                                </tr>
+                                <tr>
+                                    <th>우편번호</th>
+                                    <td>
+                                        <div class="input_wrap">
+                                            <input type="text" name="apost1" id="apost1"  onclick="sample4_execDaumPostcode()">  
+                                        </div>
+                                    </td>
+                                    <th>주소</th>
+                                    <td  colspan="4">
+                                        <div class="input_wrap">
+                                            <input type="text" name="ajuso1" id="ajuso1" placeholder="주소"  >                             
+                                        </div>
+                                    </td>                                       
+                                </tr>      
+                                <tr> 
+                                    <th>상세주소</th>
+                                    <td  colspan="5">
+                                        <div class="input_wrap">
+                                            <input type="text" name="ajuso2" id="ajuso2" placeholder="상세주소"  >                             
+                                        </div>
+                                    </td>                                       
+                                </tr>                                                                                                                                                                                      
+                                <tr>                                        
+                                    <th>대표전화<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
+                                    <td   colspan="2">
+                                        <div class="input_wrap">
+                                            <input type="text" name="atelno" id="atelno" placeholder=""  >                             
+                                        </div>
+                                    </td>                                    
+                                    <th>전화</th>
+                                    <td  colspan="2"> 
+                                        <div class="input_wrap">
+                                            <input type="text" name="atelno2" id="atelno2" placeholder=""  >                             
+                                        </div>
+                                    </td>                                                                                    
+                                </tr>                                                                                                                                                                                         
+                                <tr>                                     
+                                    <th>핸드폰</th>
+                                    <td  colspan="2"> 
+                                        <div class="input_wrap">
+                                            <input type="text" name="ahand" id="ahand" placeholder=""  >                             
+                                        </div>
+                                    </td>                                   
+                                    <th>이메일</th>
+                                    <td colspan="2"> 
+                                        <div class="input_wrap">
+                                            <input type="text" name="aemail" id="aemail" placeholder=""  >                             
+                                        </div>
+                                    </td>                                                                                   
+                                </tr>                                                                                                                                                                                       
+                                <!-- <tr>                                        
+                                    <th>영업담당(현)</th>
+                                    <td>
+                                        <div class="input_wrap">
+                                            <input type="text" name="inname01" id="inname01" placeholder=""   > 
+                                            <input type="hidden" name="abonsadam1" id="abonsadam1" placeholder=""  >                             
+                                        </div>
+                                    </td>                                    
+                                    <th>영업담당</th>
+                                    <td>
+                                        <div class="input_wrap">
+                                            <input type="text" name="inname02" id="inname02" placeholder=""   > 
+                                            <input type="hidden" name="abonsadam2" id="abonsadam2" placeholder=""  >                             
+                                        </div>
+                                    </td>                                   
+                                    <th>영업담당</th>
+                                    <td>
+                                        <div class="input_wrap">
+                                            <input type="text" name="inname03" id="inname03" placeholder=""   > 
+                                            <input type="hidden" name="abonsadam3" id="abonsadam3" placeholder=""  >                             
+                                        </div>
+                                    </td>                                                                                   
+                                </tr>                                                                                                                                                                                      -->
+                                <tr>                                        
+                                    <th>홈페이지</th>
+                                    <td colspan="2"> 
+                                        <div class="input_wrap">
+                                            <input type="text" name="adomain" id="adomain" placeholder=""  >                             
+                                        </div>
+                                    </td>                                    
+                                    <th>팩스</th>
+                                    <td colspan="2"> 
+                                        <div class="input_wrap">
+                                            <input type="text" name="afax" id="afax" placeholder=""  >                             
+                                        </div>
+                                    </td>                                                                                   
+                                </tr>         
+                                <tr>  
+                                    <th>비고</th>
+                                    <td colspan="5">
+                                        <div class="input-group"> 
+                                            <textarea class="form-control" aria-label="With textarea" name="abigo" id="abigo" ></textarea>.
+                                            </div>   
+                                                                        
+                                    </td>                                       
+                                </tr>   
+                            </tbody>
+                        </table>
+                            <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
+                                <div class="btns" >                                                        
+                                    <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
+                                    <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
+                                    <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
+
+                                </div>
+                                
+                                <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
+                            </div>                              
+                    </div>                           
+                </form>
+
             </div>
         </div>
-    </div>
-    <!-- 우측 전체 테이블 -->
-    <div class="sec_con" style="width: 65%;">
-        <div class="box_wrap" style="padding-bottom: 100px;">
-            <form action="">
-                <div class="table table_style1" >
-                    <table>
-                        <tbody>   
-                            <tr> 
-                                <th>업체구분</th>
-                                <td  colspan="4">
-                                    <div class="input_wrap" style="max-width: 235px;">
-                                        <select th:field="*{cifcodeList}" name="acorp1" id="acorp1">
-                                            <option value="">선택</option>
-                                            <option th:each="val : ${cifcodeList}" th:value="${val.cifcode}" th:text="${val.cifcodename}">
-                                        </select>
-                                    </div>
-                                </td>            
-                                <td>
-                                    <div class="input_wrap">                                    
-                                        <input type="text"   name="acorp2" id="acorp2" autocomplete="off"  disabled >  
-                                    </div>
-                                </td>                                        
-                            </tr>    
-                            <tr>
-                                <th>거래처명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
-                                <td colspan="3">
-                                    <div class="input_wrap">
-                                        <input type="text" id="acorp" placeholder="거래처명"  >
-                                        <!-- <input type="hidden" id="acorp1"  disabled> -->
-                                        <!-- <input type="hidden" id="acorp2"  disabled> -->
-                                        <input type="hidden" id="acorp3"  disabled>
-                                        <input type="hidden" id="acode"  disabled>
-                                    </div>
-                                </td>  
-                                <th>대표자</th>
-                                <td>
-                                    <div class="input_wrap">
-                                        <input type="text" id="aname" placeholder="대표자"  >
-                                    </div>
-                                </td>                                                  
-                            </tr>
-                            <tr> 
-                                <th>사업자번호</th>
-                                <td>
-                                    <div class="input_wrap">                                               
-                                        <input type="text"  id="asano1" autocomplete="off"  placeholder="3자리숫자" >  
-                                    </div>
-                                </td>            
-                                <td>
-                                    <div class="input_wrap">                                    
-                                        <input type="text"  id="asano2" autocomplete="off"  placeholder="2자리숫자" >  
-                                    </div>
-                                </td>            
-                                <td>
-                                    <div class="input_wrap">                                   
-                                        <input type="text"  id="asano3" autocomplete="off"  placeholder="5자리숫자"  >
-                                    </div>
-                                </td>                                        
-                                <th>구분</th> 
-                                <td >
-                                    <select class="form-select" id="agita" aria-label="Default select example" >  <!--onchange="CahngeSlect(this.value)"-->
-                                        <option selected="">거래구분</option>
-                                        <option value="1">크레딧</option>
-                                        <option value="2">비거래</option> 
-                                        </select>                                                                  
-                                </td>                                                     
-                            </tr>
-                            <tr> 
-                                <th>법인번호</th>
-                                <td>
-                                    <div class="input_wrap">                                               
-                                        <input type="text"  id="ajumi1" autocomplete="off"   >  
-                                    </div>
-                                </td>            
-                                <td>
-                                    <div class="input_wrap">                                    
-                                        <input type="text"  id="ajumi2" autocomplete="off"   >  
-                                    </div>
-                                </td>    
-                                <th>주민번호</th>
-                                <td>
-                                    <div class="input_wrap">                                               
-                                        <input type="text"  id="aascode1" autocomplete="off"   >  
-                                    </div>
-                                </td>            
-                                <td>
-                                    <div class="input_wrap">                                    
-                                        <input type="text"  id="aascode2" autocomplete="off"   >  
-                                    </div>
-                                </td>                                                   
-                            </tr>
-                            <tr> 
-                                <th>업태</th>
-                                <td  colspan="2">
-                                    <div class="input_wrap">                                               
-                                        <input type="text"  id="aupte" autocomplete="off"   > 
-                                    </div>
-                                </td>                                        
-                                <th>종목</th> 
-                                <td  colspan="2">
-                                    <div class="input_wrap">                                               
-                                        <input type="text"  id="ajong" autocomplete="off"   > 
-                                    </div>
-                                </td>                                                        
-                            </tr>
-                            <tr>
-                                <th>우편번호</th>
-                                <td>
-                                    <div class="input_wrap">
-                                        <input type="text" name="apost1" id="apost1"  onclick="sample4_execDaumPostcode()">  
-                                    </div>
-                                </td>
-                                <th>주소</th>
-                                <td  colspan="4">
-                                    <div class="input_wrap">
-                                        <input type="text" name="ajuso1" id="ajuso1" placeholder="주소"  >                             
-                                    </div>
-                                </td>                                       
-                            </tr>      
-                            <tr> 
-                                <th>상세주소</th>
-                                <td  colspan="5">
-                                    <div class="input_wrap">
-                                        <input type="text" name="ajuso2" id="ajuso2" placeholder="상세주소"  >                             
-                                    </div>
-                                </td>                                       
-                            </tr>                                                                                                                                                                                      
-                            <tr>                                        
-                                <th>대표전화<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
-                                <td   colspan="2">
-                                    <div class="input_wrap">
-                                        <input type="text" name="atelno" id="atelno" placeholder=""  >                             
-                                    </div>
-                                </td>                                    
-                                <th>전화</th>
-                                <td  colspan="2"> 
-                                    <div class="input_wrap">
-                                        <input type="text" name="atelno2" id="atelno2" placeholder=""  >                             
-                                    </div>
-                                </td>                                                                                    
-                            </tr>                                                                                                                                                                                         
-                            <tr>                                     
-                                <th>핸드폰</th>
-                                <td  colspan="2"> 
-                                    <div class="input_wrap">
-                                        <input type="text" name="ahand" id="ahand" placeholder=""  >                             
-                                    </div>
-                                </td>                                   
-                                <th>이메일</th>
-                                <td colspan="2"> 
-                                    <div class="input_wrap">
-                                        <input type="text" name="aemail" id="aemail" placeholder=""  >                             
-                                    </div>
-                                </td>                                                                                   
-                            </tr>                                                                                                                                                                                       
-                            <!-- <tr>                                        
-                                <th>영업담당(현)</th>
-                                <td>
-                                    <div class="input_wrap">
-                                        <input type="text" name="inname01" id="inname01" placeholder=""   > 
-                                        <input type="hidden" name="abonsadam1" id="abonsadam1" placeholder=""  >                             
-                                    </div>
-                                </td>                                    
-                                <th>영업담당</th>
-                                <td>
-                                    <div class="input_wrap">
-                                        <input type="text" name="inname02" id="inname02" placeholder=""   > 
-                                        <input type="hidden" name="abonsadam2" id="abonsadam2" placeholder=""  >                             
-                                    </div>
-                                </td>                                   
-                                <th>영업담당</th>
-                                <td>
-                                    <div class="input_wrap">
-                                        <input type="text" name="inname03" id="inname03" placeholder=""   > 
-                                        <input type="hidden" name="abonsadam3" id="abonsadam3" placeholder=""  >                             
-                                    </div>
-                                </td>                                                                                   
-                            </tr>                                                                                                                                                                                      -->
-                            <tr>                                        
-                                <th>홈페이지</th>
-                                <td colspan="2"> 
-                                    <div class="input_wrap">
-                                        <input type="text" name="adomain" id="adomain" placeholder=""  >                             
-                                    </div>
-                                </td>                                    
-                                <th>팩스</th>
-                                <td colspan="2"> 
-                                    <div class="input_wrap">
-                                        <input type="text" name="afax" id="afax" placeholder=""  >                             
-                                    </div>
-                                </td>                                                                                   
-                            </tr>         
-                            <tr>  
-                                <th>비고</th>
-                                <td colspan="5">
-                                    <div class="input-group"> 
-                                        <textarea class="form-control" aria-label="With textarea" name="abigo" id="abigo" ></textarea>.
-                                        </div>   
-                                                                    
-                                </td>                                       
-                            </tr>   
-                        </tbody>
-                    </table>
-                        <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
-                            <div class="btns" >                                                        
-                                <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
-                                <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
-                                <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
-
-                            </div>
-                            
-                            <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
-                        </div>                              
-                </div>                           
-            </form>
-
-        </div>
-    </div>
     </div>  
 
     <!--  모달 처리 -->
@@ -488,7 +487,7 @@
                 columns: [     
                     {
                         binding: 'acode',
-                        width: '1*',
+                        width: 90,
                         header: '코드', 
                         align:"center",
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
@@ -498,10 +497,10 @@
                             }
                         })
                     }, 
-                    { binding: 'acorp', header: '거래처명', align: "center", width: '*' },  
+                    { binding: 'acorp', header: '거래처명', align: "left", width: '*' },  
                     { binding: 'atelno', header: '전화번호', align: "left", width: '*' },                      
                     { binding: 'aemail', header: '메일', align: "left", width: '*' },  
-                    { binding: 'ajusotxt', header: '주소', align: "center", width: '*' },                     
+                    { binding: 'ajusotxt', header: '주소', align: "left", width: '*' },                     
                     
                 ], 
                 itemsSource: view_p01tab01page,  

@@ -51,31 +51,33 @@
     <!-- contents header -->
     <th:block th:include="layouts/APPHeader/appheadTop"/>
  
+    <div class="infor_bar type2">                                
+        <div class="left">주간생산계획</div> 
+    </div>  
 
     <!-- contents body 시작--> 
     <!-- form 또는 action 으로 받아오기  -->
         <div class="section regist"> 
-            <div class="sec_con" style="width: 60%; "> 
-                <!-- //여기서부터 그래프 -->
-                <div class="table table_style2">
-                    <div class="card-body bg-light">   
-                        <ul class="nav nav-tabs">
-                            <input type="hidden" id="tabvalue" value="A">
-                            </ul>   
-                        <div class="tab-content" >                                        
-                            <div class="tab-pane fade show active"  >  
-                                    <div class="container-fluid" id="op1" >
-                                    <div id="wtab01Grid_div" style="overflow:scroll; height:800px"></div>
-                                    <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
-                                </div>                                               
-                            </div>      
-                        </div>    
-                    </div>
-                </div>  
+            <div class="sec_con" style="width: 50%; ">  
+                <div class="box_wrap">
+                    <div class="box_input" >
+                        <div class="date_wrap">
+                            <input type="text"  id="searchtxt" placeholder="거래처명"> 
+                            <button type="button" id="retrieveBtn" >검색</button>      
+                        </div>                              
+                        <!-- //여기서부터 그래프 -->
+                        <div class="table table_style2">
+                            <div class="card-body bg-light">   
+                                <div id="wtab01Grid_div"  style="overflow:scroll;   height:680px;    margin:0 auto; "></div>
+                                <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> --> 
+                            </div>
+                        </div>                       
+                    </div>  <!---  <div class="box_input" >  -->
+                </div>    <!--  <div class="box_wrap"> -->  
             </div>
 
             <!-- 우측 전체 테이블 --> 
-            <div class="sec_con" style="width: 40%;">
+            <div class="sec_con" style="width: 50%;">
                 <div class="box_wrap" style="padding-bottom: 80px;">
                     <form action=""> 
                         <div class="table table_style1"  >
@@ -84,7 +86,8 @@
                                     <tr> 
                                         <th>등록일자</th>
                                         <td colspan="2">
-                                                <input type="text"  class="form-control datetimepicker" id="indate" autocomplete="off"  placeholder="Y-m-d"     >
+                                                <input type="text"  class="form-control datetimepicker" id="indate" autocomplete="off"  placeholder="Y-m-d"     >       
+                                                 
                                             <!-- <div class="input_wrap"> 
                                                 <input type="text" id="indate" placeholder=""  autocomplete="off">                                        
                                             </div>                                             -->
@@ -269,14 +272,14 @@
                                 </tbody>
                             </table>
 
-                                <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
-                                    <div class="btns" >                                                        
-                                        <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
-                                        <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
-                                        <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
-                                    </div>                                     
-                                </div>                              
-                         </div> <!-- table style-->                      
+                            <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
+                                <div class="btns" >                                                        
+                                    <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
+                                    <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
+                                    <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
+                                </div>                                     
+                            </div>                              
+                        </div> <!-- table style-->                      
                     </form> 
                 </div>    <!-- box_wrap-->        
             </div>        <!-- sec con-->        
@@ -489,11 +492,11 @@
                     alternatingRowStep: 0,
                     columns: [     
                         { binding: 'indate', header: '등록일자', align: "center", width: 120 }, 
-                        { binding: 'ecltnm', header: '거래처', align: "left", width: 120 }, 
+                        { binding: 'ecltnm', header: '거래처', align: "left", width: 180 }, 
                         { binding: 'jpum', 
                             header: '품목', 
                             align: "center", 
-                            width: 150,
+                            width: 200,
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.jpum}</b>',
                                 click: (e, ctx) => {
@@ -503,7 +506,7 @@
                         },   
                         { binding: 'jgugek', header: '규격', align: "left", width: 150 },   
                         { binding: 'prod_qty', header: '계획수량', align: "right", width: 90 },  
-                        { binding: 'lotno', header: '로트번호', align: "center", width: 150 },
+                        { binding: 'lotno', header: '로트번호', align: "center", width: 180 },
                         { binding: 'prod_sdate', header: '생산시작일', align: "center", width: 120 },
                         { binding: 'prod_edate', header: '생산종료일', align: "center", width: 120 },
                         { binding: 'cls_flag', header: '작지상태', align: "center", width: 100 },
@@ -2034,7 +2037,7 @@
                 //     var actarrivtimez = document.getElementById("#actarrivtimez").value;
                 //     var actcomptimez = document.getElementById("#actcomptimez").value;
                 // }
-                function getToday(){
+                function getToday(){ 
                     let today = new Date();   
                     let year = today.getFullYear(); // 년도
                     let month = today.getMonth() + 1;  // 월
