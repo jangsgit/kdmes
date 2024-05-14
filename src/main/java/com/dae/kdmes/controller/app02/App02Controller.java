@@ -248,6 +248,23 @@ public class App02Controller {
     }
 
 
+    //출하등록
+    @GetMapping(value="/index21")
+    public String Appcom21_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("출하등록");  //
+        CommDto.setMenuUrl("생산공정>출하등록");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String pcode = "%";
+        indexCa613Dto.setPname(pcode);
+        indexCa613Dto.setFrdate(fdate);
+        indexCa613Dto.setTodate(tdate);
+
+        itemDtoListCa613   = service10.SelectCa613List(indexCa613Dto);
+        model.addAttribute("itemDtoList", itemDtoListCa613);
+        return "App02/index21";
+    }
+
     //사출등록
     @GetMapping(value="/index31")
     public String Appcom31_index( Model model, HttpServletRequest request) throws Exception{
@@ -365,6 +382,272 @@ public class App02Controller {
         return "App01/index41";
     }
 
+
+    @GetMapping(value="/index51")
+    public String App51_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("생산계획현황");
+        CommDto.setMenuUrl("생산계획>사출일지조회");
+        CommDto.setMenuCode("index51");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App51_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index51";
+    }
+
+    @GetMapping(value="/index52")
+    public String App52_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("생산계획현황");
+        CommDto.setMenuUrl("생산계획>불량현황조회");
+        CommDto.setMenuCode("index51");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App52_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index52";
+    }
+
+    @GetMapping(value="/index53")
+    public String App53_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("생산계획현황");
+        CommDto.setMenuUrl("생산계획>생산현황조회");
+        CommDto.setMenuCode("index53");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App53_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index53";
+    }
+
+
+    @GetMapping(value="/index54")
+    public String App54_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("생산계획현황");
+        CommDto.setMenuUrl("생산계획>불량추이도조회");
+        CommDto.setMenuCode("index54");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App54_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index54";
+    }
+
+    @GetMapping(value="/index55")
+    public String App55_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("일별검사일보");
+        CommDto.setMenuUrl("생산계획>일별검사일보");
+        CommDto.setMenuCode("index54");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App55_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index55";
+    }
+
+
+    @GetMapping(value="/index56")
+    public String App56_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("일별검사일보");
+        CommDto.setMenuUrl("생산계획>검사불량조회");
+        CommDto.setMenuCode("index56");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App56_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index56";
+    }
+
+    @GetMapping(value="/index57")
+    public String App57_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("일별사원검사일보");
+        CommDto.setMenuUrl("생산계획>일별사원검사일보");
+        CommDto.setMenuCode("index56");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App57_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index57";
+    }
+
+
+    @GetMapping(value="/index58")
+    public String App58_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("출하내역조회");
+        CommDto.setMenuUrl("생산계획>출하내역조회");
+        CommDto.setMenuCode("index56");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App58_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index58";
+    }
+
+
+    @GetMapping(value="/index59")
+    public String App59_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("기초재고");
+        CommDto.setMenuUrl("생산계획>기초재고");
+        CommDto.setMenuCode("index59");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App59_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index59";
+    }
+
+
+    @GetMapping(value="/index60")
+    public String App60_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("제품별재고현황");
+        CommDto.setMenuUrl("생산계획>제품별재고현황");
+        CommDto.setMenuCode("index59");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App60_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index60";
+    }
+
+
+    @GetMapping(value="/index61")
+    public String App61_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("재고조정");
+        CommDto.setMenuUrl("생산계획>재고조정");
+        CommDto.setMenuCode("index61");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App61_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index61";
+    }
+
+    @GetMapping(value="/index62")
+    public String App62_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("재고설정");
+        CommDto.setMenuUrl("생산계획>재고설정");
+        CommDto.setMenuCode("index61");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App62_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index62";
+    }
+
+    @GetMapping(value="/index63")
+    public String App63_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("제품수불원장");
+        CommDto.setMenuUrl("생산계획>제품수불원장");
+        CommDto.setMenuCode("index61");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App63_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index63";
+    }
 
 
     private String getFrDate() {
