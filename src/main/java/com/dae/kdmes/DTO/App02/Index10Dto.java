@@ -26,7 +26,7 @@ public class Index10Dto {
     private String woam;
     private String prod_sdate;
     private String prod_edate;
-    private BigDecimal prod_qty;
+    private Integer prod_qty;
     private String prod_dqty;
     private String qcdate;
     private String qcqty;
@@ -52,6 +52,7 @@ public class Index10Dto {
     private String ostore;
     private String rwflag;
     private String perid;
+    private String pernm;
     private String remark;
     private Integer workdv;
     private String wflag;

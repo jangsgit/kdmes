@@ -1,9 +1,6 @@
 package com.dae.kdmes.controller.app02;
 
-import com.dae.kdmes.DTO.App01.Index01Dto;
-import com.dae.kdmes.DTO.App01.Index02Dto;
-import com.dae.kdmes.DTO.App01.Index03Dto;
-import com.dae.kdmes.DTO.App01.Index04Dto;
+import com.dae.kdmes.DTO.App01.*;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.App02.Index11Dto;
 import com.dae.kdmes.DTO.CommonDto;
@@ -25,9 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 // @RestController : return을 텍스트로 반환함.
 @RestController
@@ -46,8 +42,10 @@ public class App02CrudController {
     Index03Dto index03Dto = new Index03Dto();
     Index04Dto index04Dto = new Index04Dto();
     Index10Dto index10Dto = new Index10Dto();
+    IndexCa613Dto indexCa613Dto = new IndexCa613Dto();
     Index11Dto index11Dto = new Index11Dto();
     List<PopupDto> popupListDto = new ArrayList<>();
+    List<IndexCa613Dto> indexCa613ListDto = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
     List<Index02Dto> index02ListDto = new ArrayList<>();
     List<Index03Dto> index03List = new ArrayList<>();
@@ -418,47 +416,71 @@ public class App02CrudController {
         return index10ListDto;
     }
     @RequestMapping(value="/index10/save")
-    public String index10Save( @RequestParam("indate") String indate
-            ,@RequestParam("lotno") String lotno
-            ,@RequestParam("prod_sdate") String prod_sdate
-            ,@RequestParam("prod_edate") String prod_edate
-            ,@RequestParam("cltcd") String cltcd
-            ,@RequestParam("orddate") String orddate
-            ,@RequestParam("perid") String perid
-            ,@RequestParam("ecltnm") String ecltnm
-            ,@RequestParam("workdv") Integer workdv
-            ,@RequestParam("pcode") String pcode
-            ,@RequestParam("dem_flag") Integer dem_flag
-            ,@RequestParam("prod_qty") BigDecimal prod_qty
-            ,@RequestParam("istore") String istore
-            ,@RequestParam("ostore") String ostore
-            ,@RequestParam("rwflag") String rwflag
-            ,@RequestParam("remark") String remark
-            ,@RequestParam("plan_no") String plan_no
-
+    public String index10Save( @RequestPart(value = "key") Map<String, Object> param
             , Model model
             , HttpServletRequest request){
 
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "indate":
+                    index10Dto.setIndate(values.toString());
+                    break;
+                case "lotno":
+                    index10Dto.setLotno(values.toString());
+                    break;
+                case "prod_sdate":
+                    index10Dto.setProd_sdate(values.toString());
+                    break;
+                case "prod_edate":
+                    index10Dto.setProd_edate(values.toString());
+                    break;
+                case "cltcd":
+                    index10Dto.setCltcd(values.toString());
+                    break;
+                case "orddate":
+                    index10Dto.setOrddate(values.toString());
+                    break;
+                case "perid":
+                    index10Dto.setPerid(values.toString());
+                    break;
+                case "ecltnm":
+                    index10Dto.setEcltnm(values.toString());
+                    break;
+                case "workdv":
+                    index10Dto.setWorkdv(Integer.parseInt(values.toString()));
+                    break;
+                case "pcode":
+                    index10Dto.setPcode(values.toString());
+                    break;
+                case "dem_flag":
+                    index10Dto.setDem_flag(Integer.parseInt(values.toString()));
+                    break;
+                case "prod_qty":
+                    index10Dto.setProd_qty(Integer.parseInt(values.toString()));
+                    break;
+                case "istore":
+                    index10Dto.setIstore(values.toString());
+                    break;
+                case "ostore":
+                    index10Dto.setOstore(values.toString());
+                    break;
+                case "rwflag":
+                    index10Dto.setRwflag(values.toString());
+                    break;
+                case "remark":
+                    index10Dto.setRemark(values.toString());
+                    break;
+                case "plan_no":
+                    index10Dto.setPlan_no(values.toString());
+                    break;
+                case "qcdate":
+                    index10Dto.setQcdate(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
 
-            index10Dto.setIndate(indate);
-            index10Dto.setLotno(lotno);
-            index10Dto.setProd_sdate(prod_sdate);
-            index10Dto.setProd_edate(prod_edate);
-            index10Dto.setCltcd(cltcd);
-            index10Dto.setOrddate(orddate);
-            index10Dto.setPerid(perid);
-            index10Dto.setEcltnm(ecltnm);
-            index10Dto.setWorkdv(workdv);
-            index10Dto.setPcode(pcode);
-            index10Dto.setDem_flag(dem_flag);
-            index10Dto.setProd_qty(prod_qty);
-           // index10Dto.setCls_flag(cls_flag);
-            index10Dto.setIstore(istore);
-            index10Dto.setOstore(ostore);
-            index10Dto.setRwflag(rwflag);
-            index10Dto.setRemark(remark);
-            index10Dto.setPlan_no(plan_no);
-            //index10Dto.setJpum(jpum);
 
             HttpSession session = request.getSession();
             UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -468,11 +490,14 @@ public class App02CrudController {
             String wono = "";
             //String ls_chknull = service10.SelectCheckIndate(index10Dto);
             Boolean result = false;
-            log.info("ls_pcode");
-            log.info(index10Dto.getRemark());
+            String plan_no = index10Dto.getPlan_no();
+            String indate = index10Dto.getIndate();
+            String lotno = index10Dto.getLotno();
+            String rwflag = index10Dto.getRwflag();
+            log.info(index10Dto.getRwflag());
             if (plan_no == null || plan_no.equals("")) {
                 plan_no = GetMaxSeq(indate);
-                lotno = indate  + rwflag + plan_no.substring(8,12); //GetMaxSeq1(indate , rwflag);
+                lotno =  ""; //사출공정 중에 로트번호 생성하기로 함.  //indate  + rwflag + plan_no.substring(8,12); //GetMaxSeq1(indate , rwflag);
                 index10Dto.setPlan_no(plan_no);
                 index10Dto.setLotno(lotno);
                 wono = "P" + plan_no;
@@ -485,8 +510,6 @@ public class App02CrudController {
                 }
             } else {
                 result = service10.UpdateFplan(index10Dto);
-                log.info("result2");
-                log.info(result);
                 if (!result) {
                     return "error";
                 }
@@ -511,33 +534,169 @@ public class App02CrudController {
     }
 
 
-    //간편주문 리스트 01 등록
-    @GetMapping(value="/index03/ganlist01")
-    public Object App03GanList01_index(@RequestParam("jpbgubn") String jkey,
-                                       @RequestParam("flag") String flag,
-                                       Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("주문등록");
-        CommDto.setMenuUrl("기준정보>주문등록");
-        CommDto.setMenuCode("index14");
+    @RequestMapping(value="/index15/save")
+    public String index15Save( @RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
+
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "ibgdate":
+                    _indexCa613Dto.setIbgdate(values.toString());
+                    break;
+                case "ibgnum":
+                    _indexCa613Dto.setIbgnum(values.toString());
+                    break;
+                case "lotno":
+                    _indexCa613Dto.setLotno(values.toString());
+                    break;
+                case "istore":
+                    _indexCa613Dto.setIstore(values.toString());
+                    break;
+                case "ostore":
+                    _indexCa613Dto.setOstore(values.toString());
+                    break;
+                case "cltcd":
+                    _indexCa613Dto.setCltcd(values.toString());
+                    break;
+                case "acorp":
+                    _indexCa613Dto.setAcorp(values.toString());
+                    break;
+                case "pcode":
+                    _indexCa613Dto.setPcode(values.toString());
+                    break;
+                case "pname":
+                    _indexCa613Dto.setPname(values.toString());
+                    break;
+                case "psize":
+                    _indexCa613Dto.setPsize(values.toString());
+                    break;
+                case "punit":
+                    _indexCa613Dto.setPunit(values.toString());
+                    break;
+                case "qty":
+                    _indexCa613Dto.setQty(Integer.parseInt(values.toString()));
+                    break;
+                case "cqty":
+                    _indexCa613Dto.setCqty(Integer.parseInt(values.toString()));
+                    break;
+                case "uamt":
+                    _indexCa613Dto.setUamt(Integer.parseInt(values.toString()));
+                    break;
+                case "samt":
+                    _indexCa613Dto.setSamt(Integer.parseInt(values.toString()));
+                    break;
+                case "remark":
+                    _indexCa613Dto.setRemark(values.toString());
+                    break;
+                case "perid":
+                    _indexCa613Dto.setPerid(values.toString());
+                    break;
+                case "pernm":
+                    _indexCa613Dto.setPernm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
 
-        try {
-            if(jkey == null || jkey.equals("")){
-                jkey = "%";
+        _indexCa613Dto.setIbgseq("001");
+        String ibgnum = "";
+        Boolean result = true;
+        ibgnum = _indexCa613Dto.getIbgnum();
+        if (ibgnum == null || ibgnum.equals("")) {
+            ibgnum = GetMaxIbgnum(_indexCa613Dto.getIbgdate());
+            _indexCa613Dto.setIbgnum(ibgnum);
+            result = service10.InsertCa613(_indexCa613Dto);
+            if (!result) {
+                return "error";
             }
-            index03Dto.setJkey(jkey);
-            index03List = service03.GetGanListBonsa01(index03Dto);
-            model.addAttribute("index03GanList01",index03List);
+        } else {
+            result = service10.UpdateCa613(_indexCa613Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+        return "success";
+    }
+
+
+    @RequestMapping(value="/index15/del")
+    public String index15Delete(  @RequestParam("ibgdate") String ibgdate,
+                                  @RequestParam("ibgnum") String ibgnum,
+                                  Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        _indexCa613Dto.setIbgdate(ibgdate);
+        _indexCa613Dto.setIbgnum(ibgnum);
+        log.info("ibgdate=====>" + ibgdate);
+        log.info("ibgnum=====>" + ibgnum);
+        Boolean result = service10.DeleteCa613(_indexCa613Dto);
+        log.info("result=====>" + result);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+    @GetMapping(value="/index15/list")
+    public Object App15List_index(@RequestParam("searchtxt") String searchtxt,
+                                  @RequestParam("frdate") String frdate,
+                                  @RequestParam("todate") String todate,
+                                     Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setPname(searchtxt);
+            indexCa613ListDto = service10.SelectCa613List(_indexCa613Dto);
+            model.addAttribute("index15List",indexCa613ListDto);
 
         } catch (Exception ex) {
-            log.info("App03GanList01_index Exception =====>" + ex.toString());
-//            log.debug("Exception =====>" + ex.toString() );
+            log.info("App15List_index Exception =====>" + ex.toString());
         }
 
-        return index03List;
+        return indexCa613ListDto;
     }
+
+    @GetMapping(value="/index15/jglist")
+    public Object App15JaegoList_index(@RequestParam("searchtxt") String searchtxt,
+                                  Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            _indexCa613Dto.setPname(searchtxt);
+            _indexCa613ListDto = service10.SelectCa613JaegoList(_indexCa613Dto);
+            model.addAttribute("index15List",_indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App15JaegoList_index Exception =====>" + ex.toString());
+        }
+
+        return _indexCa613ListDto;
+    }
+
 
     @GetMapping(value="/index10/listtot")
     public Object App03ListTot_index(@RequestParam("jpbgubn") String jpbgubn,
@@ -578,10 +737,7 @@ public class App02CrudController {
 
     //거래처등록
     @GetMapping(value="/index10/listot")
-    public Object App02ListTot_index(@RequestParam("conacorp1") String conacorp1,
-                                     @RequestParam("conacorp") String conacorp,
-                                     @RequestParam("conagita") String conagita,
-                                     @RequestParam("abonsadam1") String abonsadam1,
+    public Object App02ListTot_index(@RequestParam("conacorp") String conacorp,
                                      Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("거래처등록");
         CommDto.setMenuUrl("기준정보>거래처정보");
@@ -591,23 +747,11 @@ public class App02CrudController {
         model.addAttribute("userformDto",userformDto);
 
         try {
-            if(conacorp1 == null || conacorp1.equals("")){
-                conacorp1 = "%";
-            }
             if(conacorp == null || conacorp.equals("")){
                 conacorp = "%";
             }
-            if(conagita == null || conagita.equals("")){
-                conagita = "%";
-            }
-            if(abonsadam1 == null || abonsadam1.equals("")){
-                abonsadam1 = "%";
-            }
-            index10Dto.setAcorp1(conacorp1);
-//            log.info("conacorp1 =====>" + conacorp1);
             index10Dto.setAcorp(conacorp);
-            index10Dto.setAgita(conagita);
-            index10Dto.setAbonsadam1(abonsadam1);
+            log.info("conacorp =====>" + index10Dto.getAcorp());
             index10ListDto = service10.GetCifListTot(index10Dto);
             model.addAttribute("index10List",index10ListDto);
 
@@ -685,6 +829,33 @@ public class App02CrudController {
             ls_seq = indate + ls_seq;
         }
         log.info("GetMaxSeq Exception =====>" + ls_seq);
+        return ls_seq;
+    }
+
+    public String GetMaxIbgnum(String indate){
+
+        String ls_seq = service10.SelectMaxIbgnum(indate);
+
+        if(ls_seq == null){
+            ls_seq =  "0001";
+        }else{
+            Integer ll_misnum = Integer.parseInt(ls_seq) + 1;
+            ls_seq = ll_misnum.toString();
+            switch (ls_seq.length()){
+                case 1:
+                    ls_seq = "000" + ls_seq;
+                    break;
+                case 2:
+                    ls_seq = "00" + ls_seq;
+                    break;
+                case 3:
+                    ls_seq = "0" + ls_seq;
+                    break;
+                default:
+                    break;
+            }
+        }
+        log.info("GetMaxIbgnum  =====>" + ls_seq);
         return ls_seq;
     }
 
@@ -783,4 +954,22 @@ public class App02CrudController {
 
         return index11ListDto;
     }
+    private String getFrDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, -100); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
+
+    private String getAddDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, 14); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
+
 }

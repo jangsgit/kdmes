@@ -94,6 +94,8 @@ public class Appm01Controller {
         model.addAttribute("wrmcDto", appPopupService.GetWrmcList01(wrmcDto));          //설비명
 //        log.info("Exception =====>" + appPopupService.GetPernmList(wperidDto).toString());
         model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+        model.addAttribute("wstopDto", appPopupService.GetStopList(wperidDto));        //비가동사유
+
 //        wbomDto.setPlan_no("202108120027");
         model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
 //        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
@@ -187,82 +189,6 @@ public class Appm01Controller {
         model.addAttribute("itemDtoList", itemDtoList);
         return "App01/index21";
     }
-
-
-    //검사공정
-    @GetMapping(value="/index41")
-    public String Appcom41_index( Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("검사공정");  //
-        CommDto.setMenuUrl("생산공정>검사공정");
-        CommDto.setMenuCode("appcom02");
-        String fdate = getFrDate();
-        String tdate = getAddDate();
-        String cltcd = "%";
-        String pcode = "%";
-        fplanDto.setLine("00");
-        fplanDto.setWflag("00020");
-        fplanDto.setFdate(fdate);
-        fplanDto.setTdate(tdate);
-        fplanDto.setCltcd(cltcd);
-        fplanDto.setPcode(pcode);
-        itemDto.setPlan_no("%");
-
-        wperidDto.setWflag("00020");  //첫번째공정
-        wperidDto.setWpernm("%");
-
-        wrmcDto.setMachname("%");
-        wrmcDto.setPlan_no("%");      //불량구분 팝업
-        wrmcDto.setWseq("%");
-        wrmcDto.setWflag("00020");
-        wrmcDto.setWclscode("1");
-
-
-
-        itemDtoList   = appcom01Service.GetFPLAN_List02(fplanDto);      //사출완료
-        itemDtoList02 = appcom01Service.GetFPLAN_List02_REG(fplanDto);      //검사등록완료
-
-        model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
-        model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
-        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
-        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
-        return "App01/index41";
-    }
-
-    //검사공정
-    @GetMapping(value="/index41list")
-    public String Appcom41list_index(@RequestParam("searchtxt") String searchtxt
-            ,Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("검사공정");  //
-        CommDto.setMenuUrl("생산공정>검사공정");
-        CommDto.setMenuCode("appcom02");
-        if (searchtxt.equals("") ||  searchtxt == null || searchtxt.length() == 0){
-            searchtxt = "%";
-        }
-        String fdate = getFrDate();
-        String tdate = getAddDate();
-        String cltcd = "%";
-        String pcode = "%";
-        fplanDto.setLine("00");
-        fplanDto.setWflag("00020");
-        fplanDto.setFdate(fdate);
-        fplanDto.setTdate(tdate);
-        fplanDto.setCltcd(cltcd);
-        fplanDto.setPcode(pcode);
-        fplanDto.setLotno(searchtxt);
-        itemDto.setPlan_no("%");
-
-        wperidDto.setWflag("00020");  //첫번째공정
-        wperidDto.setWpernm("%");
-
-        itemDtoList   = appcom01Service.GetFPLAN_List02(fplanDto);      //사출완료
-        itemDtoList02 = appcom01Service.GetFPLAN_List02_REG(fplanDto);      //검사등록완료
-
-        model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
-        model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
-        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
-        return "App01/index41";
-    }
-
 
 
     private String getFrDate() {

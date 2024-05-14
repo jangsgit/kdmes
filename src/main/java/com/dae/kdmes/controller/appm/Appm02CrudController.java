@@ -40,13 +40,16 @@ public class Appm02CrudController {
     Boolean result = false;
 
     @RequestMapping(value="/w020", method = RequestMethod.POST)
-    public Object AppW020_index(@RequestParam("searchtxt") String searchtxt
+    public Object AppW020_index(@RequestParam("frdate") String frdate,
+                                @RequestParam("todate") String todate
             ,Model model, HttpServletRequest request) throws Exception {
         FPLAN_VO fplanDto = new FPLAN_VO();
-        if (searchtxt.equals("") ||  searchtxt == null || searchtxt.length() == 0){
-            searchtxt = "%";
-        }
+//        if (searchtxt.equals("") ||  searchtxt == null || searchtxt.length() == 0){
+            String searchtxt = "%";
+//        }
         fplanDto.setLotno(searchtxt);
+        fplanDto.setFrdate(frdate);
+        fplanDto.setTodate(todate);
         itemDtoList = appcom01Service.GetFPLAN_List02_REG(fplanDto);
 
         model.addAttribute("itemDtoList", itemW010List);
@@ -69,14 +72,12 @@ public class Appm02CrudController {
         String tdate = getToDate();
         fplanDto.setLine("00");
         fplanDto.setWflag("00020");
-        fplanDto.setFdate(fdate);
+        fplanDto.setFdate("20000101");
         fplanDto.setTdate(tdate);
         fplanDto.setCltcd("%");
         fplanDto.setPcode("%");
-        log.info("flag  =====>" + flag  );
         if(flag.equals("2") ){
             fplanDto.setLotno(lotno);
-            log.info("lotno.length() == 0 =====>"  );
             itemDtoList = appcom01Service.GetFPLAN_List02(fplanDto);
         }else{
             String[] arrLotno = lotno.split(",");
@@ -181,26 +182,42 @@ public class Appm02CrudController {
     public String AppW020Update_index(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("inputdate") String inputdate
+            ,@RequestParam("pcode") String pcode
             ,@RequestParam("wremark") String wremark
             ,@RequestParam("wrps") String wrps
             ,@RequestParam("lotno") String lotno
-            ,@RequestParam( value =  "plan_no[]") List<String> plan_no
-            ,@RequestParam( value =  "winqt[]") List<Integer> winqt
-            ,@RequestParam( value =  "wotqt[]") List<Integer> wotqt
-            ,@RequestParam( value =  "wono[]") List<String> wono
-            ,@RequestParam( value =  "salotno[]") List<String> salotno
+            ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("winqt") Integer winqt
+            ,@RequestParam("wotqt") Integer wotqt
+            ,@RequestParam("wqcqt") Integer wqcqt
+            ,@RequestParam("wsumqt") Integer wsumqt
+            ,@RequestParam("wboxsu") Integer wboxsu
+            ,@RequestParam("wflag") String wflag
+            ,@RequestParam("salotno") String salotno
+            ,@RequestParam("wono") String wono
+            ,@RequestParam("inwcode") String inwcode
+            ,@RequestParam("inwbdqt") Integer inwbdqt
+            ,@RequestParam("demflag") String demflag
             ,Model model, HttpServletRequest request) throws Exception {
         FPLANW010_VO workDto = new FPLANW010_VO();
-        String ls_yeare = inputdate.substring(0,4);
-        String ls_mm = inputdate.substring(5,7);
-        String ls_dd = inputdate.substring(8,10);
+        FPLANWBAD_VO wbadDto = new FPLANWBAD_VO();
+//        String ls_yeare = inputdate.substring(0,4);
+//        String ls_mm = inputdate.substring(5,7);
+//        String ls_dd = inputdate.substring(8,10);
+//        inputdate =  ls_yeare + ls_mm + ls_dd;
         String ls_lotno = "";
         String ls_seq = "";
         Integer ll_lotno =  0;
         Integer ll_wotqty = 0;          //투입량
         Integer ll_winqty = 0;          //검사량
-
-        inputdate =  ls_yeare + ls_mm + ls_dd;
+        Integer ll_wboxsu = 0;          //박스수량
+        Integer ll_wsumqt = 0;          //누적수량
+        Integer ll_inwbdqt = 0;          //불량수량
+        Integer ll_inwqcqt = 0;          //불량수량
+        if(inwbdqt == null){
+            inwbdqt = 0;
+        }
+        ll_inwbdqt = inwbdqt;
         workDto.setCustcd(custcd);
         workDto.setSpjangcd(spjangcd);
         workDto.setWfrdt(inputdate);
@@ -216,12 +233,17 @@ public class Appm02CrudController {
         workDto.setWremark(wremark);
         workDto.setWrps(wrps);
         workDto.setWsyul(0);
+        workDto.setWboxsu(wboxsu);
+        workDto.setWsumqt(wsumqt);
+        workDto.setDemflag(demflag);
+
         String wstdt = inputdate;
         String wendt = inputdate;
 
         workDto.setWstdt(wstdt);
         workDto.setWendt(wendt);
-        workDto.setIndate(getToDate());
+        workDto.setIndate(inputdate);
+        workDto.setInperid(wrps);
         workDto.setWtable("TB_FPLAN_W090");
         if(lotno == null || lotno.length() == 0 || lotno.equals("")) {
             ls_lotno = appcom01Service.FPLAN_W020_MAXLOT(workDto);
@@ -234,87 +256,128 @@ public class Appm02CrudController {
         }else{
             ls_lotno = lotno;
         }
-        workDto.setLotno(ls_lotno);
+        workDto.setLotno(salotno);
+        workDto.setPlan_no(plan_no);
+        workDto.setWono(wono);
+        workDto.setWqty(wotqt);
+        workDto.setWotqt(wotqt);
+        workDto.setQty(wotqt);
+        workDto.setJqty(wotqt);
+        workDto.setQcqty(wqcqt);
+        workDto.setWflag("00010");
+        workDto.setWseq("01");
+        workDto.setGlotnono(ls_lotno);
+        workDto.setGqty01(wotqt);
+        ll_winqty =  winqt;     //투입수량
+        ll_wotqty =  wotqt;     //검사수량
+        log.info("glotno =====>" + workDto.getGlotnono() );
+        log.info("gqty01 =====>" + workDto.getGqty01() );
+        log.info("plan_no =====>" + workDto.getPlan_no() );
+        log.info("wrps =====>" + workDto.getWrps() );
+        log.info("otqt =====>" + workDto.getWotqt() );
+        log.info("wsumqt =====>" + workDto.getWsumqt() );
 
-        if( plan_no.size() > 0){
-            for(int i = 0; i < plan_no.size(); i++){
-                if (plan_no.get(i).equals("0000")){
-                    continue;
-                }
-                workDto.setPlan_no(plan_no.get(i));
-                workDto.setWono(wono.get(i));
-                workDto.setWqty(wotqt.get(i));
-                workDto.setQty(wotqt.get(i));
-                workDto.setJqty(wotqt.get(i));
-                workDto.setWflag("00010");
-                workDto.setWseq("01");
-                workDto.setGlotnono(ls_lotno);
-                workDto.setGqty01(wotqt.get(i));
-                ll_winqty = ll_winqty + winqt.get(i);
-                ll_wotqty = ll_wotqty + wotqt.get(i);
-
-                result = appcom01Service.FPLANW010_Update_GQTY(workDto);
-                if (!result){
-                    log.info("error Exception =====> FPLANW010_Update_GQTY" );
-                    return "error";
-                }
-
-                IworkDto.setCustcd("KDMES");
-                IworkDto.setSpjangcd("ZZ");
-                IworkDto.setPlan_no(plan_no.get(i));
-                IworkDto.setLotno(salotno.get(i));
-                IworkDto.setWflag("00010");
-                IworkDto.setGlotno(ls_lotno);
-                IworkDto.setQty(wotqt.get(i));
-                IworkDto.setSqty(0);
-                IworkDto.setBqty(0);
-                IworkDto.setIndate(getToDate());
-                IworkDto.setWseq("01");
-                ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
-                if(ls_seq == null || ls_seq.length() == 0 || ls_seq.equals("")){
-                    ls_seq = "001";
-                }else{
-                    int ll_seq = Integer.parseInt(ls_seq) + 1;
-                    ls_seq = Integer.toString(ll_seq);
-                    if(ls_seq.length() == 1){
-                        ls_seq = "00" + ls_seq;
-                    }else if(ls_seq.length() == 2){
-                        ls_seq = "0" + ls_seq;
-                    }
-                }
-                IworkDto.setSeq(ls_seq);
-
-                result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
-                if (!result){
-                    log.info("error Exception =====> FPLANI_IWORK_Insert" );
-                    return "error";
-                }
-
+        if(salotno.length() > 0) {
+            result = appcom01Service.FPLANW010_Update_GQTY(workDto);
+            if (!result) {
+                log.info("error Exception =====> FPLANW010_Update_GQTY");
+                return "error";
             }
-            workDto.setWinqt(ll_winqty);
-            workDto.setWotqt(ll_wotqty);
-            workDto.setQcqty(ll_wotqty);
-            workDto.setWflag("00020");  //조립완료
-            workDto.setWseq("02");
-            if(lotno == null || lotno.length() == 0 || lotno.equals("")) {
-                result = appcom01Service.FPLANW020_Insert(workDto);
-                if (!result){
-                    log.info("error Exception =====> FPLANW020_Insert" );
-                    return "error";
-                }
+        }
+        //사출로트가 있다면.
+        if(salotno.length() > 0){
+            IworkDto.setCustcd("KDMES");
+            IworkDto.setSpjangcd("ZZ");
+            IworkDto.setPlan_no(plan_no);
+            IworkDto.setLotno(salotno);
+            IworkDto.setWflag("00010");
+            IworkDto.setGlotno(ls_lotno);
+            IworkDto.setQty(wotqt);
+            IworkDto.setSqty(0);
+            IworkDto.setBqty(ll_inwbdqt);
+            IworkDto.setIndate(getToDate());
+            IworkDto.setWseq("01");
+            ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
+            if(ls_seq == null || ls_seq.length() == 0 || ls_seq.equals("")){
+                ls_seq = "001";
             }else{
-                workDto.setLotno(lotno);
-                result = appcom01Service.FPLANW020_Update(workDto);
-                if (!result){
-                    log.info("error Exception =====> FPLANW020_Update" );
-                    return "error";
+                int ll_seq = Integer.parseInt(ls_seq) + 1;
+                ls_seq = Integer.toString(ll_seq);
+                if(ls_seq.length() == 1){
+                    ls_seq = "00" + ls_seq;
+                }else if(ls_seq.length() == 2){
+                    ls_seq = "0" + ls_seq;
                 }
             }
+            IworkDto.setSeq(ls_seq);
+            result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
             if (!result){
+                log.info("error Exception =====> FPLANI_IWORK_Insert" );
                 return "error";
             }
         }
 
+
+        workDto.setWinqt(wsumqt);       //합산검사량이 최종검사량
+        workDto.setWotqt(wsumqt);
+        workDto.setQcqty(wqcqt);
+        workDto.setWflag("00020");  //검사
+        workDto.setWseq("02");
+        if(lotno == null || lotno.length() == 0 || lotno.equals("")) {
+            result = appcom01Service.FPLANW020_Insert(workDto);
+            if (!result){
+                log.info("error Exception =====> FPLANW020_Insert" );
+                return "error";
+            }
+        }else{
+            workDto.setLotno(lotno);
+            result = appcom01Service.FPLANW020_Update(workDto);
+            if (!result){
+                log.info("error Exception =====> FPLANW020_Update" );
+                return "error";
+            }
+        }
+        if (!result){
+            return "error";
+        }
+        //-------------------------------------------- 불량내역등록
+        if (ll_inwbdqt > 0){
+            wbadDto.setCustcd(custcd);
+            wbadDto.setSpjangcd(spjangcd);
+            wbadDto.setPlan_no(ls_lotno);       //검사lot로 대체 함.
+            wbadDto.setWflag(wflag);
+            wbadDto.setWbqty(inwbdqt);
+            wbadDto.setWcode(inwcode);
+            wbadDto.setPcode(pcode);
+            wbadDto.setIndate(getToDate());
+            String lsChkseq = appcom01Service.FPLAN_WBAD_SELECT(wbadDto);
+            if (lsChkseq == null  || lsChkseq.equals("")){
+                String ls_bseq = appcom01Service.FPLAN_WBAD_MAXWSEQ(wbadDto);
+                if(ls_bseq == null){
+                    ls_bseq = "01";
+                }else{
+                    int ll_seq =  Integer.parseInt(ls_bseq) + 1;
+                    ls_bseq = Integer.toString(ll_seq);
+                    if(ls_bseq.length() == 1){ls_bseq = "0" + ls_bseq;}
+                }
+                wbadDto.setWseq(ls_bseq);
+                log.info("custcd=====>" + custcd );
+                log.info("spjangcd=====>" + spjangcd );
+                log.info("ls_lotno=====>" + ls_lotno );
+                log.info("wflag=====>" + wflag );
+                log.info("inwbdqt=====>" + inwbdqt );
+                log.info("inwcode=====>" + inwcode );
+                log.info("pcode=====>" + pcode );
+                log.info("getToDate()=====>" + getToDate() );
+                log.info("ls_bseq=====>" + ls_bseq );
+                appcom01Service.FPLAN_WBAD_Insert(wbadDto) ;
+            }else{
+                wbadDto.setWseq(lsChkseq);
+                appcom01Service.FPLAN_WBAD_Update(wbadDto);
+            }
+        }
+
+        //--------------------------------------------
         //workDto.setWflag("00090");  //조립완료
         //workDto.setWseq("02");
         //workDto.setClsflag("4");        // 생산완료
@@ -334,12 +397,10 @@ public class Appm02CrudController {
     //검사공정삭제
     @RequestMapping(value="/w020del", method = RequestMethod.GET)
     public String Appcom02_delete(@RequestParam("lotno") String lotno
+                                  ,@RequestParam("planno") String planno
             ,HttpServletRequest request){
         FPLANW010_VO workDto = new FPLANW010_VO();
         workDto.setGlotnono(lotno);
-
-        log.info("getlotno =====> " + workDto.getLotno());
-
         workDto.setQcqty(0);
         workDto.setQcdate("");
         workDto.setWflag("00020");
@@ -348,6 +409,7 @@ public class Appm02CrudController {
         workDto.setWorkdv("3");
         workDto.setDecision("3");
         workDto.setDecision1("3");
+        workDto.setPlan_no(planno);
         result = appcom01Service.FPLAN_Update_GDEL(workDto);
         if (!result) {
            // log.info("error =====> FPLAN_Update_GDEL");
@@ -371,7 +433,15 @@ public class Appm02CrudController {
             return "error";
         }
 
+        IworkDto.setGlotno(lotno);
         result = appcom01Service.FPLAN_IWORK_Delete(IworkDto);
+        if (!result){
+            //log.info("error Exception =====> FPLAN_IWORK_Delete" );
+            //return "error";
+        }
+
+        workDto.setPlan_no(lotno);
+        result = appcom01Service.FPLAN_WBAD_Delete(workDto);
         if (!result){
             //log.info("error Exception =====> FPLAN_IWORK_Delete" );
             //return "error";

@@ -81,7 +81,7 @@
                             <div class="tab-content" >                                        
                             <div class="tab-pane fade show active"  >  
                                     <div class="container-fluid" id="op1" >
-                                    <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px; width: 600px;   margin:0 auto; "></div>
+                                    <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px; width: 700px;   margin:0 auto; "></div>
                                     <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
                                 </div>                                               
                             </div>                                        
@@ -178,7 +178,13 @@
                                     <div class="input_wrap">                                               
                                         <input type="text"  id="jgugek2" autocomplete="off"  placeholder="" >  
                                     </div>
-                                </td>                                                                                                                            
+                                </td>                                  
+                                <th>박스수량</th>
+                                <td colspan="2"> 
+                                    <div class="input_wrap">  
+                                        <input type="number"  id="jboxsu1" value="jboxsu1" />                                         
+                                    </div>
+                                </td>                                                                                                                             
                             </tr>    
                             <tr> 
                                 <th>사양구분</th>
@@ -461,7 +467,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.jkey}</b>',
                             click: (e, ctx) => {
-                                wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0, ctx.item.j_misayong, ctx.item.j_sang);                    
+                                wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1);                    
                             }
                         })
                     }, 
@@ -543,7 +549,8 @@
                         jchgoga0: wtab01Dto[i]["jchgoga0"],
                         jbigo: wtab01Dto[i]["jbigo"],
                         j_misayong: wtab01Dto[i]["j_misayong"],
-                        j_sang: wtab01Dto[i]["j_sang"]     
+                        j_sang: wtab01Dto[i]["j_sang"] ,
+                        jboxsu1: wtab01Dto[i]["jboxsu1"] ,    
                         
                     });
                     cnt++;
@@ -581,7 +588,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.jkey}</b>',
                             click: (e, ctx) => {
-                                wcifChk_a(ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy);                    
+                                wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1);                                        
                             }
                         })
                     }, 
@@ -660,6 +667,7 @@
                         jsize: wtab01Dto[i]["jsize"], 
                         jchgoga0: wtab01Dto[i]["jchgoga0"], 
                         jchgoga0: wtab01Dto[i]["jchgoga0"],
+                        jboxsu1: wtab01Dto[i]["jboxsu1"],
                         jbigo: wtab01Dto[i]["jbigo"]     
                         
                     });
@@ -726,6 +734,7 @@
             document.getElementById('j_jung').value = ""; 
             document.getElementById('j_misayong').value = ""; 
             document.getElementById('j_sang').value = ""; 
+            document.getElementById('jboxsu1').value = 0; 
         }
         // <!-- 저장 스크립트 시작 -->
         function save_btn(){   
@@ -748,10 +757,14 @@
             var ls_jchgoga0 =  document.getElementById('jchgoga0').value; 
             var ls_j_misayong =  document.getElementById('j_misayong').value;
             var ls_j_sang =  document.getElementById('j_sang').value;
-                
+            var ls_jboxsu1 =  document.getElementById('jboxsu1').value;
+                 
+            if(ls_jboxsu1 == null || ls_jboxsu1.length == 0 || ls_jboxsu1 == ""){ 
+                ls_jboxsu1 = 0;            
+            }  
             const j_misayong = document.getElementById('j_misayong'); 
             const is_checked = j_misayong.checked;
-            console.log(is_checked);
+             
             if (is_checked){
                 ls_j_misayong = "0"
             }else{
@@ -759,13 +772,13 @@
             }
             const j_sang = document.getElementById('j_sang'); 
             const is_checked1 = j_sang.checked;
-            console.log(is_checked1);
+             
             if (is_checked1){
                 ls_j_sang = "0"
             }else{
                 ls_j_sang = "1"
             }
-
+            var ls_w_b_gubn = ""
             var x = document.getElementsByName('w_b_gubn');
 
                 for(var i=0; i<4; i++) {
@@ -805,7 +818,8 @@
                     "jbigo"         : ls_jbigo,
                     "jchgoga0"      : ls_jchgoga0,
                     "j_misayong"    : ls_j_misayong,
-                    "j_sang"        : ls_j_sang,        
+                    "j_sang"        : ls_j_sang,     
+                    "jboxsu1"       : ls_jboxsu1
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
                 formData.delete("key");  
@@ -904,7 +918,7 @@
 
             //  tab01 grid data 수집
             function tabA_grid(data){
-                var wtab01Dto  = data;    
+                var wtab01Dto  = data;   
                 var wtab01_data = [];
                 var cnt = 1;
                 for (var i = 0; i < wtab01Dto.length; i++) {
@@ -930,6 +944,7 @@
                         jchgoga0: wtab01Dto[i]["jchgoga0"], 
                         j_misayong: wtab01Dto[i]["j_misayong"], 
                         j_sang: wtab01Dto[i]["j_sang"],    
+                        jboxsu1: wtab01Dto[i]["jboxsu1"],    
                     });
                     cnt++;
                 }   
@@ -949,7 +964,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.jkey}</b>',
                     click: (e, ctx) => {
-                        wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0 , ctx.item.j_misayong , ctx.item.j_sang);                 
+                        wcifChk_a(ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jchgoga0 , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1);                 
                         
                     }
                 });
@@ -1084,8 +1099,11 @@
                 wtab01Grid.columns.push(cols); 
             }        
 
-    //             wcifChk_a(jkey, jpb_gubn, jgong_code, jdan_code, jmodel_code,jcolor_code, jcustomer_code, jbonsa_code, jsayong_gubn, jpum, jgugek,jsize, jchgoga0, jbigo );                             
-            function wcifChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32){            
+    
+            //   jkey, j_dae, j_jung, jgugek, jgugek2,jpum, jpumcode, jsayang, j_net, jchajong, 
+            //   j_sr,j_ct, j_cavity, jdanwy, jbigo, w_b_gubn , jchgoga0 , j_misayong , j_sang, jboxsu1
+
+            function wcifChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20){            
                 document.getElementById('jkey').value = arg1;  
                 document.getElementById('j_dae').value = arg2;   
                 document.getElementById('j_jung').value = arg3;
@@ -1105,6 +1123,7 @@
                 document.getElementById('jchgoga0').value = arg17;
                 document.getElementById('j_misayong').value = arg18;
                 document.getElementById('j_sang').value = arg19;
+                document.getElementById('jboxsu1').value = arg20;
 
                 const j_misayong = document.getElementById('j_misayong'); 
                 if(arg18 == "0"){
@@ -1185,6 +1204,7 @@
                         j_dae: wtab02Dto[i]["j_dae"], 
                         j_jung: wtab02Dto[i]["j_jung"],
                         j_misayong: wtab02Dto[i]["j_misayong"],
+                        jboxsu1: wtab02Dto[i]["jboxsu1"] ,         
                         j_sang: wtab02Dto[i]["j_sang"]                 
                     });
                     cnt++;
@@ -1204,7 +1224,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.jkey}</b>',
                     click: (e, ctx) => {
-                        wcifChk1_a(ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy);                 
+                        wcifChk1_a(ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.jboxsu1);                 
                         
                     }
                 });

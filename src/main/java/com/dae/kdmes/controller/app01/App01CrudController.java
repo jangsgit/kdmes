@@ -158,8 +158,8 @@ public class App01CrudController {
             if(searchtxt == null || searchtxt.equals("")){
                 searchtxt = "%";
             }
-            index01Dto.setCom_code(searchtxt);
             index01Dto.setCom_rem1(searchtxt);
+            log.info("searchtxt =====>" + searchtxt);
             index01ListDto = service01.getWperidlist(index01Dto);
 
             model.addAttribute("wperidList",index01ListDto);
@@ -507,6 +507,9 @@ public class App01CrudController {
                         break;
                     case "j_sang":
                         index03Dto.setJ_sang(values.toString());
+                        break;
+                    case "jboxsu1":
+                        index03Dto.setJboxsu1(Integer.parseInt(values.toString()));
                         break;
                     default:
                         break;

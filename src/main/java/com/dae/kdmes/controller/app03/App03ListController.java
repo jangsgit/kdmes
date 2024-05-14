@@ -38,14 +38,14 @@ public class App03ListController {
                                Model model, HttpServletRequest request) throws Exception{
         try {
 
-            String ls_yeare = frdate.substring(0,4);
-            String ls_mm = frdate.substring(5,7);
-            String ls_dd = frdate.substring(8,10);
-            frdate =  ls_yeare + ls_mm + ls_dd;
-                 ls_yeare = todate.substring(0,4);
-                 ls_mm = todate.substring(5,7);
-                 ls_dd = todate.substring(8,10);
-            todate =  ls_yeare + ls_mm + ls_dd;
+//            String ls_yeare = frdate.substring(0,4);
+//            String ls_mm = frdate.substring(5,7);
+//            String ls_dd = frdate.substring(8,10);
+//            frdate =  ls_yeare + ls_mm + ls_dd;
+//                 ls_yeare = todate.substring(0,4);
+//                 ls_mm = todate.substring(5,7);
+//                 ls_dd = todate.substring(8,10);
+//            todate =  ls_yeare + ls_mm + ls_dd;
 
             index11Dto.setFrdate(frdate);
             index11Dto.setTodate(todate);

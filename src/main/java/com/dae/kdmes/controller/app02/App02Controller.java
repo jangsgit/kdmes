@@ -1,11 +1,10 @@
 package com.dae.kdmes.controller.app02;
 
-import com.dae.kdmes.DTO.App01.Index01Dto;
+import com.dae.kdmes.DTO.App01.*;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.App02.Index11Dto;
-import com.dae.kdmes.DTO.App01.Index02Dto;
-import com.dae.kdmes.DTO.App01.Index03Dto;
-import com.dae.kdmes.DTO.App01.Index04Dto;
+import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
+import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.DTO.Appm.TBPopupVO;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
@@ -15,6 +14,7 @@ import com.dae.kdmes.Service.App01.Index03Service;
 import com.dae.kdmes.Service.App02.Index10Service;
 import com.dae.kdmes.Service.App02.Index11Service;
 import com.dae.kdmes.Service.Appm.AppPopupService;
+import com.dae.kdmes.Service.Appm.Appcom01Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,10 +23,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 // @RestController : return을 텍스트로 반환함.
@@ -37,12 +41,22 @@ public class App02Controller {
     private final Index10Service service10;
     private final AppPopupService appPopupService;
     private final Index03Service service03;
+    private final Appcom01Service appcom01Service;
+
+    FPLAN_VO fplanDto = new FPLAN_VO();
+    FPLANW010_VO itemDto = new FPLANW010_VO();
+    TBPopupVO wperidDto = new TBPopupVO();
+    TBPopupVO wrmcDto = new TBPopupVO();
+    List<FPLAN_VO> itemDtoList = new ArrayList<>();
+    List<FPLAN_VO> itemDtoList02 = new ArrayList<>();
+    List<IndexCa613Dto> itemDtoListCa613 = new ArrayList<>();
 
     private final Index01Service service01;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
     Index01Dto index01Dto = new Index01Dto();
     Index10Dto index10Dto = new Index10Dto();
+    IndexCa613Dto indexCa613Dto = new IndexCa613Dto();
 
     Index11Dto index11Dto = new Index11Dto();
     List<PopupDto> popupListDto = new ArrayList<>();
@@ -66,7 +80,7 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
-            index10ListDto = service10.getFplanList(index10Dto);
+            index10ListDto = service10.GetFplanList(index10Dto);
             popupListDto = service10.getCls_flagList(popupDto);
             popupListDto = service03.getj1_keyList(popupDto);
             popupListDto1 = service03.getj2_keyList(popupDto);
@@ -213,5 +227,164 @@ public class App02Controller {
 
         return "App02/index16";
     }
+
+
+
+    //입고등록
+    @GetMapping(value="/index15")
+    public String Appcom15_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("입고등록");  //
+        CommDto.setMenuUrl("생산공정>입고등록");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String pcode = "%";
+        indexCa613Dto.setPname(pcode);
+        indexCa613Dto.setFrdate(fdate);
+        indexCa613Dto.setTodate(tdate);
+
+        itemDtoListCa613   = service10.SelectCa613List(indexCa613Dto);
+        model.addAttribute("itemDtoList", itemDtoListCa613);
+        return "App02/index15";
+    }
+
+
+    //사출등록
+    @GetMapping(value="/index31")
+    public String Appcom31_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("사출공정");  //
+        CommDto.setMenuUrl("생산공정>사출공정");
+        CommDto.setMenuCode("appcom01");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String cltcd = "%";
+        String pcode = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00010");
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(pcode);
+        itemDto.setPlan_no("%");
+//        itemDto = appcom01Service.FPLANW010_Blank();
+        itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
+//        model.addAttribute("itemDto", itemDto);
+        model.addAttribute("itemDtoList", itemDtoList);
+
+
+        wrmcDto.setMachname("%");
+        wperidDto.setWflag("00010");  //첫번째공정
+        wperidDto.setWpernm("%");
+        wrmcDto.setPlan_no("%");      //불량구분 팝업
+        wrmcDto.setWseq("%");
+        wrmcDto.setWflag("00010");
+        wrmcDto.setWclscode("1");
+        model.addAttribute("CommDto", CommDto);
+        model.addAttribute("wrmcDto", appPopupService.GetWrmcList01(wrmcDto));          //설비명
+//        log.info("Exception =====>" + appPopupService.GetPernmList(wperidDto).toString());
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+//        wbomDto.setPlan_no("202108120027");
+        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
+//        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
+        model.addAttribute("wfiworkDto", appPopupService.GetWfiworkList_blank());
+
+        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));          //불량구분
+        return "App02/index31";
+    }
+
+    //검사공정
+    @GetMapping(value="/index41")
+    public String Appcom41_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("검사공정");  //
+        CommDto.setMenuUrl("생산공정>검사공정");
+        CommDto.setMenuCode("appcom02");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String cltcd = "%";
+        String pcode = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00020");
+        fplanDto.setFdate("20000101");
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(pcode);
+        itemDto.setPlan_no("%");
+
+        wperidDto.setWflag("00020");  //첫번째공정
+        wperidDto.setWpernm("%");
+
+        wrmcDto.setMachname("%");
+        wrmcDto.setPlan_no("%");      //불량구분 팝업
+        wrmcDto.setWseq("%");
+        wrmcDto.setWflag("00020");
+        wrmcDto.setWclscode("1");
+
+
+
+        itemDtoList   = appcom01Service.GetFPLAN_List02(fplanDto);      //사출완료
+        itemDtoList02 = appcom01Service.GetFPLAN_List02_REG(fplanDto);      //검사등록완료
+
+        model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
+        model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
+        return "App02/index41";
+    }
+
+    //검사공정
+    @GetMapping(value="/index41list")
+    public String Appcom41list_index(@RequestParam("searchtxt") String searchtxt
+            ,Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("검사공정");  //
+        CommDto.setMenuUrl("생산공정>검사공정");
+        CommDto.setMenuCode("appcom02");
+        if (searchtxt.equals("") ||  searchtxt == null || searchtxt.length() == 0){
+            searchtxt = "%";
+        }
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String cltcd = "%";
+        String pcode = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00020");
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(pcode);
+        fplanDto.setLotno(searchtxt);
+        itemDto.setPlan_no("%");
+
+        wperidDto.setWflag("00020");  //첫번째공정
+        wperidDto.setWpernm("%");
+
+        itemDtoList   = appcom01Service.GetFPLAN_List02(fplanDto);      //사출완료
+        itemDtoList02 = appcom01Service.GetFPLAN_List02_REG(fplanDto);      //검사등록완료
+
+        model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
+        model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+        return "App01/index41";
+    }
+
+
+
+    private String getFrDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, -100); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
+
+    private String getAddDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, 14); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
+
+
 
 }

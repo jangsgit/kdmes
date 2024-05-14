@@ -50,6 +50,7 @@ public class FPLAN_VO {
     private String cls_flag;
     private String work_flag;
     private String dem_flag;
+    private String demflag;
     private String qc_flag;
     private String close_flag;
     private String end_flag;
@@ -84,6 +85,7 @@ public class FPLAN_VO {
     private String winps;
     private String wrps;
     private String partcode;
+    private String partnm;
     private String frdate;
     private String todate;
     private String wremark;
@@ -96,6 +98,9 @@ public class FPLAN_VO {
 
     private float gqty01;
     private float gqty02;
+    private Integer jboxsu1;
+    private Integer wsumqt;
+    private Integer wboxsu;
 
 
 }

@@ -34,7 +34,7 @@
                                     class="font-sans-serif">ActasErp</span>
                             </div> -->
                         </a>
-                    </div> 
+                    </div>  
                     <!------navbar vertical------>     
                     <div th:replace="layouts/layout01/navbarMemWeb :: navbar"></div>  
                 </nav>
@@ -591,4 +591,17 @@
                 </div> 
         </div>
     </main>
+    <script> 
+        function logout(){   
+                if (!confirm("로그아웃하시겠습니까?") ){
+                    return    
+                }
+                localStorage.removeItem("perid");
+                localStorage.removeItem("pernm");
+                localStorage.removeItem("userid");
+                localStorage.removeItem("flag");
+                localStorage.removeItem("custnm") ;
+                location.href = "/" ;
+            }   
+    </script>
 </header>

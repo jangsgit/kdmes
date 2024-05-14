@@ -38,6 +38,7 @@ public class Index03Dto {
     private Integer ijaego_su1;
     private Integer ijaego_su2;
     private Integer ijaego_su3;
+    private Integer jboxsu1;
     private Integer jqty;
     private String jpumnm;
     private String jsize;

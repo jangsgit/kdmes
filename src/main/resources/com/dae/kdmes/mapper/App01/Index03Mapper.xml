@@ -55,7 +55,7 @@
 
     <select id="GetJpumList" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
         <![CDATA[
-            select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jsayang, jpum,
+            select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jsayang, jpum, jboxsu1,
                    j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn,
                    E.jcifcodename as jcifcodename, j_misayong, j_sang
             from JCODE WITH (NOLOCK)
@@ -67,7 +67,7 @@
 
     <select id="GetJpumListTot" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
         <![CDATA[
-        select jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode,
+        select jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jboxsu1,
                jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, w_b_gubn, Convert(int, jchgoga0) AS jchgoga0, jbigo,
                E.jcifcodename as jcifcodename
         from JCODE WITH (NOLOCK)
@@ -80,10 +80,10 @@
 
     <insert id="InsertJpum" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
         insert into JCODE ( jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode,
-                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang) values
+                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1) values
                         (#{jkey}, #{j_dae}, #{j_jung}, #{jgugek}, #{jpum}, #{jgugek2}, #{jpumcode},
                          #{jsayang}, #{j_net}, #{jchajong}, #{j_sr}, #{j_ct}, #{j_cavity}, #{jdanwy}, #{jbigo}, #{w_b_gubn},
-                         #{jchgoga0}, #{j_misayong} , #{j_sang})
+                         #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1})
     </insert>
 
 
@@ -94,6 +94,8 @@
         <if test="j_dae != null">j_dae=#{j_dae}</if>
         <if test="j_jung != null ">,</if>
         <if test="j_jung != null">j_jung=#{j_jung}</if>
+        <if test="jboxsu1 != null ">,</if>
+        <if test="jboxsu1 != null">jboxsu1=#{jboxsu1}</if>
         <if test="jgugek != null ">,</if>
         <if test="jgugek != null">jgugek=#{jgugek}</if>
         <if test="jpum != null ">,</if>
@@ -134,30 +136,6 @@
         DELETE  JCODE where jkey  = #{jkey}
     </update>
 
-    <select id="GetGanListBonsa01" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
-        <![CDATA[
-        SELECT jbonsa_code, jmodel_code,   jpb_gubn
-        from JCODE WITH (NOLOCK)
-        WHERE isnull(jpb_gubn,'')   = #{jpb_gubn}  AND jsayong_gubn IN ( '1', '2','3')
-         GROUP BY jbonsa_code, jmodel_code, jpb_gubn
-         ORDER  BY jbonsa_code, jmodel_code, jpb_gubn
-        ]]>
-    </select>
-
-
-    <select id="GetGanListBonsa02" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
-        <![CDATA[
-        SELECT jbonsa_code, jmodel_code,   jpb_gubn, jcolor_code, jkey,
-               convert(integer, DBO.DF_TB_PCODE_JQTY(jkey,  #{frdate},  #{todate}) ) as jqty
-        from JCODE WITH (NOLOCK)
-        WHERE isnull(jpb_gubn,'')   = #{jpb_gubn}
-          and isnull(jbonsa_code,'')   = #{jbonsa_code}
-          and isnull(jmodel_code,'') Like concat('%',#{jmodel_code},'%')
-          AND jsayong_gubn IN ( '1', '2','3')
-        ORDER  BY jmodel_code, jcolor_code, jkey
-        ]]>
-    </select>
-
     <select id="getj1_keyList"  parameterType="com.dae.kdmes.DTO.Popup.PopupDto" resultType="com.dae.kdmes.DTO.Popup.PopupDto">
         <![CDATA[
             select j1_key, j1_name from jcode1  where 1=1 and isnull(j1_key,'') Like concat('%',#{j1_key},'%') order by j1_key
@@ -170,37 +148,6 @@
         ]]>
     </select>
 
-
-
-
-
-
-    <select id="SelectJegoIpgo"  parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
-        <![CDATA[ select A.jepm, A.acorp, A.key1, A.jepm_size, A.ijaego_su1 as jqty , B.jpum as jpumnm, B.jgugek as jgugek , B.jsize as jsize,
-                         B.jmodel_code as jmodel_code, B.jcolor_code as jcolor_code, B.jcustomer_code as jcustomer_code
-           from JEGO_JEPMJANAK A WITH (NOLOCK) , JCODE B WITH (NOLOCK)
-           where A.jepm = B.jkey
-           AND A.key1 = #{key1}   ]]>
-    </select>
-
-
-    <select id="SelectJegoList"  parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
-        <![CDATA[ select B.jkey,  B.jpum as jpumnm, B.jgugek as jgugek , B.jsize as jsize,
-                         B.jmodel_code as jmodel_code, B.jcolor_code as jcolor_code, B.jcustomer_code as jcustomer_code,
-                         convert(integer, DBO.DF_TB_PCODE_JQTY(B.jkey,  #{frdate},  #{todate}) ) as jqty
-           from  JCODE B WITH (NOLOCK)
-           where  isnull(B.jkey,'') Like concat('%',#{jkey},'%')     ]]>
-    </select>
-
-    <insert id="InsertJegoIpgo" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
-        insert into JEGO_JEPMJANAK (jepm, acorp, key1, jepm_size, ijaego_su1) values
-        (#{jepm}, #{acorp}, #{key1}, #{jepm_size}, #{ijaego_su1})
-    </insert>
-
-
-    <delete id="DeleteJaegoIpgo" parameterType="com.dae.kdmes.DTO.App01.Index03Dto">
-        DELETE  JEGO_JEPMJANAK  where key1  = #{key1}
-    </delete>
 
 
 

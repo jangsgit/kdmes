@@ -53,12 +53,14 @@ public class FPLANW010_VO {
     private String wrpsnm;
     private String ostore;
     private String lotno;
+    private String rwflag;
     private String store;
     private String opcltcd;
     private String opdate;
     private String phmmdoc;
     private String wotdt;
     private String workdv;
+    private String demflag;
 
     private float wokqt;
     private float jqty;
@@ -66,6 +68,8 @@ public class FPLANW010_VO {
     private float qty;
     private float bqty;
     private float sqty;
+    private float wsumqt;
+    private float wboxsu;
 
     private String wtable;
 
@@ -74,6 +78,7 @@ public class FPLANW010_VO {
     private String crudflag;
     private String clsflag;
     private String partcode;
+    private String partnm;
     private String glotnono;
     private float gqty01;
     private float gqty02;

@@ -2,7 +2,9 @@ package com.dae.kdmes.controller.appm;
 
 import com.dae.kdmes.DTO.*;
 
+import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.Appm.*;
+import com.dae.kdmes.Service.App02.Index10Service;
 import com.dae.kdmes.Service.Appm.AppPopupService;
 import com.dae.kdmes.Service.Appm.Appcom01Service;
 //import com.dae.kdmes.Service.Appcom02Service;
@@ -27,6 +29,7 @@ import java.util.*;
 @RequestMapping(value = "/input", method = RequestMethod.POST)
 public class Appm01CrudController {
     private final Appcom01Service appcom01Service;
+    private final Index10Service service10;
 //    private final Appcom02Service appcom02Service;
 //    private final Appcom03Service appcom03Service;
 //    private final Appcom04Service appcom04Service;
@@ -161,9 +164,12 @@ public class Appm01CrudController {
             ,@RequestParam("pcode") String pcode
             ,@RequestParam("wono") String wono
             ,@RequestParam("partcode") String partcode
+            ,@RequestParam("partnm") String partnm
             ,@RequestParam("workdv") String workdv
+            ,@RequestParam("rwflag") String rwflag
             ,Model model, HttpServletRequest request) throws Exception {
 
+        Index10Dto _index10Dto = new Index10Dto();
         String ls_flag = decision;
         if(startDate.equals("") || startDate == null || startDate.equals(" ") || startDate.length() ==0 ){
             startDate = null;
@@ -205,6 +211,22 @@ public class Appm01CrudController {
         workDto.setPcode(pcode);
         workDto.setWono(wono);
         workDto.setPartcode(partcode);
+        workDto.setPartnm(partnm);
+        String ls_lotno = "";
+        if(rwflag.length() > 0){
+            _index10Dto.setPcode(pcode);
+            _index10Dto.setPlan_no(plan_no);
+            _index10Dto.setIndate(getToDate());
+            _index10Dto.setRwflag(rwflag);
+            ls_lotno = plan_no.substring(0,8) + rwflag + plan_no.substring(8,12);
+            _index10Dto.setLotno(ls_lotno);
+            result = service10.UpdateFplan(_index10Dto);
+            if (!result) {
+                log.info("result =====>" + result);
+                return "error";
+            }
+        }
+
         if(!workdv.equals("4")){
             workDto.setWorkdv(workdv);
             workDto.setDecision(workdv);
@@ -218,7 +240,8 @@ public class Appm01CrudController {
         }else{
             workDto.setClsflag("2");        // 공정중
         }
-        String ls_lotno = wono.substring(2,11);
+
+        //ls_lotno = wono.substring(2,11);
         workDto.setLotno(ls_lotno);
         String wstdt = "";
         String wendt = "";
@@ -295,7 +318,7 @@ public class Appm01CrudController {
             log.info("error =====> FPLAN_Update 02");
             return "error";
         }
-        return "TB_FPLAN_W010 UPDATE OK";
+        return ls_lotno;
     }
 
 
@@ -304,6 +327,7 @@ public class Appm01CrudController {
     public String Appcom01_delete(@RequestParam("plan_no") String plan_no
                                  ,HttpServletRequest request){
         FPLANW010_VO workDto = new FPLANW010_VO();
+        Index10Dto _index10Dto = new Index10Dto();
         workDto.setPlan_no(plan_no);
         workDto.setWflag("00010");
         workDto.setWseq("01");
@@ -318,7 +342,7 @@ public class Appm01CrudController {
         result = appcom01Service.FPLAN_OWORK_Delete(workDto);
         if (!result) {
             log.info("error =====> FPLAN_OWORK_Delete");
-            return "error";
+            //return "error";
         }
 //        result = appcom01Service.FPLAN_IWORK_Delete(workDto);
 //        if (!result) {
@@ -338,12 +362,12 @@ public class Appm01CrudController {
         result = appcom01Service.FPLAN_WPERID_Delete(wperDto);
         if (!result) {
             log.info("error =====> FPLAN_WPERID_Delete");
-            return "error";
+            //return "error";
         }
         result = appcom01Service.FPLAN_WBAD_Delete(workDto);
         if (!result) {
             log.info("error =====> FPLAN_WBAD_Delete");
-            return "error";
+            //return "error";
         }
 
 
@@ -355,6 +379,15 @@ public class Appm01CrudController {
         result = appcom01Service.FPLAN_Update(workDto);
         if (!result) {
             log.info("error =====> FPLAN_Update");
+            return "error";
+        }
+
+        _index10Dto.setPlan_no(plan_no);
+        _index10Dto.setIndate(getToDate());
+        _index10Dto.setLotno(" ");
+        result = service10.UpdateFplan(_index10Dto);
+        if (!result) {
+            log.info("result =====>" + result);
             return "error";
         }
 
@@ -371,6 +404,8 @@ public class Appm01CrudController {
             ,@RequestParam("wflag") String wflag
             ,@RequestParam("decision") String decision
             ,@RequestParam("workdv") String workdv
+            ,@RequestParam("instopcd") String instopcd
+            ,@RequestParam("instopnm") String instopnm
             ,Model model, HttpServletRequest request) throws Exception {
 
         wtimeDto.setCustcd(custcd);
@@ -398,6 +433,8 @@ public class Appm01CrudController {
             wtimeDto.setSeq(getWtimeMaxSeq());
             wtimeDto.setWfrdt(getToDateTime());
             wtimeDto.setWtrdt(getToDateTime());
+            wtimeDto.setWdtcd("");
+            wtimeDto.setWrerm("");
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update");
@@ -409,7 +446,9 @@ public class Appm01CrudController {
                 log.info("error =====> FPLAN_WTIME_Insert");
                 return "error";
             }
-        }else{                        //작업종료
+        }else{
+            wtimeDto.setWdtcd(instopcd);
+            wtimeDto.setWrerm(instopnm);
             wtimeDto.setWtrdt(getToDateTime());
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
@@ -425,7 +464,7 @@ public class Appm01CrudController {
             workDto.setDecision1(workdv);
         }
         workDto.setWseq("01");
-        log.info(" workdv =====>" + workdv);
+        //log.info(" workdv =====>" + workdv);
         result = appcom01Service.FPLAN_Update(workDto);
         if (!result) {
             log.info("error =====> FPLAN_Update");

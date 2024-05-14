@@ -1,6 +1,6 @@
 package com.dae.kdmes.Mapper.App02;
 
-import com.dae.kdmes.DTO.App01.Index03Dto;
+import com.dae.kdmes.DTO.App01.IndexCa613Dto;
 import com.dae.kdmes.DTO.App01.Index01Dto;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
@@ -13,7 +13,6 @@ import java.util.List;
 @Mapper
 public interface Index10Mapper {
 
-    public List<Index10Dto> getFplanList(Index10Dto parm) ;
 
     public List<Index10Dto> GetFplanList(Index10Dto parm) ;
 
@@ -21,6 +20,16 @@ public interface Index10Mapper {
 
     public Boolean InsertFplan(Index10Dto  parm) ;
     public Boolean UpdateFplan(Index10Dto  parm) ;
+
+    public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm) ;
+
+    public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm) ;
+
+    public Boolean DeleteCa613(IndexCa613Dto parm) ;
+
+    public Boolean InsertCa613(IndexCa613Dto  parm) ;
+    public Boolean UpdateCa613(IndexCa613Dto  parm) ;
+    public String SelectMaxIbgnum(String  parm) ;
 
     public String GetFplanCheck(Index10Dto  parm) ;
     public List<Index10Dto> GetJpumListTot(Index10Dto parm) ;

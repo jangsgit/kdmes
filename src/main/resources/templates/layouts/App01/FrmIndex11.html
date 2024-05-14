@@ -104,7 +104,9 @@
                         var wtab01Grid;
                         var wtab02Grid;
                         var wtab03Grid; 
-                        var wtab04Grid;  
+                        var wtab04Grid; 
+                        let wfrdate;
+                        let wtodate;   
                         window.onload = function() {    
                            view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                                 // pageSize: 21
@@ -117,10 +119,10 @@
                                 allowSorting: 'MultiColumn',
                                 alternatingRowStep: 0,
                                 columns: [     
-                                    { binding: 'indate', header: '등록일자', align: "center",  width: 100 }, 
+                                    { binding: 'indate', header: '등록일자', align: "center",  width: 120 }, 
                                     { binding: 'ecltnm', header: '거래처', align: "left", width: 130 }, 
-                                    { binding: 'prod_sdate', header: '생산시작일', align: "center", width: 100 },
-                                    { binding: 'prod_edate', header: '생산종료일', align: "center", width: 100 },
+                                    { binding: 'prod_sdate', header: '생산시작일', align: "center", width: 120 },
+                                    { binding: 'prod_edate', header: '생산종료일', align: "center", width: 120 },
                                     { binding: 'jpum', header: '품명', align: "left", width: 150 },
                                     { binding: 'jchajong', header: '차종', align: "left", width: 120 },   
                                     { binding: 'jgugek', header: '규격', align: "left", width: 120 },   
@@ -188,8 +190,10 @@
                        function searchList_rtn(arg1){ 
                            switch(arg1){
                                case 'A':  
-                                   var ls_frdate = document.getElementById('frdate').value; 
-                                   var ls_todate = document.getElementById('todate').value; 
+                                    var  ls_frdate     =  convert_date(wfrdate.value);                    
+                                    var  ls_todate     =  convert_date(wtodate.value);
+                                //    var ls_frdate = document.getElementById('frdate').value; 
+                                //    var ls_todate = document.getElementById('todate').value; 
                                    var ls_lotno = document.getElementById('inlotno').value; 
                                    if(ls_lotno == null || ls_lotno.length == 0 || ls_lotno == ""){ 
                                         ls_lotno    = "%"
@@ -292,7 +296,7 @@
                            cols.binding = 'indate';
                            cols.header = '등록일자';
                            cols.align = "center";
-                           cols.width = 100; 
+                           cols.width = 120; 
                            wtab01Grid.columns.push(cols);  
                     
                            cols = new wijmo.grid.Column(); 
@@ -306,14 +310,14 @@
                            cols.binding = 'prod_sdate';
                            cols.header = '생산시작일';
                            cols.align = "center";
-                           cols.width = 100;  
+                           cols.width = 120;  
                            wtab01Grid.columns.push(cols);   
                     
                            cols = new wijmo.grid.Column(); 
                            cols.binding = 'prod_edate';
                            cols.header = '생산종료일';
                            cols.align = "center";
-                           cols.width = 100;  
+                           cols.width = 120;  
                            wtab01Grid.columns.push(cols);   
                            
                            cols = new wijmo.grid.Column(); 
@@ -465,10 +469,21 @@
                        }
                      
                     
+                    function convert_date(arg_date){  
+                        var ls_arg_date = String(arg_date); 
+                        if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
+                            return "";
+                        } 
+                        arg_date.setHours(arg_date.getHours() + 9); //  UTC (협정 세계시)를 나타내며, 이를 한국 시간 (GMT+9)으로 변환할 경우, 9시간을 더하여 
+                        arg_date =  String(arg_date.toISOString().substring(0,10)); 
+                        arg_date = arg_date.replaceAll("-","");  
+                        return arg_date;
+                    }
                     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                     
                     
-                       $(document).ready(function() { 
+                       $(document).ready(function() {   
+                           init()          
                            getToday()
                            fn_egov_init_date()
                            // $('datetimepicker').datetimepicker({
@@ -483,7 +498,29 @@
                            //     // console.log("달력클릭");
                            //     // console.log(convert_time(e.timestamp));
                            // })
-                       })
+                       })      
+                        function init(){ 
+                                
+                                wfrdate = new wijmo.input.InputDate('#frdate', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd', 
+                                });
+                                wtodate = new wijmo.input.InputDate('#todate', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd', 
+                                }); 
+        
+                                var result = new Date();
+                                result.setHours(result.getHours() + 9); 
+                                var ls_date = result.toISOString().substring(0,10);                                 
+                                wfrdate.value = ls_date;   
+                                wtodate.value = ls_date;  
+                                
+                        } 
                      
                     
                     

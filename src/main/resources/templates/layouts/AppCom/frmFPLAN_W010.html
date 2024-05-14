@@ -80,27 +80,20 @@
                                                         <div class="input-group-text">작지번호</div>
                                                         <input class="form-control form-control-sm" id="inplan_no"
                                                             type="text" placeholder="작지번호"    disabled />
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inspjangcd"
-                                                            />   
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="incustcd"
-                                                                />       
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwono"  
-                                                                />       
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwseq"    
-                                                                />         
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwflag"   
-                                                                />   
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwscnt"     
-                                                            value=0   />  
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="edwscnt"     
-                                                            value=0   />  
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwsyul"       
-                                                            value=0   />   
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="inostore"         
-                                                            value=0   />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inspjangcd"/>   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="incustcd"/>       
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwono"  />       
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwseq"  />         
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwflag" />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwscnt" value=0   />  
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="edwscnt" value=0   />  
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwsyul" value=0   />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inostore"value=0   />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="instopcd" />   
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="instopnm" />       
                                                         <div id='inwonobdg'></div>      
                                                                                                                     
-                                                    </div>
+                                                    </div> 
                                                 </div>
                                                 <div class="col-sm">
                                                     <div class="input-group">
@@ -137,14 +130,14 @@
                                                 </div> 
                                                 <div class="col-auto">
                                                     <div class="input-group"> 
-                                                        <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"  style=" height:40px;  "  >공정시작 </button>
+                                                        <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"  style=" height:40px;  "  >작업시작 </button>
                                                         <input type="text"  class="form-control datetimepicker" id="startDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled> 
                                                     </div>
                                                     
                                                 </div>
                                                 <div class="col-auto">
                                                     <div class="input-group"> 
-                                                        <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"  style=" height:40px;  "  >공정종료 </button>
+                                                        <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"  style=" height:40px;  "  >작업종료 </button>
                                                         <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled > 
                                                     </div>
                                                 </div>  
@@ -231,10 +224,16 @@
                                                     </div>
                                                 </div>  
                                                 <div class="col-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text">자재바코드</div> 
+                                                    <div class="input-group"> 
+                                                        <button   class="btn btn-primary btn-sm" type="button" id="partbtn"  style=" height:40px;  "  >원재료선택 </button>
                                                         <input class="form-control form-control-sm" id="inpartcode" type="text"
-                                                            placeholder=""  />
+                                                            placeholder=""  /> 
+                                                    </div>
+                                                </div> 
+                                                <div class="col-3">
+                                                    <div class="input-group"> 
+                                                        <input class="form-control form-control-sm" id="inpartnm" type="text"
+                                                            placeholder="" disabled />
                                                     </div>
                                                 </div> 
                                             </div>  
@@ -242,10 +241,10 @@
                                             <div  class="col-auto" > 
                                                 <div class="row g-2" >
                                                     <div class="col-auto">
-                                                        <button  class="btn btn-warning me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("2")' id="workstBtn"  >작업시작</button>
+                                                        <button  class="btn btn-warning me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("2")' id="workstBtn"  >재시작</button>
                                                     </div> 
                                                     <div class="col-auto">
-                                                        <button  class="btn btn-danger me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("3")' id="workedBtn"  >작업중단</button>
+                                                        <button  class="btn btn-danger me-1 mb-1" type="button" style=" height:50px;  "   id="workedBtn"  >임시중단</button>
                                                     </div>   
                                                     <div class="col-auto">
                                                         <button  class="btn btn-outline-dark me-1 mb-1" type="button" style=" height:50px;  " onclick='save_btn("4")' id="worksaveBtn">저&nbsp;&nbsp;&nbsp;장</button>
@@ -450,7 +449,89 @@
                                                 </div>
                                             </div> 
                                         </div>          
-                                        <!--------------------------------------------------------------------------------------->          
+                                        <!--------------------------------------------------------------------------------------->   
+                                        
+                                        <input class="form-control form-control-sm"  type="hidden" id="instopbtn" data-bs-toggle="modal" data-bs-target="#wstopmodal"  /> 
+                                        <!--------------------------------------------------------------------------------------->    
+                                        <div class="modal fade" id="wstopmodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
+                                                style="max-width: 500px">
+                                                <div class="modal-content border-0">
+                                                    <div class="modal-body p-0" > 
+                                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                            <h4 class="mb-1" id="modalExampleDemoLabel">비가동사유</h4>
+                                                        </div>    
+
+                                                        <div class="container-fluid"> 
+                                                            <div id="wstopGrid_div" ></div> 
+                                                        </div>    
+                                                    </div>  
+                                                    <div class="modal-footer">
+                                                        <div class="row g-1">
+                                                            <div class="col-auto">
+                                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                    type="button" id="wstopmodal_btn"  data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <button class="badge-soft-info dropdown-item rounded-1"
+                                                                    type="submit">저장 </button>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>   
+
+                                                </div>
+                                            </div> 
+                                        </div>          
+                                        <!--------------------------------------------------------------------------------------->   
+                                        
+                                        
+                                        <input class="form-control form-control-sm"  type="hidden" id="injglistbtn" data-bs-toggle="modal" data-bs-target="#wjglistmodal"  /> 
+                                        <!--------------------------------------------------------------------------------------->    
+                                        <div class="modal fade" id="wjglistmodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
+                                                style="max-width: 700px">
+                                                <div class="modal-content border-0">
+                                                    <div class="modal-body p-0" > 
+                                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                            <h4 class="mb-1" id="modalExampleDemoLabel">원자재목록</h4>
+                                                        </div>     
+                                                        <div class="container-fluid"> 
+                                                            <div class="col-auto">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-text">품목검색</div>
+                                                                    <input class="form-control form-control-sm" id="searchjqty" type="text"  
+                                                                        placeholder="품목명"     /> 
+                                                                    <button class="btn btn-falcon-warning me-1 mb-1" id="jqtySearchBtn" type="button" >검색
+                                                                    </button>
+                                                                </div>
+                                                            </div> 
+                                                        </div>       
+                                                        <div class="container-fluid"> 
+                                                            <div id="wjglistGrid_div" ></div> 
+                                                        </div>    
+                                                    </div>  
+                                                    <div class="modal-footer">
+                                                        <div class="row g-1">
+                                                            <div class="col-auto">
+                                                                <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                    type="button" id="wjglistmodal_btn"  data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <button class="badge-soft-info dropdown-item rounded-1"
+                                                                    type="submit">저장 </button>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>   
+
+                                                </div>
+                                            </div> 
+                                        </div>          
+                                        <!--------------------------------------------------------------------------------------->   
+
                                         <!--------------------------------------------------------------------------------------->    
                                         <div class="modal fade" id="wotqtymodal" data-bs-keyboard="false"
                                             data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -504,7 +585,52 @@
                                                 </div>
                                             </div> 
                                         </div>          
-                                    <!--------------------------------------------------------------------------------------->                                                         
+                                    <!--------------------------------------------------------------------------------------->  
+                                    
+                                    
+                                    <!--  모달 처리 -->
+                                    <input class="form-control form-control-sm"  type="hidden" id="intimebtn" data-bs-toggle="modal" data-bs-target="#timemodal"  /> 
+                                    <!--------------------------------------------------------------------------------------->   
+                                    <div class="modal fade" id="timemodal" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                                            style="max-width: 600px">
+                                            <div class="modal-content border-0">
+                                                <div class="modal-body p-0" > 
+                                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                                                        <h4 class="mb-1" id="modalExampleDemoLabel">작업시간선택</h4>
+                                                    </div>    
+                                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light"> 
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" name="rwflag" id="rwflag" type="radio"  value="D" checked />
+                                                            <label class="form-check-label" for="inlineRadio1">주간</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" name="rwflag" id="rwflag" type="radio" value="N" />
+                                                            <label class="form-check-label" for="inlineRadio1">야간</label>
+                                                        </div>                          
+                                                    </div>    
+                                                </div>  
+
+                                                <div class="modal-footer">
+                                                    <div class="row g-1">
+                                                        <div class="col-auto">
+                                                            <button class="badge-soft-info dropdown-item rounded-1" id="rwflagBtn" 
+                                                                type="submit">LOT번호 생성 </button>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                                                type="button"  id="wintimemodal_btn" data-bs-dismiss="modal">Close</button>
+                                                        </div> 
+                                                    </div>
+                                                </div>   
+
+                                            </div>
+                                        </div> 
+                                    </div>    
+                                    <!--------------------------------------------------------------------------------------->   
+
                                     </div>
                                 </div>
                             </div>
@@ -523,12 +649,16 @@
     var wperidGrid ;
     var wiworkGrid ; 
     var wtab01Grid;
+    var wjglistGrid; 
     var wbadGrid ;
+    var wstopGrid ;
     var wbomGrid ;
     var view_flistpage;
     var view_wotqtpage;
     var view_wrmcpage ;
     var view_wbadpage ;
+    var view_wstoppage ;
+    var view_wjglistpage;
     var button_workstBtn = document.getElementById('workstBtn');
     var button_workedBtn = document.getElementById('workedBtn');
     var button_wfrdt = document.getElementById('wfrdt');
@@ -538,6 +668,7 @@
     var button_wotqtyBtn = document.getElementById('wotqtyBtn');
     var button_wbadqtyBtn = document.getElementById('wbadqtyBtn');
     var button_worksaveBtn = document.getElementById('worksaveBtn');
+    var button_partbtn = document.getElementById('partbtn');
       
     const statusdis_div = document.getElementById('statusdis01'); 
 
@@ -547,7 +678,7 @@
             searchList_rtn(ls_searchOrdDate);
               return ;
            }
-        }
+    }
 
     window.onload = function() {  
         //작업지시 list
@@ -570,19 +701,20 @@
             columns: [
                 // { binding: 'index', header: 'seq', width: '*' },
                 { binding: 'prod_sdate', header: '일자',  width: 130, align:"center", format: 'yyyy-MM-dd' },
+                { binding: 'lotno', header: 'LOTNO',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                 {
-                    binding: 'lotno',
+                    binding: 'plan_no',
                     width: 150,
-                    header: 'LOTNO', 
+                    header: '작지번호', 
                     align:"center",
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.lotno}</b>',
+                        text: '<b>${item.plan_no}</b>',
                         click: (e, ctx) => {
-                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode   );
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm   );
                         }
                     })
                 }, 
-                { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
+                // { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
                 // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                 { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
                 { binding: 'psize', header: '규격',     align:"center",  width: 100 },
@@ -646,7 +778,8 @@
                     end_qty: ListDto[i]["end_qty"],
                     wrmc: ListDto[i]["wrmc"],
                     wrmcnm: ListDto[i]["wrmcnm"],
-                    partcode: ListDto[i]["partcode"]
+                    partcode: ListDto[i]["partcode"],
+                    partnm: ListDto[i]["partnm"]
                     
                     
                 });
@@ -1005,7 +1138,8 @@
         function randBetween(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
- 
+  
+
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //불량구분 popup list
         view_wbadpage = new wijmo.collections.CollectionView(getBadData_wlist(), {
@@ -1144,11 +1278,87 @@
         }
         //불량구분 등록  
 
-//불량수량 조회 
 
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+        //비가동구분 popup list
+        view_wstoppage = new wijmo.collections.CollectionView(getStopData_wlist(), {
+            // pageSize: 6
+        });    
+        wstopGrid = new wijmo.grid.FlexGrid('#wstopGrid_div', {  
+            autoGenerateColumns: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [    
+                { binding: 'wcode', header: '코드', align: 'center', width: '*', format: '*' , isReadOnly: true},  
+                { binding: 'wcdnm', width: '1*', header: '비가동사유', width: '*', align:"left", format: '*' ,
+                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                        text: '<b>${item.wcdnm}</b>',
+                        click: (e, ctx) => {
+                            wstopChk(ctx.item.wcode, ctx.item.wcdnm );
+                        }
+                    })
+                },  
+            ],       
+            itemsSource: view_wstoppage
+        });  
+        // 비가동구분 데이터 수집
+        function getStopData_wlist(){
+
+            var WstopDto = [[${wstopDto}]];  
+            var data05 = [];
+            var cnt = 1;
+            for (var i = 0; i < WstopDto.length; i++) {
+                data05.push({
+                    id: i, 
+                    index: cnt,
+                    wcode:WstopDto[i]["wcode"],
+                    wcdnm: WstopDto[i]["wcdnm"]         
+                });
+                cnt++;
+            }   
+            return data05                                          
+        }         
+        
+        // 헤더 열 전환
+        setHeaderColumn06(false); 
+        function setHeaderColumn06(headerOn) {
+            wstopGrid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        }
+
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+        //원자재 재고 popup list
+        view_wjglistpage = new wijmo.collections.CollectionView(getStopData_wlist(), {
+            // pageSize: 6
+        });    
+        wjglistGrid = new wijmo.grid.FlexGrid('#wjglistGrid_div', {  
+            autoGenerateColumns: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [    
+                { binding: 'pname', header: '품목', align: 'center', width: '*', format: '*' , isReadOnly: true},  
+                { binding: 'psize', header: '규격', align: 'center', width: '*', format: '*' , isReadOnly: true},  
+                { binding: 'punit', header: '단위', align: 'center', width: '*', format: '*' , isReadOnly: true},  
+                { binding: 'janqty', header: '재고', align: 'center', width: '*', format: '*' , isReadOnly: true},  
+            ],       
+            itemsSource: view_wjglistpage
+        });          
+        
+        // 헤더 열 전환
+        setHeaderColumn05(false); 
+        function setHeaderColumn05(headerOn) {
+            wjglistGrid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        }
+ 
+        //-------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //불량수량 조회  
     document.getElementById("wbadqtyBtn").addEventListener("click",function(){
             searchbdqty_fnc()
-        })    
+    })    
 
     function searchbdqty_fnc(){
         var ls_plan_no   = document.getElementById('inplan_no').value;  
@@ -1219,6 +1429,101 @@
 
         }) 
     }
+
+    //원자재 목록 조회 
+    document.getElementById("inpartcode").addEventListener("click",function(){ 
+        searchjgqty_fnc()
+        document.getElementById("injglistbtn").click();  
+    })  
+    document.getElementById("partbtn").addEventListener("click",function(){ 
+        searchjgqty_fnc()
+        document.getElementById("injglistbtn").click();  
+    })  
+    document.getElementById("jqtySearchBtn").addEventListener("click",function(){ 
+        searchjgqty_fnc() 
+    })  
+    
+    //원자재 조회  
+    function searchjgqty_fnc(){  
+        var ls_plan_no   = document.getElementById('inplan_no').value;  
+        var ls_search   = document.getElementById('searchjqty').value;  
+        var ls_wflag = '00010'  
+
+        if(ls_plan_no == null || ls_plan_no.length == 0 || ls_plan_no == ""){ 
+            alert("작업지시서를 선택 하세요")  
+            return ;               
+        }  
+        if(ls_search == null || ls_search.length == 0 || ls_search == ""){ 
+             ls_search = "%";
+        }  
+        $.ajax({
+            url: '/app02m/index15/jglist',  
+            type:"POST",
+            data: { 
+                "searchtxt" :ls_search,  
+            }, 
+            async:false,
+            success:function(data){  
+                jaego_grid(data);
+            },error:function(e){
+                console.log("error");                            
+            }
+        }).done(function(fragment){           
+
+        })  
+
+    }    
+    //  원재료 재고 목록
+    function jaego_grid(data){
+        var wtab01Dto  = data;    
+        var wtab01_data = [];
+        var cnt = 1;
+        for (var i = 0; i < wtab01Dto.length; i++) {
+            wtab01_data.push({
+                id: i, 
+                index: cnt, 
+                janqty: wtab01Dto[i]["janqty"],  
+                pcode: wtab01Dto[i]["pcode"], 
+                pname: wtab01Dto[i]["pname"], 
+                psize: wtab01Dto[i]["psize"], 
+                punit: wtab01Dto[i]["punit"],       
+            });
+            cnt++;
+        }   
+         
+            wjglistGrid.columns.clear();  
+            wjglistGrid.autoGenerateColumns = false; 
+            view_wjglistpage.sourceCollection  = wtab01_data; 
+
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'pname';
+            cols.header = '품목';
+            cols.align = "center";
+            cols.width = 200;
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.pname}</b>',
+                click: (e, ctx) => {
+                    wjglistChk(ctx.item.pcode ,ctx.item.pname);                    
+                }
+            });
+            wjglistGrid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'psize';
+            cols.header = '규격';
+            cols.align = "center";
+            cols.width = 150;           
+            wjglistGrid.columns.push(cols); 
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'janqty';
+            cols.header = '재고수량';
+            cols.align = "right";
+            cols.width = 90;                  
+            wjglistGrid.columns.push(cols);   
+
+    }        
+                   
  
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //작업설비 검색   
@@ -1236,7 +1541,7 @@
                     var wrmcDto  = data;  
                     var wrmc_data = [];
                     var cnt = 1;
-                    console.log("wrmc_data-->" + wrmc_data)
+                    //console.log("wrmc_data-->" + wrmc_data)
                     for (var i = 0; i < wrmcDto.length; i++) {
                         wrmc_data.push({
                             id: i, 
@@ -1431,6 +1736,10 @@
     var button_wfrdt = document.getElementById('wfrdt');
     var button_wtrdt = document.getElementById('wtrdt');
     document.getElementById("wfrdt").addEventListener("click",function(){ 
+            document.getElementById("intimebtn").click();  
+    })
+    document.getElementById("rwflagBtn").addEventListener("click",function(){   
+            document.getElementById("wintimemodal_btn").click(); 
             const TIME_ZONE = 3240 * 10000;  
             const d =  new Date();
             const date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
@@ -1439,8 +1748,13 @@
             save_btn("1")
             button_wfrdt.disabled = true;
             button_wtrdt.disabled = false;
+            
     })
-
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //임시중단 
+    document.getElementById("workedBtn").addEventListener("click",function(){ 
+        document.getElementById("instopbtn").click();  
+    })   
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //공정종료
     document.getElementById("wtrdt").addEventListener("click",function(){    
@@ -1456,13 +1770,14 @@
 
 
     }  
- 
+    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
     document.getElementById("searchBtn").addEventListener("click",function(){ 
         var ls_searchOrdDate = document.getElementById('searchOrdDate').value;  
         searchList_rtn(ls_searchOrdDate);
     })   
 
-
+    
     function fnc_calvalue(obj){                            
         ll_inwotqt =  obj.value;                                    //수정 생산량
         if(!ll_inwotqt){
@@ -1484,7 +1799,20 @@
             const date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
             const time = d.toTimeString().split(' ')[0]; 
             document.getElementById('endDate').value = date + ' ' + time;
+        } 
+        if(arg1 == "1"){ 
+            //주야간구분 
+            var radios = document.getElementsByName('rwflag');
+            for (var i = 0; i < radios.length; i++) {  
+                if (radios[i].checked) { 
+                    // console.log(radios[i].value); // 체크된 라디오 버튼의 값 출력 
+                    ls_rwflag = radios[i].value; 
+                }
+            }    
+        }else{
+            ls_rwflag = "";
         }
+        
         var ls_custcd   = document.getElementById('incustcd').value; 
         var ls_spjangcd = document.getElementById('inspjangcd').value; 
         var startDate   = document.getElementById('startDate').value; 
@@ -1503,7 +1831,9 @@
         var ls_inpcode   = document.getElementById('inpcode').value; 
         var ls_inwono   = document.getElementById('inwono').value;  
         var ls_inpartcode  = document.getElementById('inpartcode').value;  
-
+        var ls_inpartnm  = document.getElementById('inpartnm').value;  
+        var ls_stopcd = "";
+        var ls_stopnm = "";
         button_workstBtn.disabled = false;
         button_workedBtn.disabled = false;
         button_wfrdt.disabled = false;
@@ -1512,30 +1842,35 @@
         button_wperidBtn.disabled = false;
         button_wotqtyBtn.disabled = false;
         button_wbadqtyBtn.disabled = false; 
-        button_worksaveBtn.disabled = false; 
+        button_worksaveBtn.disabled = false;  
+        button_partbtn.disabled = false; 
         if(arg1 == "1" || arg1 == "4"){  //공정시작 작업시작
             button_workstBtn.disabled = true;
             button_workedBtn.disabled = false;
             button_wfrdt.disabled = true;
             button_wtrdt.disabled = false;               
             endDate = "";
+            document.getElementById('instopcd').value = "";     //비가동사유코드
+            document.getElementById('instopnm').value = ""; 
             document.getElementById('endDate').value = null;
         }else if(arg1 == "0"){  //공정종료  
             button_workstBtn.disabled = true;
             button_workedBtn.disabled = true; 
-            button_worksaveBtn.disabled = true;   
+            button_worksaveBtn.disabled = true;  
+            button_partbtn.disabled = true; 
         }else if(arg1 == "2"){  //  작업시작 
             button_workstBtn.disabled = true; 
             button_wfrdt.disabled = true;  
             button_wtrdt.disabled = false;    
-
+            document.getElementById('instopcd').value = "";     //비가동사유코드
+            document.getElementById('instopnm').value = ""; 
             endDate = "";
             document.getElementById('endDate').value = null;
         }else{ // 작업중단 
             button_workedBtn.disabled = true;
             button_wfrdt.disabled = true;  
-
-
+            ls_stopcd = document.getElementById('instopcd').value;     //비가동사유코드
+            ls_stopnm = document.getElementById('instopnm').value;  
             endDate = "";
             document.getElementById('endDate').value = null;
         }   
@@ -1618,12 +1953,16 @@
                     "pcode"     : ls_inpcode     ,
                     "wono"      : ls_inwono ,
                     "partcode"      : ls_inpartcode , 
-                    "workdv"      : arg1
+                    "partnm"      : ls_inpartnm ,                     
+                    "workdv"      : arg1, 
+                    "rwflag"      : ls_rwflag, 
+                    
                 },
                 async:false,
                 success:function(data){
-                    // console.log("등록OK", data); 
-                    // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
+                     console.log("등록OK", data); 
+                    // console.log("wperidGrid_Data", wperidGrid.rows.length );  
+            
                     if(arg1 == "0"){
                         // alert("완료 처리 되었습니다.");
                         button_workstBtn.disabled = true;
@@ -1634,7 +1973,19 @@
                         button_wperidBtn.disabled = true;
                         button_wotqtyBtn.disabled = true;
                         button_wbadqtyBtn.disabled = true;
-                        var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>공정 완료</span></div>";                                        
+                        var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>공정 완료</span></div>"; 
+                    }else if(arg1 == "1"){
+                        document.getElementById('inlotno').value = data;
+                        button_workstBtn.disabled = false;
+                        button_workedBtn.disabled = false;
+                        button_wfrdt.disabled = true;
+                        button_wtrdt.disabled = false; 
+                        button_wrmcBtn.disabled = false;
+                        button_wperidBtn.disabled = false;
+                        button_wotqtyBtn.disabled = false;
+                        button_wbadqtyBtn.disabled = false; 
+                        var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";      
+
                     }else{
                         // alert("저장되었습니다.");
                         button_workstBtn.disabled = false;
@@ -1668,7 +2019,9 @@
                     "plan_no"   : ls_plan_no, 
                     "wflag"     : ls_inwflag     , 
                     "decision"  : ls_decision  ,
-                    "workdv"      : arg1  
+                    "workdv"      : arg1   ,
+                    "instopcd"      : ls_stopcd   ,
+                    "instopnm"      : ls_stopnm  
                 },
                 async:false,
                 success:function(data){
@@ -1676,10 +2029,10 @@
                     // console.log("wperidGrid_Data", wperidGrid.rows.length );   
                     if(arg1 == "2"){
                         // alert("완료 처리 되었습니다.");
-                        var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>작업시작</span></div>";                                        
+                        var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>재시작</span></div>";                                        
                     }else{
                         // alert("저장되었습니다.");
-                        var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>작업중단</span></div>";                                        
+                        var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>임시중단</span></div>";                                        
                     } 
                     statusdis_div.innerHTML  = ls_text; 
             },error:function(e){
@@ -1723,9 +2076,9 @@
         }
         ls_inwinqt = Number(ls_inwinqt);
         ls_inwotqt = Number(ls_inwotqt); 
-        console.log(ls_inwinqt)
-        console.log(ls_inwotqt)
-        console.log(ls_popwotqt)
+        // console.log(ls_inwinqt)
+        // console.log(ls_inwotqt)
+        // console.log(ls_popwotqt)
         if(ls_inwinqt < ls_inwotqt + ls_popwotqt){ 
             if (!confirm("계획량을 초과했습니다. 등록하시겠습니까?")) {
                 return ; 
@@ -1887,12 +2240,12 @@
         document.getElementById('popwseq').value= arg4;  
         document.getElementById('popseq').value= arg5;  
     }
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23 ){ 
-        // /, ctx.item.owqty ,ctx.item.obqty
-            //selectChk(custcd, spjangcd, wono, cltnm, pname, 
-            //          ostore, plan_no, cltcd, pcode, wseq,
-            //            wflag, phmmdoc, otqty, wrpsnm, owqty ,
-            //              obqty,winps,wrps,lotno , prod_qty, wrmc, wrmcnm);
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24 ){ 
+            // custcd, spjangcd, wono, cltnm, pname, 
+            // ostore, plan_no, cltcd, pcode, wseq, 
+            // wflag, phmmdoc, otqty, wrpsnm, owqty ,
+            // obqty,winps,wrps,lotno,prod_qty, 
+            // wrmc, wrmcnm, partcode   
         var button_workstBtn = document.getElementById('workstBtn');
         var button_workedBtn = document.getElementById('workedBtn'); 
             button_workstBtn.disabled = false;
@@ -1912,6 +2265,7 @@
         document.getElementById('inlotno').value= arg19;  
         document.getElementById('prod_qty').value= arg20;   
         document.getElementById('inpartcode').value= arg23; 
+        document.getElementById('inpartnm').value= arg24; 
         
     // document.getElementById('inphmmdoc').value= arg12;  
         wflag = arg11; //document.getElementById('inwflag').value;
@@ -2142,6 +2496,17 @@
             document.getElementById('inwrps').value= arg1; 
             document.getElementById('inwrpsnm').value= arg2;   
             $("#wperidmodal_btn").trigger("click"); 
+    } 
+    function wstopChk(arg1, arg2  ){   
+            document.getElementById('instopcd').value= arg1; 
+            document.getElementById('instopnm').value= arg2;   
+            $("#wstopmodal_btn").trigger("click"); 
+            save_btn("3");
+    }
+    function wjglistChk(arg1, arg2  ){   
+            document.getElementById('inpartcode').value= arg1; 
+            document.getElementById('inpartnm').value= arg2;   
+            $("#wjglistmodal_btn").trigger("click");  
     }
     function searchList_rtn(arg){ 
         var ls_searchdate = arg;  
@@ -2165,8 +2530,8 @@
                 // console.log("today->" + today);
                 for (var i = 0; i < ListDto.length; i++) {
                     var psdate = ListDto[i]["prod_sdate"];
-                    psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
-                    // var date_format = new Date(psdate);
+                    psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2); 
+                    // var date_format = new Date(psdate);ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode  
                     dataArr.push({
                         id: i, 
                         index: cnt,                                                                
@@ -2196,6 +2561,10 @@
                         winps: ListDto[i]["winps"]  ,
                         wrps: ListDto[i]["wrps"]  ,
                         lotno: ListDto[i]["lotno"] ,
+                        wrmc: ListDto[i]["wrmc"] ,
+                        wrmcnm: ListDto[i]["wrmcnm"] ,
+                        partcode: ListDto[i]["partcode"] ,
+                        partnm: ListDto[i]["partnm"] ,
                         end_qty: ListDto[i]["end_qty"] 
                     });
                     cnt++;
@@ -2213,12 +2582,6 @@
                 cols.binding = 'lotno';
                 cols.header = 'LotNo';
                 cols.align = "center";
-                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    text: '<b>${item.lotno}</b>',
-                    click: (e, ctx) => {
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc , ctx.item.otqty , ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno );
-                    }
-                });
                 cols.width = 150 ; 
                 wtab01Grid.columns.push(cols);  
                 cols = new wijmo.grid.Column(); 
@@ -2226,6 +2589,12 @@
                 cols.header = '작지번호';
                 cols.align = "center";
                 cols.width = 150 ; 
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.wono}</b>',
+                    click: (e, ctx) => {                        
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm  );
+                    }
+                });
                 wtab01Grid.columns.push(cols);  
                 // cols = new wijmo.grid.Column(); 
                 // cols.binding = 'cltnm';

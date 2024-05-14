@@ -5,34 +5,20 @@
 <mapper namespace="com.dae.kdmes.Mapper.App02.Index10Mapper">
 
 
-    <select id="getFplanList"  parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
-        <![CDATA[
-            select
-                Left(TB.indate,4) + '-' + substring(TB.indate, 5,2)+ '-' + substring(TB.indate, 7,2) as indate,
-                Left(TB.prod_sdate,4) + '-' + substring(TB.prod_sdate, 5,2)+ '-' + substring(TB.prod_sdate, 7,2) as prod_sdate,
-                Left(TB.prod_edate,4) + '-' + substring(TB.prod_edate, 5,2)+ '-' + substring(TB.prod_edate, 7,2) as prod_edate,
-                 TB.lotno, TB.cltcd, TB.qcdate, TB.perid, TB.workdv, TB.ecltnm, TB.qcdate, TB.plan_no,
-                TB.pcode, E.jpum, E.jgugek, TB.dem_flag, E.jchajong, E.jgugek2, E.jsayang, E.j_sr, E.jpumcode, E.jdanwy,
-                TB.prod_qty, TB.cls_flag, TB.istore, TB.ostore, TB.rwflag, TB.remark,
-                Left(TB.orddate,4) + '-' + substring(TB.orddate, 5,2)+ '-' + substring(TB.orddate, 7,2) as orddate
-             from TB_FPLAN TB
-            INNER JOIN JCODE E WITH(NOLOCK) ON (TB.PCODE = E.jkey)
-             WHERE 1=1
-             ORDER BY TB.indate desc, TB.plan_no
-        ]]>
-    </select>
-
     <select id="GetFplanList"  parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
         <![CDATA[
            select
                 Left(TB.indate,4) + '-' + substring(TB.indate, 5,2)+ '-' + substring(TB.indate, 7,2) as indate,
                 Left(TB.prod_sdate,4) + '-' + substring(TB.prod_sdate, 5,2)+ '-' + substring(TB.prod_sdate, 7,2) as prod_sdate,
                 Left(TB.prod_edate,4) + '-' + substring(TB.prod_edate, 5,2)+ '-' + substring(TB.prod_edate, 7,2) as prod_edate,
-                TB.lotno, TB.cltcd, TB.qcdate, TB.perid, TB.workdv, TB.ecltnm, TB.qcdate, TB.plan_no,
+                Left(TB.qcdate,4) + '-' + substring(TB.qcdate, 5,2)+ '-' + substring(TB.qcdate, 7,2) as qcdate,
+                TB.lotno, TB.cltcd,  TB.perid, (select com_rem1 from TB_CA510  where com_cls = '002' and com_code=TB.perid) as pernm,
+                TB.workdv, TB.ecltnm, TB.qcdate, TB.plan_no,
                 TB.pcode, E.jpum, E.jgugek, TB.dem_flag, E.jchajong, E.jgugek2, E.jsayang, E.j_sr, E.jpumcode, E.jdanwy,
-                TB.prod_qty, TB.cls_flag, TB.istore, TB.ostore, TB.rwflag, TB.remark, Left(TB.orddate,4) + '-' + substring(TB.orddate, 5,2)+ '-' + substring(TB.orddate, 7,2) as orddate
+                TB.prod_qty, TB.cls_flag, TB.istore, TB.ostore, TB.rwflag, TB.remark,
+                Left(TB.orddate,4) + '-' + substring(TB.orddate, 5,2)+ '-' + substring(TB.orddate, 7,2) as orddate
              from TB_FPLAN TB
-            INNER JOIN JCODE E WITH(NOLOCK) ON (TB.PCODE = E.jkey)
+                INNER JOIN JCODE E WITH(NOLOCK) ON (TB.PCODE = E.jkey)
               WHERE isnull(TB.pcode,'') Like concat('%',#{pcode},'%') or isnull(E.jpum,'') Like concat('%',#{jpum},'%')
             ORDER BY TB.indate desc, TB.plan_no
         ]]>
@@ -51,21 +37,21 @@
         insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd,  perid, ecltnm , line, wono ,
         workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,
         wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv ,wodv , opcod
-        , prod_dqty , ord_edate, wflag, orddate
-        ) values
+        , prod_dqty , ord_edate, wflag, orddate, qcdate  ) values
         ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{perid}, #{ecltnm}, '00', #{wono},
         #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark} ,
-        '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , #{pcode} , '0' ,'' , '00010', #{orddate},
-        )
+        '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , #{pcode} , '0' ,'' , '00010', #{orddate} , #{qcdate})
     </insert>
 
 
     <update id="UpdateFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto">
         UPDATE TB_FPLAN SET
-        pcode=#{pcode},
+        spjangcd='ZZ',
         indate=#{indate}
         <if test="prod_sdate != null ">,</if>
         <if test="prod_sdate != null">prod_sdate=#{prod_sdate}</if>
+        <if test="pcode != null ">,</if>
+        <if test="pcode != null">pcode=#{pcode}</if>
         <if test="prod_edate != null ">,</if>
         <if test="prod_edate != null">prod_edate=#{prod_edate}</if>
         <if test="cltcd != null ">,</if>
@@ -92,12 +78,113 @@
         <if test="remark != null">remark=#{remark}</if>
         <if test="workdv != null ">,</if>
         <if test="workdv != null">workdv=#{workdv}</if>
+        <if test="qcdate != null ">,</if>
+        <if test="qcdate != null">qcdate=#{qcdate}</if>
+        <if test="lotno != null ">,</if>
+        <if test="lotno != null">lotno=#{lotno}</if>
         where plan_no=#{plan_no}
     </update>
 
     <update id="DeleteFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto">
         DELETE  TB_FPLAN where lotno  = #{lotno}
     </update>
+
+    <insert id="InsertCA611" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
+        insert into TB_CA611 (custcd, spjangcd, cltcd,   ibgdate, ibgnum,
+         perid, store,  remark  ) values
+        ('KDMES', 'ZZ', #{cltcd},  #{ibgdate},    #{ibgnum},
+         #{perid},     #{store},   #{remark}  )
+    </insert>
+
+    <insert id="InsertCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
+        insert into TB_CA613 (custcd, spjangcd, cltcd, acorp, ibgdate, ibgnum, ibgseq,
+        pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt,
+        mamt, indate, inperid,  pernm, perid, remark, lotno, istore, ostore ) values
+        ('KDMES', 'ZZ', #{cltcd},   #{acorp},  #{ibgdate},  #{ibgnum}, #{ibgseq},
+        #{pcode}, #{pname}, #{psize}, #{punit}, #{qty}, #{cqty},   #{uamt},  #{samt},  #{tamt},
+        #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}  )
+    </insert>
+
+
+    <delete id="DeleteCA611" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
+        delete from TB_CA611
+        where ibgdate = #{ibgdate} and ibgnum = #{ibgnum}
+    </delete>
+
+    <delete id="DeleteCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
+        delete from TB_CA613
+        where ibgdate = #{ibgdate} and ibgnum = #{ibgnum}
+    </delete>
+
+    <update id="UpdateCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        UPDATE TB_CA613 SET
+        spjangcd='ZZ',
+        <if test="pname != null">pname=#{pname}</if>
+        <if test="pcode != null ">,</if>
+        <if test="pcode != null">pcode=#{pcode}</if>
+        <if test="psize != null ">,</if>
+        <if test="psize != null">psize=#{psize}</if>
+        <if test="punit != null ">,</if>
+        <if test="punit != null">punit=#{punit}</if>
+        <if test="qty != null ">,</if>
+        <if test="qty != null">qty=#{qty}</if>
+        <if test="cqty != null ">,</if>
+        <if test="cqty != null">cqty=#{cqty}</if>
+        <if test="uamt != null ">,</if>
+        <if test="uamt != null">uamt=#{uamt}</if>
+        <if test="samt != null ">,</if>
+        <if test="samt != null">samt=#{samt}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="pernm != null ">,</if>
+        <if test="pernm != null">pernm=#{pernm}</if>
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+        <if test="acorp != null ">,</if>
+        <if test="acorp != null">acorp=#{acorp}</if>
+        <if test="lotno != null ">,</if>
+        <if test="lotno != null">lotno=#{lotno}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        where ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and ibgseq = #{ibgseq}
+    </update>
+
+
+
+    <select id="SelectMaxIbgnum" parameterType="String" resultType="String">
+        <![CDATA[  select  max(ibgnum)  from TB_CA613 where ibgdate = #{ibgdate}      ]]>
+    </select>
+
+    <select id="SelectCa613List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+
+        <![CDATA[ select B.cltcd as cltcd,
+                      Left(B.ibgdate,4) + '-' + substring(B.ibgdate, 5,2)+ '-' + substring(B.ibgdate, 7,2) as ibgdate,
+                      B.ibgnum, B.ibgseq, B.lotno, B.istore, B.ostore,
+                      B.pcode, B.pname, B.psize,    B.punit,  B.qty, B.cqty, B.uamt, B.samt, B.tamt,
+                      isnull(B.remark,'') as remark,
+                      B.mamt, B.acorp, B.pernm , B.perid
+                  from  TB_CA613 B WITH (NOLOCK)
+                  where  B.pname Like concat('%',#{pname},'%')
+                    AND B.ibgdate between #{frdate} and #{todate}
+                  ORDER BY  B.ibgdate desc, B.ibgnum, B.ibgseq
+        ]]>
+    </select>
+
+    <select id="SelectCa613JaegoList"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+
+        <![CDATA[
+                SELECT Z.pcode, Z.pname, Z.psize, Z.punit, Z.janqty
+                FROM (
+                        select sum(isnull(B.qty,0))  - sum(isnull(B.cqty,0)) as janqty,
+                               B.pcode, B.pname, B.psize, B.punit
+                        from  TB_CA613 B WITH (NOLOCK)
+                        Group BY  B.pcode, B.pname, B.psize, B.punit
+                ) Z where Z.janqty > 0
+                AND  Z.pname Like concat('%',#{pname},'%')
+                ORDER BY  Z.pname, Z.psize, Z.punit, Z.pcode
+        ]]>
+    </select>
+
 
     <select id="GetJpumListTot" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
         <![CDATA[
@@ -116,21 +203,13 @@
 
     <select id="GetCifListTot" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
         <![CDATA[
-        select acorp1, acorp2, acorp3, acorp, asano1, asano2, asano3, asano1 + '-' + asano2 + '-' + asano3 as asanotxt, aname, aupte, ajong, apost1,  acorp1 + CAST(acorp2 as varchar) as acode,
+        select acorp1, acorp2, acorp3, acorp, asano1, asano2, asano3, asano1 + '-' + asano2 + '-' + asano3 as asanotxt,
+               aname, aupte, ajong, apost1,  acorp1 + CAST(acorp2 as varchar) as acode,
                ajuso1, ajuso2, abigo, agita, ajumi1, ajumi2, ajumi1 + '-' + ajumi2 as ajumitxt,
-               aascode1,aascode2, aascode1 + '-' + aascode2 as aascodetxt,  atelno, atelno2,
-               ahand , aemail,abonsadam1, abonsadam2, abonsadam3, adomain, afax, isnull(ajuso1,'') + ' ' + isnull(ajuso2,'') as ajusotxt,
-               B.inname as inname01, C.inname as inname02, D.inname as inname03, E.cifcodename as cifcodename
+               aascode1,aascode2,  atelno, atelno2,
+               ahand , aemail, afax, isnull(ajuso1,'') + ' ' + isnull(ajuso2,'') as ajusotxt
         from cif WITH (NOLOCK)
-            LEFT OUTER JOIN INSA B WITH(NOLOCK) ON (cif.abonsadam1 = B.insano)
-            LEFT OUTER JOIN INSA C WITH(NOLOCK) ON (cif.abonsadam2 = C.insano)
-            LEFT OUTER JOIN INSA D WITH(NOLOCK) ON (cif.abonsadam3 = D.insano)
-            LEFT OUTER JOIN cifcode E WITH(NOLOCK) ON (cif.acorp1 = E.cifcode)
-        WHERE isnull(acorp,'') Like concat('%',#{acorp},'%')
-         -- and isnull(delflag,'0')  = '0'
-          and isnull(acorp1,'') Like concat('%',#{acorp1},'%')
-          and isnull(agita,'') Like concat('%',#{agita},'%')
-          and isnull(abonsadam1,'') Like concat('%',#{abonsadam1},'%')
+        WHERE isnull(acorp,'') Like concat('%',#{acorp},'%') and LEN(isnull(acorp,'')) > 0
         ORDER BY acorp
         ]]>
     </select>

@@ -57,6 +57,10 @@ public class AppPopupService {
         return Popupmapper.GetWBadList01(parm);
     }
 
+    public Object GetStopList(TBPopupVO parm){
+        return Popupmapper.GetStopList(parm);
+    }
+
 
 
 }
