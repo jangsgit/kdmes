@@ -14,6 +14,12 @@
                     }
                 </script>
 
+                <style>
+                    .dropdown-container {
+                        display: flex;
+                        gap: 10px; /* 드롭다운 사이의 간격 */
+                    }
+                </style>
                 <nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
                     <script>
                         var navbarStyle = localStorage.getItem("navbarStyle");
@@ -60,12 +66,42 @@
     <!-- contents body 시작--> 
     <!-- form 또는 action 으로 받아오기  -->
         <div class="section regist"> 
-            <div class="sec_con" style="width: 50%; ">  
+            <div class="sec_con" style="width: 45%; ">  
                 <div class="box_wrap">
                     <div class="box_input" >
                         <div class="date_wrap">
-                            <input type="text"  id="searchtxt" placeholder="거래처명"> 
-                            <button type="button" id="retrieveBtn" >검색</button>      
+                            <div class="dropdown-container">
+                                    <select class="form-select" aria-label="Default select example" id="inmonth_txt">
+                                        <option selected="">월</option>
+                                        <option value="1월">1월</option>
+                                        <option value="2월">2월</option>
+                                        <option value="3월">3월</option>
+                                        <option value="4월">4월</option>
+                                        <option value="5월">5월</option>
+                                        <option value="6월">6월</option>
+                                        <option value="7월">7월</option>
+                                        <option value="8월">8월</option>
+                                        <option value="9월">9월</option>
+                                        <option value="10월">10월</option>
+                                        <option value="11월">11월</option>
+                                        <option value="12월">12월</option>
+                                    </select> 
+                               
+                                    <select class="form-select" aria-label="Default select example"  id="inweeks_txt">
+                                        <option selected="">주차</option>
+                                        <option value="1">1주차</option>
+                                        <option value="2">2주차</option>
+                                        <option value="3">3주차</option>
+                                        <option value="4">4주차</option>
+                                        <option value="5">5주차</option>
+                                        <option value="6">6주차</option>
+                                    </select> 
+
+                                    <input type="text"  id="searchtxt" placeholder="LOTNO" style="width: 300px; padding: 10px; font-size: 16px;">
+                                    <button type="button" id="retrieveBtn" >검색</button> 
+                            </div>
+                           <!-- <input type="text"  id="searchtxt" placeholder="거래처명">  -->
+                            <!-- <button type="button" id="retrieveBtn" >검색</button>       -->
                         </div>                              
                         <!-- //여기서부터 그래프 -->
                         <div class="table table_style2">
@@ -111,6 +147,49 @@
                                             </div>
                                         </td>                                      
                                     </tr>   
+                                    <tr>
+                                        <th>월 / 주차</th> 
+                                        <td colspan="2">
+                                            <div class="dropdown-container">
+                                                    <select class="form-select" aria-label="Default select example" id="inmonth">
+                                                        <option selected="">월</option>
+                                                        <option value="1월">1월</option>
+                                                        <option value="2월">2월</option>
+                                                        <option value="3월">3월</option>
+                                                        <option value="4월">4월</option>
+                                                        <option value="5월">5월</option>
+                                                        <option value="6월">6월</option>
+                                                        <option value="7월">7월</option>
+                                                        <option value="8월">8월</option>
+                                                        <option value="9월">9월</option>
+                                                        <option value="10월">10월</option>
+                                                        <option value="11월">11월</option>
+                                                        <option value="12월">12월</option>
+                                                    </select> 
+                                               
+                                                    <select class="form-select" aria-label="Default select example"  id="inweeks">
+                                                        <option selected="">주차</option>
+                                                        <option value="1">1주차</option>
+                                                        <option value="2">2주차</option>
+                                                        <option value="3">3주차</option>
+                                                        <option value="4">4주차</option>
+                                                        <option value="5">5주차</option>
+                                                        <option value="6">6주차</option>
+                                                    </select> 
+                                            </div>
+                                        </td>
+                                        <th>시간구분</th> 
+                                        <td colspan="2">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="rwflag" id="rwflag" type="radio"  value="D" checked />
+                                                <label class="form-check-label" for="inlineRadio1">주간</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="rwflag" id="rwflag" type="radio" value="N" />
+                                                <label class="form-check-label" for="inlineRadio1">야간</label>
+                                            </div>
+                                        </td> 
+                                    </tr>   
                                     <tr> 
                                         <th>거래처<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
                                         <td colspan="2">
@@ -129,20 +208,7 @@
                                                 <input type="text"  class="form-control datetimepicker" id="qcdate" autocomplete="off"  placeholder="Y-m-d"     >                                                      
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th>시간구분</th> 
-                                        <td colspan="4">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" name="rwflag" id="rwflag" type="radio"  value="D" checked />
-                                                <label class="form-check-label" for="inlineRadio1">주간</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" name="rwflag" id="rwflag" type="radio" value="N" />
-                                                <label class="form-check-label" for="inlineRadio1">야간</label>
-                                            </div>
-                                        </td> 
-                                    </tr>     
+                                    </tr>  
                                     <tr>     
                                         <th>담당자</th>
                                         <td colspan="2">
@@ -461,37 +527,7 @@
         
         
         
-            window.onload = function() { 
-                
-                // // 일반 입력 날짜
-                // windate = new wijmo.input.InputDate('#indate', {
-                //     isRequired: false,
-                //     value: null,
-                //     placeholder: '',
-                //     format: 'yyyy-MM-dd', 
-                // });
-                
-                // wprod_sdate = new wijmo.input.InputDate('#prod_sdate', {
-                //     isRequired: false,
-                //     value: null,
-                //     placeholder: '',
-                //     format: 'yyyy-MM-dd',
-                //     valueChanged: (sender) => showCurrentDate(sender, 7)
-                // });
-                
-                // wprod_edate = new wijmo.input.InputDate('#prod_edate', {
-                //     isRequired: false,
-                //     value: null,
-                //     placeholder: '',
-                //     format: 'yyyy-MM-dd', 
-                // });
-                
-                // wqcdate = new wijmo.input.InputDate('#qcdate', {
-                //     isRequired: false,
-                //     value: null,
-                //     placeholder: '',
-                //     format: 'yyyy-MM-dd', 
-                // });  
+            window.onload = function() {  
                     //tab01 grid list
                 view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                     pageSize: 21
@@ -511,6 +547,7 @@
                     alternatingRowStep: 0,
                     columns: [     
                         { binding: 'indate', header: '등록일자', align: "center", width: 120 }, 
+                        { binding: 'inmonthtxt', header: '주차', align: "center", width: 100 }, 
                         { binding: 'ecltnm', header: '거래처', align: "left", width: 180 }, 
                         { binding: 'jpum', 
                             header: '품목', 
@@ -519,7 +556,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.jpum}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm);                    
+                                    wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm, ctx.item.inmonth, ctx.item.inweeks);                    
                                 }
                             }) 
                         },    
@@ -563,6 +600,19 @@
                     var wactnm_data = [];       
                     var cnt = 1;   
                     for (var i = 0; i < wtab01Dto.length; i++) {
+                        var ls_inmonth = wtab01Dto[i]["inmonth"];
+                        var ls_inweeks = wtab01Dto[i]["inweeks"];
+                        if(ls_inmonth == null || ls_inmonth.length == 0 || ls_inmonth == "" ){ 
+                            ls_inmonth = ''
+                            var ls_monthtxt    = ''                 
+                        }else{
+                            if(ls_inweeks == null || ls_inweeks.length == 0 || ls_inweeks == "" ){ 
+                                ls_inweeks = '' 
+                                var ls_monthtxt    = ''             
+                            } else {
+                                var ls_monthtxt = ls_inmonth + ' ' + ls_inweeks + '주차'
+                            } 
+                        } 
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
@@ -594,7 +644,10 @@
                             ostore: wtab01Dto[i]["ostore"], 
                             rwflag: wtab01Dto[i]["rwflag"],    
                             remark: wtab01Dto[i]["remark"],     
-                            plan_no: wtab01Dto[i]["plan_no"],                                
+                            plan_no: wtab01Dto[i]["plan_no"],      
+                            inmonth: wtab01Dto[i]["inmonth"],   
+                            inweeks: wtab01Dto[i]["inweeks"],   
+                            inmonthtxt: ls_monthtxt                          
                         });
                         cnt++;
                     }      
@@ -924,17 +977,18 @@
                 if (!confirm("삭제하시겠습니까?")) {
                     return ; 
                 }               
-                var ls_lotno = document.getElementById('lotno').value;    
+                var ls_planno = document.getElementById('plan_no').value;    
                 $.ajax({
                     url: '/app02m/index10/del',   
                     type:"POST", 
                     data: {
-                        "lotno" : ls_lotno 
+                        "planno" : ls_planno 
                     },
                     async:false,
                     success:function(data){ 
                         if(data == "success"){  
-                            alert("삭제되었습니다.")
+                            alert("삭제되었습니다.") 
+                            searchList_rtn("%");
                             // console.log("delete", data);                     
                             clear_rtn();  
                         }else{
@@ -1002,7 +1056,8 @@
                 if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
                     return "";
                 }
-                arg_date.setDate(arg_date.getDate() + 1);  // 바로반환하면 하루 이전일자를 반환하여 +1일 해줌. 
+                //arg_date.setDate(arg_date.getDate() + 1);  // 바로반환하면 하루 이전일자를 반환하여 +1일 해줌.                 
+                arg_date.setHours(arg_date.getHours() + 9);
                 arg_date =  String(arg_date.toISOString().substring(0,10)); 
                 arg_date = arg_date.replaceAll("-",""); 
                 return arg_date;
@@ -1012,7 +1067,7 @@
                 var ls_indate     =  convert_date(windate.value); // (document.getElementById('indate').value).replaceAll("-","");                   
                 var ls_prod_sdate =  convert_date(wprod_sdate.value); //(document.getElementById('prod_sdate').value).replaceAll("-","");   
                 var ls_prod_edate =  convert_date(wprod_edate.value); //(document.getElementById('prod_edate')).value.replaceAll("-","");                   
-                var ls_qcdate     =  convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");     
+                var ls_qcdate     =  convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");   
                 var ls_lotno   =  document.getElementById('lotno').value;  
                 var ls_cltcd   =  document.getElementById('acode').value;
                 var ls_ecltnm  =  document.getElementById('ecltnm').value;
@@ -1035,7 +1090,9 @@
                 var ls_ostore =  document.getElementById('ostore').value; 
                 var ls_rwflag =  ""; //document.getElementById('rwflag').value;
                 var ls_remark =  document.getElementById('remark').value;  
-                var ls_plan_no  =  document.getElementById('plan_no').value;    
+                var ls_plan_no  =  document.getElementById('plan_no').value;  
+                var ls_inmonth  =  document.getElementById('inmonth').value;  
+                var ls_inweeks  =  document.getElementById('inweeks').value;    
                 const dem_flag = document.getElementById('dem_flag'); 
                 const is_checked = dem_flag.checked; 
                 if (is_checked){
@@ -1114,7 +1171,10 @@
                     "istore"        : ls_istore, 
                     "ostore"        : ls_ostore,
                     "rwflag"        : ls_rwflag,
-                    "remark"        : ls_remark,        
+                    "remark"        : ls_remark,  
+                    "inmonth"        : ls_inmonth, 
+                    "inweeks"        : ls_inweeks,    
+                    
                 } 
         
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -1188,19 +1248,30 @@
                         insaSearchList_rtn("A"); 
                     }
                 });
-                // // 거래처검색   
-                // document.getElementById("retrieveBtn").addEventListener("click",function(){  
-                //     let ls_searchtxt = document.getElementById('searchtxt').value;  
-                //     searchList_rtn(ls_searchtxt); 
+                // 전체검색   
+                document.getElementById("retrieveBtn").addEventListener("click",function(){ 
+                    searchList_rtn(); 
         
-                // })   
+                })   
                 //검색     
-                function searchList_rtn(arg1){    
+                function searchList_rtn(){  
+                    let ls_searchtxt = document.getElementById('searchtxt').value;  
+                      
+                    let ls_inmonth = document.getElementById('inmonth_txt').value;  
+                    let ls_inweeks = document.getElementById('inweeks_txt').value; 
+                    if(ls_inmonth == null || ls_inmonth.length == 0 || ls_inmonth == "" || ls_inmonth =="월"){ 
+                        ls_inmonth = '%'               
+                    } 
+                    if(ls_inweeks == null || ls_inweeks.length == 0 || ls_inweeks == "" || ls_inweeks =="주차"){ 
+                        ls_inweeks = '%'               
+                    }     
                     $.ajax({
                                 url: '/app02m/index10/list',  
                                 type:"POST",
                                 data: { 
-                                    "searchtxt" :arg1, 
+                                    "searchtxt" :ls_searchtxt, 
+                                    "inmonthtxt" :ls_inmonth, 
+                                    "inweekstxt" :ls_inweeks, 
                                 }, 
                                 async:false,
                                 success:function(data){  
@@ -1219,6 +1290,19 @@
                     var wtab01_data = [];
                     var cnt = 1;
                     for (var i = 0; i < wtab01Dto.length; i++) {
+                        var ls_inmonth = wtab01Dto[i]["inmonth"];
+                        var ls_inweeks = wtab01Dto[i]["inweeks"];
+                        if(ls_inmonth == null || ls_inmonth.length == 0 || ls_inmonth == "" ){ 
+                            ls_inmonth = ''
+                            var ls_monthtxt    = ''                 
+                        }else{
+                            if(ls_inweeks == null || ls_inweeks.length == 0 || ls_inweeks == "" ){ 
+                                ls_inweeks = '' 
+                                var ls_monthtxt    = ''             
+                            } else {
+                                var ls_monthtxt = ls_inmonth + ' ' + ls_inweeks + '주차'
+                            } 
+                        } 
                         wtab01_data.push({
                             id: i, 
                             index: cnt, 
@@ -1251,6 +1335,9 @@
                             ostore: wtab01Dto[i]["ostore"],
                             rwflag: wtab01Dto[i]["rwflag"],
                             remark: wtab01Dto[i]["remark"],  
+                            inmonth: wtab01Dto[i]["inmonth"], 
+                            inweeks: wtab01Dto[i]["inweeks"], 
+                            inmonttxt: ls_monthtxt, 
                         });
                         cnt++;
                     }   
@@ -1266,6 +1353,13 @@
                     cols.header = '등록일자';
                     cols.align = "center";
                     cols.width = 120;           
+                    wtab01Grid.columns.push(cols);   
+        
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'inmonttxt';
+                    cols.header = '주차';
+                    cols.align = "center";
+                    cols.width = 100;           
                     wtab01Grid.columns.push(cols);  
         
                     cols = new wijmo.grid.Column(); 
@@ -1274,7 +1368,7 @@
                     cols.align = "left";
                     cols.width = 180;           
                     wtab01Grid.columns.push(cols);  
-        
+                    
                     var cols = new wijmo.grid.Column(); 
                     cols.binding = 'jpum';
                     cols.header = '품목';
@@ -1283,7 +1377,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.jpum}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm);           
+                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm, ctx.item.inmonth, ctx.item.inweeks);           
                         }
                     });
                     wtab01Grid.columns.push(cols);  
@@ -1344,8 +1438,8 @@
                                 //jgugek,dem_flag,jchajong,jsayang,jgugek2,
                                 //j_sr,jpumcode,jdanwy,prod_qty,cls_flag,
                                 //istore,ostore,rwflag,remark,cltcd
-                                //plan_no
-                function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27){
+                                //plan_no , pernm inmonth, inweeks 
+                function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29){
                  
                     //document.getElementById('indate').value = arg1;  
                     //document.getElementById('prod_sdate').value = arg2;   
@@ -1393,6 +1487,8 @@
                     //document.getElementById('rwflag').value = arg23;
                     document.getElementById('remark').value = arg24;
                     document.getElementById('plan_no').value = arg26;
+                    document.getElementById('inmonth').value = arg28;
+                    document.getElementById('inweeks').value = arg29;
                     
                     var x = document.getElementsByName('rwflag');
         
@@ -2053,7 +2149,7 @@
                             value: null,
                             placeholder: '',
                             format: 'yyyy-MM-dd',
-                            valueChanged: (sender) => showCurrentDate(sender, 7)
+                            valueChanged: (sender) => showCurrentDate(sender, 5)
                         });
                         
                         wprod_edate = new wijmo.input.InputDate('#prod_edate', {
@@ -2076,7 +2172,7 @@
                         windate.value = ls_date; 
                         wprod_sdate.value = ls_date;  
                         
-                        result.setDate(result.getDate() + 7);
+                        result.setDate(result.getDate() + 5);
                         var ls_edate = result.toISOString().substring(0,10);
                         wprod_edate.value = ls_edate;
                         
@@ -2085,38 +2181,53 @@
                         var ls_qcdate = today.toISOString().substring(0,10);
                         wqcdate.value = ls_qcdate;
 
-                        showCurrentDate(indate);
-                        // 현재 선택된 날짜 표시
-                        function showCurrentDate(ctrl, days) {
-                            var ls_sdate = ctrl.value;      
-                            if(ls_sdate == null || ls_sdate.length == 0 || ls_sdate == ""){ 
-                               return;         
-                            }  
-                            var result = new Date(ls_sdate);
-                            result.setHours(result.getHours() + 9); 
-                            var ls_edate = result.toISOString().substring(0,10);
-                            wprod_edate.value = ls_edate; 
-                            // let el = document.querySelector('#theDateOutput');
-                            // el.textContent = wijmo.Globalize.format(ctrl.value, 'D'); 
-                        } 
-                        //
+                        showCurrentDate(wprod_sdate, 5); 
                 } 
-                function getToday(){ 
-                    let today = new Date();   
-                    let year = today.getFullYear(); // 년도
-                    let month = today.getMonth() + 1;  // 월
-                    let date = today.getDate();  // 날짜d
-                    let day = today.getDay();  // 요일
-                    let hours = today.getHours();
-                    let minutes = today.getMinutes();
-                    if(month > 0 && month < 10) {month = "0" + month};
-                    if(date > 0 && date < 10) {date = "0" + date};
-                    if(minutes > 0 && minutes < 10) {minutes = "0" + minutes};
-                    if(hours > 0 && hours < 10) {hours = "0" + hours};
-                    let ls_time = hours + ':' + minutes
-                    let ls_dddd = year + '-' + month + '-' + '01'
-                    let ls_frday = year + '-' + month + '-' + date
-                    let ls_today = year + '-' + month + '-' + date  
+                // 현재 선택된 날짜 + 5일
+                function showCurrentDate(ctrl, days) {
+                    var ls_sdate = ctrl.value; 
+                    //console.log(ls_sdate)     
+                    if(ls_sdate == null || ls_sdate.length == 0 || ls_sdate == ""){ 
+                        return;         
+                    }  
+                    var result = new Date(ls_sdate);
+
+                    
+                    const weekOfMonth = getWeekOfMonth(result); 
+                    const month = ls_sdate.toLocaleString('default', { month: 'long' }); 
+                    document.getElementById('inmonth').value = month;
+                    document.getElementById('inweeks').value = weekOfMonth; 
+
+
+
+                    result.setDate(result.getDate() + days); 
+                    var ls_edate = result.toISOString().substring(0,10);
+                    console.log(ls_edate)     
+                    wprod_edate.value = ls_edate; 
+                    //console.log(`${month} ${weekOfMonth}주차`); 
+                }  
+                function getWeekOfMonth(date) { 
+                    const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                    const dayOfWeek = startDate.getDay(); 
+                    const dayOfMonth = date.getDate();
+                    return Math.ceil((dayOfMonth + dayOfWeek) / 7);
+                }
+                function getToday(){  
+                    // let today = new Date();   
+                    // let year = today.getFullYear(); // 년도
+                    // let month = today.getMonth() + 1;  // 월
+                    // let date = today.getDate();  // 날짜d
+                    // let day = today.getDay();  // 요일
+                    // let hours = today.getHours();
+                    // let minutes = today.getMinutes();
+                    // if(month > 0 && month < 10) {month = "0" + month};
+                    // if(date > 0 && date < 10) {date = "0" + date};
+                    // if(minutes > 0 && minutes < 10) {minutes = "0" + minutes};
+                    // if(hours > 0 && hours < 10) {hours = "0" + hours};
+                    // let ls_time = hours + ':' + minutes
+                    // let ls_dddd = year + '-' + month + '-' + '01'
+                    // let ls_frday = year + '-' + month + '-' + date
+                    // let ls_today = year + '-' + month + '-' + date  
                 }
                 function convert_time(timestamp){ 
                     //현재시간

@@ -67,7 +67,7 @@ public class Index10Service {
         return  indexMapper.SelectCheckIndate(parm);
     }
 
-    public String SelectMaxSeq(Index10Dto parm){
+    public String SelectMaxSeq(String parm){
         return  indexMapper.SelectMaxSeq(parm);
     }
 

@@ -120,6 +120,8 @@ public class Index10Dto {
     private String ajusotxt;
     private String inname;
     private String insano;
+    private String inmonth;
+    private String inweeks;
 
     private Integer decision2;
     private Integer decision1;
