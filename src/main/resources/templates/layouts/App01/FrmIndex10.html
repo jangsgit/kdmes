@@ -2080,6 +2080,7 @@
                         var ls_edate = result.toISOString().substring(0,10);
                         wprod_edate.value = ls_edate;
                         
+                        var today = new Date();
                         today.setDate(today.getDate() + 30);
                         var ls_qcdate = today.toISOString().substring(0,10);
                         wqcdate.value = ls_qcdate;

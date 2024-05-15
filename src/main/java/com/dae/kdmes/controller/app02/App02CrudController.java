@@ -447,7 +447,7 @@ public class App02CrudController {
                     index10Dto.setEcltnm(values.toString());
                     break;
                 case "workdv":
-                    index10Dto.setWorkdv(Integer.parseInt(values.toString()));
+                    index10Dto.setWorkdv(values.toString());
                     break;
                 case "pcode":
                     index10Dto.setPcode(values.toString());

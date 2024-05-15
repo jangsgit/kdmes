@@ -54,7 +54,7 @@ public class Index10Dto {
     private String perid;
     private String pernm;
     private String remark;
-    private Integer workdv;
+    private String workdv;
     private String wflag;
     private String wseq;
     private String tordqty;
