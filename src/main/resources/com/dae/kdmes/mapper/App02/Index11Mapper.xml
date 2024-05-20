@@ -153,7 +153,11 @@
                     isnull(E.winqt, 0) - isnull(E.wbdqt, 0) as wjqty,
                     isnull(E.gqty01, 0) AS gumqty,
                     E.wfrdt,
-                    E.wtrdt
+                    E.wtrdt,
+                    A.inmonth,
+                    A.inweeks,
+					CAST(DATEDIFF(MINUTE, E.wfrdt, E.wtrdt) / 60.0 AS decimal(10,1) ) AS workhr,
+					DATEDIFF(MINUTE, E.wfrdt, E.wtrdt)  AS workmin
                 FROM TB_FPLAN A WITH (NOLOCK)
                     LEFT OUTER JOIN TB_FPLAN_work C ON A.plan_no = c.plan_no AND A.wflag = c.wflag
                     LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey,
@@ -161,10 +165,45 @@
                 WHERE  A.plan_no = E.plan_no
                 and E.indate between #{frdate} and #{todate}
                 and isnull(E.wrps,'') Like concat('%',#{wrps},'%')
-                order by E.wrps
+                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                order by A.plan_no
         ]]>
     </select>
 
+
+    <select id="getIndex13List03"  parameterType="com.dae.kdmes.DTO.App02.Index11Dto" resultType="com.dae.kdmes.DTO.App02.Index11Dto">
+        <![CDATA[
+           SELECT  A.plan_no, A.ecltnm,  Left(A.indate,4) + '-' + substring(A.indate, 5,2)+ '-' + substring(A.indate, 7,2) as indate,
+                     Left(A.prod_sdate,4) + '-' + substring(A.prod_sdate, 5,2)+ '-' + substring(A.prod_sdate, 7,2) as prod_sdate,
+                     Left(A.prod_edate,4) + '-' + substring(A.prod_edate, 5,2)+ '-' + substring(A.prod_edate, 7,2) as prod_edate,
+                      ISNULL(DBO.DF_NM_RTN('TB_WFLAG', A.custcd, A.wflag, '', ''),'') as wflagnm,
+                    isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = E.wflag and wrmc = E.wrmc),'') as wrmcnm ,
+                    (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '')  + '외 ' + CAST(E.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '') END ) as wrpsnm,
+                    (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
+                    A.lotno ,
+                    D.jpum,
+                    D.jgugek ,
+                    D.jchajong,
+                    isnull(A.prod_qty, 0) as prod_qty ,
+                    C.wfrdt,
+                    C.wtrdt,
+                    C.wrerm,
+                    A.inmonth,
+                    A.inweeks,
+					CAST(DATEDIFF(MINUTE, C.wfrdt, C.wtrdt) / 60.0 AS decimal(10,1) ) AS workhr,
+					DATEDIFF(MINUTE, C.wfrdt, C.wtrdt)  AS workmin
+                FROM TB_FPLAN A WITH (NOLOCK)
+                    LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey,
+                    TB_FPLAN_W010 E WITH (NOLOCK),
+                    TB_FPLAN_WTIME C WITH (NOLOCK)
+                WHERE A.plan_no = E.plan_no
+                and  A.plan_no = c.plan_no
+                and  c.wflag = '00010'
+                and A.indate between #{frdate} and #{todate}
+                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                order by A.plan_no, C.wfrdt, C.wseq, C.seq
+        ]]>
+    </select>
 
 
     <select id="getIndex13List02"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">

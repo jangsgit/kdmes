@@ -48,6 +48,11 @@ public class Index11Dto {
     private String deldate;
     private String delnum;
     private String delseq;
+    private String inmonth;
+    private String inweeks;
+    private String wrerm;
+    private float workhr;
+    private Integer workmin;
 
 
 

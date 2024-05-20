@@ -33,6 +33,11 @@ public class Index11Service {
     public List<FPLAN_VO> getIndex13List02(FPLAN_VO parm){
         return indexMapper.getIndex13List02(parm);
     }
+    public List<Index11Dto> getIndex13List03(Index11Dto parm){
+        return indexMapper.getIndex13List03(parm);
+    }
+
+
     public List<Index11Dto> getIndex14List01(Index11Dto parm){
         return indexMapper.getIndex14List01(parm);
     }

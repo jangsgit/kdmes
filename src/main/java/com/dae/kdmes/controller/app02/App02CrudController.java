@@ -814,6 +814,9 @@ public class App02CrudController {
         return "success";
     }
 
+
+
+
     public String GetMaxSeq(String indate){
 
         String ls_seq = service10.SelectMaxSeq(indate);

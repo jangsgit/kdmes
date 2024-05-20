@@ -20,6 +20,10 @@ public interface Index11Mapper {
     public List<Index11Dto> getIndex13List01(Index11Dto parm) ;
     public List<FPLAN_VO> getIndex13List02(FPLAN_VO parm) ;
 
+    public List<Index11Dto> getIndex13List03(Index11Dto parm) ;
+
+
+
     public List<Index11Dto> getIndex14List01(Index11Dto parm) ;
 
     public List<Index11Dto> getIndex16List01(Index11Dto parm) ;
