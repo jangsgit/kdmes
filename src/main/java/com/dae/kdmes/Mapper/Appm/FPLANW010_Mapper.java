@@ -14,9 +14,12 @@ public interface FPLANW010_Mapper {
      public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_REG(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_HIS(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm);
 
      public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO xfplanBoard);
-     public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm);
+     public List<FPLAN_VO> GetFPLAN_List03_REG(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List03_HIS(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List03Arr(HashMap<String,String> parm);
      //list
      public FPLANW010_VO GetFPLANW010_ListOne();   //한건 조회
      public FPLANW010_VO GetFPLANW010_Detail(FPLANW010_VO xa012Board);   //

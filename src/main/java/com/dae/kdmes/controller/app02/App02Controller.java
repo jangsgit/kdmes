@@ -347,6 +347,47 @@ public class App02Controller {
         return "App02/index41";
     }
 
+
+    //조립공정
+    @GetMapping(value="/index45")
+    public String Appcom45_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("조립공정");  //
+        CommDto.setMenuUrl("생산공정>조립공정");
+        CommDto.setMenuCode("appcom02");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String cltcd = "%";
+        String pcode = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00030");
+        fplanDto.setFdate("20000101");
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(pcode);
+        itemDto.setPlan_no("%");
+
+        wperidDto.setWflag("00030");  //첫번째공정
+        wperidDto.setWpernm("%");
+
+        wrmcDto.setMachname("%");
+        wrmcDto.setPlan_no("%");      //불량구분 팝업
+        wrmcDto.setWseq("%");
+        wrmcDto.setWflag("00030");
+        wrmcDto.setWclscode("1");
+
+
+
+        itemDtoList   = appcom01Service.GetFPLAN_List03(fplanDto);      //사출완료
+        itemDtoList02 = appcom01Service.GetFPLAN_List03_REG(fplanDto);      //조립등록완료
+
+        model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
+        model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
+        return "App02/index45";
+    }
+
+
     //검사공정
     @GetMapping(value="/index41list")
     public String Appcom41list_index(@RequestParam("searchtxt") String searchtxt
@@ -649,6 +690,25 @@ public class App02Controller {
         return "App02/index63";
     }
 
+    @GetMapping(value="/index64")
+    public String App64_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("일별조립일보");
+        CommDto.setMenuUrl("생산계획>일별조립일보");
+        CommDto.setMenuCode("index64");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App64_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index64";
+    }
 
     private String getFrDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

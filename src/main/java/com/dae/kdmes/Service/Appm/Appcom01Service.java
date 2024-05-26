@@ -29,12 +29,21 @@ public class Appcom01Service {
     public List<FPLAN_VO> GetFPLAN_List02_HIS(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_HIS(parm);
     }
+    public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm){
+        return FPLANW010_mapper.GetFPLAN_List02Arr(parm);
+    }
 
     public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List03(parm);
     }
-    public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm){
-        return FPLANW010_mapper.GetFPLAN_List02Arr(parm);
+    public List<FPLAN_VO> GetFPLAN_List03_REG(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List03_REG(parm);
+    }
+    public List<FPLAN_VO> GetFPLAN_List03_HIS(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List03_HIS(parm);
+    }
+    public List<FPLAN_VO> GetFPLAN_List03Arr(HashMap<String,String> parm){
+        return FPLANW010_mapper.GetFPLAN_List03Arr(parm);
     }
     public Object GetFPLANW010_ListOne(){
         return FPLANW010_mapper.GetFPLANW010_ListOne();
