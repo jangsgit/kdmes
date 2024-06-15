@@ -241,8 +241,10 @@ public class App02Controller {
         indexCa613Dto.setPname(pcode);
         indexCa613Dto.setFrdate(fdate);
         indexCa613Dto.setTodate(tdate);
-
         itemDtoListCa613   = service10.SelectCa613List(indexCa613Dto);
+        //창고
+        wperidDto.setWpernm("%");
+        model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
         model.addAttribute("itemDtoList", itemDtoListCa613);
         return "App02/index15";
     }

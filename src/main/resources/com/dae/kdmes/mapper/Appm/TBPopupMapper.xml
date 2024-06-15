@@ -56,6 +56,14 @@
         ORDER BY   A.com_code
     </select>
 
+    <select id="GetStoreList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        SELECT   A.com_code as wcode,  A.com_rem1 AS  wcdnm
+        FROM TB_CA510 A WITH (NOLOCK)
+        WHERE A.com_code != '00' AND A.com_cls = '006'
+        AND  isnull(A.com_rem1, '')  Like #{wpernm} + '%'
+        ORDER BY   A.com_code
+    </select>
+
     <select id="GetWrmcList01" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
         select  A.wflag, A.wrmc,  A.wperid,
                 A.wrmcnm wrmcnm,

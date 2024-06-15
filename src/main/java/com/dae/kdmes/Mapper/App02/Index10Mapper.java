@@ -2,6 +2,7 @@ package com.dae.kdmes.Mapper.App02;
 
 import com.dae.kdmes.DTO.App01.IndexCa613Dto;
 import com.dae.kdmes.DTO.App01.Index01Dto;
+import com.dae.kdmes.DTO.App01.IndexCa613OworkDto;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,6 +23,14 @@ public interface Index10Mapper {
     public Boolean UpdateFplan(Index10Dto  parm) ;
 
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm) ;
+    public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm) ;
+
+
+    public List<IndexCa613OworkDto> SelectCa613ChulList(IndexCa613OworkDto parm) ;
+
+    public IndexCa613OworkDto SelectCa613ChulListSum(IndexCa613OworkDto parm) ;
+
+
 
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm) ;
 
@@ -30,6 +39,12 @@ public interface Index10Mapper {
     public Boolean InsertCa613(IndexCa613Dto  parm) ;
     public Boolean UpdateCa613(IndexCa613Dto  parm) ;
     public String SelectMaxIbgnum(String  parm) ;
+    public String CA613_OWORK_MAXWSEQ(IndexCa613OworkDto parm) ;
+
+    public Boolean CA613_OWORK_Insert(IndexCa613OworkDto  parm) ;
+    public Boolean CA613_OWORK_Update(IndexCa613OworkDto  parm) ;
+    public Boolean CA613_OWORK_Delete(IndexCa613OworkDto  parm) ;
+
 
     public String GetFplanCheck(Index10Dto  parm) ;
     public List<Index10Dto> GetJpumListTot(Index10Dto parm) ;

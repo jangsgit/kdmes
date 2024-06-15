@@ -34,5 +34,7 @@ public class IndexCa611Dto {
     private String makflag;
     private String reservnum;
     private String unsongnum;
+    private String wotdt;
+    private Integer wotqt;
 
 }

@@ -3,7 +3,9 @@ package com.dae.kdmes.Service.App02;
 import com.dae.kdmes.DTO.App01.Index01Dto;
 import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.App01.IndexCa613Dto;
+import com.dae.kdmes.DTO.App01.IndexCa613OworkDto;
 import com.dae.kdmes.DTO.App02.Index10Dto;
+import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.Mapper.App02.Index10Mapper;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,19 @@ public class Index10Service {
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm){
         return indexMapper.SelectCa613List(parm);
     }
+
+    public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm){
+        return indexMapper.SelectCa613ListMapChul(parm);
+    }
+
+
+    public List<IndexCa613OworkDto> SelectCa613ChulList(IndexCa613OworkDto parm){
+        return indexMapper.SelectCa613ChulList(parm);
+    }
+
+    public IndexCa613OworkDto SelectCa613ChulListSum(IndexCa613OworkDto parm){
+        return indexMapper.SelectCa613ChulListSum(parm);
+    }
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm){return indexMapper.SelectCa613JaegoList(parm);}
 
     public Boolean DeleteCa613(IndexCa613Dto parm){  return  indexMapper.DeleteCa613(parm);  }
@@ -41,6 +56,10 @@ public class Index10Service {
     public String SelectMaxIbgnum(String parm){
         return  indexMapper.SelectMaxIbgnum(parm);
     }
+    public String CA613_OWORK_MAXWSEQ(IndexCa613OworkDto parm){ return indexMapper.CA613_OWORK_MAXWSEQ(parm);}
+    public Boolean CA613_OWORK_Insert(IndexCa613OworkDto parm){ return  indexMapper.CA613_OWORK_Insert(parm);}
+    public Boolean CA613_OWORK_Update(IndexCa613OworkDto parm){  return  indexMapper.CA613_OWORK_Update(parm);  }
+    public Boolean CA613_OWORK_Delete(IndexCa613OworkDto parm){  return  indexMapper.CA613_OWORK_Delete(parm);  }
 
     public String GetFplanCheck(Index10Dto parm){  return  indexMapper.GetFplanCheck(parm);  }
     public List<Index10Dto> GetJpumListTot(Index10Dto parm){

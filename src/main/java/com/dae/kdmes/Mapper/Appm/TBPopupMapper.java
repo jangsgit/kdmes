@@ -32,7 +32,8 @@ public interface TBPopupMapper {
      public List<TBPopupVO> GetPernmList(TBPopupVO bankBoard);           //작업자
      public List<TBPopupVO> GetWrmcList01(TBPopupVO bankBoard); //가동종료
      public List<TBPopupVO> GetWBadList01(TBPopupVO bankBoard);
-     public List<TBPopupVO> GetStopList(TBPopupVO bankBoard);           //비가동사유
+     public List<TBPopupVO> GetStopList(TBPopupVO bankBoard);
+     public List<TBPopupVO> GetStoreList(TBPopupVO bankBoard);          //비가동사유
 
 
 }

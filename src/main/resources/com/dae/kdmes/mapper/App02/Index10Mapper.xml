@@ -124,7 +124,8 @@
 
     <update id="UpdateCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
         UPDATE TB_CA613 SET
-        spjangcd='ZZ',
+        spjangcd='ZZ'
+        <if test="pname != null ">,</if>
         <if test="pname != null">pname=#{pname}</if>
         <if test="pcode != null ">,</if>
         <if test="pcode != null">pcode=#{pcode}</if>
@@ -152,6 +153,10 @@
         <if test="lotno != null">lotno=#{lotno}</if>
         <if test="remark != null ">,</if>
         <if test="remark != null">remark=#{remark}</if>
+        <if test="istore != null ">,</if>
+        <if test="istore != null">istore=#{istore}</if>
+        <if test="ostore != null ">,</if>
+        <if test="ostore != null">ostore=#{ostore}</if>
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and ibgseq = #{ibgseq}
     </update>
 
@@ -176,6 +181,75 @@
         ]]>
     </select>
 
+
+    <resultMap id="CA613ResultMap" type="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        <id property="ibgdate" column="ibgdate" />
+        <id property="ibgnum" column="ibgnum" />
+        <result  property="ibgseq" column="ibgseq" />
+        <result property="lotno" column="lotno" />
+        <result property="istore" column="istore" />
+        <result property="ostore" column="ostore" />
+        <result property="pcode" column="pcode" />
+        <result property="pname" column="pname" />
+        <result property="psize" column="psize" />
+        <result property="punit" column="punit" />
+        <result property="qty" column="qty" />
+        <result property="cqty" column="cqty" />
+        <result property="uamt" column="uamt" />
+        <result property="samt" column="samt" />
+        <result property="tamt" column="tamt" />
+        <result property="mamt" column="mamt" />
+        <result property="remark" column="remark" />
+        <result property="acorp" column="acorp" />
+        <result property="pernm" column="pernm" />
+        <result property="perid" column="perid" />
+        <collection property="oworks" ofType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" javaType="ArrayList">
+            <result property="psize" column="wotdt" />
+            <result property="cqty" column="wotqt" />
+        </collection>
+    </resultMap>
+
+    <select id="SelectCa613ListMapChul" resultMap="CA613ResultMap">
+        <![CDATA[
+            SELECT  A.cltcd as cltcd,
+                  Left(A.ibgdate,4) + '-' + substring(A.ibgdate, 5,2)+ '-' + substring(A.ibgdate, 7,2) as ibgdate,
+                  A.ibgnum, A.ibgseq, A.lotno, A.istore, A.ostore,
+                  A.pcode, A.pname, A.psize,    A.punit,  A.qty, A.cqty, A.uamt, A.samt, A.tamt,
+                  isnull(A.remark,'') as remark,
+                  A.mamt, A.acorp, A.pernm , A.perid,
+                  Left(B.wotdt,4) + '-' + substring(B.wotdt, 5,2)+ '-' + substring(B.wotdt, 7,2) as wotdt,
+                  B.wotqt
+            FROM TB_CA613 A WITH (NOLOCK)
+			LEFT join TB_CA613_OWORK B WITH (NOLOCK) ON A.ibgdate = B.ibgdate and A.ibgnum=B.ibgnum
+            where  A.pname Like concat('%',#{pname},'%')
+            AND    A.ibgdate between #{frdate} and #{todate}
+            order by A.ibgdate, A.ibgnum;
+        ]]>
+    </select>
+
+    <select id="SelectCa613ChulList"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" resultType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto">
+
+        <![CDATA[ select custcd, spjangcd, ibgdate, ibgnum, lotno, seq, pcode, istore, Left(wotdt,4) + '-' + substring(wotdt, 5,2)+ '-' + substring(wotdt, 7,2) as wotdt, winqt, wotqt,
+                        indate, inperid, pcode, pname, psize
+                  from  TB_CA613_OWORK   WITH (NOLOCK)
+                  where  ibgdate = #{ibgdate}
+                    AND  ibgnum =  #{ibgnum}
+                    AND  lotno =  #{lotno}
+                  ORDER BY  ibgdate , ibgnum, seq
+        ]]>
+    </select>
+
+    <select id="SelectCa613ChulListSum"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" resultType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto">
+
+        <![CDATA[ select sum(wotqt) as wotqt
+                  from  TB_CA613_OWORK   WITH (NOLOCK)
+                  where  ibgdate = #{ibgdate}
+                    AND  ibgnum =  #{ibgnum}
+                    AND  lotno =  #{lotno}
+                  Group by ibgdate, ibgnum, lotno
+        ]]>
+    </select>
+
     <select id="SelectCa613JaegoList"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
 
         <![CDATA[
@@ -191,6 +265,49 @@
         ]]>
     </select>
 
+    <select id="CA613_OWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" resultType="String">
+        SELECT MAX(seq) FROM  TB_CA613_OWORK
+        WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
+        and ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and lotno = #{lotno}
+    </select>
+
+    <insert id="CA613_OWORK_Insert" parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" keyProperty="plan_no">
+        INSERT INTO TB_CA613_OWORK(custcd, spjangcd, ibgdate, ibgnum, lotno, seq, istore, wotdt, winqt, wotqt,
+          indate, inperid , pcode, pname, psize)
+        VALUES (#{custcd},#{spjangcd}, #{ibgdate}, #{ibgnum}, #{lotno}, #{seq},  #{istore}, #{wotdt}, #{winqt}, #{wotqt},
+        #{indate}, #{inperid} , #{pcode} , #{pname} , #{psize})
+    </insert>
+
+
+    <update id="CA613_OWORK_Update" parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto"  >
+        UPDATE TB_CA613_OWORK SET
+        SPJANGCD = 'ZZ'
+        <if test="pcode != null ">,</if>
+        <if test="pcode != null">pcode=#{pcode}</if>
+        <if test="pname != null ">,</if>
+        <if test="pname != null">pname=#{pname}</if>
+        <if test="psize != null ">,</if>
+        <if test="psize != null">psize=#{psize}</if>
+        <if test="istore != null ">,</if>
+        <if test="istore != null">istore=#{istore}</if>
+        <if test="wotdt != null ">,</if>
+        <if test="wotdt != null">wotdt=#{wotdt}</if>
+        <if test="winqt != null ">,</if>
+        <if test="winqt != null">winqt=#{winqt}</if>
+        <if test="wotqt != null ">,</if>
+        <if test="wotqt != null">wotqt=#{wotqt}</if>
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+        <if test="inperid != null ">,</if>
+        <if test="inperid != null">inperid=#{inperid}</if>
+        where custcd=#{custcd} and spjangcd = #{spjangcd} and ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and lotno = #{lotno} and seq=#{seq}
+    </update>
+
+
+    <delete id="CA613_OWORK_Delete" parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" >
+        delete from TB_CA613_OWORK
+        where custcd=#{custcd} and spjangcd = #{spjangcd} and ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and lotno = #{lotno} and seq=#{seq}
+    </delete>
 
     <select id="GetJpumListTot" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="com.dae.kdmes.DTO.App02.Index10Dto">
         <![CDATA[

@@ -781,11 +781,19 @@
                         var ls_arg_date = String(arg_date); 
                         if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
                             return "";
-                        } 
-                        arg_date.setHours(arg_date.getHours() + 9); //  UTC (협정 세계시)를 나타내며, 이를 한국 시간 (GMT+9)으로 변환할 경우, 9시간을 더하여 
-                        arg_date =  String(arg_date.toISOString().substring(0,10)); 
-                        arg_date = arg_date.replaceAll("-","");  
-                        return arg_date;
+                        }  
+                        // Date 객체로 변환
+                        const dateObj = new Date(arg_date);
+
+                        // 년, 월, 일 추출 (월은 0부터 시작하므로 +1 필요)
+                        const year = dateObj.getFullYear();
+                        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                        const day = String(dateObj.getDate()).padStart(2, '0');
+
+                        // "YYYY-MM-DD" 형식으로 변환
+                        const formattedDate = `${year}${month}${day}`;
+                        arg_date = formattedDate; 
+                        return arg_date; 
                     }
                     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                     

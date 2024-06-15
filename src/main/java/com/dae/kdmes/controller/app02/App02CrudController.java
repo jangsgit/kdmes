@@ -3,6 +3,7 @@ package com.dae.kdmes.controller.app02;
 import com.dae.kdmes.DTO.App01.*;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.App02.Index11Dto;
+import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
@@ -42,7 +43,6 @@ public class App02CrudController {
     Index03Dto index03Dto = new Index03Dto();
     Index04Dto index04Dto = new Index04Dto();
     Index10Dto index10Dto = new Index10Dto();
-    IndexCa613Dto indexCa613Dto = new IndexCa613Dto();
     Index11Dto index11Dto = new Index11Dto();
     List<PopupDto> popupListDto = new ArrayList<>();
     List<IndexCa613Dto> indexCa613ListDto = new ArrayList<>();
@@ -685,6 +685,60 @@ public class App02CrudController {
         return indexCa613ListDto;
     }
 
+
+    @GetMapping(value="/index15/listmap")
+    public Object App15ListMap_index(@RequestParam("searchtxt") String searchtxt,
+                                  @RequestParam("frdate") String frdate,
+                                  @RequestParam("todate") String todate,
+                                  Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setPname(searchtxt);
+            indexCa613ListDto = service10.SelectCa613ListMapChul(_indexCa613Dto);
+            model.addAttribute("index15ListMap",indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App15ListMap_index Exception =====>" + ex.toString());
+        }
+
+        return indexCa613ListDto;
+    }
+
+
+    @GetMapping(value="/index15/chullist")
+    public Object App15ListModal_index(@RequestParam("inibgdate") String ibgdate,
+                                  @RequestParam("inibgnum") String ibgnum,
+                                  @RequestParam("inltono") String lotno,
+                                  Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613OworkDto ca613OworkDto = new IndexCa613OworkDto();
+        List<IndexCa613OworkDto> ca613OworkListDto = new ArrayList<>();
+
+        try {
+            ca613OworkDto.setIbgdate(ibgdate);
+            ca613OworkDto.setIbgnum(ibgnum);
+            ca613OworkDto.setLotno(lotno);
+            ca613OworkListDto = service10.SelectCa613ChulList(ca613OworkDto);
+            model.addAttribute("index15List",ca613OworkListDto);
+
+        } catch (Exception ex) {
+            log.info("App15ListModal_index =====>" + ex.toString());
+        }
+
+        return ca613OworkListDto;
+    }
+
     @GetMapping(value="/index15/jglist")
     public Object App15JaegoList_index(@RequestParam("searchtxt") String searchtxt,
                                   Model model, HttpServletRequest request) throws Exception{
@@ -706,6 +760,131 @@ public class App02CrudController {
         }
 
         return _indexCa613ListDto;
+    }
+
+
+    //생산량 등록
+    @RequestMapping(value="/index15/chulsave", method = RequestMethod.POST)
+    public String App15ChulSave_index(@RequestParam("custcd") String custcd
+            ,@RequestParam("spjangcd") String spjangcd
+            ,@RequestParam("inibgdate") String ibgdate
+            ,@RequestParam("inibgnum") String ibgnum
+            ,@RequestParam("inlotno") String inlotno
+            ,@RequestParam("inpcode") String pcode
+            ,@RequestParam("inpname") String pname
+            ,@RequestParam("inpsize") String psize
+            ,@RequestParam("popwotqt") Integer wotqt
+            ,@RequestParam("popwkotDate") String wkokdate
+            ,@RequestParam("seq") String seq
+            ,@RequestParam("inwotqt") Integer inwotqt,
+            Model model, HttpServletRequest request
+    ) throws Exception {
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        IndexCa613OworkDto ca613OworkDto = new IndexCa613OworkDto();
+        IndexCa613OworkDto _ca613OworkDto = new IndexCa613OworkDto();
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        boolean result = false;
+
+        if(seq == null || seq.length() == 0 || seq.equals("")) {
+            seq = "";
+        }
+        ca613OworkDto.setCustcd(custcd);
+        ca613OworkDto.setSpjangcd(spjangcd);
+        ca613OworkDto.setIbgdate(ibgdate);
+        ca613OworkDto.setIbgnum(ibgnum);
+        ca613OworkDto.setLotno(inlotno);
+        ca613OworkDto.setPcode(pcode);
+        ca613OworkDto.setPname(pname);
+        ca613OworkDto.setPsize(psize);
+        ca613OworkDto.setWinqt(inwotqt);
+        ca613OworkDto.setWotqt(wotqt);
+        ca613OworkDto.setWotdt(wkokdate);
+        ca613OworkDto.setOstore("W01");
+        ca613OworkDto.setIndate(getToDate());
+        ca613OworkDto.setInperid(userformDto.getPerid());
+        if(seq == null || seq.equals("")) {
+            String ls_seq = service10.CA613_OWORK_MAXWSEQ(ca613OworkDto);
+            if (ls_seq == null) {
+                ls_seq = "001";
+            } else {
+                int ll_seq = Integer.parseInt(ls_seq) + 1;
+                ls_seq = Integer.toString(ll_seq);
+                if (ls_seq.length() == 1) {
+                    ls_seq = "00" + ls_seq;
+                } else if (ls_seq.length() == 2) {
+                    ls_seq = "0" + ls_seq;
+                }
+            }
+            ca613OworkDto.setSeq(ls_seq);
+            result = service10.CA613_OWORK_Insert(ca613OworkDto);
+        }else{
+            ca613OworkDto.setSeq(seq);
+            result = service10.CA613_OWORK_Update(ca613OworkDto);
+        }
+        if (!result) {
+            return "error";
+        }
+
+        _ca613OworkDto = service10.SelectCa613ChulListSum(ca613OworkDto);
+        _indexCa613Dto.setPname(ca613OworkDto.getPname());
+        _indexCa613Dto.setCqty(_ca613OworkDto.getWotqt());
+        _indexCa613Dto.setIbgdate(ca613OworkDto.getIbgdate());
+        _indexCa613Dto.setIbgnum(ca613OworkDto.getIbgnum());
+        _indexCa613Dto.setIbgseq("001");
+        result = service10.UpdateCa613(_indexCa613Dto);
+        if (!result) {
+            return "error";
+        }
+        String ls_wotqt = _ca613OworkDto.getWotqt().toString();
+        return ls_wotqt;
+    }
+
+
+    //생산량 등록
+    @RequestMapping(value="/index15/chuldel", method = RequestMethod.POST)
+    public String App15ChulDel_index(@RequestParam("custcd") String custcd
+            ,@RequestParam("spjangcd") String spjangcd
+            ,@RequestParam("inibgdate") String ibgdate
+            ,@RequestParam("inibgnum") String ibgnum
+            ,@RequestParam("inlotno") String inlotno
+            ,@RequestParam("seq") String seq,
+                                      Model model, HttpServletRequest request
+    ) throws Exception {
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        IndexCa613OworkDto ca613OworkDto = new IndexCa613OworkDto();
+        IndexCa613OworkDto _ca613OworkDto = new IndexCa613OworkDto();
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        boolean result = false;
+        ca613OworkDto.setCustcd(custcd);
+        ca613OworkDto.setSpjangcd(spjangcd);
+        ca613OworkDto.setIbgdate(ibgdate);
+        ca613OworkDto.setIbgnum(ibgnum);
+        ca613OworkDto.setLotno(inlotno);
+        ca613OworkDto.setSeq(seq);
+        service10.CA613_OWORK_Delete(ca613OworkDto);
+
+
+        _ca613OworkDto = service10.SelectCa613ChulListSum(ca613OworkDto);
+        _indexCa613Dto.setLotno(inlotno);
+        _indexCa613Dto.setCqty(_ca613OworkDto.getWotqt());
+        _indexCa613Dto.setIbgdate(ca613OworkDto.getIbgdate());
+        _indexCa613Dto.setIbgnum(ca613OworkDto.getIbgnum());
+        _indexCa613Dto.setIbgseq("001");
+        result = service10.UpdateCa613(_indexCa613Dto);
+        if (!result) {
+            return "error";
+        }
+        String ls_wotqt = _ca613OworkDto.getWotqt().toString();
+
+        return ls_wotqt;
     }
 
 
@@ -986,4 +1165,10 @@ public class App02CrudController {
         return formatter.format(date);
     }
 
+    private String getToDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date date      = new Date(System.currentTimeMillis());
+
+        return formatter.format(date);
+    }
 }
