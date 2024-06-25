@@ -82,4 +82,7 @@ public class FPLANW010_VO {
     private String glotnono;
     private float gqty01;
     private float gqty02;
+    private String jlotnono;
+    private float jqty01;
+    private float jqty02;
 }

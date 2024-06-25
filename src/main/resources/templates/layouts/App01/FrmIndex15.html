@@ -357,68 +357,46 @@
         <!--------------------------------------------------------------------------------------->         
         
             
-        <!--------------------------------------------------------------------------------------->   
-        <input class="form-control form-control-sm"  type="hidden" id="innamebtn2" data-bs-toggle="modal" data-bs-target="#gomodal"  /> 
-        <!-- 제품현황 MODAL ForM  -->  
-        <div class="modal fade" id="gomodal" data-bs-keyboard="false"
-                data-bs-backdrop="static" aria-labelledby="staticBackdropLabel"
-                aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-6" role="document" id ="modalForm01" style="max-width: 80%">
-                <div class="modal-content">                   
-                    <div class="modal-body p-0" > 
-                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-
-                            <!-- <div class="search">
-                                <div class="input_wrap">
-                                    <input class="form-control form-control-sm" id="searchx5Code" type="text" onkeyup="if(window.event.keyCode==13){searchtxt9_rtn()}"
-                                    placeholder="제품현황 " />                                      
-                                </div>
-                                <button id="wgoBtn">
-                                    <img th:src="@{/assets/images/i_search.png}" alt=""> 
-                                </button>                            
-                            </div>   -->
-                            <div class="infor_bar type2">
-                                <div class="left">
-                                   품목현황
-                                </div>
-                                    <ul class="right">
-                                        <li>
-                                        <button type="button" class="color2" id="wciflistBtn">
-                                            <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
-                                        </button>
-                                        </li>                                   
-                                    </ul>
-                            </div>
-                            <div class="box_wrap">
-                                <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >  
-                                    <li style ="float:left; list-style-type:none; margin-left:40px;">
-                                        <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
-                                            <input class="form-control form-control-sm" id="conacorp" type="text" placeholder="제품코드/제품명"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}">
-                                        </div>
-                                    </li>                                   
-                                </ul>
-                           </div>                            
-                        </div>   
-                        <div class="box_wrap with_tit" style="padding: 10px;">
-                            <div class="container-fluid" style="padding: 10px;">
-                                <div id="wtab03Grid_div" ></div>
-                                <div  id="tab03Pager"></div>
+            <!--  모달 처리 -->
+            <input class="form-control form-control-sm"  type="hidden" id="innamebtn2" data-bs-toggle="modal" data-bs-target="#gomodal"  /> 
+            <!--------------------------------------------------------------------------------------->   
+            <div class="modal fade" id="gomodal" data-bs-keyboard="false"
+            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+            aria-hidden="true">
+                <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                    style="max-width: 850px">
+                    <div class="modal-content border-0">
+                        <div class="modal-body p-0" > 
+                            <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                            
+                                <div class="search">
+                                    <div class="input_wrap">  
+                                        <input class="form-control form-control-sm" id="conacorp" type="text"   onkeyup="if(window.event.keyCode==13){searchListTot_rtn('M')}"
+                                        placeholder="품목명 "     />                                      
+                                    </div> 
+                                    <button id="wciflistBtn">
+                                        <img th:src="@{/assets/images/i_search.png}" alt=""> 
+                                    </button>
+                                </div>                             
                             </div>   
-                        </div>
-                    </div>  
+                            <div class="container-fluid"> 
+                                <div id="wtab03Grid_div"  style="overflow:scroll; width: 800px;  height:500px;   margin:0 auto; "></div> 
+                            </div>   
+                        </div>  
 
-                    <div class="modal-footer">
-                        <div class="row g-1">
-                            <div class="col-auto">
-                                <button class="badge-soft-primary dropdown-item rounded-1"
-                                    type="button"  id="wciflist_rtn" data-bs-dismiss="modal">Close</button>
-                            </div> 
-                        </div>
-                    </div>   
+                        <div class="modal-footer">
+                            <div class="row g-1">
+                                <div class="col-auto">
+                                    <button class="badge-soft-primary dropdown-item rounded-1"
+                                        type="button"  id="wciflist_rtn" data-bs-dismiss="modal">Close</button>
+                                </div> 
+                            </div>
+                        </div>   
 
-                </div>
-            </div> 
-        </div>
+                    </div>
+                </div> 
+            </div>  
+            
+        <!--------------------------------------------------------------------------------------->       
 
         <!--  담당자 모달 처리 -->
         <input class="form-control form-control-sm"  type="hidden" id="innamebtn1" data-bs-toggle="modal" data-bs-target="#insamodal"  /> 
@@ -719,14 +697,14 @@
                 // // ################################################################
                 //거래처현황 Modalㅁ
                 view_innamepage = new wijmo.collections.CollectionView(getData_wlist2(), {
-                    pageSize: 12
+                    //pageSize: 12
                 });
                 // 거래처 페이지 이동
-                new wijmo.input.CollectionViewNavigator('#thePager03', {
-                    byPage: true,
-                    headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                    cv: view_innamepage
-                });     
+                // new wijmo.input.CollectionViewNavigator('#thePager03', {
+                //     byPage: true,
+                //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                //     cv: view_innamepage
+                // });     
                 winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
                     autoGenerateColumns: false,
                     isReadOnly: false, 
@@ -740,8 +718,7 @@
                     itemsSource: view_innamepage
                 });  
                 
-                winnameGrid.showMarquee = true;
-                winnameGrid.focus();
+                winnameGrid.showMarquee = true; 
                 wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
                 winnameGrid.focus();
                 // 거래처 데이터 수집
@@ -792,19 +769,19 @@
         
                 view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
                     sortDescriptions: [new wijmo.collections.SortDescription("acode", false)],
-                    pageSize: 18
+                    //pageSize: 18
                 });
             // tab02 grid page
-                new wijmo.input.CollectionViewNavigator('#tab03Pager', {
-                    byPage: true,
-                    headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                    cv: view_p01tab03page
-                });      
+                // new wijmo.input.CollectionViewNavigator('#tab03Pager', {
+                //     byPage: true,
+                //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+                //     cv: view_p01tab03page
+                // });      
                 wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
                     autoGenerateColumns: false,
                     showMarquee: true,
                     isReadOnly: false,  
-                    frozenColumns: 2,
+                    // frozenColumns: 2,
                     // selectionMode: 'RowRange',
                     allowSorting: 'MultiColumn',
                     alternatingRowStep: 0,
@@ -858,7 +835,7 @@
                 //         }
                 //     }); 
                     // 헤더 열 전환
-                    setHeaderColumn03(true);
+                    setHeaderColumn03(false);
                     function setHeaderColumn03(headerOn) {
                         wtab03Grid.headersVisibility = headerOn
                         ? wijmo.grid.HeadersVisibility.All

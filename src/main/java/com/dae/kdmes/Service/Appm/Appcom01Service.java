@@ -23,14 +23,26 @@ public class Appcom01Service {
     public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02(parm);
     }
+    public List<FPLAN_VO> GetFPLAN_List02_JO(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_JO(parm);
+    }
     public List<FPLAN_VO> GetFPLAN_List02_REG(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_REG(parm);
+    }
+    public List<FPLAN_VO> GetFPLAN_List02_REG_JO(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_REG_JO(parm);
     }
     public List<FPLAN_VO> GetFPLAN_List02_HIS(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_HIS(parm);
     }
+    public List<FPLAN_VO> GetFPLAN_List02_HIS_JO(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_HIS_JO(parm);
+    }
     public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm){
         return FPLANW010_mapper.GetFPLAN_List02Arr(parm);
+    }
+    public List<FPLAN_VO> GetFPLAN_List02Arr_JO(HashMap<String,String> parm){
+        return FPLANW010_mapper.GetFPLAN_List02Arr_JO(parm);
     }
 
     public List<FPLAN_VO> GetFPLAN_List03(FPLAN_VO parm){
@@ -73,6 +85,12 @@ public class Appcom01Service {
     public Boolean FPLANW010_Update_GDEL(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW010_Update_GDEL(parm);
     }
+    public Boolean FPLANW010_Update_JQTY(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW010_Update_JQTY(parm);
+    }
+    public Boolean FPLANW010_Update_JDEL(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANW010_Update_JDEL(parm);
+    }
 
     public Boolean FPLANW020_Insert(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW020_Insert(parm);
@@ -101,6 +119,7 @@ public class Appcom01Service {
     public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_OWORK_MAXWSEQ(parm);}
     public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLAN_IWORK_MAXWSEQ(parm);}
     public String FPLAN_W020_MAXLOT(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_W020_MAXLOT(parm);}
+    public String FPLAN_W030_MAXLOT(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_W030_MAXLOT(parm);}
 
 
     public Boolean FPLANW010_WrmcUpdate(FPLANW010_VO parm){

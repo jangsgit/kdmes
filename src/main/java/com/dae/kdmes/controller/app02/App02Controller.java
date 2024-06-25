@@ -379,8 +379,8 @@ public class App02Controller {
 
 
 
-        itemDtoList   = appcom01Service.GetFPLAN_List03(fplanDto);      //사출완료
-        itemDtoList02 = appcom01Service.GetFPLAN_List03_REG(fplanDto);      //조립등록완료
+        itemDtoList   = appcom01Service.GetFPLAN_List02_JO(fplanDto);      //사출완료
+        itemDtoList02 = appcom01Service.GetFPLAN_List02_REG_JO(fplanDto);      //검사등록완료
 
         model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
         model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
@@ -388,6 +388,42 @@ public class App02Controller {
         model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
         return "App02/index45";
     }
+//    public String Appcom45_index( Model model, HttpServletRequest request) throws Exception{
+//        CommDto.setMenuTitle("조립공정");  //
+//        CommDto.setMenuUrl("생산공정>조립공정");
+//        CommDto.setMenuCode("appcom02");
+//        String fdate = getFrDate();
+//        String tdate = getAddDate();
+//        String cltcd = "%";
+//        String pcode = "%";
+//        fplanDto.setLine("00");
+//        fplanDto.setWflag("00030");
+//        fplanDto.setFdate("20000101");
+//        fplanDto.setTdate(tdate);
+//        fplanDto.setCltcd(cltcd);
+//        fplanDto.setPcode(pcode);
+//        itemDto.setPlan_no("%");
+//
+//        wperidDto.setWflag("00030");  //첫번째공정
+//        wperidDto.setWpernm("%");
+//
+//        wrmcDto.setMachname("%");
+//        wrmcDto.setPlan_no("%");      //불량구분 팝업
+//        wrmcDto.setWseq("%");
+//        wrmcDto.setWflag("00030");
+//        wrmcDto.setWclscode("1");
+//
+//
+//
+//        itemDtoList   = appcom01Service.GetFPLAN_List03(fplanDto);      //사출완료
+//        itemDtoList02 = appcom01Service.GetFPLAN_List03_REG(fplanDto);      //조립등록완료
+//
+//        model.addAttribute("itemDtoList", itemDtoList);         //사출완료리스트
+//        model.addAttribute("itemDtoList02", itemDtoList02);     //검사완료리스트
+//        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+//        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
+//        return "App02/index45";
+//    }
 
 
     //검사공정

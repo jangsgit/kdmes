@@ -54,7 +54,7 @@
     <th:block th:include="layouts/APPHeader/appheadTop"/>
  
     <!-- <div class="infor_bar type2">                                
-        <div class="left">검사등록</div> 
+        <div class="left">조립등록</div> 
     </div>   -->
 
     <!-- contents body 시작--> 
@@ -64,10 +64,10 @@
             <div class="card-body bg-light">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">검사공정등록</a>
+                        <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">조립공정등록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">검사공정현황</a>
+                        <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">조립공정현황</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">기초코드3</a>
@@ -137,7 +137,7 @@
                                                                 </td>                                  
                                                             </tr>  
                                                             <tr> 
-                                                                <th>검사일자</th>
+                                                                <th>조립일자</th>
                                                                 <td  colspan="3">
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input type="text"  class="form-control datetimepicker" id="inputdate" autocomplete="off"  placeholder="Y-m-d"     >  
@@ -188,7 +188,7 @@
                                                                 </td>                                  
                                                             </tr>     
                                                             <tr>  
-                                                                <th>검사수량</th>
+                                                                <th>조립수량</th>
                                                                 <td >
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm"  type="number" id="inwotqt" placeholder=""    />
@@ -244,7 +244,7 @@
                                                                         <input class="form-control form-control-sm" id="inwinps" type="hidden" disabled size="15"  />                                         
                                                                     </div>                                            
                                                                 </td>   
-                                                                <th>검사완료</th>
+                                                                <th>조립완료</th>
                                                                 <td >     
                                                                     <div class="form-check form-check-inline">
                                                                         <input class="form-check-input"  type="checkbox" id="demflag" value="demflag"  />                                                                       
@@ -332,7 +332,7 @@
                         <div class="row g-1">
                             <div class="col-auto"> 
                                 <p>
-                                    선택된 총 검사량 : <b><span id="checked-count">0</span></b>  
+                                    선택된 총 조립량 : <b><span id="checked-count">0</span></b>  
                                 </p>
                             </div>
                             <div class="col-auto">
@@ -466,13 +466,13 @@
                     ll_wbdqt = 0;
                 }
                 if(ll_inqcqt < 0 ){ 
-                    alert("불량수량이 검사수량을 초과했습니다. 확인하세요");
+                    alert("불량수량이 조립수량을 초과했습니다. 확인하세요");
                     return ;
                 }  
                 //ll_insumqt = parseInt(ll_insumqt) + parseInt(ll_inqcqt); 
                 //if(ll_insumqt < 0 ){ ll_insumqt =0 ;}
                 // if(ll_inboxsu1 == ll_insumqt ){ 
-                //     alert("검사 완료를 체크하고 저장하세요");
+                //     alert("조립 완료를 체크하고 저장하세요");
                 //     return ;
                 // }                
                 document.getElementById('inwqcqt').value  = ll_inqcqt; //완료수량                
@@ -489,13 +489,13 @@
                     ll_inwotqt = 0;
                 }
                 if(ll_inqcqt < 0 ){ 
-                    alert("불량수량이 검사수량을 초과했습니다. 확인하세요");
+                    alert("불량수량이 조립수량을 초과했습니다. 확인하세요");
                     return ;
                 }else{
                     document.getElementById('inwqcqt').value  = ll_inqcqt; //완료수량
                 } 
                 if(ll_inboxsu1 == ll_insumqt ){ 
-                    alert("검사 완료를 체크하고 저장하세요");
+                    alert("조립 완료를 체크하고 저장하세요");
                     return ;
                 }                 
                 //console.log(`현재 값: ${currentValue02}`);
@@ -513,7 +513,7 @@
                    columns: [
                        // { binding: 'index', header: 'seq', width: '*' }, 
                        { binding: 'demflag', header: '완료',   align:"center", width: 80 , cssClass :'switch' } ,
-                       { binding: 'qcdate', header: '검사일',align:"center",  width: 120, format: 'yyyy-MM-dd' },
+                       { binding: 'qcdate', header: '조립일',align:"center",  width: 120, format: 'yyyy-MM-dd' },
                        // { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                        {
                            binding: 'lotno',
@@ -529,8 +529,8 @@
                        },       
                        { binding: 'pname', header: '품목명',     align:"center",  width: 150 },                       
                        { binding: 'psize', header: '규격',     align:"center",  width: 130 }, 
-                       { binding: 'wrpsnm', header: '검사자',     align:"center",  width: 130 }, 
-                       { binding: 'otqty', header: '검사량',align:"center",  width: 90 },
+                       { binding: 'wrpsnm', header: '조립자',     align:"center",  width: 130 }, 
+                       { binding: 'otqty', header: '조립량',align:"center",  width: 90 },
                        { binding: 'plan_no', header: '작지번호',   align:"center", width: 150 , cssClass :'switch' } 
                    ],
                    itemsSource: view_p01tab01page
@@ -624,10 +624,10 @@
                        allowSorting: 'MultiColumn',
                        alternatingRowStep: 0,
                        columns: [      
-                           { binding: 'qcdate', header: '검사일', align: "center", width: 100 }, 
-                           { binding: 'glotnono', header: '검사바코드', align: "left", width: 250 },
-                           { binding: 'otqty', header: '검사수량', align: "center", width: 100 },
-                           { binding: 'wrpsnm02', header: '검사담당자', align: "center", width: 100 },   
+                           { binding: 'qcdate', header: '조립일', align: "center", width: 100 }, 
+                           { binding: 'glotnono', header: '조립바코드', align: "left", width: 250 },
+                           { binding: 'otqty', header: '조립수량', align: "center", width: 100 },
+                           { binding: 'wrpsnm02', header: '조립담당자', align: "center", width: 100 },   
                            { binding: 'pcode', header: '품목', align: "center", width: 150 },  
                            { binding: 'jgugek', header: '규격', align: "left", width: 150 },    
                            { binding: 'wfrdt', header: '사출시작일', align: "right", width: 100 }, 
@@ -666,13 +666,13 @@
                    alternatingRowStep: 0,
                    columns: [
                        // { binding: 'index', header: 'seq', width: '*' },
-                       // { binding: 'qcdate', header: '검사시작일',align:"center",  width: 120 },
+                       // { binding: 'qcdate', header: '조립시작일',align:"center",  width: 120 },
                        { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd', isReadOnly: true  }, 
                        { binding: 'lotno', header: 'LotNo',     align:"left",  width: 200, isReadOnly: true  },
                        { binding: 'pname', header: '품목명',     align:"left",  width: 130, isReadOnly: true  },
                        { binding: 'psize', header: '규격',     align:"center",  width: 130, isReadOnly: true  },
                        { binding: 'prod_qty', header: '사출완료량',align:"center",  width: 130, isReadOnly: true  },
-                       { binding: 'otqty', header: '기검사량',align:"center",  width: 90, isReadOnly: true },
+                       { binding: 'otqty', header: '기조립량',align:"center",  width: 90, isReadOnly: true },
                        { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: false },
                        { binding: 'jboxsu1', header: '박스수량',align:"center",  width: 130, isReadOnly: true  },
                        { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  } 
@@ -757,7 +757,7 @@
                    for (var i = 0; i < sel.length; i++) { 
                        _ls_prod_qty = 0
                        _ls_prod_qty=  sel[i]._data.prod_qty; //사출완료량
-                       _ls_owqty   =  sel[i]._data.owqty; //기검사량
+                       _ls_owqty   =  sel[i]._data.owqty; //기조립량
                        _ls_pname   =  sel[i]._data.pname; //품목
                        _ls_psize   =  sel[i]._data.psize; //품목
                        _ls_cltnm   =  sel[i]._data.cltnm; //거래처
@@ -765,9 +765,9 @@
                        _ls_lotno   =  sel[i]._data.lotno; //거래처 
                        _ls_jboxsu_qty  =  sel[i]._data.jboxsu1; //거래처 
                        _ls_plan_no  =  sel[i]._data.plan_no; //거래처 
-                       _ls_prod_qty = _ls_prod_qty - _ls_owqty     //검사가능수량 완료량-기검사량
+                       _ls_prod_qty = _ls_prod_qty - _ls_owqty     //조립가능수량 완료량-기조립량
                        
-                       if(_ls_prod_qty < sel[i]._data.obqty){      //검사량이 가능수량보다 클경우 
+                       if(_ls_prod_qty < sel[i]._data.obqty){      //조립량이 가능수량보다 클경우 
                            _ls_qty   = _ls_qty + _ls_prod_qty; 
                        }else{
                            _ls_qty   = _ls_qty + sel[i]._data.obqty; 
@@ -1015,17 +1015,17 @@
                document.getElementById('inlotno').value= arg12;  
                if(arg23){
                 document.getElementById('inwinqt').value = arg13;         //투입량
-                document.getElementById('inwotqt').value = arg14;         //검사수량   arg15 
+                document.getElementById('inwotqt').value = arg14;         //조립수량   arg15 
                 document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
-                //document.getElementById('inputdate').value= arg16;         //검사일자  
+                //document.getElementById('inputdate').value= arg16;         //조립일자  
                 winputdate.value = arg16;
                 document.getElementById('inwinps').value= arg17;  
                 document.getElementById('inwrpsnm').value= arg18;
                 document.getElementById('inwremark').value= arg19; 
                }else{
-                document.getElementById('insumqt').value = arg14;         //검사수량   arg15 
+                document.getElementById('insumqt').value = arg14;         //조립수량   arg15 
                 // document.getElementById('inwinqt').value = arg13;         //투입량
-                document.getElementById('inwotqt').value = 0;         //검사수량   arg15 
+                document.getElementById('inwotqt').value = 0;         //조립수량   arg15 
                 // document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
                 //document.getElementById('inputdate').value= arg16; 
                }     
@@ -1038,17 +1038,17 @@
                var ls_custcd   = 'KDMES'; 
                var ls_spjangcd = 'ZZ';  
                var ll_inwinqt  = document.getElementById('inwotqt').value;         //투입 
-               var ll_inwotqt = document.getElementById('inwotqt').value;          //검사 
+               var ll_inwotqt = document.getElementById('inwotqt').value;          //조립 
                var ll_inwbdqt   = document.getElementById('inwbdqt').value;             //불량수량
                var ll_inwqcqt   = document.getElementById('inwqcqt').value;             //완료수량 
                var ll_insumqt = document.getElementById('insumqt').value;          //누적수량               
                var ll_inboxsu1 = document.getElementById('inboxsu1').value;          //박스수량 
                
-               var ls_inwflag  = '00020';   
+               var ls_inwflag  = '00030';   
                var ls_inwremark  = document.getElementById('inwremark').value;     //비고
-               var ls_inwinps   = document.getElementById('inwinps').value;        //검사자코드
-               var ls_inwrpsnm   = document.getElementById('inwrpsnm').value;      //검사자명
-               var ls_inlotno   = document.getElementById('inlotno').value;        //검사 lotno
+               var ls_inwinps   = document.getElementById('inwinps').value;        //조립자코드
+               var ls_inwrpsnm   = document.getElementById('inwrpsnm').value;      //조립자명
+               var ls_inlotno   = document.getElementById('inlotno').value;        //조립 lotno
                var ls_insalotno   = document.getElementById('insalotno01').value;        //사출 lotno
                var ls_wono      = document.getElementById('inwono').value;               // 작지번호 
                var ls_plan_no   = document.getElementById('inplan_no').value; 
@@ -1117,7 +1117,7 @@
             //            ls_wono[i]   =  chkTabA[i]._data.wono;  
             //            //ls_salotno[i]   =  chkTabA[i]._data.lotno;  
             //            ll_prdqty[i]   =  parseInt(chkTabA[i]._data.prod_qty);  //사출량 
-            //            ll_obqty[i]    =  parseInt(chkTabA[i]._data.obqty);  //검사량
+            //            ll_obqty[i]    =  parseInt(chkTabA[i]._data.obqty);  //조립량
             //            if(!ll_obqty[i] ){ 
             //                alert("수량을 등록하세요") 
             //                return                                           
@@ -1141,7 +1141,7 @@
                        }  
                        if(ls_inlotno == null || ls_inlotno.length == 0 || ls_inlotno == ""){ 
                             if(ll_inwotqt == null || ll_inwotqt == 0 ){ 
-                                alert("검사수량을를 등록하세요")  
+                                alert("조립수량을를 등록하세요")  
                                 return ;               
                             }   
                        }
@@ -1149,7 +1149,7 @@
 
                         
                        $.ajax({
-                           url: '/input02/w020upd',   
+                           url: '/input02/w030upd',   
                            type:"POST", 
                            data: {
                                "custcd"    : ls_custcd ,
@@ -1217,7 +1217,7 @@
                switch(ls_tab){
                    case 'A': 
                        $.ajax({
-                           url: '/input02/w020del',   
+                           url: '/input02/w030del',   
                            type:"POST", 
                            data: {
                                "lotno"    : ls_inlotno  ,
@@ -1488,7 +1488,7 @@
                wtab03Grid.columns.push(cols);  
                cols = new wijmo.grid.Column(); 
                cols.binding = 'otqty';
-               cols.header = '기검사량';
+               cols.header = '기조립량';
                cols.align = "center";
                cols.width = 90 ; 
                wtab03Grid.columns.push(cols);  
@@ -1516,7 +1516,7 @@
            }
    
            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-           //검사량 조회 
+           //조립량 조회 
            function searchList_rtn(ls_tab){ 
    
                var ls_frdate     =  convert_date(wfrdate.value);                    
@@ -1638,7 +1638,7 @@
                wtab01Grid.columns.push(cols);  
                cols = new wijmo.grid.Column(); 
                cols.binding = 'qcdate';
-               cols.header = '검사일';
+               cols.header = '조립일';
                cols.align = "center";
                cols.width = 120; 
                wtab01Grid.columns.push(cols);   
@@ -1675,14 +1675,14 @@
                wtab01Grid.columns.push(cols);    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'wrpsnm';
-               cols.header = '검사자';
+               cols.header = '조립자';
                cols.align = "center";
                cols.width = 130; 
                cols.format = 'yyyy-MM-dd'; 
                wtab01Grid.columns.push(cols);    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'otqty';
-               cols.header = '검사량';
+               cols.header = '조립량';
                cols.align = "center";
                cols.width = 90;  
                wtab01Grid.columns.push(cols);     
@@ -1753,7 +1753,7 @@
                view_p01tab02page.sourceCollection  = wtab02_data; 
                var cols = new wijmo.grid.Column(); 
                cols.binding = 'qcdate';
-               cols.header = '검사일';
+               cols.header = '조립일';
                cols.align = "center";
                cols.format = 'yyyy-MM-dd'; 
                cols.width = 120;   
@@ -1761,21 +1761,21 @@
    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'glotnono';
-               cols.header = '검사바코드';
+               cols.header = '조립바코드';
                cols.align = "center";
                cols.width = 150;  
                wtab02Grid.columns.push(cols);     
    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'otqty';
-               cols.header = '검사수량';
+               cols.header = '조립수량';
                cols.align = "right";
                cols.width = 90;  
                wtab02Grid.columns.push(cols);    
    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'wrpsnm02';
-               cols.header = '검사담당자';
+               cols.header = '조립담당자';
                cols.align = "center";
                cols.width = 120;  
                wtab02Grid.columns.push(cols);    
@@ -1856,7 +1856,7 @@
                         }); 
                         winputdate = new wijmo.input.InputDate('#inputdate', {
                             isRequired: false,
-                            value: null, 
+                            value: null,
                             placeholder: '',
                             format: 'yyyy-MM-dd', 
                         }); 
@@ -1869,7 +1869,7 @@
                         winputdate.value = ls_date;
                           
            }  
-           function convert_date(arg_date){ 
+           function convert_date(arg_date){  
                 var ls_arg_date = String(arg_date); 
                 if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
                     return "";

@@ -699,7 +699,7 @@
                        // }
    
                        ll_obqty = 0;
-                       ll_obqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];   //잔여수량
+                       ll_obqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];   //잔여수량 
                        var date_format = new Date(psdate);
                        data.push({
                            id: i, 
@@ -1069,10 +1069,10 @@
                 } 
                }   
  
-               if(ll_inboxsu1 < ll_insumqt ){
-                    alert("박스수량을 초과했습니다. 확인하세요");
-                    return ;
-                }  
+            //    if(ll_inboxsu1 < ll_insumqt ){
+            //         alert("박스수량을 초과했습니다. 확인하세요");
+            //         return ;
+            //     }  
 
                if(!ls_inlotno){
                    ls_inlotno = "";
@@ -1338,7 +1338,7 @@
                        ls_searchdate = "%";
                    }
                    $.ajax({
-                   url: '/input02/w020ordlist',  
+                   url: '/input02/w030ordlist',  
                    type:"POST",
                    data: { 
                        "lotno"      : ls_searchdate,  
@@ -1356,7 +1356,7 @@
                                psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
                                ll_obqty = 0;
                                ll_obqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];   //잔여수량
-                               var date_format = new Date(psdate);  //wijmo.DateTime.addDays(date_format, 0),
+                               var date_format = new Date(psdate);  //wijmo.DateTime.addDays(date_format, 0), 
                                dataArr.push({
                                    id: i, 
                                    index: cnt,                                                                
@@ -1371,7 +1371,7 @@
                                    psize: ListDto[i]["psize"], 
                                    prod_qty: ListDto[i]["prod_qty"], 
                                    otqty: ListDto[i]["otqty"] ,   
-                                   jboxsu1: ListDto[i]["jboxsu1"] ,   
+                                   jboxsu1: ListDto[i]["jboxsu1"],   
                                    obqty: ll_obqty  
                                });
                                cnt++;
@@ -1389,7 +1389,7 @@
                    })                                  
                }else{
                    $.ajax({
-                   url: '/input02/w020ordlist',  
+                   url: '/input02/w030ordlist',  
                    type:"POST",
                    data: { 
                        "lotno"      : addlotno,   
@@ -1521,9 +1521,9 @@
    
                var ls_frdate     =  convert_date(wfrdate.value);                    
                var ls_todate     =  convert_date(wtodate.value); 
-            console.log(ls_tab)
-            console.log(ls_frdate)
-            console.log(ls_todate)
+            // console.log(ls_tab)
+            // console.log(ls_frdate)
+            // console.log(ls_todate)
                //var ls_searchtxt = document.getElementById('searchtxt').value; 
                if(ls_searchtxt == null || ls_searchtxt.length == 0 || ls_searchtxt == ""){  
                   ls_searchtxt = "%";
@@ -1531,7 +1531,7 @@
                switch(ls_tab){
                    case 'A':
                        $.ajax({
-                           url: '/input02/w020',  
+                           url: '/input02/w030',  
                            type:"POST",
                            data: { 
                                "frdate"      : ls_frdate, 
@@ -1555,7 +1555,7 @@
                            ls_searchtxt = "%";
                        }   
                        $.ajax({
-                           url: '/input02/w020his',  
+                           url: '/input02/w030his',  
                            type:"POST",
                            data: { 
                                "searchtxt" : ls_searchtxt, 
@@ -1579,16 +1579,21 @@
            }        
            function tabA_grid(data){ 
                var wtab01Dto  = data;    
+               console.log(wtab01Dto)
                var wtab01_data = [];
                var cnt = 1;    
                for (var i = 0; i < wtab01Dto.length; i++) { 
                        var psdate = wtab01Dto[i]["prod_sdate"];
                            psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
                            var ls_qcdate = wtab01Dto[i]["qcdate"];
-                           if(ls_qcdate.length > 0){
-                               ls_qcdate = ls_qcdate.substr(0,4) + '-' + ls_qcdate.substr(4,2)+ '-' + ls_qcdate.substr(6,2);
+                           if(!ls_qcdate){
+                            ls_qcdate = ""
                            }else{
-                               ls_qcdate = "";
+                                if(ls_qcdate.length > 0){
+                                ls_qcdate = ls_qcdate.substr(0,4) + '-' + ls_qcdate.substr(4,2)+ '-' + ls_qcdate.substr(6,2);
+                                }else{
+                                    ls_qcdate = "";
+                                }
                            }
                            if(wtab01Dto[i]["demflag"] == "1"){
                                 bdemflag = true;
@@ -1856,7 +1861,7 @@
                         }); 
                         winputdate = new wijmo.input.InputDate('#inputdate', {
                             isRequired: false,
-                            value: null,
+                            value: null, 
                             placeholder: '',
                             format: 'yyyy-MM-dd', 
                         }); 
@@ -1869,7 +1874,7 @@
                         winputdate.value = ls_date;
                           
            }  
-           function convert_date(arg_date){  
+           function convert_date(arg_date){ 
                 var ls_arg_date = String(arg_date); 
                 if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
                     return "";
