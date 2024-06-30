@@ -71,6 +71,7 @@
                D.wrps as wrps,
                D.wrmc as wrmc,
                E.wrmcnm as wrmcnm,
+               C.w_b_gubn,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
         FROM TB_FPLAN A WITH(NOLOCK)
              LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00010'
@@ -190,7 +191,7 @@
                    AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
                    AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
                    AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
-                   AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
+                   AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00030') = '00030')
                    AND ( Len( ISNULL(A.wflag,'') ) > 0  )
                    AND C.w_b_gubn IN ('H')
              ) F
@@ -398,6 +399,7 @@
                D.wotqt  - D.wbdqt as prod_qty,
                D.wotqt   as otqty,
                isnull(D.wotqt,0) as owqty,
+               isnull(D.wbdqt,0) as wbdqt,
                0 as obqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
                '' AS partcode ,
@@ -408,8 +410,8 @@
                D.demflag as demflag,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm
 
-        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
-            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono
+        FROM  TB_FPLAN_W030 D  WITH(NOLOCK)
+            LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.jlotnono
 			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = D.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
             JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
@@ -493,7 +495,7 @@
                D.wremark as wremark,
                (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '') END ) wrpsnm01,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
-        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+        FROM  TB_FPLAN_W030 D  WITH(NOLOCK)
 			LEFT OUTER JOIN  TB_FPLAN_IWORK F ON D.lotno   = F.glotno
 			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = F.plan_no AND Len( ISNULL(A.wflag,'') ) > 0
             LEFT OUTER JOIN  TB_FPLAN_W010  E ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
@@ -527,7 +529,7 @@
               F.prod_qty - F.otqty as obqty
         FROM (
                  SELECT	A.wono,
-                       A.lotno AS lotno,
+                       D.lotno AS lotno,
                        A.plan_no,
                        A.cltcd,
                        A.pcode,
@@ -855,7 +857,7 @@
     <select id="GetFPLANW010_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
                A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision,B.decision1, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
-               D.jgugek AS psize, D.jdanwy AS punit,
+               D.jgugek AS psize, D.jdanwy AS punit, D.w_b_gubn,
                (CASE WHEN A.winps > 1 THEN E.inname  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  E.inname END ) wrpsnm
         from TB_FPLAN_W010 A WITH (NOLOCK)
 		     LEFT OUTER JOIN  INSA E ON A.wrps = E.insano
@@ -991,7 +993,7 @@
     <update id="FPLANW010_Update_JQTY" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_W010 SET
         jlotnono=#{glotnono},
-        jqty01= isnull(jqty01,0) + #{jqty01}
+        jqty01= isnull(jqty01,0) + #{gqty01}
         where plan_no=#{plan_no} and wseq=#{wseq} and wflag=#{wflag}
     </update>
 
@@ -1204,7 +1206,7 @@
 
     <delete id="FPLANW030_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         DELETE  from TB_FPLAN_W030
-        where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag}
+        where lotno=#{lotno}
     </delete>
 
     <delete id="FPLAN_OWORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" >

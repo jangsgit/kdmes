@@ -167,6 +167,7 @@ public class Appm01CrudController {
             ,@RequestParam("partnm") String partnm
             ,@RequestParam("workdv") String workdv
             ,@RequestParam("rwflag") String rwflag
+            ,@RequestParam("wbgubn") String wbgubn
             ,Model model, HttpServletRequest request) throws Exception {
 
         Index10Dto _index10Dto = new Index10Dto();
@@ -222,7 +223,7 @@ public class Appm01CrudController {
             _index10Dto.setLotno(ls_lotno);
             result = service10.UpdateFplan(_index10Dto);
             if (!result) {
-                log.info("result =====>" + result);
+                log.info("UpdateFplan result =====>" + result);
                 return "error";
             }
         }
@@ -306,7 +307,12 @@ public class Appm01CrudController {
 
         if(decision.equals("0")){
             wtimeDto.setWtrdt(getToDateTime());
-            workDto.setWflag("00020");
+            //검사, 조립 공정구분
+            if(wbgubn.equals("H")){
+                workDto.setWflag("00030");
+            }else{
+                workDto.setWflag("00020");
+            }
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update 02");

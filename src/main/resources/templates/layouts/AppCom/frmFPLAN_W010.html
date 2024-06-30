@@ -90,7 +90,8 @@
                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwsyul" value=0   />   
                                                         <input class="form-control form-control-sm"  type="hidden"  id="inostore"value=0   />   
                                                         <input class="form-control form-control-sm"  type="hidden"  id="instopcd" />   
-                                                        <input class="form-control form-control-sm"  type="hidden"  id="instopnm" />       
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="instopnm" />    
+                                                        <input class="form-control form-control-sm"  type="hidden"  id="inwbgubn" />  
                                                         <div id='inwonobdg'></div>      
                                                                                                                     
                                                     </div> 
@@ -710,7 +711,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.plan_no}</b>',
                         click: (e, ctx) => {
-                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm   );
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn   );
                         }
                     })
                 }, 
@@ -779,7 +780,8 @@
                     wrmc: ListDto[i]["wrmc"],
                     wrmcnm: ListDto[i]["wrmcnm"],
                     partcode: ListDto[i]["partcode"],
-                    partnm: ListDto[i]["partnm"]
+                    partnm: ListDto[i]["partnm"],
+                    wbgubn: ListDto[i]["w_b_gubn"] 
                     
                     
                 });
@@ -1832,6 +1834,8 @@
         var ls_inwono   = document.getElementById('inwono').value;  
         var ls_inpartcode  = document.getElementById('inpartcode').value;  
         var ls_inpartnm  = document.getElementById('inpartnm').value;  
+        var ls_inwbgubn  = document.getElementById('inwbgubn').value;  
+        
         var ls_stopcd = "";
         var ls_stopnm = "";
         button_workstBtn.disabled = false;
@@ -1956,6 +1960,7 @@
                     "partnm"      : ls_inpartnm ,                     
                     "workdv"      : arg1, 
                     "rwflag"      : ls_rwflag, 
+                    "wbgubn"      : ls_inwbgubn,  
                     
                 },
                 async:false,
@@ -2240,12 +2245,12 @@
         document.getElementById('popwseq').value= arg4;  
         document.getElementById('popseq').value= arg5;  
     }
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24 ){ 
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25 ){ 
             // custcd, spjangcd, wono, cltnm, pname, 
             // ostore, plan_no, cltcd, pcode, wseq, 
             // wflag, phmmdoc, otqty, wrpsnm, owqty ,
             // obqty,winps,wrps,lotno,prod_qty, 
-            // wrmc, wrmcnm, partcode   
+            // wrmc, wrmcnm, partcode, wbgubn
         var button_workstBtn = document.getElementById('workstBtn');
         var button_workedBtn = document.getElementById('workedBtn'); 
             button_workstBtn.disabled = false;
@@ -2266,6 +2271,7 @@
         document.getElementById('prod_qty').value= arg20;   
         document.getElementById('inpartcode').value= arg23; 
         document.getElementById('inpartnm').value= arg24; 
+        document.getElementById('inwbgubn').value= arg25; 
         
     // document.getElementById('inphmmdoc').value= arg12;  
         wflag = arg11; //document.getElementById('inwflag').value;
@@ -2565,6 +2571,7 @@
                         wrmcnm: ListDto[i]["wrmcnm"] ,
                         partcode: ListDto[i]["partcode"] ,
                         partnm: ListDto[i]["partnm"] ,
+                        wbgubn: ListDto[i]["w_b_gubn"] ,
                         end_qty: ListDto[i]["end_qty"] 
                     });
                     cnt++;
@@ -2592,7 +2599,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.wono}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm  );
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn );
                     }
                 });
                 wtab01Grid.columns.push(cols);  

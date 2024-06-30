@@ -222,21 +222,13 @@
                                                                 </td>                                 
                                                             </tr>  
                                                             <tr> 
-                                                                <th>누적수량</th>
+                                                                <!-- <th>누적수량</th>
                                                                 <td>
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm"  type="number" id="insumqt" placeholder=""  disabled  /> 
                                                                         <div id='inwinqtbdg'></div>                                             
                                                                     </div>                                            
-                                                                </td>  
-                                                                <th>완료수량</th>
-                                                                <td >
-                                                                    <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input class="form-control form-control-sm"  type="number" id="inwqcqt" placeholder=""  disabled  />  
-                                                                    </div>                                            
-                                                                </td>                                   
-                                                            </tr>   
-                                                            <tr> 
+                                                                </td>   -->
                                                                 <th>작업자</th>
                                                                 <td >                                                                   
                                                                     <div class="input_wrap" style="max-width: 230px;">  
@@ -244,21 +236,36 @@
                                                                         <input class="form-control form-control-sm" id="inwinps" type="hidden" disabled size="15"  />                                         
                                                                     </div>                                            
                                                                 </td>   
+                                                                <th>완료수량</th>
+                                                                <td >
+                                                                    <div class="input_wrap" style="max-width: 230px;"> 
+                                                                        <input class="form-control form-control-sm"  type="number" id="inwqcqt" placeholder=""  disabled  />  
+                                                                        <input class="form-control form-control-sm"  type="hidden" id="insumqt" placeholder=""  disabled  /> 
+                                                                    </div>                                            
+                                                                </td>                                   
+                                                            </tr>   
+                                                            <tr>  
+                                                                <th>비고</th>
+                                                                <td>
+                                                                    <div class="input_wrap" style="max-width: 230px;"> 
+                                                                        <input class="form-control form-control-sm" id="inwremark" type="text" placeholder=""  />                                    
+                                                                    </div>                                            
+                                                                </td> 
                                                                 <th>조립완료</th>
                                                                 <td >     
                                                                     <div class="form-check form-check-inline">
                                                                         <input class="form-check-input"  type="checkbox" id="demflag" value="demflag"  />                                                                       
                                                                     </div>
-                                                                </td>                                
+                                                                </td>                                  
                                                             </tr>  
-                                                            <tr> 
+                                                            <!-- <tr> 
                                                                 <th>비고</th>
                                                                 <td colspan="3">
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm" id="inwremark" type="text" placeholder=""  />                                    
                                                                     </div>                                            
                                                                 </td>                                  
-                                                            </tr> 
+                                                            </tr>  -->
                                                         </tbody>
                                                     </table>
                                                     <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
@@ -494,10 +501,10 @@
                 }else{
                     document.getElementById('inwqcqt').value  = ll_inqcqt; //완료수량
                 } 
-                if(ll_inboxsu1 == ll_insumqt ){ 
-                    alert("조립 완료를 체크하고 저장하세요");
-                    return ;
-                }                 
+                // if(ll_inboxsu1 == ll_insumqt ){ 
+                //     alert("조립 완료를 체크하고 저장하세요");
+                //     return ;
+                // }                 
                 //console.log(`현재 값: ${currentValue02}`);
             });
 
@@ -523,7 +530,7 @@
                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                text: '<b>${item.lotno}</b>',
                                click: (e, ctx) => {
-                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag  );
+                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag, ctx.item.wbdqt  );
                                }
                            })
                        },       
@@ -599,6 +606,7 @@
                            end_qty: ListDto[i]["end_qty"], 
                            wboxsu: ListDto[i]["wboxsu"], 
                            wsumqt: ListDto[i]["wsumqt"], 
+                           wbdqt: ListDto[i]["wbdqt"]  ,
                            demflag: bdemflag, 
                            qcdate: ls_qcdate
                            
@@ -782,6 +790,8 @@
                    document.getElementById('insalotno01').value= _ls_lotno;  
                    document.getElementById('inplan_no').value= _ls_plan_no; 
                    document.getElementById('inwqcqt').value= Number(_ls_qty);
+                   document.getElementById('demflag').checked = true; 
+                   
                    chkTabA_row = sel.length;
                    if(sel.length > 1 ){
                        document.getElementById('inpname').value= _ls_pname; 
@@ -989,11 +999,11 @@
             function tabchk_rtn(arg){
                document.getElementById('tabvalue').value = arg; 
            } 
-           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23){ 
-               //console.log(arg14)
+           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24){ 
+                console.log(arg15)
                //custcd, spjangcd, wono, cltnm, pname, ostore, plan_no, 1-7
                //cltcd, pcode, wseq, wflag, lotno, prod_qty  otqty otqty 8-15
-               //qcdate, winps , wrpsnm, wremark psize, wboxsu, wsumqt demflag 16-23  
+               //qcdate, winps , wrpsnm, wremark psize, wboxsu, wsumqt demflag wbdqt 16-24  
                const ls_demflagEle   = document.getElementById('demflag');             //완료여부
                if(arg23){
                 ls_demflagEle.checked = true;
@@ -1012,23 +1022,26 @@
                document.getElementById('inpcode').value= arg9;   
                document.getElementById('inwseq').value= arg10;  
                document.getElementById('inwflag').value= arg11;  
-               document.getElementById('inlotno').value= arg12;  
-               if(arg23){
+               document.getElementById('inlotno').value= arg12;   
+               //완료와관계없이 조립일자 표시  
+             //  if(arg23){
                 document.getElementById('inwinqt').value = arg13;         //투입량
                 document.getElementById('inwotqt').value = arg14;         //조립수량   arg15 
                 document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
+                document.getElementById('inwqcqt').value = arg15;         //완료량     arg13 ???
+                document.getElementById('inwbdqt').value = arg24;         //불량수량     arg24 ???
                 //document.getElementById('inputdate').value= arg16;         //조립일자  
                 winputdate.value = arg16;
                 document.getElementById('inwinps').value= arg17;  
                 document.getElementById('inwrpsnm').value= arg18;
                 document.getElementById('inwremark').value= arg19; 
-               }else{
-                document.getElementById('insumqt').value = arg14;         //조립수량   arg15 
-                // document.getElementById('inwinqt').value = arg13;         //투입량
-                document.getElementById('inwotqt').value = 0;         //조립수량   arg15 
-                // document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
-                //document.getElementById('inputdate').value= arg16; 
-               }     
+            //    }else{
+            //     document.getElementById('insumqt').value = arg14;         //조립수량   arg15 
+            //     // document.getElementById('inwinqt').value = arg13;         //투입량
+            //     document.getElementById('inwotqt').value = 0;         //조립수량   arg15 
+            //     // document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
+            //     //document.getElementById('inputdate').value= arg16; 
+            //    }     
                document.getElementById('inpsize').value= arg20;    
                document.getElementById('inboxsu1').value= arg21;  
            }
@@ -1037,11 +1050,11 @@
                var ls_inputdate     =  convert_date(winputdate.value);  
                var ls_custcd   = 'KDMES'; 
                var ls_spjangcd = 'ZZ';  
-               var ll_inwinqt  = document.getElementById('inwotqt').value;         //투입 
-               var ll_inwotqt = document.getElementById('inwotqt').value;          //조립 
+               var ll_inwinqt  = document.getElementById('inwotqt').value;         //투입수량
+               var ll_inwotqt = document.getElementById('inwotqt').value;          //조립수량 
                var ll_inwbdqt   = document.getElementById('inwbdqt').value;             //불량수량
                var ll_inwqcqt   = document.getElementById('inwqcqt').value;             //완료수량 
-               var ll_insumqt = document.getElementById('insumqt').value;          //누적수량               
+               var ll_insumqt   = ll_inwqcqt //document.getElementById('insumqt').value;          //누적수량               
                var ll_inboxsu1 = document.getElementById('inboxsu1').value;          //박스수량 
                
                var ls_inwflag  = '00030';   
@@ -1057,16 +1070,20 @@
                var ls_inpcode   = document.getElementById('inpcode').value;              //제품코드 
                const ls_demflagEle   = document.getElementById('demflag');             //완료여부
                var ls_demflag = '0'; 
+               if(!ll_inwqcqt){ll_inwqcqt = 0}
+               if(!ll_inboxsu1){ll_inboxsu1 = 0}
+               if(!ll_insumqt){ll_insumqt = 0}
+               if(!ls_inwinps){ls_inwinps = ''}
                
                if(!ll_insumqt || ll_insumqt == 0){      //최초입력시 누적수량은 완료수량이다. 
                    ll_insumqt = ll_inwqcqt;
                }else{ 
-                if(ll_insumqt == ll_inboxsu1){
-                        ls_demflag = "1"
-                        ll_inwqcqt = ll_insumqt
-                }else{
-                        ll_insumqt =  parseInt(ll_insumqt) + parseInt(ll_inwqcqt); 
-                } 
+                    if(ll_insumqt == ll_inboxsu1){
+                            ls_demflag = "1"
+                            ll_inwqcqt = ll_insumqt
+                    }else{
+                            ll_insumqt =  parseInt(ll_insumqt) + parseInt(ll_inwqcqt); 
+                    } 
                }   
  
             //    if(ll_inboxsu1 < ll_insumqt ){
@@ -1104,7 +1121,7 @@
                 }  
                if (!confirm("저장하시겠습니까?")) {
                        return ; 
-               }     
+               }      
             //    var ls_plan_no = []; 
             //    var ll_prdqty = []; 
             //    var ll_obqty = []; 
@@ -1278,7 +1295,7 @@
                document.getElementById('inwbdqt').value = 0;
                document.getElementById('insumqt').value = 0;
                document.getElementById('inwokqt').value = 0;
-               document.getElementById('inwqcqt').value = 0;
+               document.getElementById('inwqcqt').value = 0;   
                document.getElementById('inwrpsnm').value = "";
                document.getElementById('inwinps').value = ""; 
                document.getElementById('inwremark').value = ""; 
@@ -1349,8 +1366,7 @@
                            var ListDto = data;  
                            var dataArr = [];
                            var cnt = 1; 
-                           var ll_obqty = 0; 
-                           console.log(ListDto)
+                           var ll_obqty = 0;  
                            for (var i = 0; i < ListDto.length; i++) {
                                var psdate = ListDto[i]["prod_sdate"];
                                psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
@@ -1579,7 +1595,6 @@
            }        
            function tabA_grid(data){ 
                var wtab01Dto  = data;    
-               console.log(wtab01Dto)
                var wtab01_data = [];
                var cnt = 1;    
                for (var i = 0; i < wtab01Dto.length; i++) { 
@@ -1618,6 +1633,7 @@
                            obqty: wtab01Dto[i]["obqty"],    
                            otqty: wtab01Dto[i]["otqty"] , 
                            winps: wtab01Dto[i]["winps"]  ,
+                           wbdqt: wtab01Dto[i]["wbdqt"]  ,
                            wrps: wtab01Dto[i]["wrps"]  ,
                            wrpsnm: wtab01Dto[i]["wrpsnm"],  
                            wremark: wtab01Dto[i]["wremark"] , 
@@ -1662,7 +1678,7 @@
                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                    text: '<b>${item.lotno}</b>',
                    click: (e, ctx) => {
-                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag );
+                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt );
                    }
                });
                wtab01Grid.columns.push(cols);       

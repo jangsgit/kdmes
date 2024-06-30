@@ -153,9 +153,56 @@ public class Appm01Controller {
         return "AppCom/LayFPLAN_W020";
     }
 
-    //검사공정
+
+    //조립정
     @GetMapping(value="/list03")
     public String Appcom03_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("조립공정");  //
+        CommDto.setMenuUrl("생산공정>조립공정");
+        CommDto.setMenuCode("appcom03");
+        String fdate = getFrDate();
+        String tdate = getAddDate();
+        String cltcd = "%";
+        String pcode = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00020");
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(pcode);
+        itemDto.setPlan_no("%");
+//        itemDto = appcom01Service.FPLANW010_Blank();
+        itemDtoList = appcom01Service.GetFPLAN_List02(fplanDto);
+        itemDtoList02 = appcom01Service.GetFPLAN_List03(fplanDto);
+//        model.addAttribute("itemDto", itemDto);
+        model.addAttribute("itemDtoList", itemDtoList);
+        model.addAttribute("itemDtoList02", itemDtoList02);
+
+
+        wrmcDto.setMachname("%");
+        wperidDto.setWflag("00030");  //첫번째공정
+        wperidDto.setWpernm("%");
+        wrmcDto.setPlan_no("%");      //불량구분 팝업
+        wrmcDto.setWseq("%");
+        wrmcDto.setWflag("00030");
+        wrmcDto.setWclscode("1");
+        model.addAttribute("CommDto", CommDto);
+        model.addAttribute("wrmcDto", appPopupService.GetWrmcList01(wrmcDto));          //설비명
+//        log.info("Exception =====>" + appPopupService.GetPernmList(wperidDto).toString());
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+//        wbomDto.setPlan_no("202108120027");
+        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
+//        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
+        model.addAttribute("wfiworkDto", appPopupService.GetWfiworkList_blank());
+
+        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));          //불량구분
+
+        return "AppCom/LayFPLAN_W030";
+    }
+
+    //검사공정
+    @GetMapping(value="/list03_old")
+    public String Appcom03_old_index(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("검사이력조회");  //
         CommDto.setMenuUrl("생산공정>검사이력조회");
         CommDto.setMenuCode("appcom03");

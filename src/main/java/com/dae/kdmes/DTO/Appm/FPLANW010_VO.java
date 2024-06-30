@@ -72,6 +72,7 @@ public class FPLANW010_VO {
     private float wboxsu;
 
     private String wtable;
+    private String w_b_gubn;
 
 
     private String machname;

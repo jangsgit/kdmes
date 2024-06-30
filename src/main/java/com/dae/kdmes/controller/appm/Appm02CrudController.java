@@ -178,7 +178,8 @@ public class Appm02CrudController {
 //        log.info("searchtxt =====>" + searchtxt);
 //        log.info("frdate =====>" + frdate);
 //        log.info("todate =====>" + todate);
-        itemDtoList = appcom01Service.GetFPLAN_List03(fplanDto);
+        itemDtoList = appcom01Service.GetFPLAN_List02_REG_JO(fplanDto);
+        //itemDtoList = appcom01Service.GetFPLAN_List03(fplanDto);
 
         model.addAttribute("itemDtoList", itemDtoList);
         return itemDtoList;
@@ -586,6 +587,9 @@ public class Appm02CrudController {
         workDto.setWtable("TB_FPLAN_W090");
         workDto.setQcdate(inputdate);
         workDto.setWremark(wremark);
+        if(wrps == null){
+            wrps = "";
+        }
         workDto.setWrps(wrps);
         workDto.setWsyul(0);
         workDto.setWboxsu(wboxsu);
@@ -623,14 +627,17 @@ public class Appm02CrudController {
         workDto.setWseq("01");
         workDto.setGlotnono(ls_lotno);
         workDto.setGqty01(wotqt);
+        workDto.setWbdqt(ll_inwbdqt);
         ll_winqty =  winqt;     //투입수량
         ll_wotqty =  wotqt;     //검사수량
         log.info("glotno =====>" + workDto.getGlotnono() );
+        log.info("salotno =====>" + workDto.getLotno() );
         log.info("gqty01 =====>" + workDto.getGqty01() );
         log.info("plan_no =====>" + workDto.getPlan_no() );
         log.info("wrps =====>" + workDto.getWrps() );
         log.info("otqt =====>" + workDto.getWotqt() );
         log.info("wsumqt =====>" + workDto.getWsumqt() );
+        log.info("ll_inwbdqt =====>" + ll_inwbdqt);
 
         if(salotno.length() > 0) {
             result = appcom01Service.FPLANW010_Update_JQTY(workDto);
@@ -645,7 +652,7 @@ public class Appm02CrudController {
             IworkDto.setSpjangcd("ZZ");
             IworkDto.setPlan_no(plan_no);
             IworkDto.setLotno(salotno);
-            IworkDto.setWflag("00010");
+            IworkDto.setWflag("00030");
             IworkDto.setGlotno(ls_lotno);
             IworkDto.setQty(wotqt);
             IworkDto.setSqty(0);
@@ -681,14 +688,14 @@ public class Appm02CrudController {
         if(lotno == null || lotno.length() == 0 || lotno.equals("")) {
             result = appcom01Service.FPLANW030_Insert(workDto);
             if (!result){
-                log.info("error Exception =====> FPLANW020_Insert" );
+                log.info("error Exception =====> FPLANW030_Insert" );
                 return "error";
             }
         }else{
             workDto.setLotno(lotno);
             result = appcom01Service.FPLANW030_Update(workDto);
             if (!result){
-                log.info("error Exception =====> FPLANW020_Update" );
+                log.info("error Exception =====> FPLANW030_Update" );
                 return "error";
             }
         }
@@ -776,15 +783,16 @@ public class Appm02CrudController {
         IworkDto.setWflag("00010");
         IworkDto.setGlotno(lotno);
 
-        result = appcom01Service.FPLANW010_Update_GDEL(workDto);
+        result = appcom01Service.FPLANW010_Update_JDEL(workDto);
         if (!result){
             //log.info("error Exception =====> FPLANW010_Update_GDEL" );
             //return "error";
         }
         workDto.setLotno(lotno);
-        result = appcom01Service.FPLANW020_Delete(workDto);
+        log.info("lotno =====> " + lotno);
+        result = appcom01Service.FPLANW030_Delete(workDto);
         if (!result) {
-            log.info("error =====> FPLANW020_Delete");
+            log.info("error =====> FPLANW030_Delete");
             return "error";
         }
 
@@ -801,9 +809,9 @@ public class Appm02CrudController {
             //log.info("error Exception =====> FPLAN_IWORK_Delete" );
             //return "error";
         }
-
+        log.info("w030deln =====> " + result );
         var ls_line = "99";
-        return "redirect:/appm/list02";
+        return "redirect:/appm/list03";
     }
 
 
