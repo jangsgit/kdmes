@@ -296,7 +296,7 @@
                                 </div>
                             </div>
                             <div class="col-1 col-sm-1">  
-                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="searchTabBBtn"  type="button" onclick="searchList_rtn()">조회
+                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="searchTabBBtn"  type="button" onclick="searchList_rtn('B')">조회
                                 </button>
                             </div>  
                         </div> 
@@ -306,7 +306,7 @@
                                 <tr>  
                                     <td class="align-top">                                                         
                                     <div class="container-fluid"  >                                                         
-                                        <div id="wtab02Grid_div"  style="overflow:scroll;   height:600px;     margin:0 auto; "></div> 
+                                        <div id="wtab02Grid_div"  style="overflow:scroll;   height:600px; width: 1500px;    margin:0 auto; "></div> 
                                         </div>  
                                     </td> 
                                 </tr>
@@ -530,7 +530,7 @@
                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                text: '<b>${item.lotno}</b>',
                                click: (e, ctx) => {
-                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag, ctx.item.wbdqt  );
+                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag, ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm  );
                                }
                            })
                        },       
@@ -607,6 +607,8 @@
                            wboxsu: ListDto[i]["wboxsu"], 
                            wsumqt: ListDto[i]["wsumqt"], 
                            wbdqt: ListDto[i]["wbdqt"]  ,
+                           wcode: ListDto[i]["wcode"]  , 
+                           wcodenm: ListDto[i]["wcodenm"]  ,
                            demflag: bdemflag, 
                            qcdate: ls_qcdate
                            
@@ -999,11 +1001,11 @@
             function tabchk_rtn(arg){
                document.getElementById('tabvalue').value = arg; 
            } 
-           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24){ 
-                console.log(arg15)
+           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27){ 
+                console.log(arg17)
                //custcd, spjangcd, wono, cltnm, pname, ostore, plan_no, 1-7
                //cltcd, pcode, wseq, wflag, lotno, prod_qty  otqty otqty 8-15
-               //qcdate, winps , wrpsnm, wremark psize, wboxsu, wsumqt demflag wbdqt 16-24  
+               //qcdate, winps , wrpsnm, wremark psize, wboxsu, wsumqt demflag wbdqt, wcode, wcodenm wqcqt 16-27
                const ls_demflagEle   = document.getElementById('demflag');             //완료여부
                if(arg23){
                 ls_demflagEle.checked = true;
@@ -1025,15 +1027,17 @@
                document.getElementById('inlotno').value= arg12;   
                //완료와관계없이 조립일자 표시  
              //  if(arg23){
-                document.getElementById('inwinqt').value = arg13;         //투입량
+                document.getElementById('inwinqt').value = arg14;         //투입량
                 document.getElementById('inwotqt').value = arg14;         //조립수량   arg15 
                 document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
-                document.getElementById('inwqcqt').value = arg15;         //완료량     arg13 ???
+                document.getElementById('inwqcqt').value = arg13;         //완료량     arg13 ???
                 document.getElementById('inwbdqt').value = arg24;         //불량수량     arg24 ???
                 //document.getElementById('inputdate').value= arg16;         //조립일자  
                 winputdate.value = arg16;
                 document.getElementById('inwinps').value= arg17;  
                 document.getElementById('inwrpsnm').value= arg18;
+                document.getElementById('inwcode').value= arg25;
+                document.getElementById('inwcodenm').value= arg26;
                 document.getElementById('inwremark').value= arg19; 
             //    }else{
             //     document.getElementById('insumqt').value = arg14;         //조립수량   arg15 
@@ -1075,16 +1079,16 @@
                if(!ll_insumqt){ll_insumqt = 0}
                if(!ls_inwinps){ls_inwinps = ''}
                
-               if(!ll_insumqt || ll_insumqt == 0){      //최초입력시 누적수량은 완료수량이다. 
-                   ll_insumqt = ll_inwqcqt;
-               }else{ 
-                    if(ll_insumqt == ll_inboxsu1){
-                            ls_demflag = "1"
-                            ll_inwqcqt = ll_insumqt
-                    }else{
-                            ll_insumqt =  parseInt(ll_insumqt) + parseInt(ll_inwqcqt); 
-                    } 
-               }   
+            //    if(!ll_insumqt || ll_insumqt == 0){      //최초입력시 누적수량은 완료수량이다. 
+            //        ll_insumqt = ll_inwqcqt;
+            //    }else{ 
+            //         if(ll_insumqt == ll_inboxsu1){
+            //                 ls_demflag = "1"
+            //                 ll_inwqcqt = ll_insumqt
+            //         }else{
+            //                 ll_insumqt =  parseInt(ll_inwqcqt); //parseInt(ll_insumqt) + 
+            //         } 
+            //    }   
  
             //    if(ll_inboxsu1 < ll_insumqt ){
             //         alert("박스수량을 초과했습니다. 확인하세요");
@@ -1639,6 +1643,9 @@
                            wremark: wtab01Dto[i]["wremark"] , 
                            wboxsu: wtab01Dto[i]["wboxsu"] , 
                            wsumqt: wtab01Dto[i]["wsumqt"] , 
+                           wqcqt: wtab01Dto[i]["wqcqt"] , 
+                           wcode: wtab01Dto[i]["wcode"] , 
+                           wcodenm: wtab01Dto[i]["wcodenm"] , 
                            demflag: bdemflag , 
                            
                            qcdate: ls_qcdate 
@@ -1678,7 +1685,7 @@
                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                    text: '<b>${item.lotno}</b>',
                    click: (e, ctx) => {
-                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt );
+                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm, ctx.item.wqcqt );
                    }
                });
                wtab01Grid.columns.push(cols);       
@@ -1704,6 +1711,18 @@
                cols = new wijmo.grid.Column(); 
                cols.binding = 'otqty';
                cols.header = '조립량';
+               cols.align = "center";
+               cols.width = 90;  
+               wtab01Grid.columns.push(cols);       
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'wbdqt';
+               cols.header = '불량';
+               cols.align = "center";
+               cols.width = 90;  
+               wtab01Grid.columns.push(cols);       
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'prod_qty';
+               cols.header = '완료량';
                cols.align = "center";
                cols.width = 90;  
                wtab01Grid.columns.push(cols);     
@@ -1825,14 +1844,14 @@
                cols.align = "center";
                cols.width = 130;  
                cols.format = 'yyyy-MM-dd'; 
-               wtab01Grid.columns.push(cols);   
+               wtab02Grid.columns.push(cols);   
                cols = new wijmo.grid.Column(); 
                cols.binding = 'wtrdt';
                cols.header = '사출종료일';
                cols.align = "center";
                cols.width = 130;  
                cols.format = 'yyyy-MM-dd'; 
-               wtab01Grid.columns.push(cols);   
+               wtab02Grid.columns.push(cols);   
                cols = new wijmo.grid.Column(); 
                cols.binding = 'prod_qty';
                cols.header = '사출수량';

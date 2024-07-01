@@ -400,18 +400,22 @@
                D.wotqt   as otqty,
                isnull(D.wotqt,0) as owqty,
                isnull(D.wbdqt,0) as wbdqt,
+               isnull(D.wqcqt,0) as wqcqt,
                0 as obqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
                '' AS partcode ,
-               D.winps as winps,
+               D.wrps as winps,
                D.wrps as wrps,
                D.indate as qcdate,
                D.wremark as wremark,
                D.demflag as demflag,
+               F.wcode as wcode,
+               (select com_rem1 from TB_CA510 where com_cls = '005' and com_code<>'00' and com_code=F.wcode and com_rem2='00030') as wcodenm,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm
 
         FROM  TB_FPLAN_W030 D  WITH(NOLOCK)
             LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.jlotnono
+            LEFT OUTER JOIN  TB_FPLAN_WBAD F ON D.lotno   = F.plan_no AND F.wseq = '01' AND F.wflag = '00030' AND LEN(ISNULL(WCODE,'')) > 0
 			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = D.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
             JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
@@ -419,7 +423,7 @@
           AND ( Len( ISNULL(A.wflag,'') ) > 0  )
           AND D.indate between #{frdate} and #{todate}
           AND C.w_b_gubn IN ('H')
-        GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt, D.winps, D.wrps, D.indate, D.wremark, D.wsumqt, D.demflag
+        GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt,D.wqcqt, D.winps, D.wrps, D.indate, D.wremark, D.wsumqt, D.demflag, F.wcode
         ORDER BY D.lotno desc
 
 
@@ -1052,6 +1056,8 @@
         <if test="wsumqt != null">wsumqt=#{wsumqt}</if>
         <if test="wbdqt != null ">,</if>
         <if test="wbdqt != null">wbdqt=#{wbdqt}</if>
+        <if test="wqcqt != null ">,</if>
+        <if test="wqcqt != null">wqcqt=#{wqcqt}</if>
         <if test="wotqt != null ">,</if>
         <if test="wotqt != null">wotqt=#{wotqt}</if>
         <if test="winps != null ">,</if>

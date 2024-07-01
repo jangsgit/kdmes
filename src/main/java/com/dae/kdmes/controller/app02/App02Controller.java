@@ -261,11 +261,17 @@ public class App02Controller {
         indexCa613Dto.setPname(pcode);
         indexCa613Dto.setFrdate(fdate);
         indexCa613Dto.setTodate(tdate);
+        wperidDto.setWpernm("%");
+        model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
 
         itemDtoListCa613   = service10.SelectCa613List(indexCa613Dto);
         model.addAttribute("itemDtoList", itemDtoListCa613);
         return "App02/index21";
     }
+
+
+
+
 
     //사출등록
     @GetMapping(value="/index31")

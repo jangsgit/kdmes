@@ -90,6 +90,8 @@ public class FPLAN_VO {
     private String todate;
     private String wremark;
     private String w_b_gubn;
+    private String wcode;
+    private String wcodenm;
 
     private float wbdqt;
     private float tqty;

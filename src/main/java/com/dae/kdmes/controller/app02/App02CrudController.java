@@ -887,6 +887,35 @@ public class App02CrudController {
         return ls_wotqt;
     }
 
+    //매출하대기
+    @GetMapping(value="/index21/list")
+    public Object App21List_index(@RequestParam("searchtxt") String searchtxt,
+                                  @RequestParam("frdate") String frdate,
+                                  @RequestParam("todate") String todate,
+                                  Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setPname(searchtxt);
+            indexCa613ListDto = service10.SelectCa613List(_indexCa613Dto);
+            model.addAttribute("index15List",indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App15List_index Exception =====>" + ex.toString());
+        }
+
+        return indexCa613ListDto;
+    }
+
+
 
     @GetMapping(value="/index10/listtot")
     public Object App03ListTot_index(@RequestParam("jpbgubn") String jpbgubn,

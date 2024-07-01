@@ -626,7 +626,7 @@ public class Appm02CrudController {
         workDto.setWflag("00010");
         workDto.setWseq("01");
         workDto.setGlotnono(ls_lotno);
-        workDto.setGqty01(wotqt);
+        workDto.setGqty01(wqcqt);
         workDto.setWbdqt(ll_inwbdqt);
         ll_winqty =  winqt;     //투입수량
         ll_wotqty =  wotqt;     //검사수량
@@ -680,9 +680,9 @@ public class Appm02CrudController {
         }
 
 
-        workDto.setWinqt(wsumqt);       //합산검사량이 최종검사량
-        workDto.setWotqt(wsumqt);
-        workDto.setQcqty(wqcqt);
+        workDto.setWinqt(winqt);       //투입량  합산검사량이 최종검사량
+        workDto.setWotqt(winqt);        //투입량
+        workDto.setWqcqt(wqcqt);        //검사량
         workDto.setWflag("00030");  //검사
         workDto.setWseq("03");
         if(lotno == null || lotno.length() == 0 || lotno.equals("")) {
