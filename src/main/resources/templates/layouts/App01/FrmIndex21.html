@@ -631,7 +631,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
                                 }
                             }) 
                         },    
@@ -675,8 +675,8 @@
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
-                            deldate: wtab01Dto[i]["deldate"], 
-                            delnum: wtab01Dto[i]["delnum"], 
+                            ibgdate: wtab01Dto[i]["ibgdate"], 
+                            ibgnum: wtab01Dto[i]["ibgnum"], 
                             ibgseq: wtab01Dto[i]["ibgseq"], 
                             lotno: wtab01Dto[i]["lotno"], 
                             istore: wtab01Dto[i]["istore"], 
