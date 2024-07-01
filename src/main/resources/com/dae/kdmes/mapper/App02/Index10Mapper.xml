@@ -232,7 +232,7 @@
                       Left(B.ibgdate,4) + '-' + substring(B.ibgdate, 5,2)+ '-' + substring(B.ibgdate, 7,2) as ibgdate,
                       B.ibgnum, B.ibgseq, B.lotno, B.istore, B.ostore,
                       B.pcode, B.pname, B.psize,    B.punit,  B.qty, B.cqty, B.uamt, B.samt, B.tamt,
-                      isnull(B.remark,'') as remark,
+                      isnull(B.remark,'') as remark,B.balno,
                       B.mamt, B.acorp, B.pernm , B.perid
                   from  TB_CA613 B WITH (NOLOCK)
                   where  B.pname Like concat('%',#{pname},'%')

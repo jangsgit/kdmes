@@ -623,7 +623,7 @@
                     alternatingRowStep: 0,
                     columns: [     
                         { binding: 'ibgdate', header: '출하일자', align: "center", width: 120 }, 
-                        { binding: 'balno', header: '발주번호', align: "left", width: 120 },  
+                        { binding: 'balno', header: '발주번호', align: "center", width: 120 },  
                         { binding: 'pname', 
                             header: '품목', 
                             align: "left", 
@@ -631,7 +631,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty, ctx.item.balno);                    
                                 }
                             }) 
                         },    
@@ -692,7 +692,8 @@
                             uamt: wtab01Dto[i]["uamt"], 
                             samt: wtab01Dto[i]["samt"],   
                             remark: wtab01Dto[i]["remark"], 
-                            perid: wtab01Dto[i]["perid"],    
+                            perid: wtab01Dto[i]["perid"],  
+                            balno: wtab01Dto[i]["balno"],    
                             pernm: wtab01Dto[i]["pernm"],                             
                         });
                         cnt++;
@@ -1508,6 +1509,13 @@
                     wtab01Grid.columns.push(cols);  
         
                     cols = new wijmo.grid.Column(); 
+                    cols.binding = 'balno';
+                    cols.header = '발주번호';
+                    cols.align = "center";
+                    cols.width = 150;           
+                    wtab01Grid.columns.push(cols);  
+        
+                    cols = new wijmo.grid.Column(); 
                     cols.binding = 'acorp';
                     cols.header = '거래처';
                     cols.align = "left";
@@ -1522,7 +1530,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty, ctx.item.balno);                    
                         }
                     });
                     wtab01Grid.columns.push(cols);  
@@ -1651,7 +1659,7 @@
                 //pname, psize, punit, qty,  uamt, 
                 //samt, perid, pernm, remark, lotno
                 //istore, ostore, cqty  
-            function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18){
+            function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19){
                  
                 wdeldate.value = arg1; 
                 if(arg1 == null || arg1.length == 0 || arg1.length < 8 || arg1 == ""|| arg1 == "null"){  
@@ -1659,6 +1667,7 @@
                     wdeldate.value = arg1;
                 } 
                 document.getElementById('delnum').value = arg2; 
+                document.getElementById('balno').value = arg19; 
                 document.getElementById('acode').value = arg3; 
                 document.getElementById('cltnm').value = arg4;   
                 document.getElementById('pcode').value = arg5;   
