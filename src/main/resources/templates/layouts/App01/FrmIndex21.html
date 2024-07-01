@@ -622,7 +622,7 @@
                     allowSorting: 'MultiColumn',
                     alternatingRowStep: 0,
                     columns: [     
-                        { binding: 'deldate', header: '출하일자', align: "center", width: 120 }, 
+                        { binding: 'ibgdate', header: '출하일자', align: "center", width: 120 }, 
                         { binding: 'balno', header: '발주번호', align: "left", width: 120 },  
                         { binding: 'pname', 
                             header: '품목', 
@@ -631,7 +631,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
                                 }
                             }) 
                         },    
