@@ -102,8 +102,15 @@
          #{perid},     #{store},   #{remark}  )
     </insert>
 
+    <insert id="InsertDA036" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
+        insert into TB_DA036 (custcd, spjangcd, cltcd,   ibgdate, ibgnum,
+        perid, store,  remark  ) values
+        ('KDMES', 'ZZ', #{cltcd},  #{ibgdate},    #{ibgnum},
+        #{perid},     #{store},   #{remark}  )
+    </insert>
+
     <insert id="InsertCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
-        insert into TB_CA613 (custcd, spjangcd, cltcd, acorp, ibgdate, ibgnum, ibgseq,
+        insert into TB_CA613 (custcd, spjangcd, cltcd, acorp, DEdate, ibgnum, ibgseq,
         pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt,
         mamt, indate, inperid,  pernm, perid, remark, lotno, istore, ostore ) values
         ('KDMES', 'ZZ', #{cltcd},   #{acorp},  #{ibgdate},  #{ibgnum}, #{ibgseq},
@@ -111,6 +118,14 @@
         #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}  )
     </insert>
 
+    <insert id="InsertDa037" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
+        insert into TB_DA037 (custcd, spjangcd, cltcd, acorp, deldate, delnum, delseq,
+        pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt,
+        mamt, indate, inperid,  pernm, perid, remark, lotno, istore, ostore ) values
+        ('KDMES', 'ZZ', #{cltcd},   #{acorp},  #{ibgdate},  #{ibgnum}, #{ibgseq},
+        #{pcode}, #{pname}, #{psize}, #{punit}, #{qty}, #{cqty},   #{uamt},  #{samt},  #{tamt},
+        #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}  )
+    </insert>
 
     <delete id="DeleteCA611" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
         delete from TB_CA611
@@ -120,6 +135,10 @@
     <delete id="DeleteCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
         delete from TB_CA613
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum}
+    </delete>
+    <delete id="DeleteDa037" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
+        delete from TB_DA037
+        where deldate = #{deldate} and delnum = #{delnum}
     </delete>
 
     <update id="UpdateCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
@@ -161,11 +180,52 @@
     </update>
 
 
+    <update id="UpdateDa037" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        UPDATE TB_DA037 SET
+        spjangcd='ZZ'
+        <if test="pname != null ">,</if>
+        <if test="pname != null">pname=#{pname}</if>
+        <if test="pcode != null ">,</if>
+        <if test="pcode != null">pcode=#{pcode}</if>
+        <if test="psize != null ">,</if>
+        <if test="psize != null">psize=#{psize}</if>
+        <if test="punit != null ">,</if>
+        <if test="punit != null">punit=#{punit}</if>
+        <if test="qty != null ">,</if>
+        <if test="qty != null">qty=#{qty}</if>
+        <if test="cqty != null ">,</if>
+        <if test="cqty != null">cqty=#{cqty}</if>
+        <if test="uamt != null ">,</if>
+        <if test="uamt != null">uamt=#{uamt}</if>
+        <if test="samt != null ">,</if>
+        <if test="samt != null">samt=#{samt}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="pernm != null ">,</if>
+        <if test="pernm != null">pernm=#{pernm}</if>
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+        <if test="acorp != null ">,</if>
+        <if test="acorp != null">acorp=#{acorp}</if>
+        <if test="lotno != null ">,</if>
+        <if test="lotno != null">lotno=#{lotno}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="istore != null ">,</if>
+        <if test="istore != null">istore=#{istore}</if>
+        <if test="ostore != null ">,</if>
+        <if test="ostore != null">ostore=#{ostore}</if>
+        where deldate = #{deldate} and delnum = #{delnum} and delseq = #{delseq}
+    </update>
 
     <select id="SelectMaxIbgnum" parameterType="String" resultType="String">
         <![CDATA[  select  max(ibgnum)  from TB_CA613 where ibgdate = #{ibgdate}      ]]>
     </select>
 
+
+    <select id="SelectMaxDelnum" parameterType="String" resultType="String">
+        <![CDATA[  select  max(delnum)  from TB_DA037 where deldate = #{deldate}      ]]>
+    </select>
     <select id="SelectCa613List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
 
         <![CDATA[ select B.cltcd as cltcd,

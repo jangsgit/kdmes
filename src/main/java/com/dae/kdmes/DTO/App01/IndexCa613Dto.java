@@ -12,6 +12,9 @@ public class IndexCa613Dto {
     private String ibgdate;
     private String ibgnum;
     private String ibgseq;
+    private String deldate;
+    private String delnum;
+    private String delseq;
     private String pcode;
     private String pname;
     private String psize;
@@ -31,6 +34,7 @@ public class IndexCa613Dto {
     private String perid;
     private String pernm;
     private String inname;
+    private String balno;
     private Integer rownum;
     private String lotno;
     private String istore;

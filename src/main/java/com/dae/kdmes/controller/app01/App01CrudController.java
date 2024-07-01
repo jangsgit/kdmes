@@ -152,6 +152,7 @@ public class App01CrudController {
     //담당자현황
     @GetMapping(value="/wperidlist")
     public Object App01WperidList_index(@RequestParam("searchtxt") String searchtxt,
+                                        @RequestParam("comcls") String comcls,
                                           Model model, HttpServletRequest request) throws Exception{
         try {
 
@@ -159,6 +160,7 @@ public class App01CrudController {
                 searchtxt = "%";
             }
             index01Dto.setCom_rem1(searchtxt);
+            index01Dto.setCom_cls(comcls);
             log.info("searchtxt =====>" + searchtxt);
             index01ListDto = service01.getWperidlist(index01Dto);
 

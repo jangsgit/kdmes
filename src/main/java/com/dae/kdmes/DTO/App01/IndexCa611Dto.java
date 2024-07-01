@@ -10,6 +10,8 @@ public class IndexCa611Dto {
     private String misgubun;
     private String ibgdate;
     private String ibgnum;
+    private String deldate;
+    private String delnum;
     private Integer contamt;
     private String gubun;
     private String store;

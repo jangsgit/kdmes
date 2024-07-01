@@ -148,9 +148,9 @@
                                                             <tr>  
                                                                 <th>출하일자</th>
                                                                 <td colspan="2"> 
-                                                                    <input type="text"  class="form-control datetimepicker" id="ibgdate" autocomplete="off"  placeholder="Y-m-d"     >  
+                                                                    <input type="text"  class="form-control datetimepicker" id="deldate" autocomplete="off"  placeholder="Y-m-d"     >  
                                                                     <!-- <div class="input_wrap"> 
-                                                                        <input type="text" id="ibgdate" placeholder=""  autocomplete="off">                                        
+                                                                        <input type="text" id="deldate" placeholder=""  autocomplete="off">                                        
                                                                     </div>                                             -->
                                                                 </td>                                            
                                                                 <th>바코드</th> 
@@ -168,7 +168,7 @@
                                                                         <input class="form-control form-control-sm" id="acorp2" type="hidden"  />
                                                                         <input class="form-control form-control-sm" id="acorp3" type="hidden"  />
                                                                         <input class="form-control form-control-sm" id="acode" type="hidden"  /> 
-                                                                        <input class="form-control form-control-sm" id="ibgnum" type="hidden"  />  
+                                                                        <input class="form-control form-control-sm" id="delnum" type="hidden"  />  
                                                                         <input class="form-control form-control-sm" id="plan_no" type="hidden"  />  
                                                                            
                                                                 </td>  
@@ -240,7 +240,7 @@
                                                                 <th>발주번호</th> 
                                                                 <td  colspan="2">
                                                                     <div class="input_wrap">                                               
-                                                                        <input type="text" name="balcode" id="balcode" placeholder=""   >  
+                                                                        <input type="text" name="balno" id="balno" placeholder=""   >  
                                                                     </div>
                                                                 </td>                                                                                                      
                                                                 <th>품목</th> 
@@ -259,9 +259,9 @@
                                                            <tr>      
                                                                 <th>담당자</th>
                                                                 <td colspan="2">
-                                                                    <div class="input_wrap">                                               
-                                                                        <input type="text" name="pernm" id="pernm" placeholder=""   > 
-                                                                        <input type="hidden" name="perid" id="perid" placeholder=""  > 
+                                                                    <div class="input_wrap">              
+                                                                        <input class="form-control form-control-sm" id="inwrpsnm" type="text" size="15"  /> 
+                                                                        <input class="form-control form-control-sm" id="inwinps" type="hidden" disabled size="15"  />    
                                                                     </div>
                                                                 </td>      
                                                                 <th>출하수량</th>
@@ -377,7 +377,7 @@
   
 
         <!--  모달 처리 -->
-        <input class="form-control form-control-sm"  type="hidden" id="innamebtn" data-bs-toggle="modal" data-bs-target="#cifmodal"  /> 
+        <input class="form-control form-control-sm"  type="hidden" id="incltnmbtn" data-bs-toggle="modal" data-bs-target="#cifmodal"  /> 
         <!--------------------------------------------------------------------------------------->   
         <div class="modal fade" id="cifmodal" data-bs-keyboard="false"
                 data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -393,13 +393,13 @@
                                     placeholder="업체명 "     />                                      
                                 </div>
 
-                                <button id="winnameBtn">
+                                <button id="wincltnmBtn">
                                     <img th:src="@{/assets/images/i_search.png}" alt=""> 
                                 </button>
                             </div>                             
                         </div>   
                         <div class="container-fluid"> 
-                            <div id="winnameGrid_div" ></div>
+                            <div id="wincltnmGrid_div" ></div>
                             <div id="thePager03"></div>
                         </div>   
                     </div>  
@@ -408,7 +408,7 @@
                         <div class="row g-1">
                             <div class="col-auto">
                                 <button class="badge-soft-primary dropdown-item rounded-1"
-                                    type="button"  id="winnamemodal_btn" data-bs-dismiss="modal">Close</button>
+                                    type="button"  id="wincltnmmodal_btn" data-bs-dismiss="modal">Close</button>
                             </div> 
                         </div>
                     </div>   
@@ -482,7 +482,7 @@
                             </div>                             
                         </div>   
                         <div class="container-fluid"> 
-                            <div id="winnameGrid2_div" ></div>
+                            <div id="winnameGrid_div" ></div>
                             <div id="thePager04"></div>
                         </div>   
                     </div>  
@@ -491,7 +491,7 @@
                         <div class="row g-1">
                             <div class="col-auto">
                                 <button class="badge-soft-primary dropdown-item rounded-1"
-                                    type="button"  id="winnamemodal_btn2" data-bs-dismiss="modal">Close</button>
+                                    type="button"  id="winnamemodal_btn" data-bs-dismiss="modal">Close</button>
                             </div> 
                         </div>
                     </div>   
@@ -576,20 +576,22 @@
             var view_innamepage2;
             var view_p01tab02page;
             var view_p01tab03page;
+            var view_incltnmpage;
             var view_wotqtpage;
             var wtab01Grid;        
             var wtab02Grid;
             var wtab03Grid;   
             var wotqtGrid;      
-            var winnameGrid;
-            var winnameGrid2;  
+            var winnameGrid;  
+            var wincltnmGrid;
+            var winnameGrid;  
             var typeMenu;  
             var treemap; 
             var insaflag = "";
             let barchart;
             let ani;
             var wseries_data = [0]; 
-            let wibgdate;
+            let wdeldate;
             let wfrdate;
             let wtodate;  
             let wfrdate02;
@@ -620,8 +622,8 @@
                     allowSorting: 'MultiColumn',
                     alternatingRowStep: 0,
                     columns: [     
-                        { binding: 'ibgdate', header: '출하일자', align: "center", width: 120 }, 
-                        { binding: 'acorp', header: '거래처', align: "left", width: 180 }, 
+                        { binding: 'deldate', header: '출하일자', align: "center", width: 120 }, 
+                        { binding: 'balno', header: '발주번호', align: "left", width: 120 },  
                         { binding: 'pname', 
                             header: '품목', 
                             align: "left", 
@@ -629,14 +631,13 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                                    wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
                                 }
                             }) 
                         },    
                         { binding: 'psize', header: '규격', align: "left", width: 150 },  
-                        { binding: 'qty', header: '출하수량', align: "right", width: 90 },  
-                        { binding: 'cqty', header: '출고수량', align: "right", width: 90 },  
-                        { binding: 'lotno', header: '로트번호', align: "center", width: 180 }, 
+                        { binding: 'qty', header: '출하수량', align: "right", width: 90 },   
+                        { binding: 'lotno', header: '바코드', align: "center", width: 180 }, 
                         { binding: 'pernm', header: '담당자', align: "center", width: 100 },            
                     ], 
                     itemsSource: view_p01tab01page
@@ -674,8 +675,8 @@
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
-                            ibgdate: wtab01Dto[i]["ibgdate"], 
-                            ibgnum: wtab01Dto[i]["ibgnum"], 
+                            deldate: wtab01Dto[i]["deldate"], 
+                            delnum: wtab01Dto[i]["delnum"], 
                             ibgseq: wtab01Dto[i]["ibgseq"], 
                             lotno: wtab01Dto[i]["lotno"], 
                             istore: wtab01Dto[i]["istore"], 
@@ -716,7 +717,7 @@
                        headersVisibility: 'Column',
                        // selectionMode: 'RowRange', 
                        columns: [      
-                        { binding: 'ibgdate', header: '출하일자', align: "center", width: 120 }, 
+                        { binding: 'deldate', header: '출하일자', align: "center", width: 120 }, 
                         { binding: 'acorp', header: '거래처', align: "left", width: 180 }, 
                         { binding: 'pname', 
                             header: '품목', 
@@ -725,7 +726,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                                    wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
                                 }
                             }) 
                         },    
@@ -746,7 +747,7 @@
                     let groups = view_p01tab02page.groupDescriptions;
                     groups.clear();
                     if (groupsOn) {
-                        groups.push(new wijmo.collections.PropertyGroupDescription('ibgdate'), new wijmo.collections.PropertyGroupDescription('ibgnum'));
+                        groups.push(new wijmo.collections.PropertyGroupDescription('deldate'), new wijmo.collections.PropertyGroupDescription('delnum'));
                     }
                 }       
             //    new FlexGridContextMenu(wtab02Grid);  
@@ -766,20 +767,19 @@
                //====================================================================================================================================     
                //====================================================================================================================================
 
-
                 // 거래처현황 리스트     
                 // // ################################################################
                 //거래처현황 Modalㅁ
-                view_innamepage = new wijmo.collections.CollectionView(getData_wlist2(), {
+                view_incltnmpage = new wijmo.collections.CollectionView(getData_wlist2(), {
                     //pageSize: 12
                 });
                 // 거래처 페이지 이동
                 // new wijmo.input.CollectionViewNavigator('#thePager03', {
                 //     byPage: true,
                 //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                //     cv: view_innamepage
+                //     cv: view_incltnmpage
                 // });     
-                winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
+                wincltnmGrid = new wijmo.grid.FlexGrid('#wincltnmGrid_div', {  
                     autoGenerateColumns: false,
                     isReadOnly: false, 
                     allowSorting: 'MultiColumn',
@@ -789,18 +789,18 @@
                         { binding: 'acode', header: '코드', align: "center", width: '1*' },
                         { binding: 'acorp', header: '거래처명', align: "center", width: '1*' },
                     ], 
-                    itemsSource: view_innamepage
+                    itemsSource: view_incltnmpage
                 });  
                 
-                winnameGrid.showMarquee = true; 
-                wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
-                winnameGrid.focus();
+                wincltnmGrid.showMarquee = true; 
+                wijmo.toggleClass(wincltnmGrid.hostElement, 'highlightActive', true);
+                wincltnmGrid.focus();
                 // 거래처 데이터 수집
                 function getData_wlist2(){   
-                    var winname_data = []; 
+                    var wincltnm_data = []; 
                     var cnt = 1;
                     for (var i = 0; i < 12; i++) {
-                        winname_data.push({
+                        wincltnm_data.push({
                             id: i, 
                             index: cnt,
                             acode:"",
@@ -808,7 +808,7 @@
                         });
                         cnt++;
                     }    
-                    return winname_data;                                      
+                    return wincltnm_data;                                      
                 } 
          
                 // tab01검색 데이터 수집
@@ -840,6 +840,98 @@
                     }      
                     return wactnm_data;                                         
                 } 
+                                 
+           // // ################################################################
+   
+           //사원현황 Modalㅁ
+           view_innamepage = new wijmo.collections.CollectionView(getData_wlist(), {
+               //pageSize: 12
+           });  
+           winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
+               autoGenerateColumns: false,
+               isReadOnly: false, 
+               allowSorting: 'MultiColumn',
+               selectionMode: 'RowRange',
+               alternatingRowStep: 0,
+               columns: [    
+                   { binding: 'linenm',width: '*', header: '라인', width: '*', align:"center", format: '*' ,
+                       cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                           text: '<b>${item.linenm}</b>',
+                           click: (e, ctx) => {
+                               wperidChk(ctx.item.wperid, ctx.item.wpernm );
+                           }
+                       })
+                   }, 
+                   { binding: 'wflagnm', width: '1*', header: '공정', width: '*', align:"center", format: '*' ,
+                       cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                           text: '<b>${item.wflagnm}</b>',
+                           click: (e, ctx) => {
+                               wperidChk(ctx.item.wperid, ctx.item.wpernm );
+                           }
+                       })
+                       }, 
+                   { binding: 'wperid', width: '1*', header: '코드', width: '*', align:"center", format: '*' ,
+                       cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                           text: '<b>${item.wperid}</b>',
+                           click: (e, ctx) => {
+                               wperidChk(ctx.item.wperid, ctx.item.wpernm );
+                           }
+                       })
+                   }, 
+                   {
+                       binding: 'wpernm',
+                       width: '1*',
+                       header: '작업자', 
+                       align:"center",
+                       cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                           text: '<b>${item.wpernm}</b>',
+                           click: (e, ctx) => {
+                               wperidChk(ctx.item.wperid, ctx.item.wpernm );
+                           }
+                       })
+                   } 
+   
+               ], 
+               itemsSource: view_innamepage
+           });  
+           
+           winnameGrid.showMarquee = true;
+           winnameGrid.focus();
+           wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
+           winnameGrid.focus();
+           setHeaderColumn03(false);
+           function setHeaderColumn03(headerOn) {
+               winnameGrid.headersVisibility = headerOn
+               ? wijmo.grid.HeadersVisibility.All
+               : wijmo.grid.HeadersVisibility.Column; 
+           }  
+           function getData_wlist(){    
+               var WperidDto = [[${wperidDto}]];  
+               var data03 = [];
+               var cnt = 1; 
+               for (var i = 0; i < WperidDto.length; i++) {
+                   data03.push({
+                       id: i, 
+                       index: cnt,
+                       custcd:WperidDto[i]["custcd"], 
+                       spjangcd:WperidDto[i]["spjangcd"], 
+                       linenm:WperidDto[i]["linenm"], 
+                       linecd:WperidDto[i]["linecd"], 
+                       wflagcd:WperidDto[i]["wflagcd"],
+                       wflagnm:WperidDto[i]["wflagnm"], 
+                       wperid:WperidDto[i]["wperid"],  
+                       wpernm: WperidDto[i]["wpernm"]                                                    
+                   });
+                   cnt++;
+               }   
+               return data03                                              
+           }   
+           function wperidChk(arg1, arg2  ){   
+                   document.getElementById('inwinps').value= arg1; 
+                   document.getElementById('inwrpsnm').value= arg2;   
+                   $("#winnamemodal_btn").trigger("click"); 
+           }   
+   
         
                 view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
                     sortDescriptions: [new wijmo.collections.SortDescription("acode", false)],
@@ -909,8 +1001,8 @@
                 //         }
                 //     }); 
                     // 헤더 열 전환
-                    setHeaderColumn03(false);
-                    function setHeaderColumn03(headerOn) {
+                    setHeaderColumn05(false);
+                    function setHeaderColumn05(headerOn) {
                         wtab03Grid.headersVisibility = headerOn
                         ? wijmo.grid.HeadersVisibility.All
                         : wijmo.grid.HeadersVisibility.Column;
@@ -969,16 +1061,16 @@
                     }      
                     return wactnm_data;                                         
                 } 
-                view_innamepage2 = new wijmo.collections.CollectionView(getData_wlist3(), {
+                view_innamepage = new wijmo.collections.CollectionView(getData_wlist3(), {
                         // pageSize: 12
                     });
                 // 담당자 페이지 이동
                 new wijmo.input.CollectionViewNavigator('#thePager04', {
                     byPage: true,
                     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                    cv: view_innamepage2
+                    cv: view_innamepage
                 });        
-                winnameGrid2 = new wijmo.grid.FlexGrid('#winnameGrid2_div', {  
+                winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
                     autoGenerateColumns: false,
                     isReadOnly: false, 
                     allowSorting: 'MultiColumn',
@@ -988,13 +1080,13 @@
                         { binding: 'insano', header: '코드', align: "center", width: '1*' },
                         { binding: 'inname', header: '담당자명', align: "center", width: '1*' },
                     ], 
-                    itemsSource: view_innamepage2
+                    itemsSource: view_innamepage
                 });  
                     
-                winnameGrid2.showMarquee = true;
-                winnameGrid2.focus();
-                wijmo.toggleClass(winnameGrid2.hostElement, 'highlightActive', true);
-                winnameGrid2.focus();
+                winnameGrid.showMarquee = true;
+                winnameGrid.focus();
+                wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
+                winnameGrid.focus();
         
                 // 담당자 데이터 수집
                 function getData_wlist3(){   
@@ -1070,8 +1162,8 @@
         }    
 
 
-        setHeaderColumn03(false); 
-        function setHeaderColumn03(headerOn) {
+        setHeaderColumn04(false); 
+        function setHeaderColumn04(headerOn) {
             wotqtGrid.headersVisibility = headerOn
             ? wijmo.grid.HeadersVisibility.All
             : wijmo.grid.HeadersVisibility.Column; 
@@ -1083,14 +1175,14 @@
                 if (!confirm("삭제하시겠습니까?")) {
                     return ; 
                 }               
-                var ls_ibgdate     =  convert_date(wibgdate.value); 
-                var ls_ibgnum = document.getElementById('ibgnum').value;   
+                var ls_deldate     =  convert_date(wdeldate.value); 
+                var ls_delnum = document.getElementById('delnum').value;   
                 $.ajax({
                     url: '/app02m/index15/del',   
                     type:"POST", 
                     data: {
-                        "ibgdate" : ls_ibgdate ,
-                        "ibgnum" : ls_ibgnum 
+                        "deldate" : ls_deldate ,
+                        "delnum" : ls_delnum 
                     },
                     async:false,
                     success:function(data){ 
@@ -1115,10 +1207,10 @@
                 var result = new Date();
                 result.setHours(result.getHours() + 9); 
                 var ls_date = result.toISOString().substring(0,10);
-                wibgdate.value = ls_date;   
+                wdeldate.value = ls_date;   
                 wfrdate.value = ls_date;  
                 wtodate.value = ls_date;  
-                document.getElementById('ibgnum').value =  "";
+                document.getElementById('delnum').value =  "";
                 document.getElementById('lotno').value =  "";  
                 document.getElementById('cltnm').value =  "";  
                 document.getElementById('acode').value =  "";   
@@ -1159,13 +1251,14 @@
             }
             // <!-- 저장 스크립트 시작 -->
             function save_btn(){   
-                var ls_ibgdate     =  convert_date(wibgdate.value); 
-                var ls_ibgnum   =  document.getElementById('ibgnum').value;
-                var ls_lotno   =  document.getElementById('lotno').value;  
+                var ls_deldate     =  convert_date(wdeldate.value); 
+                var ls_delnum   =  document.getElementById('delnum').value;
+                var ls_balno   =  document.getElementById('lotno').value;  
+                var ls_delnum   =  document.getElementById('balno').value;
                 var ls_cltcd   =  document.getElementById('acode').value;
                 var ls_cltnm  =  document.getElementById('cltnm').value;
-                var ls_perid   =  document.getElementById('perid').value;  
-                var ls_pernm   =  document.getElementById('pernm').value; 
+                var ls_perid   =  document.getElementById('inwinps').value;  
+                var ls_pernm   =  document.getElementById('inwrpsnm').value; 
                 var ls_pcode   =  document.getElementById('pcode').value;  
                 var ls_pname  =  document.getElementById('pname').value;  
                 var ls_psize  =  document.getElementById('psize').value; 
@@ -1200,8 +1293,9 @@
                 }   
                   
                 var inputdata = {  
-                    "ibgdate"       : ls_ibgdate,
-                    "ibgnum"        : ls_ibgnum,
+                    "deldate"       : ls_deldate,
+                    "delnum"        : ls_delnum,
+                    "balno"        : ls_balno,
                     "lotno"         : ls_lotno , 
                     "cltcd"         : ls_cltcd, 
                     "acorp"         : ls_cltnm , 
@@ -1225,7 +1319,7 @@
                 formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
             
                 $.ajax({
-                    url: '/app02m/index15/save',
+                    url: '/app02m/index21/save',
                     type: "POST",   
                     processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
                     contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
@@ -1292,13 +1386,13 @@
             //거래처검색  
             document.getElementById("cltnm").addEventListener("keyup", (e)=>{                     
                 if(e.keyCode === 13){   
-                    document.getElementById("innamebtn").click(); 
+                    document.getElementById("incltnmbtn").click(); 
                     CifSearchList_rtn("A"); 
                 }
             });  
             //사원검색 
             //
-            document.getElementById("pernm").addEventListener("keyup", (e)=>{ 
+            document.getElementById("inwrpsnm").addEventListener("keyup", (e)=>{ 
                 if(e.keyCode === 13){  
                     document.getElementById("innamebtn1").click();
                     insaflag = "A"; 
@@ -1375,8 +1469,8 @@
                     wtab01_data.push({
                         id: i, 
                         index: cnt, 
-                        ibgdate: wtab01Dto[i]["ibgdate"], 
-                        ibgnum: wtab01Dto[i]["ibgnum"], 
+                        deldate: wtab01Dto[i]["deldate"], 
+                        delnum: wtab01Dto[i]["delnum"], 
                         ibgseq: wtab01Dto[i]["ibgseq"], 
                         lotno: wtab01Dto[i]["lotno"], 
                         istore: wtab01Dto[i]["istore"], 
@@ -1407,7 +1501,7 @@
                     view_p01tab01page.sourceCollection  = wtab01_data;
         
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'ibgdate';
+                    cols.binding = 'deldate';
                     cols.header = '출하일자';
                     cols.align = "center";
                     cols.width = 150;           
@@ -1428,7 +1522,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
                         }
                     });
                     wtab01Grid.columns.push(cols);  
@@ -1476,20 +1570,20 @@
                     wtab02Grid.itemsSource = new wijmo.collections.CollectionView(wtab01_data, {
                             groupDescriptions: [
                                 grandTotalsGroup,
-                                 'ibgdate', 'ibgnum'
+                                 'deldate', 'delnum'
                             ]
                         })  
                     //view_p01tab02page.sourceCollection  = wtab01_data;
         
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'ibgdate';
+                    cols.binding = 'deldate';
                     cols.header = '출하일자';
                     cols.align = "center";
                     cols.width = 150;           
                     wtab02Grid.columns.push(cols);   
         
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'ibgnum';
+                    cols.binding = 'delnum';
                     cols.header = '순번';
                     cols.align = "center";
                     cols.width = 80;           
@@ -1510,7 +1604,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
                         }
                     });
                     wtab02Grid.columns.push(cols);  
@@ -1553,18 +1647,18 @@
                 }
     
             }        
-                //ibgdate, ibgnum, cltcd, acorp, pcode ,, , 
+                //deldate, delnum, cltcd, acorp, pcode ,, , 
                 //pname, psize, punit, qty,  uamt, 
                 //samt, perid, pernm, remark, lotno
                 //istore, ostore, cqty  
             function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18){
                  
-                wibgdate.value = arg1; 
+                wdeldate.value = arg1; 
                 if(arg1 == null || arg1.length == 0 || arg1.length < 8 || arg1 == ""|| arg1 == "null"){  
                 }else{
-                    wibgdate.value = arg1;
+                    wdeldate.value = arg1;
                 } 
-                document.getElementById('ibgnum').value = arg2; 
+                document.getElementById('delnum').value = arg2; 
                 document.getElementById('acode').value = arg3; 
                 document.getElementById('cltnm').value = arg4;   
                 document.getElementById('pcode').value = arg5;   
@@ -1588,8 +1682,8 @@
             function searchListModal_rtn(){  
                 var ls_frdate = "";
                 var ls_todate = "";   
-                var ls_inibgdate     =  convert_date(wibgdate.value); 
-                var ls_inibgnum = document.getElementById('ibgnum').value; 
+                var ls_indeldate     =  convert_date(wdeldate.value); 
+                var ls_indelnum = document.getElementById('delnum').value; 
                 var ls_lotno   = document.getElementById('lotno').value; 
                 
                 document.getElementById('popseq').value = "";                  
@@ -1598,8 +1692,8 @@
                             url: '/app02m/index15/chullist',   
                             type:"POST",
                             data: { 
-                                "inibgdate" :ls_inibgdate, 
-                                "inibgnum" :ls_inibgnum, 
+                                "indeldate" :ls_indeldate, 
+                                "indelnum" :ls_indelnum, 
                                 "inltono" :ls_lotno, 
                             }, 
                             async:false,
@@ -1621,8 +1715,8 @@
                     wtab05_data.push({
                         id: i, 
                         index: cnt, 
-                        ibgdate: wtab05Dto[i]["ibgdate"], 
-                        ibgnum: wtab05Dto[i]["ibgnum"], 
+                        deldate: wtab05Dto[i]["deldate"], 
+                        delnum: wtab05Dto[i]["delnum"], 
                         lotno: wtab05Dto[i]["lotno"], 
                         seq: wtab05Dto[i]["seq"], 
                         pcode: wtab05Dto[i]["pcode"], 
@@ -2027,9 +2121,9 @@
                     cnt++;
                 }   
         
-                winnameGrid.columns.clear();  
-                winnameGrid.autoGenerateColumns = false; 
-                view_innamepage.sourceCollection  = wtab02_data;
+                wincltnmGrid.columns.clear();  
+                wincltnmGrid.autoGenerateColumns = false; 
+                view_incltnmpage.sourceCollection  = wtab02_data;
     
                 var cols = new wijmo.grid.Column(); 
                 cols.binding = 'acode';
@@ -2043,14 +2137,14 @@
                         
                     }
                 });
-                winnameGrid.columns.push(cols);  
+                wincltnmGrid.columns.push(cols);  
     
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'acorp';
                 cols.header = '거래처명'; 
                 cols.align = "left"; 
                 cols.width = 200;
-                winnameGrid.columns.push(cols); 
+                wincltnmGrid.columns.push(cols); 
             }
         
             function wcifChk_a(arg1, arg2, arg3, arg4, arg5){                       
@@ -2060,7 +2154,7 @@
                 document.getElementById('acode').value = arg4;  
                 document.getElementById('searchCode').value = arg5;
                 document.getElementById('cltnm').value = arg5;   
-                $("#winnamemodal_btn").trigger("click");
+                $("#wincltnmmodal_btn").trigger("click");
                 
             }
         
@@ -2103,8 +2197,8 @@
                     });
                     cnt++;
                 }    
-                winnameGrid2.columns.clear();  
-                winnameGrid2.autoGenerateColumns = false; 
+                winnameGrid.columns.clear();  
+                winnameGrid.autoGenerateColumns = false; 
                 view_innamepage2.sourceCollection  = wtab01_data;
     
                 var cols = new wijmo.grid.Column(); 
@@ -2118,14 +2212,14 @@
                         winsaChk_a(ctx.item.inname, ctx.item.insano);  
                     }
                 });
-                winnameGrid2.columns.push(cols);  
+                winnameGrid.columns.push(cols);  
     
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'inname';
                 cols.header = '담당자명';
                 cols.align = "center";
                 cols.width = '*';  
-                winnameGrid2.columns.push(cols);  
+                winnameGrid.columns.push(cols);  
         
             }     
             function winsaChk_a(arg1, arg2){  
@@ -2145,9 +2239,9 @@
             function save_fnc(){ 
                 var ls_custcd = "KDMES";
                 var ls_spjangcd = "ZZ";
-                var ls_inibgdate = document.getElementById('ibgdate').value; 
-                var ls_inibgdate     =  convert_date(wibgdate.value); 
-                var ls_inibgnum = document.getElementById('ibgnum').value; 
+                var ls_indeldate = document.getElementById('deldate').value; 
+                var ls_indeldate     =  convert_date(wdeldate.value); 
+                var ls_indelnum = document.getElementById('delnum').value; 
                 var ls_lotno   = document.getElementById('lotno').value; 
                 var ls_inpcode   = document.getElementById('pcode').value;              //품목코드
                 var ls_inpname   = document.getElementById('pname').value; 
@@ -2204,8 +2298,8 @@
                     data: {
                         "custcd"        : ls_custcd ,
                         "spjangcd"      : ls_spjangcd,
-                        "inibgdate"     : ls_inibgdate ,
-                        "inibgnum"      : ls_inibgnum ,
+                        "indeldate"     : ls_indeldate ,
+                        "indelnum"      : ls_indelnum ,
                         "inlotno"       : ls_lotno ,
                         "inpcode"       : ls_inpcode , 
                         "inpname"       : ls_inpname , 
@@ -2238,8 +2332,8 @@
                 //ctx.item.plan_no, ctx.item.wseq, ctx.item.seq, ctx.item.pcode, ctx.item.lotno
                 var ls_custcd = "KDMES";
                 var ls_spjangcd = "ZZ"; 
-                var ls_inibgdate     =  convert_date(wibgdate.value); 
-                var ls_inibgnum = document.getElementById('ibgnum').value; 
+                var ls_indeldate     =  convert_date(wdeldate.value); 
+                var ls_indelnum = document.getElementById('delnum').value; 
                 var ls_lotno   = document.getElementById('lotno').value;  
                 var ls_popseq   = document.getElementById('popseq').value;              //순번 
                 var ls_popwotqt   = document.getElementById('popwotqt').value;          //출고수량 
@@ -2267,8 +2361,8 @@
                         data: {
                             "custcd"        : ls_custcd ,
                             "spjangcd"      : ls_spjangcd,
-                            "inibgdate"     : ls_inibgdate ,
-                            "inibgnum"      : ls_inibgnum ,
+                            "indeldate"     : ls_indeldate ,
+                            "indelnum"      : ls_indelnum ,
                             "inlotno"       : ls_lotno , 
                             "seq"           : ls_popseq,
                         },
@@ -2309,67 +2403,97 @@
             })       
             function init(){
                 // 일반 입력 날짜
-                wibgdate = new wijmo.input.InputDate('#ibgdate', {
+                wdeldate = new wijmo.input.InputDate('#deldate', {
                     isRequired: false,
                     value: null,
                     placeholder: '',
                     format: 'yyyy-MM-dd', 
                 });
                 
-                wfrdate = new wijmo.input.InputDate('#frdate', {
-                    isRequired: false,
-                    value: null,
-                    placeholder: '',
-                    format: 'yyyy-MM-dd', 
-                });
-                wtodate = new wijmo.input.InputDate('#todate', {
-                    isRequired: false,
-                    value: null,
-                    placeholder: '',
-                    format: 'yyyy-MM-dd', 
-                });
-                wfrdate02 = new wijmo.input.InputDate('#frdate02', {
-                    isRequired: false,
-                    value: null,
-                    placeholder: '',
-                    format: 'yyyy-MM-dd', 
-                });
-                wtodate02 = new wijmo.input.InputDate('#todate02', {
-                    isRequired: false,
-                    value: null,
-                    placeholder: '',
-                    format: 'yyyy-MM-dd', 
-                });
-                popwkotDate = new wijmo.input.InputDate('#popwkotDate', {
-                    isRequired: false,
-                    value: null,
-                    placeholder: '',
-                    format: 'yyyy-MM-dd', 
-                });
+                // wfrdate = new wijmo.input.InputDate('#frdate', {
+                //     isRequired: false,
+                //     value: null,
+                //     placeholder: '',
+                //     format: 'yyyy-MM-dd', 
+                // });
+                // wtodate = new wijmo.input.InputDate('#todate', {
+                //     isRequired: false,
+                //     value: null,
+                //     placeholder: '',
+                //     format: 'yyyy-MM-dd', 
+                // });
+                // wfrdate02 = new wijmo.input.InputDate('#frdate02', {
+                //     isRequired: false,
+                //     value: null,
+                //     placeholder: '',
+                //     format: 'yyyy-MM-dd', 
+                // });
+                // wtodate02 = new wijmo.input.InputDate('#todate02', {
+                //     isRequired: false,
+                //     value: null,
+                //     placeholder: '',
+                //     format: 'yyyy-MM-dd', 
+                // });
+                // popwkotDate = new wijmo.input.InputDate('#popwkotDate', {
+                //     isRequired: false,
+                //     value: null,
+                //     placeholder: '',
+                //     format: 'yyyy-MM-dd', 
+                // });
                 
                 var result = new Date();
                 result.setHours(result.getHours() + 9); 
                 var ls_date = result.toISOString().substring(0,10);
-                wibgdate.value = ls_date;   
-                wtodate.value = ls_date;     
-                wtodate02.value = ls_date; 
-                popwkotDate.value = ls_date; 
+                wdeldate.value = ls_date;   
+                showCurrentDate(wdeldate, 5); 
+                // wtodate.value = ls_date;     
+                // wtodate02.value = ls_date; 
+                // popwkotDate.value = ls_date; 
                 
                 // 오늘 날짜에서 100일 전 날짜 계산
-                let pastDate = new Date(result);
-                pastDate.setDate(pastDate.getDate() - 60);
+                // let pastDate = new Date(result);
+                // pastDate.setDate(pastDate.getDate() - 60);
 
-                let pastYear = pastDate.getFullYear();
-                let pastMonth = pastDate.getMonth() + 1;
-                let pastDay = pastDate.getDate();
+                // let pastYear = pastDate.getFullYear();
+                // let pastMonth = pastDate.getMonth() + 1;
+                // let pastDay = pastDate.getDate();
 
-                if (pastMonth > 0 && pastMonth < 10) { pastMonth = "0" + pastMonth; }
-                if (pastDay > 0 && pastDay < 10) { pastDay = "0" + pastDay; } 
-                let ls_frday = pastYear + '-' + pastMonth + '-' + pastDay; 
-                wfrdate.value = ls_frday;  
-                wfrdate02.value = ls_frday;  
+                // if (pastMonth > 0 && pastMonth < 10) { pastMonth = "0" + pastMonth; }
+                // if (pastDay > 0 && pastDay < 10) { pastDay = "0" + pastDay; } 
+                // let ls_frday = pastYear + '-' + pastMonth + '-' + pastDay; 
+                // wfrdate.value = ls_frday;  
+                // wfrdate02.value = ls_frday;  
                         
             } 
+            // 현재 선택된 날짜 + 5일
+            function showCurrentDate(ctrl, days) {
+                var ls_sdate = ctrl.value; 
+                //console.log(ls_sdate)     
+                if(ls_sdate == null || ls_sdate.length == 0 || ls_sdate == ""){ 
+                    return;         
+                }  
+                var result = new Date(ls_sdate);
+
+                
+                const weekOfMonth = getWeekOfMonth(result); 
+                const month = ls_sdate.toLocaleString('default', { month: 'long' }); 
+                document.getElementById('inmonth').value = month;
+                document.getElementById('inweeks').value = weekOfMonth; 
+
+
+
+                // result.setDate(result.getDate() + days); 
+                // var ls_edate = result.toISOString().substring(0,10);
+                // console.log(ls_edate)     
+                // wprod_edate.value = ls_edate; 
+                //console.log(`${month} ${weekOfMonth}주차`); 
+            }  
+            function getWeekOfMonth(date) { 
+                const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                const dayOfWeek = startDate.getDay(); 
+                const dayOfMonth = date.getDate();
+                return Math.ceil((dayOfMonth + dayOfWeek) / 7);
+            }
             function getToday(){ 
                 let today = new Date();   
                 let year = today.getFullYear(); // 년도

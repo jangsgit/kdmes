@@ -35,10 +35,15 @@ public interface Index10Mapper {
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm) ;
 
     public Boolean DeleteCa613(IndexCa613Dto parm) ;
+    public Boolean DeleteDa037(IndexCa613Dto parm) ;
 
     public Boolean InsertCa613(IndexCa613Dto  parm) ;
+
+    public Boolean InsertDa037(IndexCa613Dto  parm) ;
     public Boolean UpdateCa613(IndexCa613Dto  parm) ;
+    public Boolean UpdateDa037(IndexCa613Dto  parm) ;
     public String SelectMaxIbgnum(String  parm) ;
+    public String SelectMaxDelnum(String  parm) ;
     public String CA613_OWORK_MAXWSEQ(IndexCa613OworkDto parm) ;
 
     public Boolean CA613_OWORK_Insert(IndexCa613OworkDto  parm) ;

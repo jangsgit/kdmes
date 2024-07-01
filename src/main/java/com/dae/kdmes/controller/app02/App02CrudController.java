@@ -887,6 +887,104 @@ public class App02CrudController {
         return ls_wotqt;
     }
 
+
+    @RequestMapping(value="/index21/save")
+    public String index21Save( @RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
+
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "deldate":
+                    _indexCa613Dto.setDeldate(values.toString());
+                    break;
+                case "delnum":
+                    _indexCa613Dto.setDelnum(values.toString());
+                    break;
+                case "balno":
+                    _indexCa613Dto.setBalno(values.toString());
+                    break;
+                case "lotno":
+                    _indexCa613Dto.setLotno(values.toString());
+                    break;
+                case "istore":
+                    _indexCa613Dto.setIstore(values.toString());
+                    break;
+                case "ostore":
+                    _indexCa613Dto.setOstore(values.toString());
+                    break;
+                case "cltcd":
+                    _indexCa613Dto.setCltcd(values.toString());
+                    break;
+                case "acorp":
+                    _indexCa613Dto.setAcorp(values.toString());
+                    break;
+                case "pcode":
+                    _indexCa613Dto.setPcode(values.toString());
+                    break;
+                case "pname":
+                    _indexCa613Dto.setPname(values.toString());
+                    break;
+                case "psize":
+                    _indexCa613Dto.setPsize(values.toString());
+                    break;
+                case "punit":
+                    _indexCa613Dto.setPunit(values.toString());
+                    break;
+                case "qty":
+                    _indexCa613Dto.setQty(Integer.parseInt(values.toString()));
+                    break;
+                case "cqty":
+                    _indexCa613Dto.setCqty(Integer.parseInt(values.toString()));
+                    break;
+                case "uamt":
+                    _indexCa613Dto.setUamt(Integer.parseInt(values.toString()));
+                    break;
+                case "samt":
+                    _indexCa613Dto.setSamt(Integer.parseInt(values.toString()));
+                    break;
+                case "remark":
+                    _indexCa613Dto.setRemark(values.toString());
+                    break;
+                case "perid":
+                    _indexCa613Dto.setPerid(values.toString());
+                    break;
+                case "pernm":
+                    _indexCa613Dto.setPernm(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        _indexCa613Dto.setDelseq("001");
+        String ibgnum = "";
+        Boolean result = true;
+        ibgnum = _indexCa613Dto.getDelnum();
+        if (ibgnum == null || ibgnum.equals("")) {
+            ibgnum = GetMaxDelnum(_indexCa613Dto.getIbgdate());
+            _indexCa613Dto.setDelnum(ibgnum);
+            result = service10.InsertDa037(_indexCa613Dto);
+            if (!result) {
+                return "error";
+            }
+        } else {
+            result = service10.UpdateDa037(_indexCa613Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+        return "success";
+    }
+
+
+
     //매출하대기
     @GetMapping(value="/index21/list")
     public Object App21List_index(@RequestParam("searchtxt") String searchtxt,
@@ -1082,6 +1180,32 @@ public class App02CrudController {
     }
 
 
+    public String GetMaxDelnum(String indate){
+
+        String ls_seq = service10.SelectMaxDelnum(indate);
+
+        if(ls_seq == null){
+            ls_seq =  "0001";
+        }else{
+            Integer ll_misnum = Integer.parseInt(ls_seq) + 1;
+            ls_seq = ll_misnum.toString();
+            switch (ls_seq.length()){
+                case 1:
+                    ls_seq = "000" + ls_seq;
+                    break;
+                case 2:
+                    ls_seq = "00" + ls_seq;
+                    break;
+                case 3:
+                    ls_seq = "0" + ls_seq;
+                    break;
+                default:
+                    break;
+            }
+        }
+        log.info("GetMaxDelnum  =====>" + ls_seq);
+        return ls_seq;
+    }
 
 
     public String GetMaxSeq1(String indate, String rwflag){
