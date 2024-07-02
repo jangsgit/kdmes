@@ -168,9 +168,7 @@
                                                                         <input class="form-control form-control-sm" id="acorp2" type="hidden"  />
                                                                         <input class="form-control form-control-sm" id="acorp3" type="hidden"  />
                                                                         <input class="form-control form-control-sm" id="acode" type="hidden"  /> 
-                                                                        <input class="form-control form-control-sm" id="delnum" type="hidden"  />  
-                                                                        <input class="form-control form-control-sm" id="plan_no" type="hidden"  />  
-                                                                           
+                                                                        <input class="form-control form-control-sm" id="delnum" type="hidden"  />   
                                                                 </td>  
                                                             </tr>   
                                                             <tr>
@@ -267,7 +265,7 @@
                                                                 <th>출하수량</th>
                                                                 <td colspan="2">
                                                                     <div class="input_wrap">
-                                                                        <input type="number" id="cqty" placeholder="" disabled  >
+                                                                        <input type="number" id="qty" placeholder="" disabled  >
                                                                     </div>
                                                                 </td>                              
                                                             </tr>                                                                                                                                                                                    
@@ -289,7 +287,7 @@
                                                                 <th>출하창고</th> 
                                                                 <td colspan="2">
                                                                     <div class="input_wrap" style="max-width: 235px;">
-                                                                        <select th:field="*{wstoreDto}" name="istore" id="istore">
+                                                                        <select th:field="*{wstoreDto}" name="ostore" id="ostore">
                                                                             <option value="">선택</option>
                                                                             <option th:each="val : ${wstoreDto}" th:value="${val.wcode}" th:text="${val.wcdnm}">
                                                                         </select>
@@ -605,7 +603,7 @@
         
         
             window.onload = function() {  
-                view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+                view_p01tab01page = new wijmo.collections.CollectionView(getData_wlist2(), {
                     pageSize: 21
                 });
             // tab01 grid page
@@ -622,7 +620,7 @@
                     allowSorting: 'MultiColumn',
                     alternatingRowStep: 0,
                     columns: [     
-                        { binding: 'ibgdate', header: '출하일자', align: "center", width: 120 }, 
+                        { binding: 'deldate', header: '출하일자', align: "center", width: 120 }, 
                         { binding: 'balno', header: '발주번호', align: "center", width: 120 },  
                         { binding: 'pname', 
                             header: '품목', 
@@ -631,7 +629,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty, ctx.item.balno);                    
+                                    wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,   ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno,  ctx.item.ostore, ctx.item.balno, ctx.item.lotno);                    
                                 }
                             }) 
                         },    
@@ -668,18 +666,21 @@
         
                 // tab01검색 데이터 수집
                 function getData_tab01(){        
-                    var wtab01Dto = [[${itemDtoList}]];   
+                    var wtab01Dto = [[${itemDtoListCa613}]];   
                     var wactnm_data = [];       
-                    var cnt = 1;   
+                    var cnt = 1;  
+                    if(wtab01Dto.length == null){
+                        return ;
+                    }
+                    console.log(wtab01Dto) 
                     for (var i = 0; i < wtab01Dto.length; i++) {
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
-                            ibgdate: wtab01Dto[i]["ibgdate"], 
-                            ibgnum: wtab01Dto[i]["ibgnum"], 
+                            deldate: wtab01Dto[i]["deldate"], 
+                            delnum: wtab01Dto[i]["delnum"], 
                             ibgseq: wtab01Dto[i]["ibgseq"], 
-                            lotno: wtab01Dto[i]["lotno"], 
-                            istore: wtab01Dto[i]["istore"], 
+                            lotno: wtab01Dto[i]["lotno"],  
                             ostore: wtab01Dto[i]["ostore"], 
                             cltcd: wtab01Dto[i]["cltcd"],
                             acorp: wtab01Dto[i]["acorp"], 
@@ -727,7 +728,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                                    wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,   ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno,   ctx.item.ostore, ctx.item.balno, ctx.item.lotno);                    
                                 }
                             }) 
                         },    
@@ -1229,7 +1230,6 @@
                 // document.getElementById('uamt').value = "";  
                 // document.getElementById('samt').value = "";  
                 document.getElementById('remark').value = "";  
-                document.getElementById('istore').value = ""; 
                 document.getElementById('ostore').value = "";   
             }
             function convert_date(arg_date){ 
@@ -1254,41 +1254,33 @@
             function save_btn(){   
                 var ls_deldate     =  convert_date(wdeldate.value); 
                 var ls_delnum   =  document.getElementById('delnum').value;
-                var ls_balno   =  document.getElementById('lotno').value;  
-                var ls_delnum   =  document.getElementById('balno').value;
+                var ls_lotno   =  document.getElementById('lotno').value;  
+                var ls_balno   =  document.getElementById('balno').value;
                 var ls_cltcd   =  document.getElementById('acode').value;
                 var ls_cltnm  =  document.getElementById('cltnm').value;
                 var ls_perid   =  document.getElementById('inwinps').value;  
-                var ls_pernm   =  document.getElementById('inwrpsnm').value; 
-                var ls_pcode   =  document.getElementById('pcode').value;  
-                var ls_pname  =  document.getElementById('pname').value;  
-                var ls_psize  =  document.getElementById('psize').value; 
-                var ls_punit  =  document.getElementById('punit').value; 
-                var ls_qty    =  document.getElementById('qty').value; 
-                var ls_cqty   =  document.getElementById('cqty').value; 
-                // var ls_uamt  =  document.getElementById('uamt').value; 
-                // var ls_samt  =  document.getElementById('samt').value;  
-                var ls_remark  =  document.getElementById('remark').value;    
-                var ls_istore =  document.getElementById('istore').value;  
-                var ls_ostore =  document.getElementById('ostore').value;  
-                if(!ls_pcode){
-                    alert("품목을 선택하세요")
-                    return ; 
-                } 
-                if(ls_qty == null || ls_qty.length == 0 || ls_qty == ""){ 
-                            alert("출하수량을 입력하세요") 
-                            document.getElementById("qty").focus(); 
-                            return ;               
+                var ls_pernm   =  document.getElementById('inwrpsnm').value;  
+                var ls_qty    =  document.getElementById('qty').value;   
+                var ls_remark  =  document.getElementById('remark').value;  
+                var ls_ostore =  document.getElementById('ostore').value;    
+                var ls_inmonth =  document.getElementById('inmonth').value;   
+                var ls_inweeks =  document.getElementById('inweeks').value;  
+                var ls_demflag =  document.getElementById('demflag').checked;  
+                if(ls_demflag){
+                    ls_demflag = "1";
+                }else{
+                    ls_demflag = "0";
                 }
                 if(ls_cltnm == null || ls_cltnm.length == 0 || ls_cltnm == ""){ 
                             alert("거래처를 입력하세요") 
                             document.getElementById("cltnm").focus(); 
                             return ;               
-                }               
-                if(ls_cqty == null || ls_cqty.length == 0 || ls_cqty == ""){ 
-                    ls_cqty = 0;
                 }   
-                ls_uamt = 0;  ls_samt = 0;                   
+                if(ls_balno == null || ls_balno.length == 0 || ls_balno == ""){ 
+                            alert("발주번호를 입력하세요") 
+                            document.getElementById("balno").focus(); 
+                            return ;               
+                }                   
                 if (!confirm("저장하시겠습니까?")) {
                         return ; 
                 }   
@@ -1301,18 +1293,12 @@
                     "cltcd"         : ls_cltcd, 
                     "acorp"         : ls_cltnm , 
                     "perid"         : ls_perid, 
-                    "pernm"         : ls_pernm,
-                    "pcode"         : ls_pcode,
-                    "pname"        : ls_pname,
-                    "psize"        : ls_psize , 
-                    "punit"         : ls_punit,
-                    "qty"           : ls_qty,
-                    "cqty"           : ls_cqty,
-                    "uamt"          : ls_uamt,
-                    "samt"          : ls_samt,
+                    "pernm"         : ls_pernm, 
                     "remark"        : ls_remark, 
-                    "istore"        : ls_istore,
-                    "ostore"        : ls_ostore,       
+                    "ostore"        : ls_ostore,  
+                    "ostore"        : ls_inmonth, 
+                    "ostore"        : ls_inweeks, 
+                    "ostore"        : ls_demflag,      
                 } 
         
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -1472,9 +1458,8 @@
                         index: cnt, 
                         deldate: wtab01Dto[i]["deldate"], 
                         delnum: wtab01Dto[i]["delnum"], 
-                        ibgseq: wtab01Dto[i]["ibgseq"], 
-                        lotno: wtab01Dto[i]["lotno"], 
-                        istore: wtab01Dto[i]["istore"], 
+                        ibgseq: wtab01Dto[i]["delseq"], 
+                        lotno: wtab01Dto[i]["lotno"],  
                         ostore: wtab01Dto[i]["ostore"], 
                         cltcd: wtab01Dto[i]["cltcd"],
                         acorp: wtab01Dto[i]["acorp"], 
@@ -1482,16 +1467,11 @@
                         pname: wtab01Dto[i]["pname"], 
                         psize: wtab01Dto[i]["psize"], 
                         punit: wtab01Dto[i]["punit"], 
-                        qty: wtab01Dto[i]["qty"], 
-                        cqty: wtab01Dto[i]["cqty"], 
-                        uamt: wtab01Dto[i]["uamt"], 
-                        samt: wtab01Dto[i]["samt"],   
+                        qty: wtab01Dto[i]["qty"],   
                         remark: wtab01Dto[i]["remark"], 
                         perid: wtab01Dto[i]["perid"],    
-                        pernm: wtab01Dto[i]["pernm"],    
-                        oworks: wtab01Dto[i]["oworks"],    
-                        wotdt: wtab01Dto[i]["wotdt"],   
-                        wotqt: wtab01Dto[i]["wotqt"], 
+                        pernm: wtab01Dto[i]["pernm"],     
+                        balno: wtab01Dto[i]["balno"],  
                            
                     });
                     cnt++;
@@ -1530,7 +1510,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty, ctx.item.balno);                    
+                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,   ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno,   ctx.item.ostore, ctx.item.balno, ctx.item.lotno);                    
                         }
                     });
                     wtab01Grid.columns.push(cols);  
@@ -1547,15 +1527,7 @@
                     cols.header = '출하수량';
                     cols.align = "right";
                     cols.width = 90;                  
-                    wtab01Grid.columns.push(cols);  
-        
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'cqty';
-                    cols.header = '출고수량';
-                    cols.align = "right";
-                    cols.width = 90;                  
-                    wtab01Grid.columns.push(cols);  
+                    wtab01Grid.columns.push(cols);   
 
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'lotno';
@@ -1612,7 +1584,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                            wcifChk3_a(ctx.item.deldate, ctx.item.delnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,   ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno,   ctx.item.ostore, ctx.item.balno, ctx.item.lotno);                    
                         }
                     });
                     wtab02Grid.columns.push(cols);  
@@ -1654,12 +1626,12 @@
                     wtab02Grid.columns.push(cols);                          
                 }
     
-            }        
-                //deldate, delnum, cltcd, acorp, pcode ,, , 
-                //pname, psize, punit, qty,  uamt, 
-                //samt, perid, pernm, remark, lotno
-                //istore, ostore, cqty  
-            function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19){
+            }         
+                // deldate, delnum, cltcd, acorp, pcode ,
+                // pname, psize, punit, qty,   perid, 
+                // pernm, remark, lotno  , ostore, 
+                // balno, lotno
+            function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 ){
                  
                 wdeldate.value = arg1; 
                 if(arg1 == null || arg1.length == 0 || arg1.length < 8 || arg1 == ""|| arg1 == "null"){  
@@ -1667,23 +1639,20 @@
                     wdeldate.value = arg1;
                 } 
                 document.getElementById('delnum').value = arg2; 
-                document.getElementById('balno').value = arg19; 
                 document.getElementById('acode').value = arg3; 
                 document.getElementById('cltnm').value = arg4;   
                 document.getElementById('pcode').value = arg5;   
                 document.getElementById('pname').value = arg6; 
                 document.getElementById('psize').value = arg7; 
                 document.getElementById('punit').value = arg8;   
-                document.getElementById('qty').value = arg9;  
-                document.getElementById('cqty').value = arg18; 
-                // document.getElementById('uamt').value = arg10; 
-                // document.getElementById('samt').value = arg11; 
-                document.getElementById('perid').value = arg12;  
-                document.getElementById('pernm').value = arg13;
-                document.getElementById('remark').value = arg14;
-                document.getElementById('lotno').value = arg15;
-                document.getElementById('istore').value = arg16;
-                document.getElementById('ostore').value = arg17;  
+                document.getElementById('qty').value = arg9;   
+                document.getElementById('perid').value = arg10;  
+                document.getElementById('pernm').value = arg11;
+                document.getElementById('remark').value = arg12;
+                document.getElementById('lotno').value = arg13; 
+                document.getElementById('ostore').value = arg14; 
+                document.getElementById('balno').value = arg15;  
+                document.getElementById('lotno').value = arg16;  
                 searchListModal_rtn()
             }        
   
@@ -2173,7 +2142,7 @@
                     insaText = document.getElementById('searchCode1').value; 
                 }
                 if(arg == "A"){
-                    insaText = document.getElementById('pernm').value;   
+                    insaText = document.getElementById('inwrpsnm').value;   
                 }
                 
                 $.ajax({

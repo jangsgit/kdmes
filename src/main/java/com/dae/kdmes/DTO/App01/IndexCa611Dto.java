@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class IndexCa611Dto {
     private String cltcd;
+    private String acorp;
     private String misgubun;
     private String ibgdate;
     private String ibgnum;
@@ -16,6 +17,7 @@ public class IndexCa611Dto {
     private String gubun;
     private String store;
     private String perid;
+    private String pernm;
     private Integer amt;
     private Integer addamt;
     private Integer misamt;
@@ -38,5 +40,12 @@ public class IndexCa611Dto {
     private String unsongnum;
     private String wotdt;
     private Integer wotqt;
+    private String inmonth;
+    private String inweeks;
+    private String balno;
+    private String lotno;
+    private String istore;
+    private String ostore;
+
 
 }

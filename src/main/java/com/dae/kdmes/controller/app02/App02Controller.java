@@ -257,22 +257,19 @@ public class App02Controller {
         CommDto.setMenuUrl("생산공정>출하등록");
         String fdate = getFrDate();
         String tdate = getAddDate();
-        String pcode = "%";
-        indexCa613Dto.setPname(pcode);
+        indexCa613Dto.setPname("%");
+        indexCa613Dto.setLotno("%");
+        indexCa613Dto.setBalno("%");
         indexCa613Dto.setFrdate(fdate);
         indexCa613Dto.setTodate(tdate);
-        wperidDto.setWflag("00090");  //첫번째공정
+        wperidDto.setWflag("00090");  //첫번째공정 nb
         wperidDto.setWpernm("%");
         model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
         model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
-        itemDtoListCa613   = service10.SelectCa613List(indexCa613Dto);
+        itemDtoListCa613   = service10.SelectDa036List(indexCa613Dto);
         model.addAttribute("itemDtoList", itemDtoListCa613);
         return "App02/index21";
     }
-
-
-
-
 
     //사출등록
     @GetMapping(value="/index31")

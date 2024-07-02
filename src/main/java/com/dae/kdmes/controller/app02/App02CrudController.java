@@ -893,65 +893,38 @@ public class App02CrudController {
             , Model model
             , HttpServletRequest request){
 
-        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
         param.forEach((key, values) -> {
             switch (key) {
                 case "deldate":
-                    _indexCa613Dto.setDeldate(values.toString());
+                    _indexCa611Dto.setDeldate(values.toString());
                     break;
                 case "delnum":
-                    _indexCa613Dto.setDelnum(values.toString());
+                    _indexCa611Dto.setDelnum(values.toString());
                     break;
                 case "balno":
-                    _indexCa613Dto.setBalno(values.toString());
+                    _indexCa611Dto.setBalno(values.toString());
                     break;
                 case "lotno":
-                    _indexCa613Dto.setLotno(values.toString());
-                    break;
-                case "istore":
-                    _indexCa613Dto.setIstore(values.toString());
+                    _indexCa611Dto.setLotno(values.toString());
                     break;
                 case "ostore":
-                    _indexCa613Dto.setOstore(values.toString());
+                    _indexCa611Dto.setOstore(values.toString());
                     break;
                 case "cltcd":
-                    _indexCa613Dto.setCltcd(values.toString());
+                    _indexCa611Dto.setCltcd(values.toString());
                     break;
                 case "acorp":
-                    _indexCa613Dto.setAcorp(values.toString());
-                    break;
-                case "pcode":
-                    _indexCa613Dto.setPcode(values.toString());
-                    break;
-                case "pname":
-                    _indexCa613Dto.setPname(values.toString());
-                    break;
-                case "psize":
-                    _indexCa613Dto.setPsize(values.toString());
-                    break;
-                case "punit":
-                    _indexCa613Dto.setPunit(values.toString());
-                    break;
-                case "qty":
-                    _indexCa613Dto.setQty(Integer.parseInt(values.toString()));
-                    break;
-                case "cqty":
-                    _indexCa613Dto.setCqty(Integer.parseInt(values.toString()));
-                    break;
-                case "uamt":
-                    _indexCa613Dto.setUamt(Integer.parseInt(values.toString()));
-                    break;
-                case "samt":
-                    _indexCa613Dto.setSamt(Integer.parseInt(values.toString()));
+                    _indexCa611Dto.setAcorp(values.toString());
                     break;
                 case "remark":
-                    _indexCa613Dto.setRemark(values.toString());
+                    _indexCa611Dto.setRemark(values.toString());
                     break;
                 case "perid":
-                    _indexCa613Dto.setPerid(values.toString());
+                    _indexCa611Dto.setPerid(values.toString());
                     break;
                 case "pernm":
-                    _indexCa613Dto.setPernm(values.toString());
+                    _indexCa611Dto.setPernm(values.toString());
                     break;
                 default:
                     break;
@@ -963,19 +936,18 @@ public class App02CrudController {
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
 
-        _indexCa613Dto.setDelseq("001");
         String ibgnum = "";
         Boolean result = true;
-        ibgnum = _indexCa613Dto.getDelnum();
+        ibgnum = _indexCa611Dto.getDelnum();
         if (ibgnum == null || ibgnum.equals("")) {
-            ibgnum = GetMaxDelnum(_indexCa613Dto.getIbgdate());
-            _indexCa613Dto.setDelnum(ibgnum);
-            result = service10.InsertDa037(_indexCa613Dto);
+            ibgnum = GetMaxDelnum(_indexCa611Dto.getIbgdate());
+            _indexCa611Dto.setDelnum(ibgnum);
+            result = service10.InsertDa036(_indexCa611Dto);
             if (!result) {
                 return "error";
             }
         } else {
-            result = service10.UpdateDa037(_indexCa613Dto);
+            result = service10.UpdateDa036(_indexCa611Dto);
             if (!result) {
                 return "error";
             }

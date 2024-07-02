@@ -1,9 +1,6 @@
 package com.dae.kdmes.Service.App02;
 
-import com.dae.kdmes.DTO.App01.Index01Dto;
-import com.dae.kdmes.DTO.App01.Index03Dto;
-import com.dae.kdmes.DTO.App01.IndexCa613Dto;
-import com.dae.kdmes.DTO.App01.IndexCa613OworkDto;
+import com.dae.kdmes.DTO.App01.*;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
 import com.dae.kdmes.DTO.Popup.PopupDto;
@@ -36,6 +33,11 @@ public class Index10Service {
         return indexMapper.SelectCa613List(parm);
     }
 
+
+    public List<IndexCa613Dto> SelectDa036List(IndexCa613Dto parm){
+        return indexMapper.SelectDa036List(parm);
+    }
+
     public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm){
         return indexMapper.SelectCa613ListMapChul(parm);
     }
@@ -52,8 +54,11 @@ public class Index10Service {
 
     public Boolean DeleteCa613(IndexCa613Dto parm){  return  indexMapper.DeleteCa613(parm);  }
     public Boolean InsertCa613(IndexCa613Dto parm){ return  indexMapper.InsertCa613(parm);}
+    public Boolean DeleteDa036(IndexCa613Dto parm){  return  indexMapper.DeleteDa036(parm);  }
+    public Boolean InsertDa036(IndexCa611Dto parm){ return  indexMapper.InsertDa036(parm);}
     public Boolean InsertDa037(IndexCa613Dto parm){ return  indexMapper.InsertDa037(parm);}
     public Boolean UpdateCa613(IndexCa613Dto parm){  return  indexMapper.UpdateCa613(parm);  }
+    public Boolean UpdateDa036(IndexCa611Dto parm){  return  indexMapper.UpdateDa036(parm);  }
     public Boolean UpdateDa037(IndexCa613Dto parm){  return  indexMapper.UpdateDa037(parm);  }
     public String SelectMaxIbgnum(String parm){
         return  indexMapper.SelectMaxIbgnum(parm);

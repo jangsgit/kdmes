@@ -102,12 +102,6 @@
          #{perid},     #{store},   #{remark}  )
     </insert>
 
-    <insert id="InsertDA036" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
-        insert into TB_DA036 (custcd, spjangcd, cltcd,   ibgdate, ibgnum,
-        perid, store,  remark  ) values
-        ('KDMES', 'ZZ', #{cltcd},  #{ibgdate},    #{ibgnum},
-        #{perid},     #{store},   #{remark}  )
-    </insert>
 
     <insert id="InsertCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
         insert into TB_CA613 (custcd, spjangcd, cltcd, acorp, DEdate, ibgnum, ibgseq,
@@ -118,13 +112,20 @@
         #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}  )
     </insert>
 
+    <insert id="InsertDA036" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
+        insert into TB_DA036 (custcd, spjangcd, cltcd,   deldate, delnum,
+        perid, store,  remark, balno , lotno , inmonth, inweeks) values
+        ('KDMES', 'ZZ', #{cltcd},  #{deldate},    #{delnum},
+        #{perid},     #{store},   #{remark},   #{balno},   #{lotno},   #{inmonth},   #{inweeks}  )
+    </insert>
+
     <insert id="InsertDa037" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
         insert into TB_DA037 (custcd, spjangcd, cltcd, acorp, deldate, delnum, delseq,
-        pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt,
-        mamt, indate, inperid,  pernm, perid, remark, lotno, istore, ostore ) values
-        ('KDMES', 'ZZ', #{cltcd},   #{acorp},  #{ibgdate},  #{ibgnum}, #{ibgseq},
-        #{pcode}, #{pname}, #{psize}, #{punit}, #{qty}, #{cqty},   #{uamt},  #{samt},  #{tamt},
-        #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}  )
+        pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt, mamt,
+        indate, inperid,  pernm, perid, remark, istore, ostore ) values
+        ('KDMES', 'ZZ', #{cltcd},   #{acorp},  #{deldate},  #{delnum}, #{delseq},
+        #{pcode}, #{pname}, #{psize}, #{punit}, #{qty}, 0,   0,  0,  0,
+        #{indate}, #{inperid} , #{pernm} , #{perid}, #{remark},  #{istore}, #{ostore}  )
     </insert>
 
     <delete id="DeleteCA611" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
@@ -136,9 +137,15 @@
         delete from TB_CA613
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum}
     </delete>
+
+    <delete id="DeleteDA036" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
+        delete from TB_DA036
+        where deldate = #{deldate} and delnum = #{delnum}
+    </delete>
+
     <delete id="DeleteDa037" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
         delete from TB_DA037
-        where deldate = #{deldate} and delnum = #{delnum}
+        where deldate = #{deldate} and delnum = #{delnum} and delseq = #{delseq}
     </delete>
 
     <update id="UpdateCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
@@ -179,6 +186,27 @@
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and ibgseq = #{ibgseq}
     </update>
 
+    <update id="UpdateDa036" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto">
+        UPDATE TB_DA036 SET
+        spjangcd='ZZ'
+        <if test="lotno != null ">,</if>
+        <if test="lotno != null">lotno=#{lotno}</if>
+        <if test="balno != null ">,</if>
+        <if test="balno != null">balno=#{balno}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+        <if test="store != null ">,</if>
+        <if test="store != null">store=#{store}</if>
+        <if test="inmonth != null ">,</if>
+        <if test="inmonth != null">inmonth=#{inmonth}</if>
+        <if test="inweeks != null ">,</if>
+        <if test="inweeks != null">inweeks=#{inweeks}</if>
+        where deldate = #{deldate} and delnum = #{delnum}
+    </update>
 
     <update id="UpdateDa037" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
         UPDATE TB_DA037 SET
@@ -193,12 +221,6 @@
         <if test="punit != null">punit=#{punit}</if>
         <if test="qty != null ">,</if>
         <if test="qty != null">qty=#{qty}</if>
-        <if test="cqty != null ">,</if>
-        <if test="cqty != null">cqty=#{cqty}</if>
-        <if test="uamt != null ">,</if>
-        <if test="uamt != null">uamt=#{uamt}</if>
-        <if test="samt != null ">,</if>
-        <if test="samt != null">samt=#{samt}</if>
         <if test="perid != null ">,</if>
         <if test="perid != null">perid=#{perid}</if>
         <if test="pernm != null ">,</if>
@@ -222,10 +244,10 @@
         <![CDATA[  select  max(ibgnum)  from TB_CA613 where ibgdate = #{ibgdate}      ]]>
     </select>
 
-
     <select id="SelectMaxDelnum" parameterType="String" resultType="String">
-        <![CDATA[  select  max(delnum)  from TB_DA037 where deldate = #{deldate}      ]]>
+        <![CDATA[  select  max(delnum)  from TB_DA036 where deldate = #{deldate}      ]]>
     </select>
+
     <select id="SelectCa613List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
 
         <![CDATA[ select B.cltcd as cltcd,
@@ -241,6 +263,26 @@
         ]]>
     </select>
 
+
+    <select id="SelectDa036List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+
+        <![CDATA[ select A.cltcd , A.inmonth, A.inweeks,
+                      Left(A.deldate,4) + '-' + substring(A.deldate, 5,2)+ '-' + substring(A.deldate, 7,2) as deldate,
+                      A.delnum,  A.lotno, A.istore, A.ostore,
+                      B.pcode, B.pname, B.psize,    B.punit,  B.qty,
+                      isnull(A.remark,'') as remark,A.balno,
+                      A.acorp, A.pernm , A.perid
+                  from  TB_DA036 A WITH (NOLOCK),
+                        TB_DA037 B WITH (NOLOCK)
+                  where A.deldate = B.deldate
+                     AND A.delnum = B.delnum
+                     AND B.pname Like concat('%',#{pname},'%')
+                     AND isnull(A.lotno,'') Like #{lotno} + '%'
+                     AND isnull(A.balno,'') Like #{balno} + '%'
+                    AND B.deldate between #{frdate} and #{todate}
+                  ORDER BY  B.deldate desc, B.delnum
+        ]]>
+    </select>
 
     <resultMap id="CA613ResultMap" type="com.dae.kdmes.DTO.App01.IndexCa613Dto">
         <id property="ibgdate" column="ibgdate" />

@@ -1,5 +1,6 @@
 package com.dae.kdmes.Mapper.App02;
 
+import com.dae.kdmes.DTO.App01.IndexCa611Dto;
 import com.dae.kdmes.DTO.App01.IndexCa613Dto;
 import com.dae.kdmes.DTO.App01.Index01Dto;
 import com.dae.kdmes.DTO.App01.IndexCa613OworkDto;
@@ -23,6 +24,8 @@ public interface Index10Mapper {
     public Boolean UpdateFplan(Index10Dto  parm) ;
 
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm) ;
+
+    public List<IndexCa613Dto> SelectDa036List(IndexCa613Dto parm) ;
     public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm) ;
 
 
@@ -36,11 +39,15 @@ public interface Index10Mapper {
 
     public Boolean DeleteCa613(IndexCa613Dto parm) ;
     public Boolean DeleteDa037(IndexCa613Dto parm) ;
+    public Boolean DeleteDa036(IndexCa613Dto parm) ;
 
     public Boolean InsertCa613(IndexCa613Dto  parm) ;
 
+    public Boolean InsertDa036(IndexCa611Dto parm) ;
+
     public Boolean InsertDa037(IndexCa613Dto  parm) ;
     public Boolean UpdateCa613(IndexCa613Dto  parm) ;
+    public Boolean UpdateDa036(IndexCa611Dto  parm) ;
     public Boolean UpdateDa037(IndexCa613Dto  parm) ;
     public String SelectMaxIbgnum(String  parm) ;
     public String SelectMaxDelnum(String  parm) ;
