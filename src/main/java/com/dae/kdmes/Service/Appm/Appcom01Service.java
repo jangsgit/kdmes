@@ -23,6 +23,10 @@ public class Appcom01Service {
     public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02(parm);
     }
+    public List<FPLAN_VO> GetFPLAN_List02_salist(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_salist(parm);
+    }
+
     public List<FPLAN_VO> GetFPLAN_List02_JO(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_JO(parm);
     }

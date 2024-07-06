@@ -84,6 +84,9 @@ public class App02Controller {
             popupListDto = service10.getCls_flagList(popupDto);
             popupListDto = service03.getj1_keyList(popupDto);
             popupListDto1 = service03.getj2_keyList(popupDto);
+            wperidDto.setWflag("00090");  //첫번째공정 nb
+            wperidDto.setWpernm("%");
+            model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
 
             model.addAttribute("j1_keyList",popupListDto);
             model.addAttribute("j2_keyList",popupListDto1);

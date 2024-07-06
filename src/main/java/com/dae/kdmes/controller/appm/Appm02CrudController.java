@@ -58,7 +58,7 @@ public class Appm02CrudController {
 
 
     @RequestMapping(value="/w020ordlist", method = RequestMethod.POST)
-    public Object AppW020OrdList_index(@RequestParam("lotno") String lotno
+    public Object AppW020OrdList_index(@RequestParam(value = "lotno[]") List<String> lotno
                                        ,@RequestParam("flag") String flag
             ,Model model, HttpServletRequest request) throws Exception {
 
@@ -77,12 +77,12 @@ public class Appm02CrudController {
         fplanDto.setCltcd("%");
         fplanDto.setPcode("%");
         if(flag.equals("2") ){
-            fplanDto.setLotno(lotno);
+            fplanDto.setLotno(lotno.get(0));
             itemDtoList = appcom01Service.GetFPLAN_List02(fplanDto);
         }else{
-            String[] arrLotno = lotno.split(",");
+            //String[] arrLotno = lotno.split(",");
             HashMap hm = new HashMap();
-            hm.put("itemcdArr", arrLotno) ;
+            hm.put("itemcdArr", lotno) ;
             fplanDto.setCltcd("%");
             fplanDto.setPcode("%");
             itemDtoList = appcom01Service.GetFPLAN_List02Arr(hm);
@@ -91,6 +91,19 @@ public class Appm02CrudController {
         return itemDtoList;
     }
 
+    @RequestMapping(value="/w020salist", method = RequestMethod.POST)
+    public Object AppW020saList_index( @RequestParam("lotno") String lotno
+            ,Model model, HttpServletRequest request) throws Exception {
+
+        CommDto.setMenuTitle("검사공정");  //
+        CommDto.setMenuUrl("생산공정>검사공정");
+        CommDto.setMenuCode("appcom01");
+        FPLAN_VO fplanDto = new FPLAN_VO();
+        List<FPLAN_VO> itemDtoList = new ArrayList<>();
+        fplanDto.setLotno(lotno);
+        itemDtoList = appcom01Service.GetFPLAN_List02_salist(fplanDto);
+        return itemDtoList;
+    }
 
     @RequestMapping(value="/w030ordlist", method = RequestMethod.POST)
     public Object AppW030OrdList_index(@RequestParam("lotno") String lotno
@@ -206,9 +219,13 @@ public class Appm02CrudController {
             ,@RequestParam("inwcode") String inwcode
             ,@RequestParam("inwbdqt") Integer inwbdqt
             ,@RequestParam("demflag") String demflag
+            ,@RequestParam("lotnoarr[]") List<String> lotnoarr
+            ,@RequestParam("gqtyArr[]") List<Integer> gqtyArr
+            ,@RequestParam("planArr[]") List<String> planArr
             ,Model model, HttpServletRequest request) throws Exception {
         FPLANW010_VO workDto = new FPLANW010_VO();
         FPLANWBAD_VO wbadDto = new FPLANWBAD_VO();
+
 //        String ls_yeare = inputdate.substring(0,4);
 //        String ls_mm = inputdate.substring(5,7);
 //        String ls_dd = inputdate.substring(8,10);
@@ -243,7 +260,7 @@ public class Appm02CrudController {
         workDto.setWsyul(0);
         workDto.setWboxsu(wboxsu);
         workDto.setWsumqt(wsumqt);
-        workDto.setDemflag(demflag);
+        workDto.setDemflag("1");
 
         String wstdt = inputdate;
         String wendt = inputdate;
@@ -264,71 +281,92 @@ public class Appm02CrudController {
         }else{
             ls_lotno = lotno;
         }
-        workDto.setLotno(salotno);
-        workDto.setPlan_no(plan_no);
-        workDto.setWono(wono);
+//        검사수량 wotqt
+//        박스수량 boxsu1
+//        누적수량 sumqt
+//        완료수량 wqcqt
+
+        for(int i = 0; i < lotnoarr.size(); i++){
+            salotno = lotnoarr.get(i);
+            plan_no = planArr.get(i);
+            Integer ll_wotqt =  gqtyArr.get(i);
+            Integer ll_wqcqt =  gqtyArr.get(i);
+            workDto.setLotno(salotno);
+            workDto.setPlan_no(plan_no);
+            workDto.setWono(wono);
+            workDto.setWqty(ll_wotqt);
+            workDto.setWotqt(ll_wotqt);
+            workDto.setQty(ll_wotqt);
+            workDto.setJqty(ll_wotqt);
+            workDto.setQcqty(ll_wqcqt);
+            workDto.setWflag("00010");
+            workDto.setWseq("01");
+            workDto.setGlotnono(ls_lotno);
+            workDto.setGqty01(ll_wotqt);
+            ll_winqty =  winqt;     //투입수량
+            ll_wotqty =  ll_wotqt;     //검사수량
+//            log.info("glotno =====>" + workDto.getGlotnono() );
+//            log.info("gqty01 =====>" + workDto.getGqty01() );
+//            log.info("plan_no =====>" + workDto.getPlan_no() );
+//            log.info("wrps =====>" + workDto.getWrps() );
+//            log.info("otqt =====>" + workDto.getWotqt() );
+//            log.info("wsumqt =====>" + workDto.getWsumqt() );
+
+            if(salotno.length() > 0) {
+                result = appcom01Service.FPLANW010_Update_GQTY(workDto);
+                if (!result) {
+                    log.info("error Exception =====> FPLANW010_Update_GQTY");
+                    return "error";
+                }
+            }
+            //사출로트가 있다면.
+            if(salotno.length() > 0){
+                IworkDto.setCustcd("KDMES");
+                IworkDto.setSpjangcd("ZZ");
+                IworkDto.setPlan_no(plan_no);
+                IworkDto.setLotno(salotno);
+                IworkDto.setWflag("00010");
+                IworkDto.setGlotno(ls_lotno);
+                IworkDto.setQty(ll_wotqt);
+                IworkDto.setSqty(0);
+                IworkDto.setBqty(0);
+                IworkDto.setIndate(getToDate());
+                IworkDto.setWseq("01");
+                ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
+                if(ls_seq == null || ls_seq.length() == 0 || ls_seq.equals("")){
+                    ls_seq = "001";
+                }else{
+                    int ll_seq = Integer.parseInt(ls_seq) + 1;
+                    ls_seq = Integer.toString(ll_seq);
+                    if(ls_seq.length() == 1){
+                        ls_seq = "00" + ls_seq;
+                    }else if(ls_seq.length() == 2){
+                        ls_seq = "0" + ls_seq;
+                    }
+                }
+                IworkDto.setSeq(ls_seq);
+                result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
+                if (!result){
+                    log.info("error Exception =====> FPLANI_IWORK_Insert" );
+                    return "error";
+                }
+                workDto.setWflag("00020");
+                result = appcom01Service.FPLAN_Update(workDto);
+                if (!result){
+                    log.info("error Exception =====> FPLAN_Update  " );
+                    return "error";
+                }
+            }
+        }
+
+
         workDto.setWqty(wotqt);
         workDto.setWotqt(wotqt);
         workDto.setQty(wotqt);
-        workDto.setJqty(wotqt);
-        workDto.setQcqty(wqcqt);
-        workDto.setWflag("00010");
-        workDto.setWseq("01");
-        workDto.setGlotnono(ls_lotno);
-        workDto.setGqty01(wotqt);
-        ll_winqty =  winqt;     //투입수량
-        ll_wotqty =  wotqt;     //검사수량
-        log.info("glotno =====>" + workDto.getGlotnono() );
-        log.info("gqty01 =====>" + workDto.getGqty01() );
-        log.info("plan_no =====>" + workDto.getPlan_no() );
-        log.info("wrps =====>" + workDto.getWrps() );
-        log.info("otqt =====>" + workDto.getWotqt() );
-        log.info("wsumqt =====>" + workDto.getWsumqt() );
-
-        if(salotno.length() > 0) {
-            result = appcom01Service.FPLANW010_Update_GQTY(workDto);
-            if (!result) {
-                log.info("error Exception =====> FPLANW010_Update_GQTY");
-                return "error";
-            }
-        }
-        //사출로트가 있다면.
-        if(salotno.length() > 0){
-            IworkDto.setCustcd("KDMES");
-            IworkDto.setSpjangcd("ZZ");
-            IworkDto.setPlan_no(plan_no);
-            IworkDto.setLotno(salotno);
-            IworkDto.setWflag("00010");
-            IworkDto.setGlotno(ls_lotno);
-            IworkDto.setQty(wotqt);
-            IworkDto.setSqty(0);
-            IworkDto.setBqty(ll_inwbdqt);
-            IworkDto.setIndate(getToDate());
-            IworkDto.setWseq("01");
-            ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
-            if(ls_seq == null || ls_seq.length() == 0 || ls_seq.equals("")){
-                ls_seq = "001";
-            }else{
-                int ll_seq = Integer.parseInt(ls_seq) + 1;
-                ls_seq = Integer.toString(ll_seq);
-                if(ls_seq.length() == 1){
-                    ls_seq = "00" + ls_seq;
-                }else if(ls_seq.length() == 2){
-                    ls_seq = "0" + ls_seq;
-                }
-            }
-            IworkDto.setSeq(ls_seq);
-            result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
-            if (!result){
-                log.info("error Exception =====> FPLANI_IWORK_Insert" );
-                return "error";
-            }
-        }
-
-
         workDto.setWinqt(wsumqt);       //합산검사량이 최종검사량
         workDto.setWotqt(wsumqt);
         workDto.setQcqty(wqcqt);
+        workDto.setDemflag(demflag);
         workDto.setWflag("00020");  //검사
         workDto.setWseq("02");
         if(lotno == null || lotno.length() == 0 || lotno.equals("")) {
@@ -392,11 +430,11 @@ public class Appm02CrudController {
         //workDto.setWorkdv("4");
         //workDto.setDecision("4");
        // workDto.setDecision1("4");
-        result = appcom01Service.FPLAN_Update(workDto);
-        if (!result){
-            log.info("error Exception =====> FPLAN_Update  " );
-            return "error";
-        }
+//        result = appcom01Service.FPLAN_Update(workDto);
+//        if (!result){
+//            log.info("error Exception =====> FPLAN_Update  " );
+//            return "error";
+//        }
 
         return "success";
     }

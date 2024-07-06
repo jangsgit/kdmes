@@ -317,15 +317,21 @@
                                     <tr>                                                                                                                        
                                         <th>입고창고</th> 
                                         <td colspan="2">
-                                            <div class="input_wrap">                                               
-                                                <input type="text"  id="istore" autocomplete="off"   > 
-                                            </div>
+                                            <div class="input_wrap" style="max-width: 235px;">
+                                                <select th:field="*{wstoreDto}" name="istore" id="istore">
+                                                    <option value="">선택</option>
+                                                    <option th:each="val : ${wstoreDto}" th:value="${val.wcode}" th:text="${val.wcdnm}">
+                                                </select>
+                                            </div>  
                                         </td>   
                                         <th>출고창고</th> 
                                         <td colspan="2">
-                                            <div class="input_wrap">                                               
-                                                <input type="text"  id="ostore" autocomplete="off"   > 
-                                            </div>
+                                            <div class="input_wrap" style="max-width: 235px;">
+                                                <select th:field="*{wstoreDto}" name="ostore" id="ostore">
+                                                    <option value="">선택</option>
+                                                    <option th:each="val : ${wstoreDto}" th:value="${val.wcode}" th:text="${val.wcdnm}">
+                                                </select>
+                                            </div>  
                                         </td>                                
                                     </tr>
                                     <tr> 
@@ -1058,6 +1064,7 @@
                 //document.getElementById('prod_sdate').value =  "";   
                 //document.getElementById('prod_edate').value =  "";  
                 //document.getElementById('qcdate').value =  ""; 
+                document.getElementById('plan_no').value =  "";
                 document.getElementById('lotno').value =  "";
                 document.getElementById('ecltnm').value =  "";  
                 document.getElementById('acode').value =  "";   
@@ -1135,7 +1142,7 @@
                 var ls_jpumcode  =  document.getElementById('jpumcode').value;  
                 var ls_prod_qty  =  document.getElementById('prod_qty').value;  
                 var ls_cls_flag  =  document.getElementById('cls_flag').value;  
-                var ls_istore =  document.getElementById('istore').value;  
+                var ls_istore =  document.getElementById('istore').value;   
                 var ls_ostore =  document.getElementById('ostore').value; 
                 var ls_rwflag =  ""; //document.getElementById('rwflag').value;
                 var ls_remark =  document.getElementById('remark').value;  

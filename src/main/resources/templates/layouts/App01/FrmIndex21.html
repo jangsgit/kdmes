@@ -77,7 +77,7 @@
 
                                 <div class="section regist">  
                                     
-                                    <div class="sec_con" style="width: 60%; ">
+                                    <div class="sec_con" style="width: 55%; ">
                                         <div class="box_wrap">
                                             <!-- <div class="box_input" > -->
                                                 <div class="date_wrap">
@@ -127,7 +127,7 @@
                                                           <div class="tab-content" >                                        
                                                             <div class="tab-pane fade show active"  >  
                                                                     <div class="container-fluid" id="op1" >
-                                                                    <div id="wtab01Grid_div" style="height: 600px; " ></div>
+                                                                    <div id="wtab01Grid_div" style="height: 500px; width: 700px; " ></div>
                                                                     <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
                                                                 </div>                                               
                                                             </div>                                        
@@ -139,25 +139,26 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="sec_con" style="width: 40%;">
+                                    <div class="sec_con" style="width: 45%;">
                                         <div class="box_wrap" style="padding-bottom: 100px;">  
                                             <form action=""> 
                                                 <div class="table table_style1" >
                                                     <table>
                                                         <tbody>   
                                                             <tr>  
-                                                                <th>출하일자</th>
+                                                                <th>출하<br>예정일자</th>
                                                                 <td colspan="2"> 
                                                                     <input type="text"  class="form-control datetimepicker" id="deldate" autocomplete="off"  placeholder="Y-m-d"     >  
                                                                     <!-- <div class="input_wrap"> 
                                                                         <input type="text" id="deldate" placeholder=""  autocomplete="off">                                        
                                                                     </div>                                             -->
-                                                                </td>                                            
-                                                                <th>바코드</th> 
-                                                                <td colspan="2">
-                                                                    <div class="input_wrap">
-                                                                        <input type="text" id="lotno" placeholder=""  autocomplete="off">
-                                                                    </div>
+                                                                </td> 
+                                                                <th>출하일자</th>
+                                                                <td colspan="2"> 
+                                                                    <input type="text"  class="form-control datetimepicker" id="schdate" autocomplete="off"  placeholder="Y-m-d"     >  
+                                                                    <!-- <div class="input_wrap"> 
+                                                                        <input type="text" id="deldate" placeholder=""  autocomplete="off">                                        
+                                                                    </div>                                             -->
                                                                 </td> 
                                                             </tr>  
                                                             <tr> 
@@ -236,17 +237,23 @@
                                                             </tr>   -->
                                                             <tr>         
                                                                 <th>발주번호</th> 
-                                                                <td  colspan="2">
+                                                                <td colspan="2">
                                                                     <div class="input_wrap">                                               
                                                                         <input type="text" name="balno" id="balno" placeholder=""   >  
                                                                     </div>
-                                                                </td>                                                                                                      
-                                                                <th>품목</th> 
+                                                                </td>                                               
+                                                                <th>바코드</th> 
+                                                                <td colspan="2">
+                                                                    <div class="input_wrap">
+                                                                        <input type="text" id="lotno" placeholder=""  autocomplete="off">
+                                                                    </div>
+                                                                </td>                                                                                                   
+                                                                <!-- <th>품목</th> 
                                                                 <td colspan="2">
                                                                     <div class="input_wrap">                                               
                                                                         <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">상세품목등록 </button>
                                                                     </div>
-                                                                </td>                                                                                                      
+                                                                </td>                                                                                                       -->
                                                                 <!-- <th>출하수량<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
                                                                 <td  colspan="2">
                                                                     <div class="input_wrap">                                               
@@ -307,9 +314,24 @@
                                                                         <input class="form-control form-control-sm" id="remark" type="text" placeholder=""  />                                    
                                                                     </div>                                            
                                                                 </td>                                 
-                                                            </tr>                                                                              
+                                                            </tr>   
+                                                            <tr> 
+                                                                <th> 
+                                                                   <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;"  id="retrieveBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><span style="color: #084661;">품목<br>조회</span></button>                                            
+                                                                </th>
+                                                                <td colspan="2">  
+                                                                    <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter(event)" id="pname" autocomplete="off"  placeholder="품목명">
+                                                                    <input class="form-control form-control-sm" id="pcode" type="hidden"    disabled  placeholder=""   /> 
+                                                                </td>       
+                                                                <td colspan="2"> 
+                                                                    <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #dc3545;"  id="deleteRow" ><span style="color: #084661;">행삭제</span></button> 
+                                                                </td>                    
+                                                            </tr>                                                                             
                                                         </tbody>
-                                                    </table>
+                                                    </table> 
+                                                    <div class="container-fluid"> 
+                                                        <div id="wtab04Grid_div" style="overflow:scroll; width: 600px;  height:200px;    margin:0 auto; "></div> 
+                                                    </div>  
                                                     <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
                                                         <div class="btns" >                                                        
                                                             <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
@@ -499,7 +521,7 @@
         </div>    
 
         <!--------------------------------------------------------------------------------------->    
-        <div class="modal fade" id="wotqtymodal" data-bs-keyboard="false"
+        <!-- <div class="modal fade" id="wotqtymodal" data-bs-keyboard="false"
         data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
@@ -510,11 +532,8 @@
                         <h4 class="mb-1" id="modalExampleDemoLabel"> 출하상세등록</h4>
                     </div>     
                     <div  class="container-fluid"> 
-                        <div class="col-auto">
-                                <!-- <p> 현재 <b><span id="checked-count">0</span></b> 명이 선택되었습니다. </p> -->
-                            <div class="input-group">
-                                <!-- <div class="input-group-text">등록일자</div>
-                                <input type="text"  class="form-control datetimepicker" id="popwkotDate" autocomplete="off" placeholder="Y-m-d" > -->
+                        <div class="col-auto"> 
+                            <div class="input-group"> 
                                 <div class="input-group-text">품목코드</div>
                                 <input class="form-control form-control-sm" id="pcode" type="text"    autocomplete="off"  placeholder=""> 
                                 <div class="input-group-text">품목명</div>
@@ -551,17 +570,13 @@
                         <div class="col-auto">
                             <button class="badge-soft-primary dropdown-item rounded-1"  id="wotqtymodal_btn"
                                 type="button" data-bs-dismiss="modal">Close</button>
-                        </div>
-                        <!-- <div class="col-auto">
-                            <button class="badge-soft-info dropdown-item rounded-1"
-                                type="submit">저장 </button>
-                        </div> -->
+                        </div> 
                     </div>
                 </div>   
 
             </div>
         </div> 
-    </div>          
+    </div>           -->
 <!--------------------------------------------------------------------------------------->  
 
 
@@ -574,11 +589,13 @@
             var view_innamepage2;
             var view_p01tab02page;
             var view_p01tab03page;
+            var view_p01tab04page; 
             var view_incltnmpage;
             var view_wotqtpage;
             var wtab01Grid;        
             var wtab02Grid;
             var wtab03Grid;   
+            var wtab04Grid;  
             var wotqtGrid;      
             var winnameGrid;  
             var wincltnmGrid;
@@ -595,6 +612,8 @@
             let wfrdate02;
             let wtodate02; 
             let popwkotDate; 
+            var addPcode = []; 
+            let ls_delgetCode = "";
         
             var grandTotalsGroup  = "";
             // 폼 저장시  file data 와   string data 담을 변수 
@@ -702,7 +721,59 @@
                     return wactnm_data;                                        
                 }  
         
-
+                                 
+           // // ################################################################ 
+           view_p01tab04page = new wijmo.collections.CollectionView(getData_wlist(), {
+                //   pageSize: 12
+               });    
+               wtab04Grid = new wijmo.grid.FlexGrid('#wtab04Grid_div', {  
+                   autoGenerateColumns: false,
+                   isReadOnly: false,  
+                   allowAddNew: false,
+                   allowDelete: true,
+                   deletingRow:function(s,e){
+                    console.log("deletingRow !!",s,e)
+                   },
+                   alternatingRowStep: 0,
+                   columns: [ 
+                       { binding: 'pcode', header: '품목코드',     align:"center",  width: 130, isReadOnly: true  },  
+                       { binding: 'pname', header: '품목명',align:"center",  width: 200, isReadOnly: true  },
+                       { binding: 'psize', header: '규격',align:"center",  width: 120, isReadOnly: true },
+                       { binding: 'qty', header: '출하수량',align:"center",  width: 90, isReadOnly: false }, 
+                   ],
+                   itemsSource: view_p01tab04page
+               });   
+   
+               new FlexGridContextMenu(wtab04Grid);  
+               setHeaderColumn05(true);
+               function setHeaderColumn05(headerOn) {
+                   wtab04Grid.headersVisibility = headerOn
+                   ? wijmo.grid.HeadersVisibility.All
+                   : wijmo.grid.HeadersVisibility.Column; 
+               } 
+               // 선택기 생성
+               let selector04 = new wijmo.grid.selector.Selector(wtab04Grid, {                
+                   itemChecked: () => { 
+                        showCheckedCount04();
+                   }                
+               }); 
+               function showCheckedCount04() {
+                   let cnt = document.getElementById('checked-count'), sel = wtab04Grid.rows.filter(r => r.isSelected);
+                   //cnt.textContent = sel.length.toString();  
+                   chkTabBar = sel;    
+                   //console.log(chkTabA);   
+                   var _ls_qty = 0;  
+                   var _ls_pcode = "" ;
+                   for (var i = 0; i < sel.length; i++) {  
+                        _ls_qty   =  sel[i]._data.qty;      //출하수량 
+                       _ls_sumotqty = _ls_sumotqty + _ls_otqty 
+                   }  
+                   
+                   cnt.textContent = _ls_qty.toString();
+                   document.getElementById('inwotqt').value = Number(_ls_qty);    
+                  
+               }  
+                                   
                //====================================================================================================================================     
                //====================================================================================================================================
                //현황  list
@@ -1339,6 +1410,23 @@
                     }
                 } 
             } 
+           //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    
+           document.getElementById("deleteRow").addEventListener("click",function(){ 
+                if (!confirm(ls_delgetCode + " : 삭제하시겠습니까?")) {
+                    return ; 
+                }    
+                var index = addPcode.indexOf(ls_delgetCode); 
+                // 인덱스가 -1이 아니라면 (즉, 요소가 배열에 존재한다면)
+                if (index !== -1) {
+                    // 해당 인덱스에서 1개의 요소를 제거합니다.
+                    addPcode.splice(index, 1);
+                }
+                view_p01tab04page.removeAt(ll_delgetrow);
+                //wtab04Grid.select(0,0)
+                let e = new wijmo.grid.CellEditEndingEventArgs(wtab04Grid.cells, wtab04Grid.selection); //cellEditEndingEventArgs 생성
+
+                wtab04Grid.onDeletingRow(e)
+            })
             //품목조회
             document.getElementById("wciflistBtn").addEventListener("click",function(){   
                 searchListTot_rtn("M");  

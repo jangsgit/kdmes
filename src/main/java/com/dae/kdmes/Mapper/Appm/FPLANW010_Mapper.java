@@ -12,6 +12,8 @@ import java.util.List;
 public interface FPLANW010_Mapper {
      public List<FPLAN_VO> GetFPLAN_List(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02_salist(FPLAN_VO xfplanBoard);
+
      public List<FPLAN_VO> GetFPLAN_List02_JO(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_REG(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_REG_JO(FPLAN_VO xfplanBoard);

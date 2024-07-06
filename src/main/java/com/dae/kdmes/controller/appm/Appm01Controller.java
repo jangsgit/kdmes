@@ -201,6 +201,21 @@ public class Appm01Controller {
     }
 
     //검사공정
+    @GetMapping(value="/list04")
+    public String Appcom04_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("사출조회");  //
+        CommDto.setMenuUrl("생산공정>사출조회");
+        CommDto.setMenuCode("appcom03");
+
+        wrmcDto.setMachname("%");
+        wperidDto.setWflag("00010");  //첫번째공정
+        wperidDto.setWpernm("%");
+        wrmcDto.setWclscode("1");
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+        return "AppCom/LayFPLAN_PlanSearch010";
+    }
+
+    //검사공정
     @GetMapping(value="/list03_old")
     public String Appcom03_old_index(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("검사이력조회");  //

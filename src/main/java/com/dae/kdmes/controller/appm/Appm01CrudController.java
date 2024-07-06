@@ -171,6 +171,7 @@ public class Appm01CrudController {
             ,Model model, HttpServletRequest request) throws Exception {
 
         Index10Dto _index10Dto = new Index10Dto();
+        FPLANWTIME_VO _wtimeDto = new FPLANWTIME_VO();
         String ls_flag = decision;
         if(startDate.equals("") || startDate == null || startDate.equals(" ") || startDate.length() ==0 ){
             startDate = null;
@@ -178,12 +179,12 @@ public class Appm01CrudController {
         if(endDate.equals("") || endDate == null || endDate.equals(" ") || endDate.length() ==0  ){
             endDate = null;
         }
-        if(decision.equals("1") || decision.equals("4") ){   //공정시작과 저장버튼 클릭
+        if(workdv.equals("1") || workdv.equals("4") ){   //공정시작과 저장버튼 클릭
             endDate = null;  //공정완료일경우만 종료일이 입력된다.
-            wtimeDto.setWopdv("0");
+            _wtimeDto.setWopdv("0");
             decision = "1";
         }else{
-            wtimeDto.setWopdv("1"); //비가동
+            _wtimeDto.setWopdv("1"); //비가동
         }
 
         FPLANW010_VO workDto = new FPLANW010_VO();
@@ -263,13 +264,13 @@ public class Appm01CrudController {
         workDto.setIndate(getToDate());
         workDto.setWtable("TB_FPLAN_W010");
 
-        wtimeDto.setCustcd(custcd);
-        wtimeDto.setSpjangcd(spjangcd);
-        wtimeDto.setPlan_no(plan_no);
-        wtimeDto.setWseq("01");
-        wtimeDto.setSeq("001");
-        wtimeDto.setWflag(wflag);
-        wtimeDto.setWfrdt(startDate);
+        _wtimeDto.setCustcd(custcd);
+        _wtimeDto.setSpjangcd(spjangcd);
+        _wtimeDto.setPlan_no(plan_no);
+        _wtimeDto.setWseq("01");
+        _wtimeDto.setSeq("001");
+        _wtimeDto.setWflag(wflag);
+        _wtimeDto.setWfrdt(startDate);
 
 //        workDtoDetail = (FPLANW010_VO) appcom01Service.GetFPLANW010_Detail(workDto);
         if(appcom01Service.GetFPLANW010_Detail(workDto) == null){
@@ -283,7 +284,8 @@ public class Appm01CrudController {
                 log.info("error =====> FPLANWORK_Insert");
                 return "error";
             }
-            result = appcom01Service.FPLAN_WTIME_Insert(wtimeDto);
+            _wtimeDto.setWtrdt(null);
+            result = appcom01Service.FPLAN_WTIME_Insert(_wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Insert");
                 return "error";
@@ -300,20 +302,19 @@ public class Appm01CrudController {
                 log.info("error =====> FPLANWORK_Update");
                 return "error";
             }
-            log.info("GetFPLANW010_Detail =====> not null");
         }
         workDto.setEnd_qty(wotqt - wbdqt);
         workDto.setProd_qty(wotqt);
 
-        if(decision.equals("0")){
-            wtimeDto.setWtrdt(getToDateTime());
+        if(workdv.equals("0")){
+            _wtimeDto.setWtrdt(getToDateTime());
             //검사, 조립 공정구분
             if(wbgubn.equals("H")){
                 workDto.setWflag("00030");
             }else{
                 workDto.setWflag("00020");
             }
-            result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
+            result = appcom01Service.FPLAN_WTIME_Update(_wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update 02");
                 //return "error";
@@ -441,12 +442,16 @@ public class Appm01CrudController {
             wtimeDto.setWtrdt(getToDateTime());
             wtimeDto.setWdtcd("");
             wtimeDto.setWrerm("");
+            log.info("setWfrdt11 =====>" + wtimeDto.getWfrdt());
+            log.info("setWtrdt11 =====>" + wtimeDto.getWtrdt());
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update");
                 ///return "error";
             }
             wtimeDto.setWtrdt(null);
+            log.info("setWfrdt22 =====>" + wtimeDto.getWfrdt());
+            log.info("setWtrdt22 =====>" + wtimeDto.getWtrdt());
             result = appcom01Service.FPLAN_WTIME_Insert(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Insert");
@@ -456,6 +461,7 @@ public class Appm01CrudController {
             wtimeDto.setWdtcd(instopcd);
             wtimeDto.setWrerm(instopnm);
             wtimeDto.setWtrdt(getToDateTime());
+            log.info("setWtrdt33 =====>" + wtimeDto.getWtrdt());
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update");
@@ -831,10 +837,10 @@ public class Appm01CrudController {
         return formatter.format(date);
     }
     private String getToDateTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //HH 24시 hh 12시
         Date date      = new Date(System.currentTimeMillis());
 
-        return formatter.format(date);
+        return formatter.format(date); 
     }
     private String getWtimeMaxSeq(){
 

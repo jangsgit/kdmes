@@ -80,32 +80,47 @@
                             <div class="table-responsive">
 
                                 <div class="section regist">
-                                    <div class="sec_con" style="width: 60%; ">
+                                    <div class="sec_con" style="width: 55%; ">
                                         <div class="box_wrap">
                                             <!-- <div class="box_input" > -->
-                                                <div class="date_wrap">
-                                                    <div class="col-auto">
-                                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">조회일자</span>
-                                                            <input type="text"  class="form-control datetimepicker" id="frdate" disabled autocomplete="off"  placeholder="Y-m-d"     >
-                                                        </div> 
-                                                    </div>   
-                                                    <div class="col-auto"> 
-                                                        <div class="input-group input-group-sm mb-3"> 
-                                                            <input type="text"  class="form-control datetimepicker" id="todate" disabled autocomplete="off"  placeholder="Y-m-d"     >
-                                                        </div>
-                                                    </div>  
-                                                    <!-- <input type="text"  id="searchtxt" placeholder="품명 / LOTNO">  -->
-                                                    <button type="button" id="searchTabABtn" >검색</button>      
-                                                </div>                              
+                                                <table>
+                                                    <tr> 
+                                                        <th>검사일자</th>
+                                                        <td>
+                                                            <div class="col-auto"> 
+                                                                <div class="input_wrap" style="max-width: 250px;"> 
+                                                                    <input type="text"  class="form-control datetimepicker" id="frdate" disabled autocomplete="off"  placeholder="Y-m-d"     >
+                                                                </div> 
+                                                            </div>   
+                                                        </td>     
+                                                        <td>
+                                                            <div class="col-auto"> 
+                                                                <div class="input_wrap" style="max-width: 250px;"> 
+                                                                    <input type="text"  class="form-control datetimepicker" id="todate" disabled autocomplete="off"  placeholder="Y-m-d"     >
+                                                                </div>
+                                                            </div>  
+                                                        </td>   
+                                                        <td>
+                                                            <div class="date_wrap">
+                                                                <div class="col-auto">  
+                                                                    <button type="button" id="searchTabABtn" >검색</button>       
+                                                                </div>  
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>                      
                                                 <!-- //여기서부터 그래프 -->
                                                 <!-- <div class="table table_style2"> -->
                                                     <div class="card-body bg-light">   
                                                           <div class="tab-content" >                                        
                                                             <div class="tab-pane fade show active"  >  
-                                                                    <div class="container-fluid" id="op1" >
-                                                                    <div id="wtab01Grid_div" style="height: 600px; " ></div>
-                                                                    <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
-                                                                </div>                                               
+                                                                <div class="container-fluid" id="op1" >
+                                                                <div id="wtab01Grid_div" style="height: 500px; width: 700px; " ></div>
+                                                                <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
+                                                                </div>   
+                                                                <div class="container-fluid"> 
+                                                                    <div id="wtab05Grid_div" style="overflow:scroll; width: 700px;  height:150px;    margin:0 auto; "></div> 
+                                                                </div>                                              
                                                             </div>                                        
                                                           </div>
                                                     </div>
@@ -115,55 +130,36 @@
                                         </div>
                                     </div>
                                      
-                                    <div class="sec_con" style="width: 40%;">
+                                    <div class="sec_con" style="width: 45%;">
                                         <div class="box_wrap" style="padding-bottom: 100px;"> 
-                                            <div class="date_wrap">
+                                            <!-- <div class="date_wrap">
                                                 <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter(event)" id="insalotno01" autocomplete="off"  placeholder="사출 Lot No">
                                                 <input class="form-control form-control-sm" id="insaplan_no01" type="hidden"    disabled  placeholder=""   />  
                                                 <button type="button" id="retrieveBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">사출내역</button>      
-                                            </div>   
-                                            <form action=""> 
+                                            </div>    -->
+                                            
                                                 <div class="table table_style1" >
                                                     <table>
-                                                        <tbody> 
-                                                             
+                                                        <tbody>  
                                                             <tr> 
-                                                                <th>제품LOTNO</th>
-                                                                <td colspan="3">
+                                                                <th>검사일자</th>
+                                                                <td>
+                                                                    <div class="input_wrap" style="max-width: 230px;"> 
+                                                                        <input type="text"  class="form-control datetimepicker" id="inputdate" autocomplete="off"  placeholder="Y-m-d"     >   
+                                                                    </div>                                           
+                                                                </td>  
+                                                                <th>검사코드</th>
+                                                                <td>
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm" id="inlotno" type="text"  size="15" disabled /> 
                                                                         <input class="form-control form-control-sm" id="inplan_no" type="hidden"    disabled  placeholder=""   />  
                                                                     </div>                                           
                                                                 </td>                                  
                                                             </tr>  
-                                                            <tr> 
-                                                                <th>검사일자</th>
-                                                                <td  colspan="3">
-                                                                    <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input type="text"  class="form-control datetimepicker" id="inputdate" autocomplete="off"  placeholder="Y-m-d"     >  
-                                                                        
-                                                                    </div>                                           
-                                                                </td>   
-                                                                <!-- <th>생산<br>LotNo(2)</th>
-                                                                <td >
-                                                                    <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input class="form-control form-control-sm" id="insalotno02" type="text"  size="15"  /> 
-                                                                        <input class="form-control form-control-sm" id="insaplan_no02" type="hidden"    disabled  placeholder=""   />  
-                                                                    </div>                                           
-                                                                </td>                                 -->
-                                                            </tr>                                                              
-                                                            <!-- <tr> 
-                                                                <th>생산<br>LotNo(2)</th>
-                                                                <td >
-                                                                    <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input class="form-control form-control-sm" id="insalotno02" type="text"  size="15"  /> 
-                                                                        <input class="form-control form-control-sm" id="insaplan_no02" type="hidden"    disabled  placeholder=""   />  
-                                                                    </div>                                           
-                                                                </td>                                  
-                                                            </tr>    -->   
+                                                            <tr>   
                                                             <tr> 
                                                                 <th>품목명</th>
-                                                                <td colspan="3">
+                                                                <td>
                                                                     <div class="input_wrap" style="max-width: 230px;">  
                                                                         <input class="form-control form-control-sm" id="inpname" type="text" disabled  size="15"  /> 
                                                                         <input class="form-control form-control-sm" id="inpcode" type="hidden" disabled size="15"  /> 
@@ -176,17 +172,15 @@
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwflag" />    
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="inostore"     value=0   />  
                                                                     </div>                                            
-                                                                </td>                                  
-                                                            </tr>   
-                                                            <tr> 
+                                                                </td>   
                                                                 <th>규격</th>
-                                                                <td colspan="3">
+                                                                <td>
                                                                     <div class="input_wrap" style="max-width: 230px;">  
                                                                         <input class="form-control form-control-sm" id="inpsize" type="text" disabled size="15"  />     
                                                                         <div id='inwonobdg'></div>              
                                                                     </div>                                            
                                                                 </td>                                  
-                                                            </tr>     
+                                                            </tr>       
                                                             <tr>  
                                                                 <th>검사수량</th>
                                                                 <td >
@@ -200,7 +194,7 @@
                                                                 <th>박스수량</th>
                                                                 <td >
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input class="form-control form-control-sm"  type="number" id="inboxsu1" placeholder="" disabled   /> 
+                                                                        <input class="form-control form-control-sm"  type="number" id="inboxsu1" placeholder=""     /> 
                                                                         <div id='inwinqtbdg'></div>                                             
                                                                     </div>                                            
                                                                 </td>                                   
@@ -258,20 +252,35 @@
                                                                         <input class="form-control form-control-sm" id="inwremark" type="text" placeholder=""  />                                    
                                                                     </div>                                            
                                                                 </td>                                  
-                                                            </tr> 
+                                                            </tr>   
+                                                            <tr> 
+                                                                <th> 
+                                                                   <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;"  id="retrieveBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><span style="color: #084661;">사출<br>내역</span></button>                                            
+                                                                </th>
+                                                                <td colspan="2">  
+                                                                    <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter(event)" id="insalotno01" autocomplete="off"  placeholder="사출 Lot No">
+                                                                    <input class="form-control form-control-sm" id="insaplan_no01" type="hidden"    disabled  placeholder=""   /> 
+                                                                </td>     
+                                                                <th>
+                                                                    <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #dc3545;"  id="deleteRow" ><span style="color: #084661;">행삭제</span></button> 
+                                                                </th>                     
+                                                            </tr>  
                                                         </tbody>
-                                                    </table>
+                                                    </table> 
+                                                    
+                                                    <div class="container-fluid"> 
+                                                        <div id="wtab04Grid_div" style="overflow:scroll; width: 650px;  height:200px;    margin:0 auto; "></div> 
+                                                    </div>  
                                                     <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
                                                         <div class="btns" >                                                        
                                                             <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
                                                             <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
                                                             <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn('A')"><span style="color: #084661;">저장</span></button>                                    
-                
                                                         </div> 
-                                                    </div> 
+                                                    </div>   
                                                 </div> 
-                                            </form>    
-                                        </div>              
+                                            
+                                        </div>                           
                                     </div>
                                 </div>
  
@@ -299,7 +308,7 @@
                                 <tr>  
                                     <td class="align-top">                                                         
                                     <div class="container-fluid"  >                                                         
-                                        <div id="wtab02Grid_div"  style="overflow:scroll;   height:600px;     margin:0 auto; "></div> 
+                                        <div id="wtab02Grid_div"  style="overflow:scroll;   height:600px;  width:1500px;   margin:0 auto; "></div> 
                                         </div>  
                                     </td> 
                                 </tr>
@@ -435,21 +444,38 @@
             var view_p01tab01page;
             var view_p01tab02page;
             var view_p01tab03page; 
+            var view_p01tab04page; 
+            var view_p01tab05page; 
             var view_wbadpage;
             var wtab01Grid;
             var wtab02Grid;
             var wtab03Grid; 
+            var wtab04Grid; 
+            var wtab05Grid;
             var wbadGrid; 
             var chkTabA;  
+            var chkTabBar;  
             var treemap;
             let barchart;
             let wfrdate;
             let wtodate;  
             let winputdate;
             let chkTabA_row = 0;
+            let chkTabBar_row = 0;
             let ani;
+            var ll_delgetrow = 0
+            var ls_delgetlot = "";
            var wseries_data = [0]; 
-           var addlotno = new Array(); 
+           var addlotno = []; 
+           
+           var lotnoArr = []; 
+           var activeArr = []; 
+           var prod_qtyArr = []; 
+           var otqtyArr = []; 
+           var obqtyArr = []; 
+           var gqtyArr = []; 
+           var planArr = [];  
+
            const inwotqtInput = document.getElementById('inwotqt');
            const inwbdqtInput = document.getElementById('inwbdqt');
             // 변경된 값을 저장할 변수를 선언합니다.
@@ -494,10 +520,10 @@
                 }else{
                     document.getElementById('inwqcqt').value  = ll_inqcqt; //완료수량
                 } 
-                if(ll_inboxsu1 == ll_insumqt ){ 
-                    alert("검사 완료를 체크하고 저장하세요");
-                    return ;
-                }                 
+                // if(ll_inboxsu1 == ll_insumqt ){ 
+                //     alert("검사 완료를 체크하고 저장하세요");
+                //     return ;
+                // }                 
                 //console.log(`현재 값: ${currentValue02}`);
             });
 
@@ -518,7 +544,7 @@
                        {
                            binding: 'lotno',
                            width: 150,
-                           header: 'LotNo', 
+                           header: '검사코드', 
                            align:"center",
                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                text: '<b>${item.lotno}</b>',
@@ -625,7 +651,7 @@
                        alternatingRowStep: 0,
                        columns: [      
                            { binding: 'qcdate', header: '검사일', align: "center", width: 100 }, 
-                           { binding: 'glotnono', header: '검사바코드', align: "left", width: 250 },
+                           { binding: 'glotnono', header: '검사코드', align: "left", width: 250 },
                            { binding: 'otqty', header: '검사수량', align: "center", width: 100 },
                            { binding: 'wrpsnm02', header: '검사담당자', align: "center", width: 100 },   
                            { binding: 'pcode', header: '품목', align: "center", width: 150 },  
@@ -668,12 +694,12 @@
                        // { binding: 'index', header: 'seq', width: '*' },
                        // { binding: 'qcdate', header: '검사시작일',align:"center",  width: 120 },
                        { binding: 'prod_sdate', header: '생산시작일',  width: 130, align:"center", format: 'yyyy-MM-dd', isReadOnly: true  }, 
-                       { binding: 'lotno', header: 'LotNo',     align:"left",  width: 200, isReadOnly: true  },
+                       { binding: 'lotno', header: 'LotNo',     align:"left",  width: 200, isReadOnly: false  },
                        { binding: 'pname', header: '품목명',     align:"left",  width: 130, isReadOnly: true  },
                        { binding: 'psize', header: '규격',     align:"center",  width: 130, isReadOnly: true  },
                        { binding: 'prod_qty', header: '사출완료량',align:"center",  width: 130, isReadOnly: true  },
                        { binding: 'otqty', header: '기검사량',align:"center",  width: 90, isReadOnly: true },
-                       { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: false },
+                       { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: true },
                        { binding: 'jboxsu1', header: '박스수량',align:"center",  width: 130, isReadOnly: true  },
                        { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  } 
    
@@ -791,6 +817,110 @@
                    document.getElementById("wlistBtn").click();
                }  
                                  
+           // // ################################################################ 
+           view_p01tab04page = new wijmo.collections.CollectionView(getBadData_wlist(), {
+                //   pageSize: 12
+               });    
+               wtab04Grid = new wijmo.grid.FlexGrid('#wtab04Grid_div', {  
+                   autoGenerateColumns: false,
+                   isReadOnly: false,  
+                   allowAddNew: false,
+                   allowDelete: true,
+                   deletingRow:function(s,e){
+                    console.log("deletingRow !!",s,e)
+                   },
+                   alternatingRowStep: 0,
+                   columns: [
+                       // { binding: 'index', header: 'seq', width: '*' },
+                       // { binding: 'qcdate', header: '검사시작일',align:"center",  width: 120 }, 
+                       { binding: 'lotno', header: 'LotNo',     align:"left",  width: 150, isReadOnly: true  }, 
+                    //    { binding: 'active', header: '완료',align:"center",  width: 130, isReadOnly: true  },
+                       { binding: 'prod_qty', header: '사출완료량',align:"center",  width: 130, isReadOnly: true  },
+                       { binding: 'otqty', header: '기검사량',align:"center",  width: 90, isReadOnly: true },
+                       { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: true },
+                       { binding: 'gqty', header: '검사수량',align:"center",  width: 90, isReadOnly:  false },  
+                       { binding: 'jboxsu1', header: '박스수량',align:"center",  width: 90, isReadOnly:  false },  
+                       { binding: 'plan_no', header: '작지번호',align:"center",  width: 90, isReadOnly:  true }, 
+                   ],
+                   itemsSource: view_p01tab04page
+               });   
+   
+               new FlexGridContextMenu(wtab04Grid);  
+               setHeaderColumn05(true);
+               function setHeaderColumn05(headerOn) {
+                   wtab04Grid.headersVisibility = headerOn
+                   ? wijmo.grid.HeadersVisibility.All
+                   : wijmo.grid.HeadersVisibility.Column; 
+               } 
+               // 선택기 생성
+               let selector04 = new wijmo.grid.selector.Selector(wtab04Grid, {                
+                   itemChecked: () => { 
+                        showCheckedCount04();
+                   }                
+               }); 
+               function showCheckedCount04() {
+                   let cnt = document.getElementById('checked-count'), sel = wtab04Grid.rows.filter(r => r.isSelected);
+                   //cnt.textContent = sel.length.toString();  
+                   chkTabBar = sel;    
+                   //console.log(chkTabA);   
+                   var _ls_qty = 0;   
+                   var _ls_otqty = 0; 
+                   var _ls_sumotqty = 0; 
+                   var _ls_insumqt = 0; 
+                   var _ls_prod_qty = 0 
+                   var _ls_jboxsu_qty = 0 
+                   var _ls_gqty = 0  
+                   _ls_insumqt = Number(document.getElementById('insumqt').value);
+                   if(!_ls_insumqt){ _ls_insumqt = 0}
+                   for (var i = 0; i < sel.length; i++) {  
+                       _ls_prod_qty=  sel[i]._data.prod_qty; //사출완료량
+                       _ls_otqty   =  sel[i]._data.otqty;   //기검사량
+                       _ls_gqty   =  sel[i]._data.gqty;     //검사량 
+                       _ls_jboxsu_qty  =  sel[i]._data.jboxsu1; //박스수량  
+                       //_ls_prod_qty = _ls_prod_qty - _ls_owqty     //검사가능수량 완료량-기검사량
+                       _ls_sumotqty = _ls_sumotqty + _ls_otqty
+                       if(_ls_prod_qty < _ls_gqty ){      //검사량이 가능수량보다 클경우 
+                           _ls_qty   = _ls_qty + _ls_prod_qty; 
+                       }else{
+                           _ls_qty   = _ls_qty + _ls_gqty; 
+                       }  
+                   }  
+                   
+                   cnt.textContent = _ls_qty.toString();
+                   document.getElementById('inwotqt').value = Number(_ls_qty);  //검사수량
+                   document.getElementById('inboxsu1').value= _ls_jboxsu_qty;   //박스수량  
+                   document.getElementById('inwqcqt').value = Number(_ls_qty);  //완료수량   
+                   //document.getElementById('insumqt').value = 0;  //누적수량   박스수량을 채우지 못하고 남은 검사수량
+                  
+               }  
+                                   
+           // // ################################################################ 
+           view_p01tab05page = new wijmo.collections.CollectionView(getBadData_wlist(), {
+                //   pageSize: 12
+               });    
+               wtab05Grid = new wijmo.grid.FlexGrid('#wtab05Grid_div', {  
+                   autoGenerateColumns: false,
+                   isReadOnly: false,  
+                   allowAddNew: false,
+                   allowDelete: true, 
+                   alternatingRowStep: 0,
+                   columns: [ 
+                       { binding: 'lotno', header: 'LotNo',     align:"left",  width: 150, isReadOnly: true  },  
+                       { binding: 'prod_qty', header: '사출완료량',align:"center",  width: 130, isReadOnly: true  },
+                       { binding: 'otqty', header: '검사량',align:"center",  width: 90, isReadOnly: true },
+                       { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: true },
+                   ],
+                   itemsSource: view_p01tab05page
+               });   
+   
+               new FlexGridContextMenu(wtab05Grid);  
+            //    setHeaderColumn05(false);
+            //    function setHeaderColumn05(headerOn) {
+            //        wtab05Grid.headersVisibility = headerOn
+            //        ? wijmo.grid.HeadersVisibility.All
+            //        : wijmo.grid.HeadersVisibility.Column; 
+            //    }   
+                                              
            // // ################################################################
    
            //사원현황 Modalㅁ
@@ -971,6 +1101,7 @@
                    //insaSearchList_rtn("A");  
            });   
    
+
            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
            document.getElementById("inwcodenm").addEventListener("keyup", (e)=>{ 
                if(e.keyCode === 13){  
@@ -983,12 +1114,39 @@
                    document.getElementById("inbdnamebtn").click();
                    insaflag = "A"; 
                    //insaSearchList_rtn("A");  
-           });    
-           
+           }); 
+           //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    
+           document.getElementById("deleteRow").addEventListener("click",function(){ 
+                if (!confirm(ls_delgetlot + " : 삭제하시겠습니까?")) {
+                    return ; 
+                }    
+                var index = addlotno.indexOf(ls_delgetlot); 
+                // 인덱스가 -1이 아니라면 (즉, 요소가 배열에 존재한다면)
+                if (index !== -1) {
+                    // 해당 인덱스에서 1개의 요소를 제거합니다.
+                    addlotno.splice(index, 1);
+                }
+                view_p01tab04page.removeAt(ll_delgetrow);
+                //wtab04Grid.select(0,0)
+                let e = new wijmo.grid.CellEditEndingEventArgs(wtab04Grid.cells, wtab04Grid.selection); //cellEditEndingEventArgs 생성
+
+                wtab04Grid.onDeletingRow(e)
+            })
+
+ 
+ 
+
            //선택한 탭 체크 
             function tabchk_rtn(arg){
                document.getElementById('tabvalue').value = arg; 
            } 
+           
+           function selectdelrow(arg){
+                if (!confirm(arg + " : 삭제하시겠습니까?")) {
+                    return ; 
+                }  
+                wtab03Grid.newRowAtTop = false;
+           }
            function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23){ 
                //console.log(arg14)
                //custcd, spjangcd, wono, cltnm, pname, ostore, plan_no, 1-7
@@ -1030,9 +1188,41 @@
                 //document.getElementById('inputdate').value= arg16; 
                }     
                document.getElementById('inpsize').value= arg20;    
-               document.getElementById('inboxsu1').value= arg21;  
-           }
+               document.getElementById('inboxsu1').value= arg21;
+               searchList_sachul (arg12) 
+           } 
+            function savechk_rtn(){
+                if(chkTabBar.length == 0){
+                    alert("검사정보 자료를 선택하세요")
+                    return false
+                }
+
+                while (lotnoArr.length > 0) {
+                    lotnoArr.pop();
+                    // activeArr.pop();
+                    prod_qtyArr.pop();
+                    otqtyArr.pop();
+                    obqtyArr.pop();
+                    gqtyArr.pop();
+                    planArr.pop(); 
+                }  
+                for (var i = 0; i < chkTabBar.length; i++) { 
+                    lotnoArr[i]   = chkTabBar[i]._data.lotno;
+                    // activeArr[i]   = chkTabBar[i]._data.active;
+                    prod_qtyArr[i]  = chkTabBar[i]._data.prod_qty; 
+                    otqtyArr[i]  = chkTabBar[i]._data.otqty; 
+                    obqtyArr[i]  = chkTabBar[i]._data.obqty; 
+                    gqtyArr[i]  = chkTabBar[i]._data.gqty; 
+                    planArr[i]  = chkTabBar[i]._data.plan_no;  
+                    if(gqtyArr[i] > prod_qtyArr[i]){ 
+                        alert("검사수량이 생산수량을 초과했습니다. 생산수량을 확인하세요")
+                        return  false
+                    }  
+                }        
+                return true        
+            }
            function save_btn(arg){
+               savechk_rtn()
                var ls_tab = document.getElementById('tabvalue').value;
                var ls_inputdate     =  convert_date(winputdate.value);  
                var ls_custcd   = 'KDMES'; 
@@ -1146,7 +1336,7 @@
                             }   
                        }
                        
-
+ 
                         
                        $.ajax({
                            url: '/input02/w020upd',   
@@ -1170,7 +1360,10 @@
                                "salotno"   : ls_insalotno  , 
                                "inwcode" : ls_inwcode ,
                                "inwbdqt" : ll_inwbdqt ,
-                               "demflag"   : ls_demflag
+                               "demflag"   : ls_demflag,
+                               "lotnoarr"   : lotnoArr,
+                               "gqtyArr"   : gqtyArr ,
+                               "planArr"   : planArr ,                               
                            },
                            async:false,
                            success:function(data){   
@@ -1290,7 +1483,7 @@
                result.setHours(result.getHours() + 9); 
                var ls_date = result.toISOString().substring(0,10);  
                console.log(ls_date)
-               winputdate.value = ls_date;               
+               winputdate.value = ls_date;          
    
            }
            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -1310,38 +1503,120 @@
            // Modal 검색   
            document.getElementById("searchBtn").addEventListener("click",function(){ 
                var ls_searchOrdDate = document.getElementById('searchOrdDate01').value;  
-               searchList_rtn_barcode(ls_searchOrdDate);
+               searchList_rtn_barcode("B", ls_searchOrdDate);  //팝업에서 조회
            })   
     
 
            function barcode_enter(e){ 
               if(e.keyCode == 13){
-               var ls_insalotno01 = document.getElementById('insalotno01').value;  
-               searchList_rtn_barcode(ls_insalotno01);
+               var ls_insalotno01 = document.getElementById('insalotno01').value;   
+                 searchList_rtn_barcode("A", ls_insalotno01);  // 바코드 스캔
                  return ;
               }
            }
+           function searchList_sachul(arg){ 
+               var ls_searchdate = arg;   
+                $.ajax({
+                    url: '/input02/w020salist',  
+                    type:"POST",
+                    data: { 
+                        "lotno"      : arg  
+                    }, 
+                    async:false,
+                    success:function(data){ 
+                        var ListDto = data;  
+                        var dataArr = [];
+                        var cnt = 1; 
+                        var ll_obqty = 0; 
+                        //console.log(ListDto)
+                        for (var i = 0; i < ListDto.length; i++) {
+                            var psdate = ListDto[i]["prod_sdate"];
+                            psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
+                            ll_obqty = 0;
+                            ll_obqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];   //잔여수량
+                            var date_format = new Date(psdate);  //wijmo.DateTime.addDays(date_format, 0),
+                            dataArr.push({
+                                id: i, 
+                                index: cnt,                                                                
+                                prod_sdate: psdate, 
+                                wono: ListDto[i]["wono"], 
+                                lotno: ListDto[i]["lotno"]  ,       
+                                plan_no: ListDto[i]["plan_no"] ,   
+                                cltcd: ListDto[i]["cltcd"] , 
+                                cltnm: ListDto[i]["cltnm"], 
+                                pcode: ListDto[i]["pcode"] , 
+                                pname: ListDto[i]["pname"], 
+                                psize: ListDto[i]["psize"], 
+                                prod_qty: ListDto[i]["prod_qty"], 
+                                otqty: ListDto[i]["otqty"] ,   
+                                jboxsu1: ListDto[i]["jboxsu1"] ,  
+                                gqty: ListDto[i]["gqty01"] ,  
+                                obqty: ll_obqty  
+                            });
+                            cnt++;
+                        }   
+                        sachul_searchlist(dataArr) 
+    
+                    },error:function(e){
+                        console.log("error");
+                        // alert(data.code);
+                        // alert(data.message);
+                    }
+                }).done(function(fragment){           
+
+                })    
    
-           function searchList_rtn_barcode(arg){ 
+           }    
+   
+           function sachul_searchlist(dataArr){ 
+               wtab05Grid.columns.clear();  
+               wtab05Grid.autoGenerateColumns = false; 
+               view_p01tab05page.sourceCollection  = dataArr;
+               var cols = new wijmo.grid.Column(); 
+               cols.binding = 'lotno';
+               cols.header = 'LotNo';
+               cols.align = "center";
+               cols.width = 200 ;  
+               wtab05Grid.columns.push(cols);  
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'prod_qty';
+               cols.header = '사출완료';
+               cols.align = "center";
+               cols.width = 130 ; 
+               wtab05Grid.columns.push(cols);  
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'otqty';
+               cols.header = '검사량';
+               cols.align = "center";
+               cols.width = 90 ; 
+               wtab05Grid.columns.push(cols);  
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'obqty';
+               cols.header = '잔여량';
+               cols.align = "center";
+               cols.width = 90 ; 
+               cols.isReadOnly = false ; 
+               wtab05Grid.columns.push(cols);   
+           }                   
+           function searchList_rtn_barcode(gubun, arg){ 
                var ls_searchdate = arg;  
                var ls_flag = "0" ; 
-               ls_flag = "2"  //단순조회 
-            //    if(addlotno.length == 0){
-            //        ls_flag = "2"  //단순조회 
-            //    }else{
-            //        addlotno = addlotno + ',' + ls_searchdate;
-            //        ls_flag = "1";  //바코드 스캔
-            //    }
+               if(gubun == "B"){
+                ls_flag = "2"  
+               }else{
+                ls_flag = "1"  
+               }
                //if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){  
                if(ls_flag == "2"){ 
                    if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){
                        ls_searchdate = "%";
-                   }
+                   }   
+                   addlotno.push(ls_searchdate);
                    $.ajax({
                    url: '/input02/w020ordlist',  
                    type:"POST",
                    data: { 
-                       "lotno"      : ls_searchdate,  
+                       "lotno"      : addlotno, 
                        "flag"      : ls_flag, 
                    }, 
                    async:false,
@@ -1350,7 +1625,7 @@
                            var dataArr = [];
                            var cnt = 1; 
                            var ll_obqty = 0; 
-                           console.log(ListDto)
+                           //console.log(ListDto)
                            for (var i = 0; i < ListDto.length; i++) {
                                var psdate = ListDto[i]["prod_sdate"];
                                psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
@@ -1376,8 +1651,11 @@
                                });
                                cnt++;
                            }  
-                           
-                           sachul_list(dataArr)
+                           if(gubun =="B"){ 
+                            sachul_list(dataArr)
+                           }else{ 
+                            sachulBar_list(dataArr) 
+                           }
    
                        },error:function(e){
                            console.log("error");
@@ -1387,7 +1665,8 @@
                    }).done(function(fragment){           
    
                    })                                  
-               }else{
+               }else{ 
+                    addlotno.push(ls_searchdate); 
                    $.ajax({
                    url: '/input02/w020ordlist',  
                    type:"POST",
@@ -1397,14 +1676,32 @@
                    }, 
                    async:false,
                    success:function(data){ 
-                           var ListDto = data; 
-                           // console.log("ListDto : ", ListDto);
+                           var ListDto = data;  
                            var dataArr = [];
                            var cnt = 1; 
+                            var _ls_qty = 0;   
+                            var _ls_owqty = 0; 
+                            var _ls_prod_qty = 0 
+                            var _ls_jboxsu_qty = 0 
+                            var _ls_pcode = "";
+                            var _ls_pname = "";
+                            var _ls_psize = "";
+                            var _ls_cltnm = "";
+                            var _ls_cltcd = "";
+                            var _ls_lotno = "";
+                            var _ls_plan_no = "";
                            for (var i = 0; i < ListDto.length; i++) {
                                var psdate = ListDto[i]["prod_sdate"];
                                psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
                                var date_format = new Date(psdate);  //wijmo.DateTime.addDays(date_format, 0),
+                               var ll_gqty = 0;
+                               if(ListDto[i]["prod_qty"] - ListDto[i]["otqty"] > 0){
+                                 ll_gqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];
+                               }else if(ListDto[i]["prod_qty"] - ListDto[i]["otqty"] <= 0){
+                                    continue;
+                               }else{
+                                 ll_gqty = ListDto[i]["prod_qty"]; 
+                               }
                                dataArr.push({
                                    id: i, 
                                    index: cnt,                                                                
@@ -1433,12 +1730,52 @@
                                    wrpsnm: ListDto[i]["wrpsnm"]  ,
                                    winps: ListDto[i]["winps"]  ,
                                    wrps: ListDto[i]["wrps"]  ,
-                                   lotno: ListDto[i]["lotno"] 
+                                   lotno: ListDto[i]["lotno"] ,
+                                   jboxsu1: ListDto[i]["jboxsu1"] , 
+                                   active: false,
+                                   gqty: ll_gqty
                                });
                                cnt++;
+
+
+                                _ls_prod_qty = 0
+                                _ls_prod_qty=  ListDto[i]["prod_qty"]; //사출완료량
+                                _ls_owqty   =  ListDto[i]["owqty"]; //기검사량
+                                _ls_pname   =  ListDto[i]["pname"]; //품목
+                                _ls_pcode   =  ListDto[i]["pcode"]; //품목
+                                _ls_psize   =  ListDto[i]["psize"]; //품목
+                                _ls_cltnm   =  ListDto[i]["cltnm"]; //거래처
+                                _ls_cltcd   =  ListDto[i]["cltcd"]; //거래처 
+                                _ls_lotno   =  ListDto[i]["lotno"]; //거래처 
+                                _ls_jboxsu_qty  =  ListDto[i]["jboxsu1"]; //거래처 
+                                _ls_plan_no  =  ListDto[i]["plan_no"]; //거래처 
+                                _ls_prod_qty = _ls_prod_qty - _ls_owqty     //검사가능수량 완료량-기검사량
+                                
+                                if(_ls_prod_qty < ListDto[i]["obqty"]){      //검사량이 가능수량보다 클경우 
+                                    _ls_qty   = _ls_qty + _ls_prod_qty; 
+                                }else{
+                                    _ls_qty   = _ls_qty + ListDto[i]["obqty"]; 
+                                } 
+ 
+                                document.getElementById('inpcode').value= _ls_pcode;  
+                                document.getElementById('inpname').value= _ls_pname; 
+                                document.getElementById('inwotqt').value= 0; 
+                                document.getElementById('incltnm').value= _ls_cltnm;  
+                                document.getElementById('incltcd').value= _ls_cltcd;   
+                                document.getElementById('inboxsu1').value= _ls_jboxsu_qty; 
+                                document.getElementById('inpsize').value= _ls_psize; 
+                                document.getElementById('insalotno01').value= _ls_lotno;  
+                                document.getElementById('inplan_no').value= _ls_plan_no; 
+                                document.getElementById('inwqcqt').value= 0;
+
                            }  
-                           
-                           sachul_list(dataArr) 
+                            
+
+                           if(gubun =="B"){ 
+                            sachul_list(dataArr)
+                           }else{ 
+                            sachulBar_list(dataArr) 
+                           } 
                            document.getElementById('insalotno01').value = "";
                        },error:function(e){
                            console.log("error");
@@ -1513,8 +1850,85 @@
                cols.width = 150 ; 
                cols.isReadOnly = false ; 
                wtab03Grid.columns.push(cols); 
+           } 
+           function sachulBar_list(dataArr){ 
+               
+                wtab04Grid.removeEventListener("click");
+                wtab04Grid.collectionView.clearChanges(); 
+                wtab04Grid.hostElement.addEventListener("click",function(e){
+                    // console.log(e); 
+                    var ht = wtab04Grid.hitTest(e);
+                    if(ht.cellType === wijmo.grid.CellType.Cell){
+                        if(wtab04Grid.rows[ht.row].isSelected === true){
+                        console.log("kk");
+                        } else { 
+                            let ls_lotno = wtab04Grid.getCellData(ht.row,0); 
+                            if(ls_lotno == null || ls_lotno.length == 0 || ls_lotno == ""){  
+                                return ;               
+                            }     
+                            ll_delgetrow = ht.row
+                            ls_delgetlot = ls_lotno
+                        }  
+                    }
+                })
+
+               wtab04Grid.columns.clear();  
+               wtab04Grid.autoGenerateColumns = false; 
+               view_p01tab04page.sourceCollection  = dataArr;
+               var  cols = new wijmo.grid.Column(); 
+               cols.binding = 'lotno';
+               cols.header = 'LotNo';
+               cols.align = "center";  
+               cols.width = 150 ; 
+               wtab04Grid.columns.push(cols);  
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'prod_qty';
+               cols.header = '사출완료';
+               cols.align = "center";
+               cols.width = 80 ; 
+               wtab04Grid.columns.push(cols);    
+            //    cols = new wijmo.grid.Column(); 
+            //    cols.binding = 'active';
+            //    cols.header = '완료';
+            //    cols.align = "center"; 
+            //    cols.width = 80 ; 
+            //    wtab04Grid.columns.push(cols);   
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'obqty';
+               cols.header = '잔여량';
+               cols.align = "center";
+               cols.width = 90 ; 
+               cols.isReadOnly = false ; 
+               wtab04Grid.columns.push(cols);   
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'otqty';
+               cols.header = '기검사량';
+               cols.align = "center";
+               cols.width = 90 ; 
+               wtab04Grid.columns.push(cols);  
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'gqty';
+               cols.header = '검사수량';
+               cols.align = "center";
+               cols.width = 90 ; 
+               cols.isReadOnly = false ;  
+               wtab04Grid.columns.push(cols);   
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'jboxsu1';
+               cols.header = '박스수량';
+               cols.align = "center";
+               cols.width = 90 ; 
+               cols.isReadOnly = false ;  
+               wtab04Grid.columns.push(cols);  
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'plan_no';
+               cols.header = '작지번호';
+               cols.align = "center";
+               cols.width = 150 ; 
+               cols.isReadOnly = false ; 
+               wtab04Grid.columns.push(cols); 
+                
            }
-   
            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
            //검사량 조회 
            function searchList_rtn(ls_tab){ 
@@ -1648,7 +2062,7 @@
                // wtab01Grid.columns.push(cols);    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'lotno';
-               cols.header = 'LotNo';
+               cols.header = '검사코드';
                cols.align = "center";
                cols.width = 150;  
                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
@@ -1725,6 +2139,7 @@
                            index: cnt,                                                                
                            prod_sdate: psdate,
                            cltcd: wtab02Dto[i]["cltcd"] ,
+                           end_qty: wtab02Dto[i]["end_qty"] ,
                            cltnm: wtab02Dto[i]["cltnm"] ,
                            lotno: wtab02Dto[i]["lotno"]  ,    
                            pcode: wtab02Dto[i]["pcode"] ,
@@ -1756,12 +2171,12 @@
                cols.width = 120;   
                wtab02Grid.columns.push(cols);     
    
-               cols = new wijmo.grid.Column(); 
-               cols.binding = 'glotnono';
-               cols.header = '검사바코드';
-               cols.align = "center";
-               cols.width = 150;  
-               wtab02Grid.columns.push(cols);     
+            //    cols = new wijmo.grid.Column(); 
+            //    cols.binding = 'glotnono';
+            //    cols.header = '검사코드';
+            //    cols.align = "center";
+            //    cols.width = 150;  
+            //    wtab02Grid.columns.push(cols);     
    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'otqty';
@@ -1801,20 +2216,26 @@
                cols.align = "center";
                cols.width = 130;  
                cols.format = 'yyyy-MM-dd'; 
-               wtab01Grid.columns.push(cols);   
+               wtab02Grid.columns.push(cols);   
                cols = new wijmo.grid.Column(); 
                cols.binding = 'wtrdt';
                cols.header = '사출종료일';
                cols.align = "center";
                cols.width = 130;  
                cols.format = 'yyyy-MM-dd'; 
-               wtab01Grid.columns.push(cols);   
+               wtab02Grid.columns.push(cols);   
                cols = new wijmo.grid.Column(); 
                cols.binding = 'prod_qty';
                cols.header = '사출수량';
                cols.align = "right";
                cols.width = 130;  
                wtab02Grid.columns.push(cols);    
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'end_qty';
+               cols.header = '검사수량';
+               cols.align = "right";
+               cols.width = 130;  
+               wtab02Grid.columns.push(cols);   
                cols = new wijmo.grid.Column(); 
                cols.binding = 'wrpsnm01';
                cols.header = '사출담당자';
@@ -1929,7 +2350,7 @@
                    host.addEventListener('contextmenu', (e) => {
                        // 클릭된 셀/열 선택
                        let sel = grid.selection, ht = grid.hitTest(e), row = ht.getRow();
-   
+                       ll_delgetrow = ht.getRow(); 
                        switch (ht.panel) {
                            case grid.cells:
                            let colIndex = ht.col;

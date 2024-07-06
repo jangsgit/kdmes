@@ -31,7 +31,7 @@
                     isnull(E.winqt, 0) as winqt,
                     isnull(E.wbdqt, 0) as wbdqt,
                     isnull(E.wotqt, 0) as wotqt,
-                    isnull(E.winqt, 0) - isnull(E.wbdqt, 0) as wjqty,
+                    isnull(E.wotqt, 0) - isnull(E.wbdqt, 0) as wjqty,
                     isnull(E.gqty01, 0) AS gumqty,
                     E.wfrdt,
                     E.wtrdt
@@ -150,7 +150,7 @@
                     isnull(E.winqt, 0) as winqt,
                     isnull(E.wbdqt, 0) as wbdqt,
                     isnull(E.wotqt, 0) as wotqt,
-                    isnull(E.winqt, 0) - isnull(E.wbdqt, 0) as wjqty,
+                    isnull(E.wotqt, 0) - isnull(E.wbdqt, 0) as wjqty,
                     isnull(E.gqty01, 0) AS gumqty,
                     E.wfrdt,
                     E.wtrdt,
