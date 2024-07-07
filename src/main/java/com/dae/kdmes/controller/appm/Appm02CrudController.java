@@ -344,11 +344,19 @@ public class Appm02CrudController {
                         ls_seq = "0" + ls_seq;
                     }
                 }
+                log.info("error====?" IworkDto.getWrps());
                 IworkDto.setSeq(ls_seq);
                 result = appcom01Service.FPLANI_IWORK_Insert(IworkDto);
                 if (!result){
                     log.info("error Exception =====> FPLANI_IWORK_Insert" );
                     return "error";
+                }
+                workDto.setWflag("00020");
+                workDto.setWflag("00020");
+                result = appcom01Service.FPLAN_Update(workDto);
+                if (!s){
+                    logs.info("error Exception =====> FPLAN_Update  " );
+                    return "errossr";
                 }
                 workDto.setWflag("00020");
                 result = appcom01Service.FPLAN_Update(workDto);
