@@ -34,7 +34,7 @@ public class Index10Service {
     }
 
 
-    public List<IndexCa613Dto> SelectDa036List(IndexCa613Dto parm){
+    public List<IndexCa611Dto> SelectDa036List(IndexCa611Dto parm){
         return indexMapper.SelectDa036List(parm);
     }
 
@@ -46,6 +46,11 @@ public class Index10Service {
     public List<IndexCa613OworkDto> SelectCa613ChulList(IndexCa613OworkDto parm){
         return indexMapper.SelectCa613ChulList(parm);
     }
+    public List<IndexCa613Dto> SelectDa037ChulList(IndexCa613Dto parm){
+        return indexMapper.SelectDa037ChulList(parm);
+    }
+
+
 
     public IndexCa613OworkDto SelectCa613ChulListSum(IndexCa613OworkDto parm){
         return indexMapper.SelectCa613ChulListSum(parm);
@@ -54,8 +59,9 @@ public class Index10Service {
 
     public Boolean DeleteCa613(IndexCa613Dto parm){  return  indexMapper.DeleteCa613(parm);  }
     public Boolean InsertCa613(IndexCa613Dto parm){ return  indexMapper.InsertCa613(parm);}
-    public Boolean DeleteDa036(IndexCa613Dto parm){  return  indexMapper.DeleteDa036(parm);  }
-    public Boolean InsertDa036(IndexCa611Dto parm){ return  indexMapper.InsertDa036(parm);}
+    public Boolean DeleteDA036Sch(IndexCa611Dto parm){  return  indexMapper.DeleteDA036Sch(parm);  }
+    public Boolean DeleteDa037(IndexCa611Dto parm){  return  indexMapper.DeleteDa037(parm);  }
+    public Boolean InsertDA036Sch(IndexCa611Dto parm){ return  indexMapper.InsertDA036Sch(parm);}
     public Boolean InsertDa037(IndexCa613Dto parm){ return  indexMapper.InsertDa037(parm);}
     public Boolean UpdateCa613(IndexCa613Dto parm){  return  indexMapper.UpdateCa613(parm);  }
     public Boolean UpdateDa036(IndexCa611Dto parm){  return  indexMapper.UpdateDa036(parm);  }

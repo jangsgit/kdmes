@@ -46,6 +46,7 @@ public class App02CrudController {
     Index11Dto index11Dto = new Index11Dto();
     List<PopupDto> popupListDto = new ArrayList<>();
     List<IndexCa613Dto> indexCa613ListDto = new ArrayList<>();
+    List<IndexCa611Dto> indexCa611ListDto = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
     List<Index02Dto> index02ListDto = new ArrayList<>();
     List<Index03Dto> index03List = new ArrayList<>();
@@ -888,48 +889,30 @@ public class App02CrudController {
     }
 
 
-    @RequestMapping(value="/index21/save")
-    public String index21Save( @RequestPart(value = "key") Map<String, Object> param
+    @RequestMapping(value="/index21/save", method = RequestMethod.POST)
+    public String index21Save( @RequestParam("deldate") String deldate
+            ,@RequestParam("schdate") String schdate
+            ,@RequestParam("delnum") String delnum
+            ,@RequestParam("balno") String balno
+            ,@RequestParam("lotno") String lotno
+            ,@RequestParam("cltcd") String cltcd
+            ,@RequestParam("acorp") String acorp
+            ,@RequestParam("perid") String perid
+            ,@RequestParam("pernm") String pernm
+            ,@RequestParam("remark") String remark
+            ,@RequestParam("ostore") String ostore
+            ,@RequestParam("inmonth") String inmonth
+            ,@RequestParam("inweeks") String inweeks
+            ,@RequestParam("demflag") String demflag
+            ,@RequestParam("pcodeArr[]") List<String> pcodeArr
+            ,@RequestParam("pnameArr[]") List<String> pnameArr
+            ,@RequestParam("psizeArr[]") List<String> psizeArr
+            ,@RequestParam("pqtyArr[]") List<Integer> pqtyArr
             , Model model
             , HttpServletRequest request){
 
         IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
-        param.forEach((key, values) -> {
-            switch (key) {
-                case "deldate":
-                    _indexCa611Dto.setDeldate(values.toString());
-                    break;
-                case "delnum":
-                    _indexCa611Dto.setDelnum(values.toString());
-                    break;
-                case "balno":
-                    _indexCa611Dto.setBalno(values.toString());
-                    break;
-                case "lotno":
-                    _indexCa611Dto.setLotno(values.toString());
-                    break;
-                case "ostore":
-                    _indexCa611Dto.setOstore(values.toString());
-                    break;
-                case "cltcd":
-                    _indexCa611Dto.setCltcd(values.toString());
-                    break;
-                case "acorp":
-                    _indexCa611Dto.setAcorp(values.toString());
-                    break;
-                case "remark":
-                    _indexCa611Dto.setRemark(values.toString());
-                    break;
-                case "perid":
-                    _indexCa611Dto.setPerid(values.toString());
-                    break;
-                case "pernm":
-                    _indexCa611Dto.setPernm(values.toString());
-                    break;
-                default:
-                    break;
-            }
-        });
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
 
 
         HttpSession session = request.getSession();
@@ -938,11 +921,25 @@ public class App02CrudController {
 
         String ibgnum = "";
         Boolean result = true;
+        _indexCa611Dto.setDeldate(deldate);
+        _indexCa611Dto.setDelnum(delnum);
+        _indexCa611Dto.setSchdate(schdate);
+        _indexCa611Dto.setBalno(balno);
+        _indexCa611Dto.setLotno(lotno);
+        _indexCa611Dto.setCltcd(cltcd);
+        _indexCa611Dto.setAcorp(acorp);
+        _indexCa611Dto.setPerid(perid);
+        _indexCa611Dto.setPernm(pernm);
+        _indexCa611Dto.setRemark(remark);
+        _indexCa611Dto.setOstore(ostore);
+        _indexCa611Dto.setInmonth(inmonth);
+        _indexCa611Dto.setInweeks(inweeks);
+        _indexCa611Dto.setDemflag(demflag);
         ibgnum = _indexCa611Dto.getDelnum();
         if (ibgnum == null || ibgnum.equals("")) {
-            ibgnum = GetMaxDelnum(_indexCa611Dto.getIbgdate());
+            ibgnum = GetMaxDelnum(_indexCa611Dto.getDeldate());
             _indexCa611Dto.setDelnum(ibgnum);
-            result = service10.InsertDa036(_indexCa611Dto);
+            result = service10.InsertDA036Sch(_indexCa611Dto);
             if (!result) {
                 return "error";
             }
@@ -952,40 +949,108 @@ public class App02CrudController {
                 return "error";
             }
         }
+        //모두 삭제후 재 입력
+        result = service10.DeleteDa037(_indexCa611Dto);
+        if (!result) {
+            //return "error";
+        }
+        _indexCa613Dto.setDeldate(_indexCa611Dto.getDeldate());
+        _indexCa613Dto.setDelnum(_indexCa611Dto.getDelnum());
+        String ls_delseq = "001";
+        Integer ll_delseq = 0 ;
+        for(int i = 0; i < pcodeArr.size(); i++){
+            _indexCa613Dto.setDelseq(ls_delseq);
+            _indexCa613Dto.setPcode(pcodeArr.get(i));
+            _indexCa613Dto.setPname(pnameArr.get(i));
+            _indexCa613Dto.setPsize(psizeArr.get(i));
+            _indexCa613Dto.setQty(pqtyArr.get(i));
+            ll_delseq = Integer.parseInt(ls_delseq) + 1;
+            if(ll_delseq < 9){
+                ls_delseq = "00" + ll_delseq.toString();
+            }else{
+                ls_delseq =  "0" + ll_delseq.toString();
+            }
+            result = service10.InsertDa037(_indexCa613Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+
         return "success";
     }
 
 
+    @RequestMapping(value="/index21/del")
+    public String index21Delete(  @RequestParam("deldate") String deldate,
+                                  @RequestParam("delnum") String delnum,
+                                  Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
+        _indexCa611Dto.setDeldate(deldate);
+        _indexCa611Dto.setDelnum(delnum);
+        Boolean result = service10.DeleteDA036Sch(_indexCa611Dto);
+        if (!result) {
+            return "error";
+        }
+        result = service10.DeleteDa037(_indexCa611Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
 
     //매출하대기
     @GetMapping(value="/index21/list")
     public Object App21List_index(@RequestParam("searchtxt") String searchtxt,
-                                  @RequestParam("frdate") String frdate,
-                                  @RequestParam("todate") String todate,
+                                  @RequestParam("inmonth") String inmonth,
+                                  @RequestParam("inweeks") String inweeks,
                                   Model model, HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
-        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
 
         try {
             if(searchtxt == null || searchtxt.equals("")){
                 searchtxt = "%";
             }
-            _indexCa613Dto.setFrdate(frdate);
-            _indexCa613Dto.setTodate(todate);
-            _indexCa613Dto.setPname(searchtxt);
-            indexCa613ListDto = service10.SelectCa613List(_indexCa613Dto);
-            model.addAttribute("index15List",indexCa613ListDto);
+            _indexCa611Dto.setInmonth(inmonth);
+            _indexCa611Dto.setInweeks(inweeks);
+            _indexCa611Dto.setBalno(searchtxt);
+            indexCa611ListDto = service10.SelectDa036List(_indexCa611Dto);
+            model.addAttribute("index21List",indexCa613ListDto);
 
         } catch (Exception ex) {
             log.info("App15List_index Exception =====>" + ex.toString());
         }
 
-        return indexCa613ListDto;
+        return indexCa611ListDto;
     }
 
 
+    @GetMapping(value="/index21/chullist")
+    public Object App21ListModal_index(@RequestParam("indeldate") String deldate,
+                                       @RequestParam("indelnum") String delnum,
+                                       Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        try {
+            _indexCa613Dto.setDeldate(deldate);
+            _indexCa613Dto.setDelnum(delnum);
+            _indexCa613ListDto = service10.SelectDa037ChulList(_indexCa613Dto);
+            model.addAttribute("index21List",_indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App21ListModal_index =====>" + ex.toString());
+        }
+
+        return _indexCa613ListDto;
+    }
 
     @GetMapping(value="/index10/listtot")
     public Object App03ListTot_index(@RequestParam("jpbgubn") String jpbgubn,
@@ -1040,7 +1105,6 @@ public class App02CrudController {
                 conacorp = "%";
             }
             index10Dto.setAcorp(conacorp);
-            log.info("conacorp =====>" + index10Dto.getAcorp());
             index10ListDto = service10.GetCifListTot(index10Dto);
             model.addAttribute("index10List",index10ListDto);
 

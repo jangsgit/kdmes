@@ -1222,7 +1222,9 @@
                 return true        
             }
            function save_btn(arg){
-               savechk_rtn()
+               if(!savechk_rtn()){
+                    return 
+               }
                var ls_tab = document.getElementById('tabvalue').value;
                var ls_inputdate     =  convert_date(winputdate.value);  
                var ls_custcd   = 'KDMES'; 
@@ -1507,12 +1509,20 @@
            })   
     
 
-           function barcode_enter(e){ 
-              if(e.keyCode == 13){
-               var ls_insalotno01 = document.getElementById('insalotno01').value;   
-                 searchList_rtn_barcode("A", ls_insalotno01);  // 바코드 스캔
-                 return ;
-              }
+           function barcode_enter(e){  
+                if (e.key === 'Enter') {
+                    event.preventDefault();  // Prevent the default action of the Enter key
+                    var ls_insalotno01 = document.getElementById('insalotno01').value; 
+                        searchList_rtn_barcode("A", ls_insalotno01);  // 바코드 스캔
+                        document.getElementById('insalotno01').value = "";
+                        return ;
+                }
+                //   if(e.keyCode == 13){
+                //    var ls_insalotno01 = document.getElementById('insalotno01').value; 
+                //    alert(ls_insalotno01)  
+                //      searchList_rtn_barcode("A", ls_insalotno01);  // 바코드 스캔
+                //      return ;
+                //   }
            }
            function searchList_sachul(arg){ 
                var ls_searchdate = arg;   

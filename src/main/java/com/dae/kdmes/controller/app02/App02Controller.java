@@ -258,19 +258,19 @@ public class App02Controller {
     public String Appcom21_index( Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("출하등록");  //
         CommDto.setMenuUrl("생산공정>출하등록");
+        IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
+        List<IndexCa611Dto> _itemDtoListCa611 = new ArrayList<>();
         String fdate = getFrDate();
         String tdate = getAddDate();
-        indexCa613Dto.setPname("%");
-        indexCa613Dto.setLotno("%");
-        indexCa613Dto.setBalno("%");
-        indexCa613Dto.setFrdate(fdate);
-        indexCa613Dto.setTodate(tdate);
+        _indexCa611Dto.setInweeks("%");
+        _indexCa611Dto.setInmonth("%");
+        _indexCa611Dto.setBalno("%");
         wperidDto.setWflag("00090");  //첫번째공정 nb
         wperidDto.setWpernm("%");
         model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
         model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
-        itemDtoListCa613   = service10.SelectDa036List(indexCa613Dto);
-        model.addAttribute("itemDtoList", itemDtoListCa613);
+        _itemDtoListCa611   = service10.SelectDa036List(_indexCa611Dto);
+        model.addAttribute("itemDtoList", _itemDtoListCa611);
         return "App02/index21";
     }
 

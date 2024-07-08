@@ -25,11 +25,12 @@ public interface Index10Mapper {
 
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm) ;
 
-    public List<IndexCa613Dto> SelectDa036List(IndexCa613Dto parm) ;
+    public List<IndexCa611Dto> SelectDa036List(IndexCa611Dto parm) ;
     public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm) ;
 
-
     public List<IndexCa613OworkDto> SelectCa613ChulList(IndexCa613OworkDto parm) ;
+
+    public List<IndexCa613Dto> SelectDa037ChulList(IndexCa613Dto parm);
 
     public IndexCa613OworkDto SelectCa613ChulListSum(IndexCa613OworkDto parm) ;
 
@@ -38,12 +39,12 @@ public interface Index10Mapper {
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm) ;
 
     public Boolean DeleteCa613(IndexCa613Dto parm) ;
-    public Boolean DeleteDa037(IndexCa613Dto parm) ;
-    public Boolean DeleteDa036(IndexCa613Dto parm) ;
+    public Boolean DeleteDa037(IndexCa611Dto parm) ;
+    public Boolean DeleteDA036Sch(IndexCa611Dto parm) ;
 
     public Boolean InsertCa613(IndexCa613Dto  parm) ;
 
-    public Boolean InsertDa036(IndexCa611Dto parm) ;
+    public Boolean InsertDA036Sch(IndexCa611Dto parm) ;
 
     public Boolean InsertDa037(IndexCa613Dto  parm) ;
     public Boolean UpdateCa613(IndexCa613Dto  parm) ;

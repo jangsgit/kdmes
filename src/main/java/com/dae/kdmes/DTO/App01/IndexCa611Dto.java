@@ -11,6 +11,7 @@ public class IndexCa611Dto {
     private String misgubun;
     private String ibgdate;
     private String ibgnum;
+    private String schdate;
     private String deldate;
     private String delnum;
     private Integer contamt;
@@ -33,19 +34,14 @@ public class IndexCa611Dto {
     private String spjangnum;
     private String todate;
     private String ggubun;
-    private String omisdate;
-    private String omisnum;
     private String makflag;
-    private String reservnum;
-    private String unsongnum;
-    private String wotdt;
-    private Integer wotqt;
     private String inmonth;
     private String inweeks;
     private String balno;
     private String lotno;
     private String istore;
     private String ostore;
+    private String demflag;
 
 
 }
