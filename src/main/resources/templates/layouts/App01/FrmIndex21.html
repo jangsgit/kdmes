@@ -1252,6 +1252,18 @@
                 function tabchk_rtn(arg){
                 document.getElementById('tabvalue').value = arg; 
             }     
+            
+            //  
+            document.getElementById('demflag').addEventListener('click', function (e) {
+                if(e.target.checked){ 
+                    var result = new Date();
+                    result.setHours(result.getHours() + 9); 
+                    var ls_date = result.toISOString().substring(0,10);
+                    wschdate.value = ls_date;   
+                }else{
+                    wschdate.value = null;   
+                }
+            });
                 //검색     
             function searchList_rtn(){  
                 var ls_frdate = "";
