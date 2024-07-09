@@ -161,6 +161,8 @@
               F.prod_edate,
               F.prod_qty,
               F.otqty,
+              F.wbdqt,
+              F.wqcqt,
               F.wflag,
               F.wseq,
               F.jboxsu1,
@@ -176,14 +178,16 @@
                        C.jdanwy AS punit,
                        A.prod_sdate as prod_sdate,
                        A.prod_edate,
-                       (E.wotqt)  - (E.wbdqt) as prod_qty,
-                       ISNULL(E.gqty01,0)  as otqty,
+                       (E.qty)  - (E.bqty) as prod_qty,
+                       ISNULL(E.qty,0)  as otqty,
+                       ISNULL(E.bqty,0)  as wbdqt,
+                       ISNULL(E.sqty,0)  as wqcqt,
                        A.wflag wflag,
                        A.wseq  wseq,
                        C.jboxsu1
                  FROM TB_FPLAN A WITH(NOLOCK)
-                         LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010' AND glotnono = #{lotno}
-                          LEFT OUTER JOIN  TB_FPLAN_W020 D ON E.glotnono = D.lotno AND D.wflag = '00020' ,
+                         LEFT OUTER JOIN  TB_FPLAN_IWORK E ON A.plan_no   = E.plan_no AND E.wflag = '00010' AND E.glotno = #{lotno}
+                          LEFT OUTER JOIN  TB_FPLAN_W020 D ON E.glotno = D.lotno AND D.wflag = '00020' ,
                      JCODE C WITH(NOLOCK)
                  WHERE (A.pcode              = C.JKEY)
                    AND (A.cls_flag          IN ('1', '2', '3' ))
@@ -401,9 +405,13 @@
                MAX(A.prod_sdate) as prod_sdate,
                MAX(A.prod_edate) AS prod_edate,
                MAX(D.wboxsu) AS wboxsu,
+               D.wqcqt ,
                D.wsumqt ,
                D.wotqt  - D.wbdqt as prod_qty,
                D.wotqt   as otqty,
+               D.wbdqt,
+               MAX(D.wcode) as wcode,
+               ( select com_rem1 from TB_CA510 where com_cls = '005' and com_code   != '00' and com_REM2  = '00020' and com_code = MAX(D.wcode)) as wcodenm,
                isnull(D.wotqt,0) as owqty,
                0 as obqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
@@ -424,7 +432,7 @@
           AND ( Len( ISNULL(A.wflag,'') ) > 0  )
           AND D.indate between #{frdate} and #{todate}
           AND C.w_b_gubn NOT IN ('H')
-        GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt, D.winps, D.wrps, D.indate, D.wremark, D.wsumqt, D.demflag
+        GROUP BY A.custcd, A.spjangcd, D.lotno,  D.wotqt, D.wbdqt, D.winps, D.wrps, D.indate, D.wremark, D.wsumqt, D.demflag, D.wqcqt
         ORDER BY D.lotno desc
 
 
@@ -501,6 +509,7 @@
                E.gqty01 as end_qty,
                D.lotno AS glotnono,
                D.indate as qcdate,
+               D.wqcqt as wqcqt,
                isnull(D.wotqt,0) as owqty,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
                D.winps as winps,
@@ -522,6 +531,16 @@
         ]]>
     </select>
 
+
+    <select id="GetFPLAN_List02_GSUM"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
+        <![CDATA[
+        SELECT SUM(D.wotqt) AS wotqt,
+               MAX(D.lotno) as lotno
+        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+        WHERE (D.plan_no              = #{plan_no})
+        Group by D.plan_no
+        ]]>
+    </select>
 
     <select id="GetFPLAN_List02_HIS_JO"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
@@ -987,9 +1006,9 @@
 
     <insert id="FPLANW020_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
         INSERT INTO TB_FPLAN_W020(custcd, spjangcd, plan_no, wseq, wflag, wfrdt, wtrdt, wrmc, winqt, wotqt, wqcqt,
-        wbdqt, wscnt, winps, wsyul, wrps, wremark, decision,indate, inperid , lotno, wboxsu, demflag, wsumqt)
+        wbdqt, wscnt, winps, wsyul, wrps, wremark, decision,indate, inperid , lotno, wboxsu, demflag, wsumqt, wcode)
         VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wseq}, #{wflag}, #{wfrdt}, #{wtrdt}, #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt},
-        #{wbdqt}, #{wscnt}, #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid}, #{glotnono}, #{wboxsu}, #{demflag}, #{wsumqt})
+        #{wbdqt}, #{wscnt}, #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid}, #{glotnono}, #{wboxsu}, #{demflag}, #{wsumqt}, #{wcode})
     </insert>
 
     <insert id="FPLANW030_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
@@ -1054,8 +1073,8 @@
 
     <update id="FPLANW010_Update_GDEL" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_W010 SET
-               glotnono='',
-               gqty01= 0
+               glotnono = #{lotno},
+               gqty01 = #{gqty01}
         where plan_no IN (SELECT plan_no FROM  TB_FPLAN_W010 WITH (NOLOCK) WHERE glotnono = #{glotnono} )
     </update>
 
@@ -1078,8 +1097,12 @@
         <if test="wsumqt != null">wsumqt=#{wsumqt}</if>
         <if test="wbdqt != null ">,</if>
         <if test="wbdqt != null">wbdqt=#{wbdqt}</if>
+        <if test="wcode != null ">,</if>
+        <if test="wcode != null">wcode=#{wcode}</if>
         <if test="wotqt != null ">,</if>
         <if test="wotqt != null">wotqt=#{wotqt}</if>
+        <if test="wqcqt != null ">,</if>
+        <if test="wqcqt != null">wqcqt=#{wqcqt}</if>
         <if test="winps != null ">,</if>
         <if test="winps != null">winps=#{winps}</if>
         <if test="wrps != null ">,</if>
@@ -1439,7 +1462,7 @@
 
     <select id="FPLAN_IWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" resultType="String">
         SELECT MAX(seq) FROM  TB_FPLAN_IWORK
-        WHERE   glotno = #{glotno}
+        WHERE   plan_no = #{plan_no}
     </select>
 
 

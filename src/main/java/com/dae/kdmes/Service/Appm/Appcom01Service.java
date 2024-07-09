@@ -27,6 +27,11 @@ public class Appcom01Service {
         return FPLANW010_mapper.GetFPLAN_List02_salist(parm);
     }
 
+    public FPLAN_VO GetFPLAN_List02_GSUM(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_GSUM(parm);
+    }
+
+
     public List<FPLAN_VO> GetFPLAN_List02_JO(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_JO(parm);
     }
@@ -63,7 +68,7 @@ public class Appcom01Service {
     }
     public Object GetFPLANW010_ListOne(){
         return FPLANW010_mapper.GetFPLANW010_ListOne();
-    }
+}
     public Object GetFPLANW010_Detail (FPLANW010_VO parm){
         return FPLANW010_mapper.GetFPLANW010_Detail(parm);
     }

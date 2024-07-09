@@ -1,5 +1,6 @@
 package com.dae.kdmes.controller.app03;
 
+import com.dae.kdmes.DTO.App01.IndexCa613Dto;
 import com.dae.kdmes.DTO.App02.Index11Dto;
 import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.Service.App02.Index11Service;
@@ -303,5 +304,40 @@ public class App03ListController {
     }
 
 
+    //생산계획현황
+    @GetMapping(value="/index21/janlist")
+    public Object App21List01_index(@RequestParam("frdate") String frdate,
+                          @RequestParam("todate") String todate,
+                          @RequestParam("pcode") String pcode,
+                          Model model, HttpServletRequest request) throws Exception{
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+        try {
+
+//            String ls_yeare = frdate.substring(0,4);
+//            String ls_mm = frdate.substring(5,7);
+//            String ls_dd = frdate.substring(8,10);
+//            frdate =  ls_yeare + ls_mm + ls_dd;
+//                 ls_yeare = todate.substring(0,4);
+//                 ls_mm = todate.substring(5,7);
+//                 ls_dd = todate.substring(8,10);
+//            todate =  ls_yeare + ls_mm + ls_dd;
+
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setPcode(pcode);
+
+            _indexCa613ListDto = service11.GetIndex21JanList(_indexCa613Dto);
+
+            model.addAttribute("itemList",_indexCa613ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App21List01_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return _indexCa613ListDto;
+    }
 
 }

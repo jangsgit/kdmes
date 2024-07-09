@@ -31,6 +31,8 @@ public interface FPLANW010_Mapper {
      public FPLANW010_VO GetFPLANW010_Detail(FPLANW010_VO xa012Board);   //
      public FPLANW010_VO GetFPLANW020_Detail(FPLANW010_VO xa012Board);   //
      public FPLANW010_VO GetFPLANW030_Detail(FPLANW010_VO xa012Board);   //
+     public FPLAN_VO GetFPLAN_List02_GSUM(FPLAN_VO parm);   //
+
      public List<FPLANW010_VO>  GetFPLANW020_LIST(FPLANW010_VO xa012Board);   //
      // 조회
      public Boolean FPLANW010_Insert(FPLANW010_VO xa012Board);    //입력

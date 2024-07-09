@@ -185,7 +185,7 @@
                                                                 <th>검사수량</th>
                                                                 <td colspan="2">
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
-                                                                        <input class="form-control form-control-sm"  type="number" id="inwotqt" placeholder=""    />
+                                                                        <input class="form-control form-control-sm"  type="number" id="inwotqt" placeholder=""  disabled  />
                                                                         <input class="form-control form-control-sm" id="inwinqt" type="hidden" placeholder=""   />
                                                                         <input class="form-control form-control-sm" id="inwokqt" type="hidden" placeholder=""   />
                                                                         <div id='inwinqtbdg'></div>                                             
@@ -549,7 +549,7 @@
                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                text: '<b>${item.lotno}</b>',
                                click: (e, ctx) => {
-                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag  );
+                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag , ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm , ctx.item.wqcqt );
                                }
                            })
                        },       
@@ -625,6 +625,10 @@
                            end_qty: ListDto[i]["end_qty"], 
                            wboxsu: ListDto[i]["wboxsu"], 
                            wsumqt: ListDto[i]["wsumqt"], 
+                           wbdqt: wtab01Dto[i]["wbdqt"] , 
+                           wcode: wtab01Dto[i]["wcode"] , 
+                           wcodenm: wtab01Dto[i]["wcodenm"] , 
+                           wqcqt: wtab01Dto[i]["wqcqt"] , 
                            demflag: bdemflag, 
                            qcdate: ls_qcdate
                            
@@ -885,11 +889,14 @@
                            _ls_qty   = _ls_qty + _ls_gqty; 
                        }  
                    }  
-                   
+                   if(Number(_ls_qty) >   Number(_ls_jboxsu_qty )){
+                     alert("검사수량이 박스수량을 초과했습니다. 박스수량을 확인하세요")
+                     //return 
+                   }
                    cnt.textContent = _ls_qty.toString();
                    document.getElementById('inwotqt').value = Number(_ls_qty);  //검사수량
                    document.getElementById('inboxsu1').value= _ls_jboxsu_qty;   //박스수량  
-                   document.getElementById('inwqcqt').value = Number(_ls_qty);  //완료수량   
+                   document.getElementById('inwqcqt').value = Number(_ls_qty) + Number(_ls_insumqt);  //완료수량   
                    //document.getElementById('insumqt').value = 0;  //누적수량   박스수량을 채우지 못하고 남은 검사수량
                   
                }  
@@ -906,9 +913,9 @@
                    alternatingRowStep: 0,
                    columns: [ 
                        { binding: 'lotno', header: 'LotNo',     align:"left",  width: 150, isReadOnly: true  },  
-                       { binding: 'prod_qty', header: '사출완료량',align:"center",  width: 130, isReadOnly: true  },
-                       { binding: 'otqty', header: '검사량',align:"center",  width: 90, isReadOnly: true },
-                       { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: true },
+                       { binding: 'otqty', header: '검사투입양',align:"center",  width: 90, isReadOnly: true  },
+                       { binding: 'wbdqt', header: '불량수량',align:"center",  width: 90, isReadOnly: true },
+                       { binding: 'wqcqt', header: '총검사량',align:"center",  width: 90, isReadOnly: true },
                    ],
                    itemsSource: view_p01tab05page
                });   
@@ -920,7 +927,7 @@
             //        ? wijmo.grid.HeadersVisibility.All
             //        : wijmo.grid.HeadersVisibility.Column; 
             //    }   
-                                              
+                      
            // // ################################################################
    
            //사원현황 Modalㅁ
@@ -1147,11 +1154,12 @@
                 }  
                 wtab03Grid.newRowAtTop = false;
            }
-           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23){ 
+           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27){ 
                //console.log(arg14)
                //custcd, spjangcd, wono, cltnm, pname, ostore, plan_no, 1-7
                //cltcd, pcode, wseq, wflag, lotno, prod_qty  otqty otqty 8-15
                //qcdate, winps , wrpsnm, wremark psize, wboxsu, wsumqt demflag 16-23  
+               // wbdqt, wcode, wcodenm, wqcqt ); 24-27
                const ls_demflagEle   = document.getElementById('demflag');             //완료여부
                if(arg23){
                 ls_demflagEle.checked = true;
@@ -1175,20 +1183,26 @@
                 document.getElementById('inwinqt').value = arg13;         //투입량
                 document.getElementById('inwotqt').value = arg14;         //검사수량   arg15 
                 document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
+                document.getElementById('inwqcqt').value = arg27;          //완료량     arg13 
                 //document.getElementById('inputdate').value= arg16;         //검사일자  
                 winputdate.value = arg16;
                 document.getElementById('inwinps').value= arg17;  
                 document.getElementById('inwrpsnm').value= arg18;
                 document.getElementById('inwremark').value= arg19; 
+                document.getElementById('insumqt').value = arg22; 
+                document.getElementById('inwcode').value= arg25;  
+                document.getElementById('inwcodenm').value= arg26;
+                document.getElementById('inwbdqt').value = arg24; 
                }else{
-                document.getElementById('insumqt').value = arg14;         //검사수량   arg15 
+                document.getElementById('insumqt').value = arg22;         //검사수량   arg15 
                 // document.getElementById('inwinqt').value = arg13;         //투입량
                 document.getElementById('inwotqt').value = 0;         //검사수량   arg15 
                 // document.getElementById('inwokqt').value = arg15;         //완료량     arg13 
                 //document.getElementById('inputdate').value= arg16; 
-               }     
+               }      
                document.getElementById('inpsize').value= arg20;    
-               document.getElementById('inboxsu1').value= arg21;
+               document.getElementById('inboxsu1').value= arg21; 
+               
                searchList_sachul (arg12) 
            } 
             function savechk_rtn(){
@@ -1253,18 +1267,34 @@
                if(!ll_insumqt || ll_insumqt == 0){      //최초입력시 누적수량은 완료수량이다. 
                    ll_insumqt = ll_inwqcqt;
                }else{ 
-                if(ll_insumqt == ll_inboxsu1){
-                        ls_demflag = "1"
-                        ll_inwqcqt = ll_insumqt
-                }else{
-                        ll_insumqt =  parseInt(ll_insumqt) + parseInt(ll_inwqcqt); 
-                } 
-               }   
- 
-               if(ll_inboxsu1 < ll_insumqt ){
+                    ll_insumqt =  parseInt(ll_insumqt) + parseInt(ll_inwotqt) ; //누적수량 + 완료수량
+                    if(ll_inwqcqt == ll_inboxsu1){
+                            ls_demflag = "1" 
+                    }else{
+                            
+                    } 
+               }    
+               
+               if(ll_inboxsu1 < ll_inwqcqt ){
                     alert("박스수량을 초과했습니다. 확인하세요");
                     return ;
                 }  
+
+            //    if(!ll_insumqt || ll_insumqt == 0){      //최초입력시 누적수량은 완료수량이다. 
+            //        ll_insumqt = ll_inwqcqt;
+            //    }else{ 
+            //     if(ll_insumqt == ll_inboxsu1){
+            //             ls_demflag = "1"
+            //             ll_inwqcqt = ll_insumqt
+            //     }else{
+            //             ll_insumqt =  parseInt(ll_insumqt) + parseInt(ll_inwqcqt); //누적수량 + 완료수량
+            //     } 
+            //    }   
+ 
+            //    if(ll_inboxsu1 < ll_insumqt ){
+            //         alert("박스수량을 초과했습니다. 확인하세요");
+            //         return ;
+            //     }  
 
                if(!ls_inlotno){
                    ls_inlotno = "";
@@ -1485,7 +1515,8 @@
                result.setHours(result.getHours() + 9); 
                var ls_date = result.toISOString().substring(0,10);  
                console.log(ls_date)
-               winputdate.value = ls_date;          
+               winputdate.value = ls_date;  
+               searchList_sachul ("")         
    
            }
            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -1559,14 +1590,15 @@
                                 psize: ListDto[i]["psize"], 
                                 prod_qty: ListDto[i]["prod_qty"], 
                                 otqty: ListDto[i]["otqty"] ,   
+                                wbdqt: ListDto[i]["wbdqt"] ,   
+                                wqcqt: ListDto[i]["wqcqt"] ,   
                                 jboxsu1: ListDto[i]["jboxsu1"] ,  
                                 gqty: ListDto[i]["gqty01"] ,  
                                 obqty: ll_obqty  
                             });
                             cnt++;
                         }   
-                        sachul_searchlist(dataArr) 
-    
+                        sachul_searchlist(dataArr)  
                     },error:function(e){
                         console.log("error");
                         // alert(data.code);
@@ -1587,22 +1619,22 @@
                cols.header = 'LotNo';
                cols.align = "center";
                cols.width = 200 ;  
-               wtab05Grid.columns.push(cols);  
-               cols = new wijmo.grid.Column(); 
-               cols.binding = 'prod_qty';
-               cols.header = '사출완료';
-               cols.align = "center";
-               cols.width = 130 ; 
-               wtab05Grid.columns.push(cols);  
+               wtab05Grid.columns.push(cols);   
                cols = new wijmo.grid.Column(); 
                cols.binding = 'otqty';
-               cols.header = '검사량';
+               cols.header = '검사투입양';
                cols.align = "center";
                cols.width = 90 ; 
                wtab05Grid.columns.push(cols);  
                cols = new wijmo.grid.Column(); 
-               cols.binding = 'obqty';
-               cols.header = '잔여량';
+               cols.binding = 'wbdqt';
+               cols.header = '불량수량';
+               cols.align = "center";
+               cols.width = 90 ; 
+               wtab05Grid.columns.push(cols); 
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'wqcqt';
+               cols.header = '총검사량';
                cols.align = "center";
                cols.width = 90 ; 
                cols.isReadOnly = false ; 
@@ -2016,6 +2048,7 @@
                             }else{
                                 bdemflag = false;
                             }   
+                            console.log(wtab01Dto[i]["wqcqt"])
                        wtab01_data.push({
                            id: i, 
                            index: cnt,                                                                
@@ -2032,13 +2065,17 @@
                            prod_qty: wtab01Dto[i]["prod_qty"],
                            end_qty: wtab01Dto[i]["end_qty"], 
                            obqty: wtab01Dto[i]["obqty"],    
-                           otqty: wtab01Dto[i]["otqty"] , 
+                           otqty: wtab01Dto[i]["otqty"] ,   
+                           wqcqt: wtab01Dto[i]["wqcqt"] , 
                            winps: wtab01Dto[i]["winps"]  ,
                            wrps: wtab01Dto[i]["wrps"]  ,
                            wrpsnm: wtab01Dto[i]["wrpsnm"],  
                            wremark: wtab01Dto[i]["wremark"] , 
                            wboxsu: wtab01Dto[i]["wboxsu"] , 
                            wsumqt: wtab01Dto[i]["wsumqt"] , 
+                           wbdqt: wtab01Dto[i]["wbdqt"] , 
+                           wcode: wtab01Dto[i]["wcode"] , 
+                           wcodenm: wtab01Dto[i]["wcodenm"] , 
                            demflag: bdemflag , 
                            
                            qcdate: ls_qcdate 
@@ -2078,7 +2115,7 @@
                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                    text: '<b>${item.lotno}</b>',
                    click: (e, ctx) => {
-                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag );
+                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm, ctx.item.wqcqt );
                    }
                });
                wtab01Grid.columns.push(cols);       
@@ -2139,7 +2176,7 @@
                            ls_qcdate = "";
                            ls_glotno = "";
                        }else{
-                           ls_otqty = wtab02Dto[i]["otqty"];    
+                           ls_otqty = wtab02Dto[i]["wqcqt"];    
                            ls_qcdate = wtab02Dto[i]["qcdate"];    
                            ls_glotno = wtab02Dto[i]["glotnono"];  
                        }
@@ -2181,12 +2218,12 @@
                cols.width = 120;   
                wtab02Grid.columns.push(cols);     
    
-            //    cols = new wijmo.grid.Column(); 
-            //    cols.binding = 'glotnono';
-            //    cols.header = '검사코드';
-            //    cols.align = "center";
-            //    cols.width = 150;  
-            //    wtab02Grid.columns.push(cols);     
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'glotnono';
+               cols.header = '검사코드';
+               cols.align = "center";
+               cols.width = 150;  
+               wtab02Grid.columns.push(cols);     
    
                cols = new wijmo.grid.Column(); 
                cols.binding = 'otqty';
@@ -2200,7 +2237,21 @@
                cols.header = '검사담당자';
                cols.align = "center";
                cols.width = 120;  
-               wtab02Grid.columns.push(cols);    
+               wtab02Grid.columns.push(cols);   
+
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'end_qty';
+               cols.header = '검사수량';
+               cols.align = "right";
+               cols.width = 130;  
+               wtab02Grid.columns.push(cols);     
+
+               cols = new wijmo.grid.Column(); 
+               cols.binding = 'lotno';
+               cols.header = '사출바코드';
+               cols.align = "center";
+               cols.width = 150;  
+               wtab02Grid.columns.push(cols);   
    
                cols = new wijmo.grid.Column();  
                cols.binding = 'cltnm';
@@ -2241,23 +2292,11 @@
                cols.width = 130;  
                wtab02Grid.columns.push(cols);    
                cols = new wijmo.grid.Column(); 
-               cols.binding = 'end_qty';
-               cols.header = '검사수량';
-               cols.align = "right";
-               cols.width = 130;  
-               wtab02Grid.columns.push(cols);   
-               cols = new wijmo.grid.Column(); 
                cols.binding = 'wrpsnm01';
                cols.header = '사출담당자';
                cols.align = "center";
                cols.width = 120;  
-               wtab02Grid.columns.push(cols);      
-               cols = new wijmo.grid.Column(); 
-               cols.binding = 'lotno';
-               cols.header = '사출바코드';
-               cols.align = "center";
-               cols.width = 150;  
-               wtab02Grid.columns.push(cols);   
+               wtab02Grid.columns.push(cols);     
            } 
      
    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$

@@ -24,6 +24,8 @@ public class FPLANW010_VO {
     private String wendt;
     private String qcdate;
     private String wrmc;
+    private String wcode;
+    private String wcodenm;
     private float   winqt;
     private float wotqt;
     private float wqcqt;

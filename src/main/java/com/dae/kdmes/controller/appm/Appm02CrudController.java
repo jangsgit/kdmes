@@ -233,12 +233,12 @@ public class Appm02CrudController {
         String ls_lotno = "";
         String ls_seq = "";
         Integer ll_lotno =  0;
-        Integer ll_wotqty = 0;          //투입량
+        Integer ll_wotqty = 0;          //투입량 검사량
         Integer ll_winqty = 0;          //검사량
         Integer ll_wboxsu = 0;          //박스수량
         Integer ll_wsumqt = 0;          //누적수량
         Integer ll_inwbdqt = 0;          //불량수량
-        Integer ll_inwqcqt = 0;          //불량수량
+        Integer ll_inwqcqt = 0;          //완료수량
         if(inwbdqt == null){
             inwbdqt = 0;
         }
@@ -328,10 +328,12 @@ public class Appm02CrudController {
                 IworkDto.setWflag("00010");
                 IworkDto.setGlotno(ls_lotno);
                 IworkDto.setQty(ll_wotqt);
-                IworkDto.setSqty(0);
-                IworkDto.setBqty(0);
+                IworkDto.setJqty(ll_wqcqt);
+                IworkDto.setSqty(wsumqt);
+                IworkDto.setBqty(inwbdqt);
                 IworkDto.setIndate(getToDate());
                 IworkDto.setWseq("01");
+
                 ls_seq = appcom01Service.FPLAN_IWORK_MAXWSEQ(IworkDto);
                 if(ls_seq == null || ls_seq.length() == 0 || ls_seq.equals("")){
                     ls_seq = "001";
@@ -371,12 +373,14 @@ public class Appm02CrudController {
         workDto.setWqty(wotqt);
         workDto.setWotqt(wotqt);
         workDto.setQty(wotqt);
-        workDto.setWinqt(wsumqt);       //합산검사량이 최종검사량
-        workDto.setWotqt(wsumqt);
-        workDto.setQcqty(wqcqt);
+        workDto.setWinqt(winqt);       //합산검사량이 최종검사량
+        workDto.setWsumqt(wsumqt);
+        workDto.setWqcqt(wqcqt);
         workDto.setDemflag(demflag);
+        workDto.setWcode(inwcode);
         workDto.setWflag("00020");  //검사
         workDto.setWseq("02");
+        workDto.setWbdqt(ll_inwbdqt);
         if(lotno == null || lotno.length() == 0 || lotno.equals("")) {
             result = appcom01Service.FPLANW020_Insert(workDto);
             if (!result){
@@ -454,6 +458,8 @@ public class Appm02CrudController {
                                   ,@RequestParam("planno") String planno
             ,HttpServletRequest request){
         FPLANW010_VO workDto = new FPLANW010_VO();
+        FPLAN_VO _wsumDto = new FPLAN_VO();
+        FPLAN_VO _wsumDto_result = new FPLAN_VO();
         workDto.setGlotnono(lotno);
         workDto.setQcqty(0);
         workDto.setQcdate("");
@@ -469,17 +475,6 @@ public class Appm02CrudController {
            // log.info("error =====> FPLAN_Update_GDEL");
            // return "error";
         }
-
-        IworkDto.setCustcd("KDMES");
-        IworkDto.setSpjangcd("ZZ");
-        IworkDto.setWflag("00010");
-        IworkDto.setGlotno(lotno);
-
-        result = appcom01Service.FPLANW010_Update_GDEL(workDto);
-        if (!result){
-            //log.info("error Exception =====> FPLANW010_Update_GDEL" );
-            //return "error";
-        }
         workDto.setLotno(lotno);
         result = appcom01Service.FPLANW020_Delete(workDto);
         if (!result) {
@@ -487,6 +482,24 @@ public class Appm02CrudController {
             return "error";
         }
 
+        //기존 검사된 사용량 조회하여 업데이트
+        _wsumDto.setPlan_no(planno);
+        _wsumDto_result = appcom01Service.GetFPLAN_List02_GSUM(_wsumDto);
+        workDto.setLotno(_wsumDto_result.getLotno());
+        workDto.setGqty01(_wsumDto_result.getWotqt());
+        log.info("getLotno =====>" + _wsumDto_result.getLotno());
+        log.info("getWotqt =====>" + _wsumDto_result.getWotqt());
+        result = appcom01Service.FPLANW010_Update_GDEL(workDto);
+        if (!result){
+            //log.info("error Exception =====> FPLANW010_Update_GDEL" );
+            //return "error";
+        }
+
+
+
+        IworkDto.setCustcd("KDMES");
+        IworkDto.setSpjangcd("ZZ");
+        IworkDto.setWflag("00010");
         IworkDto.setGlotno(lotno);
         result = appcom01Service.FPLAN_IWORK_Delete(IworkDto);
         if (!result){

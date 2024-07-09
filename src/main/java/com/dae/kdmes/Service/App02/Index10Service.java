@@ -32,6 +32,9 @@ public class Index10Service {
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm){
         return indexMapper.SelectCa613List(parm);
     }
+    public List<IndexCa613Dto> SelectDa037List(IndexCa613Dto parm){
+        return indexMapper.SelectDa037List(parm);
+    }
 
 
     public List<IndexCa611Dto> SelectDa036List(IndexCa611Dto parm){

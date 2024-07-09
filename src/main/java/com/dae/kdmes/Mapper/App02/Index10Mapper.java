@@ -24,6 +24,8 @@ public interface Index10Mapper {
     public Boolean UpdateFplan(Index10Dto  parm) ;
 
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm) ;
+    public List<IndexCa613Dto> SelectDa037List(IndexCa613Dto parm) ;
+
 
     public List<IndexCa611Dto> SelectDa036List(IndexCa611Dto parm) ;
     public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm) ;

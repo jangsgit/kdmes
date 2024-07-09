@@ -337,5 +337,10 @@
         ]]>
     </select>
 
+    <select id="GetIndex21JanList" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        {
+        call SP_FromToJangoList(#{frdate},#{todate}, #{pcode}, "%")
+        }
+    </select>
 
 </mapper>

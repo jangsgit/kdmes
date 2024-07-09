@@ -715,6 +715,36 @@ public class App02CrudController {
     }
 
 
+    @GetMapping(value="/index21/listmap")
+    public Object App21ListMap_index(@RequestParam("inmonth") String inmonth,
+                                     @RequestParam("inweeks") String inweeks,
+                                     @RequestParam("balno") String balno,
+                                     @RequestParam("pcode") String pcode,
+                                     @RequestParam("demflag") String demflag,
+                                     Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+
+        try {
+            _indexCa613Dto.setInmonth(inmonth);
+            _indexCa613Dto.setInweeks(inweeks);
+            _indexCa613Dto.setBalno(balno);
+            _indexCa613Dto.setPcode(pcode);
+            _indexCa613Dto.setDemflag(demflag);
+
+            _indexCa613ListDto = service10.SelectDa037List(_indexCa613Dto);
+            model.addAttribute("index15ListMap",_indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App15ListMap_index Exception =====>" + ex.toString());
+        }
+
+        return _indexCa613ListDto;
+    }
+
     @GetMapping(value="/index15/chullist")
     public Object App15ListModal_index(@RequestParam("inibgdate") String ibgdate,
                                   @RequestParam("inibgnum") String ibgnum,

@@ -1,6 +1,7 @@
 package com.dae.kdmes.Service.App02;
 
 import com.dae.kdmes.DTO.App01.Index01Dto;
+import com.dae.kdmes.DTO.App01.IndexCa613Dto;
 import com.dae.kdmes.DTO.App02.Index11Dto;
 import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.DTO.Popup.PopupDto;
@@ -35,6 +36,9 @@ public class Index11Service {
     }
     public List<Index11Dto> getIndex13List03(Index11Dto parm){
         return indexMapper.getIndex13List03(parm);
+    }
+    public List<IndexCa613Dto> GetIndex21JanList(IndexCa613Dto parm){
+        return indexMapper.GetIndex21JanList(parm);
     }
 
 

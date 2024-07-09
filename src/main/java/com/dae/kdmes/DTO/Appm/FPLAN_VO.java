@@ -37,6 +37,7 @@ public class FPLAN_VO {
     private float prod_dqty;
     private String qcdate;
     private float qcqty;
+    private float wotqt;
     private float end_qty;
     private String ordtype;
     private String orddate;
@@ -65,6 +66,7 @@ public class FPLAN_VO {
     private float tordqty;
     private float winqt;
     private float otqty;
+    private float wqcqt;
     private String qcgb;
     private String demdate;
     private String demnum;
