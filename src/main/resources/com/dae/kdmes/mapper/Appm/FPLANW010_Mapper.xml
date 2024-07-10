@@ -537,7 +537,7 @@
         SELECT SUM(D.wotqt) AS wotqt,
                MAX(D.lotno) as lotno
         FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
-        WHERE (D.plan_no              = #{plan_no})
+        WHERE (D.plan_no  = #{plan_no})
         Group by D.plan_no
         ]]>
     </select>
@@ -1075,7 +1075,7 @@
         UPDATE TB_FPLAN_W010 SET
                glotnono = #{lotno},
                gqty01 = #{gqty01}
-        where plan_no IN (SELECT plan_no FROM  TB_FPLAN_W010 WITH (NOLOCK) WHERE glotnono = #{glotnono} )
+        where plan_no=#{plan_no}
     </update>
 
     <update id="FPLANW010_Update_JDEL" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >

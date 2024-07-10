@@ -486,8 +486,11 @@ public class Appm02CrudController {
         _wsumDto.setPlan_no(planno);
         Optional<FPLAN_VO>  optionlResult = Optional.ofNullable(appcom01Service.GetFPLAN_List02_GSUM(_wsumDto));
         optionlResult.ifPresent(result -> {
-            workDto.setLotno(_wsumDto_result.getLotno());
-            workDto.setGqty01(_wsumDto_result.getWotqt());
+            workDto.setLotno(result.getLotno());
+            workDto.setGqty01(result.getWotqt());
+//            log.info("setPlan_no=====>" + _wsumDto.getPlan_no());
+//            log.info("getWotqt=====>" + result.getLotno());
+//            log.info("getLotno  =====>" + result.getWotqt());
         });
         if(!optionlResult.isPresent()){
             workDto.setLotno(lotno);
