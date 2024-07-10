@@ -484,11 +484,15 @@ public class Appm02CrudController {
 
         //기존 검사된 사용량 조회하여 업데이트
         _wsumDto.setPlan_no(planno);
-        _wsumDto_result = appcom01Service.GetFPLAN_List02_GSUM(_wsumDto);
-        workDto.setLotno(_wsumDto_result.getLotno());
-        workDto.setGqty01(_wsumDto_result.getWotqt());
-        log.info("getLotno =====>" + _wsumDto_result.getLotno());
-        log.info("getWotqt =====>" + _wsumDto_result.getWotqt());
+        Optional<FPLAN_VO>  optionlResult = Optional.ofNullable(appcom01Service.GetFPLAN_List02_GSUM(_wsumDto));
+        optionlResult.ifPresent(result -> {
+            workDto.setLotno(_wsumDto_result.getLotno());
+            workDto.setGqty01(_wsumDto_result.getWotqt());
+        });
+        if(!optionlResult.isPresent()){
+            workDto.setLotno(lotno);
+            workDto.setGqty01(0);
+        }
         result = appcom01Service.FPLANW010_Update_GDEL(workDto);
         if (!result){
             //log.info("error Exception =====> FPLANW010_Update_GDEL" );
