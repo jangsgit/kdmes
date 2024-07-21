@@ -35,7 +35,9 @@ public class App03ListController {
     @GetMapping(value="/index11/list")
     public Object getList(@RequestParam("frdate") String frdate,
                           @RequestParam("todate") String todate,
-                          @RequestParam("lotno") String lotno,
+                          @RequestParam("pcode") String pcode,
+                          @RequestParam("acode") String acode,
+                          @RequestParam("perid") String perid,
                                Model model, HttpServletRequest request) throws Exception{
         try {
 
@@ -50,8 +52,9 @@ public class App03ListController {
 
             index11Dto.setFrdate(frdate);
             index11Dto.setTodate(todate);
-            index11Dto.setLotno(lotno);
-
+            index11Dto.setCltcd(acode);
+            index11Dto.setPcode(pcode);
+            index11Dto.setWrps(perid);
             index11DtoList = service11.getIndex11List(index11Dto);
 
             model.addAttribute("itemList",index11DtoList);

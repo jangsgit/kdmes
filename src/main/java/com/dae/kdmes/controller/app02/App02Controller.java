@@ -131,6 +131,35 @@ public class App02Controller {
     }
 
 
+    @GetMapping(value="/index17")
+    public String App17_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("생산계획현황");
+        CommDto.setMenuUrl("생산계획>생산계획대비현황");
+        CommDto.setMenuCode("index17");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+
+            //index11ListDto = service11.getWflagList(index11Dto);
+            //index01ListDto = service01.getCom_rem2_keyList(index01Dto);
+
+//            model.addAttribute("com_rem2_keyList",index01ListDto);
+//            model.addAttribute("wflagList",index11ListDto);
+
+
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App11_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index17";
+    }
+
+
     @GetMapping(value="/index12")
     public String App12_index(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("공정현황");

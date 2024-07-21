@@ -52,7 +52,9 @@ public class Index11Dto {
     private String inweeks;
     private String wrerm;
     private float workhr;
-    private Integer workmin;
+
+    private String cltcd;
+    private String pcode;
 
 
 

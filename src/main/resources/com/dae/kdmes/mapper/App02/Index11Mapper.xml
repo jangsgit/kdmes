@@ -34,13 +34,16 @@
                     isnull(E.wotqt, 0) - isnull(E.wbdqt, 0) as wjqty,
                     isnull(E.gqty01, 0) AS gumqty,
                     E.wfrdt,
-                    E.wtrdt
+                    E.wtrdt,
+                    A.inmonth,
+                    A.inweeks
                 FROM TB_FPLAN A WITH (NOLOCK)
                     LEFT OUTER JOIN TB_FPLAN_work C ON A.plan_no = c.plan_no AND A.wflag = c.wflag
                     LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey
-                    LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no
+                    LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no and E.wrps Like concat('%',#{wrps},'%')
                 WHERE A.indate between #{frdate} and #{todate}
-                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                and isnull(A.cltcd,'') Like concat('%',#{cltcd},'%')
+                and isnull(A.pcode,'') Like concat('%',#{pcode},'%')
         ]]>
     </select>
 

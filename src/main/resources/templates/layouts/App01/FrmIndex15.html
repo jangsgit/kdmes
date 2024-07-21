@@ -79,25 +79,34 @@
                                     <div class="sec_con" style="width: 60%; ">
                                         <div class="box_wrap">
                                             <!-- <div class="box_input" > -->
-                                                <div class="date_wrap">
-                                                    <div class="col-auto">
-                                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">조회일자</span>
-                                                            <input type="text"  class="form-control datetimepicker" id="frdate" disabled autocomplete="off"  placeholder="Y-m-d"     >
-                                                        </div> 
-                                                    </div>   
-                                                    <div class="col-auto"> 
-                                                        <div class="input-group input-group-sm mb-3"> 
-                                                            <input type="text"  class="form-control datetimepicker" id="todate" disabled autocomplete="off"  placeholder="Y-m-d"     >
-                                                        </div>
-                                                    </div>  
-                                                    <!-- <div class="col-auto">
-                                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품명</span> 
-                                                            <input class="form-control form-control-sm" id="searchtxt" type="text"    autocomplete="off"   placeholder="품명"   > 
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- <input type="text"  id="searchtxt" placeholder="품명">  -->
-                                                    <button type="button" id="searchTabABtn" >검색</button>      
-                                                </div>                              
+                                                 
+                                                    <table>
+                                                        <tr> 
+                                                            <th>검사일자</th>
+                                                            <td>
+                                                                <div class="col-auto"> 
+                                                                    <div class="input_wrap" style="max-width: 250px;">  
+                                                                        <input type="text"  class="form-control datetimepicker" id="frdate" disabled autocomplete="off"  placeholder="Y-m-d"     >
+                                                                    </div> 
+                                                                </div>   
+                                                            </td>     
+                                                            <td>
+                                                                <div class="col-auto"> 
+                                                                    <div class="input_wrap" style="max-width: 250px;"> 
+                                                                        <input type="text"  class="form-control datetimepicker" id="todate" disabled autocomplete="off"  placeholder="Y-m-d"     >
+                                                                    </div>
+                                                                </div>  
+                                                            </td>   
+                                                            <td>
+                                                                <div class="date_wrap">
+                                                                    <div class="col-auto">  
+                                                                        <button type="button" id="searchTabABtn" >검색</button>       
+                                                                    </div>  
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>                 
+                                                                      
                                                 <!-- //여기서부터 그래프 -->
                                                 <!-- <div class="table table_style2"> -->
                                                     <div class="card-body bg-light">   
