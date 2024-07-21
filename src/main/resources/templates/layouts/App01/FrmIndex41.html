@@ -345,7 +345,7 @@
                                 </p>
                             </div>
                             <div class="col-auto">
-                                <input type="text"    onkeypress="barcode_enter(event)" id="searchOrdDate01" autocomplete="off"  placeholder="Lot No"   >
+                                <input type="hidden"    onkeypress="barcode_enter(event)" id="searchOrdDate01" autocomplete="off"  placeholder="Lot No"   >
                             </div>
                             <div class="col-auto">
                                 <button class="btn btn-primary" type="button"  id="searchBtn"  >조회 </button>
@@ -1514,9 +1514,17 @@
                var result = new Date();
                result.setHours(result.getHours() + 9); 
                var ls_date = result.toISOString().substring(0,10);  
-               console.log(ls_date)
                winputdate.value = ls_date;  
-               searchList_sachul ("")         
+   
+               var ll_lenrow = wtab04Grid.rows.length - 1;
+               for (var i = 0; i < wtab04Grid.rows.length; i++) {  
+                    view_p01tab04page.removeAt(ll_lenrow);
+                    let e = new wijmo.grid.CellEditEndingEventArgs(wtab04Grid.cells, wtab04Grid.selection); //cellEditEndingEventArgs 생성
+                    wtab04Grid.onDeletingRow(e)   
+                    ll_lenrow--;   
+                }        
+
+ 
    
            }
            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -1565,6 +1573,7 @@
                     }, 
                     async:false,
                     success:function(data){ 
+                        console.log(data)
                         var ListDto = data;  
                         var dataArr = [];
                         var cnt = 1; 
@@ -1640,7 +1649,7 @@
                cols.isReadOnly = false ; 
                wtab05Grid.columns.push(cols);   
            }                   
-           function searchList_rtn_barcode(gubun, arg){ 
+           function searchList_rtn_barcode(gubun, arg){  
                var ls_searchdate = arg;  
                var ls_flag = "0" ; 
                if(gubun == "B"){
@@ -1652,8 +1661,9 @@
                if(ls_flag == "2"){ 
                    if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){
                        ls_searchdate = "%";
+                       addlotno.pop();
                    }   
-                   addlotno.push(ls_searchdate);
+                   addlotno.push(ls_searchdate); 
                    $.ajax({
                    url: '/input02/w020ordlist',  
                    type:"POST",
@@ -2047,8 +2057,7 @@
                                 bdemflag = true;
                             }else{
                                 bdemflag = false;
-                            }   
-                            console.log(wtab01Dto[i]["wqcqt"])
+                            }    
                        wtab01_data.push({
                            id: i, 
                            index: cnt,                                                                
