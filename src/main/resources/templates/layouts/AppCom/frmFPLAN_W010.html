@@ -694,7 +694,7 @@
     var btnstep04 = document.getElementById('btnstep04'); 
 
     const statusdis_div = document.getElementById('statusdis01'); 
-
+    let barcode ;
     function barcode_enter(e){ 
            if(e.keyCode == 13){
             var ls_searchOrdDate = document.getElementById('searchOrdDate').value;  
@@ -2329,34 +2329,50 @@
         } 
             document.getElementById('delcode').value= result; 
     }  
+    let barcodeControl = null;
     function prt_btn(){
         var ls_inlotno   = document.getElementById('inlotno').value; 
-        var ls_inpname   = document.getElementById('inpname').value; 
-        // var barcode_div  = document.getElementById('barcode-container').innerHTML;
-        let barcode=new wijmo.barcode.common.Code128('#barcode', {
-                codeSet:1,
+        var ls_inpname   = document.getElementById('inpname').value;  
+        if (!ls_inlotno || !ls_inpname) {
+            alert('작업지시서를 선택하세요.');
+            return;
+        }
+        // Clear existing barcode content
+        // document.getElementById('barcode').innerHTML = '';
+        if (barcodeControl) {
+                // Update the existing barcode control value
+                barcodeControl.value = ls_inlotno;
+        } else {
+            // Create a new Code128 barcode
+            barcodeControl = new wijmo.barcode.common.Code128('#barcode', {
+                codeSet: 1,
                 value: ls_inlotno,
                 autoWidth: false
-            }); 
-
+            });
+        } 
+        setTimeout(() => {
             var doc = new wijmo.PrintDocument({
                 title: ls_inlotno,
                 copyCss: true // prevent cross-origin issues in jsfiddle 
             });
-        //     // doc.append(barcode); 
-        //     // <div id="barcode1"></div>
-        //     // doc.append('<div id="barcode1"></div>');  
-        //     doc.append(barcode_div);
-        //     doc.print(); 
- 
             // Get the barcode HTML
-            var barcodeElement = document.getElementById('barcode');
- 
-            // Append barcode to the document
-            doc.append(barcodeElement.outerHTML);
+            var barcodeElement = document.getElementById('barcode'); 
+                var barcodeHtml = barcodeElement.outerHTML;
+                var styles = `
+                    <style>
+                        /* Add any specific styles needed for printing */
+                        #barcode {
+                            margin: 20px;
+                        }
+                    </style>
+                `;
 
-            // Print the document
-            doc.print();
+                // Append the styles and barcode to the PrintDocument
+                // console.log(barcodeHtml)
+                doc.append(styles + barcodeHtml);
+                // Print the document
+                doc.print();
+        }, 500); // Adjust the timeout duration as needed
     }
     function del_fnc()  {
         let result = '';
