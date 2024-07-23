@@ -265,12 +265,15 @@
                                                     </div>                                                   
                                                     <div class="col-auto">
                                                         <button  class="btn btn-outline-primary me-1 mb-1" type="button" style=" height:50px;  " onclick='del_btn()' >삭&nbsp;&nbsp;&nbsp;제 </button>
+                                                    </div>                                               
+                                                    <div class="col-auto">
+                                                        <button  class="btn btn-outline-primary me-1 mb-1" type="button" style=" height:50px;  " onclick='prt_btn()' >출&nbsp;&nbsp;&nbsp;력 </button>
                                                     </div> 
                                                     <div class="col-auto">
                                                         <div id="statusdis01"></div><input class="form-control form-control-sm"  type="hidden"  id="indecision"  />  
                                                     </div> 
-
-
+                                                    <div id="barcode"  ></div>
+ 
                                                     <!-- <div class="col-auto">
                                                         <button  class="btn btn-outline-primary me-1 mb-1" type="button" style=" height:50px;  ">공정생성 </button>
                                                     </div>  -->
@@ -658,9 +661,6 @@
                     <!-- <footer th:replace="layouts/XDashBoard/XDashBoard_footer :: XDashBoard_footer"></footer> -->
                     <!---------------------> 
 
-
-
-                    
 <script  type="text/javascript" th:inline="javascript"> 
     var wperidGrid_Data ;
     var wperidGrid ;
@@ -670,6 +670,7 @@
     var wbadGrid ;
     var wstopGrid ;
     var wbomGrid ;
+    var theBarGrid;
     var view_flistpage;
     var view_wotqtpage;
     var view_wrmcpage ;
@@ -713,8 +714,7 @@
         //     byPage: true,
         //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
         //     cv: view_flistpage
-        // });         
-
+        // });   
         wtab01Grid = new wijmo.grid.FlexGrid('#theGrid_div', {
             autoGenerateColumns: false,
             isReadOnly: true, 
@@ -2328,7 +2328,36 @@
             result = ''; 
         } 
             document.getElementById('delcode').value= result; 
-    } 
+    }  
+    function prt_btn(){
+        var ls_inlotno   = document.getElementById('inlotno').value; 
+        var ls_inpname   = document.getElementById('inpname').value; 
+        // var barcode_div  = document.getElementById('barcode-container').innerHTML;
+        let barcode=new wijmo.barcode.common.Code128('#barcode', {
+                codeSet:1,
+                value: ls_inlotno,
+                autoWidth: false
+            }); 
+
+            var doc = new wijmo.PrintDocument({
+                title: ls_inlotno,
+                copyCss: true // prevent cross-origin issues in jsfiddle 
+            });
+        //     // doc.append(barcode); 
+        //     // <div id="barcode1"></div>
+        //     // doc.append('<div id="barcode1"></div>');  
+        //     doc.append(barcode_div);
+        //     doc.print(); 
+ 
+            // Get the barcode HTML
+            var barcodeElement = document.getElementById('barcode');
+ 
+            // Append barcode to the document
+            doc.append(barcodeElement.outerHTML);
+
+            // Print the document
+            doc.print();
+    }
     function del_fnc()  {
         let result = '';
         result = document.getElementById('delcode').value;
