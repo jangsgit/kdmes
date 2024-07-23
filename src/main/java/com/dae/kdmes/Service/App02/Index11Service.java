@@ -45,6 +45,12 @@ public class Index11Service {
     public List<Index11Dto> getIndex14List01(Index11Dto parm){
         return indexMapper.getIndex14List01(parm);
     }
+    public List<Index11Dto> getIndex14List02(Index11Dto parm){
+        return indexMapper.getIndex14List02(parm);
+    }
+    public List<Index11Dto> getIndex14List03(Index11Dto parm){
+        return indexMapper.getIndex14List03(parm);
+    }
     public List<Index11Dto> getIndex16List01(Index11Dto parm){
         return indexMapper.getIndex16List01(parm);
     }

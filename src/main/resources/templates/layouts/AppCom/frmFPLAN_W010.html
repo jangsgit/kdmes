@@ -2357,21 +2357,15 @@
             });
             // Get the barcode HTML
             var barcodeElement = document.getElementById('barcode'); 
-                var barcodeHtml = barcodeElement.outerHTML;
-                var styles = `
-                    <style>
-                        /* Add any specific styles needed for printing */
-                        #barcode {
-                            margin: 20px;
-                        }
-                    </style>
-                `;
-
-                // Append the styles and barcode to the PrintDocument
-                // console.log(barcodeHtml)
-                doc.append(styles + barcodeHtml);
+            if (barcodeElement) {
+                var barcodeHtml = barcodeElement.outerHTML; 
+ 
+                doc.append(barcodeHtml);
                 // Print the document
                 doc.print();
+            }else{ 
+                 console.error('Barcode element not found.');
+            }
         }, 500); // Adjust the timeout duration as needed
     }
     function del_fnc()  {

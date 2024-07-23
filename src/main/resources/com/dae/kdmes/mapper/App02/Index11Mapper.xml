@@ -274,6 +274,7 @@
                     isnull(E.wotqt, 0) as wotqt,
                     isnull(E.winqt, 0) - isnull(E.wbdqt, 0) as wjqty,
                     isnull(E.gqty01, 0) AS gumqty,
+					CASE WHEN isnull(E.wbdqt, 0) > 0 AND isnull(E.gqty01, 0) > 0 THEN Round(   (isnull(E.wbdqt, 0) / isnull(E.gqty01, 0)) * 100   , 2) ELSE 0 END  AS wbdyul,
                     E.wfrdt,
                     E.wtrdt,
 					(SELECT com_rem1 from TB_CA510 WHERE com_cls = '005' AND com_code != '00' AND com_REM2  = '00010' AND com_code = C.wcode) AS wbdnm,
@@ -285,8 +286,64 @@
                 WHERE  A.plan_no = E.plan_no
                 and E.indate between #{frdate} and #{todate}
                 and isnull(C.wcode,'') Like concat('%',#{wcode},'%')
+                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
                 and len(C.wcode) > 0
                 order by C.wcode, A.lotno
+        ]]>
+    </select>
+
+
+    <select id="getIndex14List02"  parameterType="com.dae.kdmes.DTO.App02.Index11Dto" resultType="com.dae.kdmes.DTO.App02.Index11Dto">
+        <![CDATA[
+                SELECT  YEAR(E.wfrdt) AS yearstr,
+					MONTH(E.wfrdt) AS monthstr,
+                    sum(isnull(A.prod_qty, 0)) as prod_qty ,
+                    sum(isnull(E.winqt, 0)) as winqt,
+                    sum(isnull(E.wbdqt, 0)) as wbdqt,
+                    sum(isnull(E.wotqt, 0)) as wotqt,
+                    sum(isnull(E.winqt, 0)) - sum(isnull(E.wbdqt, 0)) as wjqty,
+                    sum(isnull(E.gqty01, 0)) AS gumqty,
+					Round(   (sum(isnull(E.wbdqt, 0)) / sum(isnull(E.gqty01, 0))) * 100   , 2)  AS wbdyul,
+					(SELECT com_rem1 from TB_CA510 WHERE com_cls = '005' AND com_code != '00' AND com_REM2  = '00010' AND com_code = C.wcode) AS wbdnm
+                FROM TB_FPLAN A WITH (NOLOCK)
+                    LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey,
+                    TB_FPLAN_W010 E WITH (NOLOCK)
+                    LEFT OUTER JOIN TB_FPLAN_WBAD C ON E.plan_no = c.plan_no AND C.wflag = '00010'
+                WHERE  A.plan_no = E.plan_no
+                and E.indate between #{frdate} and #{todate}
+                and isnull(C.wcode,'') Like concat('%',#{wcode},'%')
+                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                and len(C.wcode) > 0
+				group by C.wcode, YEAR(E.wfrdt), MONTH(E.wfrdt)
+                order by C.wcode
+
+        ]]>
+    </select>
+
+
+    <select id="getIndex14List03"  parameterType="com.dae.kdmes.DTO.App02.Index11Dto" resultType="com.dae.kdmes.DTO.App02.Index11Dto">
+        <![CDATA[
+                SELECT
+                    sum(isnull(A.prod_qty, 0)) as prod_qty ,
+                    sum(isnull(E.winqt, 0)) as winqt,
+                    sum(isnull(E.wbdqt, 0)) as wbdqt,
+                    sum(isnull(E.wotqt, 0)) as wotqt,
+                    sum(isnull(E.winqt, 0)) - sum(isnull(E.wbdqt, 0)) as wjqty,
+                    sum(isnull(E.gqty01, 0)) AS gumqty,
+					Round(   (sum(isnull(E.wbdqt, 0)) / sum(isnull(E.gqty01, 0))) * 100   , 2)  AS wbdyul,
+					(SELECT com_rem1 from TB_CA510 WHERE com_cls = '005' AND com_code != '00' AND com_REM2  = '00010' AND com_code = C.wcode) AS wbdnm
+                FROM TB_FPLAN A WITH (NOLOCK)
+                    LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey,
+                    TB_FPLAN_W010 E WITH (NOLOCK)
+                    LEFT OUTER JOIN TB_FPLAN_WBAD C ON E.plan_no = c.plan_no AND C.wflag = '00010'
+                WHERE  A.plan_no = E.plan_no
+                and E.indate between #{frdate} and #{todate}
+                and isnull(C.wcode,'') Like concat('%',#{wcode},'%')
+                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                and len(C.wcode) > 0
+				group by C.wcode
+                order by C.wcode
+
         ]]>
     </select>
 

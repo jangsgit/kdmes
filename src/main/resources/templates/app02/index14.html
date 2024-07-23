@@ -327,6 +327,7 @@
                if(ls_inwcodenm == null || ls_inwcodenm.length == 0 || ls_inwcodenm == ""){  
                 ls_inwcode = '%';
                }  
+               var ls_lotno = '%'
                $.ajax({
                    url: '/app03m/index14/list01',  
                    type:"POST",
@@ -334,6 +335,7 @@
                        "frdate"      : ls_frdate,  
                        "todate"      : ls_todate,  
                        "wcode"      : ls_inwcode,  
+                       "lotno"      : ls_lotno,  
                    }, 
                    async:false,
                    success:function(data){ 
@@ -358,7 +360,7 @@
         var wtab01Dto = data;   
         var wtab01_data = [];       
         var cnt = 1;  
-        console.log(wtab01Dto) 
+        // console.log(wtab01Dto) 
         for (var i = 0; i < wtab01Dto.length; i++) {
            var ll_planqty = 0;
            var ll_otqty = 0;

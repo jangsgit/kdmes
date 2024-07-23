@@ -204,8 +204,7 @@
                                                                 <td colspan="2">                                                                    
                                                                     <div class="input_wrap" style="max-width: 230px;">  
                                                                         <input class="form-control form-control-sm" id="inwcodenm" type="text"    autocomplete="off"  placeholder=""     > 
-                                                                        <input class="form-control form-control-sm" id="inwcode" type="hidden"
-                                                                            placeholder=""   />                                                                               
+                                                                        <input class="form-control form-control-sm" id="inwcode" type="hidden" placeholder=""   />                                                                               
                                                                     </div>                                            
                                                                 </td>  
                                                                 <th>불량수량</th>
@@ -1023,13 +1022,7 @@
            //불량구분 popup list
            view_wbadpage = new wijmo.collections.CollectionView(getBadData_wlist(), {
                // pageSize: 6
-           });
-           // // 작업설비 페이지 이동
-           // new wijmo.input.CollectionViewNavigator('#thePager02', {
-           //     byPage: true,
-           //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-           //     cv: view_wbadpage
-           // });     
+           });      
            wbadGrid = new wijmo.grid.FlexGrid('#wbadGrid_div', {  
                autoGenerateColumns: false, 
                selectionMode: 'RowRange',

@@ -529,6 +529,12 @@ public class App02Controller {
 
         try {
 
+            wrmcDto.setMachname("%");
+            wrmcDto.setPlan_no("%");      //불량구분 팝업
+            wrmcDto.setWseq("%");
+            wrmcDto.setWflag("00010");
+            wrmcDto.setWclscode("1");
+            model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App52_index Exception =====>" + ex.toString());

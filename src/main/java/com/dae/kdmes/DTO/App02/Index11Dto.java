@@ -55,7 +55,9 @@ public class Index11Dto {
 
     private String cltcd;
     private String pcode;
-
+    private String yearstr;
+    private String monthstr;
+    private float wbdyul;
 
 
 }
