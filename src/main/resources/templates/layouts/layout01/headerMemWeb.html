@@ -40,7 +40,7 @@
                 </nav>
                 <div class="content">  
                     <!------nav ------>     
-                    <div th:replace="layouts/layout01/headerNavWeb :: headerNav"></div>   
+                    <!-- <div th:replace="layouts/layout01/headerNavWeb :: headerNav"></div>    -->
                     <!------contents ------>    
                     <!-- <div class="container">contents display</div> -->
                     <!-- <div th:replace="layouts/XDashBoard/dashboard001 :: dashboard001"></div>   -->
@@ -57,37 +57,41 @@
                               <ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="audience-chart-tab" role="tablist">
                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0 active" id="users-tab" data-bs-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">
                                     <div class="audience-tab-item p-2 pe-4">
-                                      <h6 class="text-800 fs--2 text-nowrap">Users</h6>
-                                      <h5 class="text-800">3.9K</h5>
-                                      <div class="d-flex align-items-center"><span class="fas fa-caret-up text-success"></span>
-                                        <h6 class="fs--2 mb-0 ms-2 text-success">62.0%</h6>
+                                      <!-- <h6 class="text-800 fs--2 text-nowrap">금일계획수량</h6> -->
+                                      <h5 class="text-800">공정종합품질현황</h5>
+                                      <div class="d-flex align-items-center">
+                                         <!-- <span class="fas fa-caret-up text-success"></span> -->
+                                        <!-- <h6 class="fs--2 mb-0 ms-2 text-success">5.1%</h6> -->
                                       </div>
                                     </div>
                                   </a></li>
                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="sessions-tab" data-bs-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">
                                     <div class="audience-tab-item p-2 pe-4">
-                                      <h6 class="text-800 fs--2 text-nowrap">Sessions</h6>
-                                      <h5 class="text-800">6.3K</h5>
-                                      <div class="d-flex align-items-center"><span class="fas fa-caret-up text-success"></span>
-                                        <h6 class="fs--2 mb-0 ms-2 text-success">46.2%</h6>
+                                      <!-- <h6 class="text-800 fs--2 text-nowrap">금일사출수량</h6> -->
+                                      <h5 class="text-800">불량현황(월별)</h5>
+                                      <div class="d-flex align-items-center">
+                                        <!-- <span class="fas fa-caret-up text-success"></span>
+                                        <h6 class="fs--2 mb-0 ms-2 text-success">1.5%</h6> -->
                                       </div>
                                     </div>
                                   </a></li>
                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="rate-tab" data-bs-toggle="tab" href="#rate" role="tab" aria-controls="rate" aria-selected="false">
                                     <div class="audience-tab-item p-2 pe-4">
-                                      <h6 class="text-800 fs--2 text-nowrap">Bounce Rate</h6>
-                                      <h5 class="text-800">9.49%</h5>
-                                      <div class="d-flex align-items-center"><span class="fas fa-caret-down text-warning"></span>
-                                        <h6 class="fs--2 mb-0 ms-2 text-warning">56.1%</h6>
+                                      <!-- <h6 class="text-800 fs--2 text-nowrap">공정종합품질현황(월)</h6> -->
+                                      <h5 class="text-800">공정종합품질현황(월)</h5>
+                                      <div class="d-flex align-items-center">
+                                        <!-- <span class="fas fa-caret-down text-warning"></span>
+                                        <h6 class="fs--2 mb-0 ms-2 text-warning">1.2%</h6> -->
                                       </div>
                                     </div>
                                   </a></li>
                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="duration-tab" data-bs-toggle="tab" href="#duration" role="tab" aria-controls="duration" aria-selected="false">
                                     <div class="audience-tab-item p-2 pe-4">
-                                      <h6 class="text-800 fs--2 text-nowrap">Session Duration</h6>
-                                      <h5 class="text-800">4m 03s</h5>
-                                      <div class="d-flex align-items-center"><span class="fas fa-caret-down text-warning"></span>
-                                        <h6 class="fs--2 mb-0 ms-2 text-warning">32.2%</h6>
+                                      <!-- <h6 class="text-800 fs--2 text-nowrap">불량율</h6> -->
+                                      <h5 class="text-800">불량현황(일별)</h5>
+                                      <div class="d-flex align-items-center">
+                                        <!-- <span class="fas fa-caret-down text-warning"></span>
+                                        <h6 class="fs--2 mb-0 ms-2 text-warning">2.2%</h6> -->
                                       </div>
                                     </div>
                                   </a></li>
@@ -98,37 +102,43 @@
                                 <div class="tab-pane active" id="users" role="tabpanel" aria-labelledby="users-tab">
                                   <!-- Find the JS file for the following chart at: src/js/charts/echarts/audience.js-->
                                   <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
-                                  <div class="echart-audience" data-echart-responsive="true" style="height:320px;"></div>
+                                  <div class="container-fluid" data-echart-responsive="true" style="height:400px;"> 
+                                      <div id="wtab01Grid_div" style="overflow:scroll;   height:410px;    margin:0 auto; "></div> 
+                                  </div>
                                 </div>
                                 <div class="tab-pane" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
-                                  <div class="echart-audience" data-echart-responsive="true" style="height:320px;"></div>
+                                  <div class="container-fluid02" data-echart-responsive="true" style="height:400px;"> 
+                                      <div id="wtab02Grid_div" style="overflow:scroll;   height:410px;    margin:0 auto; "></div> 
+                                  </div>
                                 </div>
                                 <div class="tab-pane" id="rate" role="tabpanel" aria-labelledby="rate-tab">
-                                  <div class="echart-audience" data-echart-responsive="true" style="height:320px;"></div>
+                                  <div class="container-fluid03" data-echart-responsive="true" style="height:400px;"> 
+                                      <div id="wtab03Grid_div" style="overflow:scroll;   height:410px; width: 950px;   margin:0 auto; "></div> 
+                                  </div>
                                 </div>
                                 <div class="tab-pane" id="duration" role="tabpanel" aria-labelledby="duration-tab">
-                                  <div class="echart-audience" data-echart-responsive="true" style="height:320px;"></div>
+                                  <div class="container-fluid04" data-echart-responsive="true" style="height:400px;"> 
+                                    <div id="wtab04Grid_div" style="overflow:scroll;   height:410px; width: 950px;     margin:0 auto; "></div> 
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="card-footer bg-light py-2">
+                            <!-- <div class="card-footer bg-light py-2">
                               <div class="row flex-between-center g-0">
                                 <div class="col-auto">
                                   <select class="form-select form-select-sm audience-select-menu">
-                                    <option value="week" selected="selected">Last 7 days</option>
-                                    <option value="month">Last month</option>
+                                    <option value="week" selected="selected">지난주</option>
+                                    <option value="month">지난달</option>
                                   </select>
-                                </div>
-                                <div class="col-auto"><a class="btn btn-link btn-sm px-0 fw-medium" href="#!">Visitors overview<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
-                              </div>
-                            </div>
+                                </div> </div>
+                            </div> -->
                           </div>
                           <div class="card">
                             <div class="bg-holder bg-card" style="background-image:url(../assets/img/icons/spot-illustrations/corner-5.png);">
                             </div>
                             <!--/.bg-holder-->
             
-                            <div class="card-body position-relative">
+                            <!-- <div class="card-body position-relative">
                               <div class="row g-2 align-items-sm-center">
                                 <div class="col-auto"><img src="../assets/img/icons/connect-circle.png" alt="" height="55" /></div>
                                 <div class="col">
@@ -142,149 +152,60 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> -->
                           </div>
                         </div>
                         <div class="col-md-6 col-xxl-4">
                           <div class="card h-100 bg-line-chart-gradient">
                             <div class="card-header bg-transparent light">
-                              <h5 class="text-white">Users online right now</h5>
+                              <h5 class="text-white">실시간 사출 생산수량</h5>
                               <div class="real-time-user display-1 fw-normal text-white" data-countup='{"endValue":119}'>0</div>
                             </div>
                             <div class="card-body text-white fs--1 light pb-0">
-                              <p class="border-bottom pb-2" style="border-color: rgba(255, 255, 255, 0.15) !important">Page views / second</p>
+                              <p class="border-bottom pb-2" style="border-color: rgba(255, 255, 255, 0.15) !important">Page views / 5minute</p>
                               <!-- Find the JS file for the following chart at: src/js/charts/echarts/real-time-users.js-->
                               <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
                               <div class="echart-real-time-users" style="height:150px" data-echart-responsive="true"></div>
                               <div class="list-group-flush mt-4">
                                 <div class="rounded-2" style="border:1px solid rgba(255, 255, 255, 0.15)">
                                   <div class="px-3 bg-transparent text-white d-flex justify-content-between px-0 py-1 fw-semi-bold border-top-0" style="border-bottom:1px solid rgba(255, 255, 255, 0.15)">
-                                    <p class="mb-0">Most Active Pages</p>
-                                    <p class="mb-0">User Count</p>
+                                    <p class="mb-0">설비별현황</p>
+                                    <p class="mb-0">Count</p>
                                   </div>
                                   <div class="px-3 bg-transparent text-white d-flex justify-content-between px-0 py-1" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
-                                    <p class="mb-0">/bootstrap-themes/</p>
-                                    <p class="mb-0">3</p>
+                                    <p class="mb-0">/#001/</p>
+                                    <p class="mb-0">3000</p>
                                   </div>
                                   <div class="px-3 bg-transparent text-white d-flex justify-content-between px-0 py-1" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
-                                    <p class="mb-0">/tags/html5/</p>
-                                    <p class="mb-0">3</p>
+                                    <p class="mb-0">/#002/</p>
+                                    <p class="mb-0">3000</p>
                                   </div>
                                   <div class="px-3 bg-transparent text-white d-xxl-flex justify-content-between px-0 py-1 d-none" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
-                                    <p class="mb-0">/</p>
-                                    <p class="mb-0">2</p>
+                                    <p class="mb-0">/#003/</p>
+                                    <p class="mb-0">2000</p>
                                   </div>
-                                  <div class="px-3 bg-transparent text-white d-xxl-flex justify-content-between px-0 py-1 d-none" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
-                                    <p class="mb-0">/preview/falcon/dashboard/</p>
-                                    <p class="mb-0">2</p>
-                                  </div>
-                                  <div class="px-3 bg-transparent text-white d-flex justify-content-between px-0 py-1" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
-                                    <p class="mb-0">/100-best-themes...all-time/</p>
-                                    <p class="mb-0">1</p>
+                                  <!-- <div class="px-3 bg-transparent text-white d-xxl-flex justify-content-between px-0 py-1 d-none" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
+                                    <p class="mb-0">/#004/</p>
+                                    <p class="mb-0">2000</p>
                                   </div>
                                   <div class="px-3 bg-transparent text-white d-flex justify-content-between px-0 py-1" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
-                                    <p class="mb-0">/product/falcon-admin-dashboard/</p>
-                                    <p class="mb-0">1</p>
+                                    <p class="mb-0">/#005/</p>
+                                    <p class="mb-0">1100</p>
                                   </div>
+                                  <div class="px-3 bg-transparent text-white d-flex justify-content-between px-0 py-1" style="border-bottom:1px solid rgba(255, 255, 255, 0.05)">
+                                    <p class="mb-0">/#006/</p>
+                                    <p class="mb-0">1500</p>
+                                  </div> -->
                                 </div>
                               </div>
                             </div>
-                            <div class="card-footer text-end bg-transparent light"><a class="text-white" href="#!">Real-time data<span class="fa fa-chevron-right ms-1 fs--1"></span></a></div>
-                          </div>
-                        </div>
-                        <div class="col-md-6 col-xxl-4">
-                          <div class="card echart-session-by-browser-card h-100">
-                            <div class="card-header d-flex flex-between-center bg-light py-2">
-                              <h6 class="mb-0">Session By Browser</h6>
-                              <div class="dropdown font-sans-serif btn-reveal-trigger">
-                                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-session-by-browser" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-session-by-browser"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-                                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card-body d-flex flex-column justify-content-between py-0">
-                              <div class="my-auto py-5 py-md-0">
-                                <!-- Find the JS file for the following chart at: src/js/charts/echarts/session-by-browser.js-->
-                                <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
-                                <div class="echart-session-by-browser h-100" data-echart-responsive="true"></div>
-                              </div>
-                              <div class="border-top">
-                                <table class="table table-sm mb-0">
-                                  <tbody>
-                                    <tr>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center"><img src="../assets/img/icons/chrome-logo.png" alt="" width="16" />
-                                          <h6 class="text-600 mb-0 ms-2">Chrome</h6>
-                                        </div>
-                                      </td>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-primary"></span>
-                                          <h6 class="fw-normal text-700 mb-0">50.3%</h6>
-                                        </div>
-                                      </td>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center justify-content-end"><span class="fas fa-caret-down text-danger"></span>
-                                          <h6 class="fs--2 mb-0 ms-2 text-700">2.9%</h6>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center"><img src="../assets/img/icons/safari-logo.png" alt="" width="16" />
-                                          <h6 class="text-600 mb-0 ms-2">Safari</h6>
-                                        </div>
-                                      </td>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-success"></span>
-                                          <h6 class="fw-normal text-700 mb-0">30.1%</h6>
-                                        </div>
-                                      </td>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center justify-content-end"><span class="fas fa-caret-up text-success"></span>
-                                          <h6 class="fs--2 mb-0 ms-2 text-700">29.4%</h6>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center"><img src="../assets/img/icons/firefox-logo.png" alt="" width="16" />
-                                          <h6 class="text-600 mb-0 ms-2">Mozilla</h6>
-                                        </div>
-                                      </td>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center"><span class="fas fa-circle fs--2 me-2 text-info"></span>
-                                          <h6 class="fw-normal text-700 mb-0">20.6%</h6>
-                                        </div>
-                                      </td>
-                                      <td class="py-3">
-                                        <div class="d-flex align-items-center justify-content-end"><span class="fas fa-caret-up text-success"></span>
-                                          <h6 class="fs--2 mb-0 ms-2 text-700">220.7%</h6>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                            <div class="card-footer bg-light py-2">
-                              <div class="row flex-between-center g-0">
-                                <div class="col-auto">
-                                  <select class="form-select form-select-sm" data-target=".echart-session-by-browser">
-                                    <option value="week" selected="selected">Last 7 days</option>
-                                    <option value="month">Last month</option>
-                                    <option value="year">Last Year</option>
-                                  </select>
-                                </div>
-                                <div class="col-auto"><a class="btn btn-link btn-sm px-0 fw-medium" href="#!">Browser overview<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
-                              </div>
-                            </div>
+                            <!-- <div class="card-footer text-end bg-transparent light"><a class="text-white" href="#!">사원별현황<span class="fa fa-chevron-right ms-1 fs--1"></span></a></div> -->
                           </div>
                         </div>
                         <div class="col-md-6 col-xxl-4">
                           <div class="card">
                             <div class="card-header d-flex align-items-center bg-light py-2">
-                              <h6 class="mb-0 flex-1">Users By Country</h6>
+                              <h6 class="mb-0 flex-1">생산대비불량현황</h6>
                               <div class="btn-reveal-trigger">
                                 <button class="btn btn-link btn-reveal btn-sm session-by-country-map-reset" type="button"><span class="fas fa-sync-alt fs--1"></span></button>
                               </div>
@@ -295,68 +216,66 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="card-body">
-                              <!-- Find the JS file for the following chart at: src/js/charts/echarts/session-by-country-map.js-->
-                              <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
-                              <div class="echart-session-by-country-map w-100 h-100" data-echart-responsive="true"></div>
-                              <!-- Find the JS file for the following chart at: src/js/charts/echarts/session-by-country.js-->
-                              <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
-                              <div class="echart-session-by-country h-100" data-echart-responsive="true"></div>
-                            </div>
-                            <div class="card-footer bg-light py-2">
+                            <div class="card-body d-flex flex-column justify-content-between py-0">
+                              
+                              <div class="container-fluid05">
+                                <div id="chart01"></div>
+                              </div>
+                              <!-- <div class="my-auto py-5 py-md-0"> 
+                                <div class="echart-session-by-browser h-100" data-echart-responsive="true"></div>
+                              </div>
+                              <div class="border-top">
+                              </div> -->
+                            </div> 
+                            <!-- <div class="card-footer bg-light py-2">
                               <div class="row flex-between-center g-0">
                                 <div class="col-auto">
                                   <select class="form-select form-select-sm audience-select-menu">
-                                    <option value="week" selected="selected">Last 7 days</option>
-                                    <option value="month">Last month</option>
-                                    <option value="year">Last Year</option>
+                                    <option value="week" selected="selected">지난주</option>
+                                    <option value="month">지난달</option> 
                                   </select>
+                                </div>  </div>
+                            </div> -->
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-xxl-4">
+                          <div class="card echart-session-by-browser-card h-100">
+                            <div class="card-header d-flex flex-between-center bg-light py-2">
+                              <h6 class="mb-0">불량현황</h6>
+                              <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-session-by-browser" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-session-by-browser"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
                                 </div>
-                                <div class="col-auto"><a class="btn btn-link btn-sm px-0 fw-medium" href="#!">Country overview<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
                               </div>
                             </div>
+                            <div class="card-body d-flex flex-column justify-content-between py-0">  
+                              <div class="container-fluid06">
+                                <div id="chart02"></div>
+                              </div>
+                            </div> 
                           </div>
                         </div>
                         <div class="col-md-6 col-xxl-4">
                           <div class="card h-100">
-                            <div class="card-header">
-                              <div class="d-flex align-items-center"><img class="me-2" src="../assets/img/icons/signal.png" alt="" height="35" />
-                                <h5 class="fs-0 fw-normal text-800 mb-0">Ask Falcon Intelligence</h5>
-                              </div>
-                            </div>
-                            <div class="card-body p-0">
-                              <div class="scrollbar-overlay pt-0 px-card ask-analytics">
-                                <div class="border border-1 border-300 rounded-2 p-3 ask-analytics-item position-relative mb-3">
-                                  <div class="d-flex align-items-center mb-3"><span class="fas fa-code-branch text-primary"></span><a class="stretched-link text-decoration-none" href="#!">
-                                      <h5 class="fs--1 text-600 mb-0 ps-3">Content Analysis</h5>
-                                    </a></div>
-                                  <h5 class="fs--1 text-800">Which landing pages with over 10 sessions have the worst bounce rates?</h5>
-                                </div>
-                                <div class="border border-1 border-300 rounded-2 p-3 ask-analytics-item position-relative mb-3">
-                                  <div class="d-flex align-items-center mb-3"><span class="fas fa-bug text-primary"></span><a class="stretched-link text-decoration-none" href="#!">
-                                      <h5 class="fs--1 text-600 mb-0 ps-3">Technical performance</h5>
-                                    </a></div>
-                                  <h5 class="fs--1 text-800">Show me a trend of my average page load time over the last 3 months</h5>
-                                </div>
-                                <div class="border border-1 border-300 rounded-2 p-3 ask-analytics-item position-relative mb-3">
-                                  <div class="d-flex align-items-center mb-3"><span class="fas fa-project-diagram text-primary"></span><a class="stretched-link text-decoration-none" href="#!">
-                                      <h5 class="fs--1 text-600 mb-0 ps-3">Technical performance</h5>
-                                    </a></div>
-                                  <h5 class="fs--1 text-800">What are my top default channel groupings by user?</h5>
-                                </div>
-                                <div class="border border-1 border-300 rounded-2 p-3 ask-analytics-item position-relative mb-3">
-                                  <div class="d-flex align-items-center mb-3"><span class="fas fa-map-marker-alt text-primary"></span><a class="stretched-link text-decoration-none" href="#!">
-                                      <h5 class="fs--1 text-600 mb-0 ps-3">Geographic Analysis</h5>
-                                    </a></div>
-                                  <h5 class="fs--1 text-800">What pages do people from California go to the most?</h5>
+                            <div class="card-header d-flex flex-between-center bg-light py-2">
+                              <h6 class="mb-0">시그마/공정능력</h6>
+                              <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-session-by-browser" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-session-by-browser"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
                                 </div>
                               </div>
                             </div>
-                            <div class="card-footer bg-light text-end me-1 py-2"><a class="btn btn-link btn-sm px-0 fw-medium" href="#!">More Insights<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
+                            <div class="card-body d-flex flex-column justify-content-between py-0">  
+                              <div class="container-fluid07">
+                                <div id="chart03"></div>
+                              </div>
+                            </div> 
                           </div>
                         </div>
                       </div>
-                      <div class="row g-3 mb-3">
+                      <!-- <div class="row g-3 mb-3">
                         <div class="col-lg-7">
                           <div class="card mb-3">
                             <div class="card-header d-flex flex-between-center bg-light py-2">
@@ -386,9 +305,7 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="col-md-auto echart-active-users-report-container">
-                                  <!-- Find the JS file for the following chart at: src/js/charts/echarts/active-users-report.js-->
-                                  <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
+                                <div class="col-md-auto echart-active-users-report-container"> 
                                   <div class="echart-active-users-report h-100" data-echart-responsive="true"></div>
                                 </div>
                               </div>
@@ -530,7 +447,7 @@
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="modal fade" id="authentication-modal" tabindex="-1" role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
                         <div class="modal-dialog mt-6" role="document">
                           <div class="modal-content border-0">
@@ -592,6 +509,439 @@
         </div>
     </main>
     <script> 
+
+    window.onload = function() {   
+        var view_p01tab01page;
+        var view_p01tab02page;
+        var view_p01tab03page; 
+        var view_p01tab04page; 
+        var wtab01Grid;
+        var wtab02Grid;
+        var wtab03Grid; 
+        var wtab04Grid; 
+    
+       //공정종합품질현황
+       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
+            // pageSize: 21
+        }); 
+        wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
+            autoGenerateColumns: false,
+            showMarquee: true,
+            isReadOnly: true, 
+            // selectionMode: 'RowRange',
+            allowSorting: 'MultiColumn',
+            alternatingRowStep: 0,
+            columns: [     
+                { binding: 'header00', header: '구분', align: "center", width: 150 },           
+                { binding: 'header01', header: '01', align: "right", width: 100 }, 
+                { binding: 'header02', header: '02', align: "right", width: 100 }, 
+                { binding: 'header03', header: '03', align: "right", width: 100 },  
+                { binding: 'header04', header: '04', align: "right", width: 100 },   
+                { binding: 'header05', header: '05', align: "right", width: 100 },
+                { binding: 'header06', header: '06', align: "right", width: 100 },  
+                { binding: 'header07', header: '07', align: "right", width: 100 },
+                { binding: 'header08', header: '08', align: "right", width: 100 },  
+                { binding: 'header09', header: '09', align: "right", width: 100 },  
+                { binding: 'header10', header: '10', align: "right", width: 100 },    
+                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+            ], 
+            itemsSource: view_p01tab01page
+        });   
+        
+        new FlexGridContextMenu(wtab01Grid);  
+        setHeaderColumn(false);
+        function setHeaderColumn(headerOn) {
+            wtab01Grid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        } 
+         // tab01검색 데이터 수집
+       function getData_tab01(){       
+           var wactnm_data = [];  //wtab01Dto[i]["indate"]
+           var cnt = 1;
+           var header00 = ['품질지표', '생산수량', '불량합계', '불량(PPM)', '달성율', '공정능력(Cpk)', '시그마수준']
+           for (var i = 0; i < 7; i++) {
+               wactnm_data.push({
+                   id: i, 
+                   index: cnt,
+                   header00: header00[i], 
+                   ipqty:  '', 
+               });
+               cnt++;
+           }    
+           return wactnm_data;                                          
+       } 
+ 
+
+       //#####################################################################################
+       //불량현황(월)
+       view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
+            // pageSize: 21
+        }); 
+        wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
+            autoGenerateColumns: false,
+            showMarquee: true,
+            isReadOnly: true, 
+            // selectionMode: 'RowRange',
+            allowSorting: 'MultiColumn',
+            alternatingRowStep: 0,
+            columns: [     
+                { binding: 'header00', header: '구분', align: "center", width: 150 },           
+                { binding: 'header01', header: '01', align: "right", width: 100 }, 
+                { binding: 'header02', header: '02', align: "right", width: 100 }, 
+                { binding: 'header03', header: '03', align: "right", width: 100 },  
+                { binding: 'header04', header: '04', align: "right", width: 100 },   
+                { binding: 'header05', header: '05', align: "right", width: 100 },
+                { binding: 'header06', header: '06', align: "right", width: 100 },  
+                { binding: 'header07', header: '07', align: "right", width: 100 },
+                { binding: 'header08', header: '08', align: "right", width: 100 },  
+                { binding: 'header09', header: '09', align: "right", width: 100 },  
+                { binding: 'header10', header: '10', align: "right", width: 100 },    
+                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+            ], 
+            itemsSource: view_p01tab02page
+        });   
+        
+        new FlexGridContextMenu(wtab02Grid);  
+        setHeaderColumn02(false);
+        function setHeaderColumn02(headerOn) {
+            wtab02Grid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        } 
+         // tab01검색 데이터 수집
+       function getData_tab02(){       
+           var wactnm_data = [];  //wtab01Dto[i]["indate"]
+           var cnt = 1;
+           var header00 = ['미성형', '버', '오염', 'GAS', '치수부족', '치수과다', '슬리브누락']
+           for (var i = 0; i < 7; i++) {
+               wactnm_data.push({
+                   id: i, 
+                   index: cnt,
+                   header00: header00[i], 
+                   ipqty:  '', 
+               });
+               cnt++;
+           }    
+           return wactnm_data;                                          
+       } 
+
+
+
+       //#####################################################################################
+       //공정종합품질현황(일)
+       view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
+            // pageSize: 21
+        }); 
+        wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
+            autoGenerateColumns: false,
+            showMarquee: true,
+            isReadOnly: true, 
+            // selectionMode: 'RowRange',
+            allowSorting: 'MultiColumn',
+            alternatingRowStep: 0,
+            columns: [     
+                { binding: 'header00', header: '구분', align: "center", width: 150 },           
+                { binding: 'header01', header: '01', align: "right", width: 100 }, 
+                { binding: 'header02', header: '02', align: "right", width: 100 }, 
+                { binding: 'header03', header: '03', align: "right", width: 100 },  
+                { binding: 'header04', header: '04', align: "right", width: 100 },   
+                { binding: 'header05', header: '05', align: "right", width: 100 },
+                { binding: 'header06', header: '06', align: "right", width: 100 },  
+                { binding: 'header07', header: '07', align: "right", width: 100 },
+                { binding: 'header08', header: '08', align: "right", width: 100 },  
+                { binding: 'header09', header: '09', align: "right", width: 100 },  
+                { binding: 'header10', header: '10', align: "right", width: 100 },    
+                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+                { binding: 'header03', header: '13', align: "right", width: 100 },  
+                { binding: 'header04', header: '14', align: "right", width: 100 },   
+                { binding: 'header05', header: '15', align: "right", width: 100 },
+                { binding: 'header06', header: '16', align: "right", width: 100 },  
+                { binding: 'header07', header: '17', align: "right", width: 100 },
+                { binding: 'header08', header: '18', align: "right", width: 100 },  
+                { binding: 'header09', header: '19', align: "right", width: 100 },  
+                { binding: 'header10', header: '20', align: "right", width: 100 },    
+                { binding: 'header11', header: '21', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header12', header: '22', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header03', header: '23', align: "right", width: 100 },  
+                { binding: 'header04', header: '24', align: "right", width: 100 },   
+                { binding: 'header05', header: '25', align: "right", width: 100 },
+                { binding: 'header06', header: '26', align: "right", width: 100 },  
+                { binding: 'header07', header: '27', align: "right", width: 100 },
+                { binding: 'header08', header: '28', align: "right", width: 100 },  
+                { binding: 'header09', header: '29', align: "right", width: 100 },  
+                { binding: 'header10', header: '30', align: "right", width: 100 },    
+                { binding: 'header11', header: '31', align: "right", format: 'n0', width: 100 },  
+                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+            ], 
+            itemsSource: view_p01tab03page
+        });   
+        
+        new FlexGridContextMenu(wtab03Grid);  
+        setHeaderColumn03(false);
+        function setHeaderColumn03(headerOn) {
+            wtab03Grid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        } 
+         // tab01검색 데이터 수집
+       function getData_tab03(){       
+           var wactnm_data = [];  //wtab01Dto[i]["indate"]
+           var cnt = 1;
+           var header00 = ['품질지표', '생산수량', '불량합계', '불량(PPM)', '달성율', '공정능력(Cpk)', '시그마수준']
+           for (var i = 0; i < 7; i++) {
+               wactnm_data.push({
+                   id: i, 
+                   index: cnt,
+                   header00: header00[i], 
+                   ipqty:  '', 
+               });
+               cnt++;
+           }    
+           return wactnm_data;                                          
+       } 
+ 
+
+
+
+       //#####################################################################################
+       //불량현황(일)
+       view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), {
+            // pageSize: 21
+        }); 
+        wtab04Grid = new wijmo.grid.FlexGrid('#wtab04Grid_div', {  
+            autoGenerateColumns: false,
+            showMarquee: true,
+            isReadOnly: true, 
+            // selectionMode: 'RowRange',
+            allowSorting: 'MultiColumn',
+            alternatingRowStep: 0,
+            columns: [     
+                { binding: 'header00', header: '구분', align: "center", width: 150 },           
+                { binding: 'header01', header: '01', align: "right", width: 100 }, 
+                { binding: 'header02', header: '02', align: "right", width: 100 }, 
+                { binding: 'header03', header: '03', align: "right", width: 100 },  
+                { binding: 'header04', header: '04', align: "right", width: 100 },   
+                { binding: 'header05', header: '05', align: "right", width: 100 },
+                { binding: 'header06', header: '06', align: "right", width: 100 },  
+                { binding: 'header07', header: '07', align: "right", width: 100 },
+                { binding: 'header08', header: '08', align: "right", width: 100 },  
+                { binding: 'header09', header: '09', align: "right", width: 100 },  
+                { binding: 'header10', header: '10', align: "right", width: 100 },    
+                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+                { binding: 'header03', header: '13', align: "right", width: 100 },  
+                { binding: 'header04', header: '14', align: "right", width: 100 },   
+                { binding: 'header05', header: '15', align: "right", width: 100 },
+                { binding: 'header06', header: '16', align: "right", width: 100 },  
+                { binding: 'header07', header: '17', align: "right", width: 100 },
+                { binding: 'header08', header: '18', align: "right", width: 100 },  
+                { binding: 'header09', header: '19', align: "right", width: 100 },  
+                { binding: 'header10', header: '20', align: "right", width: 100 },    
+                { binding: 'header11', header: '21', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header12', header: '22', align: "right", format: 'n0', width: 100 },  
+                { binding: 'header03', header: '23', align: "right", width: 100 },  
+                { binding: 'header04', header: '24', align: "right", width: 100 },   
+                { binding: 'header05', header: '25', align: "right", width: 100 },
+                { binding: 'header06', header: '26', align: "right", width: 100 },  
+                { binding: 'header07', header: '27', align: "right", width: 100 },
+                { binding: 'header08', header: '28', align: "right", width: 100 },  
+                { binding: 'header09', header: '29', align: "right", width: 100 },  
+                { binding: 'header10', header: '30', align: "right", width: 100 },    
+                { binding: 'header11', header: '31', align: "right", format: 'n0', width: 100 },  
+                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+            ], 
+            itemsSource: view_p01tab04page
+        });   
+        
+        new FlexGridContextMenu(wtab04Grid);  
+        setHeaderColumn04(false);
+        function setHeaderColumn04(headerOn) {
+            wtab04Grid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        } 
+         // tab01검색 데이터 수집
+       function getData_tab04(){       
+           var wactnm_data = [];  //wtab01Dto[i]["indate"]
+           var cnt = 1;
+           var header00 = ['미성형', '버', '오염', 'GAS', '치수부족', '치수과다', '슬리브누락']
+           for (var i = 0; i < 7; i++) {
+               wactnm_data.push({
+                   id: i, 
+                   index: cnt,
+                   header00: header00[i], 
+                   ipqty:  '', 
+               });
+               cnt++;
+           }    
+           return wactnm_data;                                          
+       } 
+  
+    //#####################################################################################
+       //생산대비불량현황(차트)
+       let barchart = new wijmo.chart.FlexChart('#chart01', {
+          // header: '생산대비 불량현황',
+          legend: {
+            position: wijmo.chart.Position.None
+          },
+          bindingX: 'month',
+          series: [
+            {
+              binding: 'bulyul',
+              name: '불량율(%)'
+            },
+            {
+              binding: 'wotqty',
+              name: '생산수량',
+              chartType: wijmo.chart.ChartType.Line
+            }
+          ],
+          axisY: {
+            axisLine: true,
+            origin: 0,
+            title: '불량율 (%)'
+          },
+          itemsSource: getData04(),
+          palette: [ '#43aa8b','#f8961e', 
+                    '#355070', '#5f0f40', ]
+      });
+           
+      let ani = new wijmo.chart.animation.ChartAnimation(barchart);
+      //
+      // 'Precipitation' 계열에 대한 추가 Y축 생성 및 적용
+      let axisY2 = new wijmo.chart.Axis();
+      axisY2.position = wijmo.chart.Position.Right;
+      axisY2.title = '생산수량 (백)';
+      axisY2.axisLine = true;
+      axisY2.min = 0;
+      barchart.series[1].axisY = axisY2;
+        
+
+      function getData04() {
+        return [
+          { month: '1', 'bulyul': 5.2, 'wotqty': 65.8 },
+          { month: '2', 'bulyul': 3.4, 'wotqty': 55.9 },
+          { month: '3', 'bulyul': 1.7, 'wotqty': 81.5 },
+          { month: '4', 'bulyul': 8.8, 'wotqty': 80.5 },
+          { month: '5', 'bulyul': 4.6, 'wotqty': 91.7 },
+          { month: '6', 'bulyul': 9.6, 'wotqty': 96.3 },
+          { month: '7', 'bulyul': 2.1, 'wotqty': 104.6 },
+          { month: '8', 'bulyul': 1.2, 'wotqty': 87.9 },
+          { month: '9', 'bulyul': 6.6, 'wotqty': 83.8 },
+          { month: '10', 'bulyul': 9.8, 'wotqty': 93.5 },
+          { month: '11', 'bulyul': 4.3, 'wotqty': 83.6 },
+          { month: '12', 'bulyul': 1.9, 'wotqty': 74.4 }
+        ];
+      }
+
+
+    //#####################################################################################
+       //불량현황(차트)
+       let data = getData05();
+        let sum = data.map(c => c.sales).reduce((sum, cur) => sum + cur);
+        let donut = new wijmo.chart.FlexPie('#chart02', {
+          // header: '불량현황',
+          bindingName: 'brand',
+          innerRadius: 0.5,
+          binding: 'sales',
+          dataLabel: {
+            position: wijmo.chart.PieLabelPosition.Outside,
+            content: (ht) => {
+              return `${ht.name} ${wijmo.Globalize.format(ht.value / sum, 'p1')}`;
+            }
+          },
+          itemsSource: data,
+          palette: ['#F3722C', '#577590', '#F8961E', '#F94144', '#90BE6D', '#F9C74F', '#43AA8B', ]
+        }); 
+      //데이터
+        function getData05() {
+          return [
+            { brand: '슬라브누락', sales: 20 },
+            { brand: '치수과다', sales: 18 },
+            { brand: '치수부족', sales: 28 },
+            { brand: '미성형', sales: 24 },
+            { brand: '오염', sales: 4 },
+            { brand: 'GAS', sales: 6 },
+            { brand: '버', sales: 0 }
+          ];
+        }
+
+
+    //#####################################################################################
+       //불량현황(차트) 
+
+       let lineChart03 = new wijmo.chart.FlexChart('#chart03', {
+          // header: '시그마/공정능력',
+          legend: {
+            position: wijmo.chart.Position.Bottom
+          },
+          chartType: wijmo.chart.ChartType.SplineSymbols,
+          dataLabel: {
+            content: '{y}'
+          },
+          tooltip: {
+            content: ''
+          },
+          bindingX: 'month',
+          series: [
+            {
+              binding: 'high',
+              name: '공정능력', 
+            } ,
+            {
+              binding: 'low',
+              name: '시그마수준'
+            } 
+          ],
+          axisY: {
+            title: '율(%)'
+          },
+          itemsSource: getData06(),
+          palette:  ['#F3722C', '#577590', '#F8961E', '#F94144', '#90BE6D', '#F9C74F', '#43AA8B', ]
+        });
+        //
+        let ani03 = new wijmo.chart.animation.ChartAnimation(lineChart03);
+        ani03.animationMode = wijmo.chart.animation.AnimationMode.Series;
+      // 'Precipitation' 계열에 대한 추가 Y축 생성 및 적용
+      let axisY4 = new wijmo.chart.Axis();
+      axisY4.position = wijmo.chart.Position.Right;
+      axisY4.title = '시그마';
+      axisY4.axisLine = true;
+      axisY4.min = 0;
+      lineChart03.series[1].axisY = axisY4;
+
+        function getData06() {
+          return [
+            { month: '1',  high: 4.8, low: 0.95 },
+            { month: '2',  high: 4.5, low: 1.09 },
+            { month: '3',  high: 4.3, low: 1.08 },
+            { month: '4',  high: 4.2, low: 1.01 },
+            { month: '5',  high: 4.0, low: 0.95},
+            { month: '6',  high: 4.3, low: 0.96 },
+            { month: '7',  high: 3.5, low: 0.83 },
+            { month: '8',  high: 0, low: 0 },
+            { month: '9',  high: 0, low: 0 },
+            { month: '10',  high: 0, low: 0 },
+            { month: '11',  high: 0, low: 0 },
+            { month: '12',  high: 0, low: 0 }
+          ];
+        }
+
+    }
+ 
+
+
+
+
+
+
+
         function logout(){   
                 if (!confirm("로그아웃하시겠습니까?") ){
                     return    
@@ -603,5 +953,230 @@
                 localStorage.removeItem("custnm") ;
                 location.href = "/" ;
             }   
+
+
+
+
+        class FlexGridContextMenu {
+                        constructor(grid) {
+                            let host = grid.hostElement, menu = this._buildMenu(grid);
+                            host.addEventListener('contextmenu', (e) => {
+                                // 클릭된 셀/열 선택
+                                let sel = grid.selection, ht = grid.hitTest(e), row = ht.getRow();
+                
+                                switch (ht.panel) {
+                                    case grid.cells:
+                                    let colIndex = ht.col;
+                                    // 만약 그룹 헤더이면, 그룹 열 선택
+                                    if (row instanceof wijmo.grid.GroupRow && row.dataItem instanceof wijmo.collections.CollectionViewGroup) {
+                                        let gd = row.dataItem.groupDescription;
+                                        if (gd instanceof wijmo.collections.PropertyGroupDescription) {
+                                        let col = grid.getColumn(gd.propertyName);
+                                        if (col && col.index > -1) {
+                                            colIndex = col.index;
+                                        }
+                                        }
+                                    }
+                                    grid.select(ht.row, colIndex);
+                                    break;
+                                    case grid.columnHeaders:
+                                    grid.select(sel.row, ht.col);
+                                    break;
+                                    case grid.rowHeaders:
+                                    grid.select(ht.row, sel.col);
+                                    break;
+                                    default:
+                                    return; // 유효하지 않는 패널
+                                }
+                                // 현재 열에 대한 메뉴 표시
+                                if (grid.selection.col > -1) {
+                                    e.preventDefault(); // 브라우저의 기본 메뉴 취소
+                                    menu.show(e); // Wijmo 메뉴 표시
+                                }
+                            }, true);
+                        }
+                        _buildMenu(grid) {
+                            let menu = new wijmo.input.Menu(document.createElement('div'), {
+                            owner: grid.hostElement,
+                            displayMemberPath: 'header',
+                            subItemsPath: 'items',
+                            commandParameterPath: 'cmd',
+                            dropDownCssClass: 'ctx-menu',
+                            openOnHover: true,
+                            closeOnLeave: true,
+                            itemsSource: [
+                                {
+                                header: '정렬', items: [
+                                    { header: 'Ascending', cmd: 'SRT_ASC' },
+                                    { header: 'Descending', cmd: 'SRT_DESC' },
+                                    { header: 'No Sort', cmd: 'SRT_NONE' },
+                                    { header: '-' },
+                                    { header: 'Clear All Sorts', cmd: 'SRT_CLR' }
+                                ]
+                                },
+                                { header: '-' },
+                                { header: 'Pin/Unpin', cmd: 'PIN' },
+                                { header: '-' },
+                                { header: 'AutoSize', cmd: 'ASZ' },
+                                { header: 'AutoSize All', cmd: 'ASZ_ALL' },
+                                { header: '-' },
+                                { header: 'Group/Ungroup', cmd: 'GRP' },
+                                { header: 'Clear All Groups', cmd: 'GRP_CLR' },
+                                { header: '-' },
+                                {
+                                header: '내려받기', items: [
+                                    { header: 'CSV', cmd: 'X_CSV' },
+                                    { header: 'XLSX', cmd: 'X_XLSX' },
+                                    { header: 'PDF', cmd: 'X_PDF' },
+                                ]
+                                }
+                            ],
+                            command: {
+                                // 메뉴 명령 활성화/비활성화
+                                canExecuteCommand: (cmd) => {
+                                let view = grid.collectionView, col = grid.columns[grid.selection.col];
+                                switch (cmd) {
+                                    case 'SRT_ASC':
+                                    return col.currentSort != '+';
+                                    case 'SRT_DESC':
+                                    return col.currentSort != '-';
+                                    case 'SRT_NONE':
+                                    return col.currentSort != null;
+                                    case 'SRT_CLR':
+                                    return view.sortDescriptions.length > 0;
+                                    case 'PIN':
+                                    return true; // toggle pin
+                                    case 'ASZ':
+                                    case 'ASZ_ALL':
+                                    return true;
+                                    case 'GRP':
+                                    return col.dataType != wijmo.DataType.Number; // don't group numbers
+                                    case 'GRP_CLR':
+                                    return view.groupDescriptions.length > 0;
+                                }
+                                return true;
+                                },
+                                // 메뉴 명령 실행
+                                executeCommand: (cmd) => {
+                                    let view = grid.collectionView, cols = grid.columns, col = cols[grid.selection.col], sd = view.sortDescriptions, gd = view.groupDescriptions;
+                                    switch (cmd) {
+                                        case 'SRT_ASC':
+                                        case 'SRT_DESC':
+                                        case 'SRT_NONE':
+                                        if (grid.allowSorting != wijmo.grid.AllowSorting.MultiColumn) {
+                                            sd.clear();
+                                        }
+                                        else {
+                                            for (let i = 0; i < sd.length; i++) {
+                                            if (sd[i].property == col.binding) {
+                                                sd.removeAt(i);
+                                                break;
+                                            }
+                                            }
+                                        }
+                                        if (cmd != 'SRT_NONE') {
+                                            sd.push(new wijmo.collections.SortDescription(col.binding, cmd == 'SRT_ASC'));
+                                        }
+                                            break;
+                                        case 'SRT_CLR':
+                                            sd.clear();
+                                            break;
+                                        case 'PIN':
+                                            let fCols = grid.frozenColumns;
+                                            if (col.index >= fCols) { // pinning
+                                                cols.moveElement(col.index, fCols, false);
+                                                cols.frozen++;
+                                            }
+                                            else { // unpinning
+                                                cols.moveElement(col.index, fCols - 1, false);
+                                                cols.frozen--;
+                                            }
+                                            break;
+                                        case 'ASZ':
+                                            grid.autoSizeColumn(col.index);
+                                            break;
+                                        case 'ASZ_ALL':
+                                            grid.autoSizeColumns(0, grid.columns.length - 1);
+                                            break;
+                                        case 'GRP':
+                                        // 그룹 삭제
+                                            for (let i = 0; i < gd.length; i++) {
+                                                if (gd[i].propertyName == col.binding) {
+                                                gd.removeAt(i);
+                                                return; // we're done
+                                                }
+                                            }
+                                            // 그룹 추가
+                                            gd.push(new wijmo.collections.PropertyGroupDescription(col.binding));
+                                            break;
+                                        case 'GRP_CLR':
+                                            gd.clear();
+                                            break;
+                                        // 내보내기
+                                        case 'X_CSV':
+                                            let rng = new wijmo.grid.CellRange(0, 0, grid.rows.length - 1, grid.columns.length - 1), csv = grid.getClipString(rng, wijmo.grid.ClipStringOptions.CSV, true, false);
+                                            wijmo.saveFile(csv, '재고등록.csv');
+                                            break;
+                                        case 'X_XLSX':
+                                            const gridView = grid.collectionView;
+                                            let oldPgSize = gridView.pageSize, oldPgIndex = gridView.pageIndex;
+                
+                                            grid.beginUpdate();
+                                            gridView.pageSize = 0;
+                
+                                            wijmo.grid.xlsx.FlexGridXlsxConverter.saveAsync(grid, {includeCellStyles: true, includeColumnHeaders: true}, '재고등록.xlsx',
+                                            saved => {
+                                            gridView.pageSize = oldPgSize;
+                                            gridView.moveToPage(oldPgIndex);
+                                            grid.endUpdate();
+                                            }, null
+                                            ); 
+                                            break;
+                                        case 'X_PDF':
+                                            wijmo.grid.pdf.FlexGridPdfConverter.export(grid, '재고등록.pdf', {
+                                                maxPages: 10,
+                                                scaleMode: wijmo.grid.pdf.ScaleMode.PageWidth,
+                                                documentOptions: {
+                                                compress: true,
+                                                header: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                                                footer: { declarative: { text: '\t&[Page] of &[Pages]' } },
+                                                info: { author: 'GrapeCity', title: '재고등록' }
+                                                },
+                                                //내장된 폰트 정보
+                                                embeddedFonts: [
+                                                    {
+                                                    source: "https://assets.codepen.io/975719/BMHANNAPro.ttf",
+                                                    name: "BMHANNAPro",
+                                                    style: "normal",
+                                                    weight: "normal",
+                                                    sansSerif: true
+                                                    }
+                                                ],
+                                                styles: {
+                                                    cellStyle: { backgroundColor: '#ffffff', borderColor: '#c6c6c6', font: {family: "BMHANNAPro"} },
+                                                    altCellStyle: { backgroundColor: '#f9f9f9' },
+                                                    groupCellStyle: { backgroundColor: '#dddddd' },
+                                                    headerCellStyle: { backgroundColor: '#eaeaea' }
+                                                }
+                                            });
+                                            break;
+                                    }
+                                    // 활성화 그리드 셀에 포커스 복원
+                                    grid.refresh();
+                                    let sel = grid.selection, cell = grid.cells.getCellElement(sel.row, sel.col);
+                                    if (cell) {
+                                        cell.focus();
+                                    }
+                                }
+                            }
+                            });
+                            // 완료
+                            return menu;
+                        }
+                    }        
+                
+                
+
+
     </script>
 </header>
