@@ -94,6 +94,7 @@ public class FPLAN_VO {
     private String w_b_gubn;
     private String wcode;
     private String wcodenm;
+    private String jchajong;
 
     private float wbdqt;
     private float tqty;

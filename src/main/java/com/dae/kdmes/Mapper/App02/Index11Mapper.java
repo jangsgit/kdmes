@@ -27,8 +27,14 @@ public interface Index11Mapper {
 
 
     public List<Index11Dto> getIndex14List01(Index11Dto parm) ;
+
     public List<Index11Dto> getIndex14List02(Index11Dto parm) ;
     public List<Index11Dto> getIndex14List03(Index11Dto parm) ;
+
+    public List<Index11Dto> getIndex56List02(Index11Dto parm) ;
+
+    public List<Index11Dto> getIndex56List01(Index11Dto parm) ;
+    public List<Index11Dto> getIndex56List03(Index11Dto parm) ;
 
     public List<Index11Dto> getIndex16List01(Index11Dto parm) ;
 

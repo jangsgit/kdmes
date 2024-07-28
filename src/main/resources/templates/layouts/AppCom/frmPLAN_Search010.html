@@ -324,6 +324,7 @@
                             if(ls_lotno == null || ls_lotno.length == 0 || ls_lotno == ""){ 
                                 ls_lotno    = "%"
                             }   
+                            var ls_inwrmc    = "%"
                             $.ajax({
                                 url: '/app03m/index13/list01',  
                                 type:"POST",
@@ -331,7 +332,8 @@
                                     "frdate"      : ls_frdate,  
                                     "todate"      : ls_todate, 
                                     "inwrps"      : ls_inwrps,  
-                                    "lotno"      : ls_lotno, 
+                                    "lotno"      : ls_lotno,  
+                                    "inwrmc"      : ls_inwrmc, 
                                 }, 
                                 async:false,
                                 success:function(data){           

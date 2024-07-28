@@ -508,7 +508,9 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
-
+            wperidDto.setWflag("00010");  //첫번째공정
+            wperidDto.setWpernm("%");
+            model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App51_index Exception =====>" + ex.toString());
@@ -554,6 +556,17 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
+            wrmcDto.setMachname("%");
+            wrmcDto.setPlan_no("%");      //불량구분 팝업
+            wrmcDto.setWseq("%");
+            wrmcDto.setWflag("00010");
+            wrmcDto.setWclscode("1");
+            wperidDto.setWflag("00010");  //첫번째공정
+            wperidDto.setWpernm("%");
+            model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));
+            model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
+            model.addAttribute("wrmcDto", appPopupService.GetWrmcList01(wrmcDto));
+
 
         } catch (Exception ex) {
 //                dispatchException = ex;
@@ -596,6 +609,9 @@ public class App02Controller {
 
         try {
 
+            wperidDto.setWflag("00020");  //첫번째공정
+            wperidDto.setWpernm("%");
+            model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App55_index Exception =====>" + ex.toString());
@@ -616,6 +632,12 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
+            wrmcDto.setMachname("%");
+            wrmcDto.setPlan_no("%");      //불량구분 팝업
+            wrmcDto.setWseq("%");
+            wrmcDto.setWflag("00020");
+            wrmcDto.setWclscode("1");
+            model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));
 
         } catch (Exception ex) {
 //                dispatchException = ex;
@@ -636,7 +658,9 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
-
+            wperidDto.setWflag("00020");  //첫번째공정
+            wperidDto.setWpernm("%");
+            model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App57_index Exception =====>" + ex.toString());
@@ -657,6 +681,9 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
+            wperidDto.setWflag("00020");  //첫번째공정
+            wperidDto.setWpernm("%");
+            model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
 
         } catch (Exception ex) {
 //                dispatchException = ex;

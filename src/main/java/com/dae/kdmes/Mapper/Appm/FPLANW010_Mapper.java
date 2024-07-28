@@ -18,6 +18,8 @@ public interface FPLANW010_Mapper {
      public List<FPLAN_VO> GetFPLAN_List02_REG(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_REG_JO(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_HIS(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02_HISMON(FPLAN_VO xfplanBoard);
+     public List<FPLAN_VO> GetFPLAN_List02_HISPER(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02_HIS_JO(FPLAN_VO xfplanBoard);
      public List<FPLAN_VO> GetFPLAN_List02Arr(HashMap<String,String> parm);
      public List<FPLAN_VO> GetFPLAN_List02Arr_JO(HashMap<String,String> parm);

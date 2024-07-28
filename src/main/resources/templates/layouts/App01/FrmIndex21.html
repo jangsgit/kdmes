@@ -65,9 +65,12 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">출하현황</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">기초코드3</a>
-                    </li> --> 
+                   <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">바코드별 조회</a>
+                    </li> 
+                    <li class="nav-item">
+                         <a class="nav-link" data-toggle="tab" href="#step04"  onclick="tabchk_rtn('D')">지역별 조회</a>
+                     </li> 
                     <input type="hidden" id="tabvalue" value="A">
                     </ul>
                     <div class="tab-content">
@@ -215,7 +218,7 @@
                                                                         <input type="text" name="balno" id="balno" placeholder=""   >  
                                                                     </div>
                                                                 </td>                                               
-                                                                <th>바코드</th> 
+                                                                <th>KCC바코드</th> 
                                                                 <td colspan="2">
                                                                     <div class="input_wrap">
                                                                         <input type="text" id="lotno" placeholder=""  autocomplete="off">
@@ -255,7 +258,7 @@
                                                                 </td>                               
                                                             </tr>  
                                                             <tr>  
-                                                                <th>비고</th>
+                                                                <th>지역</th>
                                                                 <td colspan="4">
                                                                     <div class="input_wrap"  > 
                                                                         <input class="form-control form-control-sm" id="remark" type="text" placeholder=""  />                                    
@@ -361,6 +364,15 @@
                                     <input class="form-control form-control-sm" id="pcode_jo" type="hidden"    autocomplete="off"   placeholder="품명"   > 
                                 </div>
                             </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">납품처</span> 
+                                    <input class="form-control form-control-sm" id="bcltnm" type="text"    autocomplete="off"   placeholder="납품처"   > 
+                                    <input class="form-control form-control-sm" id="bacorp1" type="hidden"  />
+                                    <input class="form-control form-control-sm" id="bacorp2" type="hidden"  />
+                                    <input class="form-control form-control-sm" id="bacorp3" type="hidden"  />
+                                    <input class="form-control form-control-sm" id="bacode" type="hidden"  />  
+                                </div>
+                            </div>
                             <div class="col-1 col-sm-1">  
                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="searchTabBBtn"  type="button" onclick="searchList_rtn()">조회
                                 </button>
@@ -373,6 +385,111 @@
                                     <td class="align-top">                                                         
                                     <div class="container-fluid"  >                                                         
                                         <div id="wtab02Grid_div"  style="overflow:scroll;   height:600px;     margin:0 auto; "></div> 
+                                        </div>  
+                                    </td> 
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>  
+                    </div> 
+                    <div class="tab-pane fade" id="step03">  
+                        <div class="row gx-3" style="  margin: 10px 10px 10px;"> 
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">출하예정일</span>
+                                    <input type="text"  class="form-control datetimepicker" id="frdate"   autocomplete="off"  placeholder="Y-m-d"     > 
+                                </div> 
+                            </div>   
+                            <div class="col-auto"> 
+                                <div class="input-group input-group-sm mb-3"> 
+                                    <input type="text"  class="form-control datetimepicker" id="todate"   autocomplete="off"  placeholder="Y-m-d"     >
+                                </div>
+                            </div>                               
+                            <div class="col-auto"> 
+                                <div class="dropdown-container">
+                                    <select class="form-select"  id="indemflag02">
+                                        <option selected="">출하여부</option>
+                                        <option value="1">출하</option>
+                                        <option value="0">미출하</option>>
+                                    </select>  
+                                </div>  
+                            </div>  
+                            <div class="col-auto"> 
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">KCC바코드</span> 
+                                    <input class="form-control form-control-sm" id="inlotno" type="text"    autocomplete="off"  placeholder=""     > 
+                                </div>
+                            </div>
+                            <!-- <div class="col-auto">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품명</span> 
+                                    <input class="form-control form-control-sm" id="pname_jo" type="text"    autocomplete="off"   placeholder="품명"   > 
+                                    <input class="form-control form-control-sm" id="pcode_jo" type="hidden"    autocomplete="off"   placeholder="품명"   > 
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">납품처</span> 
+                                    <input class="form-control form-control-sm" id="bcltnm" type="text"    autocomplete="off"   placeholder="납품처"   > 
+                                    <input class="form-control form-control-sm" id="bacorp1" type="hidden"  />
+                                    <input class="form-control form-control-sm" id="bacorp2" type="hidden"  />
+                                    <input class="form-control form-control-sm" id="bacorp3" type="hidden"  />
+                                    <input class="form-control form-control-sm" id="bacode" type="hidden"  />  
+                                </div>
+                            </div> -->
+                            <div class="col-1 col-sm-1">  
+                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="searchTabBBtn02"  type="button" onclick="searchList_rtn()">조회
+                                </button>
+                            </div>  
+                        </div> 
+                        <div class="table-responsive">
+                            <table class="table table-borderless" style="height: 100px;" >
+                                <tbody>
+                                <tr>  
+                                    <td class="align-top">                                                         
+                                    <div class="container-fluid"  >                                                         
+                                        <div id="wtab05Grid_div"  style="overflow:scroll;   height:600px;     margin:0 auto; "></div> 
+                                        </div>  
+                                    </td> 
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>  
+                    </div> 
+                    <div class="tab-pane fade" id="step04">  
+                        <div class="row gx-3" style="  margin: 10px 10px 10px;"> 
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">출하예정일</span>
+                                    <input type="text"  class="form-control datetimepicker" id="frdate02"   autocomplete="off"  placeholder="Y-m-d"     > 
+                                </div> 
+                            </div>   
+                            <div class="col-auto"> 
+                                <div class="input-group input-group-sm mb-3"> 
+                                    <input type="text"  class="form-control datetimepicker" id="todate02"   autocomplete="off"  placeholder="Y-m-d"     >
+                                </div>
+                            </div>                               
+                            <div class="col-auto"> 
+                                <div class="dropdown-container">
+                                    <select class="form-select"  id="indemflag03">
+                                        <option selected="">출하여부</option>
+                                        <option value="1">출하</option>
+                                        <option value="0">미출하</option>>
+                                    </select>  
+                                </div>  
+                            </div>  
+                            <div class="col-auto"> 
+                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">지역</span> 
+                                    <input class="form-control form-control-sm" id="inremark" type="text"    autocomplete="off"  placeholder=""     > 
+                                </div>
+                            </div> 
+                            <div class="col-1 col-sm-1">  
+                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="searchTabBBtn03"  type="button" onclick="searchList_rtn()">조회
+                                </button>
+                            </div>  
+                        </div> 
+                        <div class="table-responsive">
+                            <table class="table table-borderless" style="height: 100px;" >
+                                <tbody>
+                                <tr>  
+                                    <td class="align-top">                                                         
+                                    <div class="container-fluid"  >                                                         
+                                        <div id="wtab06Grid_div"  style="overflow:scroll;   height:600px;     margin:0 auto; "></div> 
                                         </div>  
                                     </td> 
                                 </tr>
@@ -524,12 +641,16 @@
             var view_p01tab02page;
             var view_p01tab03page;
             var view_p01tab04page; 
+            var view_p01tab05page; 
+            var view_p01tab06page; 
             var view_incltnmpage;
             var view_wotqtpage;
             var wtab01Grid;        
             var wtab02Grid;
             var wtab03Grid;   
-            var wtab04Grid;  
+            var wtab04Grid;   
+            var wtab05Grid;   
+            var wtab06Grid;  
             var wotqtGrid;      
             var winnameGrid;  
             var wincltnmGrid;
@@ -765,15 +886,71 @@
                 new FlexGridContextMenu(wtab02Grid);  
                function getData_wlist(){
 
+               }                         
+               //====================================================================================================================================     
+               //====================================================================================================================================
+               //바코드 현황  list02
+               view_p01tab05page = new wijmo.collections.CollectionView(getData_wlist(), { 
+               });  
+               wtab05Grid = new wijmo.grid.FlexGrid('#wtab05Grid_div', { 
+                        deferResizing: true,
+                        showMarquee: true, 
+                        alternatingRowStep: 0,
+                        selectionMode: 'MultiRange',
+                        allowSorting: 'MultiColumn',
+                        autoGenerateColumns: false,  
+                       columns: [      
+                        { binding: 'deldate', header: '출하예정일', align: "center", width: 120 }, 
+                        { binding: 'lotno', header: '바코드', align: "center", width: 150 }, 
+                        { binding: 'balno', header: '발주번호', align: "center", width: 120 }, 
+                        { binding: 'pcode', header: '품목코드', align: "center", width: 150 }, 
+                        { binding: 'pname', header: '품목명', align: "left", width: 200 }, 
+                        { binding: 'schdate', header: '출하일자', align: "center", width: 150 },  
+                        { binding: 'inmonth_text', header: '주차', align: "left", width: 120 },  
+                        { binding: 'qty', header: '출하수량', align: "right", width: 90 },  
+                        { binding: 'boxnum', header: '박스수량', align: "right", width: 90 },  
+                        { binding: 'acorp', header: '납품처', align: "center", width: 180 },    
+                        { binding: 'demflag', header: '출하완료', align: "center", width: 100, cssClass: 'switch'  },    
+                        
+                       ], 
+                       itemsSource: view_p01tab05page
+                });   
+                new FlexGridContextMenu(wtab05Grid);  
+               function getData_wlist(){
+
+               }                             
+               //====================================================================================================================================     
+               //====================================================================================================================================
+               //지역별 현황  list02
+               view_p01tab06page = new wijmo.collections.CollectionView(getData_wlist(), { 
+               });  
+               wtab06Grid = new wijmo.grid.FlexGrid('#wtab06Grid_div', { 
+                        deferResizing: true,
+                        showMarquee: true, 
+                        alternatingRowStep: 0,
+                        selectionMode: 'MultiRange',
+                        allowSorting: 'MultiColumn',
+                        autoGenerateColumns: false,  
+                       columns: [      
+                        { binding: 'remark', header: '지역', align: "center", width: 150 }, 
+                        { binding: 'balno', header: '발주번호', align: "center", width: 120 }, 
+                        { binding: 'pcode', header: '품목코드', align: "center", width: 150 }, 
+                        { binding: 'pname', header: '품목명', align: "left", width: 200 }, 
+                        { binding: 'schdate', header: '출하일자', align: "center", width: 150 },  
+                        { binding: 'inmonth_text', header: '주차', align: "left", width: 120 },  
+                        { binding: 'qty', header: '출하수량', align: "right", width: 90 },  
+                        { binding: 'boxnum', header: '박스수량', align: "right", width: 90 },  
+                        { binding: 'acorp', header: '납품처', align: "center", width: 180 },  
+                        { binding: 'lotno', header: '바코드', align: "center", width: 150 },   
+                        { binding: 'demflag', header: '출하완료', align: "center", width: 100, cssClass: 'switch'  },    
+                        
+                       ], 
+                       itemsSource: view_p01tab06page
+                });   
+                new FlexGridContextMenu(wtab06Grid);  
+               function getData_wlist(){
+
                }        
-            //    new FlexGridContextMenu(wtab02Grid);  
-            //    // 헤더 열 전환
-            //    setHeaderColumn2(false);
-            //    function setHeaderColumn2(headerOn) {
-            //        wtab02Grid.headersVisibility = headerOn
-            //        ? wijmo.grid.HeadersVisibility.All
-            //        : wijmo.grid.HeadersVisibility.Column; 
-            //    }  
    
    
                //====================================================================================================================================     
@@ -1249,12 +1426,26 @@
                     document.getElementById("innamebtn2").click();
                     searchListTot_rtn("A"); 
                 }  
-            });    
+            });       
+            //품목현황 검색  
+            document.getElementById("pname_jo").addEventListener("keyup", (e)=>{  
+                if(e.keyCode === 13){   
+                    document.getElementById("innamebtn2").click();
+                    searchListTot_rtn("B"); 
+                }  
+            });   
             //거래처검색  
             document.getElementById("cltnm").addEventListener("keyup", (e)=>{                     
                 if(e.keyCode === 13){   
                     document.getElementById("incltnmbtn").click(); 
                     CifSearchList_rtn("A"); 
+                }
+            });  
+            //거래처검색  
+            document.getElementById("bcltnm").addEventListener("keyup", (e)=>{                     
+                if(e.keyCode === 13){   
+                    document.getElementById("incltnmbtn").click(); 
+                    CifSearchList_rtn("B"); 
                 }
             });  
             //사원검색 
@@ -1319,13 +1510,15 @@
 
                     })  
 
-                }else{
+                }else if (ls_tab == "B"){ 
                     ls_demflag = document.getElementById('indemflag').value ;                       
                     ls_balno     =  document.getElementById("balno_jo").value;     
                     ls_inmonth     =  document.getElementById("inmonth_jo").value;                    
                     ls_inweeks     =  document.getElementById("inweeks_jo").value;                
                     ls_pcode     =  document.getElementById("pcode_jo").value;                   
-                    ls_pname     =  document.getElementById("pname_jo").value;            
+                    ls_pname     =  document.getElementById("pname_jo").value;                    
+                    ls_bacode     =  document.getElementById("bacode").value;                   
+                    ls_bcltnm     =  document.getElementById("bcltnm").value;     
                     if(ls_demflag == null || ls_demflag.length == 0 || ls_demflag == ""){ 
                         ls_demflag = "%" ;
                     }  
@@ -1344,6 +1537,9 @@
                     }       
                     if(ls_inweeks == null || ls_inweeks.length == 0 || ls_inweeks == "주차"){ 
                         ls_inweeks = "%" ;
+                    }      
+                    if(ls_bcltnm == null || ls_bcltnm.length == 0 || ls_bcltnm == ""){ 
+                        ls_bacode = "%" ;
                     } 
 
                     $.ajax({
@@ -1355,6 +1551,7 @@
                             "balno" :ls_balno, 
                             "pcode" :ls_pcode, 
                             "demflag" :ls_demflag, 
+                            "acode" :ls_bacode, 
                         }, 
                         async:false,
                         success:function(data){  
@@ -1367,7 +1564,71 @@
 
                     })  
 
-                }         
+                }else if (ls_tab == "C"){ 
+                    ls_demflag = document.getElementById('indemflag02').value ;                       
+                    ls_lotno     =  document.getElementById("inlotno").value;   
+                    var  ls_frdate     =  convert_date(wfrdate.value);                    
+                    var  ls_todate     =  convert_date(wtodate.value);     
+                    if(ls_demflag == null || ls_demflag.length == 0 || ls_demflag == ""){ 
+                        ls_demflag = "%" ;
+                    }  
+                    if(ls_demflag == "출하여부"){ls_demflag = "%" ;}          
+                    if(ls_lotno == null || ls_lotno.length == 0 || ls_lotno == ""){ 
+                        ls_lotno = "%" ;
+                    }   
+                    $.ajax({
+                        url: '/app02m/index21/listbarcode',   
+                        type:"POST",
+                        data: { 
+                            "frdate" :ls_frdate, 
+                            "todate" :ls_todate, 
+                            "lotno" :ls_lotno,  
+                            "demflag" :ls_demflag, 
+                        }, 
+                        async:false,
+                        success:function(data){  
+                            //console.log(data)
+                            tabF_grid(data, ls_tab);
+                        },error:function(e){
+                            console.log("error");                            
+                        }
+                    }).done(function(fragment){           
+
+                    })  
+
+                } else if (ls_tab == "D"){ 
+                    ls_demflag = document.getElementById('indemflag03').value ;                       
+                    ls_remark     =  document.getElementById("inremark").value;   
+                    var  ls_frdate     =  convert_date(wfrdate02.value);                    
+                    var  ls_todate     =  convert_date(wtodate02.value);     
+                    if(ls_demflag == null || ls_demflag.length == 0 || ls_demflag == ""){ 
+                        ls_demflag = "%" ;
+                    }  
+                    if(ls_demflag == "출하여부"){ls_demflag = "%" ;}          
+                    if(ls_remark == null || ls_remark.length == 0 || ls_remark == ""){ 
+                        ls_remark = "%" ;
+                    }   
+                    $.ajax({
+                        url: '/app02m/index21/listjiyuk',   
+                        type:"POST",
+                        data: { 
+                            "frdate" :ls_frdate, 
+                            "todate" :ls_todate, 
+                            "remark" :ls_remark,  
+                            "demflag" :ls_demflag, 
+                        }, 
+                        async:false,
+                        success:function(data){  
+                            //console.log(data)
+                            tabG_grid(data, ls_tab);
+                        },error:function(e){
+                            console.log("error");                            
+                        }
+                    }).done(function(fragment){           
+
+                    })  
+
+                }             
             }    
         
                 //  tab01 grid data 수집
@@ -1469,7 +1730,7 @@
                         }else{
                             lb_dembool = false; 
                         }
-                        console.log(lb_demflag)
+                        //console.log(lb_demflag)
                         wtab01_data.push({
                             id: i, 
                             index: cnt, 
@@ -1567,7 +1828,268 @@
                     wtab02Grid.columns.push(cols);                          
                 }
     
-            }        
+            }       
+
+            //  tab01 grid data 수집
+            function tabF_grid(data, arg_tab){
+                var wtab03Dto  = data;    
+                var wtab03_data = []; 
+                var cnt = 1;  
+                for (var i = 0; i < wtab03Dto.length; i++) {
+                    var ls_montxt = wtab03Dto[i]["inmonth"] + ' ' + wtab03Dto[i]["inweeks"] + '주차'
+                    var lb_demflag = wtab03Dto[i]["demflag"];
+                    var lb_dembool = false;
+                    if(lb_demflag == "1"){
+                        lb_dembool = true;
+                    }else{
+                        lb_dembool = false; 
+                    }
+                    //console.log(lb_demflag)
+                    wtab03_data.push({
+                        id: i, 
+                        index: cnt, 
+                        deldate: wtab03Dto[i]["deldate"], 
+                        schdate: wtab03Dto[i]["schdate"],
+                        delnum: wtab03Dto[i]["delnum"], 
+                        ibgseq: wtab03Dto[i]["delseq"],   
+                        balno: wtab03Dto[i]["balno"],  
+                        acorp: wtab03Dto[i]["acorp"],     
+                        inmonth: wtab03Dto[i]["inmonth"],     
+                        inweeks: wtab03Dto[i]["inweeks"], 
+                        pcode: wtab03Dto[i]["pcode"],  
+                        pname: wtab03Dto[i]["pname"], 
+                        qty: wtab03Dto[i]["qty"], 
+                        boxnum: wtab03Dto[i]["boxnum"],  
+                        lotno: wtab03Dto[i]["lotno"],     
+                        demflag: lb_dembool,     
+                        inmonth_text:ls_montxt, 
+                        
+                    });
+                    cnt++;
+                }    
+                wtab05Grid.columns.clear();  
+                wtab05Grid.autoGenerateColumns = false;  
+                view_p01tab05page.sourceCollection  = wtab03_data;
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'lotno';
+                cols.header = '바코드';
+                cols.align = "center";
+                cols.width = 150;           
+                wtab05Grid.columns.push(cols);    
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'deldate';
+                cols.header = '출하예정일';
+                cols.align = "center";
+                cols.width = 120;           
+                wtab05Grid.columns.push(cols);   
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'balno';
+                cols.header = '발주번호';
+                cols.align = "center";
+                cols.width = 120;           
+                wtab05Grid.columns.push(cols);   
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'pcode';
+                cols.header = '품목코드';
+                cols.align = "center";
+                cols.width = 150;           
+                wtab05Grid.columns.push(cols);    
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'pname';
+                cols.header = '품목명';
+                cols.align = "center";
+                cols.width = 200;           
+                wtab05Grid.columns.push(cols);   
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'deldate';
+                cols.header = '출하예정일자';
+                cols.align = "center";
+                cols.width = 150;           
+                wtab05Grid.columns.push(cols);   
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'schdate';
+                cols.header = '출하일자';
+                cols.align = "center";
+                cols.width = 150;           
+                wtab05Grid.columns.push(cols);  
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'inmonth_text';
+                cols.header = '주차';
+                cols.align = "center";
+                cols.width = 120;           
+                wtab05Grid.columns.push(cols);   
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'qty';
+                cols.header = '출하수량';
+                cols.align = "center";
+                cols.width = 90;           
+                wtab05Grid.columns.push(cols);  
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'boxnum';
+                cols.header = '박스';
+                cols.align = "center";
+                cols.width = 90;           
+                wtab05Grid.columns.push(cols);   
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'acorp';
+                cols.header = '납품처';
+                cols.align = "left";
+                cols.width = 180;           
+                wtab05Grid.columns.push(cols);   
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'demflag';
+                cols.header = '출하';
+                cols.align = "left";
+                cols.width = 100;           
+                cols.cssClass='switch'    
+                wtab05Grid.columns.push(cols);                          
+            
+
+        }       
+        
+
+            //  tab01 grid data 수집
+            function tabG_grid(data, arg_tab){
+                var wtab06Dto  = data;    
+                var wtab06_data = [];  
+                var cnt = 1;  
+                for (var i = 0; i < wtab06Dto.length; i++) {
+                    var ls_montxt = wtab06Dto[i]["inmonth"] + ' ' + wtab06Dto[i]["inweeks"] + '주차'
+                    var lb_demflag = wtab06Dto[i]["demflag"];
+                    var lb_dembool = false;
+                    if(lb_demflag == "1"){
+                        lb_dembool = true;
+                    }else{
+                        lb_dembool = false; 
+                    }
+                    //console.log(lb_demflag)
+                    wtab06_data.push({
+                        id: i, 
+                        index: cnt, 
+                        deldate: wtab06Dto[i]["deldate"], 
+                        schdate: wtab06Dto[i]["schdate"],
+                        delnum: wtab06Dto[i]["delnum"], 
+                        ibgseq: wtab06Dto[i]["delseq"],   
+                        balno: wtab06Dto[i]["balno"],  
+                        acorp: wtab06Dto[i]["acorp"],     
+                        inmonth: wtab06Dto[i]["inmonth"],     
+                        inweeks: wtab06Dto[i]["inweeks"], 
+                        pcode: wtab06Dto[i]["pcode"],  
+                        pname: wtab06Dto[i]["pname"], 
+                        qty: wtab06Dto[i]["qty"], 
+                        boxnum: wtab06Dto[i]["boxnum"],  
+                        lotno: wtab06Dto[i]["lotno"], 
+                        remark: wtab06Dto[i]["remark"],     
+                        demflag: lb_dembool,     
+                        inmonth_text:ls_montxt, 
+                        
+                    });
+                    cnt++;
+                }    
+                wtab06Grid.columns.clear();  
+                wtab06Grid.autoGenerateColumns = false;  
+                view_p01tab06page.sourceCollection  = wtab06_data;
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'remark';
+                cols.header = '지역';
+                cols.align = "left";
+                cols.width = 150;           
+                wtab06Grid.columns.push(cols);    
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'deldate';
+                cols.header = '출하예정일';
+                cols.align = "center";
+                cols.width = 120;           
+                wtab06Grid.columns.push(cols);   
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'balno';
+                cols.header = '발주번호';
+                cols.align = "center";
+                cols.width = 120;           
+                wtab06Grid.columns.push(cols);   
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'pcode';
+                cols.header = '품목코드';
+                cols.align = "center";
+                cols.width = 150;           
+                wtab06Grid.columns.push(cols);    
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'pname';
+                cols.header = '품목명';
+                cols.align = "center";
+                cols.width = 200;           
+                wtab06Grid.columns.push(cols);  
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'schdate';
+                cols.header = '출하일자';
+                cols.align = "center";
+                cols.width = 150;           
+                wtab06Grid.columns.push(cols);  
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'inmonth_text';
+                cols.header = '주차';
+                cols.align = "center";
+                cols.width = 120;           
+                wtab06Grid.columns.push(cols);   
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'qty';
+                cols.header = '출하수량';
+                cols.align = "center";
+                cols.width = 90;           
+                wtab06Grid.columns.push(cols);  
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'boxnum';
+                cols.header = '박스';
+                cols.align = "center";
+                cols.width = 90;           
+                wtab06Grid.columns.push(cols);   
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'acorp';
+                cols.header = '납품처';
+                cols.align = "left";
+                cols.width = 180;           
+                wtab06Grid.columns.push(cols);   
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'lotno';
+                cols.header = '바코드';
+                cols.align = "center";
+                cols.width = 150;           
+                wtab06Grid.columns.push(cols);    
+    
+    
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'demflag';
+                cols.header = '출하';
+                cols.align = "left";
+                cols.width = 100;           
+                cols.cssClass='switch'    
+                wtab06Grid.columns.push(cols);                          
+            
+
+        }            
                 //deldate, delnum, cltcd, acorp, inmonth ,
                 //inweeks,   perid, pernm, remark, lotno,   
                 // ostore, balno,  schdate demflag
@@ -1691,7 +2213,10 @@
                 }
                 if(arg == "A"){
                     searchCode = document.getElementById('pname').value; 
-                }    
+                }   
+                if(arg == "B"){
+                    searchCode = document.getElementById('pname_jo').value; 
+                }  
                 $.ajax({
                             url: '/app01m/index03/list',  
                             type:"POST",
@@ -1892,19 +2417,24 @@
             }     
                 
             function wcifChk1_a(arg1, arg2, arg3, arg4){  
-                document.getElementById('pcode').value = arg1;  
-                document.getElementById('pname').value = arg2;
-                document.getElementById('psize').value = arg3;
-                document.getElementById('punit').value = arg4; 
-                  
-                var temp = view_p01tab04page.addNew(); 
-                let e = new wijmo.grid.CellEditEndingEventArgs(wtab04Grid.cells, wtab04Grid.selection); //cellEditEndingEventArgs 생성
+                var ls_tab = document.getElementById('tabvalue').value;   
+                if(ls_tab =="B"){
+                    document.getElementById('pcode_jo').value = arg1;  
+                    document.getElementById('pname_jo').value = arg2; 
+                }else{
+                    document.getElementById('pcode').value = arg1;  
+                    document.getElementById('pname').value = arg2;
+                    document.getElementById('psize').value = arg3;
+                    document.getElementById('punit').value = arg4; 
+                    
+                    var temp = view_p01tab04page.addNew(); 
+                    let e = new wijmo.grid.CellEditEndingEventArgs(wtab04Grid.cells, wtab04Grid.selection); //cellEditEndingEventArgs 생성
 
-                wtab04Grid.onRowAdded(e) 
-                wtab04Grid.setCellData(wtab04Grid.rows.length-1, 0, arg1);
-                wtab04Grid.setCellData(wtab04Grid.rows.length-1, 1, arg2);
-                wtab04Grid.setCellData(wtab04Grid.rows.length-1, 2, arg3); 
-                       
+                    wtab04Grid.onRowAdded(e) 
+                    wtab04Grid.setCellData(wtab04Grid.rows.length-1, 0, arg1);
+                    wtab04Grid.setCellData(wtab04Grid.rows.length-1, 1, arg2);
+                    wtab04Grid.setCellData(wtab04Grid.rows.length-1, 2, arg3); 
+                }       
                  $("#wciflist_rtn").trigger("click");
             }
          
@@ -1916,6 +2446,9 @@
                 }
                 if(arg == "A"){
                     searchCode = document.getElementById('cltnm').value;   
+                } 
+                if(arg == "B"){
+                    searchCode = document.getElementById('bcltnm').value;   
                 } 
                 if(searchCode == null || searchCode.length == 0 || searchCode == ""){ 
                     searchCode = "%"         ;
@@ -1981,15 +2514,25 @@
                 wincltnmGrid.columns.push(cols); 
             }
         
-            function wcifChk_a(arg1, arg2, arg3, arg4, arg5){                       
-                document.getElementById('acorp1').value = arg1;  
-                document.getElementById('acorp2').value = arg2;  
-                document.getElementById('acorp3').value = arg3;  
-                document.getElementById('acode').value = arg4;  
-                document.getElementById('searchCode').value = arg5;
-                document.getElementById('cltnm').value = arg5; 
-                 
-                wtab04Grid.newRowAtTop = true;  
+            function wcifChk_a(arg1, arg2, arg3, arg4, arg5){   
+                var ls_tab = document.getElementById('tabvalue').value; 
+                if(ls_tab == "B"){
+                    document.getElementById('bacorp1').value = arg1;  
+                    document.getElementById('bacorp2').value = arg2;  
+                    document.getElementById('bacorp3').value = arg3;  
+                    document.getElementById('bacode').value = arg4;   ;
+                    document.getElementById('bcltnm').value = arg5; 
+
+                }else{
+                    document.getElementById('acorp1').value = arg1;  
+                    document.getElementById('acorp2').value = arg2;  
+                    document.getElementById('acorp3').value = arg3;  
+                    document.getElementById('acode').value = arg4;  
+                    document.getElementById('searchCode').value = arg5;
+                    document.getElementById('cltnm').value = arg5; 
+                    
+                    wtab04Grid.newRowAtTop = true;  
+                }
                 // wtab04Grid.collectionView.addNew(2);
 
                 $("#wincltnmmodal_btn").trigger("click");
@@ -2098,20 +2641,31 @@
                     format: 'yyyy-MM-dd', 
                 });
                  
-                
-                wfrdate02 = new wijmo.input.InputDate('#frdate02', {
+                wfrdate = new wijmo.input.InputDate('#frdate', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd', 
+                                });
+                wtodate = new wijmo.input.InputDate('#todate', {
                     isRequired: false,
                     value: null,
                     placeholder: '',
                     format: 'yyyy-MM-dd', 
-                });
-                
+                }); 
+                wfrdate02 = new wijmo.input.InputDate('#frdate02', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd', 
+                                });
                 wtodate02 = new wijmo.input.InputDate('#todate02', {
                     isRequired: false,
                     value: null,
                     placeholder: '',
                     format: 'yyyy-MM-dd', 
-                });
+                }); 
+                 
  
                 
                 var result = new Date();
@@ -2121,8 +2675,10 @@
                 showCurrentDate(wdeldate, 5);  
                         
                 
+                wfrdate.value = ls_date;    
+                wtodate.value = ls_date;  
                 wfrdate02.value = ls_date;    
-                wtodate02.value = ls_date;   
+                wtodate02.value = ls_date;     
             } 
             // 현재 선택된 날짜 + 5일
             function showCurrentDate(ctrl, days) {

@@ -44,6 +44,13 @@ public class Appcom01Service {
     public List<FPLAN_VO> GetFPLAN_List02_HIS(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_HIS(parm);
     }
+
+    public List<FPLAN_VO> GetFPLAN_List02_HISMON(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_HISMON(parm);
+    }
+    public List<FPLAN_VO> GetFPLAN_List02_HISPER(FPLAN_VO parm){
+        return FPLANW010_mapper.GetFPLAN_List02_HISPER(parm);
+    }
     public List<FPLAN_VO> GetFPLAN_List02_HIS_JO(FPLAN_VO parm){
         return FPLANW010_mapper.GetFPLAN_List02_HIS_JO(parm);
     }

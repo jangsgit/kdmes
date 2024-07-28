@@ -418,6 +418,7 @@
                                    if(ls_lotno == null || ls_lotno.length == 0 || ls_lotno == ""){ 
                                         ls_lotno    = "%"
                                    }   
+                                    var ls_inwrmc    = "%"
                                    $.ajax({
                                        url: '/app03m/index13/list01',  
                                        type:"POST",
@@ -426,6 +427,7 @@
                                            "todate"      : ls_todate, 
                                            "inwrps"      : ls_inwrps,  
                                            "lotno"      : ls_lotno, 
+                                           "inwrmc"      : ls_inwrmc, 
                                        }, 
                                        async:false,
                                        success:function(data){ 
@@ -539,6 +541,7 @@
                                 inweeks: wtab01Dto[i]["inweeks"], 
                                 workhr: wtab01Dto[i]["workhr"], 
                                 workmin: wtab01Dto[i]["workmin"],  
+                                wbdyul: wtab01Dto[i]["wbdyul"], 
                                 inmonthtxt : ls_inmonthtxt,
                                 ginputdate: ls_gindate,  
                                 
@@ -673,7 +676,15 @@
                         cols.align = "center";
                         cols.width = 80;  
                         cols.format = 'n0'
-                        wtab01Grid.columns.push(cols);     
+                        wtab01Grid.columns.push(cols);  
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'wbdyul';
+                        cols.header = '불량율(%)';
+                        cols.align = "right";
+                        cols.width = 90;  
+                        cols.format = 'n0'
+                        wtab01Grid.columns.push(cols);      
 
                         cols = new wijmo.grid.Column(); 
                         cols.binding = 'lotno';
@@ -798,13 +809,18 @@
                     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                     
                     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
-                    document.getElementById("inwrpsnm").addEventListener("keyup", (e)=>{ 
-                        if(e.keyCode === 13){  
-                            document.getElementById("innamebtn").click();
-                            insaflag = "A"; 
-                            //insaSearchList_rtn("A"); 
-                        }
-                    }); 
+                        document.getElementById("inwrpsnm").addEventListener("keyup", (e)=>{ 
+                            if(e.keyCode === 13){  
+                                document.getElementById("innamebtn").click();
+                                insaflag = "A"; 
+                                //insaSearchList_rtn("A"); 
+                            }
+                        });  
+                        document.getElementById("inwrpsnm").addEventListener("click", (e)=>{  
+                                document.getElementById("innamebtn").click();
+                                insaflag = "A"; 
+                                //insaSearchList_rtn("A");  
+                        }); 
                     
                        $(document).ready(function() {   
                            init()          

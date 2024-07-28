@@ -714,13 +714,14 @@ public class App02CrudController {
         return indexCa613ListDto;
     }
 
-
+    //출하현황
     @GetMapping(value="/index21/listmap")
     public Object App21ListMap_index(@RequestParam("inmonth") String inmonth,
                                      @RequestParam("inweeks") String inweeks,
                                      @RequestParam("balno") String balno,
                                      @RequestParam("pcode") String pcode,
                                      @RequestParam("demflag") String demflag,
+                                     @RequestParam("acode") String acode,
                                      Model model, HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -734,12 +735,70 @@ public class App02CrudController {
             _indexCa613Dto.setBalno(balno);
             _indexCa613Dto.setPcode(pcode);
             _indexCa613Dto.setDemflag(demflag);
-
+            _indexCa613Dto.setCltcd(acode);
             _indexCa613ListDto = service10.SelectDa037List(_indexCa613Dto);
             model.addAttribute("index15ListMap",_indexCa613ListDto);
 
         } catch (Exception ex) {
             log.info("App15ListMap_index Exception =====>" + ex.toString());
+        }
+
+        return _indexCa613ListDto;
+    }
+
+
+    //출하 바코드조회
+    @GetMapping(value="/index21/listbarcode")
+    public Object App21ListBarcode_index(@RequestParam("frdate") String frdate,
+                                     @RequestParam("todate") String todate,
+                                     @RequestParam("lotno") String lotno,
+                                     @RequestParam("demflag") String demflag,
+                                     Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+
+        try {
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setLotno(lotno);
+            _indexCa613Dto.setDemflag(demflag);
+            _indexCa613ListDto = service10.SelectDa037ListBarcd(_indexCa613Dto);
+            model.addAttribute("index15ListMap",_indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App21ListBarcode_index Exception =====>" + ex.toString());
+        }
+
+        return _indexCa613ListDto;
+    }
+
+
+    //출하 바코드조회
+    @GetMapping(value="/index21/listjiyuk")
+    public Object App21ListJiyuk_index(@RequestParam("frdate") String frdate,
+                                         @RequestParam("todate") String todate,
+                                         @RequestParam("remark") String remark,
+                                         @RequestParam("demflag") String demflag,
+                                         Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+
+        try {
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setRemark(remark);
+            _indexCa613Dto.setDemflag(demflag);
+            _indexCa613ListDto = service10.SelectDa037ListJiyuk(_indexCa613Dto);
+            model.addAttribute("index15ListMap",_indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App21ListJiyuk_index Exception =====>" + ex.toString());
         }
 
         return _indexCa613ListDto;

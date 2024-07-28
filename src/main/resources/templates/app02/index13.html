@@ -519,13 +519,17 @@
                if(inwrpsnm == null || inwrpsnm.length == 0 || inwrpsnm == ""){  
                     ls_inwrps = '%';
                }  
+               var ls_inwrmc    = "%"
+               var ls_lotno    = "%"
                $.ajax({
                    url: '/app03m/index13/list01',  
                    type:"POST",
                    data: { 
                        "frdate"      : ls_frdate,  
                        "todate"      : ls_todate,  
-                       "inwrps"      : ls_inwrps,  
+                       "inwrps"      : ls_inwrps,    
+                        "lotno"      : ls_lotno, 
+                        "inwrmc"      : ls_inwrmc, 
                    }, 
                    async:false,
                    success:function(data){ 

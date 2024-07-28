@@ -402,6 +402,7 @@
                MAX(C.jpum) AS pname,
                MAX(C.jgugek) AS psize,
                MAX(C.jdanwy) AS punit,
+               MAX(C.jchajong) AS jchajong,
                MAX(A.prod_sdate) as prod_sdate,
                MAX(A.prod_edate) AS prod_edate,
                MAX(D.wboxsu) AS wboxsu,
@@ -425,10 +426,9 @@
 
         FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
             LEFT OUTER JOIN  TB_FPLAN_W010 E ON D.lotno   = E.glotnono
-			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = D.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = D.plan_no AND Len( ISNULL(A.wflag,'') ) > 0  AND   ( ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') ) ,
             JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND ( ISNULL(D.lotno,'')   lIKE  concat('%',#{lotno},'%') )
           AND ( Len( ISNULL(A.wflag,'') ) > 0  )
           AND D.indate between #{frdate} and #{todate}
           AND C.w_b_gubn NOT IN ('H')
@@ -451,6 +451,7 @@
                MAX(C.jpum) AS pname,
                MAX(C.jgugek) AS psize,
                MAX(C.jdanwy) AS punit,
+               MAX(C.jchajong) AS jchajong,
                MAX(A.prod_sdate) as prod_sdate,
                MAX(A.prod_edate) AS prod_edate,
                MAX(D.wboxsu) AS wboxsu,
@@ -499,6 +500,7 @@
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
+               C.jchajong AS jchajong,
                C.jdanwy AS punit,
                A.lotno as lotno,
                (A.prod_sdate) as prod_sdate,
@@ -508,26 +510,97 @@
                E.wotqt - E.wbdqt as prod_qty,
                E.gqty01 as end_qty,
                D.lotno AS glotnono,
-               D.indate as qcdate,
+               substring(D.indate, 3,2)+ '-' + substring(D.indate, 5,2)+ '- ' + substring(D.indate, 7,2)  as qcdate,
                D.wqcqt as wqcqt,
                isnull(D.wotqt,0) as owqty,
+               isnull(D.wbdqt,0) as wbdqt,
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
                D.winps as winps,
                D.wrps as wrps,
+                isnull(D.demflag,'0') as demflag,
                D.wremark as wremark,
                (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '') END ) wrpsnm01,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
         FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
 			LEFT OUTER JOIN  TB_FPLAN_IWORK F ON D.lotno   = F.glotno
-			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = F.plan_no AND Len( ISNULL(A.wflag,'') ) > 0
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = F.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 AND ( ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
             LEFT OUTER JOIN  TB_FPLAN_W010  E ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
             JCODE C WITH(NOLOCK),
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
-          AND ( ISNULL(D.lotno,'')   lIKE  concat('%',#{lotno},'%') )
           AND C.w_b_gubn NOT IN ('H')
+          AND D.indate between #{fdate} and #{tdate}
+          AND isnull(D.wrps, '')   lIKE  concat('%',#{wrps},'%')
         ORDER BY D.lotno, A.LOTNO
+        ]]>
+    </select>
+
+
+    <select id="GetFPLAN_List02_HISMON"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
+        <![CDATA[
+        SELECT D.custcd,
+               D.spjangcd,
+               substring(LEFT(D.indate,6), 3,2)+ '/' + substring(LEFT(D.indate,6), 5,2)  as qcdate,
+               SUM(isnull(D.wotqt,0))  - SUM(isnull(D.wbdqt,0))   as prod_qty,
+               SUM(isnull(D.wqcqt,0))  as end_qty,
+               SUM(isnull(D.wqcqt,0)) as wqcqt,
+               SUM(isnull(D.wotqt,0)) as owqty,
+               SUM(isnull(D.wbdqt,0)) as wbdqt,
+               SUM(isnull(D.wotqt,0)) - SUM(isnull(D.wbdqt,0)) as otqty,
+			   ISNULL(DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', ''),'')  wrpsnm02,
+               D.wrps as wrps
+        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+        WHERE   LEFT(D.indate,6) between #{fdate} and #{tdate}
+          AND isnull(D.wrps, '')   lIKE  concat('%',#{wrps},'%')
+		GROUP BY LEFT(D.indate,6), D.wrps, D.custcd,        D.spjangcd
+        ORDER BY D.wrps
+        ]]>
+    </select>
+
+    <select id="GetFPLAN_List02_HISPER"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
+        <![CDATA[
+        SELECT A.custcd,
+               A.spjangcd,
+               (A.plan_no) AS plan_no,
+               A.cltcd,
+               B.acorp as cltnm,
+               A.pcode,
+               C.jpum AS pname,
+               C.jgugek AS psize,
+               C.jchajong AS jchajong,
+               C.jdanwy AS punit,
+               A.lotno as lotno,
+               (A.prod_sdate) as prod_sdate,
+               (A.prod_edate) AS prod_edate,
+               E.wfrdt as wfrdt,
+               E.wtrdt as wtrdt,
+               E.wotqt - E.wbdqt as prod_qty,
+               E.gqty01 as end_qty,
+               D.lotno AS glotnono,
+               substring(D.indate, 3,2)+ '-' + substring(D.indate, 5,2)+ '- ' + substring(D.indate, 7,2)  as qcdate,
+               D.wqcqt as wqcqt,
+               isnull(D.wotqt,0) as owqty,
+               isnull(D.wbdqt,0) as wbdqt,
+               isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
+               D.winps as winps,
+               D.wrps as wrps,
+                isnull(D.demflag,'0') as demflag,
+               D.wremark as wremark,
+               (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, E.wrps, '', '') END ) wrpsnm01,
+               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', A.custcd, D.wrps, '', '') END ) wrpsnm02
+        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+			LEFT OUTER JOIN  TB_FPLAN_IWORK F ON D.lotno   = F.glotno
+			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = F.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 AND ( ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+            LEFT OUTER JOIN  TB_FPLAN_W010  E ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
+            JCODE C WITH(NOLOCK),
+            CIF B WITH(NOLOCK)
+        WHERE (A.pcode              = C.JKEY)
+          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
+          AND C.w_b_gubn NOT IN ('H')
+          AND D.indate between #{fdate} and #{tdate}
+          AND isnull(D.wrps, '')   lIKE  concat('%',#{wrps},'%')
+        ORDER BY D.wrps, D.indate
         ]]>
     </select>
 

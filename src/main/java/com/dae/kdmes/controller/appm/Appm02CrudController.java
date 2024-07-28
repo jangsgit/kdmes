@@ -141,7 +141,10 @@ public class Appm02CrudController {
 
 
     @RequestMapping(value="/w020his", method = RequestMethod.POST)
-    public Object AppW020HIS_index(@RequestParam("searchtxt") String searchtxt
+    public Object AppW020HIS_index(@RequestParam("frdate") String frdate,
+                                   @RequestParam("todate") String todate,
+                                   @RequestParam("searchtxt") String searchtxt,
+                                   @RequestParam("inwinps") String inwinps
             ,Model model, HttpServletRequest request) throws Exception {
         CommDto.setMenuTitle("검사공정");  //
         CommDto.setMenuUrl("생산공정>검사공정");
@@ -150,10 +153,56 @@ public class Appm02CrudController {
         List<FPLAN_VO> itemDtoList = new ArrayList<>();
         String fdate = getFrDate();
         String tdate = getToDate();
-        fplanDto.setFdate(fdate);
-        fplanDto.setTdate(tdate);
+        fplanDto.setFdate(frdate);
+        fplanDto.setTdate(todate);
         fplanDto.setLotno(searchtxt);
+        fplanDto.setWrps(inwinps);
         itemDtoList = appcom01Service.GetFPLAN_List02_HIS(fplanDto);
+        return itemDtoList;
+    }
+
+
+    @RequestMapping(value="/w020hismon", method = RequestMethod.POST)
+    public Object AppW020HISMON_index(@RequestParam("frdate") String frdate,
+                                   @RequestParam("todate") String todate,
+                                   @RequestParam("searchtxt") String searchtxt,
+                                   @RequestParam("inwinps") String inwinps
+            ,Model model, HttpServletRequest request) throws Exception {
+        CommDto.setMenuTitle("검사공정");  //
+        CommDto.setMenuUrl("생산공정>검사공정");
+        CommDto.setMenuCode("appcom01");
+        FPLAN_VO fplanDto = new FPLAN_VO();
+        List<FPLAN_VO> itemDtoList = new ArrayList<>();
+        String fdate = getFrDate();
+        String tdate = getToDate();
+        frdate = frdate.substring(0,6);
+        todate = todate.substring(0,6);
+        fplanDto.setFdate(frdate);
+        fplanDto.setTdate(todate);
+        fplanDto.setLotno(searchtxt);
+        fplanDto.setWrps(inwinps);
+        itemDtoList = appcom01Service.GetFPLAN_List02_HISMON(fplanDto);
+        return itemDtoList;
+    }
+
+    @RequestMapping(value="/w020per", method = RequestMethod.POST)
+    public Object AppW020PER_index(@RequestParam("frdate") String frdate,
+                                   @RequestParam("todate") String todate,
+                                   @RequestParam("searchtxt") String searchtxt,
+                                   @RequestParam("inwinps") String inwinps
+            ,Model model, HttpServletRequest request) throws Exception {
+        CommDto.setMenuTitle("검사공정");  //
+        CommDto.setMenuUrl("생산공정>검사공정");
+        CommDto.setMenuCode("appcom01");
+        FPLAN_VO fplanDto = new FPLAN_VO();
+        List<FPLAN_VO> itemDtoList = new ArrayList<>();
+        String fdate = getFrDate();
+        String tdate = getToDate();
+        fplanDto.setFdate(frdate);
+        fplanDto.setTdate(todate);
+        fplanDto.setLotno(searchtxt);
+        fplanDto.setWrps(inwinps);
+        itemDtoList = appcom01Service.GetFPLAN_List02_HISPER(fplanDto);
         return itemDtoList;
     }
 

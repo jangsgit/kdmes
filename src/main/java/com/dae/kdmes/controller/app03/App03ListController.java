@@ -146,6 +146,7 @@ public class App03ListController {
                                     @RequestParam("todate") String todate,
                                     @RequestParam("inwrps") String inwrps,
                                     @RequestParam("lotno") String lotno,
+                                    @RequestParam("inwrmc") String inwrmc,
                                     Model model, HttpServletRequest request) throws Exception{
         List<Index11Dto> _index11DtoList = new ArrayList<>();
         try {
@@ -156,7 +157,7 @@ public class App03ListController {
             _index11Dto.setTodate(todate);
             _index11Dto.setWrps(inwrps);
             _index11Dto.setLotno(lotno);
-
+            _index11Dto.setWrmcnm(inwrmc);
 //            log.info("frdate =====>" + frdate);
 //            log.info("todate =====>" + todate);
 //            log.info("inwrps =====>" + inwrps);
@@ -345,6 +346,114 @@ public class App03ListController {
         return index11DtoList;
     }
 
+
+    //일별 불량별  검사현황
+    @GetMapping(value="/index56/list01")
+    public Object App56List01_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("wcode") String wcode,
+                                    @RequestParam("lotno") String lotno,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+//            String ls_yeare = frdate.substring(0,4);
+//            String ls_mm = frdate.substring(5,7);
+//            String ls_dd = frdate.substring(8,10);
+//            frdate =  ls_yeare + ls_mm + ls_dd;
+//            ls_yeare = todate.substring(0,4);
+//            ls_mm = todate.substring(5,7);
+//            ls_dd = todate.substring(8,10);
+//            todate =  ls_yeare + ls_mm + ls_dd;
+
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11Dto.setWcode(wcode);
+            index11Dto.setLotno(lotno);
+
+            index11DtoList = service11.getIndex56List01(index11Dto);
+
+            model.addAttribute("itemList",index11DtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App14List01_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11DtoList;
+    }
+
+
+
+    //월별 불량별 검사현황
+    @GetMapping(value="/index56/list02")
+    public Object App56List02_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("wcode") String wcode,
+                                    @RequestParam("lotno") String lotno,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+//            String ls_yeare = frdate.substring(0,4);
+//            String ls_mm = frdate.substring(5,7);
+//            String ls_dd = frdate.substring(8,10);
+//            frdate =  ls_yeare + ls_mm + ls_dd;
+//            ls_yeare = todate.substring(0,4);
+//            ls_mm = todate.substring(5,7);
+//            ls_dd = todate.substring(8,10);
+//            todate =  ls_yeare + ls_mm + ls_dd;
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11Dto.setWcode(wcode);
+            index11Dto.setLotno(lotno);
+
+            index11DtoList = service11.getIndex56List02(index11Dto);
+
+            model.addAttribute("itemList",index11DtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App14List02_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11DtoList;
+    }
+
+    //유형별 불량별 검사현황
+    @GetMapping(value="/index56/list03")
+    public Object App56List03_index(@RequestParam("frdate") String frdate,
+                                    @RequestParam("todate") String todate,
+                                    @RequestParam("wcode") String wcode,
+                                    @RequestParam("lotno") String lotno,
+                                    Model model, HttpServletRequest request) throws Exception{
+        try {
+
+//            String ls_yeare = frdate.substring(0,4);
+//            String ls_mm = frdate.substring(5,7);
+//            String ls_dd = frdate.substring(8,10);
+//            frdate =  ls_yeare + ls_mm + ls_dd;
+//            ls_yeare = todate.substring(0,4);
+//            ls_mm = todate.substring(5,7);
+//            ls_dd = todate.substring(8,10);
+//            todate =  ls_yeare + ls_mm + ls_dd;
+            index11Dto.setFrdate(frdate);
+            index11Dto.setTodate(todate);
+            index11Dto.setWcode(wcode);
+            index11Dto.setLotno(lotno);
+
+            index11DtoList = service11.getIndex56List03(index11Dto);
+
+            model.addAttribute("itemList",index11DtoList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App14List03_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return index11DtoList;
+    }
 
     //출하현황
     @GetMapping(value="/index16/list01")

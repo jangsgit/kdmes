@@ -343,10 +343,46 @@
         and B.inmonth Like concat('%',#{inmonth},'%')
         and B.inweeks Like concat('%',#{inweeks},'%')
         and B.balno Like concat('%',#{balno},'%')
+        and B.cltcd Like concat('%',#{cltcd},'%')
         and isnull(B.demflag, '0') Like  concat('%',#{demflag},'%')
         ORDER BY B.inmonth, B.inweeks, B.balno
         ]]>
     </select>
+
+
+    <select id="SelectDa037ListBarcd" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        <![CDATA[
+        SELECT B.balno, A.pcode, A.pname, B.inmonth, B.inweeks, A.qty, A.delnum, A.delseq, B.acorp,B.demflag, B.lotno,
+                Left(B.deldate,4) + '-' + substring(B.deldate, 5,2)+ '-' + substring(B.deldate, 7,2) as deldate,
+                Left(B.schdate,4) + '-' + substring(B.schdate, 5,2)+ '-' + substring(B.schdate, 7,2) as schdate,
+                case when C.jboxsu1 > 0 then  CAST(Round(A.qty / isnull(C.jboxsu1,0) ,0) AS int) else 0 end   as boxnum
+        FROM TB_DA037 A WITH (NOLOCK), TB_DA036 B WITH (NOLOCK), jcode C WITH (NOLOCK)
+        WHERE A.deldate = B.deldate and A.delnum = B.delnum
+        AND A.pcode = C.jkey
+        AND A.deldate between #{frdate} and #{todate}
+        and B.lotno Like concat('%',#{lotno},'%')
+        and isnull(B.demflag, '0') Like  concat('%',#{demflag},'%')
+        ORDER BY B.inmonth, B.inweeks, B.balno
+        ]]>
+    </select>
+
+
+    <select id="SelectDa037ListJiyuk" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        <![CDATA[
+        SELECT B.balno, A.pcode, A.pname, B.inmonth, B.inweeks, A.qty, A.delnum, A.delseq, B.acorp,B.demflag, B.lotno, B.remark,
+                Left(B.deldate,4) + '-' + substring(B.deldate, 5,2)+ '-' + substring(B.deldate, 7,2) as deldate,
+                Left(B.schdate,4) + '-' + substring(B.schdate, 5,2)+ '-' + substring(B.schdate, 7,2) as schdate,
+                case when C.jboxsu1 > 0 then  CAST(Round(A.qty / isnull(C.jboxsu1,0) ,0) AS int) else 0 end   as boxnum
+        FROM TB_DA037 A WITH (NOLOCK), TB_DA036 B WITH (NOLOCK), jcode C WITH (NOLOCK)
+        WHERE A.deldate = B.deldate and A.delnum = B.delnum
+        AND A.pcode = C.jkey
+        AND A.deldate between #{frdate} and #{todate}
+        and isnull(B.remark,'') Like concat('%',#{remark},'%')
+        and isnull(B.demflag, '0') Like  concat('%',#{demflag},'%')
+        ORDER BY B.inmonth, B.inweeks, B.balno
+        ]]>
+    </select>
+
 
     <select id="SelectCa613ChulList"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" resultType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto">
 
