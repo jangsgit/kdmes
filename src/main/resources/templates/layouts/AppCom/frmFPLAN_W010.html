@@ -272,7 +272,8 @@
                                                     <div class="col-auto">
                                                         <div id="statusdis01"></div><input class="form-control form-control-sm"  type="hidden"  id="indecision"  />  
                                                     </div> 
-                                                    <div id="barcode"  ></div>
+                                                    <!-- <div id="barcode"  ></div> -->
+                                                    <img id="barcodeImage" src=""  style="width: 300px; height: 100px;">
  
                                                     <!-- <div class="col-auto">
                                                         <button  class="btn btn-outline-primary me-1 mb-1" type="button" style=" height:50px;  ">공정생성 </button>
@@ -2330,7 +2331,34 @@
             document.getElementById('delcode').value= result; 
     }  
     let barcodeControl = null;
+
+
     function prt_btn(){
+        var ls_inlotno   = document.getElementById('inlotno').value; 
+        var ls_inpname   = document.getElementById('inpname').value; 
+        if (!ls_inlotno || !ls_inpname) {
+            alert('작업지시서를 선택하세요.');
+            return;
+        } 
+        
+        const text = ls_inlotno;
+        const barcodeImage = document.getElementById('barcodeImage');
+        barcodeImage.src = `/input/generate-barcode?text=${encodeURIComponent(text)}`;
+
+        
+        setTimeout(() => { 
+            const barcodeImage = document.getElementById('barcodeImage'); 
+            var doc = new wijmo.PrintDocument({
+                title: ls_inlotno,
+                copyCss: true // prevent cross-origin issues in jsfiddle 
+            });
+                doc.append(barcodeImage);
+                // Print the document
+                doc.print(); 
+        }, 500); // Adjust the timeout duration as needed
+        
+    }
+    function prt_btn_wijmo(){
         var ls_inlotno   = document.getElementById('inlotno').value; 
         var ls_inpname   = document.getElementById('inpname').value;  
         if (!ls_inlotno || !ls_inpname) {
@@ -2350,6 +2378,7 @@
                 autoWidth: false
             });
         } 
+
         setTimeout(() => {
             var doc = new wijmo.PrintDocument({
                 title: ls_inlotno,

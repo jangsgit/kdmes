@@ -18,9 +18,29 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.Code128Writer;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+
+import java.awt.image.BufferedImage;
+import java.util.List;
+import javax.imageio.ImageIO;
+
 
 // @RestController : return을 텍스트로 반환함.
 //@Controller
@@ -812,6 +832,46 @@ public class Appm01CrudController {
         workDto.setWflag(wflag);
         appcom01Service.FPLAN_OWORK_PERDELETE(workDto);
         return "success" ;
+    }
+
+
+
+
+    @GetMapping("/generate-barcode")
+    public void generateBarcode(@RequestParam String text, HttpServletResponse response) throws IOException, WriterException {
+        int width = 300;
+        int height = 100;
+        int fontSize = 20;
+        int margin = 10;
+
+        Code128Writer barcodeWriter = new Code128Writer();
+        BitMatrix bitMatrix = barcodeWriter.encode(text, BarcodeFormat.CODE_128, width, height);
+
+        BufferedImage barcodeImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+
+        // Create a new image with space for the text
+        BufferedImage combinedImage = new BufferedImage(width, height + fontSize + margin, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = combinedImage.createGraphics();
+
+        // Draw the barcode image
+        g.drawImage(barcodeImage, 0, 0, null);
+
+        // Set text properties
+        g.setFont(new Font("Arial", Font.PLAIN, fontSize));
+        g.setColor(Color.BLACK);
+
+        // Draw the text below the barcode
+        FontMetrics fontMetrics = g.getFontMetrics();
+        int textWidth = fontMetrics.stringWidth(text);
+        int x = (width - textWidth) / 2;
+        int y = height + fontSize + margin / 2;
+
+        g.drawString(text, x, y);
+
+        g.dispose();
+
+        response.setContentType("image/png");
+        ImageIO.write(combinedImage, "PNG", response.getOutputStream());
     }
 
 
