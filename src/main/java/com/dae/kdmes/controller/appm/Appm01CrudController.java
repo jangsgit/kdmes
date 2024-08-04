@@ -133,9 +133,9 @@ public class Appm01CrudController {
 
     @RequestMapping(value="/w010ordlist", method = RequestMethod.POST)
     public Object AppW010OrdList_index(@RequestParam("lotno") String lotno
+            ,@RequestParam("inmonth") String inmonth
+            ,@RequestParam("inweeks") String inweeks
             ,Model model, HttpServletRequest request) throws Exception {
-
-
         CommDto.setMenuTitle("사출공정");  //
         CommDto.setMenuUrl("생산공정>사출공정");
         CommDto.setMenuCode("appcom01");
@@ -152,7 +152,8 @@ public class Appm01CrudController {
         fplanDto.setCltcd("%");
         fplanDto.setPcode("%");
         fplanDto.setLotno(lotno);
-
+        fplanDto.setInmonth(inmonth);
+        fplanDto.setInweeks(inweeks);
 
 
         itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);

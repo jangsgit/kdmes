@@ -65,7 +65,8 @@
                                                 </div>                                -->  
                                                 <div class="col-auto"> 
                                                     <button  class="btn btn-outline-info me-1 mb-1" type="button" id="workstartBtn"  style=" height:50px;  ">작업지시리스트 </button>
-                                                </div>             
+                                                    <button  class="btn btn-outline-warning me-1 mb-1" type="button" id="workingBtn"  style=" height:50px;  ">사출조회</button>
+                                                </div>              
                                                 <div class="col-auto">  
                                                         <div class="col-auto">
                                                             <div id="statusdis01"></div>  
@@ -122,7 +123,7 @@
                                                         <input class="form-control form-control-sm"  type="hidden"  id="incltcd"    />  
                                                     </div>
                                                 </div> 
-                                                <div class="col-sm">
+                                                <div class="col-sm"> 
                                                     <div class="input-group">
                                                         <div class="input-group-text">품목명</div> 
                                                         <input class="form-control form-control-sm" id="inpname" type="text" disabled
@@ -141,7 +142,7 @@
                                             </div>
                                             <div class="row mb-3 row-cols-lg-3 align-items-center">
                                                 <div class="col-sm">
-                                                    <div class="input-group">
+                                                    <div class="input-group"> 
                                                         <div class="input-group-text">LOTNO</div> 
                                                         <input class="form-control form-control-sm" id="inlotno" type="text" disabled
                                                             size="15"  /> 
@@ -287,27 +288,63 @@
                                                 </div>      
                                             </div>                
                                         </form>
+
                                             <input class="form-control form-control-sm"  type="hidden" id="inworkstartbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  /> 
                                             <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false"
                                                 data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-                                                    style="max-width: 1000px">
+                                                    style="max-width: 1100px">
                                                     <div class="modal-content border-0">
                                                         <div class="modal-body p-0" >
                                                             <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
                                                                 <h4 class="mb-1" id="staticBackdropLabel">작업지시리스트</h4> 
                                                             </div>
                                                             <div class="container-fluid"> 
-                                                                <div id="theGrid_div" style="overflow:scroll; width: 950px;  height:300px;    margin:0 auto; "></div>
+                                                                <div id="theGrid_div" style="overflow:scroll; width: 1000px;  height:300px;    margin:0 auto; "></div>
                                                                 <!-- <div id="thePager01"></div> -->
                                                             </div>     
                                                         </div>  
                                                         <div class="modal-footer">
                                                             <div class="row g-1">
-                                                                <div class="col-auto">
+                                                                <!-- <div class="col-auto">
                                                                     <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter(event)" id="searchOrdDate" autocomplete="off"  placeholder="Lot No"   >
-                                                                </div>
+                                                                </div> --> 
+                                                                <div class="col-auto">
+                                                                    <div class="dropdown-container">
+                                                                        <select class="form-select" aria-label="Default select example" id="inmonth">
+                                                                            <option selected="">월</option>
+                                                                            <option value="1월">1월</option>
+                                                                            <option value="2월">2월</option>
+                                                                            <option value="3월">3월</option>
+                                                                            <option value="4월">4월</option>
+                                                                            <option value="5월">5월</option>
+                                                                            <option value="6월">6월</option>
+                                                                            <option value="7월">7월</option>
+                                                                            <option value="8월">8월</option>
+                                                                            <option value="9월">9월</option>
+                                                                            <option value="10월">10월</option>
+                                                                            <option value="11월">11월</option>
+                                                                            <option value="12월">12월</option>
+                                                                        </select>  
+                                                                        <!-- <input type="text"  id="searchtxt" placeholder="LOTNO" style="width: 300px; padding: 10px; font-size: 16px;"> -->
+                                                                        
+                                                                    </div>
+                                                                </div>    
+                                                                <div class="col-auto">
+                                                                    <div class="dropdown-container"> 
+                                                                        <select class="form-select" aria-label="Default select example"  id="inweeks">
+                                                                            <option selected="">주차</option>
+                                                                            <option value="1">1주차</option>
+                                                                            <option value="2">2주차</option>
+                                                                            <option value="3">3주차</option>
+                                                                            <option value="4">4주차</option>
+                                                                            <option value="5">5주차</option>
+                                                                            <option value="6">6주차</option>
+                                                                        </select>  
+                                                                        <!-- <input type="text"  id="searchtxt" placeholder="LOTNO" style="width: 300px; padding: 10px; font-size: 16px;"> -->
+                                                                    </div>
+                                                                </div>    
                                                                 <div class="col-auto">
                                                                     <button class="btn btn-primary" type="button"  id="searchBtn"  >조회 </button>
                                                                 </div>
@@ -327,6 +364,84 @@
                                             </div>         
                                          
                                         <!--------------------------------------------------------------------------------------->
+
+                                        <input class="form-control form-control-sm"  type="hidden" id="inworkingbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop_sa"  /> 
+                                        <div class="modal fade" id="staticBackdrop_sa" data-bs-keyboard="false"
+                                            data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm06"
+                                                style="max-width: 1100px">
+                                                <div class="modal-content border-0">
+                                                    <div class="modal-body p-0" >
+                                                        <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+                                                            <h4 class="mb-1" id="staticBackdropLabel">사출리스트</h4> 
+                                                        </div>
+                                                        <div class="container-fluid"> 
+                                                            <div id="theGridSA_div" style="overflow:scroll; width: 1000px;  height:300px;    margin:0 auto; "></div>
+                                                            <!-- <div id="thePager01"></div> -->
+                                                        </div>     
+                                                    </div>  
+                                                    <div class="modal-footer">
+                                                        <div class="row g-1">
+                                                            <!-- <div class="col-auto">
+                                                                <input type="text"  class="form-control datetimepicker"  onkeypress="barcode_enter(event)" id="searchOrdDate" autocomplete="off"  placeholder="Lot No"   >
+                                                            </div> --> 
+                                                            <div class="col-auto">
+                                                                <div class="dropdown-container">
+                                                                    <select class="form-select" aria-label="Default select example" id="inmonth_sa">
+                                                                        <option selected="">월</option>
+                                                                        <option value="1월">1월</option>
+                                                                        <option value="2월">2월</option>
+                                                                        <option value="3월">3월</option>
+                                                                        <option value="4월">4월</option>
+                                                                        <option value="5월">5월</option>
+                                                                        <option value="6월">6월</option>
+                                                                        <option value="7월">7월</option>
+                                                                        <option value="8월">8월</option>
+                                                                        <option value="9월">9월</option>
+                                                                        <option value="10월">10월</option>
+                                                                        <option value="11월">11월</option>
+                                                                        <option value="12월">12월</option>
+                                                                    </select>   
+                                                                </div>
+                                                            </div>    
+                                                            <div class="col-auto">
+                                                                <div class="dropdown-container"> 
+                                                                    <select class="form-select" aria-label="Default select example"  id="inweeks_sa">
+                                                                        <option selected="">주차</option>
+                                                                        <option value="1">1주차</option>
+                                                                        <option value="2">2주차</option>
+                                                                        <option value="3">3주차</option>
+                                                                        <option value="4">4주차</option>
+                                                                        <option value="5">5주차</option>
+                                                                        <option value="6">6주차</option>
+                                                                    </select>   
+                                                                </div>
+                                                            </div>        
+                                                            <div class="col-auto"> 
+                                                                 <input type="text"  id="searchtxt" placeholder="LOTNO" style="width: 300px; padding: 10px; font-size: 16px;">  
+                                                            </div>    
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-primary" type="button"  id="searchBtn02"  >조회 </button>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-secondary me-1 mb-1" id="wlistsaBtn" type="button" data-bs-dismiss="modal">Close
+                                                                </button>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <button class="badge-soft-info dropdown-item rounded-1"
+                                                                    type="submit">저장 </button>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>   
+
+                                                </div>
+                                            </div> 
+                                        </div>         
+                                     
+                                    <!--------------------------------------------------------------------------------------->
+
+
                                         <!--------------------------------------------------------------------------------------->  
                                         <form    role="form"   th:object="${wrmcDto}" th:action="@{/popup/wrmc}" method="post" enctype="multipart/form-data" >
                                             <div class="modal fade" id="wrmcmodal" data-bs-keyboard="false"
@@ -666,13 +781,15 @@
     var wperidGrid_Data ;
     var wperidGrid ;
     var wiworkGrid ; 
-    var wtab01Grid;
+    var wtab01Grid; 
+    var wtabsaGrid;
     var wjglistGrid; 
     var wbadGrid ;
     var wstopGrid ;
     var wbomGrid ;
     var theBarGrid;
     var view_flistpage;
+    var view_salistpage;
     var view_wotqtpage;
     var view_wrmcpage ;
     var view_wbadpage ;
@@ -724,7 +841,7 @@
             columns: [
                 // { binding: 'index', header: 'seq', width: '*' },
                 { binding: 'prod_sdate', header: '일자',  width: 130, align:"center", format: 'yyyy-MM-dd' },
-                { binding: 'lotno', header: 'LOTNO',  width: 130, align:"center", format: 'yyyy-MM-dd' },
+                // { binding: 'lotno', header: 'LOTNO',  width: 130, align:"center", format: 'yyyy-MM-dd' },
                 {
                     binding: 'plan_no',
                     width: 150,
@@ -741,6 +858,7 @@
                 // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                 { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
                 { binding: 'psize', header: '규격',     align:"center",  width: 100 },
+                { binding: 'psize', header: '차종',     align:"center",  width: 100 },
                 { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
                 { binding: 'end_qty', header: '생산량',   align:"center",width: 100 } ,
                 // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
@@ -811,18 +929,114 @@
             }    
             return data                                          
         }             
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+        view_salistpage = new wijmo.collections.CollectionView(getData_flist(), {
+            // pageSize: 8
+        });   
+        wtabsaGrid = new wijmo.grid.FlexGrid('#theGridSA_div', {
+            autoGenerateColumns: false,
+            isReadOnly: true, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [
+                // { binding: 'index', header: 'seq', width: '*' },
+                { binding: 'prod_sdate', header: '일자',  width: 130, align:"center", format: 'yyyy-MM-dd' }, 
+                { binding: 'plan_no', header: '작지번호',  width: 130, align:"center",  },
+                {
+                    binding: 'lotno',
+                    width: 150,
+                    header: 'LOTNO', 
+                    align:"center",
+                    cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                        text: '<b>${item.lotno}</b>',
+                        click: (e, ctx) => {
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn   );
+                        }
+                    })
+                }, 
+                // { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
+                // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
+                { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
+                { binding: 'psize', header: '규격',     align:"center",  width: 100 },
+                { binding: 'psize', header: '차종',     align:"center",  width: 100 },
+                { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
+                { binding: 'end_qty', header: '생산량',   align:"center",width: 100 } ,
+                // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
+                // { binding: 'wotqt', header: '완료량',   align:"center",width: '*' } ,
+                // { binding: 'decision', header: '임시여부', align:"center", width: '*' }
+
+            ],
+            itemsSource: view_salistpage
+        }); 
+        
+        setHeaderColumn08(false); 
+        function setHeaderColumn08(headerOn) {
+            wtabsaGrid.headersVisibility = headerOn
+            ? wijmo.grid.HeadersVisibility.All
+            : wijmo.grid.HeadersVisibility.Column; 
+        }
+
+            //작업지시서 데이타 
+        function getData_flist(){ 
+            var ListDto = [[${itemDtoListSACHUL}]]; 
+            // console.log("ListDto : ", ListDto);
+            var data = [];
+            var cnt = 1;
+            // var today = new Date()
+            // console.log("today->" + today);
+            for (var i = 0; i < ListDto.length; i++) {
+                var psdate = ListDto[i]["prod_sdate"];
+                psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
+                var date_format = new Date(psdate);
+                data.push({
+                    id: i, 
+                    index: cnt,                                                                
+                    prod_sdate: wijmo.DateTime.addDays(date_format, 0),
+                    wono: ListDto[i]["wono"], 
+                    cltnm: ListDto[i]["cltnm"], 
+                    pname: ListDto[i]["pname"], 
+                    psize: ListDto[i]["psize"], 
+                    prod_qty: ListDto[i]["prod_qty"],
+                    winqt: ListDto[i]["winqt"] , 
+                    owqty: ListDto[i]["owqty"] ,  
+                    otqty: ListDto[i]["otqty"] ,     
+                    decision: ListDto[i]["decision"] ,    
+                    plan_no: ListDto[i]["plan_no"] ,
+                    ostore: ListDto[i]["ostore"] ,
+                    custcd: ListDto[i]["custcd"] ,
+                    spjangcd: ListDto[i]["spjangcd"] ,
+                    cltcd: ListDto[i]["cltcd"] ,
+                    wseq: ListDto[i]["wseq"]  ,
+                    pcode: ListDto[i]["pcode"] ,
+                    wflag: ListDto[i]["wflag"] ,
+                    wremark: ListDto[i]["wremark"] ,
+                    phmmdoc: ListDto[i]["phmmdoc"]  ,
+                    winps: ListDto[i]["winps"]  ,
+                    wrps: ListDto[i]["wrps"]  ,
+                    lotno: ListDto[i]["lotno"]  ,
+                    wrpsnm: ListDto[i]["wrpsnm"],
+                    obqty: ListDto[i]["obqty"],
+                    end_qty: ListDto[i]["end_qty"],
+                    wrmc: ListDto[i]["wrmc"],
+                    wrmcnm: ListDto[i]["wrmcnm"],
+                    partcode: ListDto[i]["partcode"],
+                    partnm: ListDto[i]["partnm"],
+                    wbgubn: ListDto[i]["w_b_gubn"] 
+                    
+                    
+                });
+                cnt++;
+            }    
+            return data                                          
+        }             
+       
 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //작업설비 popup list
         view_wrmcpage = new wijmo.collections.CollectionView(getData_wrmc(), {
             ///pageSize: 6
-        });
-        // 작업설비 페이지 이동
-        // new wijmo.input.CollectionViewNavigator('#thePager02', {
-        //     byPage: true,
-        //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-        //     cv: view_wrmcpage
-        // });     
+        });  
         wrmcGrid = new wijmo.grid.FlexGrid('#wrmcGrid_div', {  
         autoGenerateColumns: false,
         isReadOnly: true, 
@@ -1404,8 +1618,8 @@
                 var WbadDto = data;  
                 var dataBad = [];
                 var cnt = 1;
-                console.log('WbadDto')
-                console.log(WbadDto)
+                // console.log('WbadDto')
+                // console.log(WbadDto)
                 for (var i = 0; i < WbadDto.length; i++) {
                     dataBad.push({
                         id: i, 
@@ -1818,6 +2032,12 @@
         document.getElementById("inworkstartbtn").click();  
     })   
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    //사출리스트 
+    document.getElementById("workingBtn").addEventListener("click",function(){   
+        searchList_rtn("%");
+        document.getElementById("inworkingbtn").click();  
+    })  
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     //임시중단 
     document.getElementById("workedBtn").addEventListener("click",function(){  
         btn_progress(true, false, true, false) 
@@ -1848,8 +2068,8 @@
     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
     document.getElementById("searchBtn").addEventListener("click",function(){ 
-        var ls_searchOrdDate = document.getElementById('searchOrdDate').value;  
-        searchList_rtn(ls_searchOrdDate);
+        // var ls_searchOrdDate = document.getElementById('searchOrdDate').value;  
+        searchList_rtn("");
     })   
 
     function btn_progress(arg1, arg2, arg3, arg4){ 
@@ -2073,7 +2293,7 @@
                 },
                 async:false,
                 success:function(data){
-                     console.log("등록OK", data); 
+                    //  console.log("등록OK", data); 
                     // console.log("wperidGrid_Data", wperidGrid.rows.length );  
             
                     if(arg1 == "0"){
@@ -2734,11 +2954,22 @@
         if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){ 
             ls_searchdate = "%";
         }     
+        
+        let ls_inmonth = document.getElementById('inmonth').value;  
+        let ls_inweeks = document.getElementById('inweeks').value; 
+        if(ls_inmonth == null || ls_inmonth.length == 0 || ls_inmonth == "" || ls_inmonth =="월"){ 
+            ls_inmonth = '%'               
+        } 
+        if(ls_inweeks == null || ls_inweeks.length == 0 || ls_inweeks == "" || ls_inweeks =="주차"){ 
+            ls_inweeks = '%'               
+        }    
         $.ajax({
             url: '/input/w010ordlist',  
             type:"POST",
             data: { 
                     "lotno"      : ls_searchdate,  
+                    "inmonth"      : ls_inmonth, 
+                    "inweeks"      : ls_inweeks, 
             }, 
             async:false,
             success:function(data){ 
@@ -2751,6 +2982,9 @@
                 for (var i = 0; i < ListDto.length; i++) {
                     var psdate = ListDto[i]["prod_sdate"];
                     psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2); 
+                    var ls_month = ListDto[i]["inmonth"];
+                    var ls_weeks = ListDto[i]["inweeks"];
+                    var ls_inmonth = ls_month + '' + ls_weeks + '주차';
                     // var date_format = new Date(psdate);ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode  
                     dataArr.push({
                         id: i, 
@@ -2786,7 +3020,9 @@
                         partcode: ListDto[i]["partcode"] ,
                         partnm: ListDto[i]["partnm"] ,
                         wbgubn: ListDto[i]["w_b_gubn"] ,
-                        end_qty: ListDto[i]["end_qty"] 
+                        end_qty: ListDto[i]["end_qty"]  ,
+                        jchajong: ListDto[i]["jchajong"]  ,
+                        inmonth: ls_inmonth
                     });
                     cnt++;
                 }   
@@ -2800,18 +3036,24 @@
                 cols.width = 120 ; 
                 wtab01Grid.columns.push(cols);   
                 cols = new wijmo.grid.Column(); 
-                cols.binding = 'lotno';
-                cols.header = 'LotNo';
+                cols.binding = 'inmonth';
+                cols.header = '주차';
                 cols.align = "center";
-                cols.width = 150 ; 
-                wtab01Grid.columns.push(cols);  
+                cols.width = 130 ; 
+                wtab01Grid.columns.push(cols);   
+                // cols = new wijmo.grid.Column(); 
+                // cols.binding = 'lotno';
+                // cols.header = 'LotNo';
+                // cols.align = "center";
+                // cols.width = 150 ; 
+                // wtab01Grid.columns.push(cols);  
                 cols = new wijmo.grid.Column(); 
-                cols.binding = 'wono';
+                cols.binding = 'plan_no';
                 cols.header = '작지번호';
                 cols.align = "center";
                 cols.width = 150 ; 
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    text: '<b>${item.wono}</b>',
+                    text: '<b>${item.plan_no}</b>',
                     click: (e, ctx) => {                        
                         selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn );
                     }
@@ -2840,7 +3082,13 @@
                 // cols.header = '도면번호';
                 // cols.align = "center";
                 // cols.width = '2*' ;  
-                // wtab01Grid.columns.push(cols);  
+                // wtab01Grid.columns.push(cols);   
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'jchajong';
+                cols.header = '차종';
+                cols.align = "center";
+                cols.width = 100 ; 
+                wtab01Grid.columns.push(cols);  
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'psize';
                 cols.header = '규격';
@@ -3080,11 +3328,40 @@
         if(month > 0 && month < 10) {month = "0" + month};
         let ls_frday = year + '-' + month + '-01'
         let ls_today = year + '-' + month + '-' + date
-        console.log(ls_today); 
+        // console.log(ls_today); 
         document.getElementById('popwkotDate').value = ls_today;
         // document.getElementById('searchOrdDate').value = ls_today; 
+        showCurrentDate(ls_today, 5); 
     }
 
+    // 현재 선택된 날짜 + 5일
+    function showCurrentDate(ctrl, days) {
+        var ls_sdate = ctrl;
+        //console.log(ls_sdate)     
+        if(ls_sdate == null || ls_sdate.length == 0 || ls_sdate == ""){ 
+            return;         
+        }  
+        var result = new Date(ls_sdate);
+
+        const month = result.getMonth()  ;
+        const weekOfMonth = getWeekOfMonth(result);  
+        // 월 이름 배열
+        const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']; 
+        // 해당 월 이름을 가져옴
+        const monthName = monthNames[month];
+        // const month = ls_sdate.toLocaleString('default', { month: 'long' });  
+        document.getElementById('inmonth').value = monthName;
+        document.getElementById('inweeks').value = weekOfMonth;  
+        document.getElementById('inmonth_sa').value = monthName;
+        document.getElementById('inweeks_sa').value = weekOfMonth;  
+ 
+    }   
+    function getWeekOfMonth(date) { 
+        const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+        const dayOfWeek = startDate.getDay(); 
+        const dayOfMonth = date.getDate();
+        return Math.ceil((dayOfMonth + dayOfWeek) / 7);
+    }
 
     function fn_egov_init_date(){ 
         var $startDate = $('#startDate');
@@ -3142,12 +3419,10 @@
                     // minDate: $searchOrdDate.val() ? $searchOrdDate.val() : false
                 })
             }
-        });
-
+        }); 
         
-        
-
     }
+    
 </script>                    
                 </div>
             </div>

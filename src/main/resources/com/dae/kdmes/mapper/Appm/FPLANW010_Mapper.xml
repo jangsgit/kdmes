@@ -33,12 +33,13 @@
                C.jpum AS pname,
                C.jgugek AS psize,
                C.jdanwy AS punit,
+               C.jchajong AS jchajong,
                A.line,
                A.opcod,
                A.prod_sdate as prod_sdate,
                A.prod_edate,
                A.prod_qty,
-               D.wotqt  - D.wbdqt as end_qty,
+               ISNULL(CAST(DBO.DF_NM_RTN('TB_FPLAN_PLAN_W010', A.plan_no, '00010', '', '') as DECIMAL(18,0)),0) AS  end_qty,
                A.orddate,
                A.ordnum,
                A.ordseq,
@@ -58,9 +59,11 @@
                A.perid,
                A.remark,
                A.workdv,
+               A.inmonth,
+               A.inweeks,
                D.wflag wflag,
                A.wseq  wseq,
-               CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, A.wflag, '', '') as DECIMAL(18,3)) winqt,
+               CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, '00010', '', '') as DECIMAL(18,3)) winqt,
                A.tordqty,
                isnull(D.wotqt,0) as owqty,
                (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no  and wflag= '00010' group by plan_no,wseq,wflag ) as obqty,
@@ -80,18 +83,25 @@
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
-          AND (A.line               = #{line})
-          AND (A.cls_flag          IN ('1', '2' ))
-          AND (A.decision1 in ('0', '1', '2', '3'))
-          AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
           AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
           AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
-          AND ( ISNULL(A.line,'')  = '00' )
            AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
-          AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00010', '', '') <> '00' OR ISNULL(A.wflag, '00010') <= '00010')
+           AND (ISNULL(A.inmonth,'')   lIKE  concat('%',#{inmonth},'%') )
+           AND (ISNULL(A.inweeks,'')   lIKE  concat('%',#{inweeks},'%') )
+
           ORDER BY A.prod_sdate desc, A.wono
         ]]>
     </select>
+    <!--
+        AND ( ISNULL(A.line,'')  = '00' )
+        AND (A.line               = #{line})
+        AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
+        AND (A.cls_flag          IN ('1', '2' ))
+        AND (A.decision1 in ('0', '1', '2', '3'))
+        AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00010', '', '') <> '00' OR ISNULL(A.wflag, '00010') <= '00010')
+    -->
+
+
 
     <select id="GetFPLAN_List02"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[

@@ -2236,7 +2236,7 @@
                         today.setDate(today.getDate() + 30);
                         var ls_qcdate = today.toISOString().substring(0,10);
                         wqcdate.value = ls_qcdate;
-
+ 
                         showCurrentDate(wprod_sdate, 5); 
                 } 
                 // 현재 선택된 날짜 + 5일
@@ -2258,7 +2258,7 @@
 
                     result.setDate(result.getDate() + days); 
                     var ls_edate = result.toISOString().substring(0,10);
-                    console.log(ls_edate)     
+                    // console.log(ls_edate)     
                     wprod_edate.value = ls_edate; 
                     //console.log(`${month} ${weekOfMonth}주차`); 
                 }  
