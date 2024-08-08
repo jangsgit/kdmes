@@ -162,6 +162,35 @@ public class Appm01CrudController {
     }
 
 
+    @RequestMapping(value="/w010Sachullist", method = RequestMethod.POST)
+    public Object AppW010SachulList_index(@RequestParam("lotno") String lotno
+            ,@RequestParam("inmonth") String inmonth
+            ,@RequestParam("inweeks") String inweeks
+            ,Model model, HttpServletRequest request) throws Exception {
+        CommDto.setMenuTitle("사출공정");  //
+        CommDto.setMenuUrl("생산공정>사출공정");
+        CommDto.setMenuCode("appcom01");
+        FPLAN_VO fplanDto = new FPLAN_VO();
+        List<FPLAN_VO> itemDtoList = new ArrayList<>();
+
+        String fdate = getFrDate();
+        String tdate = getToDate();
+
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00010");
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd("%");
+        fplanDto.setPcode("%");
+        fplanDto.setLotno(lotno);
+        fplanDto.setInmonth(inmonth);
+        fplanDto.setInweeks(inweeks);
+
+
+        itemDtoList = appcom01Service.GetFPLAN_SachulList(fplanDto);
+
+        return itemDtoList;
+    }
 
     @RequestMapping(value="/w010upd", method = RequestMethod.POST)
     public String AppW010Update_index(@RequestParam("custcd") String custcd

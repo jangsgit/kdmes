@@ -63,14 +63,16 @@ public class Appm01Controller {
     //사출공정
     @GetMapping(value="/list01")
     public String Appcom01_index(Model model, HttpServletRequest request) throws Exception{
+        List<FPLAN_VO> _itemSachulDtoList = new ArrayList<>();
         CommDto.setMenuTitle("사출공정");  //
         CommDto.setMenuUrl("생산공정>사출공정");
         CommDto.setMenuCode("appcom01");
         String fdate = getFrDate();
-        String tdate = getAddDate();
+        String tdate =  getAddDate();
         String cltcd = "%";
         String pcode = "%";
         String lotno = "%";
+        String ls_month = "%";
         fplanDto.setLine("00");
         fplanDto.setWflag("00010");
         fplanDto.setLotno(lotno);
@@ -78,7 +80,14 @@ public class Appm01Controller {
         fplanDto.setTdate(tdate);
         fplanDto.setCltcd(cltcd);
         fplanDto.setPcode(pcode);
-        fplanDto.setInmonth(tdate.substring(4,6));
+        ls_month = tdate.substring(4,6);
+        if(ls_month.substring(0,1).equals("0")){ ;
+            ls_month = ls_month.substring(1,2) + "월";
+        }else{
+            ls_month = ls_month.substring(0,2) + "월";
+        }
+        fplanDto.setInmonth(ls_month);
+
         fplanDto.setInweeks("%");
         itemDto.setPlan_no("%");
 //        log.info("fdate =====> " + tdate);
@@ -87,6 +96,11 @@ public class Appm01Controller {
         itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
 //        model.addAttribute("itemDto", itemDto);
         model.addAttribute("itemDtoList", itemDtoList);
+
+
+        _itemSachulDtoList = appcom01Service.GetFPLAN_SachulList(fplanDto);
+        model.addAttribute("itemSachulDtoList", _itemSachulDtoList);
+
 
 
         wrmcDto.setMachname("%");
