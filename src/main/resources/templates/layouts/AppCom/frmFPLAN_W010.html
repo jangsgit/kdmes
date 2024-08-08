@@ -2607,6 +2607,7 @@
                 <p class="item-cltnm">업체명: ${ls_incltnm}</p>
                 
             `;
+            // <p class="item-barcode">LOTNO : ${ls_inlotno}</p>
             // <p class="item-qty">수량:  ${ls_inwokqt}</p>
         printArea.appendChild(barcodeImage);
         printArea.appendChild(details);
@@ -2623,7 +2624,7 @@
         barcodeImage.onload = () => {
             // const barcodeImage = document.getElementById('barcodeImage'); 
             var doc = new wijmo.PrintDocument({
-                title: ls_inlotno,
+                // title: ls_inlotno,
                 copyCss: true // prevent cross-origin issues in jsfiddle 
             }); 
                 // const printArea = document.getElementById('printArea').cloneNode(true)
