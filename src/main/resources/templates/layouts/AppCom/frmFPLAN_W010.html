@@ -274,7 +274,16 @@
                                                         <div id="statusdis01"></div><input class="form-control form-control-sm"  type="hidden"  id="indecision"  />  
                                                     </div> 
                                                     <!-- <div id="barcode"  ></div> -->
-                                                    <img id="barcodeImage" src=""  style="width: 300px; height: 100px;">
+
+                                                    <!-- <div class="print-area" id="printArea" style="display: none;">
+                                                        <img id="barcodeImage" src="" alt="Generated Barcode" class="barcode-image">
+                                                        <div class="details">
+                                                            <p id="itemName">Item Name: Sample Item</p>
+                                                            <p id="quantity">Quantity: 10</p>
+                                                            <p id="companyName">Company: ABC Corp</p>
+                                                        </div>
+                                                    </div> -->
+                                                    <!-- <img id="barcodeImage" src=""  style="width: 300px; height: 100px;"> -->
  
                                                     <!-- <div class="col-auto">
                                                         <button  class="btn btn-outline-primary me-1 mb-1" type="button" style=" height:50px;  ">공정생성 </button>
@@ -877,11 +886,20 @@
         }
 
             //작업지시서 데이타 
-        function getData_flist(){ 
-            var ListDto = [[${itemDtoList}]]; 
-            // console.log("ListDto : ", ListDto);
+        function getData_flist(){
             var data = [];
-            var cnt = 1;
+            var cnt = 1;  
+            var ListDto = [[${itemDtoList}]];  
+            if (!ListDto) {
+                for (var i = 0; i < 10; i++) {
+                    data.push({
+                        id: i, 
+                        index: cnt, 
+                    })
+                    cnt++;
+                }
+                return data   
+            }
             // var today = new Date()
             // console.log("today->" + today);
             for (var i = 0; i < ListDto.length; i++) {
@@ -931,7 +949,7 @@
         }             
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-        view_salistpage = new wijmo.collections.CollectionView(getData_flist(), {
+        view_salistpage = new wijmo.collections.CollectionView(getData_flist02(), {
             // pageSize: 8
         });   
         wtabsaGrid = new wijmo.grid.FlexGrid('#theGridSA_div', {
@@ -977,12 +995,22 @@
             : wijmo.grid.HeadersVisibility.Column; 
         }
 
-            //작업지시서 데이타 
-        function getData_flist(){ 
-            var ListDto = [[${itemDtoListSACHUL}]]; 
-            // console.log("ListDto : ", ListDto);
+            //사출리스트 데이타 
+        function getData_flist02(){ 
             var data = [];
             var cnt = 1;
+            var ListDto = [[${itemDtoListSACHUL}]];
+            if (!ListDto) {
+                for (var i = 0; i < 10; i++) {
+                    data.push({
+                        id: i, 
+                        index: cnt 
+                    })
+                    cnt++;
+                }
+                return data   
+            }
+            // console.log("ListDto : ", ListDto);
             // var today = new Date()
             // console.log("today->" + today);
             for (var i = 0; i < ListDto.length; i++) {
@@ -2556,26 +2584,53 @@
     function prt_btn(){
         var ls_inlotno   = document.getElementById('inlotno').value; 
         var ls_inpname   = document.getElementById('inpname').value; 
+        var ls_incltnm   = document.getElementById('incltnm').value; 
+        var ls_inwokqt   = document.getElementById('inwokqt').value; 
         if (!ls_inlotno || !ls_inpname) {
             alert('작업지시서를 선택하세요.');
             return;
         } 
         
         const text = ls_inlotno;
-        const barcodeImage = document.getElementById('barcodeImage');
+        // const barcodeImage = document.getElementById('barcodeImage');
+        const printArea = document.createElement('div');
+        printArea.className = 'print-area';
+        const barcodeImage = document.createElement('img');
+        barcodeImage.className = 'barcode-image';
+        // const printArea = document.getElementById('printArea').cloneNode(true);
         barcodeImage.src = `/input/generate-barcode?text=${encodeURIComponent(text)}`;
+        // document.getElementById('printArea').style.display = 'block';
+        const details = document.createElement('div');
+            details.className = 'details';
+            details.innerHTML = `
+                <p>품명:  ${ls_inpname}</p>
+                <p>업체명: ${ls_incltnm}</p>
+                <p>수량:  ${ls_inwokqt}</p>
+            `;
+        printArea.appendChild(barcodeImage);
+        printArea.appendChild(details);
 
+         
+        // var ls_itemName   = document.getElementById('itemName'); 
+        // var ls_quantity   = document.getElementById('quantity');         
+        // var ls_companyName   = document.getElementById('companyName');
+        // document.getElementById('barcode').innerHTML 
+        // ls_itemName.innerHTML  = "품명:" + ls_inpname;
+        // ls_quantity.innerHTML  = "업체명:" + ls_incltnm;
+        // ls_companyName.innerHTML  = "수량:" + ls_inwokqt;
         
-        setTimeout(() => { 
-            const barcodeImage = document.getElementById('barcodeImage'); 
+        barcodeImage.onload = () => {
+            // const barcodeImage = document.getElementById('barcodeImage'); 
             var doc = new wijmo.PrintDocument({
                 title: ls_inlotno,
                 copyCss: true // prevent cross-origin issues in jsfiddle 
-            });
-                doc.append(barcodeImage);
+            }); 
+                // const printArea = document.getElementById('printArea').cloneNode(true)
+                doc.append(printArea);
+                // doc.append(barcodeImage);
                 // Print the document
                 doc.print(); 
-        }, 500); // Adjust the timeout duration as needed
+        } ; // Adjust the timeout duration as needed
         
     }
     function prt_btn_wijmo(){
