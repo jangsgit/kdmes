@@ -119,6 +119,7 @@
     <style>
         @media print {
           @page {
+              size: 10cm 5cm; /* 라벨 크기에 맞추기 */
               margin: 0;
           }
           body {
@@ -126,29 +127,39 @@
               padding: 0;
           }
           .print-area {
-              width: 5cm;
+              width: 8cm;
               height: 3cm;
               border: none;
-              padding: 10px;
+              padding: 0;
               box-sizing: border-box;
               display: flex;
               flex-direction: column;
               justify-content: space-between;
+              align-items: center;
           }
           .barcode-image {
               width: 100%;
               height: auto;
           }
           .details {
-              font-size: 9px;
+              font-size: 13px;
               text-align: left;
               display: flex;
               flex-direction: column;
-              align-items: left;
+              align-items: flex-start;
               line-height: 2; /* 줄 간격 최소화 */
           }
           .details p {
               margin: 0; /* 간격을 줄이기 위해 여백을 조정 */
+          }
+          .details .item-name {
+              font-weight: bold; /* 품명 굵게 표시 */
+          }
+          .details .item-cltnm {
+              font-weight: bold; /* 품명 굵게 표시 */
+          }
+          .details .item-qty {
+              font-weight: bold; /* 품명 굵게 표시 */
           }
       } 
     </style>

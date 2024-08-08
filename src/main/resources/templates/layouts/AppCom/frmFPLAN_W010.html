@@ -2603,9 +2603,9 @@
         const details = document.createElement('div');
             details.className = 'details';
             details.innerHTML = `
-                <p>품명:  ${ls_inpname}</p>
-                <p>업체명: ${ls_incltnm}</p>
-                <p>수량:  ${ls_inwokqt}</p>
+                <p class="item-name">품명:  ${ls_inpname}</p>
+                <p class="item-cltnm">업체명: ${ls_incltnm}</p>
+                <p class="item-qty">수량:  ${ls_inwokqt}</p>
             `;
         printArea.appendChild(barcodeImage);
         printArea.appendChild(details);
