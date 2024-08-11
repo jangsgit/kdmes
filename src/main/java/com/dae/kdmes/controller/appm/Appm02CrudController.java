@@ -531,28 +531,6 @@ public class Appm02CrudController {
             return "error";
         }
 
-        //기존 검사된 사용량 조회하여 업데이트
-        _wsumDto.setPlan_no(planno);
-        Optional<FPLAN_VO>  optionlResult = Optional.ofNullable(appcom01Service.GetFPLAN_List02_GSUM(_wsumDto));
-        optionlResult.ifPresent(result -> {
-            workDto.setLotno(result.getLotno());
-            workDto.setGqty01(result.getWotqt());
-//            log.info("setPlan_no=====>" + _wsumDto.getPlan_no());
-//            log.info("getWotqt=====>" + result.getLotno());
-//            log.info("getLotno  =====>" + result.getWotqt());
-        });
-        if(!optionlResult.isPresent()){
-            workDto.setLotno(lotno);
-            workDto.setGqty01(0);
-        }
-        result = appcom01Service.FPLANW010_Update_GDEL(workDto);
-        if (!result){
-            //log.info("error Exception =====> FPLANW010_Update_GDEL" );
-            //return "error";
-        }
-
-
-
         IworkDto.setCustcd("KDMES");
         IworkDto.setSpjangcd("ZZ");
         IworkDto.setWflag("00010");
@@ -563,12 +541,39 @@ public class Appm02CrudController {
             //return "error";
         }
 
-        workDto.setPlan_no(lotno);
+        workDto.setPlan_no(planno);
         result = appcom01Service.FPLAN_WBAD_Delete(workDto);
         if (!result){
             //log.info("error Exception =====> FPLAN_IWORK_Delete" );
             //return "error";
         }
+        //기존 검사된 사용량 조회하여 업데이트
+        result = appcom01Service.FPLANW010_Update_GDEL(workDto);
+        if (!result){
+            //log.info("error Exception =====> FPLANW010_Update_GDEL" );
+            //return "error";
+        }
+
+        //기존 검사된 사용량 조회하여 업데이트
+//        _wsumDto.setPlan_no(planno);
+//        log.info("planno11 =====>" + planno);
+//        Optional<FPLAN_VO>  optionlResult = Optional.ofNullable(appcom01Service.GetFPLAN_List02_GSUM(_wsumDto));
+//        optionlResult.ifPresent(result -> {
+//            workDto.setLotno(result.getLotno());        //사출lotno
+//            workDto.setGqty01(result.getWotqt());       //검사수량
+////            workDto.setGlotnono(result.getGlotnono());
+//            log.info("setPlan_no=====>" + _wsumDto.getPlan_no());
+//            log.info("getWotqt=====>" + result.getLotno());
+//            log.info("getLotno  =====>" + result.getWotqt());
+//            log.info("getGlotnono  =====>" + result.getGlotnono());
+//        });
+
+//        log.info("planno22 =====>" + planno);
+//        if(!optionlResult.isPresent()){
+//            workDto.setLotno(lotno);
+//            workDto.setGqty01(0);
+//        }
+
 
         var ls_line = "99";
         return "redirect:/appm/list02";

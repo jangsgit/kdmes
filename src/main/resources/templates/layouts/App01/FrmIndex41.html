@@ -901,12 +901,18 @@
                        _ls_jboxsu_qty  =  sel[i]._data.jboxsu1; //박스수량  
                        //_ls_prod_qty = _ls_prod_qty - _ls_owqty     //검사가능수량 완료량-기검사량
                        _ls_sumotqty = _ls_sumotqty + _ls_otqty
+                       console.log('_ls_prod_qty : ' + _ls_prod_qty);
+                       console.log('_ls_otqty : ' + _ls_otqty);
+                       console.log('_ls_gqty : ' + _ls_gqty);
+                       console.log('_ls_jboxsu_qty : ' + _ls_jboxsu_qty);
+                       console.log('_ls_sumotqty : ' + _ls_sumotqty);
                        if(_ls_prod_qty < _ls_gqty ){      //검사량이 가능수량보다 클경우 
                            _ls_qty   = _ls_qty + _ls_prod_qty; 
                        }else{
                            _ls_qty   = _ls_qty + _ls_gqty; 
                        }  
                    }  
+                       console.log('_ls_qty : ' + _ls_qty);
                    if(Number(_ls_qty) >   Number(_ls_jboxsu_qty )){
                      alert("검사수량이 박스수량을 초과했습니다. 박스수량을 확인하세요")
                      //return 
@@ -1307,8 +1313,9 @@
                             
                     } 
                }    
-               
-               if(ll_inboxsu1 < ll_inwqcqt ){
+               console.log("ll_inboxsu1-->" + ll_inboxsu1)
+               console.log("ll_inwqcqt-->" + ll_inwqcqt)
+               if(parseInt(ll_inboxsu1) < parseInt(ll_inwqcqt) ){
                     alert("박스수량을 초과했습니다. 확인하세요");
                     return ;
                 }  
@@ -1686,8 +1693,10 @@
                var ls_searchdate = arg;  
                var ls_flag = "0" ; 
                if(gubun == "B"){
+                //팝업조회
                 ls_flag = "2"  
                }else{
+                //바코드스캔
                 ls_flag = "1"  
                }
                //if(ls_searchdate == null || ls_searchdate.length == 0 || ls_searchdate == ""){  

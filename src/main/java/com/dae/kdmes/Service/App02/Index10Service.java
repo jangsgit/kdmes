@@ -22,6 +22,10 @@ public class Index10Service {
     public List<Index10Dto> GetFplanList(Index10Dto parm){
         return indexMapper.GetFplanList(parm);
     }
+    public String SelectMaxLotno(Index10Dto parm){
+        return indexMapper.SelectMaxLotno(parm);
+    }
+
 
     public Boolean DeleteFplan(Index10Dto parm){  return  indexMapper.DeleteFplan(parm);  }
 

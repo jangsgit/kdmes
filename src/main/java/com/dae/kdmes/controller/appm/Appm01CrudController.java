@@ -72,6 +72,7 @@ public class Appm01CrudController {
             ,@RequestParam("pname") String pname
             ,@RequestParam("ostore") String ostore
             ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wflag") String wflag
             ,@RequestParam("wrmc") String wrmc
             ,Model model, HttpServletRequest request) throws Exception {
@@ -86,6 +87,7 @@ public class Appm01CrudController {
         workDto.setSpjangcd(spjangcd);
         workDto.setWono(wono);
         workDto.setPlan_no(plan_no);
+        workDto.setLotno(lotno);
         wflag = "00010";
         workDto.setWflag(wflag);
         workDto.setWrmc(wrmc);
@@ -101,9 +103,11 @@ public class Appm01CrudController {
         wperDto.setWflag(wflag);
         wperDto.setSeq("001");
         wperDto.setPlan_no(plan_no);
+        wperDto.setLotno(lotno);
         wtimeDto.setCustcd(custcd);
         wtimeDto.setSpjangcd(spjangcd);
         wtimeDto.setPlan_no(plan_no);
+        wtimeDto.setLotno(lotno);
         wtimeDto.setWseq("01");
         wtimeDto.setSeq("001");
         wtimeDto.setWflag(wflag);
@@ -199,6 +203,7 @@ public class Appm01CrudController {
             ,@RequestParam("startDate") String startDate
             ,@RequestParam("endDate") String endDate
             ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wrmc") String wrmc
             ,@RequestParam("winqt") float winqt
             ,@RequestParam("wbdqt") float wbdqt
@@ -243,6 +248,7 @@ public class Appm01CrudController {
         workDto.setWtrdt(endDate);
 
         workDto.setPlan_no(plan_no);
+        workDto.setLotno(lotno);
         workDto.setWrmc(wrmc);
         workDto.setWinqt(winqt);
         workDto.setWqty(winqt);
@@ -263,18 +269,39 @@ public class Appm01CrudController {
         workDto.setPartcode(partcode);
         workDto.setPartnm(partnm);
         String ls_lotno = "";
+        if(lotno != null && lotno.length() > 0){
+            ls_lotno = lotno;
+        }
         if(rwflag.length() > 0){
             _index10Dto.setPcode(pcode);
             _index10Dto.setPlan_no(plan_no);
             _index10Dto.setIndate(getToDate());
             _index10Dto.setRwflag(rwflag);
-            ls_lotno = plan_no.substring(0,8) + rwflag + plan_no.substring(8,12);
+
+            String ls_maxlotno = service10.SelectMaxLotno(_index10Dto);
+            String ls_seq;
+            if (ls_maxlotno == null) {
+                ls_lotno = plan_no.substring(0,8) + rwflag + "0001";
+            } else {
+                ls_seq = ls_maxlotno.substring(8, 12);
+                int ll_seq = Integer.parseInt(ls_seq) + 1;
+                ls_seq = Integer.toString(ll_seq);
+                if (ls_seq.length() == 1) {
+                    ls_seq = "000" + ls_seq;
+                } else if (ls_seq.length() == 2) {
+                    ls_seq = "00" + ls_seq;
+                } else if (ls_seq.length() == 3) {
+                    ls_seq = "0" + ls_seq;
+                }
+                ls_lotno = plan_no.substring(0,8) + rwflag + ls_seq;
+            }
             _index10Dto.setLotno(ls_lotno);
             result = service10.UpdateFplan(_index10Dto);
             if (!result) {
                 log.info("UpdateFplan result =====>" + result);
                 return "error";
             }
+            workDto.setLotno(ls_lotno);
         }
 
         if(!workdv.equals("4")){
@@ -292,7 +319,6 @@ public class Appm01CrudController {
         }
 
         //ls_lotno = wono.substring(2,11);
-        workDto.setLotno(ls_lotno);
         String wstdt = "";
         String wendt = "";
         if(startDate != null){
@@ -315,6 +341,7 @@ public class Appm01CrudController {
         _wtimeDto.setCustcd(custcd);
         _wtimeDto.setSpjangcd(spjangcd);
         _wtimeDto.setPlan_no(plan_no);
+        _wtimeDto.setLotno(ls_lotno);
         _wtimeDto.setWseq("01");
         _wtimeDto.setSeq("001");
         _wtimeDto.setWflag(wflag);
@@ -380,13 +407,16 @@ public class Appm01CrudController {
     //절단공정삭제
     @RequestMapping(value="/w010del", method = RequestMethod.GET)
     public String Appcom01_delete(@RequestParam("plan_no") String plan_no
+                                 ,@RequestParam("lotno") String lotno
                                  ,HttpServletRequest request){
         FPLANW010_VO workDto = new FPLANW010_VO();
         Index10Dto _index10Dto = new Index10Dto();
         workDto.setPlan_no(plan_no);
+        workDto.setLotno(lotno);
         workDto.setWflag("00010");
         workDto.setWseq("01");
         wperDto.setPlan_no(plan_no);
+        wperDto.setLotno(lotno);
         wperDto.setWseq("01");
         wperDto.setWflag("00010");
         result = appcom01Service.FPLANW010_Delete(workDto);
@@ -456,6 +486,7 @@ public class Appm01CrudController {
     public String AppWTimeUpdate_index(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wflag") String wflag
             ,@RequestParam("decision") String decision
             ,@RequestParam("workdv") String workdv
@@ -466,6 +497,7 @@ public class Appm01CrudController {
         wtimeDto.setCustcd(custcd);
         wtimeDto.setSpjangcd(spjangcd);
         wtimeDto.setPlan_no(plan_no);
+        wtimeDto.setLotno(lotno);
         wtimeDto.setWflag(wflag);
         switch (wflag){
             case "00010":
@@ -517,6 +549,7 @@ public class Appm01CrudController {
             }
         }
         workDto.setPlan_no(plan_no);
+        workDto.setLotno(lotno);
         workDto.setWflag(wflag);
         if(!workdv.equals("4")){
             workDto.setWorkdv(workdv);
@@ -564,11 +597,13 @@ public class Appm01CrudController {
             ,@RequestParam( value =  "wflagnm[]") List<String> wflagnm
             ,@RequestParam( value =  "wperid[]") List<String> wperid
             ,@RequestParam( value =  "wpernm[]") List<String> wpernm
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("plan_no") String plan_no) throws Exception {
 
         FPLANWPERID_VO wperDto = new FPLANWPERID_VO();
 
         wperDto.setPlan_no(plan_no);
+        wperDto.setLotno(lotno);
         wperDto.setWseq("01");
         wperDto.setAseq("01");
         wperDto.setWflag("00010");
@@ -611,12 +646,14 @@ public class Appm01CrudController {
     public String AppW010Wrmc_index(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wflag") String wflag
             ,@RequestParam("wrmc") String wrmc) throws Exception {
 
         FPLANW010_VO itemDto = new FPLANW010_VO();
 
         itemDto.setPlan_no(plan_no);
+        itemDto.setLotno(lotno);
         itemDto.setWflag(wflag);
         itemDto.setWseq("01");
         itemDto.setWrmc(wrmc);
@@ -632,11 +669,13 @@ public class Appm01CrudController {
     public Object AppW010_SEL(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wflag") String wflag) throws Exception {
 
         FPLANW010_VO itemDto = new FPLANW010_VO();
 
         itemDto.setPlan_no(plan_no);
+        itemDto.setLotno(lotno);
         itemDto.setWflag(wflag);
         itemDto.setWseq("01");
         return appcom01Service.GetFPLANW010_Detail(itemDto);
@@ -650,6 +689,7 @@ public class Appm01CrudController {
     public String AppWBAD_INT(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wflag") String wflag
             ,@RequestParam("wbqty") int wbqty
             ,@RequestParam("wcode") String wcode
@@ -662,6 +702,7 @@ public class Appm01CrudController {
             wbadDto.setCustcd(custcd);
             wbadDto.setSpjangcd(spjangcd);
             wbadDto.setPlan_no(plan_no);
+            wbadDto.setLotno(lotno);
             wbadDto.setWflag(wflag);
             wbadDto.setWbqty(wbqty);
             wbadDto.setWcode(wcode);
@@ -669,6 +710,12 @@ public class Appm01CrudController {
             wbadDto.setPcode(pcode);
             wbadDto.setIndate(getToDate());
             String lsChkseq = appcom01Service.FPLAN_WBAD_SELECT(wbadDto);
+
+            log.info("wseq =====> " + wseq);
+            log.info("lsChkseq =====> " + lsChkseq);
+            log.info("plan_no =====> " + plan_no);
+            log.info("lotno =====> " + lotno);
+            log.info("wbqty =====> " + wbqty);
             if (lsChkseq == null  || lsChkseq.equals("")){
                 String ls_seq = appcom01Service.FPLAN_WBAD_MAXWSEQ(wbadDto);
                 if(ls_seq == null){
@@ -699,6 +746,7 @@ public class Appm01CrudController {
     public Object AppWBAD_SEL(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wflag") String wflag) throws Exception {
 
         FPLANWBAD_VO wbadDto = new FPLANWBAD_VO();
@@ -723,12 +771,14 @@ public class Appm01CrudController {
         wbadDto.setCustcd(custcd);
         wbadDto.setSpjangcd(spjangcd);
         wbadDto.setPlan_no(plan_no);
+        wbadDto.setLotno(lotno);
         wbadDto.setWclscode(ls_wbadflag);
         wbadDto.setWflag(wflag);
 
         wscntDto.setCustcd(custcd);
         wscntDto.setSpjangcd(spjangcd);
         wscntDto.setPlan_no(plan_no);
+        wscntDto.setLotno(lotno);
         wscntDto.setWclscode(ls_wbadflag);
         wscntDto.setWflag(wflag);
         if(appPopupService.GetWBadList(wscntDto) == null){
@@ -744,6 +794,7 @@ public class Appm01CrudController {
     public String AppWOwork_Insert(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("inplan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("inpcode") String pcode
             ,@RequestParam("inwono") String wono
             ,@RequestParam("popwotqt") float wotqt
@@ -758,14 +809,15 @@ public class Appm01CrudController {
         FPLANW010_VO workDtoSum = new FPLANW010_VO();
         String ls_indate = getToDate();
 
-        String ls_yeare = wkokdate.substring(0,4);
-        String ls_mm = wkokdate.substring(5,7);
-        String ls_dd = wkokdate.substring(8,10);
-        wkokdate =  ls_yeare + ls_mm + ls_dd;
+//        String ls_yeare = wkokdate.substring(0,4);
+//        String ls_mm = wkokdate.substring(5,7);
+//        String ls_dd = wkokdate.substring(8,10);
+//        wkokdate =  ls_yeare + ls_mm + ls_dd;
 
         workDto.setCustcd(custcd);
         workDto.setSpjangcd(spjangcd);
         workDto.setPlan_no(plan_no);
+        workDto.setLotno(lotno);
         workDto.setPcode(pcode);
         workDto.setWono(wono);
         workDto.setWqty(wotqt);
@@ -796,8 +848,8 @@ public class Appm01CrudController {
 
         workDto.setStore("W01");
         workDto.setIndate(getToDate());
-        String ls_lotno = wono.substring(2,11);
-        workDto.setLotno(ls_lotno);
+//        String ls_lotno = wono.substring(2,11);
+//        workDto.setLotno(ls_lotno);
         if(seq == null || seq.equals("")) {
             String ls_seq = appcom01Service.FPLAN_OWORK_MAXWSEQ(workDto);
             if (ls_seq == null) {
@@ -847,6 +899,7 @@ public class Appm01CrudController {
     @ResponseBody
     @RequestMapping(value="/oworkdel", method = RequestMethod.POST)
     public String AppWOwork_Delete(@RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wseq") String wseq
             ,@RequestParam("seq") String seq
             ,@RequestParam("pcode") String pcode
@@ -854,6 +907,7 @@ public class Appm01CrudController {
     ) throws Exception {
 
         workDto.setPlan_no(plan_no);
+        workDto.setLotno(lotno);
         workDto.setWseq(wseq);
         workDto.setSeq(seq);
         workDto.setPcode(pcode);

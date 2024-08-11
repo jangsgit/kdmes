@@ -35,6 +35,10 @@
         ]]>
     </select>
 
+    <select id="SelectMaxLotno" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
+        <![CDATA[  select  max(lotno) as lotnomax  from TB_FPLAN_W010 where Left(lotno,8) = #{lotno}      ]]>
+    </select>
+
     <insert id="InsertFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
         insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd,  perid, ecltnm , line, wono ,
         workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,

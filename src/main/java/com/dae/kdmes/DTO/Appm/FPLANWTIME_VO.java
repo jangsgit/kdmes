@@ -13,6 +13,7 @@ public class FPLANWTIME_VO {
     private String custcd;
     private String spjangcd;
     private String plan_no;
+    private String lotno;
     private String wseq;
     private String seq;
     private String wflag;

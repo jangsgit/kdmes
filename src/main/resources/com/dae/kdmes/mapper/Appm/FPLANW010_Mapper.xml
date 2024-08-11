@@ -40,7 +40,7 @@
                A.prod_sdate as prod_sdate,
                A.prod_edate,
                A.prod_qty,
-               ISNULL(CAST(DBO.DF_NM_RTN('TB_FPLAN_PLAN_W010', A.plan_no, '00010', '', '') as DECIMAL(18,0)),0) AS  end_qty,
+               ISNULL(CAST(DBO.DF_NM_RTN('TB_FPLAN_PLAN_W010_SUM', A.plan_no, '00010', '', '') as DECIMAL(18,0)),0) AS  end_qty,
                A.orddate,
                A.ordnum,
                A.ordseq,
@@ -62,31 +62,18 @@
                A.workdv,
                A.inmonth,
                A.inweeks,
-               D.wflag wflag,
+               A.wflag wflag,
                A.wseq  wseq,
                CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, '00010', '', '') as DECIMAL(18,3)) winqt,
                A.tordqty,
-               isnull(D.wotqt,0) as owqty,
-               (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no  and wflag= '00010' group by plan_no,wseq,wflag ) as obqty,
-               isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
-               D.partcode  as partcode,
-               D.partnm  as partnm,
-               D.winps as winps,
-               D.wrps as wrps,
-               D.wrmc as wrmc,
-               E.wrmcnm as wrmcnm,
-               C.w_b_gubn,
-               (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
-        FROM TB_FPLAN A WITH(NOLOCK)
-             LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00010'
-             Left OUTER JOIN  TB_FPLAN_WRMC E ON A.wflag = E.wflag and D.wrmc = E.wrmc ,
+               C.w_b_gubn
+        FROM TB_FPLAN A WITH(NOLOCK),
             JCODE C WITH(NOLOCK),
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
           AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
-           AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
            AND (ISNULL(A.inmonth,'')   lIKE  concat('%',#{inmonth},'%') )
            AND (ISNULL(A.inweeks,'')   lIKE  concat('%',#{inweeks},'%') )
           ORDER BY A.plan_no desc, A.wono
@@ -107,7 +94,7 @@
                A.spjangcd,
                A.wodv,
                A.wono,
-               A.lotno,
+               D.lotno AS lotno,
                A.plan_no,
                A.cltcd,
                B.acorp as cltnm,
@@ -118,17 +105,17 @@
                C.jchajong AS jchajong,
                A.line,
                A.opcod,
-               A.prod_sdate as prod_sdate,
+               D.indate as prod_sdate,
                A.prod_edate,
                A.prod_qty,
-               ISNULL(CAST(DBO.DF_NM_RTN('TB_FPLAN_PLAN_W010', A.plan_no, '00010', '', '') as DECIMAL(18,0)),0) AS  end_qty,
+               ISNULL(CAST(DBO.DF_NM_RTN('TB_FPLAN_PLAN_W010', D.lotno, '00010', '', '') as DECIMAL(18,0)),0) AS  end_qty,
                A.orddate,
                A.ordnum,
                A.ordseq,
                A.ordqty,
                A.ord_edate,
                A.close_date,
-               isnull(A.decision,'') as  decision,
+               isnull(D.decision,'') as  decision,
                A.cls_flag,
                A.work_flag,
                A.dem_flag,
@@ -172,13 +159,14 @@
            AND (ISNULL(A.inweeks,'')   lIKE  concat('%',#{inweeks},'%') )
            AND ( ISNULL(A.line,'')  = '00' )
            AND (A.line               = #{line})
-           AND (A.cls_flag          IN ('1', '2' ))
-           AND (A.decision1 in ('0', '1', '2', '3'))
+           and  LEN(isnull(D.lotno,'')) > 0
            AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00010', '', '') <> '00' OR ISNULL(A.wflag, '00010') <= '00010')
           ORDER BY A.plan_no desc, A.wono
         ]]>
     </select>
 <!--    AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})-->
+<!--    AND (D.cls_flag          IN ('1', '2' ))-->
+<!--    AND (D.decision in ('0', '1'))-->
 
     <select id="GetFPLAN_List02"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
@@ -200,7 +188,7 @@
               F.prod_qty - F.otqty as obqty
         FROM (
                  SELECT	A.wono,
-                       A.lotno AS lotno,
+                       E.lotno AS lotno,
                        A.plan_no,
                        A.cltcd,
                        A.pcode,
@@ -216,13 +204,12 @@
                        C.jboxsu1
                  FROM TB_FPLAN A WITH(NOLOCK)
                          LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010'
-                          LEFT OUTER JOIN  TB_FPLAN_W020 D ON E.glotnono = D.lotno AND D.wflag = '00020' ,
+                         LEFT OUTER JOIN  TB_FPLAN_W020 D ON E.glotnono = D.lotno AND D.wflag = '00020' ,
                      JCODE C WITH(NOLOCK)
                  WHERE (A.pcode              = C.JKEY)
-                   AND (A.cls_flag          IN ('1', '2', '3' ))
+                   AND (E.decision          IN ('3' ))
                    AND ( ISNULL(A.line,'')  = '00' )
-                   AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
-                   AND (ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
+                   AND (ISNULL(E.lotno,'')   lIKE  concat('%',#{lotno},'%') )
                    AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
                    AND (DBO.DF_NM_RTN('TB_FPLAN_WORK_WSEQ', A.plan_no, '00020', '', '') <> '00' OR ISNULL(A.wflag, '00020') = '00020')
                    AND ( Len( ISNULL(A.wflag,'') ) > 0  )
@@ -232,7 +219,7 @@
         ORDER BY F.prod_sdate desc, F.wono
          ]]>
     </select>
-
+<!--    AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})-->
 
     <select id="GetFPLAN_List02_salist"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
@@ -256,7 +243,7 @@
               F.prod_qty - F.otqty as obqty
         FROM (
                  SELECT	A.wono,
-                       A.lotno AS lotno,
+                       E.lotno AS lotno,
                        A.plan_no,
                        A.cltcd,
                        A.pcode,
@@ -346,7 +333,7 @@
                A.spjangcd,
                A.wodv,
                A.wono,
-               A.lotno,
+               D.lotno,
                A.plan_no,
                A.cltcd,
                B.acorp as cltnm,
@@ -397,8 +384,8 @@
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
-          AND (A.cls_flag          IN ('1', '2', '3' ))
-          AND A.lotno in
+          AND (D.decision          IN (  '3' ))
+          AND D.lotno in
                 <foreach collection="itemcdArr" item="itemcd" open="(" close=")" separator=",">
                   #{itemcd}
                 </foreach>
@@ -694,14 +681,21 @@
 
     <select id="GetFPLAN_List02_GSUM"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
-        SELECT SUM(D.wotqt) AS wotqt,
-               MAX(D.lotno) as lotno
-        FROM  TB_FPLAN_W020 D  WITH(NOLOCK)
+        SELECT SUM(D.jqty) AS wotqt,
+               D.lotno as lotno
+        FROM  TB_FPLAN_IWORK D  WITH(NOLOCK)
         WHERE (D.plan_no  = #{plan_no})
-        Group by D.plan_no
+        Group by D.plan_no, D.lotno
+        union
+        SELECT 0 AS wotqt,
+               '' as lotno
         ]]>
     </select>
-
+<!--    SELECT SUM(D.wotqt) AS wotqt,-->
+<!--    MAX(D.lotno) as lotno-->
+<!--    FROM  TB_FPLAN_W020 D  WITH(NOLOCK)-->
+<!--    WHERE (D.plan_no  = #{plan_no})-->
+<!--    Group by D.plan_no-->
     <select id="GetFPLAN_List02_HIS_JO"  parameterType="com.dae.kdmes.DTO.Appm.FPLAN_VO" resultType="com.dae.kdmes.DTO.Appm.FPLAN_VO">
         <![CDATA[
         SELECT A.custcd,
@@ -1089,7 +1083,7 @@
 
 
     <select id="GetFPLANW010_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
-        select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
+        select A.custcd, A.spjangcd, A.plan_no, A.lotno, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
                A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision,B.decision1, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
                D.jgugek AS psize, D.jdanwy AS punit, D.w_b_gubn,
                (CASE WHEN A.winps > 1 THEN E.inname  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  E.inname END ) wrpsnm
@@ -1103,7 +1097,8 @@
           AND   A.plan_no = B.plan_no
           AND   B.cltcd =  C.acorp1 + CAST(C.acorp2 as varchar)
           AND   B.pcode = D.jkey
-          AND   A.plan_no=#{plan_no} and A.wseq IN (#{wseq} , '02')
+          AND   A.plan_no=#{plan_no}
+          AND   A.lotno =#{lotno}
 
     </select>
 
@@ -1158,9 +1153,9 @@
 
 
     <insert id="FPLANW010_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_W010(custcd, spjangcd, plan_no, wseq, wflag, wfrdt, wtrdt, wrmc, winqt, wotqt, wqcqt,
+        INSERT INTO TB_FPLAN_W010(custcd, spjangcd, plan_no, lotno,  wflag, wfrdt, wtrdt, wrmc, winqt, wotqt, wqcqt,
                              wbdqt,   winps, wsyul, wrps, wremark, decision,indate, inperid, partcode, partnm )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wseq}, #{wflag}, #{wfrdt}, #{wtrdt}, #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt},
+        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{lotno}, #{wflag}, #{wfrdt}, #{wtrdt}, #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt},
                  #{wbdqt},   #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid}, #{partcode}, #{partnm})
     </insert>
 
@@ -1212,7 +1207,7 @@
         <if test="indate != null">indate=#{indate}</if>
         <if test="inperid != null ">,</if>
         <if test="inperid != null">inperid=#{inperid}</if>
-        where plan_no=#{plan_no} and wseq=#{wseq} and wflag=#{wflag}
+        where plan_no=#{plan_no} and lotno =#{lotno}  and wflag=#{wflag}
     </update>
 
 
@@ -1220,7 +1215,7 @@
         UPDATE TB_FPLAN_W010 SET
          glotnono=#{glotnono},
          gqty01= isnull(gqty01,0) + #{gqty01}
-        where plan_no=#{plan_no} and wseq=#{wseq} and wflag=#{wflag}
+        where plan_no=#{plan_no} and lotno =#{lotno}  and wflag=#{wflag}
     </update>
 
 
@@ -1228,21 +1223,33 @@
         UPDATE TB_FPLAN_W010 SET
         jlotnono=#{glotnono},
         jqty01= isnull(jqty01,0) + #{gqty01}
-        where plan_no=#{plan_no} and wseq=#{wseq} and wflag=#{wflag}
+        where plan_no=#{plan_no} and lotno =#{lotno}   and wflag=#{wflag}
     </update>
 
     <update id="FPLANW010_Update_GDEL" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_W010 SET
-               glotnono = #{lotno},
-               gqty01 = #{gqty01}
-        where plan_no=#{plan_no}
+               gqty01 = subquery.total_qty,
+               glotnono = subquery.glotno
+        FROM(
+            SELECT D.plan_no, D.lotno, max(D.glotno) as glotno,  SUM(D.jqty) as total_qty
+            FROM TB_FPLAN_IWORK D WITH(NOLOCK)
+            WHERE D.plan_no =#{plan_no}
+            Group by D.plan_no, D.lotno
+        ) AS subquery
+        where TB_FPLAN_W010.plan_no = subquery.plan_no
+        and TB_FPLAN_W010.lotno = subquery.lotno
+        and TB_FPLAN_W010.plan_no = #{plan_no}
     </update>
+<!--    UPDATE TB_FPLAN_W010 SET-->
+<!--    gqty01 = #{gqty01}-->
+<!--    where plan_no=#{plan_no} and lotno =#{lotno}-->
+
 
     <update id="FPLANW010_Update_JDEL" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_W010 SET
         jlotnono='',
         jqty01= 0
-        where plan_no IN (SELECT plan_no FROM  TB_FPLAN_W010 WITH (NOLOCK) WHERE jlotnono = #{glotnono} )
+        where lotno IN (SELECT lotno FROM  TB_FPLAN_W010 WITH (NOLOCK) WHERE jlotnono = #{glotnono} )
     </update>
 
     <update id="FPLANW020_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
@@ -1314,7 +1321,7 @@
     <update id="FPLANW010_WrmcUpdate" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_W010 SET
         wrmc=#{wrmc}
-        where plan_no=#{plan_no} and wseq=#{wseq} and  wflag=#{wflag}
+        where plan_no=#{plan_no} and lotno=#{lotno} and  wflag=#{wflag}
     </update>
 
     <update id="FPLAN_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
@@ -1384,16 +1391,16 @@
     </select>
 
     <insert id="FPLANWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_WORK(custcd, spjangcd, plan_no, wono, wseq, wflag, wrmc, winqt, wotqt, wqcqt,wstdt, wfrdt,
+        INSERT INTO TB_FPLAN_WORK(custcd, spjangcd, plan_no, lotno, wono, wseq, wflag, wrmc, winqt, wotqt, wqcqt,wstdt, wfrdt,
                                   wbdqt,  winps, wsyul, wrps, wremark, decision, indate, inperid )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wono}, #{wseq}, #{wflag},  #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt}, #{wstdt},#{wfrdt},
+        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{lotno}, #{wono}, #{wseq}, #{wflag},  #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt}, #{wstdt},#{wfrdt},
                 #{wbdqt},   #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid})
     </insert>
 
     <insert id="FPLAN_OWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_OWORK(custcd, spjangcd, plan_no, wseq, wflag, seq, pcode, store, wotdt, wqty, lotno,
+        INSERT INTO TB_FPLAN_OWORK(custcd, spjangcd, plan_no,  wseq, wflag, seq, pcode, store, wotdt, wqty, lotno,
                                    bqty, qty, styn, indate, inperid )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{wseq}, #{wflag}, #{seq},  #{pcode}, #{store}, #{wotdt}, #{wqty}, #{lotno},
+        VALUES (#{custcd},#{spjangcd}, #{plan_no},  #{wseq}, #{wflag}, #{seq},  #{pcode}, #{store}, #{wotdt}, #{wqty}, #{lotno},
                 #{bqty},   #{qty},  '0', #{indate}, #{inperid})
     </insert>
 
@@ -1414,29 +1421,29 @@
 
     <delete id="FPLAN_OWORK_PERDELETE" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         DELETE  from TB_FPLAN_OWORK
-        where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag} AND seq =#{seq}
+        where plan_no=#{plan_no} and lotno=#{lotno} and wseq=#{wseq} AND wflag =#{wflag} AND seq =#{seq}
     </delete>
 
     <select id="FPLAN_OWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="String">
         SELECT MAX(seq) FROM  TB_FPLAN_OWORK
         WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
-          and plan_no = #{plan_no} and wflag = #{wflag} and wseq = #{wseq}
+          and plan_no = #{plan_no} and lotno=#{lotno} and wflag = #{wflag} and wseq = #{wseq}
     </select>
 
 
     <select id="FPLAN_OWORK_SUMQTY" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select sum(wqty) as wotqt, sum(qty) as qty,
-               (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and wseq=A.wseq and wflag=A.wflag group by plan_no,wseq,wflag) as wbdqt
+               (select isnull(sum(wbqty),0) as wbqty from TB_FPLAN_WBAD where plan_no=A.plan_no and lotno=A.lotno and wseq=A.wseq and wflag=A.wflag group by plan_no,lotno, wseq,wflag) as wbdqt
         from TB_FPLAN_OWORK A WITH (NOLOCK)
-        WHERE  A.plan_no =#{plan_no} and A.wflag =#{wflag} and A.wseq =#{wseq}
-        group by A.plan_no, A.wflag, A.wseq
+        WHERE  A.plan_no =#{plan_no} and lotno=#{lotno} and A.wflag =#{wflag} and A.wseq =#{wseq}
+        group by A.plan_no, A.lotno, A.wflag, A.wseq
     </select>
 
 
 
     <delete id="FPLANW010_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         DELETE  from TB_FPLAN_W010
-        where plan_no=#{plan_no} and wseq=#{wseq} AND wflag =#{wflag}
+        where plan_no=#{plan_no} and lotno=#{lotno}   AND wflag =#{wflag}
     </delete>
 
     <delete id="FPLANW020_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
@@ -1451,7 +1458,7 @@
 
     <delete id="FPLAN_OWORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" >
         DELETE  from TB_FPLAN_OWORK
-        where plan_no=#{plan_no}   AND wflag =#{wflag}
+        where plan_no=#{plan_no} and lotno=#{lotno}  AND wflag =#{wflag}
     </delete>
 
     <delete id="FPLAN_IWORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" >
@@ -1461,7 +1468,7 @@
 
     <delete id="FPLAN_WORK_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" >
         DELETE  from TB_FPLAN_WORK
-        where plan_no=#{plan_no}   AND wflag =#{wflag}
+        where plan_no=#{plan_no}  and lotno=#{lotno} AND wflag =#{wflag}
     </delete>
     <update id="FPLANWORK_update" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"  >
         UPDATE TB_FPLAN_WORK SET
@@ -1498,7 +1505,7 @@
         <if test="wtable != null">wtable=#{wtable}</if>
         <if test="wrmc != null ">,</if>
         <if test="wrmc != null">wrmc=#{wrmc}</if>
-        where plan_no=#{plan_no} and wseq=#{wseq} and wflag=#{wflag}
+        where plan_no=#{plan_no} and lotno=#{lotno}  and wseq=#{wseq} and wflag=#{wflag}
     </update>
 
     <select id="GetWIworkDetail" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
@@ -1507,7 +1514,7 @@
                  D.jgugek AS psize, D.jdanwy AS punit
         FROM TB_FPLAN_IWORK A WITH(NOLOCK) ,  JCODE D WITH(NOLOCK)
         where A.pcode = D.jkey
-          AND A.plan_no =#{plan_no} and A.wflag = #{wflag}
+          AND A.plan_no =#{plan_no} and lotno=#{lotno} and A.wflag = #{wflag}
     </select>
 
     <select id="GetWIworkDetail_blank" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
@@ -1542,24 +1549,24 @@
         <if test="bqty != null">bqty=#{bqty}</if>
         <if test="indate != null ">,</if>
         <if test="indate != null">indate=#{indate}</if>
-        where plan_no=#{plan_no}   and wseq=#{wseq} and wflag=#{wflag}
+        where plan_no=#{plan_no}  and lotno=#{lotno} and wseq=#{wseq} and wflag=#{wflag}
     </update>
 
 
     <select id="FPLAN_WPERID_SELECT" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO"   resultType="com.dae.kdmes.DTO.Appm.FPLANWPERID_VO">
         SELECT  custcd, spjangcd, plan_no,  wseq, wflag, seq, perid, indate, inperid
         from TB_FPLAN_WPERID
-        where plan_no=#{plan_no}  AND wflag = #{wflag}
+        where plan_no=#{plan_no} and lotno=#{lotno} AND wflag = #{wflag}
     </select>
 
     <insert id="FPLAN_WPERID_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANWPERID_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_WPERID(custcd, spjangcd, plan_no,  wseq, wflag, seq, perid, indate, inperid )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq}, '00010',  #{seq}, #{perid},   #{indate}, #{inperid})
+        INSERT INTO TB_FPLAN_WPERID(custcd, spjangcd, plan_no, lotno,  wseq, wflag, seq, perid, indate, inperid )
+        VALUES (#{custcd},#{spjangcd}, #{plan_no},  #{lotno}, #{wseq}, '00010',  #{seq}, #{perid},   #{indate}, #{inperid})
     </insert>
 
     <delete id="FPLAN_WPERID_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANWPERID_VO" >
         DELETE  from TB_FPLAN_WPERID
-        where plan_no=#{plan_no} and wseq=#{wseq} and wflag=#{wflag}
+        where plan_no=#{plan_no} and lotno=#{lotno} and wseq=#{wseq} and wflag=#{wflag}
     </delete>
 
 
@@ -1571,64 +1578,64 @@
     <select id="FPLAN_WBAD_SELECT" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="String">
         SELECT top 1 A.wseq
         FROM TB_FPLAN_WBAD  A WITH(NOLOCK)
-        where   A.plan_no=#{plan_no} and A.wflag=#{wflag} and A.wcode=#{wcode}
+        where   A.plan_no=#{plan_no} and lotno=#{lotno} and A.wflag=#{wflag} and A.wcode=#{wcode}
     </select>
 
     <select id="FPLAN_WBAD_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO">
         SELECT MAX(wseq) FROM  TB_FPLAN_WBAD
         WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
-          and plan_no = #{plan_no} and wflag = #{wflag}
+          and plan_no = #{plan_no} and lotno=#{lotno} and wflag = #{wflag}
     </select>
 
     <update id="FPLAN_WBAD_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" keyProperty="plan_no">
         UPDATE  TB_FPLAN_WBAD SET wbqty = #{wbqty}
         WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
-          and plan_no = #{plan_no} and wflag = #{wflag} and wcode = #{wcode}
+          and plan_no = #{plan_no} and lotno=#{lotno} and wflag = #{wflag} and wcode = #{wcode}
     </update>
 
 
     <insert id="FPLAN_WBAD_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_WBAD(custcd, spjangcd, plan_no, wseq, wflag,   wcode, wbqty, indate, inperid)
-        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq}, #{wflag},  #{wcode},  #{wbqty}, #{indate},  #{inperid})
+        INSERT INTO TB_FPLAN_WBAD(custcd, spjangcd, plan_no, lotno, wseq, wflag,   wcode, wbqty, indate, inperid)
+        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{lotno},  #{wseq}, #{wflag},  #{wcode},  #{wbqty}, #{indate},  #{inperid})
     </insert>
 
     <delete id="FPLAN_WBAD_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" >
         DELETE  from TB_FPLAN_WBAD
-        where plan_no=#{plan_no}   and wflag=#{wflag}
+        where plan_no=#{plan_no}  and lotno=#{lotno} and wflag=#{wflag}
     </delete>
 
     <insert id="FPLAN_WTIME_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANWTIME_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_WTIME(custcd, spjangcd, plan_no,  wseq, seq, wflag, wfrdt, wtrdt, wopdv, wdtcd, wrerm )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq}, #{seq},  #{wflag},  #{wfrdt}, #{wtrdt},  #{wopdv},   #{wdtcd}, #{wrerm})
+        INSERT INTO TB_FPLAN_WTIME(custcd, spjangcd, plan_no, lotno, wseq, seq, wflag, wfrdt, wtrdt, wopdv, wdtcd, wrerm )
+        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{lotno},  #{wseq}, #{seq},  #{wflag},  #{wfrdt}, #{wtrdt},  #{wopdv},   #{wdtcd}, #{wrerm})
     </insert>
 
     <delete id="FPLAN_WTIME_Delete" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" >
         DELETE  from TB_FPLAN_WTIME
-        where plan_no=#{plan_no} and wflag=#{wflag}
+        where plan_no=#{plan_no} and lotno=#{lotno} and wflag=#{wflag}
     </delete>
 
     <select id="FPLAN_WTIME_MAXSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANWTIME_VO" resultType="String">
         SELECT MAX(seq) FROM  TB_FPLAN_WTIME WITH (NOLOCK)
         WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
-          and plan_no = #{plan_no} and wflag = #{wflag} and wseq=#{wseq}
+          and plan_no = #{plan_no} and lotno=#{lotno} and wflag = #{wflag} and wseq=#{wseq}
     </select>
 
     <update id="FPLAN_WTIME_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANWTIME_VO" keyProperty="plan_no">
         UPDATE  TB_FPLAN_WTIME SET wtrdt = #{wtrdt}, wdtcd = #{wdtcd}, wrerm = #{wrerm}
         WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
-          and plan_no = #{plan_no} and wflag = #{wflag} and wseq=#{wseq} AND wtrdt IS NULL
+          and plan_no = #{plan_no} and lotno=#{lotno} and wflag = #{wflag} and wseq=#{wseq} AND wtrdt IS NULL
     </update>
 
 
     <select id="FPLAN_IWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" resultType="String">
         SELECT MAX(seq) FROM  TB_FPLAN_IWORK
-        WHERE   plan_no = #{plan_no}
+        WHERE   plan_no = #{plan_no} and lotno=#{lotno}
     </select>
 
 
     <insert id="FPLAN_IWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANIWORK_VO" keyProperty="plan_no">
-        INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no,  wseq, seq, wflag, pcode, lotno, store, qty, bqty,  indate, inperid )
-        VALUES (#{custcd},#{spjangcd}, #{plan_no},   #{wseq}, #{seq},  #{wflag},  #{pcode}, #{lotno},  #{store},   #{qty}, #{bqty},  #{indate}, #{inperid})
+        INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no, lotno,  wseq, seq, wflag, pcode, lotno, store, qty, bqty,  indate, inperid )
+        VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{lotno},  #{wseq}, #{seq},  #{wflag},  #{pcode}, #{lotno},  #{store},   #{qty}, #{bqty},  #{indate}, #{inperid})
     </insert>
 
 

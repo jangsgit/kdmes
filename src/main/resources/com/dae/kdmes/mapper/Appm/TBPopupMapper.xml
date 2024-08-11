@@ -81,7 +81,7 @@
                TB_FPLAN_WBAD.wseq   as wseq ,
                TB_FPLAN_WBAD.plan_no   as plan_no
         FROM TB_CA510 WITH(NOLOCK) LEFT OUTER JOIN TB_FPLAN_WBAD WITH(NOLOCK)
-        ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag} and TB_FPLAN_WBAD.plan_no = #{plan_no}
+        ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag} and TB_FPLAN_WBAD.plan_no = #{plan_no} and TB_FPLAN_WBAD.lotno = #{lotno}
         WHERE TB_CA510.com_cls = '005'
           AND TB_CA510.com_code   != '00'
           AND TB_CA510.com_REM2  = #{wflag}
@@ -187,6 +187,7 @@
         FROM TB_CA510 WITH(NOLOCK) LEFT OUTER JOIN TB_FPLAN_WBAD WITH(NOLOCK)
              ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag}
             AND TB_FPLAN_WBAD.plan_no   = #{plan_no}
+            AND TB_FPLAN_WBAD.lotno     = #{lotno}
         WHERE TB_CA510.com_cls = '005'
           AND TB_CA510.com_code   != '00'
         ]]>

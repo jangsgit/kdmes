@@ -217,8 +217,9 @@ public class AppPopupController {
 
     //wbad  LIST
     @GetMapping(value="/wbad")
-    public Object Appwiwork_index(
+    public Object Appwiwork02_index(
              @RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("wflag") String wflag
             ,Model model, HttpServletRequest request) throws Exception{
         TBPopupVO wbadDto = new TBPopupVO();
@@ -228,6 +229,7 @@ public class AppPopupController {
         wbadDto.setCustcd("KDMES");
         wbadDto.setSpjangcd("ZZ");
         wbadDto.setPlan_no(plan_no);
+        wbadDto.setLotno(lotno);
         wbadDto.setWflag(wflag);
         if(appPopupService.GetWBadList01(wbadDto) == null){
             return appPopupService.GetWBadList_blank();
@@ -240,6 +242,7 @@ public class AppPopupController {
 
     @GetMapping(value="/oworklist")
     public Object Appwiwork_index( @RequestParam("plan_no") String plan_no
+            ,@RequestParam("lotno") String lotno
             ,@RequestParam("inpcode") String inpcode
             ,@RequestParam("inwono") String inwono
             ,@RequestParam("wflag") String wflag
@@ -252,9 +255,10 @@ public class AppPopupController {
             plan_no = "%";
         }
         wPopDto.setPlan_no(plan_no);
+        wPopDto.setLotno(lotno);
         wPopDto.setPcode(inpcode);
         wPopDto.setWflag(wflag);
-        wPopDto.setLotno(inwono.substring(2,11));
+        //wPopDto.setLotno(inwono.substring(2,11));
         wPopDtoList = appPopupService.FPLAN_OWORK_List(wPopDto) ;
         return wPopDtoList;
     }

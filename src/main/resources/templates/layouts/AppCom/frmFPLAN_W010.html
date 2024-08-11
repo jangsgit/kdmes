@@ -804,6 +804,7 @@
     var view_wbadpage ;
     var view_wstoppage ;
     var view_wjglistpage;
+    var wkotdate;
     var button_workstBtn = document.getElementById('workstBtn');
     var button_workedBtn = document.getElementById('workedBtn');
     var button_wfrdt = document.getElementById('wfrdt');
@@ -970,13 +971,13 @@
                 // { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  },
                 // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                 { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, 
-                { binding: 'psize', header: '규격',     align:"center",  width: 100 },
+                // { binding: 'psize', header: '규격',     align:"center",  width: 100 },
                 { binding: 'psize', header: '차종',     align:"center",  width: 100 },
                 { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
                 { binding: 'end_qty', header: '생산량',   align:"center",width: 100 } ,
                 // { binding: 'winqt', header: '투입량',   align:"center",width: '*' }, 
                 // { binding: 'wotqt', header: '완료량',   align:"center",width: '*' } ,
-                // { binding: 'decision', header: '임시여부', align:"center", width: '*' }
+                { binding: 'decision', header: '상태', align:"center", width: '*' }
 
             ],
             itemsSource: view_salistpage
@@ -1010,7 +1011,13 @@
             for (var i = 0; i < ListDto.length; i++) {
                 var psdate = ListDto[i]["prod_sdate"];
                 psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
-                var date_format = new Date(psdate);
+                var date_format = new Date(psdate); 
+                var ls_decision =  ListDto[i]["decision"];  
+                if(ls_decision == "3"){
+                    ls_decision = "작업완료";
+                }else{
+                    ls_decision = "진행중";
+                }
                 data.push({
                     id: i, 
                     index: cnt,                                                                
@@ -1023,7 +1030,7 @@
                     winqt: ListDto[i]["winqt"] , 
                     owqty: ListDto[i]["owqty"] ,  
                     otqty: ListDto[i]["otqty"] ,     
-                    decision: ListDto[i]["decision"] ,    
+                    decision: ls_decision ,    
                     plan_no: ListDto[i]["plan_no"] ,
                     ostore: ListDto[i]["ostore"] ,
                     custcd: ListDto[i]["custcd"] ,
@@ -1304,6 +1311,7 @@
                 // console.log('sel[i]._data.wflagcd', sel[i]._data.wflagcd);
             }  
             plan_no =  document.getElementById('inplan_no').value;
+            var ls_inlotno =  document.getElementById('inlotno').value;
             if(sel.length > 0){
                 if(sel.length == 1){
                     document.getElementById('inwrpsnm').value = wpernm [0];
@@ -1334,7 +1342,8 @@
                         "wflagnm" : wflagnm,
                         "wperid" : wperid,
                         "wpernm" : wpernm,
-                        "plan_no" : plan_no
+                        "plan_no" : plan_no,
+                        "lotno" : ls_inlotno
                         },
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
                 success:function(data){
@@ -1442,6 +1451,7 @@
                         } 
                         // console.log('qty',s.activeEditor.value); 
                         var ls_plan_no   = document.getElementById('inplan_no').value;  
+                        var ls_inlotno   = document.getElementById('inlotno').value; 
                         var ls_inpcode   = document.getElementById('inpcode').value; 
                         var rows = e._p._rows.length  ;   
                         for (var i = 0; i < rows ; i++) {  
@@ -1480,6 +1490,7 @@
                                             "custcd"    : "KDMES" ,
                                             "spjangcd"  : "ZZ",
                                             "plan_no"      : ls_plan_no ,
+                                            "lotno"        : ls_inlotno ,
                                             "wflag" : "00010" ,
                                             "wbqty"   : ll_qty   ,
                                             "wcode"   : ls_wcode,
@@ -1620,7 +1631,8 @@
     })    
 
     function searchbdqty_fnc(){
-        var ls_plan_no   = document.getElementById('inplan_no').value;  
+        var ls_plan_no   = document.getElementById('inplan_no').value; 
+        var ls_inlotno   = document.getElementById('inlotno').value;  
         var ls_wflag = '00010'  
 
         if(ls_plan_no == null || ls_plan_no.length == 0 || ls_plan_no == ""){ 
@@ -1633,6 +1645,7 @@
             type:"POST",
             data: {
                 "plan_no" : ls_plan_no, 
+                "lotno" : ls_inlotno, 
                 "wflag" : ls_wflag ,
             },
             success:function(data){ 
@@ -1862,6 +1875,7 @@
             var wflag = document.getElementById('inwflag').value;
             var ls_custcd   = document.getElementById('incustcd').value; 
             var ls_spjangcd = document.getElementById('inspjangcd').value;  
+            var ls_inlotno   = document.getElementById('inlotno').value; 
             if(!wflag){wflag = "00010";}  
             $.ajax({
                 url: '/input/SELWBAD',  
@@ -1870,6 +1884,7 @@
                     "custcd"     : ls_custcd,
                     "spjangcd"   : ls_spjangcd,
                     "plan_no"    : arg,
+                    "lotno"    : ls_inlotno,
                     "wflag"      : wflag
                 },
                 async:true,
@@ -2159,6 +2174,7 @@
         var startDate   = document.getElementById('startDate').value; 
         var endDate   = document.getElementById('endDate').value;
         var ls_plan_no   = document.getElementById('inplan_no').value; 
+        var ls_inlotno   = document.getElementById('inlotno').value; 
         var ls_inwrmc   = document.getElementById('inwrmc').value;
         var ll_inwinqt  = document.getElementById('prod_qty').value;         //계획
         var ll_inwbdqt  = document.getElementById('inwbdqt').value;         //불량
@@ -2297,6 +2313,7 @@
                     "startDate" : startDate ,
                     "endDate"   : endDate   ,
                     "plan_no"   : ls_plan_no,
+                    "lotno"     : ls_inlotno,
                     "wrmc"      : ls_inwrmc      ,
                     "winqt"     : ll_inwinqt     ,
                     "wbdqt"     : ll_inwbdqt     ,
@@ -2396,6 +2413,7 @@
                     "custcd"    : ls_custcd ,
                     "spjangcd"  : ls_spjangcd, 
                     "plan_no"   : ls_plan_no, 
+                    "lotno"     : ls_inlotno, 
                     "wflag"     : ls_inwflag     , 
                     "decision"  : ls_decision  ,
                     "workdv"      : arg1   ,
@@ -2432,11 +2450,13 @@
         var ls_custcd   = document.getElementById('incustcd').value; 
         var ls_spjangcd = document.getElementById('inspjangcd').value; 
         var ls_plan_no   = document.getElementById('inplan_no').value; 
+        var ls_inlotno   = document.getElementById('inlotno').value; 
         var ls_inpcode   = document.getElementById('inpcode').value; 
         var ls_inwono   = document.getElementById('inwono').value; 
         var ls_popwotqt   = document.getElementById('popwotqt').value; 
         var ls_popwbdqt   = 0 ; //document.getElementById('popwbdqt').value;  
-        var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
+        var ls_popwkotDate     =  convert_date(wkotdate.value);
+        // var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
         var ls_popseq   = document.getElementById('popseq').value; 
         var ls_popwseq   = document.getElementById('popwseq').value; 
         var ls_inwinqt   = document.getElementById('prod_qty').value; //계획량
@@ -2481,6 +2501,7 @@
                 "custcd"        : ls_custcd ,
                 "spjangcd"      : ls_spjangcd,
                 "inplan_no"     : ls_plan_no ,
+                "lotno"         : ls_inlotno, 
                 "inpcode"       : ls_inpcode ,
                 "inwono"        : ls_inwono   ,
                 "popwotqt"      : ls_popwotqt , 
@@ -2517,9 +2538,11 @@
         var ls_custcd   = document.getElementById('incustcd').value; 
         var ls_spjangcd = document.getElementById('inspjangcd').value; 
         var ls_plan_no   = document.getElementById('inplan_no').value; 
+        var ls_inlotno   = document.getElementById('inlotno').value; 
         var ls_inpcode   = document.getElementById('inpcode').value;  
         var ls_popwotqt   = document.getElementById('popwotqt').value;  
-        var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
+        var ls_popwkotDate     =  convert_date(wkotdate.value);
+        // var ls_popwkotDate   = document.getElementById('popwkotDate').value; 
         var ls_popseq   = document.getElementById('popseq').value; 
         var ls_popwseq   = document.getElementById('popwseq').value; 
         var ls_wflag = '00010' 
@@ -2547,6 +2570,7 @@
                 type:"POST", 
                 data: {
                     "plan_no"    : ls_plan_no , 
+                    "lotno"      : ls_inlotno, 
                     "wseq"    : ls_popwseq,  
                     "seq"    : ls_popseq,  
                     "pcode"    : ls_inpcode ,  
@@ -2697,7 +2721,8 @@
                 url: '/input/w010del',   
                 type:"POST", 
                 data: {
-                    "plan_no"    : ls_plan_no  
+                    "plan_no"    : ls_plan_no,  
+                    "lotno"      : ls_inlotno 
                 },
                 async:false,
                 success:function(data){
@@ -2711,7 +2736,8 @@
             })  
     }     
     function woworkChk(arg1, arg2, arg3, arg4, arg5  ){ 
-        document.getElementById('popwkotDate').value= arg1; 
+        wkotdate.value = arg1;
+        // document.getElementById('popwkotDate').value= arg1; 
         document.getElementById('popwotqt').value= arg2; 
         document.getElementById('popwbdqt').value= arg3; 
         document.getElementById('popwseq').value= arg4;  
@@ -2804,6 +2830,15 @@
         var ls_text = "<div style='color:red'><span class='badge badge-soft-info'></span></div>";  
         btn_progress(false, false, false, false) 
         statusdis_div.innerHTML  = ls_text;   
+
+        
+        var result = new Date();
+        result.setHours(result.getHours() + 9);
+        var ls_date = result.toISOString().substring(0,10);
+        wkotdate.value = ls_date; 
+
+        //생산량 초기화     
+        searchotqty_fnc();
           
 
     }  
@@ -2898,6 +2933,7 @@
                 "pname"     : arg5,
                 "ostore"    : arg6,
                 "plan_no"   : arg7,
+                "lotno"     : arg19,
                 "wflag"     : wflag,
                 "wrmc"      : wrmc
             },
@@ -2933,6 +2969,7 @@
                 "custcd"    : arg1,
                 "spjangcd"  : arg2, 
                 "plan_no"   : arg7,
+                "lotno"     : arg19, 
                 "wflag"     : wflag 
             },
             async:false,
@@ -3047,6 +3084,7 @@
         arg4 = document.getElementById('inspjangcd').value;  
         wflag = document.getElementById('inwflag').value;
         plan_no = document.getElementById('inplan_no').value;
+    var ls_inlotno   = document.getElementById('inlotno').value; 
         if(!wflag){ wflag = "00010"; } 
         // $("#wlistBtn").trigger("click");  
         // $("#plannoBtn").trigger("click"); 
@@ -3059,6 +3097,7 @@
                 "custcd"    : arg3,
                 "spjangcd"  : arg4, 
                 "plan_no"   : plan_no,
+                "lotno"      : ls_inlotno ,
                 "wflag"     : wflag,
                 "wrmc"      : arg1
             },
@@ -3294,6 +3333,12 @@
                         var ls_month = ListDto[i]["inmonth"];
                         var ls_weeks = ListDto[i]["inweeks"];
                         var ls_inmonth = ls_month + '' + ls_weeks + '주차';
+                        var ls_decision= ListDto[i]["decision"];
+                        if(ls_decision == "3"){
+                            ls_decision = "작업완료";
+                        }else{
+                            ls_decision = "진행중";
+                        }
                         // var date_format = new Date(psdate);ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode  
                         dataArr.push({
                             id: i, 
@@ -3306,7 +3351,7 @@
                             prod_qty: ListDto[i]["prod_qty"],
                             winqt: ListDto[i]["winqt"] , 
                             wotqt: ListDto[i]["wotqt"] ,     
-                            decision: ListDto[i]["decision"] ,    
+                            decision: ls_decision,    
                             plan_no: ListDto[i]["plan_no"] ,
                             ostore: ListDto[i]["ostore"] ,
                             custcd: ListDto[i]["custcd"] ,
@@ -3404,12 +3449,12 @@
                     cols.align = "center";
                     cols.width = 100 ; 
                     wtabsaGrid.columns.push(cols);  
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'psize';
-                    cols.header = '규격';
-                    cols.align = "center";
-                    cols.width = 100 ; 
-                    wtabsaGrid.columns.push(cols);  
+                    // cols = new wijmo.grid.Column(); 
+                    // cols.binding = 'psize';
+                    // cols.header = '규격';
+                    // cols.align = "center";
+                    // cols.width = 100 ; 
+                    // wtabsaGrid.columns.push(cols);  
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'prod_qty';
                     cols.header = '계획량';
@@ -3421,7 +3466,13 @@
                     cols.header = '생산량';
                     cols.align = "center";
                     cols.width = 100 ; 
-                    wtabsaGrid.columns.push(cols);   
+                    wtabsaGrid.columns.push(cols);  
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'decision';
+                    cols.header = '상태';
+                    cols.align = "center";
+                    cols.width = 100 ; 
+                    wtabsaGrid.columns.push(cols);  
 
             },error:function(e){
                 console.log("error");
@@ -3450,6 +3501,7 @@
 
     function searchotqty_fnc(){
         var ls_plan_no   = document.getElementById('inplan_no').value; 
+        var ls_inlotno   = document.getElementById('inlotno').value; 
         var ls_inpcode   = document.getElementById('inpcode').value; 
         var ls_inwono   = document.getElementById('inwono').value; 
         var ls_wflag = '00010' 
@@ -3465,6 +3517,7 @@
             type:"POST",
             data: {
                 "plan_no" : ls_plan_no,
+                "lotno"      : ls_inlotno, 
                 "inpcode" : ls_inpcode ,
                 "inwono" : ls_inwono ,
                 "wflag" : ls_wflag ,
@@ -3596,7 +3649,7 @@
         }).done(function(fragment){           
 
         }) 
-    }
+    } 
 
 
 
@@ -3632,6 +3685,33 @@
         return time;  
     }
     
+    function convert_date(arg_date){  
+        var ls_arg_date = String(arg_date); 
+        if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
+            return "";
+        }  
+        // Date 객체로 변환
+        const dateObj = new Date(arg_date);
+
+        // 년, 월, 일 추출 (월은 0부터 시작하므로 +1 필요)
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+
+        // "YYYY-MM-DD" 형식으로 변환
+        const formattedDate = `${year}${month}${day}`;
+        arg_date = formattedDate; 
+        return arg_date; 
+        // var ls_arg_date = String(arg_date); 
+        // if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
+        //     return "";
+        // }
+        // //arg_date.setDate(arg_date.getDate() + 1);  // 바로반환하면 하루 이전일자를 반환하여 +1일 해줌.                 
+        // arg_date.setHours(arg_date.getHours() + 9);
+        // arg_date =  String(arg_date.toISOString().substring(0,10)); 
+        // arg_date = arg_date.replaceAll("-",""); 
+        // return arg_date;
+    }
     function getToday(){
         let today = new Date();
 
@@ -3643,8 +3723,25 @@
         if(month > 0 && month < 10) {month = "0" + month};
         let ls_frday = year + '-' + month + '-01'
         let ls_today = year + '-' + month + '-' + date
+
+
+        
+        // 일반 입력 날짜
+        wkotdate = new wijmo.input.InputDate('#popwkotDate', {
+            isRequired: false,
+            value: null,
+            placeholder: '',
+            format: 'yyyy-MM-dd', 
+        });
+
+ 
+        var result = new Date();
+        result.setHours(result.getHours() + 9);
+        var ls_date = result.toISOString().substring(0,10);
+        wkotdate.value = ls_date;  
+
         // console.log(ls_today); 
-        document.getElementById('popwkotDate').value = ls_today;
+        //document.getElementById('popwkotDate').value = ls_today;
         // document.getElementById('searchOrdDate').value = ls_today; 
         showCurrentDate(ls_today, 5); 
     }

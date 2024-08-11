@@ -18,6 +18,7 @@ public class Index10Dto {
     private String wrmc;
     private String wono;
     private String lotno;
+    private String lotnomax;
     private String line;
     private String opcod;
     private String cltcd;
