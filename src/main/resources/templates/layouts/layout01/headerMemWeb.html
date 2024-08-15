@@ -54,54 +54,99 @@
                         <div class="col-xxl-8">
                           <div class="card overflow-hidden mb-3">
                             <div class="card-header audience-chart-header p-0 bg-light scrollbar-overlay">
-                              <ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="audience-chart-tab" role="tablist">
+
+                              <div class="card-group">
+                                <div class="card overflow-hidden" style="width: 10rem;">
+                                  <div class="card-img-top"><img class="img-fluid" th:src="@{/assets/images/pngwing.com.png}" alt="Card image cap" /></div>
+                                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">                                      
+                                    <a class="btn btn-primary btn-sm" href="#!">가동중</a>
+                                    <h5 class="card-title">설비#1</h5>
+                                  </div>
+                                </div>
+                                <div class="card overflow-hidden" style="width: 10rem;">
+                                  <div class="card-img-top"><img class="img-fluid" th:src="@{/assets/images/pngwing.com.png}" alt="Card image cap" /></div>
+                                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">                                     
+                                    <a class="btn btn-primary btn-sm" href="#!">가동중</a>
+                                    <h5 class="card-title">설비#2</h5>
+                                  </div>
+                                </div>
+                                <div class="card overflow-hidden" style="width: 10rem;">
+                                  <div class="card-img-top"><img class="img-fluid" th:src="@{/assets/images/pngwing.com.png}" alt="Card image cap" style="animation: blink-animation 1s steps(5, start) infinite;" /></div>
+                                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">                                     
+                                    <a class="btn btn-danger btn-sm" href="#!" >비가동</a> 
+                                    <style>
+                                      @keyframes blink-animation {
+                                          to {
+                                              visibility: hidden;
+                                          }
+                                      }
+                                    </style>
+                                    <p class="card-title">금형교체중</p>
+                                    <h5 class="card-title">설비#3</h5>                                    
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div class="card-group">
+                                <div class="card overflow-hidden" style="width: 10rem;">
+                                  <div class="card-img-top"><img class="img-fluid" th:src="@{/assets/images/pngwing.com.png}" alt="Card image cap"  /></div>
+                                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">                                      
+                                    <a class="btn btn-primary btn-sm" href="#!">가동중</a>
+                                    <!-- <p class="card-title">기계결함</p> -->
+                                    <h5 class="card-title">설비#4</h5>
+                                  </div>
+                                </div>
+                                <div class="card overflow-hidden" style="width: 10rem;">
+                                  <div class="card-img-top"><img class="img-fluid" th:src="@{/assets/images/pngwing.com.png}" alt="Card image cap" /></div>
+                                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">                                     
+                                    <a class="btn btn-primary btn-sm" href="#!">가동중</a>
+                                    <h5 class="card-title">설비#5</h5>
+                                  </div>
+                                </div>
+                                <div class="card overflow-hidden" style="width: 10rem;">
+                                  <div class="card-img-top"><img class="img-fluid" th:src="@{/assets/images/pngwing.com.png}" alt="Card image cap" /></div>
+                                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">                                     
+                                    <a class="btn btn-primary btn-sm" href="#!">가동중</a>
+                                    <h5 class="card-title">설비#6</h5>                                    
+                                  </div>
+                                </div>
+                              </div>
+
+ 
+                              <!--<ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="audience-chart-tab" role="tablist">
                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0 active" id="users-tab" data-bs-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">
-                                    <div class="audience-tab-item p-2 pe-4">
-                                      <!-- <h6 class="text-800 fs--2 text-nowrap">금일계획수량</h6> -->
+                                    <div class="audience-tab-item p-2 pe-4"> 
                                       <h5 class="text-800">공정종합품질현황</h5>
-                                      <div class="d-flex align-items-center">
-                                         <!-- <span class="fas fa-caret-up text-success"></span> -->
-                                        <!-- <h6 class="fs--2 mb-0 ms-2 text-success">5.1%</h6> -->
+                                      <div class="d-flex align-items-center"> 
                                       </div>
                                     </div>
                                   </a></li>
-                                <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="sessions-tab" data-bs-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">
-                                    <div class="audience-tab-item p-2 pe-4">
-                                      <!-- <h6 class="text-800 fs--2 text-nowrap">금일사출수량</h6> -->
+                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="sessions-tab" data-bs-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false">
+                                    <div class="audience-tab-item p-2 pe-4"> 
                                       <h5 class="text-800">불량현황(월별)</h5>
-                                      <div class="d-flex align-items-center">
-                                        <!-- <span class="fas fa-caret-up text-success"></span>
-                                        <h6 class="fs--2 mb-0 ms-2 text-success">1.5%</h6> -->
+                                      <div class="d-flex align-items-center"> 
                                       </div>
                                     </div>
                                   </a></li>
                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="rate-tab" data-bs-toggle="tab" href="#rate" role="tab" aria-controls="rate" aria-selected="false">
-                                    <div class="audience-tab-item p-2 pe-4">
-                                      <!-- <h6 class="text-800 fs--2 text-nowrap">공정종합품질현황(월)</h6> -->
+                                    <div class="audience-tab-item p-2 pe-4"> 
                                       <h5 class="text-800">공정종합품질현황(월)</h5>
-                                      <div class="d-flex align-items-center">
-                                        <!-- <span class="fas fa-caret-down text-warning"></span>
-                                        <h6 class="fs--2 mb-0 ms-2 text-warning">1.2%</h6> -->
+                                      <div class="d-flex align-items-center"> 
                                       </div>
                                     </div>
                                   </a></li>
                                 <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="duration-tab" data-bs-toggle="tab" href="#duration" role="tab" aria-controls="duration" aria-selected="false">
-                                    <div class="audience-tab-item p-2 pe-4">
-                                      <!-- <h6 class="text-800 fs--2 text-nowrap">불량율</h6> -->
+                                    <div class="audience-tab-item p-2 pe-4"> 
                                       <h5 class="text-800">불량현황(일별)</h5>
-                                      <div class="d-flex align-items-center">
-                                        <!-- <span class="fas fa-caret-down text-warning"></span>
-                                        <h6 class="fs--2 mb-0 ms-2 text-warning">2.2%</h6> -->
+                                      <div class="d-flex align-items-center"> 
                                       </div>
                                     </div>
-                                  </a></li>
-                              </ul>
+                                  </a></li> 
+                              </ul>-->
                             </div>
                             <div class="card-body">
-                              <div class="tab-content">
-                                <div class="tab-pane active" id="users" role="tabpanel" aria-labelledby="users-tab">
-                                  <!-- Find the JS file for the following chart at: src/js/charts/echarts/audience.js-->
-                                  <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
+                              <!-- <div class="tab-content">
+                                <div class="tab-pane active" id="users" role="tabpanel" aria-labelledby="users-tab"> 
                                   <div class="container-fluid" data-echart-responsive="true" style="height:400px;"> 
                                       <div id="wtab01Grid_div" style="overflow:scroll;   height:410px;    margin:0 auto; "></div> 
                                   </div>
@@ -121,7 +166,7 @@
                                     <div id="wtab04Grid_div" style="overflow:scroll;   height:410px; width: 1100px;     margin:0 auto; "></div> 
                                   </div>
                                 </div>
-                              </div>
+                              </div> -->
                             </div>
                             <!-- <div class="card-footer bg-light py-2">
                               <div class="row flex-between-center g-0">
@@ -521,42 +566,40 @@
         var wtab04Grid; 
     
        //공정종합품질현황
-       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
-            // pageSize: 21
-        }); 
-        wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
-            autoGenerateColumns: false,
-            showMarquee: true,
-            isReadOnly: true, 
-            // selectionMode: 'RowRange',
-            allowSorting: 'MultiColumn',
-            alternatingRowStep: 0,
-            columns: [     
-                { binding: 'header00', header: '구분', align: "center", width: 150 },           
-                { binding: 'header01', header: '01', align: "right", width: 100 }, 
-                { binding: 'header02', header: '02', align: "right", width: 100 }, 
-                { binding: 'header03', header: '03', align: "right", width: 100 },  
-                { binding: 'header04', header: '04', align: "right", width: 100 },   
-                { binding: 'header05', header: '05', align: "right", width: 100 },
-                { binding: 'header06', header: '06', align: "right", width: 100 },  
-                { binding: 'header07', header: '07', align: "right", width: 100 },
-                { binding: 'header08', header: '08', align: "right", width: 100 },  
-                { binding: 'header09', header: '09', align: "right", width: 100 },  
-                { binding: 'header10', header: '10', align: "right", width: 100 },    
-                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
-                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
-            ], 
-            itemsSource: view_p01tab01page
-        });   
+      //  view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), { 
+      //   }); 
+      //   wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
+      //       autoGenerateColumns: false,
+      //       showMarquee: true,
+      //       isReadOnly: true,  
+      //       allowSorting: 'MultiColumn',
+      //       alternatingRowStep: 0,
+      //       columns: [     
+      //           { binding: 'header00', header: '구분', align: "center", width: 150 },           
+      //           { binding: 'header01', header: '01', align: "right", width: 100 }, 
+      //           { binding: 'header02', header: '02', align: "right", width: 100 }, 
+      //           { binding: 'header03', header: '03', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '04', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '05', align: "right", width: 100 },
+      //           { binding: 'header06', header: '06', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '07', align: "right", width: 100 },
+      //           { binding: 'header08', header: '08', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '09', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '10', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+      //           { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+      //       ], 
+      //       itemsSource: view_p01tab01page
+      //   });   
         
-        new FlexGridContextMenu(wtab01Grid);  
-        setHeaderColumn(false);
-        function setHeaderColumn(headerOn) {
-            wtab01Grid.headersVisibility = headerOn
-            ? wijmo.grid.HeadersVisibility.All
-            : wijmo.grid.HeadersVisibility.Column; 
-        } 
+      //   new FlexGridContextMenu(wtab01Grid);  
+      //   setHeaderColumn(false);
+      //   function setHeaderColumn(headerOn) {
+      //       wtab01Grid.headersVisibility = headerOn
+      //       ? wijmo.grid.HeadersVisibility.All
+      //       : wijmo.grid.HeadersVisibility.Column; 
+      //   } 
          // tab01검색 데이터 수집
        function getData_tab01(){       
            var wactnm_data = [];  //wtab01Dto[i]["indate"]
@@ -577,42 +620,40 @@
 
        //#####################################################################################
        //불량현황(월)
-       view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
-            // pageSize: 21
-        }); 
-        wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
-            autoGenerateColumns: false,
-            showMarquee: true,
-            isReadOnly: true, 
-            // selectionMode: 'RowRange',
-            allowSorting: 'MultiColumn',
-            alternatingRowStep: 0,
-            columns: [     
-                { binding: 'header00', header: '구분', align: "center", width: 150 },           
-                { binding: 'header01', header: '01', align: "right", width: 100 }, 
-                { binding: 'header02', header: '02', align: "right", width: 100 }, 
-                { binding: 'header03', header: '03', align: "right", width: 100 },  
-                { binding: 'header04', header: '04', align: "right", width: 100 },   
-                { binding: 'header05', header: '05', align: "right", width: 100 },
-                { binding: 'header06', header: '06', align: "right", width: 100 },  
-                { binding: 'header07', header: '07', align: "right", width: 100 },
-                { binding: 'header08', header: '08', align: "right", width: 100 },  
-                { binding: 'header09', header: '09', align: "right", width: 100 },  
-                { binding: 'header10', header: '10', align: "right", width: 100 },    
-                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
-                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
-            ], 
-            itemsSource: view_p01tab02page
-        });   
+      //  view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), { 
+      //   }); 
+      //   wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
+      //       autoGenerateColumns: false,
+      //       showMarquee: true,
+      //       isReadOnly: true,  
+      //       allowSorting: 'MultiColumn',
+      //       alternatingRowStep: 0,
+      //       columns: [     
+      //           { binding: 'header00', header: '구분', align: "center", width: 150 },           
+      //           { binding: 'header01', header: '01', align: "right", width: 100 }, 
+      //           { binding: 'header02', header: '02', align: "right", width: 100 }, 
+      //           { binding: 'header03', header: '03', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '04', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '05', align: "right", width: 100 },
+      //           { binding: 'header06', header: '06', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '07', align: "right", width: 100 },
+      //           { binding: 'header08', header: '08', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '09', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '10', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+      //           { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+      //       ], 
+      //       itemsSource: view_p01tab02page
+      //   });   
         
-        new FlexGridContextMenu(wtab02Grid);  
-        setHeaderColumn02(false);
-        function setHeaderColumn02(headerOn) {
-            wtab02Grid.headersVisibility = headerOn
-            ? wijmo.grid.HeadersVisibility.All
-            : wijmo.grid.HeadersVisibility.Column; 
-        } 
+      //   new FlexGridContextMenu(wtab02Grid);  
+      //   setHeaderColumn02(false);
+      //   function setHeaderColumn02(headerOn) {
+      //       wtab02Grid.headersVisibility = headerOn
+      //       ? wijmo.grid.HeadersVisibility.All
+      //       : wijmo.grid.HeadersVisibility.Column; 
+      //   } 
          // tab01검색 데이터 수집
        function getData_tab02(){       
            var wactnm_data = [];  //wtab01Dto[i]["indate"]
@@ -634,61 +675,59 @@
 
        //#####################################################################################
        //공정종합품질현황(일)
-       view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), {
-            // pageSize: 21
-        }); 
-        wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
-            autoGenerateColumns: false,
-            showMarquee: true,
-            isReadOnly: true, 
-            // selectionMode: 'RowRange',
-            allowSorting: 'MultiColumn',
-            alternatingRowStep: 0,
-            columns: [     
-                { binding: 'header00', header: '구분', align: "center", width: 150 },           
-                { binding: 'header01', header: '01', align: "right", width: 100 }, 
-                { binding: 'header02', header: '02', align: "right", width: 100 }, 
-                { binding: 'header03', header: '03', align: "right", width: 100 },  
-                { binding: 'header04', header: '04', align: "right", width: 100 },   
-                { binding: 'header05', header: '05', align: "right", width: 100 },
-                { binding: 'header06', header: '06', align: "right", width: 100 },  
-                { binding: 'header07', header: '07', align: "right", width: 100 },
-                { binding: 'header08', header: '08', align: "right", width: 100 },  
-                { binding: 'header09', header: '09', align: "right", width: 100 },  
-                { binding: 'header10', header: '10', align: "right", width: 100 },    
-                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
-                { binding: 'header03', header: '13', align: "right", width: 100 },  
-                { binding: 'header04', header: '14', align: "right", width: 100 },   
-                { binding: 'header05', header: '15', align: "right", width: 100 },
-                { binding: 'header06', header: '16', align: "right", width: 100 },  
-                { binding: 'header07', header: '17', align: "right", width: 100 },
-                { binding: 'header08', header: '18', align: "right", width: 100 },  
-                { binding: 'header09', header: '19', align: "right", width: 100 },  
-                { binding: 'header10', header: '20', align: "right", width: 100 },    
-                { binding: 'header11', header: '21', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header12', header: '22', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header03', header: '23', align: "right", width: 100 },  
-                { binding: 'header04', header: '24', align: "right", width: 100 },   
-                { binding: 'header05', header: '25', align: "right", width: 100 },
-                { binding: 'header06', header: '26', align: "right", width: 100 },  
-                { binding: 'header07', header: '27', align: "right", width: 100 },
-                { binding: 'header08', header: '28', align: "right", width: 100 },  
-                { binding: 'header09', header: '29', align: "right", width: 100 },  
-                { binding: 'header10', header: '30', align: "right", width: 100 },    
-                { binding: 'header11', header: '31', align: "right", format: 'n0', width: 100 },  
-                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
-            ], 
-            itemsSource: view_p01tab03page
-        });   
+      //  view_p01tab03page = new wijmo.collections.CollectionView(getData_tab03(), { 
+      //   }); 
+      //   wtab03Grid = new wijmo.grid.FlexGrid('#wtab03Grid_div', {  
+      //       autoGenerateColumns: false,
+      //       showMarquee: true,
+      //       isReadOnly: true,  
+      //       allowSorting: 'MultiColumn',
+      //       alternatingRowStep: 0,
+      //       columns: [     
+      //           { binding: 'header00', header: '구분', align: "center", width: 150 },           
+      //           { binding: 'header01', header: '01', align: "right", width: 100 }, 
+      //           { binding: 'header02', header: '02', align: "right", width: 100 }, 
+      //           { binding: 'header03', header: '03', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '04', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '05', align: "right", width: 100 },
+      //           { binding: 'header06', header: '06', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '07', align: "right", width: 100 },
+      //           { binding: 'header08', header: '08', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '09', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '10', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+      //           { binding: 'header03', header: '13', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '14', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '15', align: "right", width: 100 },
+      //           { binding: 'header06', header: '16', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '17', align: "right", width: 100 },
+      //           { binding: 'header08', header: '18', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '19', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '20', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '21', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header12', header: '22', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header03', header: '23', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '24', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '25', align: "right", width: 100 },
+      //           { binding: 'header06', header: '26', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '27', align: "right", width: 100 },
+      //           { binding: 'header08', header: '28', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '29', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '30', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '31', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+      //       ], 
+      //       itemsSource: view_p01tab03page
+      //   });   
         
-        new FlexGridContextMenu(wtab03Grid);  
-        setHeaderColumn03(false);
-        function setHeaderColumn03(headerOn) {
-            wtab03Grid.headersVisibility = headerOn
-            ? wijmo.grid.HeadersVisibility.All
-            : wijmo.grid.HeadersVisibility.Column; 
-        } 
+      //   new FlexGridContextMenu(wtab03Grid);  
+      //   setHeaderColumn03(false);
+      //   function setHeaderColumn03(headerOn) {
+      //       wtab03Grid.headersVisibility = headerOn
+      //       ? wijmo.grid.HeadersVisibility.All
+      //       : wijmo.grid.HeadersVisibility.Column; 
+      //   } 
          // tab01검색 데이터 수집
        function getData_tab03(){       
            var wactnm_data = [];  //wtab01Dto[i]["indate"]
@@ -711,61 +750,59 @@
 
        //#####################################################################################
        //불량현황(일)
-       view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), {
-            // pageSize: 21
-        }); 
-        wtab04Grid = new wijmo.grid.FlexGrid('#wtab04Grid_div', {  
-            autoGenerateColumns: false,
-            showMarquee: true,
-            isReadOnly: true, 
-            // selectionMode: 'RowRange',
-            allowSorting: 'MultiColumn',
-            alternatingRowStep: 0,
-            columns: [     
-                { binding: 'header00', header: '구분', align: "center", width: 150 },           
-                { binding: 'header01', header: '01', align: "right", width: 100 }, 
-                { binding: 'header02', header: '02', align: "right", width: 100 }, 
-                { binding: 'header03', header: '03', align: "right", width: 100 },  
-                { binding: 'header04', header: '04', align: "right", width: 100 },   
-                { binding: 'header05', header: '05', align: "right", width: 100 },
-                { binding: 'header06', header: '06', align: "right", width: 100 },  
-                { binding: 'header07', header: '07', align: "right", width: 100 },
-                { binding: 'header08', header: '08', align: "right", width: 100 },  
-                { binding: 'header09', header: '09', align: "right", width: 100 },  
-                { binding: 'header10', header: '10', align: "right", width: 100 },    
-                { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
-                { binding: 'header03', header: '13', align: "right", width: 100 },  
-                { binding: 'header04', header: '14', align: "right", width: 100 },   
-                { binding: 'header05', header: '15', align: "right", width: 100 },
-                { binding: 'header06', header: '16', align: "right", width: 100 },  
-                { binding: 'header07', header: '17', align: "right", width: 100 },
-                { binding: 'header08', header: '18', align: "right", width: 100 },  
-                { binding: 'header09', header: '19', align: "right", width: 100 },  
-                { binding: 'header10', header: '20', align: "right", width: 100 },    
-                { binding: 'header11', header: '21', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header12', header: '22', align: "right", format: 'n0', width: 100 },  
-                { binding: 'header03', header: '23', align: "right", width: 100 },  
-                { binding: 'header04', header: '24', align: "right", width: 100 },   
-                { binding: 'header05', header: '25', align: "right", width: 100 },
-                { binding: 'header06', header: '26', align: "right", width: 100 },  
-                { binding: 'header07', header: '27', align: "right", width: 100 },
-                { binding: 'header08', header: '28', align: "right", width: 100 },  
-                { binding: 'header09', header: '29', align: "right", width: 100 },  
-                { binding: 'header10', header: '30', align: "right", width: 100 },    
-                { binding: 'header11', header: '31', align: "right", format: 'n0', width: 100 },  
-                { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
-            ], 
-            itemsSource: view_p01tab04page
-        });   
+      //  view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), { 
+      //   }); 
+      //   wtab04Grid = new wijmo.grid.FlexGrid('#wtab04Grid_div', {  
+      //       autoGenerateColumns: false,
+      //       showMarquee: true,
+      //       isReadOnly: true,  
+      //       allowSorting: 'MultiColumn',
+      //       alternatingRowStep: 0,
+      //       columns: [     
+      //           { binding: 'header00', header: '구분', align: "center", width: 150 },           
+      //           { binding: 'header01', header: '01', align: "right", width: 100 }, 
+      //           { binding: 'header02', header: '02', align: "right", width: 100 }, 
+      //           { binding: 'header03', header: '03', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '04', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '05', align: "right", width: 100 },
+      //           { binding: 'header06', header: '06', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '07', align: "right", width: 100 },
+      //           { binding: 'header08', header: '08', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '09', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '10', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '11', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header12', header: '12', align: "right", format: 'n0', width: 100 }, 
+      //           { binding: 'header03', header: '13', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '14', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '15', align: "right", width: 100 },
+      //           { binding: 'header06', header: '16', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '17', align: "right", width: 100 },
+      //           { binding: 'header08', header: '18', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '19', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '20', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '21', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header12', header: '22', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'header03', header: '23', align: "right", width: 100 },  
+      //           { binding: 'header04', header: '24', align: "right", width: 100 },   
+      //           { binding: 'header05', header: '25', align: "right", width: 100 },
+      //           { binding: 'header06', header: '26', align: "right", width: 100 },  
+      //           { binding: 'header07', header: '27', align: "right", width: 100 },
+      //           { binding: 'header08', header: '28', align: "right", width: 100 },  
+      //           { binding: 'header09', header: '29', align: "right", width: 100 },  
+      //           { binding: 'header10', header: '30', align: "right", width: 100 },    
+      //           { binding: 'header11', header: '31', align: "right", format: 'n0', width: 100 },  
+      //           { binding: 'headersum', header: 'sum', align: "right", format: 'n0', width: 100 },  
+      //       ], 
+      //       itemsSource: view_p01tab04page
+      //   });   
         
-        new FlexGridContextMenu(wtab04Grid);  
-        setHeaderColumn04(false);
-        function setHeaderColumn04(headerOn) {
-            wtab04Grid.headersVisibility = headerOn
-            ? wijmo.grid.HeadersVisibility.All
-            : wijmo.grid.HeadersVisibility.Column; 
-        } 
+      //   new FlexGridContextMenu(wtab04Grid);  
+      //   setHeaderColumn04(false);
+      //   function setHeaderColumn04(headerOn) {
+      //       wtab04Grid.headersVisibility = headerOn
+      //       ? wijmo.grid.HeadersVisibility.All
+      //       : wijmo.grid.HeadersVisibility.Column; 
+      //   } 
          // tab01검색 데이터 수집
        function getData_tab04(){       
            var wactnm_data = [];  //wtab01Dto[i]["indate"]
