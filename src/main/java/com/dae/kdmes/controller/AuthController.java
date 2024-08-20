@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -52,10 +53,15 @@ public class AuthController {
 
     @GetMapping(value="/emmsdashboard")
     public String memberEmmsBoardForm( Model model
+            , RedirectAttributes redirectAttributes
             , HttpServletRequest request){
-
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        if (userformDto == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "User not logged in.");
+            return "redirect:/";  // 리다이렉트할 페이지로 변경하세요.
+        }
+
         String ls_flag = userformDto.getFlag();
         userformDto.setPagetree01("관리자모드");
         userformDto.setPagenm("Dashboard");

@@ -62,7 +62,7 @@
                     isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = E.wflag and wrmc = E.wrmc),'') as wrmcnm ,
                     (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '')  + '외 ' + CAST(E.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '') END ) as wrpsnm,
                     (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
-                    A.lotno ,
+                    E.lotno AS lotno ,
                     isnull(E.glotnono, '') as glotnono,
                     D.jpum,
                     D.jgugek ,
@@ -82,7 +82,7 @@
                     TB_FPLAN_W010 E WITH (NOLOCK)
                 WHERE  A.plan_no = E.plan_no
                 and E.indate between #{frdate} and #{todate}
-                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                and isnull(E.lotno,'') Like concat('%',#{lotno},'%')
         ]]>
     </select>
 
@@ -125,7 +125,7 @@
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           and D.indate between #{frdate} and #{todate}
           AND ( ISNULL(D.lotno,'')   lIKE  concat('%',#{lotno},'%') )
-        ORDER BY D.lotno, A.LOTNO
+        ORDER BY D.lotno, E.LOTNO
         ]]>
     </select>
 
@@ -144,7 +144,7 @@
                     isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = E.wflag and wrmc = E.wrmc),'') as wrmcnm ,
                     (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '')  + '외 ' + CAST(E.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '') END ) as wrpsnm,
                     (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
-                    A.lotno ,
+                    E.lotno AS lotno ,
                     isnull(E.glotnono, '') as glotnono,
                     D.jpum,
                     D.jgugek ,
@@ -169,7 +169,7 @@
                 WHERE  A.plan_no = E.plan_no
                 and E.indate between #{frdate} and #{todate}
                 and isnull(E.wrps,'') Like concat('%',#{wrps},'%')
-                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                and isnull(E.lotno,'') Like concat('%',#{lotno},'%')
                 and isnull(E.wrmc,'') Like concat('%',#{wrmcnm},'%')
                 order by A.plan_no
         ]]>
@@ -185,7 +185,7 @@
                     isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = E.wflag and wrmc = E.wrmc),'') as wrmcnm ,
                     (CASE WHEN E.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '')  + '외 ' + CAST(E.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', E.custcd, E.wrps, '', '') END ) as wrpsnm,
                     (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
-                    A.lotno ,
+                    E.lotno as lotno ,
                     D.jpum,
                     D.jgugek ,
                     D.jchajong,
@@ -205,7 +205,7 @@
                 and  A.plan_no = c.plan_no
                 and  c.wflag = '00010'
                 and A.indate between #{frdate} and #{todate}
-                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+                and isnull(E.lotno,'') Like concat('%',#{lotno},'%')
                 order by A.plan_no, C.wfrdt, C.wseq, C.seq
         ]]>
     </select>
@@ -222,7 +222,7 @@
                C.jpum AS pname,
                C.jgugek AS psize,
                C.jdanwy AS punit,
-               A.lotno as lotno,
+               E.lotno as lotno,
                (A.prod_sdate) as prod_sdate,
                (A.prod_edate) AS prod_edate,
                E.wfrdt as wfrdt,
@@ -247,7 +247,7 @@
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           and D.indate between #{frdate} and #{todate}
           and isnull(D.wrps,'') Like concat('%',#{wrps},'%')
-        ORDER BY D.lotno, A.LOTNO
+        ORDER BY D.lotno, E.LOTNO
         ]]>
     </select>
 
@@ -292,7 +292,7 @@
                 and isnull(C.wcode,'') Like concat('%',#{wcode},'%')
                 and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
                 and len(C.wcode) > 0
-                order by C.wcode, A.lotno
+                order by C.wcode, E.lotno
         ]]>
     </select>
 
@@ -484,7 +484,7 @@
                 ELSE A.decision END ) AS STATUSCD,
                 isnull((select wrmcnm from TB_FPLAN_WRMC where wflag = A.wflag and wrmc = C.wrmc),'') as wrmcnm ,
                 (case when A.rwflag = 'D' THEN '주간' WHEN A.rwflag = 'N' THEN '야간' ELSE '' END) AS rwflagnm,
-                A.lotno ,
+                isnull(E.lotno,'') AS lotno ,
                 F.lotno as qclotno,
                 D.jpum,
                 D.jgugek ,
@@ -496,10 +496,10 @@
                 FROM TB_FPLAN A WITH (NOLOCK)
                     LEFT OUTER JOIN TB_FPLAN_work C ON A.plan_no = c.plan_no AND A.wflag = c.wflag
                     LEFT OUTER JOIN JCODE D ON A.pcode = D.jkey
-                    LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no
+                    LEFT OUTER JOIN TB_FPLAN_W010 E ON E.plan_no = A.plan_no and isnull(E.lotno,'') Like concat('%',#{lotno},'%')
                     LEFT OUTER JOIN TB_FPLAN_W020 F ON F.plan_no = A.plan_no
                 WHERE A.indate between #{frdate} and #{todate}
-                and isnull(A.lotno,'') Like concat('%',#{lotno},'%')
+
         ]]>
     </select>
 
