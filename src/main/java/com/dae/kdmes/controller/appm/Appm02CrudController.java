@@ -186,7 +186,6 @@ public class Appm02CrudController {
     }
 
     @RequestMapping(value="/w020per", method = RequestMethod.POST)
-    @RequestMapping(value="/w020per", method = RequestMethod.POST)
     public Object AppW020PER_index(@RequestParam("frdate") String frdate,
                                    @RequestParam("todate") String todate,
                                    @RequestParam("searchtxt") String searchtxt,
