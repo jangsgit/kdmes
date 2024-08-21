@@ -36,4 +36,6 @@ public class TBXa012VO {
     private String cmspass;         //cms pw
     private String agnertel1;         //담당자
     private String agnertel2;         //연락처
+    private String emailadres;         //연락처
+
 }

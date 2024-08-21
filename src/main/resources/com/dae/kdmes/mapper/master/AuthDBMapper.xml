@@ -22,7 +22,7 @@
          from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
     </select>
     <select id="GetAdminInfo" parameterType="com.dae.kdmes.DTO.UserFormDto"  resultType="com.dae.kdmes.DTO.UserFormDto">
-        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, perid, pernm, useyn, role, dbnm, wrongnum, custcd, custnm, dbnm, psuhid
+        select top 1 userid, passwd1,  username, actcd, actnm, saupnum, flag, phone, perid, pernm, useyn, role, dbnm, wrongnum, custcd, custnm, dbnm, pushid
         from TB_XUSERS where userid=#{userid} and passwd1=#{passwd1}
     </select>
     <select id="GetUserInfoDto" parameterType="com.dae.kdmes.DTO.UserFormDto"  resultType="com.dae.kdmes.DTO.UserFormDto">
@@ -157,4 +157,22 @@
             username = #{username}, passwd1 = #{passwd1}, passwd2 = #{passwd2}, phone = #{phone}
         WHERE userid = #{userid} and custcd= #{custcd} and flag = #{flag}
     </update>
+
+
+    <insert id="TB_XUSERS_INSERT" parameterType="com.dae.kdmes.DTO.UserFormDto">
+        INSERT INTO TB_XUSERS
+        (userid, passwd1, passwd2, custnm, pernm, rnum, username, flag, wrongnum,   USEYN , perid, password, role, custcd, spjangcd, saupnum, encodepw)
+        VALUES
+        (#{userid}, #{passwd1}, #{passwd2}, #{custnm}, #{username}, #{rnum}, #{username},  #{flag}, 0, 'Y', #{perid}, #{passwd1}, #{role}, #{custcd}, #{spjangcd}, #{saupnum}, '$2a$10$GeEZZkFfKQdC.YMvVgvBduyV9DVvucitE9lv97BTjHRem68K29zmum')
+    </insert>
+
+
+    <!-- 사업장 INFO -->
+    <select id="GetXa012Info" parameterType="com.dae.kdmes.DTO.Popup.PopupDto" resultType="com.dae.kdmes.DTO.TBXa012VO">
+        <![CDATA[
+        SELECT TOP 1 saupnum,     spjangnm,  prenm,  biztype,     item,     tel1, agnertel1, agnertel2, emailadres
+        FROM tb_xa012   WITH(NOLOCK)
+        WHERE spjangcd = 'ZZ'
+        ]]>
+    </select>
 </mapper>

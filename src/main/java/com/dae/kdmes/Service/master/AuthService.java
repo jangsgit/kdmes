@@ -2,6 +2,7 @@ package com.dae.kdmes.Service.master;
 
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.TBXLoginDTO;
+import com.dae.kdmes.DTO.TBXa012VO;
 import com.dae.kdmes.DTO.TBXuserMenuDTO;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.Mapper.master.AuthDBMapper;
@@ -63,6 +64,10 @@ public class AuthService {
     public void TB_XUSER_UPDATE(UserFormDto dto) {authMapper.TB_XUSER_UPDATE(dto);}
 
 
+    //   사업장 정보조회 */
+    public TBXa012VO GetXa012Info(PopupDto parm) {
+        return  authMapper.GetXa012Info(parm);
+    }
 
     //사용자사용여부
     @Transactional

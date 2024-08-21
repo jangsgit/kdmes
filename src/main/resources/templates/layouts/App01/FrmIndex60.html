@@ -62,19 +62,19 @@
                                 </ul>
                                 <div class="tab-content">
                                 <div class="tab-pane fade show active" id="step01">     
-                                    <div class="row gx-3" style="  margin: 10px 10px 10px;">    
-                                        <div class="col-2 col-sm-2">
+                                    <div class="row gx-4" style="  margin: 10px 10px 10px;">    
+                                        <div class="col-auto">
                                             <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">조회일자</span>
                                                 <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div> 
                                         </div>   
-                                        <div class="col-2 col-sm-2"> 
+                                        <div class="col-auto"> 
                                             <div class="input-group input-group-sm mb-3"> 
                                                 <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div>
                                         </div> 
-                                        <div class="col-2 col-sm-2">
-                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">로트번호</span> 
+                                        <div class="col-auto">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품목명</span> 
                                                 <input class="form-control form-control-sm" id="inlotno" type="text"    autocomplete="off"  placeholder=""     > 
                                             </div>
                                         </div>
@@ -84,7 +84,7 @@
                                         </div>   
                                     </div> 
                                     <div class="container-fluid">   
-                                        <div id="wtab01Grid_div" style="overflow:scroll;   height:680px; width: 75%;    margin:0 auto; "></div> 
+                                        <div id="wtab01Grid_div" style="overflow:scroll;   height:680px;     margin:0 auto; "></div> 
                                         <!-- <div id="tab01Pager"></div> -->
                                     </div>   
                                 </div> 
@@ -119,30 +119,14 @@
                                 allowSorting: 'MultiColumn',
                                 alternatingRowStep: 0,
                                 columns: [     
-                                    { binding: 'indate', header: '등록일자', align: "center",  width: 120 }, 
-                                    { binding: 'ecltnm', header: '거래처', align: "left", width: 130 }, 
-                                    { binding: 'prod_sdate', header: '생산시작일', align: "center", width: 120 },
-                                    { binding: 'prod_edate', header: '생산종료일', align: "center", width: 120 },
-                                    { binding: 'jpum', header: '품명', align: "left", width: 150 },
-                                    { binding: 'jchajong', header: '차종', align: "left", width: 120 },   
-                                    { binding: 'jgugek', header: '규격', align: "left", width: 120 },   
-                                    { binding: 'wflagnm', header: '공정', align: "center", width: 80 },  
-                                    // { binding: 'statuscd', header: '상태', align: "center", width: 70 },   
-                                    { binding: 'wfrdt', header: '사출시작', align: "center", width: 80 },   
-                                    { binding: 'wtrdt', header: '사출종료', align: "center", width: 80 },  
-                                    { binding: 'wrmcnm', header: '설비', align: "center", width: 80 },  
-                                    { binding: 'rwflagnm', header: '주야', align: "left", width: 60 },   
-                                    { binding: 'lotno', header: '사출로트', align: "center", width: 130 },
-                                    { binding: 'prod_qty', header: '계획', align: "right", format: 'n0', width: 80 },  
-                                    { binding: 'winqt', header: '투입', align: "right", format: 'n0', width: 80 }, 
-                                    { binding: 'wbdqt', header: '불량', align: "right", format: 'n0', width: 80 }, 
-                                    { binding: 'wjqty', header: '완료', align: "right", format: 'n0', width: 80 }, 
-                                    { binding: 'wyul', header: '달성률', align: "center",  format: 'n2', width: 80 },
-                                    { binding: 'wrpsnm', header: '사출담당', align: "center", width: 80 },           
-                                    { binding: 'glotno', header: '검사로트', align: "center", width: 130 }, 
-                                    { binding: 'ginputdate', header: '검사일자', align: "center", width: 120 },            
-                                    { binding: 'gumqty', header: '검사', align: "right", format: 'n0', width: 80 }, 
-                                    { binding: 'gumwrpsnm', header: '검사담당', align: "center", width: 80 },            
+                                    { binding: 'jkey', header: '품목코드', align: "center", width: 150 }, 
+                                    { binding: 'jpum', header: '품목', align: "center", width: 200 }, 
+                                    { binding: 'jgugek', header: '규격', align: "center", width: 150 }, 
+                                    { binding: 'jchajong', header: '차종', align: "center", width: 150 },  
+                                    { binding: 'junqty', header: '전재고', align: "center", width: 100, format: 'n0' }, 
+                                    { binding: 'ipqty', header: '입고수량', align: "center", width: 100, format: 'n0' }, 
+                                    { binding: 'chqty', header: '출고수량', align: "center", width: 100, format: 'n0' }, 
+                                    { binding: 'jqty', header: '재고수량', align: "center", width: 100, format: 'n0' },  
                                 ], 
                                 itemsSource: view_p01tab01page
                             });   

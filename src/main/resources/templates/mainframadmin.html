@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACTAS Elevator 고객센터 관리자화면</title>
+    <title>관리자화면</title>
 </head>
 <body style="background: #f5f9fa">
 <input type="hidden"  name="actuseridz" id="actuseridz" th:value="${userFormDto.userid}" >
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="con"> 
-        <div class="header_top">
+        <!-- <div class="header_top">
             <ul class="left">
                 <li>
                     <div class="logo">
@@ -47,14 +47,9 @@
                     <a href="#">
                         <img src="/images/in2.png" onclick="logout()">
                     </a>
-                </li>
-                <!-- <li>
-                    <button id="userinfo"> 
-                        <img src="/images/i_user.png" alt="">
-                    </button>
-                </li> -->
+                </li> 
             </ul>
-        </div>
+        </div> -->
 
         <div class="section section2">
             <div class="sec_con" style="width: 100%;">
@@ -71,19 +66,7 @@
                                     자세히 보기 >
                                 </a>
                             </div>
-                        </li>
-                        <li>
-                            <div class="img">
-                                <img src="/images/center_img2.png" alt="">
-                            </div>
-                            <div class="txt">
-                                <h5>보수현장별 사용 관리</h5>
-                                <p>유지보수현장별로 종합유지관리 서비스 제공여부를 관리할 수 있습니다.</p>
-                                <a th:href="@{/admin/index02}">
-                                    자세히 보기 >
-                                </a>
-                            </div>
-                        </li>
+                        </li> 
                         <li>
                             <div class="img">
                                 <img src="/images/center_img3.png" alt="">
@@ -103,14 +86,14 @@
                                 <img src="/images/center_img4.png" alt="">
                             </div>
                             <div class="txt">
-                                <h5>사업장정보 / 문자발신번호</h5>
-                                <p>우리 사업장 정보를 수정하거나 문자 발신번호를 등록 할 수 있습니다.</p>
+                                <h5>사업장정보 </h5>
+                                <p>우리 사업장 정보를  등록 할 수 있습니다.</p>
                                 <a th:href="@{/admin/index04}">
                                     자세히 보기 >
                                 </a>
                             </div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <div class="img">
                                 <img src="/images/center_img5.png" alt="">
                             </div>
@@ -121,7 +104,7 @@
                                     자세히 보기 >
                                 </a>
                             </div>
-                        </li>
+                        </li> -->
                         <!-- <li>
                             <div class="img">
                                 <img src="/images/center_img6.png" alt="">

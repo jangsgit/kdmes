@@ -212,12 +212,12 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">입고수량</span> 
+                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">조정수량</span> 
                                 <input class="form-control form-control-sm" id="bjqty" type="number"    autocomplete="off"  placeholder=""     > 
                             </div>
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="saveone_btn()">입고등록
+                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="saveone_btn()">재고조정
                             </button>
                         </div> 
                     </div> 
@@ -237,6 +237,8 @@
     </div>   
  
  
+     
+<input class="form-control form-control-sm"  type="hidden" id="actnmbtn" data-bs-toggle="modal" data-bs-target="#savemodal"  /> 
 <!---------------------------------------------------------------------------------------> 
 
 
@@ -245,10 +247,14 @@ var view_p01tab01page;
 var view_p01tab02page;
 var view_p01tab03page; 
 var view_p01tab04page; 
+var view_innamepage; 
+var view_injcodepage; 
 var wtab01Grid;
 var wtab02Grid;
 var wtab03Grid; 
 var wtab04Grid; 
+var winnameGrid; 
+var winjcodeGrid; 
 let wfrdate;
 let wipfrdate;   
 let wiptodate;  
@@ -360,6 +366,101 @@ window.onload = function() {
         }     
         return wactnm_data;                           
     }  
+
+    
+    // // ################################################################  
+    //품목현황 Modalㅁ
+    view_innamepage = new wijmo.collections.CollectionView(getData_wlist2(), {
+        // pageSize: 12
+    });
+    // 품목 페이지 이동
+    // new wijmo.input.CollectionViewNavigator('#thePager03', {
+    //     byPage: true,
+    //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+    //     cv: view_innamepage
+    // });     
+    winnameGrid = new wijmo.grid.FlexGrid('#winnameGrid_div', {  
+        autoGenerateColumns: false,
+        isReadOnly: false, 
+        allowSorting: 'MultiColumn',
+        selectionMode: 'RowRange',
+        alternatingRowStep: 0,
+        columns: [     
+            { binding: 'jkey', header: '코드', align: "center", width: '1*' },
+            { binding: 'pname', header: '품목', align: "left", width: '1*' },
+            { binding: 'psize', header: '규격', align: "left", width: '1*' },
+            { binding: 'jchajong', header: '차종', align: "center", width: '1*' }, 
+        ], 
+        itemsSource: view_innamepage
+    });  
+    
+    winnameGrid.showMarquee = true; 
+    wijmo.toggleClass(winnameGrid.hostElement, 'highlightActive', true);
+    winnameGrid.focus();
+
+
+    setHeaderColumn4(false);
+    function setHeaderColumn4(headerOn) {
+        winnameGrid.headersVisibility = headerOn
+        ? wijmo.grid.HeadersVisibility.All
+        : wijmo.grid.HeadersVisibility.Column; 
+    } 
+    // // ################################################################  
+    //품목현황 Modalㅁ
+    view_injcodepage = new wijmo.collections.CollectionView(getData_wlist2(), {
+        // pageSize: 12
+    });
+    // 품목 페이지 이동
+    // new wijmo.input.CollectionViewNavigator('#thePager03', {
+    //     byPage: true,
+    //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+    //     cv: view_injcodepage
+    // });     
+    winjcodeGrid = new wijmo.grid.FlexGrid('#winjcodeGrid_div', {  
+        autoGenerateColumns: false,
+        isReadOnly: false, 
+        allowSorting: 'MultiColumn',
+        selectionMode: 'RowRange',
+        alternatingRowStep: 0,
+        columns: [     
+            { binding: 'jkey', header: '코드', align: "center", width: '1*' },
+            { binding: 'pname', header: '품목', align: "left", width: '1*' },
+            { binding: 'psize', header: '규격', align: "left", width: '1*' },
+            { binding: 'jchajong', header: '차종', align: "center", width: '1*' }, 
+        ], 
+        itemsSource: view_injcodepage
+    });  
+    
+    winjcodeGrid.showMarquee = true; 
+    wijmo.toggleClass(winjcodeGrid.hostElement, 'highlightActive', true);
+    winjcodeGrid.focus();
+
+    setHeaderColumn10(false);
+    function setHeaderColumn10(headerOn) {
+        winjcodeGrid.headersVisibility = headerOn
+        ? wijmo.grid.HeadersVisibility.All
+        : wijmo.grid.HeadersVisibility.Column; 
+    } 
+
+    // 거래처 데이터 수집
+    function getData_wlist2(){   
+        var winname_data = []; 
+        var cnt = 1;
+        for (var i = 0; i < 12; i++) {
+            winname_data.push({
+                id: i, 
+                index: cnt,
+                jkey:"",
+                pname: "",   
+                psize: "",  
+                pbonsa: "",  
+                pmodel: "",  
+                pcolor: "",                           
+            });
+            cnt++;
+        }    
+        return winname_data;                                      
+    } 
 
 } //onload function 
 
@@ -818,8 +919,7 @@ function JpumSearchList_rtn(arg){
             }
         }).done(function(fragment){           
 
-        })    
-
+        })  
 }     
 //  거래처팝업 grid data 수집
 function tabPop_grid(data, arg){ 

@@ -20,14 +20,7 @@
       </div>
       <div class="login">
         <div class="tit">Login</div>
-        <form action="/login" method="POST">
-          <!-- <div class="input_wrap"> 
-            <select name="select" id="select" class="select">
-              <option value="AA">본사관리</option>
-              <option value="BB">고객사용자</option>
-              <option value="CC">영업사원</option>  
-            </select> 
-          </div>  -->
+        <form action="/login" method="POST"> 
           <div class="input_wrap icon i_id">
             <input type="text" id="loginid" name="loginid">
             <input type="hidden" id="ipaddr" name="ipaddr">
@@ -39,15 +32,7 @@
             <div class="save_id">
               <input type="checkbox" id="card-checkbox" checked="checked">
               <label for="save_id" class="check_style1">ID 저장</label>
-            </div>
-            <!-- <ul class="find_account">
-              <li>
-                <a href="">아이디 찾기</a>
-              </li>
-              <li>
-                <a href="">비밀번호 찾기</a>
-              </li>
-            </ul> -->
+            </div> 
           </div>
           <div class="login_btn">
             <div class="btn_wrap">
@@ -56,9 +41,7 @@
 
 
           </div>
-          <div>
-            <a th:href="@{/auth/cltcdnew}">사용자등록</a><br>
-            <!-- <a th:href="@{/auth/actcdnew}">고객사용자등록</a> -->
+          <div> 
           </div>
           <div class="mb-3">
             <div th:if="${loginErrorMsg}" class="alert alert-warning border-2 d-flex align-items-center"

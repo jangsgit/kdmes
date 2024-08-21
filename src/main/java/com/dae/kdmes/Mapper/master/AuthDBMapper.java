@@ -2,6 +2,7 @@ package com.dae.kdmes.Mapper.master;
 
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.TBXLoginDTO;
+import com.dae.kdmes.DTO.TBXa012VO;
 import com.dae.kdmes.DTO.TBXuserMenuDTO;
 import com.dae.kdmes.DTO.UserFormDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -55,6 +56,9 @@ public interface AuthDBMapper {
     public String TB_GET_PUSHID(PopupDto Parm);
 
 
+    public int TB_XUSERS_INSERT(UserFormDto Parm);
 
+
+    public TBXa012VO GetXa012Info(PopupDto parm);
 
 }
