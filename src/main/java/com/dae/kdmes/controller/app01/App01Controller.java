@@ -168,6 +168,9 @@ public class App01Controller {
 
         return "App01/index05";
     }
+
+
+
     @GetMapping(value="/index04")
     public String App01_index04(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("품목그룹등록");
@@ -190,6 +193,35 @@ public class App01Controller {
 
         return "App01/index04";
     }
+
+
+
+    @GetMapping(value="/index06")
+    public String App01_index06(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("소요량등록");
+        CommDto.setMenuUrl("기준정보>소요량등록");
+        CommDto.setMenuCode("index06");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            index02ListDto = service02.getWflagList(index02Dto);
+            //   index02ListDto = service02.getWrcmList(index02Dto);
+
+            model.addAttribute("WflagList",index02ListDto);
+            //    model.addAttribute("WrcmList",index02ListDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App06_index Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index06";
+    }
+
+
     @GetMapping(value="/index07")
     public String App01_index07(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("거래처등록");
