@@ -257,7 +257,10 @@ var winnameGrid;
 var winjcodeGrid; 
 let wfrdate;
 let wipfrdate;   
-let wiptodate;  
+let wiptodate;   
+let wsavedate; 
+
+let includeColumnHeader = false;
 window.onload = function() {  
     wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
         autoGenerateColumns: false,
@@ -267,8 +270,8 @@ window.onload = function() {
         allowSorting: 'MultiColumn',
         alternatingRowStep: 0,
         columns: [     
-            { binding: 'jcode', header: '품목코드', align: "center",   width: 100 }, 
-            { binding: 'ipqty', header: '입고수량', align: "center",   width: 300},   
+            { binding: 'jcode', header: '품목코드', align: "center",   width: 200 }, 
+            { binding: 'ipqty', header: '기초수량', align: "center",   width: 300},   
         ], 
         itemsSource: getData_tab01()
     });   
@@ -477,9 +480,9 @@ function searchList_rtn(arg1){
     switch(arg1){
         case 'A': 
             break;
-        case 'B': 
-            var ls_ipfrdate = document.getElementById('ipfrdate').value; 
-            var ls_iptodate = document.getElementById('iptodate').value; 
+        case 'B':   
+            var  ls_ipfrdate     =  convert_date(wipfrdate.value);                    
+            var  ls_iptodate     =  convert_date(wiptodate.value);     
             var ls_jkey = document.getElementById('jkey02').value;  
             var ls_jpumname = document.getElementById('jpumname02').value; 
             if(ls_jpumname == null || ls_jpumname.length == 0 || ls_jpumname == ""){ 
@@ -490,9 +493,10 @@ function searchList_rtn(arg1){
                 document.getElementById("ipdate").focus(); 
                 return ;               
             }  
+            ls_jpbgubn = "%";
             //console.log(ls_jkey)
             $.ajax({
-                url: '/app01m/index04/list',  
+                url: '/app03m/index59/list',  
                 type:"POST",
                 data: { 
                     "ipfrdate"      : ls_ipfrdate,  
@@ -502,7 +506,7 @@ function searchList_rtn(arg1){
                 }, 
                 async:false,
                 success:function(data){ 
-                    chkLogin(data)  
+                    //chkLogin(data)  
                     tabB_grid(data);
                 },error:function(e){
                     console.log("error");                            
@@ -564,13 +568,6 @@ function tabB_grid(data){
     cols.header = '코드';
     cols.align = "center";
     cols.width = 200; 
-    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-        text: '<b>${item.jepm}</b>',
-        click: (e, ctx) => {
-            wdelfun_a(ctx.item.key1, ctx.item.acorp, ctx.item.jepm, ctx.item.jpumnm );                    
-            
-        }
-    });
     wtab02Grid.columns.push(cols);  
 
     cols = new wijmo.grid.Column(); 
@@ -578,6 +575,13 @@ function tabB_grid(data){
     cols.header = '품목';
     cols.align = "center";
     cols.width = 200;  
+    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+        text: '<b>${item.jpumnm}</b>',
+        click: (e, ctx) => {
+            wdelfun_a(ctx.item.key1, ctx.item.acorp, ctx.item.jepm, ctx.item.jpumnm );                    
+            
+        }
+    });
     wtab02Grid.columns.push(cols);   
 
     cols = new wijmo.grid.Column(); 
@@ -608,7 +612,7 @@ function tabB_grid(data){
 
 function save_btn(arg){
     var ls_tab = document.getElementById('tabvalue').value;
-    var ls_frdate = document.getElementById('frdate').value;                                        
+    var  ls_frdate     =  convert_date(wfrdate.value);                                            
     const warnning_grid = document.getElementById('inwarnning_grid'); 
     var ls_pcode  =  [];        
     var ll_qty    =  [];    
@@ -660,7 +664,7 @@ function save_btn(arg){
                 return     
             } 
             $.ajax({
-                url: '/app01m/index04/save',  
+                url: '/app03m/index59/save',  
                 type:"POST",
                 data: { 
                     "frdate"  : ls_frdate,  
@@ -673,12 +677,7 @@ function save_btn(arg){
                         alert("저장되었습니다.") 
                         // searchList_rtn(ls_tab);  
                         // clear_rtn(ls_tab);        
-                    }else{        
-                        if(data == "relogin"){
-                            alert("다시 로그인해주세요")
-                            window.location.href='http://eean.co.kr';
-                            return 
-                        }                      
+                    }else{                      
                         alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                         // listUp();
                         console.log(data);  
@@ -698,7 +697,8 @@ function save_btn(arg){
 } 
 
 function saveone_btn(arg){ 
-    var ls_savedate = document.getElementById('savedate').value;  
+    //var ls_savedate =  document.getElementById('savedate').value; 
+    var ls_savedate  =  convert_date(wsavedate.value);        
     var ls_bjkey = document.getElementById('bjkey').value; 
     var ls_bjqty = document.getElementById('bjqty').value;   
     var ls_pcode  =  [];        
@@ -730,7 +730,7 @@ function saveone_btn(arg){
     ls_jcode[0] = ls_bjkey;
     ll_jqty[0] = ls_bjqty; 
     $.ajax({
-        url: '/app01m/index04/save',  
+        url: '/app03m/index59/save',  
         type:"POST",
         data: { 
             "frdate"  : ls_savedate,  
@@ -746,12 +746,7 @@ function saveone_btn(arg){
                 document.getElementById('bjqty').value = 0;   
                 // searchList_rtn(ls_tab);  
                 // clear_rtn(ls_tab);        
-            }else{
-                if(data == "relogin"){
-                    alert("다시 로그인해주세요")
-                    window.location.href='http://eean.co.kr';
-                    return 
-                }                              
+            }else{                            
                 alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                 // listUp();
                 console.log(data);  
@@ -767,9 +762,47 @@ function saveone_btn(arg){
 } 
 
 
+function wdelfun_a(arg1, arg2, arg3, arg4 ){ 
+    if (!confirm("입고일자 : " + arg1 + " (" +  arg2 + ") : " + arg4 + "   삭제하시겠습니까?")) {
+        return ; 
+    }   
+    var ls_tab = document.getElementById('tabvalue').value; 
+    $.ajax({
+        url: '/app03m/index59/del',  
+        type:"POST",
+        data: { 
+            "ipdate"      : arg1,    
+            "acorp"       : arg2,    
+            "jepm"        : arg3,    
+        }, 
+        async:false,
+        success:function(data){   
+            if(data == "success"){
+                alert("삭제되었습니다.") 
+                searchList_rtn(ls_tab);  
+                clear_rtn(ls_tab);             
+            }else{  
+                if(data == "relogin"){
+                    alert("다시 로그인해주세요")
+                    window.location.href='http://eean.co.kr';
+                    return 
+                }                            
+                alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
+            }
+        
+        },error:function(e){
+            console.log("error"); 
+        }
+    }).done(function(fragment){           
+
+    })  
+
+
+}    
+
 function delete_btn(arg){
     var ls_tab = document.getElementById('tabvalue').value;
-    var ls_ipdate = document.getElementById('ipfrdate').value; 
+    var ls_ipdate =    convert_date(wipfrdate.value);    //document.getElementById('ipfrdate').value; 
 
     if (!confirm("입고일자 : " + ls_ipdate + " 자료를 삭제하시겠습니까?")) {
             return ; 
@@ -786,7 +819,7 @@ function delete_btn(arg){
             var ls_acorp = "";
             var ls_jepm = "";
             $.ajax({
-                url: '/app01m/index04/del',  
+                url: '/app03m/index59/del',  
                 type:"POST",
                 data: { 
                     "ipdate"      : ls_ipdate,   
@@ -912,7 +945,7 @@ function JpumSearchList_rtn(arg){
             }, 
             async:false,
             success:function(data){   
-                chkLogin(data)  
+                //chkLogin(data)  
                 tabPop_grid(data, arg);
             },error:function(e){
                 console.log("error");                            
@@ -1088,7 +1121,7 @@ return arg_date;
 
 $(document).ready(function() {   
     init()          
-    getToday()
+    //getToday()
     fn_egov_init_date()
     // $('datetimepicker').datetimepicker({
         
@@ -1125,13 +1158,20 @@ function init(){
             placeholder: '',
             format: 'yyyy-MM-dd', 
         }); 
-
+        wsavedate = new wijmo.input.InputDate('#savedate', {
+            isRequired: false,
+            value: null,
+            placeholder: '',
+            format: 'yyyy-MM-dd', 
+        }); 
+        
         var result = new Date();
         result.setHours(result.getHours() + 9); 
         var ls_date = result.toISOString().substring(0,10);                                 
         wfrdate.value = ls_date;   
         wipfrdate.value = ls_date;  
-        wiptodate.value = ls_date;  
+        wiptodate.value = ls_date;    
+        wsavedate.value = ls_date; 
         
 } 
 

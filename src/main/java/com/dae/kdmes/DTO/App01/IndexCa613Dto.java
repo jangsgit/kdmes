@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class IndexCa613Dto {
+    private String custcd;
     private String cltcd;
     private String ibgdate;
     private String ibgnum;
@@ -45,6 +46,14 @@ public class IndexCa613Dto {
     private String inweeks;
     private String demflag;
     private Integer boxnum;
+    private String wflag;
+    private String opcod;
+    private String opcodnm;
+    private String opgugek;
+    private String spcod;
+    private String spcodnm;
+    private String spgugek;
+    private Integer lvsn;
     private List<IndexCa613OworkDto> oworks;
 
 }

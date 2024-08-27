@@ -38,4 +38,158 @@
     </select>
 
 
+    <select id="SelectJegoIpgo"  parameterType="com.dae.kdmes.DTO.app03.Index59Dto" resultType="com.dae.kdmes.DTO.app03.Index59Dto">
+        <![CDATA[ select A.jepm, A.acorp, A.key1, A.jepm_size, A.ijaego_su1 as jqty , B.jpum as jpumnm, B.jgugek as jgugek ,
+                         B.jchajong as jchajong, B.j_ct as j_ct, B.j_net as j_net, B.j_sr as j_sr,
+                         substring(A.key1, 5,2)+ '.' + substring(A.key1, 7,2) as ipdate
+           from JEGO_JEPMJANAK A WITH (NOLOCK) , JCODE B WITH (NOLOCK)
+           where A.jepm = B.jkey
+           AND A.key1 between #{frdate} and  #{todate}
+           AND isnull(A.jepm,'') Like concat('%',#{jkey},'%') AND A.ijaego_su1 <> 0
+           ORDER BY   A.key1, A.acorp, A.jepm
+        ]]>
+    </select>
+
+
+    <select id="SelectJegoList"  parameterType="com.dae.kdmes.DTO.app03.Index59Dto" resultType="com.dae.kdmes.DTO.app03.Index59Dto">
+        <![CDATA[ select B.jkey,  B.jpum as jpumnm, B.jgugek as jgugek , B.jchajong as jchajong,
+                         B.j_ct as j_ct, B.j_net as j_net, B.j_sr as j_sr,
+                         convert(integer, DBO.DF_TB_PCODE_JQTY(B.jkey,  #{frdate},  #{todate}) ) as jqty
+                   from  JCODE B WITH (NOLOCK)
+                   where  isnull(B.jkey,'') Like concat('%',#{jkey},'%')
+                   ORDER BY B.jkey
+        ]]>
+    </select>
+
+
+    <select id="SelectMaxSeqIpgo"  parameterType="com.dae.kdmes.DTO.app03.Index59Dto" resultType="String">
+        <![CDATA[ select  ISNULL(MAX(B.acorp),'00') as acorp
+                  from  JEGO_JEPMJANAK B WITH (NOLOCK)
+                  where  isnull(B.jepm,'') = #{jepm} and B.key1 = #{key1}
+        ]]>
+    </select>
+
+    <select id="SelectJegoCheck"  parameterType="com.dae.kdmes.DTO.app03.Index59Dto" resultType="String">
+        <![CDATA[ select  isnull(B.acorp,'') as acorp
+                  from  JEGO_JEPMJANAK B WITH (NOLOCK)
+                  where  isnull(B.jepm,'') = #{jepm}  and B.key1 = #{key1}
+        ]]>
+    </select>
+
+    <insert id="InsertJegoIpgo" parameterType="com.dae.kdmes.DTO.app03.Index59Dto" >
+        insert into JEGO_JEPMJANAK (jepm, acorp, key1, jepm_size, ijaego_su1) values
+        (#{jepm}, #{acorp}, #{key1}, #{jepm_size}, #{ijaego_su1})
+    </insert>
+
+
+    <update id="UpdateJegoIpgo" parameterType="com.dae.kdmes.DTO.app03.Index59Dto">
+        UPDATE  JEGO_JEPMJANAK SET ijaego_su1 = #{ijaego_su1} where jepm  = #{jepm} and key1  = #{key1} and acorp  = #{acorp}
+    </update>
+
+    <delete id="DeleteJaegoIpgo" parameterType="com.dae.kdmes.DTO.app03.Index59Dto">
+        DELETE  JEGO_JEPMJANAK  where key1  = #{key1}
+    </delete>
+
+    <delete id="DeleteJaegoIpgoAcorp" parameterType="com.dae.kdmes.DTO.app03.Index59Dto">
+        DELETE  JEGO_JEPMJANAK  where jepm  = #{jepm} and key1  = #{key1} and acorp  = #{acorp}
+    </delete>
+
+
+    <select id="GetJpumFromJaegoList" parameterType="com.dae.kdmes.DTO.app03.Index59Dto" resultType="com.dae.kdmes.DTO.app03.Index59Dto">
+        {
+        call SP_FromToJaegoList(#{frdate},#{todate}, #{jkey}, #{jpb_gubn})
+        }
+    </select>
+
+
+    <select id="GetJpumSubul01" parameterType="com.dae.kdmes.DTO.app03.Index59Dto" resultType="com.dae.kdmes.DTO.app03.Index59Dto">
+        <![CDATA[
+            select p.flag, Left(p.jdate,4) + '-' + substring(p.jdate, 5,2)+ '-' + substring(p.jdate, 7,2) as jdate, p.jkey, p.jpum,p.jgugek, p.jchajong,  p.ipsu, p.chulsu
+            FROM (
+                select '0' as flag, A.key1 as jdate, B.jkey, B.jpum, isnull(B.jgugek, '') as jgugek, B.jchajong,  a.ijaego_su1 as ipsu, 0 as chulsu
+                from  jego_jepmjanak A WITH (NOLOCK), jcode B WITH (NOLOCK)
+                WHERE A.jepm = B.jkey
+                and A.key1 between #{frdate} and #{todate}
+                and  isnull(B.jkey,'') Like concat('%',#{jkey},'%')
+                and a.ijaego_su1 <> 0
+
+                union all
+
+                Select '1' as flag, A.deldate as jdate,   B.jkey, B.jpum, isnull(B.jgugek, '') as jgugek, B.jchajong,  0 as ipsu, A.qty as chulsu
+                from  tb_da037 A WITH (NOLOCK), jcode B WITH (NOLOCK)
+                WHERE A.pcode = B.jkey
+                and A.deldate between #{frdate} and #{todate}
+                and  isnull(B.jkey,'') Like concat('%',#{jkey},'%')
+                and A.qty <> 0
+            ) P
+            ORDER BY P.jdate, p.jkey, p.flag
+        ]]>
+    </select>
+
+
+    <select id="GetJpumSubul02" parameterType="com.dae.kdmes.DTO.app03.Index59Dto" resultType="com.dae.kdmes.DTO.app03.Index59Dto">
+        <![CDATA[
+            select p.flag, Left(p.jdate,4) + '-' + substring(p.jdate, 5,2)+ '-' + substring(p.jdate, 7,2) as jdate, p.jkey, p.jpum,p.jgugek, p.jchajong,   p.ipsu, p.chulsu
+            FROM (
+                select '0' as flag, A.key1 as jdate, B.jkey, B.jpum, isnull(B.jgugek, '') as jgugek, B.jchajong,  a.ijaego_su1 as ipsu, 0 as chulsu
+                from  jego_jepmjanak A WITH (NOLOCK), jcode B WITH (NOLOCK)
+                WHERE A.jepm = B.jkey
+                and A.key1 between #{frdate} and #{todate}
+                and  isnull(B.jkey,'') Like concat('%',#{jkey},'%')
+                and a.ijaego_su1 <> 0
+
+                union all
+
+                Select '1' as flag, A.deldate as jdate,   B.jkey, B.jpum, isnull(B.jgugek, '') as jgugek, B.jchajong,   0 as ipsu, A.qty as chulsu
+                from  tb_da037 A WITH (NOLOCK), jcode B WITH (NOLOCK)
+                WHERE A.pcode = B.jkey
+                and A.deldate between #{frdate} and #{todate}
+                and  isnull(B.jkey,'') Like concat('%',#{jkey},'%')
+                and A.qty <> 0
+            ) P
+            ORDER BY  p.jkey, P.jdate, p.flag
+        ]]>
+    </select>
+
+    <select id="SelectBomCheck"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="String">
+        <![CDATA[ select  isnull(wflag,'') as wflag
+                  from  TB_CA501_BOM WITH (NOLOCK)
+                  where  isnull(opcod,'') = #{opcod}  and spcod = #{spcod}
+        ]]>
+    </select>
+
+    <insert id="InsertBom501" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
+        insert into TB_CA501_BOM (custcd, opcod, spcod, lvsn, wflag, qty) values
+        ('KDMES', #{opcod}, #{spcod}, 1, 'Y' , #{qty} )
+    </insert>
+
+    <update id="UpdateBom501" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        UPDATE  TB_CA501_BOM SET qty = #{qty} where opcod  = #{opcod} and spcod  = #{spcod}
+    </update>
+
+    <delete id="DeleteBom501" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        DELETE FROM TB_CA501_BOM  where opcod  = #{opcod}
+    </delete>
+
+    <select id="SelectBomListOpcod"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        <![CDATA[ select  A.opcod as opcod, B.jpum as opcodnm, B.jgugek as opgugek,
+                          A.spcod as spcod, C.jpum as spcodnm, C.jgugek as spgugek,
+                          A.qty as qty
+                  from  TB_CA501_BOM A WITH (NOLOCK)
+                  join JCODE B on B.jkey = A.opcod
+                  join JCODE C on C.jkey = A.spcod
+                  where  isnull(A.opcod,'') = #{opcod}
+        ]]>
+    </select>
+
+
+    <select id="SelectBomListTot"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        <![CDATA[ select  A.opcod as opcod, B.jpum as opcodnm, B.jgugek as opgugek
+                  from  TB_CA501_BOM A WITH (NOLOCK)
+                  LEFT OUTER join JCODE B on B.jkey = A.opcod
+                  where  isnull(A.opcod,'') Like concat('%',#{opcod},'%')
+                  Group by A.opcod, B.jpum, B.jgugek
+        ]]>
+    </select>
+
 </mapper>

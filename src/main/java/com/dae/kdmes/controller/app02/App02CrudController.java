@@ -1228,8 +1228,6 @@ public class App02CrudController {
         return index10ListDto;
     }
 
-
-
     @GetMapping(value="/index10/tabclist")
     public String App12List_barcode(  @RequestParam("searchtxt") String searchtxt,
                                                 Model model,   HttpServletRequest request){

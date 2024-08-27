@@ -1,12 +1,10 @@
 package com.dae.kdmes.controller.app01;
 
+import com.dae.kdmes.DTO.App01.*;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
-import com.dae.kdmes.DTO.App01.Index01Dto;
-import com.dae.kdmes.DTO.App01.Index02Dto;
-import com.dae.kdmes.DTO.App01.Index03Dto;
-import com.dae.kdmes.DTO.App01.Index04Dto;
+import com.dae.kdmes.Service.App03.Index35Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,6 +36,7 @@ public class App01Controller {
     private final Index03Service service03;
 
     private final Index04Service service04;
+    private final Index35Service service35;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
@@ -204,12 +203,15 @@ public class App01Controller {
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
 
         try {
-            index02ListDto = service02.getWflagList(index02Dto);
+            _indexCa613Dto.setOpcod("%");
+            _indexCa613ListDto = service35.SelectBomListTot(_indexCa613Dto);
             //   index02ListDto = service02.getWrcmList(index02Dto);
 
-            model.addAttribute("WflagList",index02ListDto);
+            model.addAttribute("WflagList",_indexCa613ListDto);
             //    model.addAttribute("WrcmList",index02ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
