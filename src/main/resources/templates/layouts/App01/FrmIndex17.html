@@ -50,7 +50,7 @@
                         <div class="card-body bg-light">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">생산계획대비현황</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">생산계획대비현황(KPI)</a>
                                 </li>
                                 <!-- <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">검사공정</a>
@@ -62,7 +62,7 @@
                                 </ul>
                                 <div class="tab-content">
                                 <div class="tab-pane fade show active" id="step01">     
-                                    <div class="row gx-3" style="  margin: 10px 10px 10px;">    
+                                    <div class="row gx-3" style="  width: 70%; margin: 10px 10px 10px;">    
                                         <div class="col-2 col-sm-2">
                                             <div class="input-group input-group-sm mb-3">
                                                 <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
@@ -105,7 +105,7 @@
                                         </div>   
                                     </div> 
                                     <div class="container-fluid">   
-                                        <div id="wtab01Grid_div" style="overflow:scroll;   height:680px;   margin:0 auto; "></div> 
+                                        <div id="wtab01Grid_div" style="overflow:scroll;   height:680px; width: 70%;  margin:0 auto; "></div> 
                                         <!-- <div id="tab01Pager"></div> -->
                                     </div>   
                                 </div> 
@@ -265,25 +265,32 @@
             alternatingRowStep: 0,
             columns: [      
                 { binding: 'inmonttxt', header: '주차', align: "center", width: 100 }, 
+                { binding: 'indate', header: '지시(수주)일', align: "center", width: 120 },
+                { binding: 'sindate', header: '작업일', align: "center", width: 120 },
+                { binding: 'gindate', header: '검사일', align: "center", width: 120 },
+                { binding: 'deldate', header: '출하일', align: "center", width: 120 },
+                { binding: 'gunjoil', header: '건조대기', align: "center", width: 120 },
+                { binding: 'leadtime', header: '리드타임감소', align: "center", width: 120 },
                 { binding: 'ecltnm', header: '거래처', align: "left", width: 130 }, 
-                { binding: 'prod_sdate', header: '생산시작일', align: "center", width: 120 },
-                { binding: 'prod_edate', header: '생산종료일', align: "center", width: 120 },
                 { binding: 'jpum', header: '품명', align: "left", width: 150 },
                 { binding: 'jchajong', header: '차종', align: "left", width: 120 },   
                 { binding: 'jgugek', header: '규격', align: "left", width: 120 },   
                 { binding: 'wflagnm', header: '공정', align: "center", width: 80 },  
                 // { binding: 'statuscd', header: '상태', align: "center", width: 70 },   
                 // { binding: 'wfrdt', header: '사출시작', align: "center", width: 80 },   
-                // { binding: 'wtrdt', header: '사출종료', align: "center", width: 80 },  
-                // { binding: 'wrmcnm', header: '설비', align: "center", width: 80 },  
-                // { binding: 'rwflagnm', header: '주야', align: "left", width: 60 },   
-                { binding: 'lotno', header: '사출로트', align: "center", width: 130 },
-                { binding: 'prod_qty', header: '계획', align: "right", format: 'n0', width: 80 },  
-                // { binding: 'winqt', header: '투입', align: "right", format: 'n0', width: 80 }, 
-                // { binding: 'wbdqt', header: '불량', align: "right", format: 'n0', width: 80 }, 
-                { binding: 'wjqty', header: '검사완료', align: "right", format: 'n0', width: 80 }, 
-                { binding: 'wyul', header: '달성률', align: "center",  format: 'n2', width: 80 },
+                // { binding: 'wtrdt', header: '사출종료', align: "center", width: 80 },                  
                 { binding: 'wrpsnm', header: '사출담당', align: "center", width: 80 },           
+                { binding: 'wrmcnm', header: '설비', align: "center", width: 80 },  
+                { binding: 'rwflagnm', header: '주야', align: "left", width: 60 },                   
+                { binding: 'prod_qty', header: '생산', align: "right", format: 'n0', width: 80 },  
+                // { binding: 'winqt', header: '투입', align: "right", format: 'n0', width: 80 }, 
+                { binding: 'wbdqt', header: '불량', align: "right", format: 'n0', width: 80 }, 
+                { binding: 'lotno', header: '사출로트', align: "center", width: 130 },
+                { binding: 'wtrdt', header: '작업일', align: "center", width: 80 },                  
+                //{ binding: 'prod_sdate', header: '생산시작일', align: "center", width: 120 },
+                //{ binding: 'prod_edate', header: '생산종료일', align: "center", width: 120 },
+                //{ binding: 'wjqty', header: '검사완료', align: "right", format: 'n0', width: 80 }, 
+                //{ binding: 'wyul', header: '달성률', align: "center",  format: 'n2', width: 80 },
                 // { binding: 'glotno', header: '검사로트', align: "center", width: 130 }, 
                 // { binding: 'ginputdate', header: '검사일자', align: "center", width: 120 },            
                 // { binding: 'gumqty', header: '검사', align: "right", format: 'n0', width: 80 }, 
@@ -549,6 +556,11 @@
                 id: i, 
                 index: cnt,
                 indate: wtab01Dto[i]["indate"],
+                sindate: wtab01Dto[i]["sindate"],
+                gindate: wtab01Dto[i]["gindate"],
+                deldate: wtab01Dto[i]["deldate"],
+                gunjoil: wtab01Dto[i]["gunjoil"],
+                leadtime: wtab01Dto[i]["leadtime"],
                 ecltnm: wtab01Dto[i]["ecltnm"],
                 prod_sdate: wtab01Dto[i]["prod_sdate"], 
                 prod_edate: wtab01Dto[i]["prod_edate"], 
@@ -583,14 +595,7 @@
         wtab01Grid.columns.clear();  
         wtab01Grid.autoGenerateColumns = false; 
         view_p01tab01page.sourceCollection  = wtab01_data;
-        var cols = new wijmo.grid.Column(); 
-        // cols.binding = 'indate';
-        // cols.header = '등록일자';
-        // cols.align = "center";
-        // cols.width = 120; 
-        // wtab01Grid.columns.push(cols);   
-        
-        // cols = new wijmo.grid.Column(); 
+        var cols = new wijmo.grid.Column();  
         cols.binding = 'inmonttxt';
         cols.header = '주차';
         cols.align = "center";
@@ -598,142 +603,177 @@
         wtab01Grid.columns.push(cols);  
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'ecltnm';
-        cols.header = '거래처';
-        cols.align = "left";
+        cols.binding = 'indate';
+        cols.header = '지시(수주)일';
+        cols.align = "center";
         cols.width = 130;  
         wtab01Grid.columns.push(cols);   
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'prod_sdate';
-        cols.header = '생산시작일';
+        cols.binding = 'sindate';
+        cols.header = '작업일';
         cols.align = "center";
-        cols.width = 120;  
+        cols.width = 130;  
         wtab01Grid.columns.push(cols);   
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'prod_edate';
-        cols.header = '생산종료일';
+        cols.binding = 'gindate';
+        cols.header = '검사일';
         cols.align = "center";
-        cols.width = 120;  
+        cols.width = 130;  
+        wtab01Grid.columns.push(cols);    
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'deldate';
+        cols.header = '출하일';
+        cols.align = "center";
+        cols.width = 130;  
+        wtab01Grid.columns.push(cols);    
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'gunjoil';
+        cols.header = '건조대기';
+        cols.align = "center";
+        cols.width = 80;  
         wtab01Grid.columns.push(cols);   
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'leadtime';
+        cols.header = '리드타임감소';
+        cols.align = "center";
+        cols.width = 130;  
+        wtab01Grid.columns.push(cols);   
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'ecltnm';
+        cols.header = '거래처';
+        cols.align = "left";
+        cols.width = 200;  
+        wtab01Grid.columns.push(cols);   
+
+        // cols = new wijmo.grid.Column(); 
+        // cols.binding = 'prod_sdate';
+        // cols.header = '생산시작일';
+        // cols.align = "center";
+        // cols.width = 120;  
+        // wtab01Grid.columns.push(cols);   
+
+        // cols = new wijmo.grid.Column(); 
+        // cols.binding = 'prod_edate';
+        // cols.header = '생산종료일';
+        // cols.align = "center";
+        // cols.width = 120;  
+        // wtab01Grid.columns.push(cols);   
         
         cols = new wijmo.grid.Column(); 
         cols.binding = 'jpum';
         cols.header = '품명';
         cols.align = "center";
-        cols.width = 150;  
+        cols.width = 200;  
         wtab01Grid.columns.push(cols);   
         
-        cols = new wijmo.grid.Column(); 
-        cols.binding = 'jchajong';
-        cols.header = '차종';
-        cols.align = "left";
-        cols.width = 120;  
-        wtab01Grid.columns.push(cols);   
+        // cols = new wijmo.grid.Column(); 
+        // cols.binding = 'jchajong';
+        // cols.header = '차종';
+        // cols.align = "left";
+        // cols.width = 80;  
+        // wtab01Grid.columns.push(cols);   
         
+        // cols = new wijmo.grid.Column(); 
+        // cols.binding = 'jgugek';
+        // cols.header = '규격';
+        // cols.align = "center";
+        // cols.width = 120;  
+        // wtab01Grid.columns.push(cols);   
+
+        // cols = new wijmo.grid.Column(); 
+        // cols.binding = 'wflagnm';
+        // cols.header = '공정';
+        // cols.align = "center";
+        // cols.width = 80;  
+        // wtab01Grid.columns.push(cols);     
+
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'jgugek';
-        cols.header = '규격';
+        cols.binding = 'wrpsnm';
+        cols.header = '사출담당';
         cols.align = "center";
-        cols.width = 120;  
+        cols.width = 110;  
         wtab01Grid.columns.push(cols);   
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'wflagnm';
-        cols.header = '공정';
+        cols.binding = 'wrmcnm';
+        cols.header = '설비';
         cols.align = "center";
-        cols.width = 80;  
+        cols.width = 110;  
         wtab01Grid.columns.push(cols);   
-
-        // cols = new wijmo.grid.Column(); 
-        // cols.binding = 'wfrdt';
-        // cols.header = '사출시작';
-        // cols.align = "center";
-        // cols.width = 150;  
-        // wtab01Grid.columns.push(cols);   
-
-        // cols = new wijmo.grid.Column(); 
-        // cols.binding = 'wtrdt';
-        // cols.header = '사출종료';
-        // cols.align = "center";
-        // cols.width = 150;  
-        // wtab01Grid.columns.push(cols);   
-
-    //    cols = new wijmo.grid.Column(); 
-    //    cols.binding = 'statuscd';
-    //    cols.header = '상태';
-    //    cols.align = "center";
-    //    cols.width = 70;  
-    //    wtab01Grid.columns.push(cols);   
-
-        // cols = new wijmo.grid.Column(); 
-        // cols.binding = 'wrmcnm';
-        // cols.header = '설비';
-        // cols.align = "center";
-        // cols.width = 110;  
-        // wtab01Grid.columns.push(cols);   
     
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'rwflagnm';
+        cols.header = '주야';
+        cols.align = "center";
+        cols.width = 60;  
+        wtab01Grid.columns.push(cols);  
+        
         // cols = new wijmo.grid.Column(); 
-        // cols.binding = 'rwflagnm';
-        // cols.header = '주야';
-        // cols.align = "center";
-        // cols.width = 60;  
+        // cols.binding = 'prod_qty';
+        // cols.header = '계획';
+        // cols.align = "right";
+        // cols.width = 80;  
+        // cols.format = 'n0'
         // wtab01Grid.columns.push(cols);   
+        
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'wotqt';
+        cols.header = '생산';
+        cols.align = "right";
+        cols.width = 80;  
+        cols.format = 'n0'
+        wtab01Grid.columns.push(cols);   
+        
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'wbdqt';
+        cols.header = '불량';
+        cols.align = "right";
+        cols.width = 80;  
+        cols.format = 'n0'
+        wtab01Grid.columns.push(cols);    
         
         cols = new wijmo.grid.Column(); 
         cols.binding = 'lotno';
         cols.header = '사출로트';
         cols.align = "center";
         cols.width = 130;  
-        wtab01Grid.columns.push(cols);   
+        wtab01Grid.columns.push(cols);     
         
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'prod_qty';
-        cols.header = '계획';
-        cols.align = "right";
-        cols.width = 80;  
-        cols.format = 'n0'
+        cols.binding = 'sindate';
+        cols.header = '작업일';
+        cols.align = "center";
+        cols.width = 130;  
         wtab01Grid.columns.push(cols);   
         
         // cols = new wijmo.grid.Column(); 
-        // cols.binding = 'winqt';
-        // cols.header = '투입';
+        // cols.binding = 'gumqty';
+        // cols.header = '검사완료';
         // cols.align = "right";
         // cols.width = 80;  
         // cols.format = 'n0'
         // wtab01Grid.columns.push(cols);   
         
         // cols = new wijmo.grid.Column(); 
-        // cols.binding = 'wbdqt';
-        // cols.header = '불량';
-        // cols.align = "right";
+        // cols.binding = 'wyul';
+        // cols.header = '달성률';
+        // cols.align = "center";
         // cols.width = 80;  
         // cols.format = 'n0'
         // wtab01Grid.columns.push(cols);   
         
-        cols = new wijmo.grid.Column(); 
-        cols.binding = 'gumqty';
-        cols.header = '검사완료';
-        cols.align = "right";
-        cols.width = 80;  
-        cols.format = 'n0'
-        wtab01Grid.columns.push(cols);   
-        
-        cols = new wijmo.grid.Column(); 
-        cols.binding = 'wyul';
-        cols.header = '달성률';
-        cols.align = "center";
-        cols.width = 80;  
-        cols.format = 'n0'
-        wtab01Grid.columns.push(cols);   
-        
-        cols = new wijmo.grid.Column(); 
-        cols.binding = 'wrpsnm';
-        cols.header = '사출담당';
-        cols.align = "center";
-        cols.width = 80;  
-        wtab01Grid.columns.push(cols);   
+        // cols = new wijmo.grid.Column(); 
+        // cols.binding = 'wrpsnm';
+        // cols.header = '사출담당';
+        // cols.align = "center";
+        // cols.width = 80;  
+        // wtab01Grid.columns.push(cols);   
         
         // cols = new wijmo.grid.Column(); 
         // cols.binding = 'glotno';
@@ -762,7 +802,189 @@
         // cols.header = '검사담당';
         // cols.align = "center";
         // cols.width = 80;  
-        // wtab01Grid.columns.push(cols);   
+        // wtab01Grid.columns.push(cols);  
+
+
+        
+    //     // cols.binding = 'indate';
+    //     // cols.header = '등록일자';
+    //     // cols.align = "center";
+    //     // cols.width = 120; 
+    //     // wtab01Grid.columns.push(cols);   
+        
+    //     // cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'inmonttxt';
+    //     cols.header = '주차';
+    //     cols.align = "center";
+    //     cols.width = 100;           
+    //     wtab01Grid.columns.push(cols);  
+
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'ecltnm';
+    //     cols.header = '거래처';
+    //     cols.align = "left";
+    //     cols.width = 130;  
+    //     wtab01Grid.columns.push(cols);   
+
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'prod_sdate';
+    //     cols.header = '생산시작일';
+    //     cols.align = "center";
+    //     cols.width = 120;  
+    //     wtab01Grid.columns.push(cols);   
+
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'prod_edate';
+    //     cols.header = '생산종료일';
+    //     cols.align = "center";
+    //     cols.width = 120;  
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'jpum';
+    //     cols.header = '품명';
+    //     cols.align = "center";
+    //     cols.width = 150;  
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'jchajong';
+    //     cols.header = '차종';
+    //     cols.align = "left";
+    //     cols.width = 120;  
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'jgugek';
+    //     cols.header = '규격';
+    //     cols.align = "center";
+    //     cols.width = 120;  
+    //     wtab01Grid.columns.push(cols);   
+
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'wflagnm';
+    //     cols.header = '공정';
+    //     cols.align = "center";
+    //     cols.width = 80;  
+    //     wtab01Grid.columns.push(cols);   
+
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'wfrdt';
+    //     // cols.header = '사출시작';
+    //     // cols.align = "center";
+    //     // cols.width = 150;  
+    //     // wtab01Grid.columns.push(cols);   
+
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'wtrdt';
+    //     // cols.header = '사출종료';
+    //     // cols.align = "center";
+    //     // cols.width = 150;  
+    //     // wtab01Grid.columns.push(cols);   
+
+    // //    cols = new wijmo.grid.Column(); 
+    // //    cols.binding = 'statuscd';
+    // //    cols.header = '상태';
+    // //    cols.align = "center";
+    // //    cols.width = 70;  
+    // //    wtab01Grid.columns.push(cols);   
+
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'wrmcnm';
+    //     // cols.header = '설비';
+    //     // cols.align = "center";
+    //     // cols.width = 110;  
+    //     // wtab01Grid.columns.push(cols);   
+    
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'rwflagnm';
+    //     // cols.header = '주야';
+    //     // cols.align = "center";
+    //     // cols.width = 60;  
+    //     // wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'lotno';
+    //     cols.header = '사출로트';
+    //     cols.align = "center";
+    //     cols.width = 130;  
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'prod_qty';
+    //     cols.header = '계획';
+    //     cols.align = "right";
+    //     cols.width = 80;  
+    //     cols.format = 'n0'
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'winqt';
+    //     // cols.header = '투입';
+    //     // cols.align = "right";
+    //     // cols.width = 80;  
+    //     // cols.format = 'n0'
+    //     // wtab01Grid.columns.push(cols);   
+        
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'wbdqt';
+    //     // cols.header = '불량';
+    //     // cols.align = "right";
+    //     // cols.width = 80;  
+    //     // cols.format = 'n0'
+    //     // wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'gumqty';
+    //     cols.header = '검사완료';
+    //     cols.align = "right";
+    //     cols.width = 80;  
+    //     cols.format = 'n0'
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'wyul';
+    //     cols.header = '달성률';
+    //     cols.align = "center";
+    //     cols.width = 80;  
+    //     cols.format = 'n0'
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'wrpsnm';
+    //     cols.header = '사출담당';
+    //     cols.align = "center";
+    //     cols.width = 80;  
+    //     wtab01Grid.columns.push(cols);   
+        
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'glotno';
+    //     // cols.header = '검사로트';
+    //     // cols.align = "center";
+    //     // cols.width = 130;  
+    //     // wtab01Grid.columns.push(cols);   
+        
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'ginputdate';
+    //     // cols.header = '검사일자';
+    //     // cols.align = "center";
+    //     // cols.width = 100;   
+    //     // wtab01Grid.columns.push(cols);    
+        
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'gumqty';
+    //     // cols.header = '검사';
+    //     // cols.align = "right";
+    //     // cols.width = 80;  
+    //     // cols.format = 'n0'
+    //     // wtab01Grid.columns.push(cols);   
+
+    //     // cols = new wijmo.grid.Column(); 
+    //     // cols.binding = 'gumwrpsnm';
+    //     // cols.header = '검사담당';
+    //     // cols.align = "center";
+    //     // cols.width = 80;  
+    //     // wtab01Grid.columns.push(cols);   
 
     }
     

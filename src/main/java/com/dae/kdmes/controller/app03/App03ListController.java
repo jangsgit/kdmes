@@ -248,6 +248,7 @@ public class App03ListController {
                                     @RequestParam("todate") String todate,
                                     @RequestParam("wcode") String wcode,
                                     @RequestParam("lotno") String lotno,
+                                    @RequestParam("pcode") String pcode,
                                     Model model, HttpServletRequest request) throws Exception{
         try {
 
@@ -260,11 +261,14 @@ public class App03ListController {
 //            ls_dd = todate.substring(8,10);
 //            todate =  ls_yeare + ls_mm + ls_dd;
 
+            if(pcode == null || pcode.equals("")){
+                pcode = "%";
+            }
             index11Dto.setFrdate(frdate);
             index11Dto.setTodate(todate);
             index11Dto.setWcode(wcode);
             index11Dto.setLotno(lotno);
-
+            index11Dto.setPcode(pcode);
             index11DtoList = service11.getIndex14List01(index11Dto);
 
             model.addAttribute("itemList",index11DtoList);
@@ -285,6 +289,7 @@ public class App03ListController {
                                     @RequestParam("todate") String todate,
                                     @RequestParam("wcode") String wcode,
                                     @RequestParam("lotno") String lotno,
+                                    @RequestParam("pcode") String pcode,
                                     Model model, HttpServletRequest request) throws Exception{
         try {
 
@@ -296,10 +301,14 @@ public class App03ListController {
 //            ls_mm = todate.substring(5,7);
 //            ls_dd = todate.substring(8,10);
 //            todate =  ls_yeare + ls_mm + ls_dd;
+            if(pcode == null || pcode.equals("")){
+                pcode = "%";
+            }
             index11Dto.setFrdate(frdate);
             index11Dto.setTodate(todate);
             index11Dto.setWcode(wcode);
             index11Dto.setLotno(lotno);
+            index11Dto.setPcode(pcode);
 
             index11DtoList = service11.getIndex14List02(index11Dto);
 
@@ -321,6 +330,7 @@ public class App03ListController {
                                     @RequestParam("todate") String todate,
                                     @RequestParam("wcode") String wcode,
                                     @RequestParam("lotno") String lotno,
+                                    @RequestParam("pcode") String pcode,
                                     Model model, HttpServletRequest request) throws Exception{
         try {
 
@@ -332,10 +342,14 @@ public class App03ListController {
 //            ls_mm = todate.substring(5,7);
 //            ls_dd = todate.substring(8,10);
 //            todate =  ls_yeare + ls_mm + ls_dd;
+            if(pcode == null || pcode.equals("")){
+                pcode = "%";
+            }
             index11Dto.setFrdate(frdate);
             index11Dto.setTodate(todate);
             index11Dto.setWcode(wcode);
             index11Dto.setLotno(lotno);
+            index11Dto.setPcode(pcode);
 
             index11DtoList = service11.getIndex14List03(index11Dto);
 

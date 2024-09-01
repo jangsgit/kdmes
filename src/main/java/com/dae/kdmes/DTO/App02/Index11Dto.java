@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 @Setter
 public class Index11Dto {
     private String indate;
+    private String sindate;
+    private String gindate;
     private String prod_sdate;
     private String prod_edate;
     private String ecltnm;
@@ -29,6 +31,9 @@ public class Index11Dto {
     private Integer wbdqt;
     private Integer wjqty;
     private Integer gumqty;
+
+    private Integer leadtime;
+    private Integer gunjoil;
 
     private String GAPTIME;
 
