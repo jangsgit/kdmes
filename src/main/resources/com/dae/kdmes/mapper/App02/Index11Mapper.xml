@@ -388,7 +388,7 @@
                 SELECT YEAR(A.indate) AS yearstr,
 					MONTH(A.indate) AS monthstr,
                     0 as prod_qty ,
-                    (SELECT top 1 winqt from BADDATA WHERE YEAR(A.indate)=AAYEAR AND MONTH(A.indate) =AAMON  ) as winqt,
+                    0 as winqt,
                     sum(isnull(A.wbqty, 0)) as wbdqt,
                     0 as wotqt,
                     0 as wjqty,
