@@ -11,6 +11,7 @@ public class Index10Dto {
     private String custcd;
     private String spjangcd;
     private String plan_no;
+    private String plan_new;
     private String pcode;
     private String wodv;
     private String ecltnm;
@@ -123,6 +124,8 @@ public class Index10Dto {
     private String insano;
     private String inmonth;
     private String inweeks;
+    private String inmonthcp;
+    private String inweekscp;
 
     private Integer decision2;
     private Integer decision1;

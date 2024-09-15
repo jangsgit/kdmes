@@ -530,6 +530,55 @@ public class App02CrudController {
         return "success";
     }
 
+    @RequestMapping(value="/index10/savecopy")
+    public String index10SaveCopy( @RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
+
+        Index10Dto _index10Dto = new Index10Dto();
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "plan_no":
+                    _index10Dto.setPlan_no(values.toString());
+                    break;
+                case "inmonth":
+                    _index10Dto.setInmonth(values.toString());
+                    break;
+                case "inweeks":
+                    _index10Dto.setInweeks(values.toString());
+                    break;
+                case "inmonthcp":
+                    _index10Dto.setInmonthcp(values.toString());
+                    break;
+                case "inweekscp":
+                    _index10Dto.setInweekscp(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+
+        String wono = "";
+        Boolean result = false;
+        String indate = getToDate();
+        _index10Dto.setIndate(indate);
+        String plan_new = GetMaxSeq(indate);
+        _index10Dto.setPlan_new(plan_new);
+        wono = "P" + plan_new;
+        _index10Dto.setWono(wono);
+        result = service10.InsertFplanCopy(_index10Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
     @RequestMapping(value="/index10/del")
     public String index10Delete(  @RequestParam("planno") String planno,
                                   Model model,   HttpServletRequest request){
@@ -607,6 +656,9 @@ public class App02CrudController {
                     break;
                 case "pernm":
                     _indexCa613Dto.setPernm(values.toString());
+                    break;
+                case "wonflag":
+                    _indexCa613Dto.setWonflag(values.toString());
                     break;
                 default:
                     break;

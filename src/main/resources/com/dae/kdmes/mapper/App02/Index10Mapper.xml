@@ -46,9 +46,22 @@
         , prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks ) values
         ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{perid}, #{ecltnm}, '00', #{wono},
         #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark} ,
-        '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , #{pcode} , '0' ,'' , '00010', #{orddate} , #{qcdate} , #{inmonth} , #{inweeks})
+        '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , #{pcode} ,
+        '0' ,'' , '00010', #{orddate} , #{qcdate} , #{inmonth} , #{inweeks})
     </insert>
 
+    <insert id="InsertFplanCopy" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
+        insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd,  perid, ecltnm , line, wono ,
+                workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,
+                wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv ,wodv , opcod,
+                prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks )
+        SELECT custcd, spjangcd, #{plan_new}, #{indate}, prod_sdate, prod_edate, '', cltcd,  perid, ecltnm , '00', #{wono},
+               workdv, pcode, dem_flag, prod_qty, '1', istore, ostore, rwflag, remark ,
+               '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , opcod ,
+               '0' ,'' , '00010', orddate , qcdate , #{inmonthcp} , #{inweekscp}
+        FROM TB_FPLAN WITH (NOLOCK)
+        WHERE plan_no = #{plan_no}
+    </insert>
 
     <update id="UpdateFplan" parameterType="com.dae.kdmes.DTO.App02.Index10Dto">
         UPDATE TB_FPLAN SET
@@ -110,10 +123,10 @@
     <insert id="InsertCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
         insert into TB_CA613 (custcd, spjangcd, cltcd, acorp, DEdate, ibgnum, ibgseq,
         pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt,
-        mamt, indate, inperid,  pernm, perid, remark, lotno, istore, ostore ) values
+        mamt, indate, inperid,  pernm, perid, remark, lotno, istore, ostore, wonflag ) values
         ('KDMES', 'ZZ', #{cltcd},   #{acorp},  #{ibgdate},  #{ibgnum}, #{ibgseq},
         #{pcode}, #{pname}, #{psize}, #{punit}, #{qty}, #{cqty},   #{uamt},  #{samt},  #{tamt},
-        #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}  )
+        #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}, #{wonflag}  )
     </insert>
 
     <insert id="InsertDA036Sch" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
@@ -185,6 +198,8 @@
         <if test="istore != null">istore=#{istore}</if>
         <if test="ostore != null ">,</if>
         <if test="ostore != null">ostore=#{ostore}</if>
+        <if test="wonflag != null ">,</if>
+        <if test="wonflag != null">wonflag=#{wonflag}</if>
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and ibgseq = #{ibgseq}
     </update>
 
@@ -262,8 +277,8 @@
                       Left(B.ibgdate,4) + '-' + substring(B.ibgdate, 5,2)+ '-' + substring(B.ibgdate, 7,2) as ibgdate,
                       B.ibgnum, B.ibgseq, B.lotno, B.istore, B.ostore,
                       B.pcode, B.pname, B.psize,    B.punit,  B.qty, B.cqty, B.uamt, B.samt, B.tamt,
-                      isnull(B.remark,'') as remark,B.balno,
-                      B.mamt, B.acorp, B.pernm , B.perid
+                      isnull(B.remark,'') as remark, B.balno, B.wonflag,
+                      B.mamt, B.acorp, B.pernm , B.perid, B.wonflag
                   from  TB_CA613 B WITH (NOLOCK)
                   where  B.pname Like concat('%',#{pname},'%')
                     AND B.ibgdate between #{frdate} and #{todate}
@@ -424,12 +439,12 @@
     <select id="SelectCa613JaegoList"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
 
         <![CDATA[
-                SELECT Z.pcode, Z.pname, Z.psize, Z.punit, Z.janqty
+                SELECT Z.pcode, Z.pname, Z.psize, Z.punit, Z.janqty, Z.wonflag
                 FROM (
                         select sum(isnull(B.qty,0))  - sum(isnull(B.cqty,0)) as janqty,
-                               B.pcode, B.pname, B.psize, B.punit
+                               B.pcode, B.pname, B.psize, B.punit , B.wonflag
                         from  TB_CA613 B WITH (NOLOCK)
-                        Group BY  B.pcode, B.pname, B.psize, B.punit
+                        Group BY  B.pcode, B.pname, B.psize, B.punit, B.wonflag
                 ) Z where Z.janqty > 0
                 AND  Z.pname Like concat('%',#{pname},'%')
                 ORDER BY  Z.pname, Z.psize, Z.punit, Z.pcode

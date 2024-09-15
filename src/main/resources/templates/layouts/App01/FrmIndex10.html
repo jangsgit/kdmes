@@ -124,14 +124,15 @@
                                         <th>등록일자</th>
                                         <td colspan="2"> 
                                                 <input type="text"  class="form-control datetimepicker" id="indate" autocomplete="off"  placeholder="Y-m-d"     >  
+                                                <input type="hidden" id="lotno" placeholder=""  autocomplete="off">
                                             <!-- <div class="input_wrap"> 
                                                 <input type="text" id="indate" placeholder=""  autocomplete="off">                                        
                                             </div>                                             -->
                                         </td>                                            
-                                        <th>LOTNO</th> 
+                                        <th>주차복사</th> 
                                         <td colspan="2">
-                                            <div class="input_wrap">
-                                                <input type="text" id="lotno" placeholder=""  autocomplete="off">
+                                            <div class="input_wrap">                                               
+                                                <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">주차선택 </button>
                                             </div>
                                         </td> 
                                     </tr>
@@ -538,7 +539,82 @@
 
                 </div>
             </div> 
-        </div>    
+        </div> 
+        
+        
+        <!--------------------------------------------------------------------------------------->    
+        <div class="modal fade" id="wotqtymodal" data-bs-keyboard="false"
+        data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm05"
+            style="max-width: 850px">
+            <div class="modal-content border-0">
+                <div class="modal-body p-0" > 
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <h4 class="mb-1" id="modalExampleDemoLabel"> 생산계획복사</h4>
+                    </div>     
+                    <div  class="container-fluid"> 
+                        <div class="col-auto">
+                            <!-- <p> 현재 <b><span id="checked-count">0</span></b> 명이 선택되었습니다. </p> -->
+                            <div class="input-group">
+                                <div class="input-group-text">주차</div> 
+                                <div class="dropdown-container">
+                                    <select class="form-select" aria-label="Default select example" id="incopymonth">
+                                        <option selected="">월</option>
+                                        <option value="1월">1월</option>
+                                        <option value="2월">2월</option>
+                                        <option value="3월">3월</option>
+                                        <option value="4월">4월</option>
+                                        <option value="5월">5월</option>
+                                        <option value="6월">6월</option>
+                                        <option value="7월">7월</option>
+                                        <option value="8월">8월</option>
+                                        <option value="9월">9월</option>
+                                        <option value="10월">10월</option>
+                                        <option value="11월">11월</option>
+                                        <option value="12월">12월</option>
+                                    </select> 
+                            
+                                    <select class="form-select" aria-label="Default select example"  id="incopyweeks">
+                                        <option selected="">주차</option>
+                                        <option value="1">1주차</option>
+                                        <option value="2">2주차</option>
+                                        <option value="3">3주차</option>
+                                        <option value="4">4주차</option>
+                                        <option value="5">5주차</option>
+                                        <option value="6">6주차</option>
+                                    </select> 
+                                </div>   
+                                <div class="col-auto"> 
+                                        <button class="btn btn-falcon-warning me-1 mb-1" type="button" onclick="savecopy_fnc()">복사
+                                        </button>  
+                                </div>  
+                            </div>    
+                        </div>  
+                    </div>     
+                </div>  
+                <div class="modal-footer">
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <button class="badge-soft-primary dropdown-item rounded-1"  id="wotqtymodal_btn"
+                                type="button" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        <!-- <div class="col-auto">
+                            <button class="badge-soft-info dropdown-item rounded-1"
+                                type="submit">저장 </button>
+                        </div> -->
+                    </div>
+                </div>   
+
+            </div>
+        </div> 
+    </div>          
+<!--------------------------------------------------------------------------------------->  
+
+
+
+
+
         <!--########################################자바 스크립트 시작-->
         <script type="text/javascript" th:inline="javascript"> 
             // 그리드 호출 window.onload 
@@ -591,7 +667,7 @@
                         { binding: 'ecltnm', header: '거래처', align: "left", width: 180 }, 
                         { binding: 'jpum', 
                             header: '품목', 
-                            align: "center", 
+                            align: "left", 
                             width: 200,
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.jpum}</b>',
@@ -1118,6 +1194,51 @@
                 // arg_date = arg_date.replaceAll("-",""); 
                 // return arg_date;
             }
+            function savecopy_fnc(){
+                var ls_plan_no  =  document.getElementById('plan_no').value;  
+                var ls_inmonth  =  document.getElementById('inmonth').value;  
+                var ls_inweeks  =  document.getElementById('inweeks').value; 
+                var ls_inmonthcopy  =  document.getElementById('incopymonth').value;  
+                var ls_inweekscopy  =  document.getElementById('incopyweeks').value; 
+                if (!confirm("복사하시겠습니까?")) {
+                        return ; 
+                }  
+                var inputdata = {  
+                    "plan_no"       : ls_plan_no, 
+                    "inmonth"        : ls_inmonth, 
+                    "inweeks"        : ls_inweeks, 
+                    "inmonthcp"        : ls_inmonthcopy, 
+                    "inweekscp"        : ls_inweekscopy, 
+                } 
+        
+                //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
+                formData.delete("key");    
+                formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+            
+                $.ajax({
+                    url: '/app02m/index10/savecopy',
+                    type: "POST",   
+                    processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+                    contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
+                    data: formData,                   
+                    async:false,
+                    success:function(data){
+                        if(data == "success"){
+                            alert("저장되었습니다.")
+                            // console.log(formData);
+                            searchList_rtn("%");
+                            clear_rtn(); 
+                            document.getElementById("wotqtymodal_btn").click();             
+                        }else{                       
+                            alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.") 
+                            console.log(data);  
+                        }
+                    },error:function(e){
+                        console.log('error',e);
+                    }
+                })            
+                // return false;
+            }  
             // <!-- 저장 스크립트 시작 -->
             function save_btn(){   
                 var ls_indate     =  convert_date(windate.value); // (document.getElementById('indate').value).replaceAll("-","");                   
@@ -2253,8 +2374,10 @@
                     const month = ls_sdate.toLocaleString('default', { month: 'long' }); 
                     document.getElementById('inmonth').value = month;
                     document.getElementById('inweeks').value = weekOfMonth; 
+                    document.getElementById('incopymonth').value = month;
+                    document.getElementById('incopyweeks').value = weekOfMonth; 
 
-
+                    
 
                     result.setDate(result.getDate() + days); 
                     var ls_edate = result.toISOString().substring(0,10);

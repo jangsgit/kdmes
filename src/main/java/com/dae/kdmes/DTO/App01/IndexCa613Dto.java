@@ -53,6 +53,7 @@ public class IndexCa613Dto {
     private String spcod;
     private String spcodnm;
     private String spgugek;
+    private String wonflag;
     private Integer lvsn;
     private List<IndexCa613OworkDto> oworks;
 

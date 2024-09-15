@@ -119,7 +119,7 @@
                 { binding: 'ecltnm', header: '거래처', align: "center", width: 150 },  
                 { binding: 'jpum', header: '품목', align: "center", width: 200 },  
                 { binding: 'jgugek', header: '규격', align: "left", width: 150 },    
-                { binding: 'wotqt', header: '박스수량', align: "right", width: 100,  aggregate: 'Sum' },  
+                { binding: 'wotqt', header: '작업수량', align: "right", width: 100,  aggregate: 'Sum' },  
                 { binding: 'gumqty', header: '수량', align: "center", width: 100 ,  aggregate: 'Sum'},
                 { binding: 'glotno', header: '검사로트', align: "center", width: 130 },  
                 { binding: 'glotnono', header: '참조로트', align: "center", width: 130 },  
@@ -334,7 +334,7 @@
        
        cols = new wijmo.grid.Column(); 
        cols.binding = 'wotqt';
-       cols.header = '박스수량';
+       cols.header = '작업수량';
        cols.align = "right";
        cols.width = 80;   
        cols.aggregate = 'Sum';

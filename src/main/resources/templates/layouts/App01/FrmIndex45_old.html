@@ -197,7 +197,7 @@
                                                                         <div id='inwinqtbdg'></div>                                             
                                                                     </div>                                            
                                                                 </td> 
-                                                                <th>박스수량</th>
+                                                                <th>작업수량</th>
                                                                 <td >
                                                                     <div class="input_wrap" style="max-width: 230px;"> 
                                                                         <input class="form-control form-control-sm"  type="number" id="inboxsu1" placeholder="" disabled   /> 
@@ -674,7 +674,7 @@
                        { binding: 'prod_qty', header: '사출완료량',align:"center",  width: 130, isReadOnly: true  },
                        { binding: 'otqty', header: '기조립량',align:"center",  width: 90, isReadOnly: true },
                        { binding: 'obqty', header: '잔여량',align:"center",  width: 90, isReadOnly: false },
-                       { binding: 'jboxsu1', header: '박스수량',align:"center",  width: 130, isReadOnly: true  },
+                       { binding: 'jboxsu1', header: '작업수량',align:"center",  width: 130, isReadOnly: true  },
                        { binding: 'plan_no', header: '작지번호',   align:"center", width: 150  } 
    
                    ],
@@ -1042,7 +1042,7 @@
                var ll_inwbdqt   = document.getElementById('inwbdqt').value;             //불량수량
                var ll_inwqcqt   = document.getElementById('inwqcqt').value;             //완료수량 
                var ll_insumqt = document.getElementById('insumqt').value;          //누적수량               
-               var ll_inboxsu1 = document.getElementById('inboxsu1').value;          //박스수량 
+               var ll_inboxsu1 = document.getElementById('inboxsu1').value;          //작업수량 
                
                var ls_inwflag  = '00030';   
                var ls_inwremark  = document.getElementById('inwremark').value;     //비고
@@ -1070,7 +1070,7 @@
                }   
  
                if(ll_inboxsu1 < ll_insumqt ){
-                    alert("박스수량을 초과했습니다. 확인하세요");
+                    alert("작업수량을 초과했습니다. 확인하세요");
                     return ;
                 }  
 
@@ -1501,7 +1501,7 @@
                wtab03Grid.columns.push(cols);  
                cols = new wijmo.grid.Column(); 
                cols.binding = 'jboxsu1';
-               cols.header = '박스수량';
+               cols.header = '작업수량';
                cols.align = "center";
                cols.width = 130 ; 
                cols.isReadOnly = false ; 

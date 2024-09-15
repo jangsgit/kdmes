@@ -30,6 +30,9 @@ public class Index10Service {
     public Boolean DeleteFplan(Index10Dto parm){  return  indexMapper.DeleteFplan(parm);  }
 
     public Boolean InsertFplan(Index10Dto parm){ return  indexMapper.InsertFplan(parm);}
+
+    public Boolean InsertFplanCopy(Index10Dto parm){ return  indexMapper.InsertFplanCopy(parm);}
+
     public Boolean UpdateFplan(Index10Dto parm){  return  indexMapper.UpdateFplan(parm);  }
 
 

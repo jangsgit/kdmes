@@ -522,16 +522,16 @@ public class Appm01CrudController {
             wtimeDto.setWtrdt(getToDateTime());
             wtimeDto.setWdtcd("");
             wtimeDto.setWrerm("");
-            log.info("setWfrdt11 =====>" + wtimeDto.getWfrdt());
-            log.info("setWtrdt11 =====>" + wtimeDto.getWtrdt());
+//            log.info("setWfrdt11 =====>" + wtimeDto.getWfrdt());
+//            log.info("setWtrdt11 =====>" + wtimeDto.getWtrdt());
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update");
                 ///return "error";
             }
             wtimeDto.setWtrdt(null);
-            log.info("setWfrdt22 =====>" + wtimeDto.getWfrdt());
-            log.info("setWtrdt22 =====>" + wtimeDto.getWtrdt());
+//            log.info("setWfrdt22 =====>" + wtimeDto.getWfrdt());
+//            log.info("setWtrdt22 =====>" + wtimeDto.getWtrdt());
             result = appcom01Service.FPLAN_WTIME_Insert(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Insert");
@@ -541,7 +541,7 @@ public class Appm01CrudController {
             wtimeDto.setWdtcd(instopcd);
             wtimeDto.setWrerm(instopnm);
             wtimeDto.setWtrdt(getToDateTime());
-            log.info("setWtrdt33 =====>" + wtimeDto.getWtrdt());
+//            log.info("setWtrdt33 =====>" + wtimeDto.getWtrdt());
             result = appcom01Service.FPLAN_WTIME_Update(wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Update");
@@ -711,11 +711,11 @@ public class Appm01CrudController {
             wbadDto.setIndate(getToDate());
             String lsChkseq = appcom01Service.FPLAN_WBAD_SELECT(wbadDto);
 
-            log.info("wseq =====> " + wseq);
-            log.info("lsChkseq =====> " + lsChkseq);
-            log.info("plan_no =====> " + plan_no);
-            log.info("lotno =====> " + lotno);
-            log.info("wbqty =====> " + wbqty);
+//            log.info("wseq =====> " + wseq);
+//            log.info("lsChkseq =====> " + lsChkseq);
+//            log.info("plan_no =====> " + plan_no);
+//            log.info("lotno =====> " + lotno);
+//            log.info("wbqty =====> " + wbqty);
             if (lsChkseq == null  || lsChkseq.equals("")){
                 String ls_seq = appcom01Service.FPLAN_WBAD_MAXWSEQ(wbadDto);
                 if(ls_seq == null){

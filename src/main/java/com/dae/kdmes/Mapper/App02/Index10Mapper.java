@@ -21,6 +21,9 @@ public interface Index10Mapper {
     public Boolean DeleteFplan(Index10Dto parm) ;
 
     public Boolean InsertFplan(Index10Dto  parm) ;
+
+    public Boolean InsertFplanCopy(Index10Dto  parm) ;
+
     public Boolean UpdateFplan(Index10Dto  parm) ;
 
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm) ;

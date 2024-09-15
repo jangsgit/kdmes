@@ -1611,6 +1611,7 @@
                 { binding: 'psize', header: '규격', align: 'center', width: '*', format: '*' , isReadOnly: true},  
                 { binding: 'punit', header: '단위', align: 'center', width: '*', format: '*' , isReadOnly: true},  
                 { binding: 'janqty', header: '재고', align: 'center', width: '*', format: '*' , isReadOnly: true},  
+                { binding: 'wontxt', header: '자재구분', align: 'center', width: '*', format: '*' , isReadOnly: true},  
             ],       
             itemsSource: view_wjglistpage
         });          
@@ -1750,7 +1751,19 @@
         var wtab01Dto  = data;    
         var wtab01_data = [];
         var cnt = 1;
+        var ls_wontxt = "";
+        console.log(wtab01Dto)
         for (var i = 0; i < wtab01Dto.length; i++) {
+            ls_wontxt = wtab01Dto[i]["wonflag"]; 
+            if(ls_wontxt == null || ls_wontxt.length == 0 || ls_wontxt == ""){ 
+                ls_wontxt = ""         ;
+            }else{
+                if(ls_wontxt == "1"){
+                    ls_wontxt = "원재료";
+                }else{
+                    ls_wontxt = "부재료";
+                }
+            }   
             wtab01_data.push({
                 id: i, 
                 index: cnt, 
@@ -1758,7 +1771,9 @@
                 pcode: wtab01Dto[i]["pcode"], 
                 pname: wtab01Dto[i]["pname"], 
                 psize: wtab01Dto[i]["psize"], 
-                punit: wtab01Dto[i]["punit"],       
+                punit: wtab01Dto[i]["punit"],  
+                wonflag: wtab01Dto[i]["wonflag"],   
+                wontxt: ls_wontxt,      
             });
             cnt++;
         }   
@@ -1793,6 +1808,13 @@
             cols.align = "right";
             cols.width = 90;                  
             wjglistGrid.columns.push(cols);   
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'wontxt';
+            cols.header = '자재구분';
+            cols.align = "center";
+            cols.width = 90;                  
+            wjglistGrid.columns.push(cols);  
 
     }        
                    

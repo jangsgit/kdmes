@@ -119,7 +119,7 @@
                                                             </div>                                        
                                                           </div>
                                                     </div>
-                                                <!-- </div>                        -->
+                                                <!-- </div> -->
                                                                             
                                             <!-- </div> -->
                                         </div>
@@ -134,10 +134,7 @@
                                                             <tr>  
                                                                 <th>입고일자</th>
                                                                 <td colspan="2"> 
-                                                                        <input type="text"  class="form-control datetimepicker" id="ibgdate" autocomplete="off"  placeholder="Y-m-d"     >  
-                                                                    <!-- <div class="input_wrap"> 
-                                                                        <input type="text" id="ibgdate" placeholder=""  autocomplete="off">                                        
-                                                                    </div>                                             -->
+                                                                    <input type="text"  class="form-control datetimepicker" id="ibgdate" autocomplete="off"  placeholder="Y-m-d"     >                                                                       
                                                                 </td>                                            
                                                                 <th>LOTNO</th> 
                                                                 <td colspan="2">
@@ -230,6 +227,24 @@
                                                                 </td>                                
                                                             </tr>                                                                                                                                                                                   -->
                                                             <tr>                                                                                                                        
+                                                                <th>자재구분</th> 
+                                                                <td colspan="2">
+                                                                    <div class="input_wrap" style="max-width: 235px;">
+                                                                        <select  name="wonflag" id="wonflag">
+                                                                            <option value="%">선택</option>
+                                                                            <option value="1" th:text="원재료"></option>
+                                                                            <option value="2" th:text="부재료"></option>
+                                                                        </select>
+                                                                    </div> 
+                                                                </td>   
+                                                                <th>비고</th> 
+                                                                <td colspan="2">
+                                                                    <div class="input_wrap">                                               
+                                                                        <input type="text"  id="remark" autocomplete="off"   > 
+                                                                    </div>
+                                                                </td>                                
+                                                            </tr>                                                                                                                                                                                  -->
+                                                            <tr>                                                                                                                        
                                                                 <th>입고창고</th> 
                                                                 <td colspan="2">
                                                                     <div class="input_wrap" style="max-width: 235px;">
@@ -248,15 +263,7 @@
                                                                         </select>
                                                                     </div> 
                                                                 </td>                                
-                                                            </tr>
-                                                            <tr> 
-                                                                <th>비고</th>
-                                                                <td  colspan="10">
-                                                                    <div class="input_wrap">                                               
-                                                                        <input type="text"  id="remark" autocomplete="off"   > 
-                                                                    </div>
-                                                                </td>                                                                                            
-                                                            </tr>                                                                             
+                                                            </tr>                                                                        
                                                         </tbody>
                                                     </table>
                                                     <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
@@ -564,7 +571,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.pname}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty, ctx.item.wonflag);                    
                                 }
                             }) 
                         },    
@@ -572,7 +579,8 @@
                         { binding: 'qty', header: '입고수량', align: "right", width: 90 },  
                         { binding: 'cqty', header: '출고수량', align: "right", width: 90 },  
                         { binding: 'lotno', header: '로트번호', align: "center", width: 180 }, 
-                        { binding: 'pernm', header: '담당자', align: "center", width: 100 },            
+                        { binding: 'pernm', header: '담당자', align: "center", width: 100 },   
+                        { binding: 'wonflag', header: '자재구분', align: "center", width: 100 },            
                     ], 
                     itemsSource: view_p01tab01page
                 });        
@@ -627,7 +635,9 @@
                             samt: wtab01Dto[i]["samt"],   
                             remark: wtab01Dto[i]["remark"], 
                             perid: wtab01Dto[i]["perid"],    
-                            pernm: wtab01Dto[i]["pernm"],                             
+                            pernm: wtab01Dto[i]["pernm"],    
+                            wonflag: wtab01Dto[i]["wonflag"],  
+                                                       
                         });
                         cnt++;
                     }      
@@ -1072,7 +1082,8 @@
                 // document.getElementById('samt').value = "";  
                 document.getElementById('remark').value = "";  
                 document.getElementById('istore').value = ""; 
-                document.getElementById('ostore').value = "";   
+                document.getElementById('ostore').value = ""; 
+                document.getElementById('wonflag').value = "";   
             }
             function convert_date(arg_date){ 
                 var ls_arg_date = String(arg_date); 
@@ -1111,7 +1122,9 @@
                 // var ls_samt  =  document.getElementById('samt').value;  
                 var ls_remark  =  document.getElementById('remark').value;    
                 var ls_istore =  document.getElementById('istore').value;  
-                var ls_ostore =  document.getElementById('ostore').value;  
+                var ls_ostore =  document.getElementById('ostore').value;
+                var ls_wonflag =  document.getElementById('wonflag').value;
+                  
                 if(!ls_pcode){
                     alert("품목을 선택하세요")
                     return ; 
@@ -1128,7 +1141,10 @@
                 }               
                 if(ls_cqty == null || ls_cqty.length == 0 || ls_cqty == ""){ 
                     ls_cqty = 0;
-                }   
+                }                
+                if(ls_wonflag == null || ls_wonflag.length == 0 || ls_wonflag == "%"){ 
+                    ls_wonflag = "";
+                } 
                 ls_uamt = 0;  ls_samt = 0;                   
                 if (!confirm("저장하시겠습니까?")) {
                         return ; 
@@ -1152,7 +1168,8 @@
                     "samt"          : ls_samt,
                     "remark"        : ls_remark, 
                     "istore"        : ls_istore,
-                    "ostore"        : ls_ostore,       
+                    "ostore"        : ls_ostore,   
+                    "wonflag"        : ls_wonflag,    
                 } 
         
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -1306,7 +1323,18 @@
                 var wtab01Dto  = data;    
                 var wtab01_data = []; 
                 var cnt = 1; 
+                var ls_wontxt = "";
                 for (var i = 0; i < wtab01Dto.length; i++) {
+                    ls_wontxt = wtab01Dto[i]["wonflag"]; 
+                    if(ls_wontxt == null || ls_wontxt.length == 0 || ls_wontxt == ""){ 
+                        ls_wontxt = ""         ;
+                    }else{
+                        if(ls_wontxt == "1"){
+                            ls_wontxt = "원재료";
+                        }else{
+                            ls_wontxt = "부재료";
+                        }
+                    }   
                     wtab01_data.push({
                         id: i, 
                         index: cnt, 
@@ -1331,7 +1359,9 @@
                         pernm: wtab01Dto[i]["pernm"],    
                         oworks: wtab01Dto[i]["oworks"],    
                         wotdt: wtab01Dto[i]["wotdt"],   
-                        wotqt: wtab01Dto[i]["wotqt"], 
+                        wotqt: wtab01Dto[i]["wotqt"],    
+                        wonflag: wtab01Dto[i]["wonflag"],    
+                        wontxt: ls_wontxt, 
                            
                     });
                     cnt++;
@@ -1363,7 +1393,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                            wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty, ctx.item.wonflag);                    
                         }
                     });
                     wtab01Grid.columns.push(cols);  
@@ -1400,6 +1430,13 @@
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'pernm';
                     cols.header = '담당자';
+                    cols.align = "left";
+                    cols.width = 100;           
+                    wtab01Grid.columns.push(cols);   
+        
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'wontxt';
+                    cols.header = '자재구분';
                     cols.align = "left";
                     cols.width = 100;           
                     wtab01Grid.columns.push(cols);   
@@ -1445,7 +1482,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty);                    
+                            wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.cltcd, ctx.item.acorp, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.qty,  ctx.item.uamt, ctx.item.samt, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.lotno, ctx.item.istore, ctx.item.ostore, ctx.item.cqty, ctx.item.wonflag);                    
                         }
                     });
                     wtab02Grid.columns.push(cols);  
@@ -1484,7 +1521,14 @@
                     cols.header = '담당자';
                     cols.align = "left";
                     cols.width = 100;           
-                    wtab02Grid.columns.push(cols);                          
+                    wtab02Grid.columns.push(cols);     
+        
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'wontxt';
+                    cols.header = '자재구분';
+                    cols.align = "left";
+                    cols.width = 100;           
+                    wtab01Grid.columns.push(cols);                         
                 }
     
             }        
@@ -1492,7 +1536,7 @@
                 //pname, psize, punit, qty,  uamt, 
                 //samt, perid, pernm, remark, lotno
                 //istore, ostore, cqty  
-            function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18){
+            function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19){
                  
                 wibgdate.value = arg1; 
                 if(arg1 == null || arg1.length == 0 || arg1.length < 8 || arg1 == ""|| arg1 == "null"){  
@@ -1516,6 +1560,7 @@
                 document.getElementById('lotno').value = arg15;
                 document.getElementById('istore').value = arg16;
                 document.getElementById('ostore').value = arg17;  
+                document.getElementById('wonflag').value = arg19;  
                 searchListModal_rtn()
             }        
   

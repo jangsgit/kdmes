@@ -78,14 +78,7 @@
                 <!-- //여기서부터 그래프 -->
                 <div class="table table_style2">
                     <div class="card-body bg-light">    
-                            <div class="tab-content" >                                        
-                            <div class="tab-pane fade show active"  >  
-                                    <div class="container-fluid" id="op1" >
-                                    <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px; width: 700px;   margin:0 auto; "></div>
-                                    <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
-                                </div>                                               
-                            </div>                                        
-                            </div>
+                        <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px; width: 650px;   margin:0 auto; "></div>
                     </div>
                 </div>       
                                             
@@ -94,7 +87,7 @@
     </div>
     <!-- 우측 전체 테이블 -->
     <div class="sec_con" style="width: 50%;">
-        <div class="box_wrap" style="padding-bottom: 100px;">
+        <div class="box_wrap" style="padding-bottom: 10px;">
             <form action="">
                 <div class="table table_style1" >
                     <table>
@@ -109,7 +102,7 @@
                                         </select>                                              
                                     </div>                                            
                                 </td>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div class="input_wrap" style="max-width: 225px;"> 
                                         <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
                                             <option value="">선택</option>
@@ -179,7 +172,7 @@
                                         <input type="text"  id="jgugek2" autocomplete="off"  placeholder="" >  
                                     </div>
                                 </td>                                  
-                                <th>박스수량</th>
+                                <th>작업수량</th>
                                 <td colspan="2"> 
                                     <div class="input_wrap">  
                                         <input type="number"  id="jboxsu1" value="jboxsu1" />                                         
