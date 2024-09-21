@@ -759,13 +759,27 @@
         }  
         
         
-    function insertLogOut(){ 
-        var ls_loginid   = document.getElementById('actuseridz').value;  
+    function insertLogOut(){    
+         var ip_addr  ;
+        
+        // IP 주소 가져오기
+        axios.get('https://api.ipify.org?format=json')
+        .then(function (response) {
+            // IP 주소를 HTML 요소에 표시
+            console.log(response.data.ip)
+            ip_addr = String(response.data.ip);
+        })
+        .catch(function (error) {
+            console.error('Error fetching IP address:', error); 
+        }); 
+        var ls_loginid   = localStorage.getItem("userid"); 
+
         $.ajax({
             url: '/authcrud/logoutlog',
             type:"POST",
             data: {
-                "loginid" : ls_loginid 
+                "loginid" : ls_loginid ,
+                "ipaddr" : ip_addr 
             },
             async:false,
             success:function(){

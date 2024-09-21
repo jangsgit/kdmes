@@ -323,10 +323,35 @@
     </div>
 </body>
 <script> 
+  
+    var ip_addr = "";
+    async function getIpClient() {
+        try {
+            const response = await axios.get('https://api.ipify.org?format=json'); 
+            ip_addr = String(response.data.ip);   
+        } catch (error) {
+            console.error(error);
+        }
+    }
     function logout(){   
             if (!confirm("로그아웃하시겠습니까?") ){
                 return    
             }
+            
+            getIpClient()
+        var ls_loginid   = localStorage.getItem("userid"); 
+        $.ajax({
+            url: '/authcrud/logoutlog',
+            type:"POST",
+            data: {
+                "loginid" : ls_loginid ,
+                "ipaddr" : ip_addr ,
+            },
+            async:false,
+            success:function(){
+                    console.log('success');
+            }
+        });
             localStorage.removeItem("perid");
             localStorage.removeItem("pernm");
             localStorage.removeItem("userid");

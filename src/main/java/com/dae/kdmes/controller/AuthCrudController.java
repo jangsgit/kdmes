@@ -6,24 +6,32 @@ import com.dae.kdmes.Service.master.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.MediaType;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/authcrud", method = RequestMethod.POST)
 public class AuthCrudController {
     private final AuthService authService;
+    private final RestTemplate restTemplate;
     UserFormDto userformDto = new UserFormDto();
     TBXuserMenuDTO xusermenuDto = new TBXuserMenuDTO();
     List<TBXuserMenuDTO> xusermenuListDto = new ArrayList<>();
@@ -33,8 +41,11 @@ public class AuthCrudController {
 
 
     protected Log log =  LogFactory.getLog(this.getClass());
-
-
+    //api 관련 메서드-----------
+//    public AuthCrudController(RestTemplate restTemplate) {
+//        this.restTemplate = restTemplate;
+//    }
+    //---------------------
 
     @RequestMapping(value="/save")
     public String memberSave(@RequestParam("saupnum") String saupnum
@@ -127,24 +138,21 @@ public class AuthCrudController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object memberLoginForm(@RequestParam("loginid") String loginid
             , @RequestParam("logpass") String logpass
-            , @RequestParam("flag") String select
+            , @RequestParam("ipaddr") String ipaddr
             , Model model
-            , HttpServletRequest request) throws Exception{
+            , HttpServletRequest request) throws Exception{  // 보내려는 API URL
         userformDto.setUserid(loginid);
         userformDto.setPasswd1(logpass);
         UserFormDto userReturnDto = authService.GetUserInfo(userformDto);
-
 //        if(userReturnDto.getWrongnum().equals("3")){
 //            return userReturnDto;
 //        }
-
         authService.TB_XUSERS_LOGSUCC(userReturnDto);
-
         model.addAttribute("UserInfo", userReturnDto );
 
-        //userformDto.setFlag(userReturnDto.getFlag());
-        log.info(userReturnDto.getFlag());
-        log.info(userReturnDto.getUsername());
+//        userformDto.setFlag(userReturnDto.getFlag());
+//        log.info(userReturnDto.getFlag());
+//        log.info(userReturnDto.getUsername());
 //        log.info("memberLoginForm Exception ================================================================");
 //        log.info(userformDto);
         //userformDto =  authService.GetUserInfoDto(userformDto);
@@ -156,15 +164,16 @@ public class AuthCrudController {
             userReturnDto = null;
             return userReturnDto;
         }else {
-            log.info("userReturnDto  =================>");
+            String ls_return = sendLogData(loginid, "접속", ipaddr);
+            log.info("ls_result====>" + ls_return);
             return userReturnDto;
         }
     }
-
     @RequestMapping(value = "/adminchk", method = RequestMethod.POST)
     public Object memberLoginAdminForm(@RequestParam("loginid") String loginid
             , @RequestParam("logpass") String logpass
             , @RequestParam("flag") String select
+            , @RequestParam("ipaddr") String ipaddr
             , Model model
             , HttpServletRequest request) throws Exception{
         userformDto.setUserid(loginid);
@@ -187,8 +196,8 @@ public class AuthCrudController {
             userReturnDto = null;
             return userReturnDto;
         }else {
-
-
+            String ls_return = sendLogData(loginid, "접속", ipaddr);
+            log.info("ls_result====>" + ls_return);
             return userReturnDto;
         }
     }
@@ -262,6 +271,7 @@ public class AuthCrudController {
 
     @RequestMapping(value = "/logoutlog", method = RequestMethod.POST)
     public void Logout_Log(@RequestParam("loginid") String loginid
+                           ,@RequestParam("ipaddr") String ipaddr
             , HttpServletRequest request )throws Exception {
 
 
@@ -275,8 +285,9 @@ public class AuthCrudController {
         user.setUsername(userformDtoS.getUsername());
         user.setCustnm(userformDtoS.getCustnm());
         user.setIpaddr("");
-
         authService.TB_XLOGOUT_INSERT(user);
+        String ls_return = sendLogData(loginid, "종료", ipaddr);
+        log.info("ls_result====>" + ls_return);
 
     }
 
@@ -327,6 +338,38 @@ public class AuthCrudController {
     }
 
 
+    public String sendLogData(String arg_id, String  arg_gubun, String arg_ip) {
+        String url = "https://log.smart-factory.kr/apisvc/sendLogData.json";  // 보내려는 API URL
+        String api_key = "$5$API$V95bfCw5QF8F69zMz7c.kvFICN4Qs5JWCUhJNVfvznA";
+        String ls_result = "";
+        // 요청 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");  // Content-Type을 문자열로 설정
+        // 현재 날짜와 시간을 "2024-09-21 15:42:21.111" 형식으로 포맷팅
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        String formattedLogDt = now.format(formatter);  // 포맷된 시간
+
+        try {
+            // JSON 데이터 설정
+            Map<String, Object> requestData = new LinkedHashMap<>();
+            requestData.put("crtfcKey", api_key);
+            requestData.put("logDt",  formattedLogDt);  // 현재 시간 (로그 일시)
+            requestData.put("useSe", arg_gubun);
+            requestData.put("sysUser", arg_id);
+            requestData.put("conectIp", arg_ip);
+            requestData.put("dataUsgqty", "0");  // 데이터 사용량 (숫자)
+            // HttpEntity에 요청 데이터와 헤더를 담기
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestData, headers);
+            // POST 요청 보내기 (postForEntity 사용)
+            ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+            ls_result = response.getBody();
+
+        } catch (Exception ex) {
+            log.info("sendLogDatax Exception =====>" + ex.toString());
+        }
+        return ls_result;  // 응답 값 반환
+    }
     @RequestMapping(value = "/dbnm", method = RequestMethod.POST)
     public Object AppW018_index(@RequestParam("saupnum") String saupnum, Model model, HttpServletRequest request){
 

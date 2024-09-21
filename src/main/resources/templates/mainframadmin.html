@@ -172,7 +172,7 @@
 
 
 <script type="text/javascript" th:inline="javascript">
- 
+    var ip_addr = "";
     window.onload = function (){
  
     } //onload 끝
@@ -182,6 +182,7 @@
             if (!confirm("로그아웃하시겠습니까?") ){
              return    
             }else{
+                getIpClient()
                 insertLogOut()
                 location.href = "/" ;
             }
@@ -189,21 +190,53 @@
         }  
         
         
+    // async function getIpClient() {
+    //     try {
+    //         const response = await axios.get('https://api.ipify.org?format=json');
+    //         document.getElementById('ipaddr').value = response.data.ip;
+    //         ip_addr = response.data.ip; 
+    //         var lsUserid = window.localStorage.getItem("userid") 
+    //         var lsUserpw = window.localStorage.getItem("userpw")  
+    //         document.getElementById('loginid').value = lsUserid
+    //         document.getElementById('logpass').value = lsUserpw
+
+    //         // console.log(response.data.ip);
+    //         // console.log("----");
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
         
-    function insertLogOut(){ 
-        var ls_loginid   = document.getElementById('actuseridz').value;  
+    function insertLogOut(){   
+         var ip_addr  ;
+        //  var ls_loginid   = document.getElementById('actuseridz').value;   
+        
+        // IP 주소 가져오기
+        axios.get('https://api.ipify.org?format=json')
+        .then(function (response) {
+            // IP 주소를 HTML 요소에 표시
+            console.log(response.data.ip)
+            ip_addr = String(response.data.ip);
+        })
+        .catch(function (error) {
+            console.error('Error fetching IP address:', error); 
+        }); 
+        var ls_loginid   = localStorage.getItem("userid"); 
+
         $.ajax({
             url: '/authcrud/logoutlog',
             type:"POST",
             data: {
-                "loginid" : ls_loginid 
+                "loginid" : ls_loginid ,
+                "ipaddr" : ip_addr ,
             },
             async:false,
             success:function(){
                     console.log('success');
             }
         });
-        }
+    }
 
     function check_pw(){
         var pw = document.getElementById('actpasswdz').value;

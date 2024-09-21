@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
+
+ 
 <header th:fragment="headerFragment">
-    <div class="card-body d-flex align-items-center py-md-2 px-2 py-1">
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <div class="card-body d-flex align-items-center py-md-2 px-2 py-1">      
     <main class="main" id="top">
         <!-- Fluid Layout:  Replace class .container to .container-fluid inside the main tag, and the page will be switched to fluid layout. -->
         <div class="container-fluid"> 
@@ -50,6 +53,8 @@
                     -->
                     <body layout:fragment="content">
  
+                      <input type="hidden" id="ipaddr" name="ipaddr">
+
                       <div class="row g-3 mb-3">
                         <div class="col-xxl-8">
                           <div class="card overflow-hidden mb-3">
@@ -626,8 +631,8 @@
         var wtab01Grid;
         var wtab02Grid;
         var wtab03Grid; 
-        var wtab04Grid; 
-    
+        var wtab04Grid;  
+        getIpClient()
        //공정종합품질현황
       //  view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), { 
       //   }); 
@@ -1036,23 +1041,51 @@
     }
  
 
-
-
-
-
-
-
-        function logout(){   
-                if (!confirm("로그아웃하시겠습니까?") ){
-                    return    
-                }
-                localStorage.removeItem("perid");
-                localStorage.removeItem("pernm");
-                localStorage.removeItem("userid");
-                localStorage.removeItem("flag");
-                localStorage.removeItem("custnm") ;
-                location.href = "/" ;
-            }   
+    function getIpClient() {
+        try {
+            // IP 주소 가져오기
+            axios.get('https://api.ipify.org?format=json')
+            .then(function (response) {
+                // IP 주소를 HTML 요소에 표시
+                console.log(response.data.ip) 
+                document.getElementById('ipaddr').value = response.data.ip;
+            })
+            .catch(function (error) {
+                console.error('Error fetching IP address:', error); 
+            });  
+            // console.log(response.data.ip);
+            // console.log("----");
+        } catch (error) {
+            console.error(error);
+        }
+    }
+ 
+    function logout(){   
+      var ip_addr = "" ;
+      if (!confirm("로그아웃하시겠습니까?") ){
+          return    
+      } 
+      var ls_loginid   = localStorage.getItem("userid"); 
+          ip_addr = document.getElementById('ipaddr').value; 
+      $.ajax({
+          url: '/authcrud/logoutlog',
+          type:"POST",
+          data: {
+              "loginid" : ls_loginid ,
+              "ipaddr" : ip_addr ,
+          },
+          async:false,
+          success:function(){
+                  console.log('success');
+          }
+      });
+      localStorage.removeItem("perid");
+      localStorage.removeItem("pernm");
+      localStorage.removeItem("userid");
+      localStorage.removeItem("flag");
+      localStorage.removeItem("custnm") ;
+      location.href = "/" ;
+  }   
 
 
 
