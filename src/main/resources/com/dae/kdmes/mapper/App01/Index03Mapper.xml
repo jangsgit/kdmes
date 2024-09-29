@@ -53,21 +53,31 @@
         ]]>
     </select>
 
+    <select id="GetMaxJkey" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="String">
+        <![CDATA[
+        select   max(jkey) as jkey
+        from JCODE WITH (NOLOCK)
+        WHERE Left( isnull(jkey,'') ,4)   = #{jkey}
+        ]]>
+    </select>
+
     <select id="GetJpumList" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
         <![CDATA[
-            select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jsayang, jpum, jboxsu1,
+            select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jpumname, jsayang, jpum, jboxsu1, jgumtype,
                    j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn,
-                   E.jcifcodename as jcifcodename, j_misayong, j_sang
+                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp
             from JCODE WITH (NOLOCK)
-            LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey = E.jcifcode)
-            WHERE isnull(jpum,'') Like concat('%',#{jpum},'%') or isnull(jkey,'') Like concat('%',#{jkey},'%')
+            LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey  = E.jcifcode)
+            LEFT OUTER JOIN cif      F WITH(NOLOCK) ON (JCODE.cltcd = F.acorp1 + CAST(F.acorp2 as varchar))
+            WHERE (isnull(jpum,'') Like concat('%',#{jpum},'%') or isnull(jkey,'') Like concat('%',#{jkey},'%'))
+            and isnull(j_misayong,'0') Like concat('%',#{j_misayong},'%')
             ORDER BY jkey
         ]]>
     </select>
 
     <select id="GetJpumListTot" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
         <![CDATA[
-        select jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jboxsu1,
+        select jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jboxsu1, jgumtype,
                jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, w_b_gubn, Convert(int, jchgoga0) AS jchgoga0, jbigo,
                E.jcifcodename as jcifcodename
         from JCODE WITH (NOLOCK)
@@ -79,9 +89,9 @@
     </select>
 
     <insert id="InsertJpum" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
-        insert into JCODE ( jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode,
+        insert into JCODE ( jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jpumname, cltcd, jgumtype,
                              jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1) values
-                        (#{jkey}, #{j_dae}, #{j_jung}, #{jgugek}, #{jpum}, #{jgugek2}, #{jpumcode},
+                        (#{jkey}, #{j_dae}, #{j_jung}, #{jgugek}, #{jpum}, #{jgugek2}, #{jpumcode}, #{jpumname},#{cltcd}, #{jgumtype},
                          #{jsayang}, #{j_net}, #{jchajong}, #{j_sr}, #{j_ct}, #{j_cavity}, #{jdanwy}, #{jbigo}, #{w_b_gubn},
                          #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1})
     </insert>
@@ -104,6 +114,8 @@
         <if test="jgugek2 != null">jgugek2=#{jgugek2}</if>
         <if test="jpumcode != null ">,</if>
         <if test="jpumcode != null">jpumcode=#{jpumcode}</if>
+        <if test="jpumname != null ">,</if>
+        <if test="jpumname != null">jpumname=#{jpumname}</if>
         <if test="jsayang != null ">,</if>
         <if test="jsayang != null">jsayang=#{jsayang}</if>
         <if test="j_net != null ">,</if>
@@ -126,6 +138,10 @@
         <if test="jchgoga0 != null">jchgoga0=#{jchgoga0}</if>
         <if test="j_misayong != null ">,</if>
         <if test="j_misayong != null">j_misayong=#{j_misayong}</if>
+        <if test="cltcd != null ">,</if>
+        <if test="cltcd != null">cltcd=#{cltcd}</if>
+        <if test="jgumtype != null ">,</if>
+        <if test="jgumtype != null">jgumtype=#{jgumtype}</if>
         <if test="j_sang != null ">,</if>
         <if test="j_sang != null">j_sang=#{j_sang}</if>
         where jkey   = #{jkey}
@@ -148,6 +164,15 @@
         ]]>
     </select>
 
+    <select id="getGumtype_keyList"  parameterType="com.dae.kdmes.DTO.Popup.PopupDto" resultType="com.dae.kdmes.DTO.Popup.PopupDto">
+        <![CDATA[
+        SELECT TB_CA510.com_code   as wcode,
+               TB_CA510.com_rem1   as wcdnm
+        FROM TB_CA510 WITH(NOLOCK)
+        WHERE TB_CA510.com_cls = '006'
+          AND TB_CA510.com_code   != '00'
+        ]]>
+    </select>
 
 
 

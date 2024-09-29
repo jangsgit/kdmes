@@ -38,11 +38,7 @@
                     </div> 
                     <!------navbar vertical------>     
                     <div th:replace="layouts/layout01/navbarMemWeb :: navbar"></div>  
-                </nav>
-
-
-
-
+                </nav>  
                 <div class="content" id="index07"> 
                     <!------nav ------>
                     <!-- <div th:replace="layouts/layout01/headerNavWeb :: headerNav"></div>   -->
@@ -57,8 +53,7 @@
     <!-- contents infor_bar -->
     <div class="infor_bar type2">                                
         <div class="left">거래처등록</div>
-        <ul class="right" >
-            
+        <ul class="right" > 
             <li style="clear: right;">
             <h5 style="color:rgb(255, 166, 0); font-size: 17px; text-align: center;" ><b>★ : 필수 입력</b></h5>
             </li>
@@ -69,10 +64,11 @@
             </li>
         </ul>  
     </div>  
+
     <!-- contents body 시작--> 
     <!-- form 또는 action 으로 받아오기  -->
     <div class="section regist"> 
-        <div class="sec_con" style="width: 80%;">
+        <div class="sec_con" style="width: 30%;">
             <div class="box_wrap">
                 <div class="box_input" >
                     <div class="date_wrap">
@@ -81,22 +77,15 @@
                     </div>                              
                     <!-- //여기서부터 그래프 -->
                     <div class="table table_style2">
-                        <div class="card-body bg-light">    
-                                <div class="tab-content" >                                        
-                                <div class="tab-pane fade show active"  >  
-                                        <div class="container-fluid" id="op1" >
-                                        <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px;    margin:0 auto; "></div>
-                                        <!-- <div style="display: flex; margin: 0 auto; " id="tab01Pager"></div> -->
-                                    </div>                                               
-                                </div>                                        
-                                </div>
-                        </div>
+                        <div class="container-fluid" id="op1" >
+                            <div id="wtab01Grid_div"  style="overflow:scroll;   height:600px;    margin:0 auto; "></div>                                    
+                        </div> 
                     </div>                       
                 </div>  <!---  <div class="box_input" >  -->
             </div>    <!--  <div class="box_wrap"> -->
         </div>
         <!-- 우측 전체 테이블 -->
-        <div class="sec_con" style="width: 65%;">
+        <div class="sec_con"  style="width: 50%;">
             <div class="box_wrap" style="padding-bottom: 100px;">
                 <form action="">
                     <div class="table table_style1" >
@@ -104,7 +93,7 @@
                             <tbody>   
                                 <tr> 
                                     <th>업체구분</th>
-                                    <td  colspan="4">
+                                    <td colspan="3">
                                         <div class="input_wrap" style="max-width: 235px;">
                                             <select th:field="*{cifcodeList}" name="acorp1" id="acorp1">
                                                 <option value="">선택</option>
@@ -112,7 +101,7 @@
                                             </select>
                                         </div>
                                     </td>            
-                                    <td>
+                                    <td colspan="3">
                                         <div class="input_wrap">                                    
                                             <input type="text"   name="acorp2" id="acorp2" autocomplete="off"  disabled >  
                                         </div>
@@ -120,7 +109,7 @@
                                 </tr>    
                                 <tr>
                                     <th>거래처명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
-                                    <td colspan="3">
+                                    <td colspan="2">
                                         <div class="input_wrap">
                                             <input type="text" id="acorp" placeholder="거래처명"  >
                                             <!-- <input type="hidden" id="acorp1"  disabled> -->
@@ -130,7 +119,7 @@
                                         </div>
                                     </td>  
                                     <th>대표자</th>
-                                    <td>
+                                    <td colspan="3">
                                         <div class="input_wrap">
                                             <input type="text" id="aname" placeholder="대표자"  >
                                         </div>
@@ -153,17 +142,7 @@
                                             <input type="text"  id="asano3" autocomplete="off"  placeholder="5자리숫자"  >
                                         </div>
                                     </td>                                        
-                                    <th>구분</th> 
-                                    <td >
-                                        <select class="form-select" id="agita" aria-label="Default select example" >  <!--onchange="CahngeSlect(this.value)"-->
-                                            <option selected="">거래구분</option>
-                                            <option value="1">크레딧</option>
-                                            <option value="2">비거래</option> 
-                                            </select>                                                                  
-                                    </td>                                                     
-                                </tr>
-                                <tr> 
-                                    <th>법인번호</th>
+                                    <th>법인번호</th>   
                                     <td>
                                         <div class="input_wrap">                                               
                                             <input type="text"  id="ajumi1" autocomplete="off"   >  
@@ -174,18 +153,13 @@
                                             <input type="text"  id="ajumi2" autocomplete="off"   >  
                                         </div>
                                     </td>    
-                                    <th>주민번호</th>
-                                    <td>
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="aascode1" autocomplete="off"   >  
-                                        </div>
-                                    </td>            
-                                    <td>
-                                        <div class="input_wrap">                                    
-                                            <input type="text"  id="aascode2" autocomplete="off"   >  
-                                        </div>
-                                    </td>                                                   
-                                </tr>
+                                            <!-- <select class="form-select" id="agita" aria-label="Default select example" >   
+                                            <option selected="">거래구분</option>
+                                            <option value="1">크레딧</option>
+                                            <option value="2">비거래</option> 
+                                            </select>                                                                   -->
+                                                                                        
+                                </tr> 
                                 <tr> 
                                     <th>업태</th>
                                     <td  colspan="2">
@@ -194,7 +168,7 @@
                                         </div>
                                     </td>                                        
                                     <th>종목</th> 
-                                    <td  colspan="2">
+                                    <td  colspan="3">
                                         <div class="input_wrap">                                               
                                             <input type="text"  id="ajong" autocomplete="off"   > 
                                         </div>
@@ -202,7 +176,7 @@
                                 </tr>
                                 <tr>
                                     <th>우편번호</th>
-                                    <td>
+                                    <td >
                                         <div class="input_wrap">
                                             <input type="text" name="apost1" id="apost1"  onclick="sample4_execDaumPostcode()">  
                                         </div>
@@ -215,8 +189,10 @@
                                     </td>                                       
                                 </tr>      
                                 <tr> 
+                                    <th>&nbsp;</th>
+                                    <td>&nbsp;</td>
                                     <th>상세주소</th>
-                                    <td  colspan="5">
+                                    <td colspan="4" >
                                         <div class="input_wrap">
                                             <input type="text" name="ajuso2" id="ajuso2" placeholder="상세주소"  >                             
                                         </div>
@@ -224,13 +200,13 @@
                                 </tr>                                                                                                                                                                                      
                                 <tr>                                        
                                     <th>대표전화<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
-                                    <td   colspan="2">
+                                    <td  colspan="2" >
                                         <div class="input_wrap">
                                             <input type="text" name="atelno" id="atelno" placeholder=""  >                             
                                         </div>
                                     </td>                                    
                                     <th>전화</th>
-                                    <td  colspan="2"> 
+                                    <td  colspan="3"> 
                                         <div class="input_wrap">
                                             <input type="text" name="atelno2" id="atelno2" placeholder=""  >                             
                                         </div>
@@ -244,35 +220,12 @@
                                         </div>
                                     </td>                                   
                                     <th>이메일</th>
-                                    <td colspan="2"> 
+                                    <td colspan="3"> 
                                         <div class="input_wrap">
                                             <input type="text" name="aemail" id="aemail" placeholder=""  >                             
                                         </div>
                                     </td>                                                                                   
-                                </tr>                                                                                                                                                                                       
-                                <!-- <tr>                                        
-                                    <th>영업담당(현)</th>
-                                    <td>
-                                        <div class="input_wrap">
-                                            <input type="text" name="inname01" id="inname01" placeholder=""   > 
-                                            <input type="hidden" name="abonsadam1" id="abonsadam1" placeholder=""  >                             
-                                        </div>
-                                    </td>                                    
-                                    <th>영업담당</th>
-                                    <td>
-                                        <div class="input_wrap">
-                                            <input type="text" name="inname02" id="inname02" placeholder=""   > 
-                                            <input type="hidden" name="abonsadam2" id="abonsadam2" placeholder=""  >                             
-                                        </div>
-                                    </td>                                   
-                                    <th>영업담당</th>
-                                    <td>
-                                        <div class="input_wrap">
-                                            <input type="text" name="inname03" id="inname03" placeholder=""   > 
-                                            <input type="hidden" name="abonsadam3" id="abonsadam3" placeholder=""  >                             
-                                        </div>
-                                    </td>                                                                                   
-                                </tr>                                                                                                                                                                                      -->
+                                </tr>                                                                                                                                                                                   
                                 <tr>                                        
                                     <th>홈페이지</th>
                                     <td colspan="2"> 
@@ -281,7 +234,7 @@
                                         </div>
                                     </td>                                    
                                     <th>팩스</th>
-                                    <td colspan="2"> 
+                                    <td colspan="3"> 
                                         <div class="input_wrap">
                                             <input type="text" name="afax" id="afax" placeholder=""  >                             
                                         </div>
@@ -289,7 +242,7 @@
                                 </tr>         
                                 <tr>  
                                     <th>비고</th>
-                                    <td colspan="5">
+                                    <td colspan="6">
                                         <div class="input-group"> 
                                             <textarea class="form-control" aria-label="With textarea" name="abigo" id="abigo" ></textarea>.
                                             </div>   
@@ -396,17 +349,7 @@
                                             <option th:each="val : ${cifcodeList}" th:value="${val.cifcode}" th:text="${val.cifcodename}">
                                         </select>
                                     </div>
-                                </li>                                    
-                                <!-- <li style ="float:left; list-style-type:none; margin-left:40px;">
-                                    <div class="input-group mb-3" >
-                                        <span class="input-group-text" style="max-height:30px;" >구분</span>
-                                        <select class="form-select" id="conagita"   >   
-                                            <option value="%">거래구분</option>
-                                            <option value="크레딧">크레딧</option>
-                                            <option value="비거래">비거래</option> 
-                                            </select>   
-                                    </div>
-                                </li>                                       -->
+                                </li>   
                                 <li style ="float:left; list-style-type:none; margin-left:40px;">
                                     <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
                                         <input class="form-control" type="text"   aria-describedby="inputGroup-sizing-default"  id="conacorp" placeholder="거래처명/ 거래처코드"/>
@@ -484,23 +427,21 @@
                 allowSorting: 'MultiColumn',
                 // selectionMode: 'RowRange',
                 alternatingRowStep: 0,
-                columns: [     
-                    {
-                        binding: 'acode',
-                        width: 90,
-                        header: '코드', 
-                        align:"center",
+                columns: [   
+                    { binding: 'acorp', 
+                      header: '거래처명', 
+                      align: "left", 
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                            text: '<b>${item.acode}</b>',
+                            text: '<b>${item.acorp}</b>',
                             click: (e, ctx) => {
                                 wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03 );                    
                             }
-                        })
-                    }, 
-                    { binding: 'acorp', header: '거래처명', align: "left", width: '*' },  
+                        }),
+                      width: '*' 
+                    },  
                     { binding: 'atelno', header: '전화번호', align: "left", width: '*' },                      
-                    { binding: 'aemail', header: '메일', align: "left", width: '*' },  
-                    { binding: 'ajusotxt', header: '주소', align: "left", width: '*' },                     
+                    // { binding: 'aemail', header: '메일', align: "left", width: '*' },  
+                    // { binding: 'ajusotxt', header: '주소', align: "left", width: '*' },                     
                     
                 ], 
                 itemsSource: view_p01tab01page,  
@@ -780,9 +721,7 @@
             if (!confirm("삭제하시겠습니까?")) {
                 return ; 
             }               
-            var ls_acode = document.getElementById('acode').value;                                        
-                    console.log('ls_acode') ;
-                    console.log(ls_acode) ;
+            var ls_acode = document.getElementById('acode').value;       
 
             $.ajax({
                 url: '/app01m/index07/del',   
@@ -825,11 +764,11 @@
                 document.getElementById('ajuso1').value = "";
                 document.getElementById('ajuso2').value = "";
                 document.getElementById('abigo').value = "";
-                document.getElementById('agita').value = "";
+                // document.getElementById('agita').value = "";
                 document.getElementById('ajumi1').value = "";
                 document.getElementById('ajumi2').value = "";
-                document.getElementById('aascode1').value = "";
-                document.getElementById('aascode2').value = "";
+                // document.getElementById('aascode1').value = "";
+                // document.getElementById('aascode2').value = "";
                 document.getElementById('atelno').value  = "";
                 document.getElementById('atelno2').value = "";
                 document.getElementById('aemail').value = "";
@@ -861,11 +800,11 @@
             var ls_ajuso1 = document.getElementById('ajuso1').value ;  
             var ls_ajuso2 = document.getElementById('ajuso2').value; 
             var ls_abigo = document.getElementById('abigo').value; 
-            var ls_agita = document.getElementById('agita').value ; 
+            var ls_agita = ""; //document.getElementById('agita').value ; 
             var ls_ajumi1 = document.getElementById('ajumi1').value; 
             var ls_ajumi2 = document.getElementById('ajumi2').value ; 
-            var ls_aascode1 = document.getElementById('aascode1').value ; 
-            var ls_aascode2 = document.getElementById('aascode2').value ; 
+            var ls_aascode1 = ""; //document.getElementById('aascode1').value ; 
+            var ls_aascode2 = ""; //document.getElementById('aascode2').value ; 
             var ls_atelno = document.getElementById('atelno').value ; 
             var ls_atelno2 = document.getElementById('atelno2').value; 
             var ls_aemail = document.getElementById('aemail').value ; 
@@ -1013,7 +952,7 @@
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
                 formData.delete("key");  
-                console.log(inputdata);
+                // console.log(inputdata);
 
             formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
             
@@ -1151,8 +1090,7 @@
                         inname: wtab01Dto[i]["inname"]       
                     });
                     cnt++;
-                }    
-                // console.log(wtab01_data); 
+                }     
                 winnameGrid.columns.clear();  
                 winnameGrid.autoGenerateColumns = false; 
                 view_innamepage.sourceCollection  = wtab01_data;
@@ -1213,8 +1151,7 @@
             //검색  
             document.getElementById("searchtxt").addEventListener("keyup", (e)=>{ 
                 if(e.keyCode === 13){ 
-                    var searchText = document.getElementById('searchtxt').value;
-                console.log(searchText);   
+                    var searchText = document.getElementById('searchtxt').value; 
                     searchList_rtn(searchText); 
                 }
             });         
@@ -1282,60 +1219,52 @@
                     });
                     cnt++;
                 }   
-
-                console.log(wtab01_data);
-
+ 
                 wtab01Grid.columns.clear();  
                 wtab01Grid.autoGenerateColumns = false; 
                 view_p01tab01page.sourceCollection  = wtab01_data;
 
+                // var cols = new wijmo.grid.Column(); 
+                // cols.binding = 'acode';
+                // cols.header = '코드';
+                // cols.align = "center";
+                // cols.width = 80;
+                // wtab01Grid.columns.push(cols);  
+
                 var cols = new wijmo.grid.Column(); 
-                cols.binding = 'acode';
-                cols.header = '코드';
-                cols.align = "center";
-                cols.width = 80;
+                cols.binding = 'acorp';
+                cols.header = '거래처명'; 
+                cols.align = "left"; 
+                cols.width = 180;
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    text: '<b>${item.acode}</b>',
+                    text: '<b>${item.acorp}</b>',
                     click: (e, ctx) => {
                         wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03 );                    
                         
                     }
                 });
-                wtab01Grid.columns.push(cols);  
-
-                cols = new wijmo.grid.Column(); 
-                cols.binding = 'acorp';
-                cols.header = '거래처명'; 
-                cols.align = "left"; 
-                cols.width = 200;
                 wtab01Grid.columns.push(cols); 
 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'atelno';
                 cols.header = '전화번호';
-                cols.align = "center";
-                cols.width = '*'; 
-                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    text: '<b>${item.atelno}</b>',
-                    click: (e, ctx) => {
-                        wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03 );                    
-                    }
-                });
+                cols.align = "left";
+                cols.width =  200 ;  
                 wtab01Grid.columns.push(cols);  
 
-                cols = new wijmo.grid.Column(); 
-                cols.binding = 'aemail';
-                cols.header = '메일';
-                cols.align = "left";
-                cols.width = '*';                  
-                wtab01Grid.columns.push(cols);  
+                // cols = new wijmo.grid.Column(); 
+                // cols.binding = 'aemail';
+                // cols.header = '메일';
+                // cols.align = "left";
+                // cols.width = '*';                  
+                // wtab01Grid.columns.push(cols);  
 
-                cols = new wijmo.grid.Column(); 
-                cols.binding = 'ajusotxt';
-                cols.header = '주소';
-                cols.align = "left";
-                cols.width = '*';           
-                wtab01Grid.columns.push(cols);
+                // cols = new wijmo.grid.Column(); 
+                // cols.binding = 'ajusotxt';
+                // cols.header = '주소';
+                // cols.align = "left";
+                // cols.width = '*';           
+                // wtab01Grid.columns.push(cols);
         
             }        
 
@@ -1359,11 +1288,11 @@
                 document.getElementById('ajuso1').value = arg13; 
                 document.getElementById('ajuso2').value = arg14; 
                 document.getElementById('abigo').value = arg15;
-                document.getElementById('agita').value = arg16;
+                // document.getElementById('agita').value = arg16;
                 document.getElementById('ajumi1').value = arg17;
                 document.getElementById('ajumi2').value = arg18;
-                document.getElementById('aascode1').value = arg19; 
-                document.getElementById('aascode2').value = arg20;
+                // document.getElementById('aascode1').value = arg19; 
+                // document.getElementById('aascode2').value = arg20;
                 document.getElementById('atelno').value = arg21;
                 document.getElementById('atelno2').value = arg22;
                 document.getElementById('aemail').value = arg23;
@@ -1455,9 +1384,7 @@
                     });
                     cnt++;
                 }   
-
-                // console.log(wtab02_data);
-
+ 
                 wtab02Grid.columns.clear();  
                 wtab02Grid.autoGenerateColumns = false; 
                 view_p01tab02page.sourceCollection  = wtab02_data;

@@ -169,7 +169,7 @@
                                     { binding: 'indate', header: '일자', align: "center", width: 120 },
                                     { binding: 'qty', header: '수량', align: "right", width: 150 },
                                     { binding: 'janqty', header: '잔량', align: "right", width: 120 },   
-                                    { binding: 'baxnum', header: '작업수량', align: "right", width: 120 },   
+                                    { binding: 'baxnum', header: '적입수량', align: "right", width: 120 },   
                                 ], 
                                 itemsSource: new wijmo.collections.CollectionView(getData_tab01(), {
                                     groupDescriptions: [
@@ -422,7 +422,7 @@
                            
                            cols = new wijmo.grid.Column(); 
                            cols.binding = 'boxnum';
-                           cols.header = '작업수량';
+                           cols.header = '적입수량';
                            cols.align = "right";
                            cols.width = 120;  
                            wtab01Grid.columns.push(cols);   

@@ -536,16 +536,16 @@ function insaSearchList_rtn(arg){
                    document.getElementById("wrmcnm").focus(); 
                    return ;               
                }
-               if(ls_wperid == null || ls_wperid.length == 0 || ls_wperid == ""){ 
-                   alert("담당자를 등록하세요") 
-                   document.getElementById("wperid").focus(); 
-                   return ;               
-               }
-               if(ls_wpernm == null || ls_wpernm.length == 0 || ls_wpernm == ""){ 
-                   alert("담당자명을 등록하세요") 
-                   document.getElementById("ls_wpernm").focus(); 
-                   return ;               
-               }        
+            //    if(ls_wperid == null || ls_wperid.length == 0 || ls_wperid == ""){ 
+            //        alert("담당자를 등록하세요") 
+            //        document.getElementById("wperid").focus(); 
+            //        return ;               
+            //    }
+            //    if(ls_wpernm == null || ls_wpernm.length == 0 || ls_wpernm == ""){ 
+            //        alert("담당자명을 등록하세요") 
+            //        document.getElementById("ls_wpernm").focus(); 
+            //        return ;               
+            //    }        
 
                $.ajax({
                    url: '/app01m/fplandetailsave',  

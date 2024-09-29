@@ -62,6 +62,8 @@ public class App02Controller {
     List<PopupDto> popupListDto = new ArrayList<>();
 
     List<PopupDto> popupListDto1 = new ArrayList<>();
+
+    List<PopupDto> popupListDto2 = new ArrayList<>();
     List<Index10Dto> index10ListDto = new ArrayList<>();
 
     List<Index11Dto> index11ListDto = new ArrayList<>();
@@ -71,7 +73,7 @@ public class App02Controller {
     protected Log log =  LogFactory.getLog(this.getClass());
     //공통코드등록
     @GetMapping(value="/index10")
-    public String App02_index(Model model, HttpServletRequest request) throws Exception{
+    public String App10_index(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("생산계획등록");
         CommDto.setMenuUrl("생산계획>생산계획등록");
         CommDto.setMenuCode("index10");
@@ -80,22 +82,25 @@ public class App02Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
+            index10Dto.setWrmc("%");
             index10ListDto = service10.GetFplanList(index10Dto);
-            popupListDto = service10.getCls_flagList(popupDto);
-            popupListDto = service03.getj1_keyList(popupDto);
-            popupListDto1 = service03.getj2_keyList(popupDto);
-            wperidDto.setWflag("00090");  //첫번째공정 nb
-            wperidDto.setWpernm("%");
-            model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
-
-            model.addAttribute("j1_keyList",popupListDto);
-            model.addAttribute("j2_keyList",popupListDto1);
-
-            model.addAttribute("cls_flagList",popupListDto);
+            wrmcDto.setWflag("00010");
+            wrmcDto.setMachname("%");
             model.addAttribute("fplanList",index10ListDto);
+            model.addAttribute("wrmcist", appPopupService.GetWrmcList01(wrmcDto));
+
+//            wperidDto.setWflag("00090");  //첫번째공정 nb
+//            wperidDto.setWpernm("%");
+//            popupListDto = service10.getCls_flagList(popupDto);
+//            popupListDto = service03.getj1_keyList(popupDto);
+//            popupListDto1 = service03.getj2_keyList(popupDto);
+//            model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
+//            model.addAttribute("j1_keyList",popupListDto);
+//            model.addAttribute("j2_keyList",popupListDto1);
+//            model.addAttribute("cls_flagList",popupListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
-            log.info("App02_index Exception =====>" + ex.toString());
+            log.info("App10_index Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }
 

@@ -1,0 +1,15 @@
+package com.dae.kdmes.Mapper.Cms;
+
+import com.dae.kdmes.DTO.App01.Index01Dto;
+import com.dae.kdmes.DTO.Cms.CmsIndex01Dto;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+@Mapper
+public interface CmsIndex01Mapper {
+
+    public List<CmsIndex01Dto> getMachineList(CmsIndex01Dto parm) ;
+}

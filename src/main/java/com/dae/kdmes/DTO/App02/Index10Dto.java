@@ -17,6 +17,7 @@ public class Index10Dto {
     private String ecltnm;
     private String wdndv;
     private String wrmc;
+    private String wrmcnm;
     private String wono;
     private String lotno;
     private String lotnomax;
@@ -131,5 +132,8 @@ public class Index10Dto {
     private Integer decision1;
     private Integer decision3;
     private Integer decision4;
+
+
+
 
 }

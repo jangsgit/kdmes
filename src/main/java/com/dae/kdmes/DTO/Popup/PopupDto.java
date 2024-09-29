@@ -18,4 +18,6 @@ public class PopupDto {
     private String j2_name;
     private String cls_key;
     private String cls_name;
+    private String wcode;
+    private String wcdnm;
 }

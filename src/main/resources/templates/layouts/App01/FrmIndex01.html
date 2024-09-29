@@ -85,10 +85,10 @@
                         <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn()">저장
                         </button>
                     </div>  
-                    <div class="col-auto">  
+                    <!-- <div class="col-auto">  
                         <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn()">삭제
                         </button>
-                    </div>  
+                    </div>   -->
                     <div class="container-fluid"> 
                         <div id="wtab01Grid_div" style="overflow:scroll; width:500px; height: 650px; "></div>
                         <!-- <div id="tab01Pager"></div> -->
@@ -106,65 +106,70 @@
                     <table class="table table-borderless"   >
                         <tbody>
                         <tr> 
-                            <td class="align-top" style="width: 20%;"> 
+                            <td class="align-top"  > 
                                 <div class="container-fluid">   
                                     <div id="wtab02Grid_div"  style="overflow:scroll;   height:600px;  width:300px; margin:0 auto; "></div>  
                                 </div>  
                             </td>
                             <td class="align-top">
                                 <div class="row gx-3" style="  margin: 10px 10px 10px;">
-                                    <div class="col-2 col-sm-2">
+                                    <div class="col-auto">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류코드</span> 
                                             <input class="form-control form-control-sm" id="com_cls02" type="text"    autocomplete="off"  placeholder="3자리" disabled> 
                                         </div>
                                     </div>
-                                    <div class="col-2 col-sm-2">
+                                    <div class="col-auto">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
                                             <input class="form-control form-control-sm" id="com_cnam02" type="text"    autocomplete="off" disabled> 
                                         </div>
                                     </div>
                                     </div>
                                     <div class="row gx-3" style="  margin: 10px 10px 10px;">
-                                    <div class="col-2 col-sm-2">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">코드</span> 
+                                    <div class="col-auto">
+                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="com_code_txt">코드</span> 
                                             <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off"> 
                                         </div>
                                     </div>
-                                    <div class="col-2 col-sm-2">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">코드상세</span> 
+                                    <div class="col-auto">
+                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text"  id="com_rem1_txt">코드상세</span> 
                                             <input class="form-control form-control-sm" id="com_rem1" type="text"    autocomplete="off"> 
                                         </div>
                                     </div>
-                                    <!-- <div class="col-2 col-sm-2">
+                                     <!-- <div class="col-2 col-sm-2">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정구분</span> 
                                             <input class="form-control form-control-sm" id="com_rem2" type="text"    autocomplete="off"> 
                                         </div>
-                                    </div> -->
-                                    <div class="col-2 col-sm-2">
+                                     </div>  
+                                     <div class="col-2 col-sm-2">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정구분</span> 
                                             <select th:field="*{com_rem2_keyList}" name="com_rem2" id="com_rem2" class="form-control form-control-sm">
                                                 <option value="">선택</option>
                                                 <option th:each="val : ${com_rem2_keyList}" th:value="${val.com_rem2_key}" th:text="${val.com_rem2_name}">
                                             </select>   
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="col-2 col-sm-2">
-                                    <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">항목3</span> 
-                                        <input class="form-control form-control-sm" id="com_work" type="text"    autocomplete="off"> 
-                                    </div>
-                                </div>
-                                <div class="col-auto">  
-                                    <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
-                                    </button>
-                                </div>  
-                                <div class="col-auto">  
-                                    <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn()">저장
-                                    </button>
-                                </div>  
-                                <div class="col-auto">  
-                                    <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn()">삭제
-                                    </button>
-                                </div>  
+                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">항목3</span> 
+                                            <input class="form-control form-control-sm" id="com_work" type="text"    autocomplete="off"> 
+                                        </div>  
+                                    </div> -->
+
+                                    <div class="col-auto">  
+                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
+                                        </button>
+                                    </div>  
+                                    <div class="col-auto">  
+                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="save_btn()">저장
+                                        </button>
+                                    </div>  
+                                    <div class="col-auto">  
+                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn()">삭제
+                                        </button>
+                                    </div>  
+                                    <div class="col-auto">  
+                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="clear_rtn('B')">신규
+                                        </button>
+                                    </div>  
                                 </div>                                                         
                                 <div class="container-fluid"  >                                                         
                                     <div id="wtab03Grid_div"  style="overflow:scroll;   height:485px;   margin:0 auto; "></div> 
@@ -346,9 +351,7 @@
                columns: [     
                    { binding: 'com_code', header: '코드', align: "center", width: '1*' }, 
                    //{ binding: 'com_cnam', header: '코드명', align: "center", width: '1*' }, 
-                   { binding: 'com_rem1', header: '코드상세', align: "center", width: '1*' }, 
-                   { binding: 'com_rem2', header: '항목2', align: "center", width: '1*' }, 
-                   { binding: 'com_work', header: '항목3', align: "center", width: '1*' },
+                   { binding: 'com_rem1', header: '코드상세', align: "center", width: '1*' },  
                ], 
                itemsSource: view_p01tab03page
            });  
@@ -408,8 +411,33 @@
            var ls_tab = document.getElementById('tabvalue').value;
            
            document.getElementById('com_cls02').value = arg1;
-           document.getElementById('com_cnam02').value = arg2;
-            console.log(arg2);
+           document.getElementById('com_cnam02').value = arg2; 
+            
+           switch (arg1){
+            case "002":
+                //사원코드 
+                document.getElementById('com_code_txt').innerHTML = "사원코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "사원명"               
+               break;
+            case "004":
+                //가동중단사유                
+                document.getElementById('com_code_txt').innerHTML = "중단코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "중단사유"                               
+               break;
+            case "005":
+                //불량코드                
+                document.getElementById('com_code_txt').innerHTML = "불량코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "불량명칭"                               
+               break; 
+            case "006":
+                //금형코드                
+                document.getElementById('com_code_txt').innerHTML = "금형코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "금형명"               
+               break;                                            
+            default:
+                break;
+           }
+
            // console.log(ls_todate)
            $.ajax({
                url: '/app01m/comcodedetaillist',  
@@ -439,8 +467,10 @@
            var ls_codenm = document.getElementById('com_cnam').value;
            var ls_codenm02 = document.getElementById('com_cnam02').value;
            var ls_rem1 = document.getElementById('com_rem1').value;
-           var ls_rem2 = document.getElementById('com_rem2').value;
-           var ls_work = document.getElementById('com_work').value;
+           var ls_rem2 = "";
+           var ls_work = "";
+        //    var ls_rem2 = document.getElementById('com_rem2').value;
+        //    var ls_work = document.getElementById('com_work').value;
            var wtab02Grid = document.getElementById('wtab02Grid_div').value;
 
        
@@ -565,8 +595,8 @@
            var ls_codenm02 = document.getElementById('com_cnam02').value;
            var ls_codes = document.getElementById('com_code').value;
            var ls_rem1 = document.getElementById('com_rem1').value;
-           var ls_rem2 = document.getElementById('com_rem2').value;
-           var ls_work = document.getElementById('com_work').value;
+        //    var ls_rem2 = document.getElementById('com_rem2').value;
+        //    var ls_work = document.getElementById('com_work').value;
 
        
            if (!confirm("삭제하시겠습니까?")) {
@@ -668,21 +698,21 @@
                    document.getElementById('com_cnam').value = "";
                    break;
                case 'B': 
-                   document.getElementById('com_cls').value = "";
-                   document.getElementById('com_cnam').value = "";
+                //    document.getElementById('com_cls').value = "";
+                //    document.getElementById('com_cnam').value = "";
                    document.getElementById('com_code').value = "";
                    document.getElementById('com_rem1').value = "";
-                   document.getElementById('com_rem2').value = "";
-                   document.getElementById('com_work').value = "";
+                //    document.getElementById('com_rem2').value = "";
+                //    document.getElementById('com_work').value = "";
                    break;
                case 'C':
                   
                    break;                
                default:    
                    break;                
-           } 
-
+           }  
        }
+ 
        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                                     
        // tab01 검색   
@@ -893,31 +923,32 @@
            });  
            wtab03Grid.columns.push(cols);
            
-           cols = new wijmo.grid.Column(); 
-           cols.binding = 'com_rem2';
-           cols.header = '항목2';
-           cols.align = "center";
-           cols.width = 300;  
-           wtab03Grid.columns.push(cols);  
+        //    cols = new wijmo.grid.Column(); 
+        //    cols.binding = 'com_rem2';
+        //    cols.header = '항목2';
+        //    cols.align = "center";
+        //    cols.width = 300;  
+        //    wtab03Grid.columns.push(cols);  
 
-           cols = new wijmo.grid.Column(); 
-           cols.binding = 'com_work';
-           cols.header = '항목3';
-           cols.align = "center";
-           cols.width = 300;  
-           wtab03Grid.columns.push(cols);  
+        //    cols = new wijmo.grid.Column(); 
+        //    cols.binding = 'com_work';
+        //    cols.header = '항목3';
+        //    cols.align = "center";
+        //    cols.width = 300;  
+        //    wtab03Grid.columns.push(cols);  
        } 
 
-       function wactnmChk(arg1, arg2){
+       function wactnmChk(arg1, arg2){            
            document.getElementById('com_cls').value = arg1; 
-           document.getElementById('com_cnam').value = arg2;    
+           document.getElementById('com_cnam').value = arg2;   
+           
        } 
 
        function wactnmChk1(arg1,arg2,arg3,arg4){   
            document.getElementById('com_code').value = arg1; 
            document.getElementById('com_rem1').value = arg2;
-           document.getElementById('com_rem2').value = arg3;
-           document.getElementById('com_work').value = arg4;      
+        //    document.getElementById('com_rem2').value = arg3;
+        //    document.getElementById('com_work').value = arg4;      
        }
 
        function searchGrid(ls_tab){   

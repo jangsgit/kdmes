@@ -16,13 +16,15 @@
                 TB.workdv, TB.ecltnm, TB.qcdate, TB.plan_no,
                 TB.pcode, E.jpum, E.jgugek, TB.dem_flag, E.jchajong, E.jgugek2, E.jsayang, E.j_sr, E.jpumcode, E.jdanwy,
                 TB.prod_qty, TB.cls_flag, TB.istore, TB.ostore, TB.rwflag, TB.remark, isnull(TB.inmonth,'') as inmonth, isnull(TB.inweeks,'') as inweeks,
-                Left(TB.orddate,4) + '-' + substring(TB.orddate, 5,2)+ '-' + substring(TB.orddate, 7,2) as orddate
+                Left(TB.orddate,4) + '-' + substring(TB.orddate, 5,2)+ '-' + substring(TB.orddate, 7,2) as orddate,
+                TB.wrmc, F.wrmcnm as wrmcnm
              from TB_FPLAN TB
                 INNER JOIN JCODE E WITH(NOLOCK) ON (TB.PCODE = E.jkey)
-              WHERE isnull(TB.lotno,'') Like concat('%',#{lotno},'%')
+                LEFT join TB_FPLAN_WRMC F WITH (NOLOCK) ON TB.wrmc = F.wrmc and F.wflag = '00010'
+              WHERE isnull(TB.wrmc,'') Like concat('%',#{wrmc},'%')
               and isnull(TB.inmonth,'') Like concat('%',#{inmonth},'%')
               and isnull(TB.inweeks,'') Like concat('%',#{inweeks},'%')
-            ORDER BY TB.indate desc, TB.plan_no
+            ORDER BY TB.wrmc, TB.indate desc, TB.plan_no
         ]]>
     </select>
 
@@ -43,22 +45,22 @@
         insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd,  perid, ecltnm , line, wono ,
         workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,
         wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv ,wodv , opcod
-        , prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks ) values
+        , prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks, wrmc ) values
         ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{perid}, #{ecltnm}, '00', #{wono},
         #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark} ,
         '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , #{pcode} ,
-        '0' ,'' , '00010', #{orddate} , #{qcdate} , #{inmonth} , #{inweeks})
+        '0' ,'' , '00010', #{orddate} , #{qcdate} , #{inmonth} , #{inweeks}, #{wrmc})
     </insert>
 
     <insert id="InsertFplanCopy" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
         insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd,  perid, ecltnm , line, wono ,
                 workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,
                 wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv ,wodv , opcod,
-                prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks )
+                prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks , wrmc )
         SELECT custcd, spjangcd, #{plan_new}, #{indate}, prod_sdate, prod_edate, '', cltcd,  perid, ecltnm , '00', #{wono},
                workdv, pcode, dem_flag, prod_qty, '1', istore, ostore, rwflag, remark ,
                '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , opcod ,
-               '0' ,'' , '00010', orddate , qcdate , #{inmonthcp} , #{inweekscp}
+               '0' ,'' , '00010', orddate , qcdate , #{inmonthcp} , #{inweekscp}, wrmc
         FROM TB_FPLAN WITH (NOLOCK)
         WHERE plan_no = #{plan_no}
     </insert>
@@ -105,6 +107,8 @@
         <if test="inmonth != null">inmonth=#{inmonth}</if>
         <if test="inweeks != null ">,</if>
         <if test="inweeks != null">inweeks=#{inweeks}</if>
+        <if test="wrmc != null ">,</if>
+        <if test="wrmc != null">wrmc=#{wrmc}</if>
         where plan_no=#{plan_no}
     </update>
 
@@ -519,6 +523,7 @@
                ahand , aemail, afax, isnull(ajuso1,'') + ' ' + isnull(ajuso2,'') as ajusotxt
         from cif WITH (NOLOCK)
         WHERE isnull(acorp,'') Like concat('%',#{acorp},'%') and LEN(isnull(acorp,'')) > 0
+        and acorp1 <> '00'  and isnull(delflag,'0')  = '0'
         ORDER BY acorp
         ]]>
     </select>

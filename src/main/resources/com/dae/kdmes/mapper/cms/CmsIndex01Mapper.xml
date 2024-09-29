@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.Cms.CmsIndex01Mapper">
+
+
+    <select id="getMachineList"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto">
+        <![CDATA[
+            select IDX, Machine_Name from machine_list   order by IDX
+        ]]>
+    </select>
+
+</mapper>

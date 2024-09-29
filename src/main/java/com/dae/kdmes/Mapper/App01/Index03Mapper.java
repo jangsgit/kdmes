@@ -26,11 +26,14 @@ public interface Index03Mapper {
 
     public List<PopupDto> getj2_keyList(PopupDto parm) ;
 
+    public List<PopupDto> getGumtype_keyList(PopupDto parm) ;
+
 
     public Boolean InsertJpum(Index03Dto  parm) ;
     public Boolean UpdateJpum(Index03Dto  parm) ;
     public Boolean DeleteJpum(Index03Dto  parm) ;
     public String GetJpumCheck(Index03Dto  parm) ;
+    public String GetMaxJkey(Index03Dto  parm) ;
 
 
 

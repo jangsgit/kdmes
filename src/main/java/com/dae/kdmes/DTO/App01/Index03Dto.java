@@ -13,6 +13,7 @@ public class Index03Dto {
     private String jpum;
     private String jgugek2;
     private String jpumcode;
+    private String jpumname;
     private String jsayang;
     private String j_net;
     private String jchajong;
@@ -44,10 +45,7 @@ public class Index03Dto {
     private String jsize;
     private String jepm;
     private String jepm_size;
-
-
-
-
-
+    private String cltcd;
+    private String jgumtype;
 
 }

@@ -406,7 +406,7 @@ public class App02CrudController {
             if(searchtxt == null || searchtxt.equals("")){
                 searchtxt = "%";
             }
-            index10Dto.setLotno(searchtxt);
+            index10Dto.setWrmc(searchtxt);
             index10Dto.setInmonth(inmonthtxt);
             index10Dto.setInweeks(inweekstxt);
             index10ListDto = service10.GetFplanList(index10Dto);
@@ -486,6 +486,9 @@ public class App02CrudController {
                     break;
                 case "inweeks":
                     _index10Dto.setInweeks(values.toString());
+                    break;
+                case "wrmc":
+                    _index10Dto.setWrmc(values.toString());
                     break;
                 default:
                     break;

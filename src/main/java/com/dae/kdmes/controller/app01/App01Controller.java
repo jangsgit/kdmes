@@ -51,6 +51,8 @@ public class App01Controller {
     List<PopupDto> popupListDto = new ArrayList<>();
 
     List<PopupDto> popupListDto1 = new ArrayList<>();
+
+    List<PopupDto> popupListDto2 = new ArrayList<>();
     List<Index01Dto> index01ListDto = new ArrayList<>();
 
     List<Index01Dto> index01ListDto1 = new ArrayList<>();
@@ -151,16 +153,20 @@ public class App01Controller {
 
         try {
             index03Dto.setJpum("%");
+            index03Dto.setJ_misayong("%");
             index03List = service03.GetJpumList(index03Dto);
             popupListDto = service03.getj1_keyList(popupDto);
             popupListDto1 = service03.getj2_keyList(popupDto);
+            popupListDto2 = service03.getGumtype_keyList(popupDto);
+
 
             model.addAttribute("j1_keyList",popupListDto);
             model.addAttribute("j2_keyList",popupListDto1);
+            model.addAttribute("j3_keyList",popupListDto2);
             model.addAttribute("index03List",index03List);
         } catch (Exception ex) {
 //                dispatchException = ex;
-            log.info("App03001Tab01Form Exception ================================================================");
+            log.info("App03001Tab01Form Exception ===== ======");
             log.info("Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }

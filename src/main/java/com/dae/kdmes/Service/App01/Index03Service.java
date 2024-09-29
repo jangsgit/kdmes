@@ -52,6 +52,9 @@ public class Index03Service {
     public List<PopupDto> getj2_keyList(PopupDto parm){
         return  appMapper.getj2_keyList(parm);
     }
+    public List<PopupDto> getGumtype_keyList(PopupDto parm){
+        return  appMapper.getGumtype_keyList(parm);
+    }
 
 
 
@@ -60,6 +63,7 @@ public class Index03Service {
     public Boolean UpdateJpum(Index03Dto parm){  return  appMapper.UpdateJpum(parm);  }
     public Boolean DeleteJpum(Index03Dto parm){  return  appMapper.DeleteJpum(parm);  }
     public String GetJpumCheck(Index03Dto parm){  return  appMapper.GetJpumCheck(parm);  }
+    public String GetMaxJkey(Index03Dto parm){  return  appMapper.GetMaxJkey(parm);  }
 
 
 

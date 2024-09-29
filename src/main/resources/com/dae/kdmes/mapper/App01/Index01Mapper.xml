@@ -56,13 +56,13 @@
     <update id="UpdateComCodeDetail" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
         <![CDATA[
         UPDATE  TB_CA510 SET com_cnam = #{com_cnam} , com_rem1 = #{com_rem1} , com_rem2 = #{com_rem2} , com_work = #{com_work}
-        where com_cls  = #{com_cls} and com_cnam = #{com_cnam} and com_code = #{com_code} and com_code <> '00'
+        where com_cls  = #{com_cls}   and com_code = #{com_code} and com_code <> '00'
         ]]>
     </update>
 
     <update id="DeleteComCodeDetail" parameterType="com.dae.kdmes.DTO.App01.Index01Dto">
         <![CDATA[
-        DELETE  TB_CA510   where com_cls  = #{com_cls} and com_cnam = #{com_cnam} and com_code = #{com_code} and com_code <> ('00')
+        DELETE  TB_CA510   where com_cls  = #{com_cls}   and com_code = #{com_code} and com_code <> ('00')
         ]]>
     </update>
 
