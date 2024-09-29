@@ -300,10 +300,10 @@
            allowSorting: 'MultiColumn',
            alternatingRowStep: 0,
            columns: [       
-               { binding: 'wrmc', header: '설비코드', align: "center", width: '1*' }, 
-               { binding: 'wrmcnm', header: '설비명', align: "center", width: '1*' }, 
-               { binding: 'wperid', header: '담당자', align: "center", width: '1*' }, 
-               { binding: 'wpernm', header: '담당자명', align: "center", width: '1*' }, 
+               { binding: 'wrmc', header: '설비코드', align: "center", width: 80 }, 
+               { binding: 'wrmcnm', header: '설비명', align: "center", width: 150 }, 
+               { binding: 'wperid', header: '담당자', align: "center", width: 100 }, 
+               { binding: 'wpernm', header: '담당자명', align: "center", width: 100 }, 
            ], 
                
            itemsSource: view_p01tab02page
@@ -353,8 +353,8 @@
        selectionMode: 'RowRange',
        alternatingRowStep: 0,
        columns: [     
-           { binding: 'insano', header: '담당자', align: "center", width: '1*' },
-           { binding: 'inname', header: '담당자명', align: "center", width: '1*' },
+           { binding: 'insano', header: '담당자', align: "center", width: 80 },
+           { binding: 'inname', header: '담당자명', align: "center", width: 150 },
        ], 
        itemsSource: view_innamepage
    });  
@@ -447,7 +447,7 @@ function insaSearchList_rtn(arg){
        cols.binding = 'insano';
        cols.header = '코드';
        cols.align = "center";
-       cols.width = '*';  
+       cols.width = 80;  
        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
            text: '<b>${item.insano}</b>',
            click: (e, ctx) => {
@@ -460,7 +460,7 @@ function insaSearchList_rtn(arg){
        cols.binding = 'inname';
        cols.header = '담당자명';
        cols.align = "center";
-       cols.width = '*';  
+       cols.width = 150;  
        winnameGrid.columns.push(cols);  
    }
    
@@ -832,14 +832,14 @@ function insaSearchList_rtn(arg){
        cols.binding = 'wrmc';
        cols.header = '설비코드';
        cols.align = "center";
-       cols.width = 300; 
+       cols.width = 100; 
        wtab02Grid.columns.push(cols);   
 
        cols = new wijmo.grid.Column(); 
        cols.binding = 'wrmcnm';
        cols.header = '설비명';
        cols.align = "center";
-       cols.width = 300;  
+       cols.width = 150;  
        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
            text: '<b>${item.wrmcnm}</b>',
            click: (e, ctx) => {
@@ -852,14 +852,14 @@ function insaSearchList_rtn(arg){
        cols.binding = 'wperid';
        cols.header = '담당자';
        cols.align = "center";
-       cols.width = 300;  
+       cols.width = 80;  
        wtab02Grid.columns.push(cols);  
 
        cols = new wijmo.grid.Column(); 
        cols.binding = 'com_rem1';
        cols.header = '담당자명';
        cols.align = "center";
-       cols.width = 300;  
+       cols.width = 150;  
        wtab02Grid.columns.push(cols);
    }
 

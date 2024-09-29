@@ -851,9 +851,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     border: 4px solid #f4f4f4;
 }
 .section.regist .sec_con .box_wrap{
-    height: 797px;
+    height: 740px;
 
-}
+} 
 .section.regist .sec_con:nth-child(1) .box_wrap .date_wrap{
     margin-bottom: 20px;
     display: flex;

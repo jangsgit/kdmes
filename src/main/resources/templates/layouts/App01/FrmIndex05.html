@@ -51,7 +51,7 @@
     <!-- contents header -->
     <th:block th:include="layouts/APPHeader/appheadTop"/>
     <!-- contents infor_bar -->
-    <div class="infor_bar type2">                                  
+    <!-- <div class="infor_bar type2">                                  
         <div class="left">제품등록</div>
         <ul class="right" >  
             <li>
@@ -63,7 +63,7 @@
                 </button>
             </li>
         </ul>               
-    </div>   
+    </div>    -->
 
     <!-- contents body 시작--> 
     <!-- form 또는 action 으로 받아오기  -->
@@ -78,7 +78,7 @@
                     <!-- //여기서부터 그래프 -->
                     <div class="table table_style2">
                         <div class="container-fluid" id="op1" >
-                            <div id="wtab01Grid_div"  style="overflow:scroll;   height:700px;    margin:0 auto; "></div>
+                            <div id="wtab01Grid_div"  style="overflow:scroll;   height:650px;    margin:0 auto; "></div>
                         </div>
                     </div>       
                                                 
@@ -102,14 +102,18 @@
                                             </select>                                              
                                         </div>                                            
                                     </td>
-                                    <td colspan="3">
+                                    <td>
                                         <div class="input_wrap" style="max-width: 225px;"> 
                                             <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
                                                 <option value="">선택</option>
                                                 <option th:each="val : ${j2_keyList}" th:value="${val.j2_key}" th:text="${val.j2_name}">
                                             </select>                                              
                                         </div>                                                                                                           
-                                    </td>       
+                                    </td>    
+                                    <td colspan="2">
+                                        <button class="btn btn-primary me-1 mb-1"   type="button" id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal"> <span style="color: #f6f9fa;">제품현황</span></button>                                                                                                                      
+                                    </td>   
+                                    
                                 </tr>   
                                 <tr> 
                                     <th>제품코드</th>
