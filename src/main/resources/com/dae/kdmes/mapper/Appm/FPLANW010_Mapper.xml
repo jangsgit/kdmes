@@ -66,8 +66,11 @@
                A.wseq  wseq,
                CAST(DBO.DF_NM_RTN('TB_FPLAN_WORK_WOTQT', A.plan_no, '00010', '', '') as DECIMAL(18,3)) winqt,
                A.tordqty,
-               C.w_b_gubn
-        FROM TB_FPLAN A WITH(NOLOCK),
+               C.w_b_gubn,
+               F.wrmc as wrmc,
+               F.wrmcnm as wrmcnm
+        FROM TB_FPLAN A WITH(NOLOCK)
+                LEFT join TB_FPLAN_WRMC F WITH (NOLOCK) ON A.wrmc = F.wrmc and F.wflag = '00010',
             JCODE C WITH(NOLOCK),
             CIF B WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
@@ -76,7 +79,8 @@
           AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
            AND (ISNULL(A.inmonth,'')   lIKE  concat('%',#{inmonth},'%') )
            AND (ISNULL(A.inweeks,'')   lIKE  concat('%',#{inweeks},'%') )
-          ORDER BY A.plan_no desc, A.wono
+           AND (ISNULL(A.wrmc,'')   lIKE  concat('%',#{wrmc},'%') )
+          ORDER BY A.wrmc, A.prod_sdate , A.plan_no desc, A.wono
         ]]>
     </select>
     <!--
@@ -140,10 +144,10 @@
                D.partcode  as partcode,
                D.partnm  as partnm,
                D.winps as winps,
-               D.wrps as wrps,
                D.wrmc as wrmc,
                E.wrmcnm as wrmcnm,
                C.w_b_gubn,
+               D.wrps as wrps,
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
         FROM TB_FPLAN A WITH(NOLOCK)
              LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00010'
@@ -1580,6 +1584,11 @@
         FROM TB_FPLAN_WBAD  A WITH(NOLOCK)
         where   A.plan_no=#{plan_no} and lotno=#{lotno} and A.wflag=#{wflag} and A.wcode=#{wcode}
     </select>
+    <select id="FPLAN_WBAD_SELECT_SUM" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="Integer">
+        SELECT sum(wbqty) as wbqty
+        FROM TB_FPLAN_WBAD  A WITH(NOLOCK)
+        where   A.plan_no=#{plan_no} and lotno=#{lotno} and A.wflag=#{wflag}
+    </select>
 
     <select id="FPLAN_WBAD_MAXWSEQ" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO">
         SELECT MAX(wseq) FROM  TB_FPLAN_WBAD
@@ -1588,7 +1597,7 @@
     </select>
 
     <update id="FPLAN_WBAD_Update" parameterType="com.dae.kdmes.DTO.Appm.FPLANWBAD_VO" keyProperty="plan_no">
-        UPDATE  TB_FPLAN_WBAD SET wbqty = #{wbqty}
+        UPDATE  TB_FPLAN_WBAD SET wbqty = wbqty + #{wbqty}
         WHERE custcd=#{custcd} and spjangcd = #{spjangcd}
           and plan_no = #{plan_no} and lotno=#{lotno} and wflag = #{wflag} and wcode = #{wcode}
     </update>

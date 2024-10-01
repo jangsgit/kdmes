@@ -139,6 +139,7 @@ public class Appm01CrudController {
     public Object AppW010OrdList_index(@RequestParam("lotno") String lotno
             ,@RequestParam("inmonth") String inmonth
             ,@RequestParam("inweeks") String inweeks
+            ,@RequestParam("wrmc") String wrmc
             ,Model model, HttpServletRequest request) throws Exception {
         CommDto.setMenuTitle("사출공정");  //
         CommDto.setMenuUrl("생산공정>사출공정");
@@ -158,6 +159,7 @@ public class Appm01CrudController {
         fplanDto.setLotno(lotno);
         fplanDto.setInmonth(inmonth);
         fplanDto.setInweeks(inweeks);
+        fplanDto.setWrmc(wrmc);
 
 
         itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
@@ -686,7 +688,7 @@ public class Appm01CrudController {
 
     //불량내역  등록
     @RequestMapping(value="/w010wbad", method = RequestMethod.POST)
-    public String AppWBAD_INT(@RequestParam("custcd") String custcd
+    public Integer AppWBAD_INT(@RequestParam("custcd") String custcd
             ,@RequestParam("spjangcd") String spjangcd
             ,@RequestParam("plan_no") String plan_no
             ,@RequestParam("lotno") String lotno
@@ -732,10 +734,11 @@ public class Appm01CrudController {
                 wbadDto.setWseq(lsChkseq);
                 appcom01Service.FPLAN_WBAD_Update(wbadDto);
             }
-            return "TB_FPLAN_WBAD I/U OK";
+            Integer ll_sumqty = appcom01Service.FPLAN_WBAD_SELECT_SUM(wbadDto);
+            return ll_sumqty;
         } catch (Exception ex) {
-            dispatchException = ex;
-            return "TB_FPLAN_WBAD ERROR " + dispatchException;
+            log.info("AppWBAD_INT Exception =====>" + ex.toString());
+            return 0;
         }
     }
 
@@ -913,6 +916,37 @@ public class Appm01CrudController {
         workDto.setPcode(pcode);
         workDto.setWflag(wflag);
         appcom01Service.FPLAN_OWORK_PERDELETE(workDto);
+        return "success" ;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value="/wbadlistdel", method = RequestMethod.POST)
+    public String AppWbadlist_Delete(@RequestParam("lotno") String lotno
+            ,@RequestParam("wseq") String wseq
+            ,@RequestParam("seq") String seq
+            ,@RequestParam("pcode") String pcode
+            ,@RequestParam("wflag") String wflag
+    ) throws Exception {
+
+        FPLANWBAD_VO wbadDto = new FPLANWBAD_VO();
+
+//        wbadDto.setCustcd(custcd);
+//        wbadDto.setSpjangcd(spjangcd);
+//        wbadDto.setPlan_no(plan_no);
+//        wbadDto.setLotno(lotno);
+//        wbadDto.setWflag(wflag);
+//        wbadDto.setWbqty(wbqty);
+//        wbadDto.setWcode(wcode);
+//        wbadDto.setWseq(wseq);
+//        wbadDto.setPcode(pcode);
+//        wbadDto.setIndate(getToDate());
+//
+//        result = appcom01Service.FPLAN_WBAD_Delete(wbadDto);
+//        if (!result) {
+//            log.info("error =====> FPLAN_WBAD_Delete");
+//            //return "error";
+//        }
         return "success" ;
     }
 

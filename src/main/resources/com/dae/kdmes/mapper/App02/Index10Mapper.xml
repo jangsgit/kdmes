@@ -125,7 +125,7 @@
 
 
     <insert id="InsertCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
-        insert into TB_CA613 (custcd, spjangcd, cltcd, acorp, DEdate, ibgnum, ibgseq,
+        insert into TB_CA613 (custcd, spjangcd, cltcd, acorp, ibgdate, ibgnum, ibgseq,
         pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt,
         mamt, indate, inperid,  pernm, perid, remark, lotno, istore, ostore, wonflag ) values
         ('KDMES', 'ZZ', #{cltcd},   #{acorp},  #{ibgdate},  #{ibgnum}, #{ibgseq},

@@ -87,27 +87,22 @@ public class Appm01Controller {
             ls_month = ls_month.substring(0,2) + "월";
         }
         fplanDto.setInmonth(ls_month);
-
         fplanDto.setInweeks("%");
         itemDto.setPlan_no("%");
-//        log.info("fdate =====> " + tdate);
-//        log.info("fdate =====> " + tdate.substring(4,6));
-//        itemDto = appcom01Service.FPLANW010_Blank();
         itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
 //        model.addAttribute("itemDto", itemDto);
         model.addAttribute("itemDtoList", itemDtoList);
-
-
         _itemSachulDtoList = appcom01Service.GetFPLAN_SachulList(fplanDto);
         model.addAttribute("itemSachulDtoList", _itemSachulDtoList);
 
 
 
-        wrmcDto.setMachname("%");
+
         wperidDto.setWflag("00010");  //첫번째공정
         wperidDto.setWpernm("%");
         wrmcDto.setPlan_no("%");      //불량구분 팝업
         wrmcDto.setWseq("%");
+        wrmcDto.setMachname("%");
         wrmcDto.setWflag("00010");
         wrmcDto.setWclscode("1");
         model.addAttribute("CommDto", CommDto);
@@ -122,6 +117,7 @@ public class Appm01Controller {
         model.addAttribute("wfiworkDto", appPopupService.GetWfiworkList_blank());
 
         model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));          //불량구분
+        model.addAttribute("wbadDDDto", appPopupService.GetWBadDDList(wrmcDto));          //불량구분
 
         return "AppCom/LayFPLAN_W010";
     }

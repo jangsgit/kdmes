@@ -94,6 +94,8 @@ public interface FPLANW010_Mapper {
 
      public List<FPLANWBAD_VO> FPLAN_WBAD_SELECT_blank(FPLANWBAD_VO parm);   //조회
      public String FPLAN_WBAD_SELECT(FPLANWBAD_VO parm);   //조회
+     public Integer FPLAN_WBAD_SELECT_SUM(FPLANWBAD_VO parm);   //조회
+
      public String FPLAN_WBAD_MAXWSEQ(FPLANWBAD_VO bankBoard);   //TB_FPLAN_WORK seq가져오기
 
 

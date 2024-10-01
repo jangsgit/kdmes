@@ -191,6 +191,7 @@ public class Appcom01Service {
 
     public List<FPLANWBAD_VO> FPLAN_WBAD_SELECT_blank(FPLANWBAD_VO parm){return FPLANW010_mapper.FPLAN_WBAD_SELECT_blank(parm);}
     public String FPLAN_WBAD_SELECT(FPLANWBAD_VO parm){return FPLANW010_mapper.FPLAN_WBAD_SELECT(parm);}
+    public Integer FPLAN_WBAD_SELECT_SUM(FPLANWBAD_VO parm){return FPLANW010_mapper.FPLAN_WBAD_SELECT_SUM(parm);}
 
     public String FPLAN_WBAD_MAXWSEQ(FPLANWBAD_VO parm){
         return FPLANW010_mapper.FPLAN_WBAD_MAXWSEQ(parm);

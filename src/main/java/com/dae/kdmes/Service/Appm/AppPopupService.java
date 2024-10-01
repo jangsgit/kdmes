@@ -20,6 +20,7 @@ public class AppPopupService {
     public Object GetWrmcList(TBPopupVO parm){
         return Popupmapper.GetWrmcList(parm);
     }
+
     public Object GetWfperidList(TBPopupVO parm){
         return Popupmapper.GetWfperidList(parm);
     }
@@ -42,6 +43,9 @@ public class AppPopupService {
     public void TB_Fplan_WtimeUpdate(TBPopupVO parm){Popupmapper.TB_Fplan_WtimeUpdate(parm);}
     public Object GetWBadList(TBPopupVO parm){
         return Popupmapper.GetWBadList(parm);
+    }
+    public Object GetWBadDDList(TBPopupVO parm){
+        return Popupmapper.GetWBadDDList(parm);
     }
     public Object GetWBadList_blank(){ return Popupmapper.GetWBadList_blank(); }
     public List<TBPopupVO> FPLAN_OWORK_List(TBPopupVO parm){return Popupmapper.FPLAN_OWORK_List(parm);}

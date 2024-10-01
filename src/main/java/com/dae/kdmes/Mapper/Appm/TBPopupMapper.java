@@ -24,7 +24,9 @@ public interface TBPopupMapper {
      public void TB_Fplan_WtimeInsert(TBPopupVO bankBoard);    //입력
      public String GetWtimeEndSeq(TBPopupVO bankBoard);                         //fplan_wtime 종료 seq값가져오기
      public void TB_Fplan_WtimeUpdate(TBPopupVO bankBoard);    //가동종료
-     public List<TBPopupVO> GetWBadList(TBPopupVO bankBoard);              //불량구분 리스트
+     public List<TBPopupVO> GetWBadList(TBPopupVO bankBoard);
+     public List<TBPopupVO> GetWBadDDList(TBPopupVO bankBoard);
+     //불량구분 리스트
      public List<TBPopupVO> GetWBadList_blank();                         //투입량
      public List<TBPopupVO> FPLAN_OWORK_List(TBPopupVO bankBoard);         //생산량 리스트
 
