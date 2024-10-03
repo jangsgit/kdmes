@@ -5,9 +5,13 @@
 <mapper namespace="com.dae.kdmes.Mapper.Cms.CmsIndex01Mapper">
 
 
-    <select id="getMachineList"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto">
+    <select id="getSHOTDATA_wotqty"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="Integer">
         <![CDATA[
-            select IDX, Machine_Name from machine_list   order by IDX
+            select  isnull(count(*), 0) as wotqty
+             from shot_data WITH (NOLOCK)
+             where machine_name = #{machine_name}
+              and  trim(Additional_Info_1) = #{Additional_Info_1}
+              and  TimeStamp >=#{STARTTIME}  and TimeStamp <= #{ENDTIME}
         ]]>
     </select>
 

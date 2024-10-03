@@ -109,6 +109,7 @@ public class FPLAN_VO {
     private Integer wboxsu;
     private String inmonth;
     private String inweeks;
-
+    private String jgumtype;
+    private String jgumnm;
 
 }

@@ -11,5 +11,9 @@ import java.util.List;
 @Mapper
 public interface CmsIndex01Mapper {
 
-    public List<CmsIndex01Dto> getMachineList(CmsIndex01Dto parm) ;
+    public Integer getSHOTDATA_wotqty(CmsIndex01Dto parm) ;
+
+
+
+
 }

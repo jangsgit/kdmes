@@ -15,8 +15,8 @@ public class CmsIndex01Service {
     @Autowired
     CmsIndex01Mapper  cmsindexMapper;
 
-    public List<CmsIndex01Dto> getMachineList(CmsIndex01Dto parm){
-        return cmsindexMapper.getMachineList(parm);
+    public Integer getSHOTDATA_wotqty(CmsIndex01Dto parm){
+        return cmsindexMapper.getSHOTDATA_wotqty(parm);
     }
 
 }

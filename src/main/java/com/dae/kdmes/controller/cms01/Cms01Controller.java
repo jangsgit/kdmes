@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,30 +33,26 @@ import java.util.List;
 public class Cms01Controller {
     private final CmsIndex01Service cmsservice01;
 
-    CommonDto CommDto = new CommonDto();
-
-    CmsIndex01Dto cmsIndex01Dto = new CmsIndex01Dto();
-    List<CmsIndex01Dto> index01ListDto = new ArrayList<>();
-
-    List<Index01Dto> index01ListDto1 = new ArrayList<>();
-
     protected Log log =  LogFactory.getLog(this.getClass());
     //공통코드등록
-    @GetMapping(value="/index01")
-    public String Cms01_index(Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("공통코드등록");
-        CommDto.setMenuUrl("기준정보>공통코드등록");
-        CommDto.setMenuCode("index01");
+    @GetMapping(value="/getwotqty")
+    public String Cms01_Getwotqty_index(@RequestParam("jgumtype") String jgumtype
+            ,@RequestParam("wrmc") String wrmc
+            ,@RequestParam("lotno") String lotno
+            ,@RequestParam("wflag") String wflag
+            ,Model model, HttpServletRequest request) throws Exception{
+
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
-
+        CmsIndex01Dto cmsdto = new CmsIndex01Dto();
         try {
-            index01ListDto = cmsservice01.getMachineList(cmsIndex01Dto);
 
-            log.info("Exception =====>" + index01ListDto);
-            model.addAttribute("com_rem2_keyList",index01ListDto1);
-            model.addAttribute("comcodeList",index01ListDto);
+//            index01ListDto = cmsservice01.getSHOTDATA_wotqty(cmsIndex01Dto);
+//
+//            log.info("Exception =====>" + index01ListDto);
+//            model.addAttribute("com_rem2_keyList",index01ListDto1);
+//            model.addAttribute("comcodeList",index01ListDto);
 
         } catch (Exception ex) {
 //                dispatchException = ex;

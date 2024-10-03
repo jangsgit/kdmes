@@ -77,7 +77,8 @@
                TB_CA510.com_rem1   as wcdnm,
                ISNULL(TB_FPLAN_WBAD.wbqty, 0) as wbqty,
                TB_FPLAN_WBAD.wseq   as wseq ,
-               TB_FPLAN_WBAD.plan_no   as plan_no
+               TB_FPLAN_WBAD.plan_no   as plan_no,
+               TB_FPLAN_WBAD.lotno   as lotno
         FROM TB_CA510 WITH(NOLOCK)
         LEFT OUTER JOIN TB_FPLAN_WBAD WITH(NOLOCK) ON TB_CA510.com_code = TB_FPLAN_WBAD.wcode and TB_FPLAN_WBAD.wflag = #{wflag} and TB_FPLAN_WBAD.plan_no = #{plan_no} and TB_FPLAN_WBAD.lotno = #{lotno}
         WHERE TB_CA510.com_cls = '005'

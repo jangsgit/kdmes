@@ -160,8 +160,9 @@
                                                         <div class="input-group-text">설비</div>
                                                         <input class="form-control form-control-sm" id="inmachname" type="text"    disabled
                                                             placeholder=""   />
-                                                        <input class="form-control form-control-sm" id="inwrmc" type="hidden"
-                                                            placeholder=""   />                                                            
+                                                        <input class="form-control form-control-sm" id="inwrmc" type="hidden"  placeholder=""   /> 
+                                                        <input class="form-control form-control-sm" id="injgumtype" type="hidden"  placeholder=""   /> 
+                                                        <input class="form-control form-control-sm" id="injgumnm" type="hidden"  placeholder=""   /> 
                                                         <div id='inwrmcbdg'></div>
                                                     </div>    
                                                 </div>  
@@ -602,7 +603,7 @@
                                                                     </button> 
                                                                     <button class="btn btn-falcon-warning me-1 mb-1" type="button" id="popsearch03" >조회
                                                                     </button> 
-                                                                    <button class="btn btn-falcon-danger me-1 mb-1" type="button" id="popsearch02" onclick="workbadDel()">삭제
+                                                                    <!-- <button class="btn btn-falcon-danger me-1 mb-1" type="button" id="popsearch02" onclick="workbadDel()">삭제 -->
                                                                     </button>  
                                                                 </div> 
                                                             </div> 
@@ -892,7 +893,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty   );
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty, ctx.item.jgumtype, ctx.item.jgumnm   );
                         }
                     })
                 }, 
@@ -900,6 +901,7 @@
                 // { binding: 'cltnm', header: '거래처',   align:"center",  width: 100 },
                 // { binding: 'pname', header: '품목명',   align:"center",  width: 150 }, /
                 { binding: 'psize', header: '규격',     align:"center",  width: 100 },
+                { binding: 'jgumnm', header: '금형',     align:"left",  width: 150 },
                 // { binding: 'psize', header: '차종',     align:"center",  width: 100 },
                 { binding: 'prod_qty', header: '계획량',align:"center",  width: 100 },
                 { binding: 'end_qty', header: '생산량',   align:"center",width: 100 } ,
@@ -973,7 +975,9 @@
                     wrmcnm: ListDto[i]["wrmcnm"],
                     partcode: ListDto[i]["partcode"],
                     partnm: ListDto[i]["partnm"],
-                    wbgubn: ListDto[i]["w_b_gubn"] 
+                    wbgubn: ListDto[i]["w_b_gubn"] ,
+                    jgumtype: ListDto[i]["jgumtype"],
+                    jgumnm: ListDto[i]["jgumnm"] 
                     
                     
                 });
@@ -992,7 +996,7 @@
             selectionMode: 'RowRange',
             alternatingRowStep: 0,
             columns: [
-                // { binding: 'index', header: 'seq', width: '*' },
+                { binding: 'wrmcnm', header: '호기', width: 100 },
                 { binding: 'prod_sdate', header: '일자',  width: 130, align:"center", format: 'yyyy-MM-dd' }, 
                 // { binding: 'plan_no', header: '작지번호',  width: 130, align:"center",  },
                 {
@@ -1003,7 +1007,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {
-                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn   );
+                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn, ctx.item.jgumtype , ctx.item.jgumnm    );
                         }
                     })
                 }, 
@@ -1090,7 +1094,9 @@
                     wrmcnm: ListDto[i]["wrmcnm"],
                     partcode: ListDto[i]["partcode"],
                     partnm: ListDto[i]["partnm"],
-                    wbgubn: ListDto[i]["w_b_gubn"]  
+                    wbgubn: ListDto[i]["w_b_gubn"]  ,
+                    jgumtype: ListDto[i]["jgumtype"],
+                    jgumnm: ListDto[i]["jgumnm"] 
                     
                 });
                 cnt++;
@@ -1518,7 +1524,7 @@
                                         },
                                         async:false,
                                         success:function(data){
-                                            console.log("등록OK", data);   
+                                            //console.log("등록OK", data);   
                                     
                                     },error:function(e){
                                         console.log('error',e);
@@ -1700,14 +1706,15 @@
                 cols.binding = 'wcdnm';
                 cols.header = '불량구분';
                 cols.width = 150;
-                cols.align = "center"
-                cols.cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                cols.align = "center", 
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.wcdnm}</b>',
                     click: (e, ctx) => {
-                        wbadDel(ctx.item.lotno, ctx.item.wcode, ctx.item.wcdnm, ctx.item.wseq, ctx.item.wbqty);
+                        wbadDel(ctx.item.lotno, ctx.item.wcode, ctx.item.wcdnm, ctx.item.wbqty);
                     }
-                })
-                wbadGrid.columns.push(cols);  
+                }); 
+                wbadGrid.columns.push(cols);   
+ 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'wbqty';
                 cols.header = '불량수량';
@@ -2238,6 +2245,8 @@
         var ls_inpartcode  = document.getElementById('inpartcode').value;  
         var ls_inpartnm  = document.getElementById('inpartnm').value;  
         var ls_inwbgubn  = document.getElementById('inwbgubn').value;  
+        var ls_injgumtype  = document.getElementById('injgumtype').value;  
+        var ls_injgumnm  = document.getElementById('injgumnm').value; 
         
         var ls_stopcd = "";
         var ls_stopnm = "";
@@ -2379,6 +2388,7 @@
                     "workdv"      : arg1, 
                     "rwflag"      : ls_rwflag, 
                     "wbgubn"      : ls_inwbgubn,  
+                    "jgumnm"      : ls_injgumnm,  
                     
                 },
                 async:false,
@@ -2392,12 +2402,15 @@
                         button_workedBtn.disabled = true;
                         button_wfrdt.disabled = true;
                         button_wtrdt.disabled = true;   
-                        button_wrmcBtn.disabled = true;
+                        //button_wrmcBtn.disabled = true;
                         button_wperidBtn.disabled = true;
-                        button_wotqtyBtn.disabled = true;
+                        //button_wotqtyBtn.disabled = true;
                         button_wbadqtyBtn.disabled = true;  
                         button_partbtn.disabled = true; 
                         btn_progress(false, false, false, true) 
+                        var ll_wotqt = Number(data)
+                        document.getElementById('inwotqt').value = ll_wotqt;
+                        document.getElementById('inwokqt').value = ll_wotqt;
                         // var ls_text = "<div style='color:red'><span class='badge badge-soft-danger'>공정 완료</span></div>"; 
                     }else if(arg1 == "1"){
                         // alert("작업시작 처리 되었습니다.");
@@ -2442,7 +2455,7 @@
                         btn_progress(true, true, false, false) 
                         // var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>공정 진행중</span></div>";                                        
                     } 
-                    statusdis_div.innerHTML  = ls_text;  
+                    //statusdis_div.innerHTML  = ls_text;  
             
             },error:function(e){
                 console.log('error',e);
@@ -2481,7 +2494,7 @@
                         // var ls_text = "<div style='color:red'><span class='badge badge-soft-info'>임시중단</span></div>";  
                         btn_progress(true, false, true, false)                                                                               
                     } 
-                    statusdis_div.innerHTML  = ls_text; 
+                    //statusdis_div.innerHTML  = ls_text; 
             },error:function(e){
                 console.log('error',e);
             }
@@ -2700,42 +2713,49 @@
     
 
 
-    function wbadDel(arg1, arg2, arg3, arg4, arg5){
-        
+    function wbadDel(arg1, arg2, arg3, arg4){ 
         //lotno, wcode, wcdnm, wseq , wbqty
-        var ls_wflag = '00010' 
- 
-        if(arg5 == 0) {
+        var ls_plan_no   = document.getElementById('inplan_no').value; 
+        var ls_wflag = '00010'  
+        if(arg4 == 0) {
             alert("불량수량이 없습니다.")
             return 
-        }
-
+        } 
+        console.log(ls_plan_no)
+        console.log(arg1)
+        if(!ls_plan_no) {
+            alert("작업지시서를 선택하세요.")
+            return 
+        }  
         let result = '';
-            if (!confirm("삭제하시겠습니까?")) {
-                return ; 
-            }  
-            $.ajax({
-                url: '/input/wbadlistdel',   
-                type:"POST", 
-                data: { 
-                    "lotno"      : arg1, 
-                    "wcode"      : arg2, 
-                    "wseq"      : arg4 ,
-                    "wflag"    : ls_wflag  
-                },
-                async:false,
-                success:function(data){
-                    // console.log("등록OK", data); 
-                    searchbadqty_fnc();
-                    
-                    $("#wbadqtymodal_btn").trigger("click"); 
-                    
-                },error:function(e){
-                    console.log('error',e);
-                }
-            }).done(function(fragment){           
+        if (!confirm("삭제하시겠습니까?")) {
+            return ; 
+        }  
+        $.ajax({
+            url: '/input/wbadlistdel',   
+            type:"POST", 
+            data: { 
+                "lotno"      : arg1, 
+                "wcode"      : arg2, 
+                "wseq"      : arg4 ,
+                "wflag"    : ls_wflag  ,
+                "plan_no"    : ls_plan_no  
+            },
+            async:false,
+            success:function(data){
+                var ll_sumqty = parseFloat(data);
+                document.getElementById('inwbdqt').value= ll_sumqty;  
+                // console.log("삭제OK", data); 
+                searchbadqty_fnc();
+                
+                $("#wbadqtymodal_btn").trigger("click"); 
+                
+            },error:function(e){
+                console.log('error',e);
+            }
+        }).done(function(fragment){           
 
-            })  
+        })  
     }
 
 
@@ -2894,18 +2914,19 @@
         document.getElementById('popseq').value= arg5;  
     }
     //작업지시선택 
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26 ){ 
-            // custcd, spjangcd, wono, cltnm, pname, 
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27 , arg28){ 
+             // custcd, spjangcd, wono, cltnm, pname, 
             // ostore, plan_no, cltcd, pcode, wseq, 
             // wflag, phmmdoc, otqty, wrpsnm, owqty ,
             // obqty,winps,wrps,lotno,prod_qty, 
-            // wrmc, wrmcnm, partcode, partnm, wbgubn, end_qty 
+            // wrmc, wrmcnm, partcode, partnm, wbgubn, 
+            // end_qty, jgumtype, jgumnm 
+            console.log(arg27)
+            console.log(arg28)
          if(arg20 <= arg26){
             alert("계획량과 생산량을 확인하세요");
             return 
-         }
-         console.log(arg21)
-         console.log(arg22)
+         } 
         var button_workstBtn = document.getElementById('workstBtn');
         var button_workedBtn = document.getElementById('workedBtn'); 
             button_workstBtn.disabled = false;
@@ -2929,6 +2950,8 @@
         document.getElementById('inwbgubn').value= arg25;  
         document.getElementById('inwrmc').value = arg21;           //설비코드
         document.getElementById('inmachname').value  = arg22;     //설비명 
+        document.getElementById('injgumtype').value  = arg27;     //금형코드 
+        document.getElementById('injgumnm').value  = arg28;     //금형명
     // document.getElementById('inphmmdoc').value= arg12;  
         wflag = arg11; //document.getElementById('inwflag').value;
         if(!wflag){wflag = "00010";} 
@@ -2980,7 +3003,7 @@
         wscntdis_div.innerHTML = "";    
         var ls_text = "<div style='color:red'><span class='badge badge-soft-info'></span></div>";  
         btn_progress(false, false, false, false) 
-        statusdis_div.innerHTML  = ls_text;   
+        //statusdis_div.innerHTML  = ls_text;   
 
         
         var result = new Date();
@@ -2993,12 +3016,14 @@
           
 
     }  
-    function selectChk_02(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25 ){ 
+    function selectChk_02(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27 ){ 
+ 
             // custcd, spjangcd, wono, cltnm, pname, 
             // ostore, plan_no, cltcd, pcode, wseq, 
             // wflag, phmmdoc, otqty, wrpsnm, owqty ,
-            // obqty,winps,wrps,lotno,prod_qty, 
-            // wrmc, wrmcnm, partcode, wbgubn
+            // obqty,winps,wrps,lotno,prod_qty,
+            //  wrmc, wrmcnm, partcode , partnm, wbgubn, 
+            //  jgumtype, jgumnm
         var button_workstBtn = document.getElementById('workstBtn');
         var button_workedBtn = document.getElementById('workedBtn'); 
             button_workstBtn.disabled = false;
@@ -3019,7 +3044,11 @@
         document.getElementById('prod_qty').value= arg20;   
         document.getElementById('inpartcode').value= arg23; 
         document.getElementById('inpartnm').value= arg24; 
-        document.getElementById('inwbgubn').value= arg25; 
+        document.getElementById('inwbgubn').value= arg25;  
+        document.getElementById('inwrmc').value  = arg21;         //설비코드코드 
+        document.getElementById('inmachname').value  = arg22;     //설비명  
+        document.getElementById('injgumtype').value  = arg26;     //금형코드 
+        document.getElementById('injgumnm').value  = arg27;     //금형명
         
         // <input class="form-control form-control-sm" id="inwrpsnm" type="text"  disabled  placeholder=""  />
         // <input class="form-control form-control-sm" id="inwrps" type="hidden"  placeholder=""   />
@@ -3077,7 +3106,7 @@
         wscntdis_div.innerHTML = "";    
         var ls_text = "<div style='color:red'><span class='badge badge-soft-info'></span></div>";  
         btn_progress(false, false, false, false) 
-        statusdis_div.innerHTML  = ls_text;   
+        //statusdis_div.innerHTML  = ls_text;   
         $.ajax({
             url: '/input/w010',   
             type:"POST", 
@@ -3173,7 +3202,7 @@
                         button_wtrdt.disabled = true;   
                         // button_wrmcBtn.disabled = true;
                         button_wperidBtn.disabled = true;
-                        button_wotqtyBtn.disabled = true;
+                        //button_wotqtyBtn.disabled = true;
                         button_wbadqtyBtn.disabled = true; 
                         button_worksaveBtn.disabled = true;   
                         button_partbtn.disabled = true; 
@@ -3216,7 +3245,7 @@
                         btn_progress(false, false, false, false) 
                     // var ls_text = "<div style='color:red'><span class='badge badge-soft-primary'>작업지시리스트 선택</span></div>";
                 }
-                statusdis_div.innerHTML  = ls_text;   
+                //statusdis_div.innerHTML  = ls_text;   
                 return  false  
                 // console.log("wperidGrid_Data", wperidGrid.rows.length ); 
 
@@ -3361,6 +3390,8 @@
                         wbgubn: ListDto[i]["w_b_gubn"] ,
                         end_qty: ListDto[i]["end_qty"]  ,
                         jchajong: ListDto[i]["jchajong"]  ,
+                        jgumnm: ListDto[i]["jgumnm"]  ,
+                        jgumtype: ListDto[i]["jgumtype"]  ,
                         inmonth: ls_inmonth
                     });
                     cnt++;
@@ -3397,7 +3428,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.plan_no}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty);
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm);
                     }
                 });
                 wtab01Grid.columns.push(cols);   
@@ -3437,6 +3468,12 @@
                 cols.header = '규격';
                 cols.align = "center";
                 cols.width = 100 ; 
+                wtab01Grid.columns.push(cols);  
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'jgumnm';
+                cols.header = '금형';
+                cols.align = "left";
+                cols.width = 150 ; 
                 wtab01Grid.columns.push(cols);  
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'prod_qty';
@@ -3540,6 +3577,8 @@
                             wbgubn: ListDto[i]["w_b_gubn"] ,
                             end_qty: ListDto[i]["end_qty"]  ,
                             jchajong: ListDto[i]["jchajong"]  ,
+                            jgumnm: ListDto[i]["jgumnm"]  ,
+                            jgumtype: ListDto[i]["jgumtype"]  ,
                             inmonth: ls_inmonth
                         });
                         cnt++;
@@ -3548,6 +3587,12 @@
                     wtabsaGrid.autoGenerateColumns = false; 
                     view_salistpage.sourceCollection  = dataArr;
                     var cols = new wijmo.grid.Column(); 
+                    cols.binding = 'wrmcnm';
+                    cols.header = '호기';
+                    cols.align = "center";
+                    cols.width = 100 ; 
+                    wtabsaGrid.columns.push(cols);   
+                    cols = new wijmo.grid.Column(); 
                     cols.binding = 'prod_sdate';
                     cols.header = '일자';
                     cols.align = "center";
@@ -3567,7 +3612,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {                        
-                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn );
+                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.jgumtype, ctx.item.jgumnm );
                         }
                     });
                     wtabsaGrid.columns.push(cols);  
@@ -3613,12 +3658,12 @@
                     cols.align = "center";
                     cols.width = 100 ; 
                     wtabsaGrid.columns.push(cols);  
-                    // cols = new wijmo.grid.Column(); 
-                    // cols.binding = 'psize';
-                    // cols.header = '규격';
-                    // cols.align = "center";
-                    // cols.width = 100 ; 
-                    // wtabsaGrid.columns.push(cols);  
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'jgumnm';
+                    cols.header = '금형';
+                    cols.align = "left";
+                    cols.width = 130 ; 
+                    wtabsaGrid.columns.push(cols);  
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'prod_qty';
                     cols.header = '계획량';

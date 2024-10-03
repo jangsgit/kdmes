@@ -200,6 +200,7 @@ public class Appcom01Service {
     public Boolean FPLAN_WBAD_Update(FPLANWBAD_VO parm){ return FPLANW010_mapper.FPLAN_WBAD_Update(parm); }
 
     public Boolean FPLAN_WBAD_Delete(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_WBAD_Delete(parm); }
+    public Boolean FPLAN_WBAD_WCODE_Delete(FPLANWBAD_VO parm){ return FPLANW010_mapper.FPLAN_WBAD_WCODE_Delete(parm); }
 
     public String FPLAN_WTIME_MAXSEQ(FPLANWTIME_VO parm){ return FPLANW010_mapper.FPLAN_WTIME_MAXSEQ(parm); }
     public Boolean FPLAN_WTIME_Insert(FPLANWTIME_VO parm){ return FPLANW010_mapper.FPLAN_WTIME_Insert(parm); }

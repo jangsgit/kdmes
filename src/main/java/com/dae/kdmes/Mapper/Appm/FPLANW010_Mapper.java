@@ -102,6 +102,7 @@ public interface FPLANW010_Mapper {
      public Boolean FPLAN_WBAD_Insert(FPLANWBAD_VO parm);
      public Boolean FPLAN_WBAD_Update(FPLANWBAD_VO parm);
      public Boolean FPLAN_WBAD_Delete(FPLANW010_VO parm);
+     public Boolean FPLAN_WBAD_WCODE_Delete(FPLANWBAD_VO parm);
 
      public String FPLAN_WTIME_MAXSEQ(FPLANWTIME_VO bankBoard);
      public Boolean FPLAN_WTIME_Insert(FPLANWTIME_VO parm);

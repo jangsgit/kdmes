@@ -4,12 +4,14 @@ import com.dae.kdmes.DTO.*;
 
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.Appm.*;
+import com.dae.kdmes.DTO.Cms.CmsIndex01Dto;
 import com.dae.kdmes.Service.App02.Index10Service;
 import com.dae.kdmes.Service.Appm.AppPopupService;
 import com.dae.kdmes.Service.Appm.Appcom01Service;
 //import com.dae.kdmes.Service.Appcom02Service;
 //import com.dae.kdmes.Service.Appcom03Service;
 //import com.dae.kdmes.Service.Appcom04Service;
+import com.dae.kdmes.Service.Cms.CmsIndex01Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -48,10 +51,8 @@ import javax.imageio.ImageIO;
 public class Appm01CrudController {
     private final Appcom01Service appcom01Service;
     private final Index10Service service10;
-//    private final Appcom02Service appcom02Service;
-//    private final Appcom03Service appcom03Service;
-//    private final Appcom04Service appcom04Service;
     private final AppPopupService appPopupService;
+    private final CmsIndex01Service cmsservice01;
     FPLANWPERID_VO wperDto = new FPLANWPERID_VO();
     FPLANWTIME_VO wtimeDto = new FPLANWTIME_VO();
     FPLANW010_VO workDto = new FPLANW010_VO();
@@ -207,9 +208,9 @@ public class Appm01CrudController {
             ,@RequestParam("plan_no") String plan_no
             ,@RequestParam("lotno") String lotno
             ,@RequestParam("wrmc") String wrmc
-            ,@RequestParam("winqt") float winqt
-            ,@RequestParam("wbdqt") float wbdqt
-            ,@RequestParam("wotqt") float wotqt
+            ,@RequestParam("winqt") Integer winqt
+            ,@RequestParam("wbdqt") Integer wbdqt
+            ,@RequestParam("wotqt") Integer wotqt
             ,@RequestParam("wsyul") float wsyul
             ,@RequestParam("wflag") String wflag
             ,@RequestParam("wremark") String wremark
@@ -223,10 +224,12 @@ public class Appm01CrudController {
             ,@RequestParam("workdv") String workdv
             ,@RequestParam("rwflag") String rwflag
             ,@RequestParam("wbgubn") String wbgubn
+            ,@RequestParam("jgumnm") String jgumnm
             ,Model model, HttpServletRequest request) throws Exception {
 
         Index10Dto _index10Dto = new Index10Dto();
         FPLANWTIME_VO _wtimeDto = new FPLANWTIME_VO();
+        CmsIndex01Dto cmsdto = new CmsIndex01Dto();
         String ls_flag = decision;
         if(startDate.equals("") || startDate == null || startDate.equals(" ") || startDate.length() ==0 ){
             startDate = null;
@@ -252,13 +255,9 @@ public class Appm01CrudController {
         workDto.setPlan_no(plan_no);
         workDto.setLotno(lotno);
         workDto.setWrmc(wrmc);
-        workDto.setWinqt(winqt);
-        workDto.setWqty(winqt);
+        workDto.setWinqt(winqt); //계획량
         workDto.setBqty(wbdqt);
         workDto.setWbdqt(wbdqt);
-        workDto.setQty(wotqt);
-        workDto.setWotqt(wotqt);
-        workDto.setJqty(wotqt - wbdqt);
         workDto.setWflag("00010");
         workDto.setWsyul(wsyul);
         workDto.setWremark(wremark);
@@ -311,11 +310,37 @@ public class Appm01CrudController {
             workDto.setDecision(workdv);
             workDto.setDecision1(workdv);
         }
-        if(workdv.equals("0")){
-            workDto.setClsflag("3");        // 생산완료
+        if(workdv.equals("0")){          // 공정종료
+            workDto.setClsflag("3");
             workDto.setWorkdv("3");
             workDto.setDecision("3");
             workDto.setDecision1("3");
+//        jgumtype = "DM_HOLDER(FR)";
+//        wrmc = "10";
+            cmsdto.setMachine_name(wrmc); //호기
+            cmsdto.setAdditional_Info_1(jgumnm); //금형
+            // SimpleDateFormat을 이용하여 String을 Date로 변환
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date stparsedDate = dateFormat.parse(startDate);
+            Date edparsedDate = dateFormat.parse(getToDateTime());
+            // Date를 Timestamp로 변환
+            Timestamp stimestamp = new Timestamp(stparsedDate.getTime());
+            Timestamp edimestamp = new Timestamp(edparsedDate.getTime());
+
+            cmsdto.setSTARTTIME(stimestamp); //작업시작시간
+            cmsdto.setENDTIME(edimestamp);   //작업종료시간
+//            log.info("wrmc =====> " + wrmc);
+//            log.info("jgumtype =====> " + jgumnm);
+//            log.info("stimestamp =====> " + stimestamp);
+//            log.info("edimestamp =====> " + edimestamp);
+
+
+            wotqt = cmsservice01.getSHOTDATA_wotqty(cmsdto);  //생산량
+            log.info("wotqt =====> " + wotqt);
+            workDto.setWqty(wotqt);
+            workDto.setQty(wotqt);
+            workDto.setWotqt(wotqt);
+            workDto.setJqty(wotqt - wbdqt);
         }else{
             workDto.setClsflag("2");        // 공정중
         }
@@ -361,7 +386,7 @@ public class Appm01CrudController {
                 log.info("error =====> FPLANWORK_Insert");
                 return "error";
             }
-            _wtimeDto.setWtrdt(null);
+            _wtimeDto.setWtrdt(null);       //작업시작
             result = appcom01Service.FPLAN_WTIME_Insert(_wtimeDto);
             if (!result) {
                 log.info("error =====> FPLAN_WTIME_Insert");
@@ -383,7 +408,7 @@ public class Appm01CrudController {
         workDto.setEnd_qty(wotqt - wbdqt);
         workDto.setProd_qty(wotqt);
 
-        if(workdv.equals("0")){
+        if(workdv.equals("0")){  //공정종료
             _wtimeDto.setWtrdt(getToDateTime());
             //검사, 조립 공정구분
             if(wbgubn.equals("H")){
@@ -402,7 +427,12 @@ public class Appm01CrudController {
             log.info("error =====> FPLAN_Update 02");
             return "error";
         }
-        return ls_lotno;
+        if(workdv.equals("0")){     //공정종료//
+            return Integer.toString(wotqt);
+        }else{
+            return ls_lotno;
+        }
+
     }
 
 
@@ -922,36 +952,27 @@ public class Appm01CrudController {
 
     @ResponseBody
     @RequestMapping(value="/wbadlistdel", method = RequestMethod.POST)
-    public String AppWbadlist_Delete(@RequestParam("lotno") String lotno
+    public Integer AppWbadlist_Delete(@RequestParam("lotno") String lotno
             ,@RequestParam("wseq") String wseq
-            ,@RequestParam("seq") String seq
-            ,@RequestParam("pcode") String pcode
+            ,@RequestParam("wcode") String wcode
             ,@RequestParam("wflag") String wflag
+            ,@RequestParam("plan_no") String plan_no
     ) throws Exception {
 
         FPLANWBAD_VO wbadDto = new FPLANWBAD_VO();
-
-//        wbadDto.setCustcd(custcd);
-//        wbadDto.setSpjangcd(spjangcd);
-//        wbadDto.setPlan_no(plan_no);
-//        wbadDto.setLotno(lotno);
-//        wbadDto.setWflag(wflag);
-//        wbadDto.setWbqty(wbqty);
-//        wbadDto.setWcode(wcode);
-//        wbadDto.setWseq(wseq);
-//        wbadDto.setPcode(pcode);
-//        wbadDto.setIndate(getToDate());
-//
-//        result = appcom01Service.FPLAN_WBAD_Delete(wbadDto);
-//        if (!result) {
-//            log.info("error =====> FPLAN_WBAD_Delete");
-//            //return "error";
-//        }
-        return "success" ;
+        wbadDto.setPlan_no(plan_no);
+        wbadDto.setLotno(lotno);
+        wbadDto.setWflag(wflag);
+        wbadDto.setWcode(wcode);
+        wbadDto.setWseq(wseq);
+        result = appcom01Service.FPLAN_WBAD_WCODE_Delete(wbadDto);
+        if (!result) {
+            log.info("AppWbadlist_Delete =====> ");
+            return 0;
+        }
+        Integer ll_sumqty = appcom01Service.FPLAN_WBAD_SELECT_SUM(wbadDto);
+        return ll_sumqty ;
     }
-
-
-
 
     @GetMapping("/generate-barcode")
     public void generateBarcode(@RequestParam String text, HttpServletResponse response) throws IOException, WriterException {
