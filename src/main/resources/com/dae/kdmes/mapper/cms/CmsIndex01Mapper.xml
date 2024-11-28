@@ -15,4 +15,33 @@
         ]]>
     </select>
 
+
+    <select id="getSHOTDATA_realtime"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto">
+        <![CDATA[
+        SELECT top 100 Machine_Name as machine_name
+              ,Additional_Info_1
+              ,Shot_Number
+              ,Injection_Time
+              ,Filling_Time
+              ,Plasticizing_Time
+              ,Cycle_Time
+              ,Barrel_Temperature_1
+              ,Barrel_Temperature_2
+              ,Mold_Temperature_1
+              ,Mold_Temperature_2
+              ,Mold_Temperature_3
+              ,Mold_Temperature_4
+              ,Mold_Temperature_5
+              ,Mold_Temperature_6
+              ,Cavity
+              ,TimeStamp
+              ,FORMAT(TimeStamp, 'HH:mm:ss') as shottime
+              ,FORMAT(TimeStamp, 'yyyyMMdd') as shotdate
+          FROM [ado_kd].[dbo].[shot_data]
+          where   FORMAT(TimeStamp, 'yyyyMMdd') between #{frdate} and #{todate}
+          and    isnull(Machine_Name,'') Like concat(#{machine_name},'%')
+          and    isnull(Additional_Info_1,'') Like concat(#{Additional_Info_1},'%')
+          ORDER BY TimeStamp DESC
+        ]]>
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.dae.kdmes.Service.Cms;
 
+import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.Cms.CmsIndex01Dto;
 import com.dae.kdmes.Mapper.Cms.CmsIndex01Mapper;
 import lombok.RequiredArgsConstructor;
@@ -19,4 +20,7 @@ public class CmsIndex01Service {
         return cmsindexMapper.getSHOTDATA_wotqty(parm);
     }
 
+    public List<CmsIndex01Dto> getSHOTDATA_realtime(CmsIndex01Dto parm){
+        return cmsindexMapper.getSHOTDATA_realtime(parm);
+    }
 }

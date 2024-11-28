@@ -1,11 +1,16 @@
 package com.dae.kdmes.controller;
 
+import com.dae.kdmes.DTO.App01.Index03Dto;
 import com.dae.kdmes.DTO.Appm.FPLAN_VO;
+import com.dae.kdmes.DTO.Cms.CmsIndex01Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.Service.Appm.Appcom01Service;
+import com.dae.kdmes.Service.Cms.CmsIndex01Service;
 import com.dae.kdmes.Service.master.AuthService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -66,13 +71,12 @@ public class AuthController {
         userformDto.setPagetree01("관리자모드");
         userformDto.setPagenm("Dashboard");
         model.addAttribute("userFormDto", userformDto);
-
+        CmsIndex01Dto cmsdto = new CmsIndex01Dto();
         if (ls_flag.equals("AA")){
 
             Date nowData = new Date();
             SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
             String indate = endDate.format(nowData).toString();
-
             CommDto.setMenuTitle("공통코드등록");
             CommDto.setMenuUrl("기준정보>공통코드등록");
             CommDto.setMenuCode("index01");
@@ -85,6 +89,11 @@ public class AuthController {
             userformDto.setFlag(userformDto.getFlag());
 
             model.addAttribute("userDto", userformDto );
+
+//            System.out.println("리스트 데이터:");
+//            for (CmsIndex01Dto item : cms01List) {
+//                System.out.println("- " + item.getAdditional_Info_1());
+//            }
 
             return "mainframe";
         } else if (userformDto == null) {
