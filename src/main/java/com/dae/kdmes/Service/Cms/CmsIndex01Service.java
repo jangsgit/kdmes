@@ -23,4 +23,14 @@ public class CmsIndex01Service {
     public List<CmsIndex01Dto> getSHOTDATA_realtime(CmsIndex01Dto parm){
         return cmsindexMapper.getSHOTDATA_realtime(parm);
     }
+
+    public List<CmsIndex01Dto> getSHOTDATA_machine(CmsIndex01Dto parm){
+        return cmsindexMapper.getSHOTDATA_machine(parm);
+    }
+
+    public List<CmsIndex01Dto> getSHOTDATA_addinfo(CmsIndex01Dto parm){
+        return cmsindexMapper.getSHOTDATA_addinfo(parm);
+    }
+
+
 }

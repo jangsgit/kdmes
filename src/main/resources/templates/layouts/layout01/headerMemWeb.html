@@ -81,17 +81,12 @@
                                     </div> 
                                     <div class="col-2 col-sm-2">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">기계이름</span>  
-                                            <input class="form-control form-control-sm" id="pname" type="text"    autocomplete="off"  placeholder=""> 
-                                            <input class="form-control form-control-sm" id="pcode" type="hidden"    autocomplete="off"  placeholder=""> 
+                                            <input class="form-control form-control-sm" id="inmachname" type="text"    autocomplete="off"  placeholder=""     >  
                                         </div>
                                     </div> 
                                     <div class="col-2 col-sm-2">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">금형자료</span>  
-                                            <input class="form-control form-control-sm" id="ecltnm" type="text"    autocomplete="off"  placeholder="">
-                                            <input class="form-control form-control-sm" id="acorp1" type="hidden"  />
-                                            <input class="form-control form-control-sm" id="acorp2" type="hidden"  />
-                                            <input class="form-control form-control-sm" id="acorp3" type="hidden"  />
-                                            <input class="form-control form-control-sm" id="acode" type="hidden"  />  
+                                            <input class="form-control form-control-sm" id="inaddinfo" type="text"    autocomplete="off"  placeholder=""     >  
                                         </div>
                                     </div> 
                                     <div class="col-auto">  
@@ -115,6 +110,96 @@
                           </div>
                     </div> 
 
+
+
+                    <!--------------------------------------------------------------------------------------->    
+                    <input class="form-control form-control-sm"  type="hidden" id="inbtn01" data-bs-toggle="modal" data-bs-target="#machnmmodal"  /> 
+                    <!--------------------------------------------------------------------------------------->   >
+                    <div class="modal fade" id="machnmmodal" data-bs-keyboard="false"
+                    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                            style="max-width: 500px">
+                            <div class="modal-content border-0">
+                                <div class="modal-body p-0" > 
+                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light"  >
+                                        <h4 class="mb-1" id="modalExampleDemoLabel"></h4>
+                                    </div> 
+                                    <div class="container-fluid"> 
+                                        <div class="col-auto">
+                                            <div class="input-group">
+                                                <div class="input-group-text">기계검색</div>
+                                                <input class="form-control form-control-sm" id="searchCode01" type="text"   /> 
+                                                <button class="btn btn-falcon-warning me-1 mb-1" id="SearchBtn01" type="button" >검색
+                                                </button>
+                                            </div>
+                                        </div> 
+                                    </div>                             
+                                    <div class="container-fluid"> 
+                                        <div id="machnmGrid_div" ></div> 
+                                    </div>                                                                 
+
+                                </div>  
+                                <div class="modal-footer">
+                                    <div class="row g-1">
+                                        <div class="col-auto">
+                                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                                type="button" id="machnmmodal_btn" data-bs-dismiss="modal">Close</button>
+                                        </div> 
+                                    </div>
+                                </div>   
+
+                            </div>
+                        </div> 
+                    </div>    
+
+
+                    <!--------------------------------------------------------------------------------------->    
+                    <input class="form-control form-control-sm"  type="hidden" id="inbtn02" data-bs-toggle="modal" data-bs-target="#addinfomodal"  /> 
+                    <!--------------------------------------------------------------------------------------->   >
+                    <div class="modal fade" id="addinfomodal" data-bs-keyboard="false"
+                    data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
+                            style="max-width: 500px">
+                            <div class="modal-content border-0">
+                                <div class="modal-body p-0" > 
+                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light"  >
+                                        <h4 class="mb-1" id="modalExampleDemoLabel"></h4>
+                                    </div> 
+                                    <div class="container-fluid"> 
+                                        <div class="col-auto">
+                                            <div class="input-group">
+                                                <div class="input-group-text">금형검색</div>
+                                                <input class="form-control form-control-sm" id="searchCode01" type="text"   /> 
+                                                <button class="btn btn-falcon-warning me-1 mb-1" id="SearchBtn01" type="button" >검색
+                                                </button>
+                                            </div>
+                                        </div> 
+                                    </div>                             
+                                    <div class="container-fluid"> 
+                                        <div id="addinfoGrid_div" ></div> 
+                                    </div>                                                                 
+
+                                </div>  
+                                <div class="modal-footer">
+                                    <div class="row g-1">
+                                        <div class="col-auto">
+                                            <button class="badge-soft-primary dropdown-item rounded-1"
+                                                type="button" id="addinfomodal_btn" data-bs-dismiss="modal">Close</button>
+                                        </div> 
+                                    </div>
+                                </div>   
+
+                            </div>
+                        </div> 
+                    </div>    
+
+
+
+
+
+
                     </body>
 
                     <!------footer ------>    
@@ -127,15 +212,13 @@
 
     window.onload = function() {   
         var view_p01tab01page;
-        var view_p01tab02page;
-        var view_p01tab03page; 
-        var view_p01tab04page; 
+        var view_machnmpage;
+        var view_addinfopage;  
         var wtab01Grid;
-        var wtab02Grid;
-        var wtab03Grid; 
-        var wtab04Grid;   
+        var machnmGrid;
+        var addinfoGrid;  
        //실시간현황
-       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), { 
+       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01('%', '%', '%', '%'), { 
         }); 
         wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
             autoGenerateColumns: false,
@@ -144,12 +227,32 @@
             allowSorting: 'MultiColumn',
             alternatingRowStep: 0,
             columns: [     
-                { binding: 'shottime', header: '시간', align: "center" ,  width: 120 },           
-                { binding: 'machine_name', header: '기계', align: "center",  width: 50  }, 
-                { binding: 'Additional_Info_1', header: '금형', align: "left",  width: 200  }, 
+                { binding: 'shottime', header: '시간', align: "center" ,  width: 120 },   
+                { binding: 'machine_name', 
+                            header: '기계', 
+                            align: "center", 
+                            width: 50,
+                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                text: '<b>${item.machine_name}</b>',
+                                click: (e, ctx) => {
+                                    chart_list(ctx.item.machine_name, ctx.item.Additional_Info_1);                    
+                                }
+                            }) 
+                },     
+                { binding: 'Additional_Info_1', 
+                            header: '금형', 
+                            align: "left", 
+                            width: 200,
+                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                                text: '<b>${item.Additional_Info_1}</b>',
+                                click: (e, ctx) => {
+                                    chart_list(ctx.item.machine_name, ctx.item.Additional_Info_1);                    
+                                }
+                            }) 
+                },     
                 { binding: 'Shot_Number', header: '공정횟수', align: "right",  width: 80  },  
                 { binding: 'Injection_Time', header: '사출시간', align: "right", format: 'n1',  width: 80  },   
-                { binding: 'Filling_Time', header: '출진시간', align: "center", width: 80 },
+                { binding: 'Filling_Time', header: '충진시간', align: "center", width: 80 },
                 { binding: 'Plasticizing_Time', header: '계량시간', align: "right", format: 'n1',  width: 80  },  
                 { binding: 'Cycle_Time', header: '공정시간', align: "center", width: 80 },
                 { binding: 'Barrel_Temperature_1', header: '연장노즐', align: "right", format: 'n1',  width: 80  },  
@@ -172,13 +275,13 @@
             : wijmo.grid.HeadersVisibility.Column; 
         } 
          // tab01검색 데이터 수집
-       function getData_tab01(){  
-            var ls_frdate = "";
-            var ls_todate = "";
-            var ls_machnm = "";
-            var ls_addinfo = "";   
+       function getData_tab01(arg1, arg2, arg3, arg4){  
+            var ls_machnm = arg1;
+            var ls_addinfo = arg2;
+            var ls_frdate = arg3;
+            var ls_todate = arg4;   
             var wactnm_data = [];          
-            var cnt = 1;    
+            var cnt = 1;     
             $.ajax({
                     url: '/appcms/reallist',   
                     type:"POST", 
@@ -225,61 +328,8 @@
                 })      
                 return wactnm_data;                                     
        } 
- 
-      //  let linechart = new wijmo.chart.FlexChart('#chart', {
-      //       header: '기계: 1 금형자료 : GN7_B_RH',
-      //       legend: {
-      //         position: wijmo.chart.Position.Bottom
-      //       },
-      //       chartType: wijmo.chart.ChartType.Line,
-      //       bindingX: 'month',
-      //       series: [{
-      //         binding: 'mt01',
-      //         name: 'Mold_T_1'
-      //       }, {
-      //         binding: 'mt02',
-      //         name: 'Mold_T_2'
-      //       }, {
-      //         binding: 'mt03',
-      //         name: 'Mold_T_3'
-      //       }, {
-      //         binding: 'mt04',
-      //         name: 'Mold_T_4'
-      //       }, {
-      //         binding: 'mt05',
-      //         name: 'Mold_T_5'
-      //       }, {
-      //         binding: 'mt06',
-      //         name: 'Mold_T_6'
-      //       }],
-      //       axisY: {
-      //         title: '금형온도(°C)'
-      //       },
-      //       itemsSource: getData(),
-      //       palette: ['#F3722C', '#577590', '#F8961E', '#F94144', '#90BE6D', '#F9C74F', '#43AA8B', ]
-      //     });
-      //     //
-      //     let ani = new wijmo.chart.animation.ChartAnimation(linechart);
-      //     ani.animationMode = wijmo.chart.animation.AnimationMode.Point;
-     
 
-      //   function getData() {
-      //     return [
-      //       { month: '21:23:54', mt01: 28.2, mt02: 28, mt03: 30.3, mt04: 30.5, mt05: 62.8, mt06: 0 },
-      //       { month: '21:23:16', mt01: 28.1, mt02: 28, mt03: 30.2, mt04: 30.4, mt05: 62.6, mt06: 0  },
-      //       { month: '21:22:38', mt01: 28, mt02: 28, mt03: 30.3, mt04:30.5, mt05: 62.6, mt06: 0  },
-      //       { month: '21:22:01', mt01: 28.1, mt02: 28.1, mt03: 30.4, mt04: 30.5, mt05: 62.6, mt06: 0  },
-      //       { month: '21:20:45', mt01: 28.1, mt02: 28.1, mt03: 30.5, mt04: 30.5, mt05:62.2, mt06: 0  },
-      //       { month: '21:20:08', mt01: 28.1, mt02: 28.1, mt03: 30.5, mt04: 30.6, mt05: 62.2, mt06: 0  },
-      //       { month: '21:19:30', mt01: 28, mt02: 28.1, mt03: 30.4 , mt04: 30.6, mt05: 62.7, mt06: 0 },
-      //       { month: '21:18:52', mt01: 21.2, mt02: 28.1, mt03: 30.4, mt04: 30.6, mt05:63, mt06: 0  },
-      //       { month: '21:18:15', mt01: 28.1, mt02: 28.1, mt03: 30.3 , mt04: 30.5, mt05: 63.1, mt06: 0 },
-      //       { month: '21:17:37', mt01: 28.1, mt02: 28, mt03: 30.3, mt04: 30.5, mt05: 63.4, mt06: 0  },
-      //       { month: '21:17:00', mt01: 28.1, mt02: 28, mt03: 30.3, mt04: 30.4, mt05: 63.1, mt06: 0  },
-      //       { month: '21:16:22', mt01: 28.1, mt02: 28, mt03: 30.3 , mt04: 30.4, mt05: 62.2, mt06: 0 }
-      //     ];
-      //   }
-
+       
  
 
       const data = [
@@ -350,6 +400,426 @@
                 }
             }
         });
+
+ 
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+        //기계구분 popup list
+        view_machnmpage = new wijmo.collections.CollectionView(getData_machnm(), {
+            // pageSize: 6
+        });      
+        machnmGrid = new wijmo.grid.FlexGrid('#machnmGrid_div', {  
+            autoGenerateColumns: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [   
+                {
+                    binding: 'machine_name',
+                    width: '1*',
+                    header: '기계번호', 
+                    align:"left", 
+                } 
+
+            ],       
+                itemsSource: view_machnmpage
+        });  
+        // 데이터 수집
+        function getData_machnm(){  
+            var data05 = []; 
+            return data05                                          
+        } 
+ 
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+        //금형구분 popup list
+        view_addinfopage = new wijmo.collections.CollectionView(getData_machnm(), {
+            // pageSize: 6
+        });      
+        addinfoGrid = new wijmo.grid.FlexGrid('#addinfoGrid_div', {  
+            autoGenerateColumns: false, 
+            selectionMode: 'RowRange',
+            alternatingRowStep: 0,
+            columns: [   
+                {
+                    binding: 'additional_Info_1',
+                    width: '1*',
+                    header: '금형명', 
+                    align:"left", 
+                } 
+
+            ],       
+                itemsSource: view_addinfopage
+        });   
+
+
+
+
+      //  let linechart = new wijmo.chart.FlexChart('#chart', {
+      //       header: '기계: 1 금형자료 : GN7_B_RH',
+      //       legend: {
+      //         position: wijmo.chart.Position.Bottom
+      //       },
+      //       chartType: wijmo.chart.ChartType.Line,
+      //       bindingX: 'month',
+      //       series: [{
+      //         binding: 'mt01',
+      //         name: 'Mold_T_1'
+      //       }, {
+      //         binding: 'mt02',
+      //         name: 'Mold_T_2'
+      //       }, {
+      //         binding: 'mt03',
+      //         name: 'Mold_T_3'
+      //       }, {
+      //         binding: 'mt04',
+      //         name: 'Mold_T_4'
+      //       }, {
+      //         binding: 'mt05',
+      //         name: 'Mold_T_5'
+      //       }, {
+      //         binding: 'mt06',
+      //         name: 'Mold_T_6'
+      //       }],
+      //       axisY: {
+      //         title: '금형온도(°C)'
+      //       },
+      //       itemsSource: getData(),
+      //       palette: ['#F3722C', '#577590', '#F8961E', '#F94144', '#90BE6D', '#F9C74F', '#43AA8B', ]
+      //     });
+      //     //
+      //     let ani = new wijmo.chart.animation.ChartAnimation(linechart);
+      //     ani.animationMode = wijmo.chart.animation.AnimationMode.Point;
+     
+
+      //   function getData() {
+      //     return [
+      //       { month: '21:23:54', mt01: 28.2, mt02: 28, mt03: 30.3, mt04: 30.5, mt05: 62.8, mt06: 0 },
+      //       { month: '21:23:16', mt01: 28.1, mt02: 28, mt03: 30.2, mt04: 30.4, mt05: 62.6, mt06: 0  },
+      //       { month: '21:22:38', mt01: 28, mt02: 28, mt03: 30.3, mt04:30.5, mt05: 62.6, mt06: 0  },
+      //       { month: '21:22:01', mt01: 28.1, mt02: 28.1, mt03: 30.4, mt04: 30.5, mt05: 62.6, mt06: 0  },
+      //       { month: '21:20:45', mt01: 28.1, mt02: 28.1, mt03: 30.5, mt04: 30.5, mt05:62.2, mt06: 0  },
+      //       { month: '21:20:08', mt01: 28.1, mt02: 28.1, mt03: 30.5, mt04: 30.6, mt05: 62.2, mt06: 0  },
+      //       { month: '21:19:30', mt01: 28, mt02: 28.1, mt03: 30.4 , mt04: 30.6, mt05: 62.7, mt06: 0 },
+      //       { month: '21:18:52', mt01: 21.2, mt02: 28.1, mt03: 30.4, mt04: 30.6, mt05:63, mt06: 0  },
+      //       { month: '21:18:15', mt01: 28.1, mt02: 28.1, mt03: 30.3 , mt04: 30.5, mt05: 63.1, mt06: 0 },
+      //       { month: '21:17:37', mt01: 28.1, mt02: 28, mt03: 30.3, mt04: 30.5, mt05: 63.4, mt06: 0  },
+      //       { month: '21:17:00', mt01: 28.1, mt02: 28, mt03: 30.3, mt04: 30.4, mt05: 63.1, mt06: 0  },
+      //       { month: '21:16:22', mt01: 28.1, mt02: 28, mt03: 30.3 , mt04: 30.4, mt05: 62.2, mt06: 0 }
+      //     ];
+      //   }
+        function machnm_list(arg){ 
+            var wactnm_data = [];          
+            var cnt = 1;    
+            $.ajax({
+                    url: '/appcms/machnmlist',   
+                    type:"POST", 
+                    data: { 
+                        "machnm" : arg , 
+                    },
+                    async:false,
+                    success:function(data){   
+                            var wtab01Dto = data; 
+                            rowCount = data.length;   
+                            for (var i = 0; i < rowCount; i++) {
+                                    wactnm_data.push({ 
+                                        index: cnt,
+                                        machine_name: wtab01Dto[i]["machine_name"] 
+                                    });
+                                    cnt++;
+                              }  
+                    },error:function(e){
+                        console.log('error',e);
+                    }
+            }).done(function(fragment){           
+            })  
+            
+            machnmGrid.columns.clear();  
+            machnmGrid.autoGenerateColumns = false; 
+            view_machnmpage.sourceCollection  = wactnm_data;
+            
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'machine_name';
+            cols.header = '기계번호';
+            cols.align = "center";
+            cols.width = 200;  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.machine_name}</b>',
+                click: (e, ctx) => {
+                    machnmChk(ctx.item.machine_name);  
+                }
+            });
+            machnmGrid.columns.push(cols);   
+                
+        }
+        function machnmChk(arg1){    
+            var ls_tab = document.getElementById('tabvalue').value; 
+            if(ls_tab == "A"){
+                document.getElementById('inmachname').value= arg1;  
+            }  
+            $("#machnmmodal_btn").trigger("click"); 
+        }  
+        
+
+        function addinfo_list(arg){ 
+            var wactnm_data = [];          
+            var cnt = 1;    
+            $.ajax({
+                    url: '/appcms/addinfolist',   
+                    type:"POST", 
+                    data: { 
+                        "addinfo" : arg , 
+                    },
+                    async:false,
+                    success:function(data){   
+                            var wtab01Dto = data; 
+                            rowCount = data.length;   
+                            for (var i = 0; i < rowCount; i++) {
+                                    wactnm_data.push({ 
+                                        index: cnt,
+                                        addinfo_name: wtab01Dto[i]["additional_Info_1"] 
+                                    });
+                                    cnt++;
+                              }  
+                    },error:function(e){
+                        console.log('error',e);
+                    }
+            }).done(function(fragment){           
+            })  
+            
+            addinfoGrid.columns.clear();  
+            addinfoGrid.autoGenerateColumns = false; 
+            view_addinfopage.sourceCollection  = wactnm_data;
+            
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'addinfo_name';
+            cols.header = '기계번호';
+            cols.align = "center";
+            cols.width = 200;  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.addinfo_name}</b>',
+                click: (e, ctx) => {
+                    addinfoChk(ctx.item.addinfo_name);  
+                }
+            });
+            addinfoGrid.columns.push(cols);   
+                
+        }
+        function addinfoChk(arg1){    
+            var ls_tab = document.getElementById('tabvalue').value; 
+            if(ls_tab == "A"){
+                document.getElementById('inaddinfo').value= arg1;  
+            }  
+            $("#addinfomodal_btn").trigger("click"); 
+        }  
+
+        function chart_list(arg1, arg2){
+            var  ls_frdate     =  convert_date(wfrdate.value);                    
+            var  ls_todate     =  convert_date(wtodate.value);  
+            console.log(arg1)
+            console.log(arg2)
+            console.log(ls_frdate)
+            console.log(ls_todate)
+        }
+                                  
+        // tab01 검색   
+        document.getElementById("retrieveBtn").addEventListener("click",function(){  
+            var ls_inmachnm = document.getElementById('inmachname').value;
+            var ls_inaddinfo = document.getElementById('inaddinfo').value;
+            ls_inmachnm = ls_inmachnm.trim();
+            ls_inaddinfo = ls_inaddinfo.trim();
+            var  ls_frdate     =  convert_date(wfrdate.value);                    
+            var  ls_todate     =  convert_date(wtodate.value);  
+            if(ls_inmachnm == null || ls_inmachnm.length == 0 || ls_inmachnm == ""){ 
+                ls_inmachnm    = "%"
+            }   
+            if(ls_inaddinfo == null || ls_inaddinfo.length == 0 || ls_inaddinfo == ""){ 
+                ls_inaddinfo    = "%"
+            }    
+            var cmsData = getData_tab01(ls_inmachnm, ls_inaddinfo, ls_frdate, ls_todate ); 
+            tabA_grid(cmsData);
+        })  
+          
+
+        function tabA_grid(arg_data){
+
+            wtab01Grid.columns.clear();  
+            wtab01Grid.autoGenerateColumns = false; 
+            view_p01tab01page.sourceCollection  = arg_data;
+            
+            var cols = new wijmo.grid.Column(); 
+            cols.binding = 'shottime';
+            cols.header = '시간';
+            cols.align = "center";
+            cols.width = 120;  
+            wtab01Grid.columns.push(cols);    
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'machine_name';
+            cols.header = '기계';
+            cols.align = "center";
+            cols.width = 50; 
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.machine_name}</b>',
+                click: (e, ctx) => {
+                    chart_list(ctx.item.machine_name, ctx.item.Additional_Info_1);  
+                }
+            });
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Additional_Info_1';
+            cols.header = '금형';
+            cols.align = "left";
+            cols.width = 200;  
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.Additional_Info_1}</b>',
+                click: (e, ctx) => {
+                    chart_list(ctx.item.machine_name, ctx.item.Additional_Info_1);  
+                }
+            });
+            wtab01Grid.columns.push(cols);   
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Shot_Number';
+            cols.header = '공정횟수';
+            cols.align = "right";
+            cols.width = 80;  
+            wtab01Grid.columns.push(cols);    
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Injection_Time';
+            cols.header = '사출시간';
+            cols.align = "right";
+            cols.width = 80;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);   
+ 
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Filling_Time';
+            cols.header = '충진시간';
+            cols.align = "right";
+            cols.width = 80;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);   
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Plasticizing_Time';
+            cols.header = '계량시간';
+            cols.align = "right";
+            cols.width = 80;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);   
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Cycle_Time';
+            cols.header = '공정시간';
+            cols.align = "center";
+            cols.width = 80;   
+            wtab01Grid.columns.push(cols); 
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Barrel_Temperature_1';
+            cols.header = '연장노즐';
+            cols.align = "right";
+            cols.width = 80;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);   
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Barrel_Temperature_2';
+            cols.header = '노즐';
+            cols.align = "right";
+            cols.width = 80;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);   
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Mold_Temperature_1';
+            cols.header = '금형온도(1)';
+            cols.align = "right";
+            cols.width = 110;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);     
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Mold_Temperature_2';
+            cols.header = '금형온도(2)';
+            cols.align = "right";
+            cols.width = 110;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);     
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Mold_Temperature_3';
+            cols.header = '금형온도(3)';
+            cols.align = "right";
+            cols.width = 110;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);     
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Mold_Temperature_4';
+            cols.header = '금형온도(4)';
+            cols.align = "right";
+            cols.width = 110;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);     
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Mold_Temperature_5';
+            cols.header = '금형온도(5)';
+            cols.align = "right";
+            cols.width = 110;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);     
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'Mold_Temperature_6';
+            cols.header = '금형온도(6)';
+            cols.align = "right";
+            cols.width = 110;  
+            cols.format = 'n1';  
+            wtab01Grid.columns.push(cols);     
+        }
+ 
+        document.getElementById("inmachname").addEventListener("keyup", (e)=>{ 
+            if(e.keyCode === 13){  
+                machnm_list("%")
+                document.getElementById("inbtn01").click();
+            }
+        });  
+        document.getElementById("inaddinfo").addEventListener("keyup", (e)=>{ 
+            if(e.keyCode === 13){  
+                addinfo_list("%")
+                document.getElementById("inbtn02").click();
+            }
+        });  
+        document.getElementById("inmachname").addEventListener("click", (e)=>{  
+                machnm_list("%")
+                document.getElementById("inbtn01").click(); 
+        }); 
+        document.getElementById("inaddinfo").addEventListener("click", (e)=>{  
+                addinfo_list("%")
+                document.getElementById("inbtn02").click(); 
+        });
+
+        function convert_date(arg_date){  
+            var ls_arg_date = String(arg_date); 
+            if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
+                return "";
+            }  
+            // Date 객체로 변환
+            const dateObj = new Date(arg_date);
+
+            // 년, 월, 일 추출 (월은 0부터 시작하므로 +1 필요)
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+
+            // "YYYY-MM-DD" 형식으로 변환
+            const formattedDate = `${year}${month}${day}`;
+            arg_date = formattedDate; 
+            return arg_date; 
+        }
+
 
     }
        

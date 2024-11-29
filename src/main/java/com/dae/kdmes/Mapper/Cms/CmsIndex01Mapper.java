@@ -15,6 +15,10 @@ public interface CmsIndex01Mapper {
     public Integer getSHOTDATA_wotqty(CmsIndex01Dto parm) ;
     public List<CmsIndex01Dto> getSHOTDATA_realtime(CmsIndex01Dto parm) ;
 
+    public List<CmsIndex01Dto> getSHOTDATA_machine(CmsIndex01Dto parm) ;
+
+    public List<CmsIndex01Dto> getSHOTDATA_addinfo(CmsIndex01Dto parm) ;
+
 
 
 }

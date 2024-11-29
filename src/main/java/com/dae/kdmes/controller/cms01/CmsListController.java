@@ -41,22 +41,29 @@ public class CmsListController {
                           @RequestParam("addinfo") String addinfo,
                                Model model, HttpServletRequest request) throws Exception{
         List<CmsIndex01Dto> cms01List = new ArrayList<>();
+        List<CmsIndex01Dto> cms02List = new ArrayList<>();
         try {
 
             Date nowData = new Date();
             SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
             String indate = endDate.format(nowData).toString();
-            cmsdto.setFrdate(indate);
-            cmsdto.setTodate(indate);
-            cmsdto.setMachine_name("%");
-            cmsdto.setAdditional_Info_1("%");
-            cms01List = cmsservice01.getSHOTDATA_realtime(cmsdto);
-
-            System.out.println("리스트 데이터:");
-            for (CmsIndex01Dto item : cms01List) {
-                System.out.println("- " + item.getAdditional_Info_1());
+            if(frdate.equals("%")){
+                frdate = indate;
+                todate = indate;
             }
+            cmsdto.setFrdate(frdate);
+            cmsdto.setTodate(todate);
+            cmsdto.setMachine_name(machnm);
+            cmsdto.setAdditional_Info_1(addinfo);
+            cms01List = cmsservice01.getSHOTDATA_realtime(cmsdto);
+            cms02List = cmsservice01.getSHOTDATA_machine(cmsdto);
+
+//            System.out.println("리스트 데이터:");
+//            for (CmsIndex01Dto item : cms01List) {
+//                System.out.println("- " + item.getAdditional_Info_1());
+//            }
             model.addAttribute("cmsDto", cms01List);
+            model.addAttribute("machnmDto", cms02List);
 
         } catch (Exception ex) {
             log.info("getRealCmsList Exception =====>" + ex.toString());
@@ -65,5 +72,49 @@ public class CmsListController {
     }
 
 
+
+    //기계번호조회
+    @GetMapping(value="/machnmlist")
+    public Object getMachnmList( @RequestParam("machnm") String machnm,
+                                 Model model, HttpServletRequest request) throws Exception{
+        List<CmsIndex01Dto> cms01List = new ArrayList<>();
+        try {
+
+            cmsdto.setMachine_name(machnm);
+            cms01List = cmsservice01.getSHOTDATA_machine(cmsdto);
+
+//            System.out.println("리스트 데이터:");
+//            for (CmsIndex01Dto item : cms01List) {
+//                System.out.println("- " + item.getAdditional_Info_1());
+//            }
+            model.addAttribute("machnmDto", cms01List);
+
+        } catch (Exception ex) {
+            log.info("getRealCmsList Exception =====>" + ex.toString());
+        }
+        return cms01List;
+    }
+
+
+    //금형조회
+    @GetMapping(value="/addinfolist")
+    public Object getAddinfoList( @RequestParam("addinfo") String addinfo,
+                                 Model model, HttpServletRequest request) throws Exception{
+        List<CmsIndex01Dto> cms01List = new ArrayList<>();
+        try {
+
+            cmsdto.setAdditional_Info_1(addinfo);
+            cms01List = cmsservice01.getSHOTDATA_addinfo(cmsdto);
+
+//            System.out.println("리스트 데이터:");
+//            for (CmsIndex01Dto item : cms01List) {
+//                System.out.println("- " + item.getAdditional_Info_1());
+//            }
+
+        } catch (Exception ex) {
+            log.info("getAddinfoList Exception =====>" + ex.toString());
+        }
+        return cms01List;
+    }
 
 }

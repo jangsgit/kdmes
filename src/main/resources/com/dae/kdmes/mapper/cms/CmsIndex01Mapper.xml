@@ -44,4 +44,25 @@
           ORDER BY TimeStamp DESC
         ]]>
     </select>
+
+
+    <select id="getSHOTDATA_machine"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto">
+        <![CDATA[
+        select  machine_name
+            from shot_data
+            where  isnull(machine_name,'') Like concat(#{machine_name},'%')
+            group by machine_name
+            order by cast(machine_name as int)
+        ]]>
+    </select>
+
+    <select id="getSHOTDATA_addinfo"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto">
+        <![CDATA[
+        select  Additional_Info_1
+            from shot_data
+            where  isnull(Additional_Info_1,'') Like concat(#{Additional_Info_1},'%')
+            group by Additional_Info_1
+            order by Additional_Info_1
+        ]]>
+    </select>
 </mapper>
