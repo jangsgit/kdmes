@@ -41,5 +41,11 @@ public class CmsIndex01Dto {
     private float  Mold_Temperature_10;
     private float  Mold_Temperature_11;
     private float  Mold_Temperature_12;
+    private float  MT01;
+    private float  MT02;
+    private float  MT03;
+    private float  MT04;
+    private float  MT05;
+    private float  MT06;
 
 }

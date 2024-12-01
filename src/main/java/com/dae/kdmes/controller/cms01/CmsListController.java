@@ -36,26 +36,34 @@ public class CmsListController {
     //생산계획현황
     @GetMapping(value="/reallist")
     public Object getRealCmsList(@RequestParam("frdate") String frdate,
-                          @RequestParam("todate") String todate,
-                          @RequestParam("machnm") String machnm,
-                          @RequestParam("addinfo") String addinfo,
+                                 @RequestParam("todate") String todate,
+                                 @RequestParam("machnm") String machnm,
+                                 @RequestParam("addinfo") String addinfo,
+                                 @RequestParam("listflag") String listflag,
                                Model model, HttpServletRequest request) throws Exception{
         List<CmsIndex01Dto> cms01List = new ArrayList<>();
         List<CmsIndex01Dto> cms02List = new ArrayList<>();
         try {
 
             Date nowData = new Date();
-            SimpleDateFormat endDate = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat endDate = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             String indate = endDate.format(nowData).toString();
+            System.out.println("indate  :" + indate);
             if(frdate.equals("%")){
                 frdate = indate;
                 todate = indate;
             }
+            System.out.println("frdate  :" + frdate);
+            System.out.println("todate  :" + todate);
             cmsdto.setFrdate(frdate);
             cmsdto.setTodate(todate);
             cmsdto.setMachine_name(machnm);
             cmsdto.setAdditional_Info_1(addinfo);
-            cms01List = cmsservice01.getSHOTDATA_realtime(cmsdto);
+            if(listflag.equals("list")){
+                cms01List = cmsservice01.getSHOTDATA_realtime(cmsdto);
+            }else{
+                cms01List = cmsservice01.getSHOTDATA_realtime_chart(cmsdto);
+            }
             cms02List = cmsservice01.getSHOTDATA_machine(cmsdto);
 
 //            System.out.println("리스트 데이터:");

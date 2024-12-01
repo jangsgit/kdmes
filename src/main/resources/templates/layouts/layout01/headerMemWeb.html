@@ -71,12 +71,14 @@
                                 <div class="row gx-3" style="  margin: 10px 10px 10px;">    
                                     <div class="col-auto">
                                         <div class="input-group input-group-sm mb-3">
-                                            <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
+                                            <!-- <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     > -->
+                                            <input type="datetime-local" class="form-control" id="frdate" autocomplete="off" placeholder="YYYY-MM-DD HH:MM">
                                         </div> 
                                     </div>   
                                     <div class="col-auto"> 
                                         <div class="input-group input-group-sm mb-3"> 
-                                            <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
+                                            <!-- <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     > -->
+                                            <input type="datetime-local" class="form-control" id="todate" autocomplete="off" placeholder="YYYY-MM-DD HH:MM">
                                         </div>
                                     </div> 
                                     <div class="col-2 col-sm-2">
@@ -216,9 +218,16 @@
         var view_addinfopage;  
         var wtab01Grid;
         var machnmGrid;
-        var addinfoGrid;  
+        var addinfoGrid; 
+        var machnmChart;
+        var addinfoChart;
+        var labels ; 
+        var dataset ;
+        var dataChart = [];
+        // 전역 변수로 차트 객체 선언
+        let chartInstance;
        //실시간현황
-       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01('%', '%', '%', '%'), { 
+       view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01('%', '%', '%', '%', "list"), { 
         }); 
         wtab01Grid = new wijmo.grid.FlexGrid('#wtab01Grid_div', {  
             autoGenerateColumns: false,
@@ -275,7 +284,7 @@
             : wijmo.grid.HeadersVisibility.Column; 
         } 
          // tab01검색 데이터 수집
-       function getData_tab01(arg1, arg2, arg3, arg4){  
+       function getData_tab01(arg1, arg2, arg3, arg4, arg5){  
             var ls_machnm = arg1;
             var ls_addinfo = arg2;
             var ls_frdate = arg3;
@@ -289,119 +298,95 @@
                         "frdate" : ls_frdate , 
                         "todate" : ls_todate , 
                         "machnm" : ls_machnm , 
-                        "addinfo" : ls_addinfo
+                        "addinfo" : ls_addinfo,
+                        "listflag" : arg5
                     },
                     async:false,
                     success:function(data){   
                             var wtab01Dto = data; 
                             rowCount = data.length;   
                             for (var i = 0; i < rowCount; i++) {
-                                    wactnm_data.push({ 
-                                        index: cnt,
-                                        machine_name: wtab01Dto[i]["machine_name"], 
-                                        Additional_Info_1: wtab01Dto[i]["additional_Info_1"], 
-                                        Shot_Number: wtab01Dto[i]["shot_Number"], 
-                                        Injection_Time: wtab01Dto[i]["injection_Time"], 
-                                        Filling_Time: wtab01Dto[i]["filling_Time"], 
-                                        Plasticizing_Time: wtab01Dto[i]["plasticizing_Time"], 
-                                        Cycle_Time: wtab01Dto[i]["cycle_Time"], 
-                                        Barrel_Temperature_1: wtab01Dto[i]["barrel_Temperature_1"], 
-                                        Barrel_Temperature_2: wtab01Dto[i]["barrel_Temperature_2"], 
-                                        Mold_Temperature_1: wtab01Dto[i]["mold_Temperature_1"], 
-                                        Mold_Temperature_2: wtab01Dto[i]["mold_Temperature_2"], 
-                                        Mold_Temperature_3: wtab01Dto[i]["mold_Temperature_3"], 
-                                        Mold_Temperature_4: wtab01Dto[i]["mold_Temperature_4"], 
-                                        Mold_Temperature_5: wtab01Dto[i]["mold_Temperature_5"], 
-                                        Mold_Temperature_6: wtab01Dto[i]["mold_Temperature_6"],
-                                        Cavity: wtab01Dto[i]["cavity"],  
-                                        TimeStamp: wtab01Dto[i]["timeStamp"], 
-                                        shottime: wtab01Dto[i]["shottime"], 
-                                        shotdate: wtab01Dto[i]["shotdate"],      
-                                        
-                                    });
+                                    if(arg5 == "list"){
+                                        wactnm_data.push({ 
+                                            index: cnt,
+                                            machine_name: wtab01Dto[i]["machine_name"], 
+                                            Additional_Info_1: wtab01Dto[i]["additional_Info_1"], 
+                                            Shot_Number: wtab01Dto[i]["shot_Number"], 
+                                            Injection_Time: wtab01Dto[i]["injection_Time"], 
+                                            Filling_Time: wtab01Dto[i]["filling_Time"], 
+                                            Plasticizing_Time: wtab01Dto[i]["plasticizing_Time"], 
+                                            Cycle_Time: wtab01Dto[i]["cycle_Time"], 
+                                            Barrel_Temperature_1: wtab01Dto[i]["barrel_Temperature_1"], 
+                                            Barrel_Temperature_2: wtab01Dto[i]["barrel_Temperature_2"], 
+                                            Mold_Temperature_1: wtab01Dto[i]["mold_Temperature_1"], 
+                                            Mold_Temperature_2: wtab01Dto[i]["mold_Temperature_2"], 
+                                            Mold_Temperature_3: wtab01Dto[i]["mold_Temperature_3"], 
+                                            Mold_Temperature_4: wtab01Dto[i]["mold_Temperature_4"], 
+                                            Mold_Temperature_5: wtab01Dto[i]["mold_Temperature_5"], 
+                                            Mold_Temperature_6: wtab01Dto[i]["mold_Temperature_6"],
+                                            Cavity: wtab01Dto[i]["cavity"],  
+                                            TimeStamp: wtab01Dto[i]["timeStamp"], 
+                                            shottime: wtab01Dto[i]["shottime"], 
+                                            shotdate: wtab01Dto[i]["shotdate"],      
+                                            
+                                        });
+
+                                    }else{
+                                        dataChart.push({ 
+                                            index: cnt, 
+                                            machine_name: wtab01Dto[i]["machine_name"], 
+                                            Additional_Info_1: wtab01Dto[i]["additional_Info_1"], 
+                                            MT01: wtab01Dto[i]["mt01"], 
+                                            MT01: wtab01Dto[i]["mt01"], 
+                                            MT02: wtab01Dto[i]["mt02"], 
+                                            MT03: wtab01Dto[i]["mt03"], 
+                                            MT04: wtab01Dto[i]["mt04"], 
+                                            MT05: wtab01Dto[i]["mt05"], 
+                                            MT06: wtab01Dto[i]["mt06"], 
+                                            shottime: wtab01Dto[i]["shottime"],       
+                                            
+                                        }); 
+                                    }
                                     cnt++;
                               }  
                     },error:function(e){
                         console.log('error',e);
                     }
                 }).done(function(fragment){           
-                })      
-                return wactnm_data;                                     
-       } 
-
-       
- 
-
-      const data = [
-            { month: '21:23:54', MT01: 28.2, MT02: 28, MT03: 30.3, MT04: 30.5, MT05: 62.8, MT06: 0 },
-            { month: '21:23:16', MT01: 28.1, MT02: 28, MT03: 30.2, MT04: 30.4, MT05: 62.6, MT06: 0 },
-            { month: '21:22:38', MT01: 28, MT02: 28, MT03: 30.3, MT04: 30.5, MT05: 62.6, MT06: 0 },
-            { month: '21:22:01', MT01: 28.1, MT02: 28.1, MT03: 30.4, MT04: 30.5, MT05: 62.6, MT06: 0 },
-            { month: '21:20:45', MT01: 28.1, MT02: 28.1, MT03: 30.5, MT04: 30.5, MT05: 62.2, MT06: 0 },
-            { month: '21:20:08', MT01: 28.1, MT02: 28.1, MT03: 30.5, MT04: 30.6, MT05: 62.2, MT06: 0 },
-            { month: '21:19:30', MT01: 28, MT02: 28.1, MT03: 30.4, MT04: 30.6, MT05: 62.7, MT06: 0 },
-            { month: '21:18:52', MT01: 21.2, MT02: 28.1, MT03: 30.4, MT04: 30.6, MT05: 63, MT06: 0 },
-            { month: '21:18:15', MT01: 28.1, MT02: 28.1, MT03: 30.3, MT04: 30.5, MT05: 63.1, MT06: 0 },
-            { month: '21:17:37', MT01: 28.1, MT02: 28, MT03: 30.3, MT04: 30.5, MT05: 63.4, MT06: 0 },
-            { month: '21:17:00', MT01: 28.1, MT02: 28, MT03: 30.3, MT04: 30.4, MT05: 63.1, MT06: 0 },
-            { month: '21:16:22', MT01: 28.1, MT02: 28, MT03: 30.3, MT04: 30.4, MT05: 62.2, MT06: 0 }
-        ];
-
-        const labels = data.map(entry => entry.month);
-        const dataset = [
-            { label: 'MT01', data: data.map(entry => entry.MT01) },
-            { label: 'MT02', data: data.map(entry => entry.MT02) },
-            { label: 'MT03', data: data.map(entry => entry.MT03) },
-            { label: 'MT04', data: data.map(entry => entry.MT04) },
-            { label: 'MT05', data: data.map(entry => entry.MT05) },
-            { label: 'MT06', data: data.map(entry => entry.MT06) }
-        ];
-
-        const ctx = document.getElementById('temperatureChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: dataset.map((set, index) => ({
-                    label: set.label,
-                    data: set.data,
-                    borderColor: `hsl(${index * 60}, 70%, 50%)`,
-                    backgroundColor: `hsl(${index * 60}, 70%, 70%, 0.4)`,
-                    fill: false,
-                    tension: 0.1
-                }))
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: '기계:1 (금형:GN7_B_RH) 온도변화'
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: '시간'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: '온도 (°C)'
-                        },
-                        beginAtZero: true
-                    }
+                })  
+                if(arg5 == "list"){    
+                    return wactnm_data;                                     
                 }
-            }
-        });
+                else{
+                    return dataChart;                                     
+                }
+       }  
+       machnmChart = "샘플";
+       addinfoChart = "Sample";
+       dataC = [
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:23:54', MT01: 28.2, MT02: 28, MT03: 30.3, MT04: 30.5, MT05: 62.8, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:23:16', MT01: 28.1, MT02: 28, MT03: 30.2, MT04: 30.4, MT05: 62.6, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:22:38', MT01: 28, MT02: 28, MT03: 30.3, MT04: 30.5, MT05: 62.6, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:22:01', MT01: 28.1, MT02: 28.1, MT03: 30.4, MT04: 30.5, MT05: 62.6, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:20:45', MT01: 28.1, MT02: 28.1, MT03: 30.5, MT04: 30.5, MT05: 62.2, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:20:08', MT01: 28.1, MT02: 28.1, MT03: 30.5, MT04: 30.6, MT05: 62.2, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:19:30', MT01: 28, MT02: 28.1, MT03: 30.4, MT04: 30.6, MT05: 62.7, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:18:52', MT01: 21.2, MT02: 28.1, MT03: 30.4, MT04: 30.6, MT05: 63, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:18:15', MT01: 28.1, MT02: 28.1, MT03: 30.3, MT04: 30.5, MT05: 63.1, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:17:37', MT01: 28.1, MT02: 28, MT03: 30.3, MT04: 30.5, MT05: 63.4, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:17:00', MT01: 28.1, MT02: 28, MT03: 30.3, MT04: 30.4, MT05: 63.1, MT06: 0 },
+            { machine_name : "1", Additional_Info_1: 'DM_RD', shottime: '21:16:22', MT01: 28.1, MT02: 28, MT03: 30.3, MT04: 30.4, MT05: 62.2, MT06: 0 }
+        ];
 
- 
+        labels = dataC.map(entry => entry.shottime);
+        dataset = [
+            { label: 'MT01', data: dataC.map(entry => entry.MT01) },
+            { label: 'MT02', data: dataC.map(entry => entry.MT02) },
+            { label: 'MT03', data: dataC.map(entry => entry.MT03) },
+            { label: 'MT04', data: dataC.map(entry => entry.MT04) },
+            { label: 'MT05', data: dataC.map(entry => entry.MT05) },
+            { label: 'MT06', data: dataC.map(entry => entry.MT06) }
+        ]; 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //기계구분 popup list
         view_machnmpage = new wijmo.collections.CollectionView(getData_machnm(), {
@@ -449,62 +434,7 @@
                 itemsSource: view_addinfopage
         });   
 
-
-
-
-      //  let linechart = new wijmo.chart.FlexChart('#chart', {
-      //       header: '기계: 1 금형자료 : GN7_B_RH',
-      //       legend: {
-      //         position: wijmo.chart.Position.Bottom
-      //       },
-      //       chartType: wijmo.chart.ChartType.Line,
-      //       bindingX: 'month',
-      //       series: [{
-      //         binding: 'mt01',
-      //         name: 'Mold_T_1'
-      //       }, {
-      //         binding: 'mt02',
-      //         name: 'Mold_T_2'
-      //       }, {
-      //         binding: 'mt03',
-      //         name: 'Mold_T_3'
-      //       }, {
-      //         binding: 'mt04',
-      //         name: 'Mold_T_4'
-      //       }, {
-      //         binding: 'mt05',
-      //         name: 'Mold_T_5'
-      //       }, {
-      //         binding: 'mt06',
-      //         name: 'Mold_T_6'
-      //       }],
-      //       axisY: {
-      //         title: '금형온도(°C)'
-      //       },
-      //       itemsSource: getData(),
-      //       palette: ['#F3722C', '#577590', '#F8961E', '#F94144', '#90BE6D', '#F9C74F', '#43AA8B', ]
-      //     });
-      //     //
-      //     let ani = new wijmo.chart.animation.ChartAnimation(linechart);
-      //     ani.animationMode = wijmo.chart.animation.AnimationMode.Point;
-     
-
-      //   function getData() {
-      //     return [
-      //       { month: '21:23:54', mt01: 28.2, mt02: 28, mt03: 30.3, mt04: 30.5, mt05: 62.8, mt06: 0 },
-      //       { month: '21:23:16', mt01: 28.1, mt02: 28, mt03: 30.2, mt04: 30.4, mt05: 62.6, mt06: 0  },
-      //       { month: '21:22:38', mt01: 28, mt02: 28, mt03: 30.3, mt04:30.5, mt05: 62.6, mt06: 0  },
-      //       { month: '21:22:01', mt01: 28.1, mt02: 28.1, mt03: 30.4, mt04: 30.5, mt05: 62.6, mt06: 0  },
-      //       { month: '21:20:45', mt01: 28.1, mt02: 28.1, mt03: 30.5, mt04: 30.5, mt05:62.2, mt06: 0  },
-      //       { month: '21:20:08', mt01: 28.1, mt02: 28.1, mt03: 30.5, mt04: 30.6, mt05: 62.2, mt06: 0  },
-      //       { month: '21:19:30', mt01: 28, mt02: 28.1, mt03: 30.4 , mt04: 30.6, mt05: 62.7, mt06: 0 },
-      //       { month: '21:18:52', mt01: 21.2, mt02: 28.1, mt03: 30.4, mt04: 30.6, mt05:63, mt06: 0  },
-      //       { month: '21:18:15', mt01: 28.1, mt02: 28.1, mt03: 30.3 , mt04: 30.5, mt05: 63.1, mt06: 0 },
-      //       { month: '21:17:37', mt01: 28.1, mt02: 28, mt03: 30.3, mt04: 30.5, mt05: 63.4, mt06: 0  },
-      //       { month: '21:17:00', mt01: 28.1, mt02: 28, mt03: 30.3, mt04: 30.4, mt05: 63.1, mt06: 0  },
-      //       { month: '21:16:22', mt01: 28.1, mt02: 28, mt03: 30.3 , mt04: 30.4, mt05: 62.2, mt06: 0 }
-      //     ];
-      //   }
+ 
         function machnm_list(arg){ 
             var wactnm_data = [];          
             var cnt = 1;    
@@ -609,15 +539,82 @@
             }  
             $("#addinfomodal_btn").trigger("click"); 
         }  
-
+        const ctx = document.getElementById('temperatureChart').getContext('2d');
         function chart_list(arg1, arg2){
             var  ls_frdate     =  convert_date(wfrdate.value);                    
-            var  ls_todate     =  convert_date(wtodate.value);  
-            console.log(arg1)
-            console.log(arg2)
-            console.log(ls_frdate)
-            console.log(ls_todate)
+            var  ls_todate     =  convert_date(wtodate.value); 
+            dataChart = getData_tab01(arg1, arg2, ls_frdate, ls_todate, "chart")  
+            machnmChart  = arg1
+            addinfoChart = arg2
+            labels = dataChart.map(entry => entry.shottime);
+            dataset = [
+                { label: 'MT01', data: dataChart.map(entry => entry.MT01) },
+                { label: 'MT02', data: dataChart.map(entry => entry.MT02) },
+                { label: 'MT03', data: dataChart.map(entry => entry.MT03) },
+                { label: 'MT04', data: dataChart.map(entry => entry.MT04) },
+                { label: 'MT05', data: dataChart.map(entry => entry.MT05) },
+                { label: 'MT06', data: dataChart.map(entry => entry.MT06) }
+            ];
+              
+            // 차트 업데이트
+            if (chartInstance) {
+                chartInstance.data.labels = labels;
+                chartInstance.data.datasets = dataset.map((set, index) => ({
+                    label: set.label,
+                    data: set.data,
+                    borderColor: `hsl(${index * 60}, 70%, 50%)`,
+                    backgroundColor: `hsl(${index * 60}, 70%, 70%, 0.4)`,
+                    fill: false,
+                    tension: 0.1
+                }));
+                chartInstance.options.plugins.title.text = `기계: ${arg1} (금형: ${arg2}) 온도변화`;
+                chartInstance.update(); // 차트 업데이트
+            } 
         }
+        //text: '기계:' + data.map(item => item.machine_name) + '(금형:' + data.map(item => item.additional_Info_1) + ') 온도변화'
+        
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: dataset.map((set, index) => ({
+                    label: set.label,
+                    data: set.data,
+                    borderColor: `hsl(${index * 60}, 70%, 50%)`,
+                    backgroundColor: `hsl(${index * 60}, 70%, 70%, 0.4)`,
+                    fill: false,
+                    tension: 0.1
+                }))
+            }, 
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '기계:' + machnmChart + '(금형:' +  addinfoChart + ') 온도변화'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '시간'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '온도 (°C)'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
                                   
         // tab01 검색   
         document.getElementById("retrieveBtn").addEventListener("click",function(){  
@@ -627,13 +624,15 @@
             ls_inaddinfo = ls_inaddinfo.trim();
             var  ls_frdate     =  convert_date(wfrdate.value);                    
             var  ls_todate     =  convert_date(wtodate.value);  
+            console.log(ls_frdate)
+            console.log(ls_todate)
             if(ls_inmachnm == null || ls_inmachnm.length == 0 || ls_inmachnm == ""){ 
                 ls_inmachnm    = "%"
             }   
             if(ls_inaddinfo == null || ls_inaddinfo.length == 0 || ls_inaddinfo == ""){ 
                 ls_inaddinfo    = "%"
             }    
-            var cmsData = getData_tab01(ls_inmachnm, ls_inaddinfo, ls_frdate, ls_todate ); 
+            var cmsData = getData_tab01(ls_inmachnm, ls_inaddinfo, ls_frdate, ls_todate, "list" ); 
             tabA_grid(cmsData);
         })  
           
@@ -814,12 +813,19 @@
             const month = String(dateObj.getMonth() + 1).padStart(2, '0');
             const day = String(dateObj.getDate()).padStart(2, '0');
 
+
+            // 시간과 분 추출
+            const hours = String(dateObj.getHours()).padStart(2, '0');
+            const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+
             // "YYYY-MM-DD" 형식으로 변환
-            const formattedDate = `${year}${month}${day}`;
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
             arg_date = formattedDate; 
             return arg_date; 
         }
 
+
+ 
 
     }
        
@@ -841,20 +847,20 @@ $(document).ready(function() {
         //     // console.log("달력클릭");
         //     // console.log(convert_time(e.timestamp));
         // })
-   })   
+   })    
     function init(){ 
             
-            wfrdate = new wijmo.input.InputDate('#frdate', {
+            wfrdate = new wijmo.input.InputDateTime('#frdate', {
                 isRequired: false,
                 value: null,
                 placeholder: '',
-                format: 'yyyy-MM-dd', 
+                format: 'yyyy-MM-dd HH:mm', 
             });
-            wtodate = new wijmo.input.InputDate('#todate', {
+            wtodate = new wijmo.input.InputDateTime('#todate', {
                 isRequired: false,
                 value: null,
                 placeholder: '',
-                format: 'yyyy-MM-dd', 
+                format: 'yyyy-MM-dd HH:mm', 
             }); 
 
             var result = new Date();
