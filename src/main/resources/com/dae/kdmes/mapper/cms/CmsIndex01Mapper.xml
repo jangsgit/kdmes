@@ -19,7 +19,7 @@
     <select id="getSHOTDATA_realtime"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto">
         <![CDATA[
         SELECT  Machine_Name as machine_name
-              ,Additional_Info_1
+              ,trim(Additional_Info_1) as Additional_Info_1
               ,Shot_Number
               ,Injection_Time
               ,Filling_Time
@@ -40,7 +40,7 @@
           FROM [ado_kd].[dbo].[shot_data]
           where    TimeStamp between #{frdate} and #{todate}
           and    isnull(Machine_Name,'') Like concat(#{machine_name},'%')
-          and    isnull(Additional_Info_1,'') Like concat(#{Additional_Info_1},'%')
+          and    isnull(trim(Additional_Info_1),'') Like concat(#{Additional_Info_1},'%')
           ORDER BY TimeStamp
         ]]>
     </select>
@@ -50,7 +50,7 @@
         <![CDATA[
         SELECT
                Machine_Name,
-               Additional_Info_1,
+               trim(Additional_Info_1) as Additional_Info_1,
                Mold_Temperature_1 as MT01
               ,Mold_Temperature_2 as MT02
               ,Mold_Temperature_3 as MT03
@@ -61,7 +61,7 @@
           FROM [ado_kd].[dbo].[shot_data]
           where   TimeStamp between #{frdate} and #{todate}
           and    isnull(Machine_Name,'') Like concat(#{machine_name},'%')
-          and    isnull(Additional_Info_1,'') Like concat(#{Additional_Info_1},'%')
+          and    isnull(trim(Additional_Info_1),'') Like concat(#{Additional_Info_1},'%')
           ORDER BY TimeStamp
         ]]>
     </select>

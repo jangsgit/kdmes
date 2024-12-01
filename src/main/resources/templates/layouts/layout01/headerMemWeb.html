@@ -332,7 +332,7 @@
                                         });
 
                                     }else{
-                                        dataChart.push({ 
+                                        wactnm_data.push({ 
                                             index: cnt, 
                                             machine_name: wtab01Dto[i]["machine_name"], 
                                             Additional_Info_1: wtab01Dto[i]["additional_Info_1"], 
@@ -353,13 +353,8 @@
                         console.log('error',e);
                     }
                 }).done(function(fragment){           
-                })  
-                if(arg5 == "list"){    
-                    return wactnm_data;                                     
-                }
-                else{
-                    return dataChart;                                     
-                }
+                })   
+                    return wactnm_data;  
        }  
        machnmChart = "샘플";
        addinfoChart = "Sample";
@@ -543,7 +538,8 @@
         function chart_list(arg1, arg2){
             var  ls_frdate     =  convert_date(wfrdate.value);                    
             var  ls_todate     =  convert_date(wtodate.value); 
-            dataChart = getData_tab01(arg1, arg2, ls_frdate, ls_todate, "chart")  
+            const newdataChart = getData_tab01(arg1, arg2, ls_frdate, ls_todate, "chart")   
+            dataChart = [...newdataChart] 
             machnmChart  = arg1
             addinfoChart = arg2
             labels = dataChart.map(entry => entry.shottime);
@@ -555,8 +551,65 @@
                 { label: 'MT05', data: dataChart.map(entry => entry.MT05) },
                 { label: 'MT06', data: dataChart.map(entry => entry.MT06) }
             ];
-              
-            // 차트 업데이트
+ 
+            const canvasElement = document.getElementById('temperatureChart');
+            //  // 기존 차트가 있다면 삭제
+            // if (chartInstance) {
+            //     // 현재 캔버스의 크기 저장
+            //     const width = canvasElement.width;
+            //     const height = canvasElement.height;
+
+            //     chartInstance.destroy();
+
+            //     // 기존 크기 유지
+            //     canvasElement.width = width;
+            //     canvasElement.height = height;
+            // }
+            
+            // chartInstance = new Chart(ctx, {
+            //     type: 'line',
+            //     data: {
+            //         labels: labels,
+            //         datasets: dataset.map((set, index) => ({
+            //             label: set.label,
+            //             data: set.data,
+            //             borderColor: `hsl(${index * 60}, 70%, 50%)`,
+            //             backgroundColor: `hsl(${index * 60}, 70%, 70%, 0.4)`,
+            //             fill: false,
+            //             tension: 0.1
+            //         }))
+            //     }, 
+            //     options: {
+            //         responsive: true,
+            //         plugins: {
+            //             title: {
+            //                 display: true,
+            //                 text: '기계:' + machnmChart + '(금형:' +  addinfoChart + ') 온도변화'
+            //             },
+            //             legend: {
+            //                 display: true,
+            //                 position: 'top'
+            //             }
+            //         },
+            //         scales: {
+            //             x: {
+            //                 title: {
+            //                     display: true,
+            //                     text: '시간'
+            //                 }
+            //             },
+            //             y: {
+            //                 title: {
+            //                     display: true,
+            //                     text: '온도 (°C)'
+            //                 },
+            //                 beginAtZero: true
+            //             }
+            //         }
+            //     }
+            // });
+            
+            //차트 업데이트
             if (chartInstance) {
                 chartInstance.data.labels = labels;
                 chartInstance.data.datasets = dataset.map((set, index) => ({
