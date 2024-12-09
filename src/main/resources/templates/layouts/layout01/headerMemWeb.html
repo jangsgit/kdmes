@@ -266,12 +266,12 @@
                 { binding: 'Cycle_Time', header: '공정시간', align: "center", width: 80 },
                 { binding: 'Barrel_Temperature_1', header: '연장노즐', align: "right", format: 'n1',  width: 80  },  
                 { binding: 'Barrel_Temperature_2', header: '노즐', align: "right", format: 'n1',  width: 80  },  
-                { binding: 'Mold_Temperature_1', header: '금형온도(1)', align: "right", format: 'n1',  width: 110  },   
-                { binding: 'Mold_Temperature_2', header: '금형온도(2)', align: "right", format: 'n1',  width: 110  }, 
-                { binding: 'Mold_Temperature_3', header: '금형온도(3)', align: "right", format: 'n1',  width: 110  }, 
-                { binding: 'Mold_Temperature_4', header: '금형온도(4)', align: "right", format: 'n1' ,  width: 110 }, 
-                { binding: 'Mold_Temperature_5', header: '금형온도(5)', align: "right", format: 'n1',  width: 110  }, 
-                { binding: 'Mold_Temperature_6', header: '금형온도(6)', align: "right", format: 'n1',  width: 110  },   
+                { binding: 'Mold_Temperature_1', header: '이동측금형1', align: "right", format: 'n1',  width: 110  },   
+                { binding: 'Mold_Temperature_2', header: '이동측금형2', align: "right", format: 'n1',  width: 110  }, 
+                { binding: 'Mold_Temperature_3', header: '고정측금형1', align: "right", format: 'n1',  width: 110  }, 
+                { binding: 'Mold_Temperature_4', header: '고정측금형2', align: "right", format: 'n1' ,  width: 110 }, 
+                { binding: 'Mold_Temperature_5', header: '건조기', align: "right", format: 'n1',  width: 110  }, 
+                { binding: 'Mold_Temperature_6', header: '온수기', align: "right", format: 'n1',  width: 110  },   
             ], 
             itemsSource: view_p01tab01page
         });   
@@ -336,8 +336,7 @@
                                             index: cnt, 
                                             machine_name: wtab01Dto[i]["machine_name"], 
                                             Additional_Info_1: wtab01Dto[i]["additional_Info_1"], 
-                                            MT01: wtab01Dto[i]["mt01"], 
-                                            MT01: wtab01Dto[i]["mt01"], 
+                                            MT01: wtab01Dto[i]["mt01"],  
                                             MT02: wtab01Dto[i]["mt02"], 
                                             MT03: wtab01Dto[i]["mt03"], 
                                             MT04: wtab01Dto[i]["mt04"], 
@@ -375,12 +374,12 @@
 
         labels = dataC.map(entry => entry.shottime);
         dataset = [
-            { label: 'MT01', data: dataC.map(entry => entry.MT01) },
-            { label: 'MT02', data: dataC.map(entry => entry.MT02) },
-            { label: 'MT03', data: dataC.map(entry => entry.MT03) },
-            { label: 'MT04', data: dataC.map(entry => entry.MT04) },
-            { label: 'MT05', data: dataC.map(entry => entry.MT05) },
-            { label: 'MT06', data: dataC.map(entry => entry.MT06) }
+            { label: '이동측금형1', data: dataC.map(entry => entry.MT01) },
+            { label: '이동측금형2', data: dataC.map(entry => entry.MT02) },
+            { label: '고정측금형1', data: dataC.map(entry => entry.MT03) },
+            { label: '고정측금형2', data: dataC.map(entry => entry.MT04) },
+            { label: '건조기', data: dataC.map(entry => entry.MT05) },
+            { label: '온수기', data: dataC.map(entry => entry.MT06) }
         ]; 
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         //기계구분 popup list
@@ -478,6 +477,13 @@
             var ls_tab = document.getElementById('tabvalue').value; 
             if(ls_tab == "A"){
                 document.getElementById('inmachname').value= arg1;  
+                search_rtn()  
+                var ls_inaddinfo = document.getElementById('inaddinfo').value; 
+                    ls_inaddinfo = ls_inaddinfo.trim(); 
+                    if(ls_inaddinfo == null || ls_inaddinfo.length == 0 || ls_inaddinfo == ""){ 
+                        ls_inaddinfo    = "%"
+                    }    
+                chart_list(arg1, ls_inaddinfo); 
             }  
             $("#machnmmodal_btn").trigger("click"); 
         }  
@@ -515,7 +521,7 @@
             
             var cols = new wijmo.grid.Column(); 
             cols.binding = 'addinfo_name';
-            cols.header = '기계번호';
+            cols.header = '금형자료';
             cols.align = "center";
             cols.width = 200;  
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
@@ -530,7 +536,14 @@
         function addinfoChk(arg1){    
             var ls_tab = document.getElementById('tabvalue').value; 
             if(ls_tab == "A"){
-                document.getElementById('inaddinfo').value= arg1;  
+                document.getElementById('inaddinfo').value= arg1; 
+                search_rtn()  
+            var ls_inmachname = document.getElementById('inmachname').value; 
+                ls_inmachname = ls_inmachname.trim(); 
+                if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
+                    ls_inmachname    = "%"
+                }    
+                chart_list(ls_inmachname, arg1);  
             }  
             $("#addinfomodal_btn").trigger("click"); 
         }  
@@ -544,14 +557,14 @@
             addinfoChart = arg2
             labels = dataChart.map(entry => entry.shottime);
             dataset = [
-                { label: 'MT01', data: dataChart.map(entry => entry.MT01) },
-                { label: 'MT02', data: dataChart.map(entry => entry.MT02) },
-                { label: 'MT03', data: dataChart.map(entry => entry.MT03) },
-                { label: 'MT04', data: dataChart.map(entry => entry.MT04) },
-                { label: 'MT05', data: dataChart.map(entry => entry.MT05) },
-                { label: 'MT06', data: dataChart.map(entry => entry.MT06) }
+                { label: '이동측금형1', data: dataChart.map(entry => entry.MT01) },
+                { label: '이동측금형2', data: dataChart.map(entry => entry.MT02) },
+                { label: '고정측금형1', data: dataChart.map(entry => entry.MT03) },
+                { label: '고정측금형2', data: dataChart.map(entry => entry.MT04) },
+                { label: '건조기', data: dataChart.map(entry => entry.MT05) },
+                { label: '온수기', data: dataChart.map(entry => entry.MT06) }
             ];
- 
+  
             const canvasElement = document.getElementById('temperatureChart');
             //  // 기존 차트가 있다면 삭제
             // if (chartInstance) {
@@ -670,15 +683,17 @@
         });
                                   
         // tab01 검색   
-        document.getElementById("retrieveBtn").addEventListener("click",function(){  
+        document.getElementById("retrieveBtn").addEventListener("click",function(){ 
+            search_rtn() 
+        })  
+          
+        function search_rtn(arg_data){
             var ls_inmachnm = document.getElementById('inmachname').value;
             var ls_inaddinfo = document.getElementById('inaddinfo').value;
             ls_inmachnm = ls_inmachnm.trim();
             ls_inaddinfo = ls_inaddinfo.trim();
             var  ls_frdate     =  convert_date(wfrdate.value);                    
-            var  ls_todate     =  convert_date(wtodate.value);  
-            console.log(ls_frdate)
-            console.log(ls_todate)
+            var  ls_todate     =  convert_date(wtodate.value);   
             if(ls_inmachnm == null || ls_inmachnm.length == 0 || ls_inmachnm == ""){ 
                 ls_inmachnm    = "%"
             }   
@@ -687,9 +702,8 @@
             }    
             var cmsData = getData_tab01(ls_inmachnm, ls_inaddinfo, ls_frdate, ls_todate, "list" ); 
             tabA_grid(cmsData);
-        })  
-          
 
+        }
         function tabA_grid(arg_data){
 
             wtab01Grid.columns.clear();  
@@ -785,7 +799,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'Mold_Temperature_1';
-            cols.header = '금형온도(1)';
+            cols.header = '이동측금형1';
             cols.align = "right";
             cols.width = 110;  
             cols.format = 'n1';  
@@ -793,7 +807,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'Mold_Temperature_2';
-            cols.header = '금형온도(2)';
+            cols.header = '이동측금형2';
             cols.align = "right";
             cols.width = 110;  
             cols.format = 'n1';  
@@ -801,7 +815,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'Mold_Temperature_3';
-            cols.header = '금형온도(3)';
+            cols.header = '고정측금형1';
             cols.align = "right";
             cols.width = 110;  
             cols.format = 'n1';  
@@ -809,7 +823,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'Mold_Temperature_4';
-            cols.header = '금형온도(4)';
+            cols.header = '고정측금형2';
             cols.align = "right";
             cols.width = 110;  
             cols.format = 'n1';  
@@ -817,7 +831,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'Mold_Temperature_5';
-            cols.header = '금형온도(5)';
+            cols.header = '건조기';
             cols.align = "right";
             cols.width = 110;  
             cols.format = 'n1';  
@@ -825,7 +839,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'Mold_Temperature_6';
-            cols.header = '금형온도(6)';
+            cols.header = '온수기';
             cols.align = "right";
             cols.width = 110;  
             cols.format = 'n1';  
@@ -918,9 +932,17 @@ $(document).ready(function() {
 
             var result = new Date();
             result.setHours(result.getHours() + 9); 
-            var ls_date = result.toISOString().substring(0,10);                                 
-            wfrdate.value = ls_date;   
-            wtodate.value = ls_date;  
+            var ls_date01 = result.toISOString().substring(0,10);    
+            
+            // ls_date02 값을 날짜와 시간을 "23:59"로 설정
+            
+            // result.setHours(result.getHours() + 10); 
+            var today = new Date();
+            today.setHours(23, 59, 0, 0); // 시간: 23, 분: 59, 초: 0, 밀리초: 0 
+            var ls_date02 = today.toISOString().substring(0, 10) + " " + today.toTimeString().substring(0, 5); 
+                          
+            wfrdate.value = ls_date01;   
+            wtodate.value = ls_date02;  
             
     } 
     

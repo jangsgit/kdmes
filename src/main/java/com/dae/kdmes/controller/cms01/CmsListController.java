@@ -53,8 +53,8 @@ public class CmsListController {
                 frdate = indate;
                 todate = indate;
             }
-//            System.out.println("frdate  :" + frdate);
-//            System.out.println("todate  :" + todate);
+            System.out.println("frdate  :" + frdate);
+            System.out.println("todate  :" + todate);
             cmsdto.setFrdate(frdate);
             cmsdto.setTodate(todate);
             cmsdto.setMachine_name(machnm);
