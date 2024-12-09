@@ -4,7 +4,7 @@
    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>   -->
     <!-- 차트  -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  
     <div class="card-body d-flex align-items-center py-md-2 px-2 py-1">      
     <main class="main" id="top">
         <!-- Fluid Layout:  Replace class .container to .container-fluid inside the main tag, and the page will be switched to fluid layout. -->
@@ -54,69 +54,108 @@
                     -->
                     <body layout:fragment="content">
                       <div class="card-body bg-light">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">실시간현황</a>
-                            </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">검사공정</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">검사이력현황</a>
-                            </li> -->
-                            <input type="hidden" id="tabvalue" value="A">
-                        </ul>
-                          <div class="tab-content">
-                            <div class="tab-pane fade show active" id="step01">     
-                                <div class="row gx-3" style="  margin: 10px 10px 10px;">    
-                                    <div class="col-auto">
-                                        <div class="input-group input-group-sm mb-3">
-                                            <!-- <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     > -->
-                                            <input type="datetime-local" class="form-control" id="frdate" autocomplete="off" placeholder="YYYY-MM-DD HH:MM">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">실시간현황</a>
+                                </li>
+                                 <!--<li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">생산진행</a>
+                                </li> 
+                               <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">검사이력현황</a>
+                                </li> -->
+                                <input type="hidden" id="tabvalue" value="A">
+                            </ul>
+                            <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="step01">     
+                                        <div class="row gx-3" style="  margin: 10px 10px 10px;">    
+                                            <div class="col-auto">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <!-- <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     > -->
+                                                    <input type="datetime-local" class="form-control" id="frdate" autocomplete="off" placeholder="YYYY-MM-DD HH:MM">
+                                                </div> 
+                                            </div>   
+                                            <div class="col-auto"> 
+                                                <div class="input-group input-group-sm mb-3"> 
+                                                    <!-- <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     > -->
+                                                    <input type="datetime-local" class="form-control" id="todate" autocomplete="off" placeholder="YYYY-MM-DD HH:MM">
+                                                </div>
+                                            </div> 
+                                            <div class="col-2 col-sm-2">
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">기계이름</span>  
+                                                    <input class="form-control form-control-sm" id="inmachname" type="text"    autocomplete="off"  placeholder=""     >  
+                                                </div>
+                                            </div> 
+                                            <div class="col-2 col-sm-2">
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">금형자료</span>  
+                                                    <input class="form-control form-control-sm" id="inaddinfo" type="text"    autocomplete="off"  placeholder=""     >  
+                                                </div>
+                                            </div> 
+                                            <div class="col-auto">  
+                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
+                                                </button> 
+                                            </div>   
                                         </div> 
-                                    </div>   
-                                    <div class="col-auto"> 
-                                        <div class="input-group input-group-sm mb-3"> 
-                                            <!-- <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     > -->
-                                            <input type="datetime-local" class="form-control" id="todate" autocomplete="off" placeholder="YYYY-MM-DD HH:MM">
-                                        </div>
+                                        <div class="container-fluid">   
+                                            <div id="wtab01Grid_div" style="overflow:scroll;   height:300px; width: 90%;    margin:0 auto; "></div>  
+                                        </div>  
+                                        <!-- 스타일로 캔버스 크기를 조정 -->
+                                        <div style="width: 100%; margin: 0 auto;">
+                                        <canvas id="temperatureChart" style="width: 100%; height: 400px;"></canvas>
+                                        </div> 
                                     </div> 
-                                    <div class="col-2 col-sm-2">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">기계이름</span>  
-                                            <input class="form-control form-control-sm" id="inmachname" type="text"    autocomplete="off"  placeholder=""     >  
-                                        </div>
-                                    </div> 
-                                    <div class="col-2 col-sm-2">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">금형자료</span>  
-                                            <input class="form-control form-control-sm" id="inaddinfo" type="text"    autocomplete="off"  placeholder=""     >  
-                                        </div>
-                                    </div> 
-                                    <div class="col-auto">  
-                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
-                                        </button> 
-                                    </div>   
-                                </div> 
-                                <div class="container-fluid">   
-                                    <div id="wtab01Grid_div" style="overflow:scroll;   height:300px; width: 90%;    margin:0 auto; "></div> 
-                                    <!-- <div id="tab01Pager"></div> -->
-                                </div>  
-                                <!-- 스타일로 캔버스 크기를 조정 -->
-                                <div style="width: 100%; margin: 0 auto;">
-                                  <canvas id="temperatureChart" style="width: 100%; height: 400px;"></canvas>
-                                </div>
-                                <!-- <div class="container-fluid">
-                                  <div id="chart"></div>
-                                </div>   -->
-                            </div> 
-        
-                          </div>
-                    </div> 
+                                    <div class="tab-pane fade show" id="step02">  
+                                            <div class="header">
+                                                CMS - Product Board
+                                            </div>
+                                        
+                                            <div class="dashboard">
+                                                <!-- Cards for each product -->
+                                                <div class="card">
+                                                    <div class="chart-container">
+                                                        <canvas id="chart7"></canvas>
+                                                    </div>
+                                                    <div class="info">
+                                                        <table>
+                                                            <tr><td>기계 상태:</td><td>자동</td></tr>
+                                                            <tr><td>현재 수량:</td><td>75</td></tr>
+                                                            <tr><td>남은 수량:</td><td>125</td></tr>
+                                                            <tr><td>캐비티 수:</td><td>0</td></tr>
+                                                            <tr><td>공정 시간:</td><td>0</td></tr>
+                                                            <tr><td>양품률:</td><td>100%</td></tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="completed">37% Completed..</div>
+                                                </div>
+                                        
+                                                <!-- Repeat for additional cards -->
+                                                <div class="card">
+                                                    <div class="chart-container">
+                                                        <canvas id="chart8"></canvas>
+                                                    </div>
+                                                    <div class="info">
+                                                        <table>
+                                                            <tr><td>기계 상태:</td><td>자동</td></tr>
+                                                            <tr><td>현재 수량:</td><td>75</td></tr>
+                                                            <tr><td>남은 수량:</td><td>125</td></tr>
+                                                            <tr><td>캐비티 수:</td><td>0</td></tr>
+                                                            <tr><td>공정 시간:</td><td>0</td></tr>
+                                                            <tr><td>양품률:</td><td>100%</td></tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="completed">37% Completed..</div>
+                                                </div> 
+                                                <!-- Additional cards... -->
+                                            </div> 
+                                    </div>
+                            </div>      
+                       </div> 
 
 
 
                     <!--------------------------------------------------------------------------------------->    
                     <input class="form-control form-control-sm"  type="hidden" id="inbtn01" data-bs-toggle="modal" data-bs-target="#machnmmodal"  /> 
-                    <!--------------------------------------------------------------------------------------->   >
+                    <!--------------------------------------------------------------------------------------->    
                     <div class="modal fade" id="machnmmodal" data-bs-keyboard="false"
                     data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                     aria-hidden="true">
@@ -158,7 +197,7 @@
 
                     <!--------------------------------------------------------------------------------------->    
                     <input class="form-control form-control-sm"  type="hidden" id="inbtn02" data-bs-toggle="modal" data-bs-target="#addinfomodal"  /> 
-                    <!--------------------------------------------------------------------------------------->   >
+                    <!--------------------------------------------------------------------------------------->    
                     <div class="modal fade" id="addinfomodal" data-bs-keyboard="false"
                     data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
                     aria-hidden="true">
@@ -628,11 +667,7 @@
                 }
             }
         });
-                                  
-        // tab01 검색   
-        document.getElementById("retrieveBtn").addEventListener("click",function(){ 
-            search_rtn() 
-        })  
+             
           
         function search_rtn(arg_data){
             var ls_inmachnm = document.getElementById('inmachname').value;
@@ -793,6 +828,35 @@
             wtab01Grid.columns.push(cols);     
         }
  
+        function createPieChart(ctx, redValue, greenValue) {
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['불량', '양품'],
+                    datasets: [{
+                        data: [redValue, greenValue],
+                        backgroundColor: ['red', 'green'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+                     
+        // tab01 검색   
+        document.getElementById("retrieveBtn").addEventListener("click",function(){ 
+            search_rtn() 
+        })  
+
         document.getElementById("inmachname").addEventListener("keyup", (e)=>{ 
             if(e.keyCode === 13){  
                 machnm_list("%")
@@ -813,7 +877,7 @@
                 addinfo_list("%")
                 document.getElementById("inbtn02").click(); 
         });
-
+  
         function convert_date(arg_date){  
             var ls_arg_date = String(arg_date); 
             if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
@@ -841,8 +905,15 @@
 
  
 
+        // Initialize charts
+        createPieChart(document.getElementById('chart7').getContext('2d'), 125, 75);
+        createPieChart(document.getElementById('chart8').getContext('2d'), 125, 75);
     }
        
+    //선택한 탭 체크 
+    function tabchk_rtn(arg){
+        document.getElementById('tabvalue').value = arg; 
+    } 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 

@@ -299,4 +299,16 @@ public class App01Controller {
         return "App01/indexds03";
     }
 
+    @GetMapping(value="/indexds04")
+    public String App01_indexds04(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("공정기준등록");
+        CommDto.setMenuUrl("기준정보>공정기준등록");
+        CommDto.setMenuCode("index04");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+
+        return "App01/indexds04";
+    }
 }

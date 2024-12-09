@@ -59,109 +59,109 @@
                                     <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">유형별불량현황</a>
                                 </li>
                                 <input type="hidden" id="tabvalue" value="A">
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="step01">     
-                                        <div class="row gx-3" style="  margin: 10px 10px 10px;">    
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
-                                                </div> 
-                                            </div>   
-                                            <div class="col-2 col-sm-2"> 
-                                                <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
-                                                </div>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="step01">     
+                                    <div class="row gx-3" style="  margin: 10px 10px 10px;">    
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"> 
+                                                <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div> 
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">불량구분</span> 
-                                                    <input class="form-control form-control-sm" id="inwcodenm" type="text"    autocomplete="off"  placeholder=""     > 
-                                                    <input class="form-control form-control-sm" id="inwcode" type="hidden" placeholder=""   />                        
-                                                </div>
+                                        </div>   
+                                        <div class="col-2 col-sm-2"> 
+                                            <div class="input-group input-group-sm mb-3"> 
+                                                <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div>
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">로트번호</span> 
-                                                    <input class="form-control form-control-sm" id="inlotno" type="text"    autocomplete="off"  placeholder=""     > 
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
-                                                </button> 
-                                            </div>   
                                         </div> 
-                                        <div class="container-fluid">   
-                                            <div id="wtab01Grid_div" style="overflow:scroll;   height:680px;  margin:0 auto; "></div> 
-                                            <!-- <div id="tab01Pager"></div> -->
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">불량구분</span> 
+                                                <input class="form-control form-control-sm" id="inwcodenm" type="text"    autocomplete="off"  placeholder=""     > 
+                                                <input class="form-control form-control-sm" id="inwcode" type="hidden" placeholder=""   />                        
+                                            </div>
+                                        </div>
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">로트번호</span> 
+                                                <input class="form-control form-control-sm" id="inlotno" type="text"    autocomplete="off"  placeholder=""     > 
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">  
+                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
+                                            </button> 
                                         </div>   
                                     </div> 
-                                    <div class="tab-pane fade show" id="step02">     
-                                        <div class="row gx-3" style="  margin: 10px 10px 10px;">    
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="frdate02" autocomplete="off"  placeholder="Y-m-d"     >
-                                                </div> 
-                                            </div>   
-                                            <div class="col-2 col-sm-2"> 
-                                                <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="todate02" autocomplete="off"  placeholder="Y-m-d"     >
-                                                </div>
+                                    <div class="container-fluid">   
+                                        <div id="wtab01Grid_div" style="overflow:scroll;   height:680px;  margin:0 auto; "></div> 
+                                        <!-- <div id="tab01Pager"></div> -->
+                                    </div>   
+                                </div> 
+                                <div class="tab-pane fade show" id="step02">     
+                                    <div class="row gx-3" style="  margin: 10px 10px 10px;">    
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"> 
+                                                <input type="text"  class="form-control datetimepicker" id="frdate02" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div> 
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">불량구분</span> 
-                                                    <input class="form-control form-control-sm" id="inwcodenm02" type="text"    autocomplete="off"  placeholder=""     > 
-                                                    <input class="form-control form-control-sm" id="inwcode02" type="hidden" placeholder=""   />                        
-                                                </div>
+                                        </div>   
+                                        <div class="col-2 col-sm-2"> 
+                                            <div class="input-group input-group-sm mb-3"> 
+                                                <input type="text"  class="form-control datetimepicker" id="todate02" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div>
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">로트번호</span> 
-                                                    <input class="form-control form-control-sm" id="inlotno02" type="text"    autocomplete="off"  placeholder=""     > 
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn02" >조회
-                                                </button> 
-                                            </div>   
                                         </div> 
-                                        <div class="container-fluid">   
-                                            <div id="wtab02Grid_div" style="overflow:scroll;   height:680px;    margin:0 auto; "></div> 
-                                            <!-- <div id="tab01Pager"></div> -->
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">불량구분</span> 
+                                                <input class="form-control form-control-sm" id="inwcodenm02" type="text"    autocomplete="off"  placeholder=""     > 
+                                                <input class="form-control form-control-sm" id="inwcode02" type="hidden" placeholder=""   />                        
+                                            </div>
+                                        </div>
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">로트번호</span> 
+                                                <input class="form-control form-control-sm" id="inlotno02" type="text"    autocomplete="off"  placeholder=""     > 
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">  
+                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn02" >조회
+                                            </button> 
                                         </div>   
                                     </div> 
-                                    <div class="tab-pane fade show" id="step03">     
-                                        <div class="row gx-3" style="  margin: 10px 10px 10px;">    
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="frdate03" autocomplete="off"  placeholder="Y-m-d"     >
-                                                </div> 
-                                            </div>   
-                                            <div class="col-2 col-sm-2"> 
-                                                <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="todate03" autocomplete="off"  placeholder="Y-m-d"     >
-                                                </div>
+                                    <div class="container-fluid">   
+                                        <div id="wtab02Grid_div" style="overflow:scroll;   height:680px;    margin:0 auto; "></div> 
+                                        <!-- <div id="tab01Pager"></div> -->
+                                    </div>   
+                                </div> 
+                                <div class="tab-pane fade show" id="step03">     
+                                    <div class="row gx-3" style="  margin: 10px 10px 10px;">    
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"> 
+                                                <input type="text"  class="form-control datetimepicker" id="frdate03" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div> 
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">불량구분</span> 
-                                                    <input class="form-control form-control-sm" id="inwcodenm03" type="text"    autocomplete="off"  placeholder=""     > 
-                                                    <input class="form-control form-control-sm" id="inwcode03" type="hidden" placeholder=""   />                        
-                                                </div>
+                                        </div>   
+                                        <div class="col-2 col-sm-2"> 
+                                            <div class="input-group input-group-sm mb-3"> 
+                                                <input type="text"  class="form-control datetimepicker" id="todate03" autocomplete="off"  placeholder="Y-m-d"     >
                                             </div>
-                                            <div class="col-2 col-sm-2">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">로트번호</span> 
-                                                    <input class="form-control form-control-sm" id="inlotno03" type="text"    autocomplete="off"  placeholder=""     > 
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn03" >조회
-                                                </button> 
-                                            </div>   
                                         </div> 
-                                        <div class="container-fluid">   
-                                            <div id="wtab03Grid_div" style="overflow:scroll;   height:680px;   margin:0 auto; "></div> 
-                                            <!-- <div id="tab01Pager"></div> -->
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">불량구분</span> 
+                                                <input class="form-control form-control-sm" id="inwcodenm03" type="text"    autocomplete="off"  placeholder=""     > 
+                                                <input class="form-control form-control-sm" id="inwcode03" type="hidden" placeholder=""   />                        
+                                            </div>
+                                        </div>
+                                        <div class="col-2 col-sm-2">
+                                            <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">로트번호</span> 
+                                                <input class="form-control form-control-sm" id="inlotno03" type="text"    autocomplete="off"  placeholder=""     > 
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">  
+                                            <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn03" >조회
+                                            </button> 
                                         </div>   
                                     </div> 
-            
-                                </div>
+                                    <div class="container-fluid">   
+                                        <div id="wtab03Grid_div" style="overflow:scroll;   height:680px;   margin:0 auto; "></div> 
+                                        <!-- <div id="tab01Pager"></div> -->
+                                    </div>   
+                                </div> 
+        
+                            </div>
                         </div> 
                     </div> 
  
