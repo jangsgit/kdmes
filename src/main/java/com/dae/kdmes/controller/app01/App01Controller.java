@@ -1,10 +1,12 @@
 package com.dae.kdmes.controller.app01;
 
 import com.dae.kdmes.DTO.App01.*;
+import com.dae.kdmes.DTO.Cms.CmsIndex01Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.Service.App03.Index35Service;
+import com.dae.kdmes.Service.Cms.CmsIndex01Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,6 +39,8 @@ public class App01Controller {
 
     private final Index04Service service04;
     private final Index35Service service35;
+    private final CmsIndex01Service cmsservice01;
+    CmsIndex01Dto cmsdto = new CmsIndex01Dto();
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
@@ -301,13 +305,13 @@ public class App01Controller {
 
     @GetMapping(value="/indexds04")
     public String App01_indexds04(Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("공정기준등록");
-        CommDto.setMenuUrl("기준정보>공정기준등록");
+        CommDto.setMenuTitle("생산가동현황");
+        CommDto.setMenuUrl("모니터링>생산가동현황");
         CommDto.setMenuCode("index04");
+        List<CmsIndex01Dto> cms01List = new ArrayList<>();
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
-
 
         return "App01/indexds04";
     }

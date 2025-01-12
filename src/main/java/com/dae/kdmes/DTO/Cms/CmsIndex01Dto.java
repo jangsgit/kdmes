@@ -17,12 +17,18 @@ public class CmsIndex01Dto {
     private String shotdate;
     private String frdate;
     private String todate;
+    private String Status;
     private Timestamp TimeStamp;
     private Timestamp STARTTIME;
     private Timestamp ENDTIME;
+    private Timestamp Latest_TimeStamp;
     private Integer Shot_Number;
     private Integer wotqty;
     private Integer Cavity;
+    private Integer OperatingTimeHours;    //가동시간: 5분 이하의 간격
+    private Integer OperatingTimeSeconds;
+    private Integer IdleTimeMinute;        //유휴시간: 5분~30분 사이
+    private Integer DowntimeMinute;        //비가동시간: 30분 이상
     private float  Injection_Time;
     private float  Filling_Time;
     private float  Plasticizing_Time;

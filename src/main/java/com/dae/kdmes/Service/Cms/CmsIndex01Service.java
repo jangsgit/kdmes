@@ -36,4 +36,7 @@ public class CmsIndex01Service {
     }
 
 
+    public List<CmsIndex01Dto> GetADD_INFO(CmsIndex01Dto parm){
+        return cmsindexMapper.GetADD_INFO(parm);
+    }
 }

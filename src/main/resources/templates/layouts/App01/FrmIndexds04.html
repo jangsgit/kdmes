@@ -180,10 +180,10 @@
                           
                                   <div class="controls">
                                       <label>Start Date:
-                                          <input type="datetime-local" value="2024-12-09T00:00">
+                                          <input type="datetime-local"  value="2024-12-09T00:00" id = "startdate">
                                       </label>
                                       <label>End Date:
-                                          <input type="datetime-local" value="2024-12-09T23:59">
+                                          <input type="datetime-local" value="2024-12-09T23:59"  id = "enddate">
                                       </label>
                                       <label>Machine Name:
                                           <input type="text">
@@ -194,7 +194,7 @@
                                       <button>Search</button>
                                   </div>
                           
-                                  <div class="summary">
+                                  <!-- <div class="summary">
                                     <div class="summary-item blue">
                                         <div>사출기</div>
                                         <div id="total-machines">15</div>
@@ -211,77 +211,113 @@
                                         <div>정지</div>
                                         <div id="stopped-machines">1</div>
                                     </div>
-                                </div>
+                                </div> -->
 
-                                  <div class="dashboard">
+                                <div class="dashboard">
                                     <!-- Cards for each product -->
                                     <div class="card">
-                                        <div class="card-header">No. 7 - 금형명칭: Sample Mould</div>
+                                        <div class="card-header" id="addname0">No. 1 - 금형명칭: </div>
                                         <div class="chart-container">
-                                            <canvas id="chart7"></canvas>
+                                            <canvas id="chart0"></canvas>
                                         </div>
                                         <div class="info">
                                             <table>
-                                                <tr><td>기계 상태:</td><td>자동</td></tr>
-                                                <tr><td>현재 수량:</td><td>75</td></tr>
-                                                <tr><td>남은 수량:</td><td>125</td></tr>
-                                                <tr><td>캐비티 수:</td><td>0</td></tr>
-                                                <tr><td>공정 시간:</td><td>0</td></tr>
-                                                <tr><td>양품률:</td><td>100%</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState0" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty0">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty0">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty0"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature0"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp0">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp0">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount0"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime0"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime0"  colspan="3">100%</td></tr>
                                             </table>
                                         </div>
                                         <div class="completed">37% Completed..</div>
                                     </div>
                             
                                     <div class="card">
-                                        <div class="card-header">No. 8 - 금형명칭: Advanced Mould</div>
+                                        <div class="card-header" id="addname1">No. 2 - 금형명칭: </div>
                                         <div class="chart-container">
-                                            <canvas id="chart8"></canvas>
+                                            <canvas id="chart1"></canvas>
                                         </div>
                                         <div class="info">
                                             <table>
-                                                <tr><td>기계 상태:</td><td>자동</td></tr>
-                                                <tr><td>현재 수량:</td><td>75</td></tr>
-                                                <tr><td>남은 수량:</td><td>125</td></tr>
-                                                <tr><td>캐비티 수:</td><td>0</td></tr>
-                                                <tr><td>공정 시간:</td><td>0</td></tr>
-                                                <tr><td>양품률:</td><td>100%</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState1" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty1">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty1">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty1"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature1"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp1">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp1">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount1"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime1"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime1"  colspan="3">100%</td></tr>
                                             </table>
                                         </div>
                                         <div class="completed">37% Completed..</div>
                                     </div>
                             
                                     <div class="card">
-                                        <div class="card-header">No. 9 - 금형명칭: Advanced Mould</div>
+                                        <div class="card-header" id="addname2">No. 3 - 금형명칭: </div>
                                         <div class="chart-container">
-                                            <canvas id="chart9"></canvas>
+                                            <canvas id="chart2"></canvas>
                                         </div>
                                         <div class="info">
-                                            <table>
-                                                <tr><td>기계 상태:</td><td>자동</td></tr>
-                                                <tr><td>현재 수량:</td><td>75</td></tr>
-                                                <tr><td>남은 수량:</td><td>125</td></tr>
-                                                <tr><td>캐비티 수:</td><td>0</td></tr>
-                                                <tr><td>공정 시간:</td><td>0</td></tr>
-                                                <tr><td>양품률:</td><td>100%</td></tr>
+                                            <table> 
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState2" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty2">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty2">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty2"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature2"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp2">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp2">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount2"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime2"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime2"  colspan="3">100%</td></tr>
                                             </table>
                                         </div>
                                         <div class="completed">37% Completed..</div>
                                     </div>
 
                                     <div class="card">
-                                        <div class="card-header">No. 10 - 금형명칭: Advanced Mould</div>
+                                        <div class="card-header" id="addname3">No. 4 - 금형명칭: </div>
                                         <div class="chart-container">
-                                            <canvas id="chart10"></canvas>
+                                            <canvas id="chart3"></canvas>
                                         </div>
                                         <div class="info">
                                             <table>
-                                                <tr><td>기계 상태:</td><td>자동</td></tr>
-                                                <tr><td>현재 수량:</td><td>75</td></tr>
-                                                <tr><td>남은 수량:</td><td>125</td></tr>
-                                                <tr><td>캐비티 수:</td><td>0</td></tr>
-                                                <tr><td>공정 시간:</td><td>0</td></tr>
-                                                <tr><td>양품률:</td><td>100%</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState3" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty3">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty3">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty3"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature3"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp3">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp3">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount3"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime3"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime3"  colspan="3">100%</td></tr>
                                             </table>
                                         </div>
                                         <div class="completed">37% Completed..</div>
@@ -291,11 +327,157 @@
                                 </div>
 
 
+                                <div class="dashboard">
+                                    <!-- Cards for each product -->
+                                    <div class="card">
+                                        <div class="card-header" id="addname4">No. 5 - 금형명칭: </div>
+                                        <div class="chart-container">
+                                            <canvas id="chart4"></canvas>
+                                        </div>
+                                        <div class="info">
+                                            <table>
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState4" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty4">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty4">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty4"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature4"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp4">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp4">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount4"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime4"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime4"  colspan="3">100%</td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="completed">37% Completed..</div>
+                                    </div>
+                            
+                                    <div class="card">
+                                        <div class="card-header" id="addname5">No. 6 - 금형명칭: </div>
+                                        <div class="chart-container">
+                                            <canvas id="chart5"></canvas>
+                                        </div>
+                                        <div class="info">
+                                            <table>
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState5" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty5">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty5">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty5"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature5"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp5">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp5">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount5"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime5"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime5"  colspan="3">100%</td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="completed">37% Completed..</div>
+                                    </div>
+                            
+                                    <div class="card">
+                                        <div class="card-header" id="addname6">No. 7 - 금형명칭: </div>
+                                        <div class="chart-container">
+                                            <canvas id="chart6"></canvas>
+                                        </div>
+                                        <div class="info">
+                                            <table>
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState6" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty6">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty6">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty6"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature6"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp6">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp6">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount6"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime6"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime6"  colspan="3">100%</td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="completed">37% Completed..</div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-header" id="addname7">No. 8 - 금형명칭: </div>
+                                        <div class="chart-container">
+                                            <canvas id="chart7"></canvas>
+                                        </div>
+                                        <div class="info">
+                                            <table>
+                                                <tr>
+                                                    <td style="font-weight: bold;">기계 상태:</td><td  id="machineState7" >자동</td>
+                                                    <td style="font-weight: bold;">계획:</td><td  id="plannedQty7">75</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">생산:</td><td  id="producedQty7">125</td>
+                                                    <td style="font-weight: bold;">불량:</td><td  id="defectiveQty7"  colspan="3">125</td>
+                                                </tr>  
+                                                <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature7"  colspan="3">0</td></tr>
+                                                <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp7">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp7">0</td></tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;">캐비티:</td><td id="cavityCount7"  >0</td>
+                                                    <td style="font-weight: bold;">가동시간:</td><td id="operatingTime7"  >0</td>
+                                                </tr> 
+                                                <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime7"  colspan="3">100%</td></tr>
+                                            </table>
+                                        </div>
+                                        <div class="completed">37% Completed..</div>
+                                    </div>
+                            
+                                    <!-- Additional cards... -->
+                                </div>
                               </div>
                             </div>      
                        </div> 
  
 
+                       <div class="dashboard">
+                        <!-- Cards for each product -->
+                        <div class="card">
+                            <div class="card-header" id="addname8">No. 9 - 금형명칭: </div>
+                            <div class="chart-container">
+                                <canvas id="chart8"></canvas>
+                            </div>
+                            <div class="info">
+                                <table>
+                                    <tr>
+                                        <td style="font-weight: bold;">기계 상태:</td><td  id="machineState8" >자동</td>
+                                        <td style="font-weight: bold;">계획:</td><td  id="plannedQty8">75</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">생산:</td><td  id="producedQty8">125</td>
+                                        <td style="font-weight: bold;">불량:</td><td  id="defectiveQty8"  colspan="3">125</td>
+                                    </tr>  
+                                    <tr><td style="font-weight: bold;">금형온도:</td><td id="temperature8"  colspan="3">0</td></tr>
+                                    <tr><td style="font-weight: bold;">온수기:</td><td id="onsutemp8">0</td><td style="font-weight: bold;">건조기:</td><td id="drytemp8">0</td></tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">캐비티:</td><td id="cavityCount8"  >0</td>
+                                        <td style="font-weight: bold;">가동시간:</td><td id="operatingTime8"  >0</td>
+                                    </tr> 
+                                    <tr><td style="font-weight: bold;">설비유휴시간:</td><td id="idleTime8"  colspan="3">100%</td></tr>
+                                </table>
+                            </div>
+                            <div class="completed">37% Completed..</div>
+                        </div>
+                 
+                        <!-- Additional cards... -->
+                    </div>
+                  </div>
+                </div>      
+           </div> 
 
                     </body>
 
@@ -337,30 +519,59 @@
                
       // Initialize charts  ['#FF6384', '#FF9F40', '#FFCD56', '#4BC0C0', '#36A2EB'],
         // Initialize charts
-        const chart7 = createPieChart(
-            document.getElementById('chart7').getContext('2d'),
+        const chart0 = createPieChart(
+            document.getElementById('chart0').getContext('2d'),
             [40, 60],
             ['미완료',   '완료', ]
         );
 
+        const chart1 = createPieChart(
+            document.getElementById('chart1').getContext('2d'),
+            [30, 70],
+            ['미완료',   '완료', ]
+        );
+ 
+        const chart2 = createPieChart(
+            document.getElementById('chart2').getContext('2d'),
+            [ 25, 75],
+            ['미완료',   '완료', ]
+        );
+ 
+        const chart3 = createPieChart(
+            document.getElementById('chart3').getContext('2d'),
+            [30, 70],
+            ['미완료',   '완료', ]
+        );
+ 
+        const chart4 = createPieChart(
+            document.getElementById('chart4').getContext('2d'),
+            [40, 60],
+            ['미완료',   '완료', ]
+        );
+
+        const chart5 = createPieChart(
+            document.getElementById('chart5').getContext('2d'),
+            [30, 70],
+            ['미완료',   '완료', ]
+        );
+ 
+        const chart6 = createPieChart(
+            document.getElementById('chart6').getContext('2d'),
+            [ 25, 75],
+            ['미완료',   '완료', ]
+        );
+ 
+        const chart7 = createPieChart(
+            document.getElementById('chart7').getContext('2d'),
+            [30, 70],
+            ['미완료',   '완료', ]
+        );
+ 
         const chart8 = createPieChart(
             document.getElementById('chart8').getContext('2d'),
             [30, 70],
             ['미완료',   '완료', ]
         );
- 
-        const chart9 = createPieChart(
-            document.getElementById('chart9').getContext('2d'),
-            [ 25, 75],
-            ['미완료',   '완료', ]
-        );
- 
-        const chart10 = createPieChart(
-            document.getElementById('chart10').getContext('2d'),
-            [30, 70],
-            ['미완료',   '완료', ]
-        );
- 
 
         function convert_date(arg_date){  
             var ls_arg_date = String(arg_date); 
@@ -400,12 +611,151 @@
 
     async function fetchData() {
         // Example fetch logic
-        const response = await fetch('/api/dashboard-data'); // Replace with actual API endpoint
+           
+        var wtab01_data = []; 
+        var cnt = 0;
+        const response = await fetch('/appcms/addlistinfo'); // Replace with actual API endpoint
         const data = await response.json();
+        
+        for (var i = 0; i < data.length; i++) {
+            if(data[i]["mold_Temperature_1"] + 
+               data[i]["mold_Temperature_2"] + 
+               data[i]["mold_Temperature_3"] + 
+               data[i]["mold_Temperature_4"] + 
+               data[i]["mold_Temperature_5"] + 
+               data[i]["mold_Temperature_6"] == 0){
+                continue
+            }
+            wtab01_data.push({
+                id: i, 
+                index: cnt,
+                additional_Info_1: data[i]["additional_Info_1"], 
+                status: data[i]["status"], 
+                wotqty: data[i]["wotqty"], 
+                mold_Temperature_1: data[i]["mold_Temperature_1"], 
+                mold_Temperature_2: data[i]["mold_Temperature_2"], 
+                mold_Temperature_3: data[i]["mold_Temperature_3"], 
+                mold_Temperature_4: data[i]["mold_Temperature_4"], 
+                mold_Temperature_5: data[i]["mold_Temperature_5"], 
+                mold_Temperature_6: data[i]["mold_Temperature_6"], 
+                cavity: data[i]["cavity"], 
+                operatingTimeHours: data[i]["operatingTimeHours"], 
+                idleTimeMinute: data[i]["idleTimeMinute"],  
+                starttime: data[i]["starttime"],  
+                endtime: data[i]["endtime"],   
+                
+            });
+        }
+        const startdate = document.getElementById(`startdate`);
+        const enddate = document.getElementById(`enddate`);
 
+        // 날짜 문자열을 `datetime-local` 형식으로 변환
+        const date01 = new Date(data[0].starttime);
+        const date02 = new Date(data[0].endtime);
+
+        // 로컬 시간으로 변환 (YYYY-MM-DD HH:mm:ss 형식)
+        const localDate01 = date01.getFullYear() +
+            "-" +
+            String(date01.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(date01.getDate()).padStart(2, "0") +
+            " " +
+            String(date01.getHours()).padStart(2, "0") +
+            ":" +
+            String(date01.getMinutes()).padStart(2, "0") +
+            ":" +
+            String(date01.getSeconds()).padStart(2, "0");
+        // 로컬 시간으로 변환 (YYYY-MM-DD HH:mm:ss 형식)
+        const localDate02 = date02.getFullYear() +
+            "-" +
+            String(date02.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(date02.getDate()).padStart(2, "0") +
+            " " +
+            String(date02.getHours()).padStart(2, "0") +
+            ":" +
+            String(date02.getMinutes()).padStart(2, "0") +
+            ":" +
+            String(date02.getSeconds()).padStart(2, "0");
+ 
+        // datetime-local 형식으로 변환 (YYYY-MM-DDTHH:mm) 
+         startdate.value = localDate01.replace(" ", "T").slice(0, 16);
+         enddate.value = localDate02.replace(" ", "T").slice(0, 16); 
+        for (var i = 0; i < wtab01_data.length; i++) {
+            
+            const element = document.getElementById(`addname${i}`);
+            const machine = document.getElementById(`machineState${i}`);
+            const planqty = document.getElementById(`plannedQty${i}`);
+            const proqty = document.getElementById(`producedQty${i}`);
+            const defqty = document.getElementById(`defectiveQty${i}`);
+            const temp = document.getElementById(`temperature${i}`);
+            const onsutemp = document.getElementById(`onsutemp${i}`);
+            const drytemp = document.getElementById(`drytemp${i}`);
+            const cavity = document.getElementById(`cavityCount${i}`);
+            const opertime = document.getElementById(`operatingTime${i}`);
+            const idletime = document.getElementById(`idleTime${i}`); 
+            
+             
+            if (element) { // Check if the element exists
+                element.innerHTML = `No. ${i + 1}. ${wtab01_data[i].additional_Info_1}`;
+            } else {
+                console.warn(`Element with id addname${i} not found.`);
+            } 
+            if (machine) { // Check if the element exists
+                machine.innerHTML = `${wtab01_data[i].status}`;
+            } else {
+                console.warn(`Element with id machine${i} not found.`);
+            } 
+            if (planqty) { // Check if the element exists
+                planqty.innerHTML = `0`;
+            } else {
+                console.warn(`Element with id planqty${i} not found.`);
+            } 
+            if (proqty) { // Check if the element exists
+                proqty.innerHTML = `${wtab01_data[i].wotqty}`;
+            } else {
+                console.warn(`Element with id wotqty${i} not found.`);
+            } 
+            if (defqty) { // Check if the element exists
+                defqty.innerHTML = `0`;
+            } else {
+                console.warn(`Element with id defqty${i} not found.`);
+            } 
+            if (temp) { // Check if the element existsmold_Temperature_1
+                temp.innerHTML = `${wtab01_data[i].mold_Temperature_1} ( ${wtab01_data[i].mold_Temperature_2} ) ${wtab01_data[i].mold_Temperature_3} (${wtab01_data[i].mold_Temperature_4})`;
+            } else {
+                console.warn(`Element with id mold_Temperature_1${i} not found.`);
+            } 
+            if (onsutemp) { // Check if the element existsmold_Temperature_1
+                onsutemp.innerHTML = `${wtab01_data[i].mold_Temperature_5}`;
+            } else {
+                console.warn(`Element with id onsutemp${i} not found.`);
+            } 
+            if (drytemp) { // Check if the element existsmold_Temperature_1
+                drytemp.innerHTML = `${wtab01_data[i].mold_Temperature_6}`;
+            } else {
+                console.warn(`Element with id drytemp${i} not found.`);
+            } 
+            if (cavity) { // Check if the element existsmold_Temperature_1
+                cavity.innerHTML = `${wtab01_data[i].cavity}`;
+            } else {
+                console.warn(`Element with id cavity${i} not found.`);
+            } 
+            if (opertime) { // Check if the element existsmold_Temperature_1
+                opertime.innerHTML = `${wtab01_data[i].operatingTimeHours}시간`;
+            } else {
+                console.warn(`Element with id opertime${i} not found.`);
+            } 
+            if (idletime) { // Check if the element existsmold_Temperature_1
+                idletime.innerHTML = `${wtab01_data[i].idleTimeMinute}분`;
+            } else {
+                console.warn(`Element with id idletime${i} not found.`);
+            } 
+        }
+          
         // Update data for each machine
-        updateCardData(7, data.machine7);
-        updateCardData(8, data.machine8);
+        // updateCardData(7, data.machine7);
+        // updateCardData(8, data.machine8);
         // Add more machines as needed
     }
 

@@ -125,4 +125,27 @@ public class CmsListController {
         return cms01List;
     }
 
+    //금형별 정보 대시보드
+    @GetMapping(value="/addlistinfo")
+    public Object getAddListInfo( Model model, HttpServletRequest request) throws Exception{
+        List<CmsIndex01Dto> cms01List = new ArrayList<>();
+        try {
+
+            cms01List = cmsservice01.GetADD_INFO(cmsdto);
+            model.addAttribute("cms01List",cms01List);
+
+//            System.out.println("리스트 데이터:");
+//            for (CmsIndex01Dto item : cms01List) {
+//                System.out.println("- " + item.getAdditional_Info_1());
+//            }
+            model.addAttribute("cms01ListDto", cms01List);
+
+        } catch (Exception ex) {
+            log.info("getRealCmsList Exception =====>" + ex.toString());
+        }
+        return cms01List;
+    }
+
+
+
 }

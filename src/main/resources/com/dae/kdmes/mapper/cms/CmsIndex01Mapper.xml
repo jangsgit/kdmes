@@ -85,4 +85,14 @@
             order by Additional_Info_1
         ]]>
     </select>
+
+
+
+    <select id="GetADD_INFO"  parameterType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto" resultType="com.dae.kdmes.DTO.Cms.CmsIndex01Dto">
+
+        exec GetADD_INFO
+        #{frdate, jdbcType=VARCHAR},
+        #{todate, jdbcType=VARCHAR}
+
+    </select>
 </mapper>

@@ -21,6 +21,6 @@ public interface CmsIndex01Mapper {
 
     public List<CmsIndex01Dto> getSHOTDATA_realtime_chart(CmsIndex01Dto parm) ;
 
-
+    public List<CmsIndex01Dto> GetADD_INFO(CmsIndex01Dto parm) ;
 
 }
