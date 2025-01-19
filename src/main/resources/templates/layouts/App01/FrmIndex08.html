@@ -1178,25 +1178,25 @@
                 doc.moveDown(1);
                 //  
                 y = doc.y; 
-                doc.drawText('[ 품       명 ] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false});
+                doc.drawText('[품       명] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false});
                 doc.drawText(  salesdata[0].machname   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});  
-                doc.drawText('[ 금형제작업체 ] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText('[금형제작업체] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
                 doc.drawText(  salesdata[0].machjaejak   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});     
                 //
                 //doc.moveDown(1);
                 //
                 y = doc.y;
-                doc.drawText('[ 품       번 ] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText('[품       번] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
                 doc.drawText(  salesdata[0].machcd   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[ 금형보관위치 ] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText('[금형보관위치] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
                 doc.drawText(  salesdata[0].machplace   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
                 //
                 //doc.moveDown(1); 
                 //
                 y = doc.y;
-                doc.drawText('[ 거   래  선 ]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText('[거   래  선]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
                 doc.drawText(  salesdata[0].machcltnm   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[ 차               종 ]'  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText('[차            종]'  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
                 doc.drawText(  salesdata[0].machcha   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
                 //
                 //doc.moveDown(1);
@@ -1210,13 +1210,13 @@
                 //doc.moveDown(1);
                 // 
                 y = doc.y;
-                doc.drawText('[  CAVITY  수 ]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText('[CAVITY  수]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
                 doc.drawText(  salesdata[0].machcavity   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
                 doc.drawText('[원  재  료  명] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
                 doc.drawText(  salesdata[0].machwon   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
 
                 y = doc.y;
-                doc.drawText('[ GRADE    NO ]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText('[GRADE    NO]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
                 doc.drawText(  salesdata[0].machgrade   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
                 doc.drawText('[제품 중량 (g)] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
                 doc.drawText(  ls_gram   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
