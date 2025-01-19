@@ -18,6 +18,10 @@ public class Index08Service {
     public List<Pc110Dto> getMachList(Pc110Dto parm){
         return  indexMapper.getMachList(parm);
     }
+    public List<Pc110Dto> getPringImg(Pc110Dto parm){
+        return  indexMapper.getPringImg(parm);
+    }
+
     public List<PcFixDto> getMachFixList(PcFixDto parm){
         return  indexMapper.getMachFixList(parm);
     }

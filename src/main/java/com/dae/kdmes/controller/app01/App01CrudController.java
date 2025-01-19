@@ -1142,9 +1142,9 @@ public class App01CrudController {
         try {
 
             for(MultipartFile multipartFile : file){
-                log.info("================================================================");
-                log.info("upload file name : " + multipartFile.getOriginalFilename());
-                log.info("upload file name : " + multipartFile.getSize());
+//                log.info("================================================================");
+//                log.info("upload file name : " + multipartFile.getOriginalFilename());
+//                log.info("upload file name : " + multipartFile.getSize());
                 ls_fileName = multipartFile.getOriginalFilename();
 
 
@@ -1375,6 +1375,33 @@ public class App01CrudController {
 
         return _Pc110DtoListDto;
     }
+
+
+    //거래처등록
+    @GetMapping(value="/index08/printimg")
+    public Object AppPrintJPG_index(@RequestParam("inmachcd") String inmachcd,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("금형이력카드");
+        CommDto.setMenuUrl("기준정보>금형이력카드");
+        CommDto.setMenuCode("index08");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Pc110Dto _index08Dto = new Pc110Dto();
+        List<Pc110Dto> _Pc110DtoListDto = new ArrayList<>();
+        try {
+            _index08Dto.setMachcd(inmachcd);
+            _Pc110DtoListDto = service08.getPringImg(_index08Dto);
+            model.addAttribute("index08List",_Pc110DtoListDto);
+
+        } catch (Exception ex) {
+            log.info("AppPrintView_index Exception =====>" + ex.toString());
+        }
+
+        return _Pc110DtoListDto;
+    }
+
 
     /**
      * 서버에 생성할 파일명을 처리할 랜덤 문자열 반환

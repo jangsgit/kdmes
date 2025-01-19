@@ -13,6 +13,8 @@ import java.util.List;
 public interface Index08Mapper {
 
     public List<Pc110Dto> getMachList(Pc110Dto parm) ;
+    public List<Pc110Dto> getPringImg(Pc110Dto parm);
+
     public String getDupleMachchk(Pc110Dto parm) ;
 
     public Boolean InsertMach(Pc110Dto parm) ;

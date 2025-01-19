@@ -59,6 +59,15 @@
         ]]>
     </select>
 
+
+    <select id="getPringImg" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto" resultType="com.dae.kdmes.DTO.App01.Pc110Dto">
+        <![CDATA[
+            SELECT isnull(save_name,'') as save_name
+              FROM TB_MATTACH WITH(NOLOCK)
+             WHERE board_idx = #{machcd}
+        ]]>
+    </select>
+
     <insert id="InsertMach" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto" >
         insert into TB_PC110 (machcd
                             ,machno

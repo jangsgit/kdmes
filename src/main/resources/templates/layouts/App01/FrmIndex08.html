@@ -1050,10 +1050,32 @@
                 sansSerif: true
             }); 
 
+            var ls_image01 = ""
+            var ls_image02 = ""
+            //이력조회     
+            $.ajax({
+                url: '/app01m/index08/printimg',  
+                type:"POST",
+                data: { 
+                    "inmachcd" : ls_inmachcd, 
+                }, 
+                async:false,
+                success:function(data){  
+                    console.log(data)
+                    ls_image01 = data[0].save_name;
+                    ls_image02 = data[1].save_name;
+                    console.log(ls_image01)
+                    console.log(ls_image02)
+                },error:function(e){
+                    console.log("error");                            
+                }
+            }).done(function(fragment){           
+
+            })  
 
             const addImageToPDF = async () => {
                 const ls_imgstr =
-                    'assets/upload/' + ls_inmachcd + '/53c229d81323474a8f908d29235a6290.png';
+                    'assets/upload/' + ls_inmachcd + '/' + ls_image01;
                  
                 const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
 
@@ -1084,7 +1106,7 @@
 
             const addImageToPDF02 = async () => {
                 const ls_imgstr =
-                    'assets/upload/' + ls_inmachcd + '/50343a816a2e4c1fbfeec65da03a2d1b.png';
+                    'assets/upload/' + ls_inmachcd + '/' + ls_image02;
                  
                 const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
 
