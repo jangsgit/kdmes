@@ -1128,9 +1128,11 @@ public class App01CrudController {
                 return "error";
             }
         }
+
 //        C:\Project\aprjKDMES\src\main\resources\static\assets
 //        C:\Project\aprjKDMES\src\main\java\com\dae\kdmes\controller\app01
-        String _uploadPath = Paths.get("C:", "Project", "aprjKDMES","src","main","resources","static","assets","upload", _index08Dto.getMachcd()).toString();
+        //D:\workspace\KDMES\src\main\resources\static\assets
+        String _uploadPath = Paths.get("D:", "workspace", "KDMES","src","main","resources","static","assets","upload", _index08Dto.getMachcd()).toString();
         /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
         File dir = new File(_uploadPath);
         if (dir.exists() == false) {
