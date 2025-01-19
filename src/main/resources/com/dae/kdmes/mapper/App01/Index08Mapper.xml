@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.dae.kdmes.Mapper.App01.Index08Mapper">
+    <select id="getMachList" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto" resultType="com.dae.kdmes.DTO.App01.Pc110Dto">
+        <![CDATA[
+            SELECT machcd
+                  ,machno
+                  ,machname
+                  ,Left(machdate,4) + '-' + substring(machdate, 5,2)+ '-' + substring(machdate, 7,2) as machdate
+                  ,Left(machstdate,4) + '-' + substring(machstdate, 5,2)+ '-' + substring(machstdate, 7,2) as machstdate
+                  ,Left(macheddate,4) + '-' + substring(macheddate, 5,2)+ '-' + substring(macheddate, 7,2) as macheddate
+                  ,machshot
+                  ,machgugek
+                  ,machcavity
+                  ,machuse
+                  ,machcha
+                  ,machcltnm
+                  ,machjaejak
+                  ,machplace
+                  ,machamt
+                  ,machwon
+                  ,perid
+                  ,machgrade
+                  ,machgram
+                  ,machncha
+                  ,remark
+                  ,indate
+                  ,inperid
+              FROM TB_PC110 WITH(NOLOCK)
+             WHERE ( isnull(machcd,'') Like concat('%',#{machcd},'%')
+               or isnull(machname,'') Like concat('%',#{machcd},'%') )
+        ]]>
+    </select>
+
+    <select id="getMachFixList" parameterType="com.dae.kdmes.DTO.App01.PcFixDto" resultType="com.dae.kdmes.DTO.App01.PcFixDto">
+        <![CDATA[
+            SELECT fixid
+                  ,fixmachcd
+                  ,Left(reqdate,4) + '-' + substring(reqdate, 5,2)+ '-' + substring(reqdate, 7,2) as reqdate
+                  ,Left(respdate,4) + '-' + substring(respdate, 5,2)+ '-' + substring(respdate, 7,2) as respdate
+                  ,fixtext
+                  ,fixcltnm
+                  ,remark
+                  ,indate
+                  ,inperid
+              FROM TB_PCFIXLIST WITH(NOLOCK)
+             WHERE fixmachcd = #{fixmachcd}
+        ]]>
+    </select>
+
+    <select id="getDupleMachchk" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto" resultType="String">
+        <![CDATA[
+            SELECT isnull(machname,'') as machname
+              FROM TB_PC110 WITH(NOLOCK)
+             WHERE machcd = #{machcd}
+        ]]>
+    </select>
+
+    <insert id="InsertMach" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto" >
+        insert into TB_PC110 (machcd
+                            ,machno
+                            ,machname
+                            ,machdate
+                            ,machstdate
+                            ,macheddate
+                            ,machshot
+                            ,machgugek
+                            ,machcavity
+                            ,machuse
+                            ,machcha
+                            ,machcltnm
+                            ,machjaejak
+                            ,machplace
+                            ,machwon
+                            ,machgrade
+                            ,machgram
+                            ,machncha
+                            ,indate
+                            ,inperid
+        ) values  (
+                             #{machcd}
+                            ,#{machno}
+                            ,#{machname}
+                            ,#{machdate}
+                            ,#{machstdate}
+                            ,#{macheddate}
+                            ,#{machshot}
+                            ,#{machgugek}
+                            ,#{machcavity}
+                            ,#{machuse}
+                            ,#{machcha}
+                            ,#{machcltnm}
+                            ,#{machjaejak}
+                            ,#{machplace}
+                            ,#{machwon}
+                            ,#{machgrade}
+                            ,#{machgram}
+                            ,#{machncha}
+                            ,#{indate}
+                            ,#{inperid}
+        )
+    </insert>
+
+
+    <insert id="InsertMachFix" parameterType="com.dae.kdmes.DTO.App01.PcFixDto" >
+        insert into TB_PCFIXLIST (fixmachcd
+            ,reqdate
+            ,respdate
+            ,fixtext
+            ,fixcltnm
+            ,remark
+            ,indate
+            ,inperid
+        ) values  (
+             #{fixmachcd}
+            ,#{reqdate}
+            ,#{respdate}
+            ,#{fixtext}
+            ,#{fixcltnm}
+            ,#{remark}
+            ,#{indate}
+            ,#{inperid}
+        )
+    </insert>
+
+
+    <update id="UpdateMach" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto">
+        update TB_PC110
+        set perid = '00'
+        <if test="machno != null ">,</if>
+        <if test="machno != null">machno=#{machno}</if>
+        <if test="machname != null ">,</if>
+        <if test="machname != null">machname=#{machname}</if>
+        <if test="machdate != null ">,</if>
+        <if test="machdate != null">machdate=#{machdate}</if>
+        <if test="machstdate != null ">,</if>
+        <if test="machstdate != null">machstdate=#{machstdate}</if>
+        <if test="macheddate != null ">,</if>
+        <if test="macheddate != null">macheddate=#{macheddate}</if>
+        <if test="machshot != null ">,</if>
+        <if test="machshot != null">machshot=#{machshot}</if>
+        <if test="machgugek != null ">,</if>
+        <if test="machgugek != null">machgugek=#{machgugek}</if>
+        <if test="machcavity != null ">,</if>
+        <if test="machcavity != null">machcavity=#{machcavity}</if>
+        <if test="machuse != null ">,</if>
+        <if test="machuse != null">machuse=#{machuse}</if>
+        <if test="machcha != null ">,</if>
+        <if test="machcha != null">machcha=#{machcha}</if>
+        <if test="machcltnm != null ">,</if>
+        <if test="machcltnm != null">machcltnm=#{machcltnm}</if>
+        <if test="machjaejak != null ">,</if>
+        <if test="machjaejak != null">machjaejak=#{machjaejak}</if>
+        <if test="machplace != null ">,</if>
+        <if test="machplace != null">machplace=#{machplace}</if>
+        <if test="machwon != null ">,</if>
+        <if test="machwon != null">machwon=#{machwon}</if>
+        <if test="machgrade != null ">,</if>
+        <if test="machgrade != null">machgrade=#{machgrade}</if>
+        <if test="machgram != null ">,</if>
+        <if test="machgram != null">machgram=#{machgram}</if>
+        <if test="machncha != null ">,</if>
+        <if test="machncha != null">machncha=#{machncha}</if>
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+        <if test="inperid != null ">,</if>
+        <if test="inperid != null">inperid=#{inperid}</if>
+        where machcd = #{machcd}
+    </update>
+
+
+    <update id="UpdateMachFix" parameterType="com.dae.kdmes.DTO.App01.PcFixDto">
+        update TB_PCFIXLIST
+        set perid = '00'
+        <if test="fixmachcd != null ">,</if>
+        <if test="fixmachcd != null">fixmachcd=#{fixmachcd}</if>
+        <if test="reqdate != null ">,</if>
+        <if test="reqdate != null">reqdate=#{reqdate}</if>
+        <if test="respdate != null ">,</if>
+        <if test="respdate != null">respdate=#{respdate}</if>
+        <if test="fixtext != null ">,</if>
+        <if test="fixtext != null">fixtext=#{fixtext}</if>
+        <if test="fixcltnm != null ">,</if>
+        <if test="fixcltnm != null">fixcltnm=#{fixcltnm}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="indate != null ">,</if>
+        <if test="indate != null">indate=#{indate}</if>
+        <if test="inperid != null ">,</if>
+        <if test="inperid != null">inperid=#{inperid}</if>
+        where fixid = #{fixid}
+    </update>
+
+    <update id="DeleteMach" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto">
+        <![CDATA[
+        DELETE  TB_PC110  where machcd = #{machcd}
+        ]]>
+    </update>
+
+
+    <update id="DeleteMachFix" parameterType="com.dae.kdmes.DTO.App01.PcFixDto">
+        <![CDATA[
+        DELETE  TB_PCFIXLIST  where fixid = #{fixid}
+        ]]>
+    </update>
+</mapper>

@@ -1,16 +1,11 @@
 package com.dae.kdmes.controller.app01;
 
-import com.dae.kdmes.DTO.App01.Index01Dto;
-import com.dae.kdmes.DTO.App01.Index02Dto;
-import com.dae.kdmes.DTO.App01.Index03Dto;
-import com.dae.kdmes.DTO.App01.Index04Dto;
+import com.dae.kdmes.DTO.App01.*;
+import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
-import com.dae.kdmes.Service.App01.Index01Service;
-import com.dae.kdmes.Service.App01.Index02Service;
-import com.dae.kdmes.Service.App01.Index03Service;
-import com.dae.kdmes.Service.App01.Index04Service;
+import com.dae.kdmes.Service.App01.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,9 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 // @RestController : return을 텍스트로 반환함.
 @RestController
@@ -35,6 +29,8 @@ public class App01CrudController {
     private final Index03Service service03;
 
     private final Index04Service service04;
+
+    private final Index08Service service08;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
@@ -1021,5 +1017,277 @@ public class App01CrudController {
         return "success";
     }
 
+
+    @RequestMapping(value="/index08/save")
+    public String index08Save( @RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        String ls_machdate = "";
+        String ls_machstdate = "";
+        String ls_macheddate= "";
+        Pc110Dto _index08Dto = new Pc110Dto();
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "inmachcd":
+                    _index08Dto.setMachcd(values.toString());
+                    break;
+                case "inmachno":
+                    _index08Dto.setMachno(values.toString());
+                    break;
+                case "inmachname":
+                    _index08Dto.setMachname(values.toString());
+                    break;
+                case "inmachdate":
+                    _index08Dto.setMachdate(values.toString());
+                    break;
+                case "inmachstdate":
+                    _index08Dto.setMachstdate(values.toString());
+                    break;
+                case "inmacheddate":
+                    _index08Dto.setMacheddate(values.toString());
+                    break;
+                case "inmachshot":
+                    _index08Dto.setMachshot(Integer.parseInt(values.toString()));
+                    break;
+                case "inmachgugek":
+                    _index08Dto.setMachgugek(values.toString());
+                    break;
+                case "inmachcavity":
+                    _index08Dto.setMachcavity(values.toString());
+                    break;
+                case "inmachuse":
+                    _index08Dto.setMachuse(values.toString());
+                    break;
+                case "inmachcha":
+                    _index08Dto.setMachcha(values.toString());
+                    break;
+                case "inmachcltnm":
+                    _index08Dto.setMachcltnm(values.toString());
+                    break;
+                case "inmachjaejak":
+                    _index08Dto.setMachjaejak(values.toString());
+                    break;
+                case "inmachplace":
+                    _index08Dto.setMachplace(values.toString());
+                    break;
+                case "inmachwon":
+                    _index08Dto.setMachwon(values.toString());
+                    break;
+                case "inmachgrade":
+                    _index08Dto.setMachgrade(values.toString());
+                    break;
+                case "inmachgram":
+                    _index08Dto.setMachgram(Integer.parseInt(values.toString()));
+                    break;
+                case "inmachncha":
+                    _index08Dto.setMachncha(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+//        ls_machdate = _index08Dto.getMachdate();
+//        ls_machstdate = _index08Dto.getMachstdate();
+//        ls_macheddate = _index08Dto.getMacheddate();
+//
+//        String ls_yeare = ls_machdate.substring(0,4);
+//        String ls_mm = ls_machdate.substring(5,7);
+//        String ls_dd = ls_machdate.substring(8,10);
+//        ls_machdate =  ls_yeare + ls_mm + ls_dd;
+//
+//        ls_yeare = ls_machstdate.substring(0,4);
+//        ls_mm = ls_machstdate.substring(5,7);
+//        ls_dd = ls_machstdate.substring(8,10);
+//        ls_machstdate =  ls_yeare + ls_mm + ls_dd;
+//
+//        ls_yeare = ls_macheddate.substring(0,4);
+//        ls_mm = ls_macheddate.substring(5,7);
+//        ls_dd = ls_macheddate.substring(8,10);
+//        ls_macheddate =  ls_yeare + ls_mm + ls_dd;
+//
+//        _index08Dto.setMachdate(ls_machdate);
+//        _index08Dto.setMachstdate(ls_machstdate);
+//        _index08Dto.setMacheddate(ls_macheddate);
+
+        _index08Dto.setIndate(getDate());
+        _index08Dto.setInperid(userformDto.getUserid());
+
+        String ls_chkmachnm = service08.getDupleMachchk(_index08Dto);
+        Boolean result = false;
+        if (ls_chkmachnm != null && !ls_chkmachnm.equals("")) {
+            log.info("ls_getMachcd =====>" + _index08Dto.getMachcd());
+            log.info("ls_chkmachnm =====>" + ls_chkmachnm);
+            result = service08.UpdateMach(_index08Dto);
+            if (!result) {
+                return "error";
+            }
+        }else{
+            result = service08.InsertMach(_index08Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+
+        return "success";
+    }
+
+    @RequestMapping(value="/index08/del")
+    public String index08Delete(  @RequestParam("inmachcd") String inmachcd,
+                                  Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        Pc110Dto _index08Dto = new Pc110Dto();
+        _index08Dto.setMachcd(inmachcd);
+        Boolean result = service08.DeleteMach(_index08Dto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+    //거래처등록
+    @GetMapping(value="/index08/listtot")
+    public Object App082ListTot_index(@RequestParam("searchtxt") String inmachcd,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("금형등록");
+        CommDto.setMenuUrl("기준정보>금형등록");
+        CommDto.setMenuCode("index08");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        List<Pc110Dto> _index08ListDto = new ArrayList<>();
+        Pc110Dto _index08Dto = new Pc110Dto();
+        try {
+            if(inmachcd == null || inmachcd.equals("")){
+                inmachcd = "%";
+            }
+            _index08Dto.setMachcd(inmachcd);
+            _index08ListDto = service08.getMachList(_index08Dto);
+            model.addAttribute("index08List",_index08ListDto);
+
+        } catch (Exception ex) {
+            log.info("App08ListTot_index Exception =====>" + ex.toString());
+        }
+
+        return _index08ListDto;
+    }
+
+
+    @RequestMapping(value="/index08/fixsave")
+    public String index08FixSave( @RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        PcFixDto _index08FixDto = new PcFixDto();
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "infixid":
+                    _index08FixDto.setFixid(Integer.parseInt(values.toString()));
+                    break;
+                case "infixmachcd":
+                    _index08FixDto.setFixmachcd(values.toString());
+                    break;
+                case "infixtext":
+                    _index08FixDto.setFixtext(values.toString());
+                    break;
+                case "infixcltnm":
+                    _index08FixDto.setFixcltnm(values.toString());
+                    break;
+                case "inremark":
+                    _index08FixDto.setRemark(values.toString());
+                    break;
+                case "inreqdate":
+                    _index08FixDto.setReqdate(values.toString());
+                    break;
+                case "inrespdate":
+                    _index08FixDto.setRespdate(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        _index08FixDto.setIndate(getDate());
+        _index08FixDto.setInperid(userformDto.getUserid());
+
+        Boolean result = false;
+        if (_index08FixDto.getFixid() > 0) {
+            result = service08.UpdateMachFix(_index08FixDto);
+            if (!result) {
+                return "error";
+            }
+        }else{
+            result = service08.InsertMachFix(_index08FixDto);
+            if (!result) {
+                return "error";
+            }
+        }
+
+        return "success";
+    }
+
+
+    @RequestMapping(value="/index08/delfix")
+    public String index08FixDelete(  @RequestParam("infixid") String infixid,
+                                  Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        PcFixDto _index08FixDto = new PcFixDto();
+        _index08FixDto.setFixid(Integer.parseInt(infixid));
+        Boolean result = service08.DeleteMachFix(_index08FixDto);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+
+    //거래처등록
+    @GetMapping(value="/index08/listtotfix")
+    public Object App082ListTotFix_index(@RequestParam("searchtxt") String inmachcd,
+                                      Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("금형수리등록");
+        CommDto.setMenuUrl("기준정보>금형수리등록");
+        CommDto.setMenuCode("index08");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        List<PcFixDto> _index08FixListDto = new ArrayList<>();
+        PcFixDto _index08FixDto = new PcFixDto();
+        try {
+            if(inmachcd == null || inmachcd.equals("")){
+                inmachcd = "%";
+            }
+            _index08FixDto.setFixmachcd(inmachcd);
+            _index08FixListDto = service08.getMachFixList(_index08FixDto);
+            model.addAttribute("index08List",_index08FixListDto);
+
+        } catch (Exception ex) {
+            log.info("App08ListTot_index Exception =====>" + ex.toString());
+        }
+
+        return _index08FixListDto;
+    }
+
+    private String getDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
 
 }

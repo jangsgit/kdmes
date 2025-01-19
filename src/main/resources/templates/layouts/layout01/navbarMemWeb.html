@@ -55,6 +55,13 @@
                                 </a> 
                             </li> 
                             <li class="nav-item"> 
+                                <a class="nav-link" th:href="@{/app01/index08}" aria-expanded="false" >
+                                    <div class="d-flex align-items-center"><span
+                                        class="nav-link-text ps-1">금형등록</span>  
+                                    </div>
+                                </a> 
+                            </li>  
+                            <li class="nav-item"> 
                                 <a class="nav-link" th:href="@{/app01/index02}" aria-expanded="false" >
                                     <div class="d-flex align-items-center"><span
                                         class="nav-link-text ps-1">설비등록</span>  
@@ -309,7 +316,18 @@
                                 </a>  
                             </li>  
                         </ul>  
-                        <a class="nav-item" href="#" role="button" onclick="logout()"
+                        <a class="nav-item" href="#" role="button"  
+                                onclick="
+                                    if (!confirm('로그아웃하시겠습니까?')) {
+                                        return;
+                                    }
+                                    localStorage.removeItem('perid');
+                                    localStorage.removeItem('pernm');
+                                    localStorage.removeItem('userid');
+                                    localStorage.removeItem('flag');
+                                    localStorage.removeItem('custnm');
+                                    location.href = '/';
+                                "
                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="withdraw">
                             <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                         class="fas fa-envelope-open"></span></span><span
@@ -322,42 +340,5 @@
         </div>
     </div>
 </body>
-<script> 
-  
-    var ip_addr = "";
-    async function getIpClient() {
-        try {
-            const response = await axios.get('https://api.ipify.org?format=json'); 
-            ip_addr = String(response.data.ip);   
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    function logout(){   
-            if (!confirm("로그아웃하시겠습니까?") ){
-                return    
-            }
-            
-            getIpClient()
-        var ls_loginid   = localStorage.getItem("userid"); 
-        $.ajax({
-            url: '/authcrud/logoutlog',
-            type:"POST",
-            data: {
-                "loginid" : ls_loginid ,
-                "ipaddr" : ip_addr ,
-            },
-            async:false,
-            success:function(){
-                    console.log('success');
-            }
-        });
-            localStorage.removeItem("perid");
-            localStorage.removeItem("pernm");
-            localStorage.removeItem("userid");
-            localStorage.removeItem("flag");
-            localStorage.removeItem("custnm") ;
-            location.href = "/" ;
-        }   
-</script>
+ 
 </html>

@@ -5,6 +5,7 @@ import com.dae.kdmes.DTO.Cms.CmsIndex01Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
+import com.dae.kdmes.Service.App01.*;
 import com.dae.kdmes.Service.App03.Index35Service;
 import com.dae.kdmes.Service.Cms.CmsIndex01Service;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.dae.kdmes.Service.App01.Index01Service;
-import com.dae.kdmes.Service.App01.Index02Service;
-import com.dae.kdmes.Service.App01.Index03Service;
-import com.dae.kdmes.Service.App01.Index04Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +35,8 @@ public class App01Controller {
     private final Index03Service service03;
 
     private final Index04Service service04;
+
+    private final Index08Service service08;
     private final Index35Service service35;
     private final CmsIndex01Service cmsservice01;
     CmsIndex01Dto cmsdto = new CmsIndex01Dto();
@@ -261,6 +260,34 @@ public class App01Controller {
         }
 
         return "App01/index07";
+    }
+
+
+    @GetMapping(value="/index08")
+    public String App01_index08(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("금형등록");
+        CommDto.setMenuUrl("기준정보>금형등록");
+        CommDto.setMenuCode("index08");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        List<Pc110Dto> _index08ListDto = new ArrayList<>();
+        Pc110Dto _index08Dto = new Pc110Dto();
+        try {
+            _index08Dto.setMachcd("%");
+            _index08ListDto = service08.getMachList(_index08Dto);
+            //   index02ListDto = service02.getWrcmList(index02Dto);
+
+            model.addAttribute("Index08List",_index08ListDto);
+            //    model.addAttribute("WrcmList",index02ListDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App08_index Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index08";
     }
 
 
