@@ -1,21 +1,31 @@
 package com.dae.kdmes.controller.app01;
 
 import com.dae.kdmes.DTO.App01.*;
-import com.dae.kdmes.DTO.App02.Index10Dto;
+import com.dae.kdmes.DTO.App05ElvlrtDto;
+import com.dae.kdmes.DTO.AttachDTO;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
+import com.dae.kdmes.Exception.AttachFileException;
 import com.dae.kdmes.Service.App01.*;
+import com.dae.kdmes.Service.impl.AppUploadServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import org.apache.commons.io.FilenameUtils;
+import org.json.JSONObject;
 
 // @RestController : return을 텍스트로 반환함.
 @RestController
@@ -31,6 +41,7 @@ public class App01CrudController {
     private final Index04Service service04;
 
     private final Index08Service service08;
+    private final AppUploadServiceImpl appServiceImpl;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
@@ -1020,15 +1031,21 @@ public class App01CrudController {
 
     @RequestMapping(value="/index08/save")
     public String index08Save( @RequestPart(value = "key") Map<String, Object> param
+                               ,@RequestPart(value = "file",required = false ) List<MultipartFile> file
             , Model model
             , HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
 
-        String ls_machdate = "";
-        String ls_machstdate = "";
-        String ls_macheddate= "";
+
+        String ls_fileName = "";
+        String ls_errmsg = "";
+        /* 업로드 파일 정보를 담을 비어있는 리스트 */
+        List<AttachDTO> attachList = new ArrayList<>();
+        App05ElvlrtDto _App05Dto = new App05ElvlrtDto();
+
+
         Pc110Dto _index08Dto = new Pc110Dto();
         param.forEach((key, values) -> {
             switch (key) {
@@ -1092,31 +1109,9 @@ public class App01CrudController {
         });
 
 
-//        ls_machdate = _index08Dto.getMachdate();
-//        ls_machstdate = _index08Dto.getMachstdate();
-//        ls_macheddate = _index08Dto.getMacheddate();
-//
-//        String ls_yeare = ls_machdate.substring(0,4);
-//        String ls_mm = ls_machdate.substring(5,7);
-//        String ls_dd = ls_machdate.substring(8,10);
-//        ls_machdate =  ls_yeare + ls_mm + ls_dd;
-//
-//        ls_yeare = ls_machstdate.substring(0,4);
-//        ls_mm = ls_machstdate.substring(5,7);
-//        ls_dd = ls_machstdate.substring(8,10);
-//        ls_machstdate =  ls_yeare + ls_mm + ls_dd;
-//
-//        ls_yeare = ls_macheddate.substring(0,4);
-//        ls_mm = ls_macheddate.substring(5,7);
-//        ls_dd = ls_macheddate.substring(8,10);
-//        ls_macheddate =  ls_yeare + ls_mm + ls_dd;
-//
-//        _index08Dto.setMachdate(ls_machdate);
-//        _index08Dto.setMachstdate(ls_machstdate);
-//        _index08Dto.setMacheddate(ls_macheddate);
 
         _index08Dto.setIndate(getDate());
-        _index08Dto.setInperid(userformDto.getUserid());
+        //_index08Dto.setInperid(userformDto.getUserid());
 
         String ls_chkmachnm = service08.getDupleMachchk(_index08Dto);
         Boolean result = false;
@@ -1133,6 +1128,73 @@ public class App01CrudController {
                 return "error";
             }
         }
+//        C:\Project\aprjKDMES\src\main\resources\static\assets
+//        C:\Project\aprjKDMES\src\main\java\com\dae\kdmes\controller\app01
+        String _uploadPath = Paths.get("C:", "Project", "aprjKDMES","src","main","resources","static","assets","upload", _index08Dto.getMachcd()).toString();
+        /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
+        File dir = new File(_uploadPath);
+        if (dir.exists() == false) {
+            dir.mkdirs();
+        }
+
+        try {
+
+            for(MultipartFile multipartFile : file){
+                log.info("================================================================");
+                log.info("upload file name : " + multipartFile.getOriginalFilename());
+                log.info("upload file name : " + multipartFile.getSize());
+                ls_fileName = multipartFile.getOriginalFilename();
+
+
+                /* 파일이 비어있으면 비어있는 리스트 반환 */
+                if (multipartFile.getSize() < 1) {
+                    ls_errmsg = "success";
+                    return ls_errmsg;
+                }
+                /* 파일 확장자 */
+                final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+                /* 서버에 저장할 파일명 (랜덤 문자열 + 확장자) */
+                final String saveName = getRandomString() + "." + extension;
+
+                /* 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성 */
+                File target = new File(_uploadPath, saveName);
+
+                log.info("uploadPath : " + _uploadPath);
+                log.info("saveName : " + saveName);
+
+                multipartFile.transferTo(target);
+                String nseq1 = _index08Dto.getMachcd();
+                /* 파일 정보 저장 */
+                AttachDTO attach = new AttachDTO();
+                attach.setBoardIdx(nseq1);
+                attach.setOriginalName(multipartFile.getOriginalFilename());
+                attach.setSaveName(saveName);
+                attach.setSize(multipartFile.getSize());
+                attach.setFlag("NN");
+                /* 파일 정보 추가 */
+                attachList.add(attach);
+            }
+
+            result  = appServiceImpl.registerMNotice(_App05Dto, attachList);
+            if(!result){
+                return  "error";
+            }
+        }catch (DataAccessException e){
+            log.info("memberUpload DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/App05/App05list/", Method.GET, model);
+        } catch (Exception  e){
+            /*log.info("memberUpload Exception ================================================================");
+            log.info(e.toString());
+            ls_errmsg = "[" + ls_fileName + "] failed to save";
+            throw new AttachFileException("[" + ls_fileName + "] failed to save");*/
+            //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app05/App05list/", Method.GET, model);
+        }
+
+
+
+
 
         return "success";
     }
@@ -1219,7 +1281,7 @@ public class App01CrudController {
         });
 
         _index08FixDto.setIndate(getDate());
-        _index08FixDto.setInperid(userformDto.getUserid());
+        //_index08FixDto.setInperid(userformDto.getUserid());
 
         Boolean result = false;
         if (_index08FixDto.getFixid() > 0) {
@@ -1280,6 +1342,44 @@ public class App01CrudController {
         }
 
         return _index08FixListDto;
+    }
+
+
+    //거래처등록
+    @GetMapping(value="/index08/printview")
+    public Object AppPrintView_index(@RequestParam("inmachcd") String inmachcd,
+                                     @RequestParam("inmachno") String inmachno,
+                                         Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("금형이력카드");
+        CommDto.setMenuUrl("기준정보>금형이력카드");
+        CommDto.setMenuCode("index08");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Pc110Dto _index08Dto = new Pc110Dto();
+        List<Pc110Dto> _Pc110DtoListDto = new ArrayList<>();
+        try {
+            if(inmachcd == null || inmachcd.equals("")){
+                inmachcd = "%";
+            }
+            _index08Dto.setMachcd(inmachcd);
+            _Pc110DtoListDto = service08.getMachList(_index08Dto);
+            model.addAttribute("index08List",_Pc110DtoListDto);
+
+        } catch (Exception ex) {
+            log.info("AppPrintView_index Exception =====>" + ex.toString());
+        }
+
+        return _Pc110DtoListDto;
+    }
+
+    /**
+     * 서버에 생성할 파일명을 처리할 랜덤 문자열 반환
+     * @return 랜덤 문자열
+     */
+    private final String getRandomString() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     private String getDate() {

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PcFixDto {
+    private int rownum;
     private int fixid;
     private String fixmachcd;
     private String reqdate;

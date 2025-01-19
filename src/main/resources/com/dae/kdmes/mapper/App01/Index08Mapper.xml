@@ -36,7 +36,8 @@
 
     <select id="getMachFixList" parameterType="com.dae.kdmes.DTO.App01.PcFixDto" resultType="com.dae.kdmes.DTO.App01.PcFixDto">
         <![CDATA[
-            SELECT fixid
+            SELECT ROW_NUMBER() OVER (ORDER BY fixid) AS rownum
+                  ,fixid
                   ,fixmachcd
                   ,Left(reqdate,4) + '-' + substring(reqdate, 5,2)+ '-' + substring(reqdate, 7,2) as reqdate
                   ,Left(respdate,4) + '-' + substring(respdate, 5,2)+ '-' + substring(respdate, 7,2) as respdate
