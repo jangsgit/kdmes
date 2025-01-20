@@ -1,12 +1,17 @@
 package com.dae.kdmes.controller.app01;
 
 import com.dae.kdmes.DTO.App01.*;
+import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
+import com.dae.kdmes.DTO.Appm.FPLAN_VO;
+import com.dae.kdmes.DTO.Appm.TBPopupVO;
 import com.dae.kdmes.DTO.Cms.CmsIndex01Dto;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
 import com.dae.kdmes.Service.App01.*;
 import com.dae.kdmes.Service.App03.Index35Service;
+import com.dae.kdmes.Service.Appm.AppPopupService;
+import com.dae.kdmes.Service.Appm.Appcom01Service;
 import com.dae.kdmes.Service.Cms.CmsIndex01Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
@@ -20,7 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 // @RestController : return을 텍스트로 반환함.
@@ -38,8 +46,9 @@ public class App01Controller {
 
     private final Index08Service service08;
     private final Index35Service service35;
-    private final CmsIndex01Service cmsservice01;
-    CmsIndex01Dto cmsdto = new CmsIndex01Dto();
+
+    private final Appcom01Service appcom01Service;
+    private final AppPopupService appPopupService;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
@@ -291,6 +300,75 @@ public class App01Controller {
     }
 
 
+    @GetMapping(value="/index09")
+    public String App01_index09(Model model, HttpServletRequest request) throws Exception{
+        List<FPLAN_VO> _itemSachulDtoList = new ArrayList<>();
+        CommDto.setMenuTitle("사출공정");  //
+        CommDto.setMenuUrl("생산공정>사출공정");
+        CommDto.setMenuCode("appcom01");
+        FPLAN_VO fplanDto = new FPLAN_VO();
+        FPLANW010_VO itemDto = new FPLANW010_VO();
+        List<FPLAN_VO> itemDtoList = new ArrayList<>();
+        TBPopupVO wrmcDto = new TBPopupVO();
+        TBPopupVO wperidDto = new TBPopupVO();
+
+
+        String fdate = getFrDate();
+        String tdate =  getAddDate();
+        String cltcd = "%";
+        String pcode = "%";
+        String lotno = "%";
+        String ls_month = "%";
+        fplanDto.setLine("00");
+        fplanDto.setWflag("00010");
+        fplanDto.setLotno(lotno);
+        fplanDto.setFdate(fdate);
+        fplanDto.setTdate(tdate);
+        fplanDto.setCltcd(cltcd);
+        fplanDto.setPcode(pcode);
+        ls_month = tdate.substring(4,6);
+        if(ls_month.substring(0,1).equals("0")){ ;
+            ls_month = ls_month.substring(1,2) + "월";
+        }else{
+            ls_month = ls_month.substring(0,2) + "월";
+        }
+        fplanDto.setInmonth(ls_month);
+        fplanDto.setInweeks("%");
+        itemDto.setPlan_no("%");
+        itemDtoList = appcom01Service.GetFPLAN_List(fplanDto);
+//        model.addAttribute("itemDto", itemDto);
+        model.addAttribute("itemDtoList", itemDtoList);
+        _itemSachulDtoList = appcom01Service.GetFPLAN_SachulList(fplanDto);
+        model.addAttribute("itemSachulDtoList", _itemSachulDtoList);
+
+
+
+
+        wperidDto.setWflag("00010");  //첫번째공정
+        wperidDto.setWpernm("%");
+        wrmcDto.setPlan_no("%");      //불량구분 팝업
+        wrmcDto.setWseq("%");
+        wrmcDto.setMachname("%");
+        wrmcDto.setWflag("00010");
+        wrmcDto.setWclscode("1");
+        model.addAttribute("CommDto", CommDto);
+        model.addAttribute("wrmcDto", appPopupService.GetWrmcList01(wrmcDto));          //설비명
+//        log.info("Exception =====>" + appPopupService.GetPernmList(wperidDto).toString());
+        model.addAttribute("wperidDto", appPopupService.GetPernmList(wperidDto));       //작업자
+        model.addAttribute("wstopDto", appPopupService.GetStopList(wperidDto));        //비가동사유
+
+//        wbomDto.setPlan_no("202108120027");
+        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
+//        model.addAttribute("wfbomDto", appPopupService.GetWfbomList_blank());
+        model.addAttribute("wfiworkDto", appPopupService.GetWfiworkList_blank());
+
+        model.addAttribute("wbadDto", appPopupService.GetWBadList01(wrmcDto));          //불량구분
+        model.addAttribute("wbadDDDto", appPopupService.GetWBadDDList(wrmcDto));          //불량구분
+
+        return "App01/index09";
+    }
+
+
     @GetMapping(value="/indexds01")
     public String App01_indexds01(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("공정기준등록");
@@ -342,4 +420,29 @@ public class App01Controller {
 
         return "App01/indexds04";
     }
+
+
+
+    private String getFrDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, -100); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
+
+    private String getAddDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal1 = Calendar.getInstance();
+        cal1.add(Calendar.DATE, 14); // 빼고 싶다면 음수 입력
+        Date date      = new Date(cal1.getTimeInMillis());
+
+        return formatter.format(date);
+    }
+
+
+
+
 }
+
