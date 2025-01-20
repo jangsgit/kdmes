@@ -79,10 +79,21 @@
                                 <!-- //여기서부터 그래프 -->
                                 <div class="table table_style2"> 
                                     <div class="container-fluid" id="op1" >
-                                        <div id="wtab04Grid_div"  style="overflow:scroll;   height:550px;  width: 530px;  margin:0 auto; "></div>
-                                    </div>     
-                                        
-                                </div>                       
+                                        <div id="wtab04Grid_div"  style="overflow:scroll;   height:450px;  width: 530px;  margin:0 auto; "></div>
+                                    </div>  
+                                </div>  
+                                
+                                <div class="table table_style1"  >
+                                    <table>
+                                        <tbody> 
+                                            <tr>
+                                                <td id="cell1"></td>
+                                                <td id="cell2"></td>
+                                            </tr>   
+                                        </tbody>
+                                    </table>
+                                </div>        
+
                             </div>  <!---  <div class="box_input" >  -->
                         </div>    <!--  <div class="box_wrap"> -->  
                     </div>
@@ -96,8 +107,7 @@
                                             <tr>  
                                                 <th>최초<br>입고일</th>
                                                 <td colspan="2"> 
-                                                        <input type="text"  class="form-control datetimepicker" id="inmachdate" autocomplete="off"  placeholder="Y-m-d"     >  
-                                                            
+                                                        <input type="text"  class="form-control datetimepicker" id="inmachdate" autocomplete="off"  placeholder="Y-m-d"     >                                                              
                                                 </td>                                            
                                                 <th>금형<br>이력카드</th> 
                                                 <td colspan="2">
@@ -1729,6 +1739,37 @@
        document.getElementById('inmachgram').value = arg15;
        document.getElementById('inmachncha').value = arg16; 
        document.getElementById('inmachjaejak').value = arg17; 
+
+
+       var ls_image01 = "" ;
+       var ls_image02 = "" ;
+        //이력조회     
+        $.ajax({
+            url: '/app01m/index08/printimg',  
+            type:"POST",
+            data: { 
+                "inmachcd" : arg0, 
+            }, 
+            async:false,
+            success:function(data){  
+                ls_image01 = data[0].save_name;
+                ls_image02 = data[1].save_name;
+            },error:function(e){
+                console.log("error");                            
+            }
+        }).done(function(fragment){           
+
+        })  
+
+        // th:src="@{assets/img/icons/spot-illustrations/falcon.png}"
+        var ls_src01 = "assets/upload/" + arg0 + "/" + ls_image01;
+        var ls_src02 = "assets/upload/" + arg0 + "/" + ls_image02; 
+console.log(ls_src01)
+        document.getElementById('cell1').innerHTML = '<img th:src="@{' + ls_src01 + '}" alt="Image 1" style="max-width:100%; max-height:100%;">';
+        document.getElementById('cell2').innerHTML = '<img th:src="@{' + ls_src02 + '}" alt="Image 2" style="max-width:100%; max-height:100%;">';
+
+         
+        
        searchList_rtn("B");  
 
    }   
@@ -1745,6 +1786,7 @@
        document.getElementById('inremark').value = arg7;    
        wreqdate.value   = arg3;
        wrespdate.value = arg4; 
+       
 
    }   
 
