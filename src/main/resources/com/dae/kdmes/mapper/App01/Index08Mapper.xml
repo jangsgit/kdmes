@@ -215,4 +215,12 @@
         DELETE  TB_PCFIXLIST  where fixid = #{fixid}
         ]]>
     </update>
+
+
+    <update id="DeleteGumIMG" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto">
+        <![CDATA[
+        DELETE  TB_MATTACH  where save_name = #{save_name}
+        ]]>
+    </update>
+
 </mapper>

@@ -1377,7 +1377,7 @@ public class App01CrudController {
     }
 
 
-    //거래처등록
+    //이미지불러오기
     @GetMapping(value="/index08/printimg")
     public Object AppPrintJPG_index(@RequestParam("inmachcd") String inmachcd,
                                      Model model, HttpServletRequest request) throws Exception{
@@ -1400,6 +1400,32 @@ public class App01CrudController {
         }
 
         return _Pc110DtoListDto;
+    }
+
+    //이미지불러오기
+    @GetMapping(value="/index08/printimgdel")
+    public Object AppPrintJPGDel_index(@RequestParam("savename") String savename,
+                                    Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("금형이력카드");
+        CommDto.setMenuUrl("기준정보>금형이력카드");
+        CommDto.setMenuCode("index08");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Pc110Dto _index08Dto = new Pc110Dto();
+        List<Pc110Dto> _Pc110DtoListDto = new ArrayList<>();
+        try {
+            _index08Dto.setSave_name(savename);
+            Boolean result = service08.DeleteGumIMG(_index08Dto);
+            if (!result) {
+                return "error";
+            }
+        } catch (Exception ex) {
+            log.info("AppPrintView_index Exception =====>" + ex.toString());
+        }
+
+        return "success";
     }
 
 

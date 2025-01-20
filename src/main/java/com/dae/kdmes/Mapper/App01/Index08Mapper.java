@@ -30,6 +30,8 @@ public interface Index08Mapper {
 
     public Boolean DeleteMachFix(PcFixDto parm) ;
 
+    public Boolean DeleteGumIMG(Pc110Dto parm) ;
+
 
 
 
