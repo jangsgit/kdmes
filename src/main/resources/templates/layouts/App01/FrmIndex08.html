@@ -260,7 +260,7 @@
                                     <div id="btnDiv" class="btn_wrap" style="float: right; margin-bottom: 10px;">
                                         <div class="btns" >                                                        
                                             <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
-                                            <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
+                                            <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn('A')"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
                                             <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
                                         </div>                                     
                                     </div> <!-- btn_wrap -->                                
@@ -881,9 +881,6 @@
    function delete_btn(){ 
    
         var ls_tab = document.getElementById('tabvalue').value;  
-       if (!confirm("삭제하시겠습니까?")) {
-               return ; 
-       }   
        
        switch(ls_tab){
            case 'A': 
@@ -896,6 +893,9 @@
                     return ;               
                 }    
 
+                if (!confirm("이력과 사진정보도 함께 삭제됩니다. 삭제하시겠습니까?")) {
+                        return ; 
+                }   
                $.ajax({
                    url: '/app01m/index08/del',  
                    type:"POST",
@@ -906,8 +906,10 @@
                    success:function(data){   
                        if(data == "success"){
                            alert("삭제되었습니다.")  
-                           searchList_rtn(ls_tab);  
-                           clear_rtn(ls_tab);             
+                           searchList_rtn(ls_tab);   
+                           clear_rtn(ls_tab);   
+                           clear_rtn("B");       
+                           searchList_rtn("B");        
                        }else{                       
                            alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
                        }
@@ -936,7 +938,7 @@
                        if(data == "success"){
                            alert("삭제되었습니다.") 
                            searchList_rtn(ls_tab);  
-                           clear_rtn();             
+                           clear_rtn("B");             
                        }else{                       
                            alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
                        }
@@ -955,8 +957,8 @@
        } 
 
    }         
-   function clear_rtn(){ 
-        var ls_tab = document.getElementById('tabvalue').value;  
+   function clear_rtn(ls_tab){ 
+        //var ls_tab = document.getElementById('tabvalue').value;  
        switch(ls_tab){
            case 'A':  
                 document.getElementById('inmachcd').value = "";
@@ -981,6 +983,11 @@
                 document.getElementById('inmachncha').value = ""; 
                break;
            case 'B':   
+                document.getElementById('infixmachcd').value = "";
+                document.getElementById('infixid').value = "";
+                document.getElementById('infixtext').value = "";
+                document.getElementById('infixcltnm').value = "";
+                document.getElementById('inremark').value = "";
                break;                
            default:    
                break;                

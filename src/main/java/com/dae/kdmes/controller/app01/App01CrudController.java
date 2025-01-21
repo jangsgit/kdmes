@@ -1214,6 +1214,7 @@ public class App01CrudController {
             return "error";
         }
         result = service08.DeleteGumALLIMG(_index08Dto);
+        result = service08.DeleteMachFixAll(_index08Dto);
 
         return "success";
     }

@@ -216,9 +216,9 @@
         ]]>
     </update>
 
-    <update id="DeleteMachFixAll" parameterType="com.dae.kdmes.DTO.App01.PcFixDto">
+    <update id="DeleteMachFixAll" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto">
         <![CDATA[
-        DELETE  TB_PCFIXLIST  where fixid = #{fixid}
+        DELETE  TB_PCFIXLIST  where fixmachcd = #{machcd}
         ]]>
     </update>
 

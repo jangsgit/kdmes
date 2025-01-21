@@ -47,6 +47,14 @@ public class Index08Service {
     public Boolean DeleteMachFix(PcFixDto parm){
         return  indexMapper.DeleteMachFix(parm);
     }
+    public Boolean DeleteMachFixAll(Pc110Dto parm){
+        return  indexMapper.DeleteMachFixAll(parm);
+    }
+
+    public Boolean TB_PCFIXLIST(Pc110Dto parm){
+        return  indexMapper.TB_PCFIXLIST(parm);
+    }
+
     public Boolean DeleteGumIMG(Pc110Dto parm){
         return  indexMapper.DeleteGumIMG(parm);
     }
