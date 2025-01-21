@@ -53,9 +53,9 @@
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">설비등록</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">설비이력등록</a>
-            </li> 
+            </li>  -->
             <!-- <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#step03"   onclick="tabchk_rtn('C')">수리내역카드인쇄</a>
             </li> -->
@@ -115,7 +115,7 @@
                                             <th>설비구분<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
                                             <td colspan="2"> 
                                                 <div class="input_wrap">                          
-                                                    <select id="typeSelector" onchange="updateTable(this.value)">
+                                                    <select id="infacflag" onchange="updateTable(this.value)">
                                                         <option value="01">사출기</option>
                                                         <option value="02">로봇</option>
                                                         <option value="03">열풍기</option>
@@ -127,19 +127,21 @@
                                             <th>관리번호<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
                                             <td colspan="2"> 
                                                 <div class="input_wrap">                                               
-                                                    <input class="form-control form-control-sm" id="inmachname" type="text"    autocomplete="off"  placeholder=""> 
+                                                    <input class="form-control form-control-sm" id="infacno" type="text"    autocomplete="off"  placeholder=""> 
+                                                    <input class="form-control form-control-sm" id="infaccd" type="hidden"    autocomplete="off"  placeholder=""> 
+                                                    
                                                 </div>        
                                             </td> 
                                         </tr>
                                         <tr>  
                                             <th>등록일</th>
                                             <td colspan="2"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="inmachdate" autocomplete="off"  placeholder="Y-m-d"     >                                                              
+                                                    <input type="text"  class="form-control datetimepicker" id="infacdate" autocomplete="off"  placeholder="Y-m-d"     >                                                              
                                             </td>                                            
                                             <th>설비명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
                                             <td colspan="2"> 
                                                 <div class="input_wrap">                                               
-                                                    <input class="form-control form-control-sm" id="inmachname" type="text"    autocomplete="off"  placeholder=""> 
+                                                    <input class="form-control form-control-sm" id="infacname" type="text"    autocomplete="off"  placeholder=""> 
                                                 </div>        
                                             </td> 
                                         </tr>
@@ -147,13 +149,13 @@
                                             <th>모델명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
                                             <td  colspan="2">
                                                 <div class="input_wrap">                                               
-                                                    <input class="form-control form-control-sm" id="inmachname" type="text"    autocomplete="off"  placeholder=""> 
+                                                    <input class="form-control form-control-sm" id="infacmodel" type="text"    autocomplete="off"  placeholder=""> 
                                                 </div>                                                
                                             </td>
                                             <th>제조사</th>
                                             <td colspan="2">
                                                 <div class="input_wrap">                                               
-                                                    <input type="text"  id="inmachcd" autocomplete="off"   > 
+                                                    <input type="text"  id="infacjaejo" autocomplete="off"   > 
                                                 </div>       
                                             </td>    
                                         </tr>
@@ -161,25 +163,25 @@
                                             <th>제조번호</th> 
                                             <td  colspan="2">
                                                 <div class="input_wrap">     
-                                                    <input type="text" id="inmachjaejak" placeholder=""  >
+                                                    <input type="text" id="infacjaejono" placeholder=""  >
                                                 </div>
                                             </td>
                                             <th>제조일</th>
                                             <td colspan="2">
-                                                <input type="text"  class="form-control datetimepicker" id="inmachstdate" autocomplete="off"  placeholder="Y-m-d"     >                                                                                                                                                               
+                                                <input type="text"  class="form-control datetimepicker" id="infacstdate" autocomplete="off"  placeholder="Y-m-d"     >                                                                                                                                                               
                                             </td>                                                                                   
                                         </tr>  
                                         <tr>      
                                             <th>구매회사</th>
                                             <td colspan="2">
                                                 <div class="input_wrap">            
-                                                    <input type="text" id="inmachplace" placeholder=""  >
+                                                    <input type="text" id="infacbycltnm" placeholder=""  >
                                                 </div>       
                                             </td>                                                 
                                             <th>구매일</th> 
                                             <td colspan="2">
                                                 <div class="input_wrap">
-                                                    <input type="text"  class="form-control datetimepicker" id="inmacheddate" autocomplete="off"  placeholder="Y-m-d"     >
+                                                    <input type="text"  class="form-control datetimepicker" id="infaceddate" autocomplete="off"  placeholder="Y-m-d"     >
                                                 </div>
                                             </td>                                      
                                         </tr>      
@@ -187,13 +189,13 @@
                                             <th>구매담당자</th>
                                             <td colspan="2">
                                                 <div class="input_wrap">
-                                                    <input type="text" id="inmachcltnm" placeholder=""  >
+                                                    <input type="text" id="infacbypernm" placeholder=""  >
                                                 </div>
                                             </td>                                      
                                             <th>연락처</th>
                                             <td colspan="2">
                                                 <div class="input_wrap">
-                                                    <input type="text" id="inmachcha" placeholder=""  >
+                                                    <input type="text" id="infactelno" placeholder=""  >
                                                 </div>
                                             </td>  
                                         </tr>
@@ -201,13 +203,13 @@
                                             <th>구분</th>
                                             <td colspan="2"> 
                                                 <div class="input_wrap">
-                                                    <input type="text"  id="inmachno" autocomplete="off"  placeholder="" >                                        
+                                                    <input type="text"  id="infacgubun" autocomplete="off"  placeholder="" >                                        
                                                 </div>
                                             </td>  
                                             <th>구매가</th>
                                             <td colspan="2">
                                                 <div class="input_wrap">                                               
-                                                    <input type="number"  id="inmachuse" autocomplete="off"  placeholder="" >  
+                                                    <input type="number"  id="infacamt" autocomplete="off"  placeholder="" >  
                                                 </div>
                                             </td>                                               
                                         </tr>  
@@ -215,13 +217,13 @@
                                             <th>전원</th>
                                             <td colspan="2">
                                                 <div class="input_wrap">                                               
-                                                    <input type="text"  id="inmachcavity" autocomplete="off"  placeholder="" >  
+                                                    <input type="text"  id="infacjunwon" autocomplete="off"  placeholder="" >  
                                                 </div>
                                             </td>                                        
                                             <th>사용부서</th> 
                                             <td  colspan="2">
                                                 <div class="input_wrap">                                               
-                                                    <input type="text"  id="inmachwon" autocomplete="off"   > 
+                                                    <input type="text"  id="infacdivnm" autocomplete="off"   > 
                                                 </div>
                                             </td> 
                                         </tr>   
@@ -229,7 +231,7 @@
                                             <th>기타내용</th>
                                             <td colspan="5">
                                                 <div class="input_wrap">                                               
-                                                    <input type="text"  id="inmachgrade" autocomplete="off"  placeholder="" >  
+                                                    <input type="text"  id="infacgita" autocomplete="off"  placeholder="" >  
                                                 </div>
                                             </td>         
                                         </tr> 
@@ -452,38 +454,66 @@
         wijmo.toggleClass(wtab04Grid.hostElement, 'highlightActive', true);
         wtab04Grid.focus();
 
-
+ 
         // tab01검색 데이터 수집
         function getData_tab04(){    
-                    var wtab01Dto = [[${Index08List}]];   
+                    var wtab01Dto = [[${Index22List}]];   
                     var wactnm_data = [];   
                     var cnt = 1;   
+                    var ls_facflag = "";
+                    var ls_flagnm = "";
                     for (var i = 0; i < wtab01Dto.length; i++) {
+                        
+                        ls_facflag = wtab01Dto[i]["facflag"]
+                        switch(ls_facflag){
+                            case '01': 
+                                ls_flagnm  = "사출기" 
+                                break;        
+                            case '02': 
+                                ls_flagnm  = "로봇"
+                                break;        
+                            case '03': 
+                                ls_flagnm  = "열풍기"
+                                break;             
+                            case '04': 
+                                ls_flagnm  = "자동화기"
+                                break;             
+                            case '05': 
+                                ls_flagnm  = "슬리브검사"
+                                break;           
+                            default:    
+                                break;                
+                        }  
                         wactnm_data.push({
                             id: i, 
                             index: cnt,
-                            machcd: wtab01Dto[i]["machcd"], 
-                            machno: wtab01Dto[i]["machno"], 
-                            machname: wtab01Dto[i]["machname"], 
-                            machdate: wtab01Dto[i]["machdate"], 
-                            machstdate: wtab01Dto[i]["machstdate"], 
-                            macheddate: wtab01Dto[i]["macheddate"], 
-                            machshot: wtab01Dto[i]["machshot"], 
-                            machgugek: wtab01Dto[i]["machgugek"], 
-                            machcavity: wtab01Dto[i]["machcavity"], 
-                            machuse: wtab01Dto[i]["machuse"], 
-                            machcha: wtab01Dto[i]["machcha"], 
-                            machcltnm: wtab01Dto[i]["machcltnm"], 
-                            machjaejak: wtab01Dto[i]["machjaejak"], 
-                            machplace: wtab01Dto[i]["machplace"], 
-                            machamt: wtab01Dto[i]["machamt"], 
-                            machwon: wtab01Dto[i]["machwon"], 
-                            machgrade: wtab01Dto[i]["machgrade"],
-                            machgram: wtab01Dto[i]["machgram"],  
-                            machncha: wtab01Dto[i]["machncha"], 
-                            remark: wtab01Dto[i]["remark"], 
-                            indate: wtab01Dto[i]["indate"], 
-                            inperid: wtab01Dto[i]["inperid"],   
+                            faccd: wtab01Dto[i]["faccd"],
+                            facflag: wtab01Dto[i]["facflag"], 
+                            flagnm: ls_flagnm,
+                            facno: wtab01Dto[i]["facno"], 
+                            facname: wtab01Dto[i]["facname"], 
+                            facdate: wtab01Dto[i]["facdate"], 
+                            facstdate: wtab01Dto[i]["facstdate"], 
+                            faceddate: wtab01Dto[i]["faceddate"], 
+                            facmodel: wtab01Dto[i]["facmodel"], 
+                            facjaejo: wtab01Dto[i]["facjaejo"], 
+                            facjaejono: wtab01Dto[i]["facjaejono"], 
+                            facbycltnm: wtab01Dto[i]["facbycltnm"], 
+                            facbypernm: wtab01Dto[i]["facbypernm"], 
+                            factelno: wtab01Dto[i]["factelno"], 
+                            facgubun: wtab01Dto[i]["facgubun"], 
+                            facamt: wtab01Dto[i]["facamt"], 
+                            facjunwon: wtab01Dto[i]["facjunwon"], 
+                            facdivnm: wtab01Dto[i]["facdivnm"], 
+                            facgita: wtab01Dto[i]["facgita"],
+                            facsize: wtab01Dto[i]["facsize"],  
+                            facweight: wtab01Dto[i]["facweight"], 
+                            fachyung: wtab01Dto[i]["fachyung"], 
+                            facscrew: wtab01Dto[i]["facscrew"], 
+                            factype: wtab01Dto[i]["factype"],   
+                            facvolumn: wtab01Dto[i]["facvolumn"],   
+                            facgunondo: wtab01Dto[i]["facgunondo"],   
+                            facgunpung: wtab01Dto[i]["facgunpung"],   
                             
                         });
                         cnt++;
@@ -601,96 +631,149 @@
        
        switch(ls_tab){
            case 'A': 
-                var ls_inmachcd = document.getElementById('inmachcd').value;
-                var ls_inmachno = document.getElementById('inmachno').value;
-                var ls_inmachname = document.getElementById('inmachname').value;
-                var ls_inmachdate   =  convert_date(wmachdate.value);                 
-                var ls_inmachstdate =  convert_date(wmachstdate.value);  
-                var ls_inmacheddate =  convert_date(wmacheddate.value);   
-                //    var ls_inmachdate = document.getElementById('inmachdate').value;
-                //    var ls_inmachstdate = document.getElementById('inmachstdate').value;
-                //    var ls_inmacheddate = document.getElementById('inmacheddate').value;
-                var ls_inmachshot = document.getElementById('inmachshot').value;
+           
+                var ls_infaccd = document.getElementById('infaccd').value;              //설비코드
+                var ls_infacflag = document.getElementById('infacflag').value;          //01 사출 02 로봇 03 열풍
+                var ls_infacno = document.getElementById('infacno').value;              //관리번호
+                var ls_infacname = document.getElementById('infacname').value;          //설비명
+                var ls_infacdate   =  convert_date(wmachdate.value);                    //등록일        
+                var ls_infacstdate =  convert_date(wmachstdate.value);                  //제조일
+                var ls_infaceddate =  convert_date(wmacheddate.value);                  //구매일
+                //    var ls_infacdate = document.getElementById('infacdate').value;
+                //    var ls_infacstdate = document.getElementById('infacstdate').value;
+                //    var ls_infaceddate = document.getElementById('infaceddate').value;
+                var ls_infacmodel = document.getElementById('infacmodel').value;        //모델명
 
-                var ls_inmachgugek = document.getElementById('inmachgugek').value;
-                var ls_inmachcavity = document.getElementById('inmachcavity').value;
-                var ls_inmachuse = document.getElementById('inmachuse').value;
-                var ls_inmachcha = document.getElementById('inmachcha').value;
-                var ls_inmachcltnm = document.getElementById('inmachcltnm').value;
-                var ls_inmachjaejak = document.getElementById('inmachjaejak').value;
-                var ls_inmachplace = document.getElementById('inmachplace').value;
+                var ls_infacjaejo = document.getElementById('infacjaejo').value;        //제조사
+                var ls_infacjaejono = document.getElementById('infacjaejono').value;    //제조번호
+                var ls_infacbycltnm = document.getElementById('infacbycltnm').value;    //구매회사
+                var ls_infacbypernm = document.getElementById('infacbypernm').value;    //구매담당자
+                var ls_infactelno = document.getElementById('infactelno').value;        //연락처
+                var ls_infacgubun = document.getElementById('infacgubun').value;        //구분
+                var ls_infacamt = document.getElementById('infacamt').value;            //구매가
 
-                var ls_inmachwon = document.getElementById('inmachwon').value;
-                var ls_inmachgrade = document.getElementById('inmachgrade').value;
-                var ls_inmachgram = document.getElementById('inmachgram').value;
-                var ls_inmachncha = document.getElementById('inmachncha').value; 
+                var ls_infacjunwon = document.getElementById('infacjunwon').value;      //전원
+                var ls_infacdivnm = document.getElementById('infacdivnm').value;        //사용부서
+                var ls_infacgita  = document.getElementById('infacgita').value;         //기타내용
+ 
+                var ls_infacsize = "";
+                var ls_infacweight = "";
+                var ls_infachyung = "";
+                var ls_infacscrew = "";
+                var ls_infactype = "";
+                var ls_infacvolumn = "";
+                var ls_infacgunondo = "";
+                var ls_infacgunpung = "";
 
-               if(ls_inmachcd == null || ls_inmachcd.length == 0 || ls_inmachcd == ""){ 
-                   alert("품번을 등록하세요") 
-                   document.getElementById("machcd").focus(); 
+                switch(ls_infacflag){
+                    case '01': 
+                        ls_infacsize  = document.getElementById('infacsize').value;         //SIZE
+                        ls_infacweight  = document.getElementById('infacweight').value;     //중량
+                        ls_infachyung  = document.getElementById('infachyung').value;         //형체결력
+                        ls_infacscrew  = document.getElementById('infacscrew').value;         //스크류
+                        break;        
+                    case '02': 
+                        ls_infactype  = document.getElementById('infactype').value;         //TYPE
+                        break;        
+                    case '03': 
+                        ls_infacsize  = document.getElementById('infacsize').value;         //SIZE
+                        ls_infacvolumn  = document.getElementById('infacvolumn').value;     //용량
+                        ls_infacgunondo  = document.getElementById('infacgunondo').value;         //건조온도
+                        ls_infacgunpung  = document.getElementById('infacgunpung').value;         //건조풍량
+                        break;           
+                    default:    
+                        break;                
+                }  
+
+               if(ls_infacflag == null || ls_infacflag.length == 0 || ls_infacflag == ""){ 
+                   alert("설비구분을 등록하세요") 
+                   document.getElementById("infacflag").focus(); 
                    return ;               
                }  
-               if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
-                   alert("품명을 등록하세요") 
-                   document.getElementById("wrmcnm").focus(); 
+               if(ls_infacno == null || ls_infacno.length == 0 || ls_infacno == ""){ 
+                   alert("관리번호를 등록하세요") 
+                   document.getElementById("infacno").focus(); 
                    return ;               
                }  
-               if(ls_inmachdate == null || ls_inmachdate.length == 0 || ls_inmachdate == ""){ 
-                   alert("최초입고일을 등록하세요") 
-                   document.getElementById("inmachdate").focus(); 
+               if(ls_infacname == null || ls_infacname.length == 0 || ls_infacname == ""){ 
+                   alert("설비명을 등록하세요") 
+                   document.getElementById("infacname").focus(); 
                    return ;               
                } 
-               if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
-                   alert("제작시작일을 등록하세요") 
-                   document.getElementById("inmachstdate").focus(); 
+               if(ls_infacmodel == null || ls_infacmodel.length == 0 || ls_infacmodel == ""){ 
+                   alert("모델명을 등록하세요") 
+                   document.getElementById("infacmodel").focus(); 
                    return ;               
                } 
-               if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
-                   alert("제작종료일을 등록하세요") 
-                   document.getElementById("inmacheddate").focus(); 
+               if(ls_infacdate == null || ls_infacdate.length == 0 || ls_infacdate == ""){ 
+                   alert("등록일을 등록하세요") 
+                   document.getElementById("infacdate").focus(); 
                    return ;               
                }  
-               if(ls_inmachno == null || ls_inmachno.length == 0 || ls_inmachno == ""){
-                   alert("금형번호를 등록하세요") 
-                   document.getElementById("inmachno").focus(); 
+               if(ls_infacstdate == null || ls_infacstdate.length == 0 || ls_infacstdate == ""){ 
+                   alert("제조일을 등록하세요") 
+                   document.getElementById("infaceddate").focus(); 
+                   return ;               
+               }  
+               if(ls_infaceddate == null || ls_infaceddate.length == 0 || ls_infaceddate == ""){
+                   alert("구매일을 등록하세요") 
+                   document.getElementById("infaceddate").focus(); 
                    return ;               
                }    
-               if(ls_inmachshot == null || ls_inmachshot.length == 0  ){
-                    ls_inmachshot = "0";
+               if(ls_infaccd == null || ls_infaccd.length == 0  ){
+                    ls_infaccd = "";
+               }   
+               if(ls_infacjaejo == null || ls_infacjaejo.length == 0  ){
+                    ls_infacjaejo = "";
                }    
-               if(ls_inmachgugek == null || ls_inmachgugek.length == 0  ){
-                    ls_inmachgugek = "";
+               if(ls_infacjaejono == null || ls_infacjaejono.length == 0  ){
+                    ls_infacjaejono = "";
                }     
-               if(ls_inmachcavity == null || ls_inmachcavity.length == 0  ){
-                    ls_inmachcavity = "";
+               if(ls_infacbycltnm == null || ls_infacbycltnm.length == 0  ){
+                    ls_infacbycltnm = "";
                }       
-               if(ls_inmachuse == null || ls_inmachuse.length == 0  ){
-                    ls_inmachuse = "";
+               if(ls_infacbypernm == null || ls_infacbypernm.length == 0  ){
+                    ls_infacbypernm = "";
                }      
-               if(ls_inmachcha == null || ls_inmachcha.length == 0  ){
-                    ls_inmachcha = "";
+               if(ls_infactelno == null || ls_infactelno.length == 0  ){
+                    ls_infactelno = "";
                }     
-               if(ls_inmachcltnm == null || ls_inmachcltnm.length == 0  ){
-                    ls_inmachcltnm = "";
+               if(ls_infacgubun == null || ls_infacgubun.length == 0  ){
+                    ls_infacgubun = "";
                }     
-               if(ls_inmachjaejak == null || ls_inmachjaejak.length == 0  ){
-                    ls_inmachjaejak = "";
+               if(ls_infacamt == null || ls_infacamt.length == 0  ){
+                    ls_infacamt = "0";
                }     
-               if(ls_inmachplace == null || ls_inmachplace.length == 0  ){
-                    ls_inmachplace = "";
+               if(ls_infacjunwon == null || ls_infacjunwon.length == 0  ){
+                    ls_infacjunwon = "";
                }     
-               if(ls_inmachwon == null || ls_inmachwon.length == 0  ){
-                    ls_inmachwon = "";
+               if(ls_infacdivnm == null || ls_infacdivnm.length == 0  ){
+                    ls_infacdivnm = "";
                }     
-               if(ls_inmachgrade == null || ls_inmachgrade.length == 0  ){
-                    ls_inmachgrade = "";
+               if(ls_infacgita == null || ls_infacgita.length == 0  ){
+                    ls_infacgita = "";
                }    
-               if(ls_inmachgram == null || ls_inmachgram.length == 0  ){
-                    ls_inmachgram = "0";
+               if(ls_infacweight == null || ls_infacweight.length == 0  ){
+                    ls_infacweight = "";
                }      
-               if(ls_inmachncha == null || ls_inmachncha.length == 0  ){
-                    ls_inmachncha = "";
-               } 
+               if(ls_infachyung == null || ls_infachyung.length == 0  ){
+                    ls_infachyung = "";
+               }    
+               if(ls_infacscrew == null || ls_infacscrew.length == 0  ){
+                    ls_infacscrew = "";
+               }    
+               if(ls_infactype == null || ls_infactype.length == 0  ){
+                    ls_infactype = "";
+               }    
+               if(ls_infacvolumn == null || ls_infacvolumn.length == 0  ){
+                    ls_infacvolumn = "";
+               }    
+               if(ls_infacgunondo == null || ls_infacgunondo.length == 0  ){
+                    ls_infacgunondo = "";
+               }    
+               if(ls_infacgunpung == null || ls_infacgunpung.length == 0  ){
+                    ls_infacgunpung = "";
+               }   
      
                for (h = 0; h <= fileIdx; h++ ){
                     ls_fileid = 'file_' + h;
@@ -706,25 +789,33 @@
                 }
 
                var inputdata = {  
-                    "inmachcd"       : ls_inmachcd,
-                    "inmachno"        : ls_inmachno,
-                    "inmachname"    : ls_inmachname , 
-                    "inmachdate"    : ls_inmachdate, 
-                    "inmachstdate"         : ls_inmachstdate , 
-                    "inmacheddate"         : ls_inmacheddate, 
-                    "inmachshot"        : ls_inmachshot,
-                    "inmachgugek"         : ls_inmachgugek,
-                    "inmachcavity"        : ls_inmachcavity,
-                    "inmachuse"        : ls_inmachuse , 
-                    "inmachcha"         : ls_inmachcha,
-                    "inmachcha"      : ls_inmachcha,
-                    "inmachcltnm"      : ls_inmachcltnm,
-                    "inmachjaejak"      : ls_inmachjaejak,
-                    "inmachplace"        : ls_inmachplace, 
-                    "inmachwon"        : ls_inmachwon,
-                    "inmachgrade"        : ls_inmachgrade,
-                    "inmachgram"        : ls_inmachgram,  
-                    "inmachncha"        : ls_inmachncha,  
+                    "infaccd"       : ls_infaccd,
+                    "infacflag"       : ls_infacflag,
+                    "infacno"        : ls_infacno,
+                    "infacname"    : ls_infacname , 
+                    "infacdate"    : ls_infacdate, 
+                    "infacstdate"         : ls_infacstdate , 
+                    "infaceddate"         : ls_infaceddate, 
+                    "infacdate"        : ls_infacdate,
+                    "infacmodel"         : ls_infacmodel,
+                    "infacjaejo"        : ls_infacjaejo,
+                    "infacjaejono"        : ls_infacjaejono , 
+                    "infacbycltnm"         : ls_infacbycltnm,
+                    "infacbypernm"      : ls_infacbypernm,
+                    "infactelno"      : ls_infactelno,
+                    "infacgubun"      : ls_infacgubun,
+                    "infacamt"        : ls_infacamt, 
+                    "infacjunwon"        : ls_infacjunwon,
+                    "infacdivnm"        : ls_infacdivnm,
+                    "infacgita"        : ls_infacgita,  
+                    "infacsize"        : ls_infacsize,  
+                    "infacweight"        : ls_infacweight,  
+                    "infachyung"        : ls_infachyung,  
+                    "infacscrew"        : ls_infacscrew,  
+                    "infactype"        : ls_infactype,  
+                    "infacvolumn"        : ls_infacvolumn,  
+                    "infacgunondo"        : ls_infacgunondo,  
+                    "infacgunpung"        : ls_infacgunpung,  
                     
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -732,7 +823,7 @@
                 formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
         
                $.ajax({
-                   url: '/app01m/index08/save',  
+                   url: '/app01m/index22/save',  
                     type: "POST",   
                     processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
                     contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
@@ -811,7 +902,7 @@
                 formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
         
                $.ajax({
-                   url: '/app01m/index08/fixsave',  
+                   url: '/app01m/index22/fixsave',  
                     type: "POST",   
                     processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
                     contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
@@ -848,9 +939,7 @@
        
        switch(ls_tab){
            case 'A': 
-                var ls_inmachcd = document.getElementById('inmachcd').value;
-                var ls_inmachno = document.getElementById('inmachno').value;
-                var ls_inmachname = document.getElementById('inmachname').value;
+                var ls_infaccd = document.getElementById('infaccd').value;              //설비코드
                 if(ls_inmachcd == null || ls_inmachcd.length == 0 || ls_inmachcd == ""){ 
                     alert("품번을 확인하세요") 
                     document.getElementById("inmachcd").focus(); 
@@ -858,10 +947,10 @@
                 }    
 
                $.ajax({
-                   url: '/app01m/index08/del',  
+                   url: '/app01m/index22/del',  
                    type:"POST",
                    data: { 
-                       "inmachcd"      : ls_inmachcd,  
+                       "infaccd"      : ls_infaccd,  
                    }, 
                    async:false,
                    success:function(data){   
@@ -887,7 +976,7 @@
                     return ;               
                 }    
                $.ajax({
-                   url: '/app01m/index08/delfix',   
+                   url: '/app01m/index22/delfix',   
                    type:"POST",
                    data: { 
                        "infixid"      : ls_infixid 
@@ -920,26 +1009,26 @@
         var ls_tab = document.getElementById('tabvalue').value;  
        switch(ls_tab){
            case 'A':  
-                document.getElementById('inmachcd').value = "";
-                document.getElementById('infixmachcd').value = "";
-                document.getElementById('infixmachname').value = "";
+                document.getElementById('infacflag').value = "01";
+                document.getElementById('infacno').value = "";
+                document.getElementById('infacname').value = "";
                 document.getElementById('infixmachno').value = "";
-                document.getElementById('inmachno').value = "";
-                document.getElementById('inmachname').value = "";
-                document.getElementById('inmachshot').value = 0;
+                document.getElementById('infacmodel').value = "";
+                document.getElementById('infacjaejo').value = "";
+                document.getElementById('infacjaejono').value = "";
 
-                document.getElementById('inmachgugek').value = "";
-                document.getElementById('inmachcavity').value = "";
-                document.getElementById('inmachuse').value = "";
-                document.getElementById('inmachcha').value = "";
-                document.getElementById('inmachcltnm').value = "";
-                document.getElementById('inmachplace').value = "";
-                document.getElementById('inmachjaejak').value = "";
+                document.getElementById('infacbycltnm').value = "";
+                document.getElementById('infacbypernm').value = "";
+                document.getElementById('infactelno').value = "";
+                document.getElementById('infacgubun').value = "";
+                document.getElementById('infacamt').value = 0;
+                document.getElementById('infacjunwon').value = "";
+                document.getElementById('infacdivnm').value = "";
 
-                document.getElementById('inmachwon').value = "";
-                document.getElementById('inmachgrade').value = "";
-                document.getElementById('inmachgram').value = 0;
-                document.getElementById('inmachncha').value = ""; 
+                document.getElementById('infacsize').value = "";
+                document.getElementById('infacweight').value = "";
+                document.getElementById('infachyung').value = "";
+                document.getElementById('infacscrew').value = ""; 
                break;
            case 'B':   
                break;                
@@ -961,13 +1050,13 @@
                         <th>SIZE</th>
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="text" id="inmachgrade" autocomplete="off" placeholder="">  
+                                <input type="text" id="infacsize" autocomplete="off" placeholder="">  
                             </div>
                         </td>                                        
                         <th>중량</th> 
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="number" id="inmachgram" autocomplete="off"> 
+                                <input type="number" id="infacweight" autocomplete="off"> 
                             </div>
                         </td> 
                     </tr>   
@@ -975,13 +1064,13 @@
                         <th>형체결력</th>
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="number" id="inmachshot" autocomplete="off" placeholder="">  
+                                <input type="number" id="infachyung" autocomplete="off" placeholder="">  
                             </div>
                         </td>                                        
                         <th>스크류</th> 
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="text" id="inmachgugek" autocomplete="off"> 
+                                <input type="text" id="infacscrew" autocomplete="off"> 
                             </div>
                         </td> 
                     </tr>
@@ -993,7 +1082,7 @@
                         <th>TYPE</th>
                         <td colspan="5">
                             <div class="input_wrap">                                 
-                                <input type="text" id="inspec" autocomplete="off" placeholder="">  
+                                <input type="text" id="infactype" autocomplete="off" placeholder="">  
                             </div>
                         </td>
                     </tr>
@@ -1005,13 +1094,13 @@
                         <th>SIZE</th>
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="text" id="inmachgrade" autocomplete="off" placeholder="">  
+                                <input type="text" id="infacsize" autocomplete="off" placeholder="">  
                             </div>
                         </td>                                        
                         <th>용량</th> 
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="number" id="inmachgram" autocomplete="off"> 
+                                <input type="number" id="infacvolumn" autocomplete="off"> 
                             </div>
                         </td> 
                     </tr>   
@@ -1019,13 +1108,13 @@
                         <th>건조온도</th>
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="number" id="inmachshot" autocomplete="off" placeholder="">  
+                                <input type="number" id="infacgunondo" autocomplete="off" placeholder="">  
                             </div>
                         </td>                                        
                         <th>건조풍량</th> 
                         <td colspan="2">
                             <div class="input_wrap">                                 
-                                <input type="text" id="inmachgugek" autocomplete="off"> 
+                                <input type="text" id="infacgunpung" autocomplete="off"> 
                             </div>
                         </td> 
                     </tr>
@@ -1439,7 +1528,7 @@
            case 'A':
             var ls_searchtxt = document.getElementById('searchtxt').value; 
            $.ajax({
-                   url: '/app01m/index08/listtot',  
+                   url: '/app01m/index22/listtot',  
                    type:"POST",
                    data: { 
                        "searchtxt" : ls_searchtxt, 
@@ -1764,47 +1853,76 @@
         // machwon, machgrade,     machgram, machncha,   machjaejak 
        var ls_tab = document.getElementById('tabvalue').value; 
         
-       document.getElementById('inmachcd').value = arg0;
-       document.getElementById('infixmachcd').value = arg0;
-       document.getElementById('inmachno').value = arg1;
-       document.getElementById('infixmachno').value = arg1;
-       document.getElementById('inmachname').value = arg2;       
-       document.getElementById('infixmachname').value = arg2;
+       document.getElementById('infaccd').value = arg0;
+       document.getElementById('infacflag').value = arg0;
+       document.getElementById('infacno').value = arg0;
+       document.getElementById('infacname').value = arg1;
+       document.getElementById('infacmodel').value = arg1;
+       document.getElementById('infacjaejo').value = arg2;       
+       document.getElementById('infacjaejono').value = arg2;
        wmachdate.value   = arg3;
        wmachstdate.value = arg4;
        wmacheddate.value = arg5;
-    //    document.getElementById('inmachdate').value = arg3;
-    //    document.getElementById('inmachstdate').value = arg4;
-    //    document.getElementById('inmacheddate').value = arg5;
-       document.getElementById('inmachshot').value = arg6;
+    //    document.getElementById('infacdate').value = arg3;
+    //    document.getElementById('infacstdate').value = arg4;
+    //    document.getElementById('infaceddate').value = arg5;
+       document.getElementById('infacbycltnm').value = arg6;
 
-       document.getElementById('inmachgugek').value = arg7;
-       document.getElementById('inmachcavity').value = arg8;
-       document.getElementById('inmachuse').value = arg9;
-       document.getElementById('inmachcha').value = arg10;
-       document.getElementById('inmachcltnm').value = arg11;
-       document.getElementById('inmachplace').value = arg12;
+       document.getElementById('infacbypernm').value = arg7;
+       document.getElementById('infactelno').value = arg8;
+       document.getElementById('infacgubun').value = arg9;
+       document.getElementById('infacamt').value = arg10;
+       document.getElementById('infacjunwon').value = arg11;
+       document.getElementById('infacdivnm').value = arg12; 
+       document.getElementById('infacgita').value = arg13;
 
-       document.getElementById('inmachwon').value = arg13;
        document.getElementById('inmachgrade').value = arg14;
        document.getElementById('inmachgram').value = arg15;
        document.getElementById('inmachncha').value = arg16; 
        document.getElementById('inmachjaejak').value = arg17; 
 
 
+        switch(arg0){
+            case '01': 
+                document.getElementById('infacsize').value = arg18;          //SIZE
+                document.getElementById('infacweight').value = arg19;      //중량
+                document.getElementById('infachyung').value = arg20;          //형체결력
+                document.getElementById('infacscrew').value = arg21;         //스크류
+                break;        
+            case '02': 
+                document.getElementById('infactype').value = arg22;         //TYPE
+                break;        
+            case '03': 
+                document.getElementById('infacsize').value = arg18;         //SIZE
+                document.getElementById('infacvolumn').value = arg23;     //용량
+                document.getElementById('infacgunondo').value = arg24;          //건조온도
+                document.getElementById('infacgunpung').value = arg25;         //건조풍량
+                break;           
+            default:    
+                break;                
+        }  
+
        var ls_image01 = "" ;
        var ls_image02 = "" ;
+       var ls_image03 = "" ;
+       var ls_image04 = "" ;
+       var ls_image05 = "" ;
+       var ls_image06 = "" ;
         //이력조회     
         $.ajax({
-            url: '/app01m/index08/printimg',  
+            url: '/app01m/index22/printimg',  
             type:"POST",
             data: { 
-                "inmachcd" : arg0, 
+                "infaccd" : arg0, 
             }, 
             async:false,
             success:function(data){  
                 ls_image01 = data[0].save_name;
                 ls_image02 = data[1].save_name;
+                ls_image03 = data[2].save_name;
+                ls_image04 = data[3].save_name;
+                ls_image05 = data[4].save_name;
+                ls_image06 = data[5].save_name;
             },error:function(e){
                 console.log("error");                            
             }
@@ -1815,10 +1933,22 @@
         // th:src="@{assets/img/icons/spot-illustrations/falcon.png}"
         var ls_src01 = "assets/upload/" + arg0 + "/" + ls_image01;
         var ls_src02 = "assets/upload/" + arg0 + "/" + ls_image02; 
+        var ls_src03 = "assets/upload/" + arg0 + "/" + ls_image03; 
+        var ls_src04 = "assets/upload/" + arg0 + "/" + ls_image04; 
+        var ls_src05 = "assets/upload/" + arg0 + "/" + ls_image05; 
+        var ls_src06 = "assets/upload/" + arg0 + "/" + ls_image06; 
         const imageUrl01 = `http://mes.c-kd.com:8500/${ls_src01}`;
         const imageUrl02 = `http://mes.c-kd.com:8500/${ls_src02}`;
+        const imageUrl03 = `http://mes.c-kd.com:8500/${ls_src03}`;
+        const imageUrl04 = `http://mes.c-kd.com:8500/${ls_src04}`;
+        const imageUrl05 = `http://mes.c-kd.com:8500/${ls_src05}`;
+        const imageUrl06 = `http://mes.c-kd.com:8500/${ls_src06}`;
         document.getElementById('cell1').innerHTML = '<img src="' + imageUrl01 + '" alt="Image 1" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image01 + '")">';
         document.getElementById('cell2').innerHTML = '<img src="' + imageUrl02 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image02 +'")">';
+        document.getElementById('cell3').innerHTML = '<img src="' + imageUrl03 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image03 +'")">';
+        document.getElementById('cell4').innerHTML = '<img src="' + imageUrl04 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image04 +'")">';
+        document.getElementById('cell5').innerHTML = '<img src="' + imageUrl05 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image05 +'")">';
+        document.getElementById('cell6').innerHTML = '<img src="' + imageUrl06 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image06 +'")">';
  
         
        searchList_rtn("B");  
@@ -1979,21 +2109,21 @@ function listUp01(){
  
    function init(){
         // 일반 입력 날짜
-        wmachdate = new wijmo.input.InputDate('#inmachdate', {
+        wmachdate = new wijmo.input.InputDate('#infacdate', {
             isRequired: false,
             value: null,
             placeholder: '',
             format: 'yyyy-MM-dd', 
         });
         
-        wmachstdate = new wijmo.input.InputDate('#inmachstdate', {
+        wmachstdate = new wijmo.input.InputDate('#infacstdate', {
             isRequired: false,
             value: null,
             placeholder: '',
             format: 'yyyy-MM-dd', 
         });
         
-        wmacheddate = new wijmo.input.InputDate('#inmacheddate', {
+        wmacheddate = new wijmo.input.InputDate('#infaceddate', {
             isRequired: false,
             value: null,
             placeholder: '',
