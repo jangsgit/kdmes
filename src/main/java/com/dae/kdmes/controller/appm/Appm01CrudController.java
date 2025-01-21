@@ -334,8 +334,8 @@ public class Appm01CrudController {
 //            log.info("stimestamp =====> " + stimestamp);
 //            log.info("edimestamp =====> " + edimestamp);
 
-
-            wotqt = cmsservice01.getSHOTDATA_wotqty(cmsdto);  //생산량
+            // 임시적으로 막음 25.01.21
+            // wotqt = cmsservice01.getSHOTDATA_wotqty(cmsdto);  //생산량
             log.info("wotqt =====> " + wotqt);
             workDto.setWqty(wotqt);
             workDto.setQty(wotqt);
