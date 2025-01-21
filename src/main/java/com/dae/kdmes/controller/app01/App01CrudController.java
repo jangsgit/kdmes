@@ -1213,6 +1213,8 @@ public class App01CrudController {
         if (!result) {
             return "error";
         }
+        result = service08.DeleteGumALLIMG(_index08Dto);
+
         return "success";
     }
 

@@ -2276,7 +2276,12 @@
             document.getElementById('instopnm').value = ""; 
             document.getElementById('endDate').value = null;  
             btn_progress(true, true, false, false) 
-        }else if(arg1 == "0"){  //공정종료  
+        }else if(arg1 == "0"){  //공정종료   
+            if(ls_inlotno == null || ls_inlotno.length == 0 || ls_inlotno == ""){ 
+                alert("lotno를 생성 하세요.")  
+                return ;               
+            }     
+            
             button_workstBtn.disabled = true;
             button_workedBtn.disabled = true; 
             button_worksaveBtn.disabled = true;  

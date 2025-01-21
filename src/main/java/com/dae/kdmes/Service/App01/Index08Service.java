@@ -50,6 +50,9 @@ public class Index08Service {
     public Boolean DeleteGumIMG(Pc110Dto parm){
         return  indexMapper.DeleteGumIMG(parm);
     }
+    public Boolean DeleteGumALLIMG(Pc110Dto parm){
+        return  indexMapper.DeleteGumALLIMG(parm);
+    }
 
 
 

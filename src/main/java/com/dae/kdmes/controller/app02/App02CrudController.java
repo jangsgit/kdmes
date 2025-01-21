@@ -1103,10 +1103,14 @@ public class App02CrudController {
         String ls_delseq = "001";
         Integer ll_delseq = 0 ;
         for(int i = 0; i < pcodeArr.size(); i++){
+            if(psizeArr.get(i) != null || !psizeArr.get(i).equals("")) {
+                _indexCa613Dto.setPsize(psizeArr.get(i));
+            }else{
+                _indexCa613Dto.setPsize("");
+            }
             _indexCa613Dto.setDelseq(ls_delseq);
             _indexCa613Dto.setPcode(pcodeArr.get(i));
             _indexCa613Dto.setPname(pnameArr.get(i));
-            _indexCa613Dto.setPsize(psizeArr.get(i));
             _indexCa613Dto.setQty(pqtyArr.get(i));
             ll_delseq = Integer.parseInt(ls_delseq) + 1;
             if(ll_delseq < 9){

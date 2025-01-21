@@ -32,6 +32,8 @@ public interface Index08Mapper {
 
     public Boolean DeleteGumIMG(Pc110Dto parm) ;
 
+    public Boolean DeleteGumALLIMG(Pc110Dto parm) ;
+
 
 
 

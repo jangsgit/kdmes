@@ -216,6 +216,18 @@
         ]]>
     </update>
 
+    <update id="DeleteMachFixAll" parameterType="com.dae.kdmes.DTO.App01.PcFixDto">
+        <![CDATA[
+        DELETE  TB_PCFIXLIST  where fixid = #{fixid}
+        ]]>
+    </update>
+
+
+    <update id="DeleteGumALLIMG" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto">
+        <![CDATA[
+        DELETE  TB_MATTACH  where board_idx = #{machcd}
+        ]]>
+    </update>
 
     <update id="DeleteGumIMG" parameterType="com.dae.kdmes.DTO.App01.Pc110Dto">
         <![CDATA[

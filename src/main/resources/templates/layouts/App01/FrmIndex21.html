@@ -1247,9 +1247,22 @@
                 }   
                 var cnt = 0;
                 for (var i = 0; i < wtab04Grid.rows.length; i++) { 
-                    pcodeArr.push(wtab04Grid.getCellData(cnt, 0));
-                    pnameArr.push(wtab04Grid.getCellData(cnt, 1));
-                    psizeArr.push(wtab04Grid.getCellData(cnt, 2)); 
+                    var ls_pcode =  wtab04Grid.getCellData(cnt, 0)  
+                    if(ls_pcode == null || ls_pcode.length == 0 || ls_pcode == ""|| ls_pcode == "null"){  
+                        ls_pcode =  " ";
+                    }  
+                    var ls_pname =  wtab04Grid.getCellData(cnt, 1)  
+                    if(ls_pname == null || ls_pname.length == 0 || ls_pname == ""|| ls_pname == "null"){  
+                        ls_pname =  " ";
+                    }  
+                    var ls_psize =  wtab04Grid.getCellData(cnt, 2)  
+                    if(ls_psize == null || ls_psize.length == 0 || ls_psize == ""|| ls_psize == "null"){  
+                        ls_psize =  " ";
+                    }   
+
+                    pcodeArr.push(ls_pcode);
+                    pnameArr.push(ls_pname);
+                    psizeArr.push(ls_psize); 
                     pqtyArr.push(wtab04Grid.getCellData(cnt, 3)); 
                     console.log(cnt)
                     if(pqtyArr[cnt]  == null || pqtyArr[cnt] == 0){ 
