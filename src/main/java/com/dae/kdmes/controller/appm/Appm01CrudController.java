@@ -284,9 +284,10 @@ public class Appm01CrudController {
             if (ls_maxlotno == null) {
                 ls_lotno = plan_no.substring(0,8) + rwflag + "0001";
             } else {
-                ls_seq = ls_maxlotno.substring(8, 12);
+                ls_seq = ls_maxlotno.substring(9, 13);
                 int ll_seq = Integer.parseInt(ls_seq) + 1;
                 ls_seq = Integer.toString(ll_seq);
+
                 if (ls_seq.length() == 1) {
                     ls_seq = "000" + ls_seq;
                 } else if (ls_seq.length() == 2) {
