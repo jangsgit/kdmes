@@ -2184,42 +2184,42 @@
         // 캐싱 방지를 위해 timestamp 추가
         const timestamp = new Date().getTime();
 
-        var ls_src01 = `assets/upload/${arg0}/${ls_image01}`;
-        var ls_src02 = `assets/upload/${arg0}/${ls_image02}`;
-        var ls_src03 = `assets/upload/${arg0}/${ls_image03}`;
-        var ls_src04 = `assets/upload/${arg0}/${ls_image04}`;
-        var ls_src05 = `assets/upload/${arg0}/${ls_image05}`;
-        var ls_src06 = `assets/upload/${arg0}/${ls_image06}`;
+        // var ls_src01 = `assets/upload/${arg0}/${ls_image01}`;
+        // var ls_src02 = `assets/upload/${arg0}/${ls_image02}`;
+        // var ls_src03 = `assets/upload/${arg0}/${ls_image03}`;
+        // var ls_src04 = `assets/upload/${arg0}/${ls_image04}`;
+        // var ls_src05 = `assets/upload/${arg0}/${ls_image05}`;
+        // var ls_src06 = `assets/upload/${arg0}/${ls_image06}`;
 
 
-        // 이미지를 갱신하여 즉시 반영
-        document.getElementById('cell1').innerHTML = `<img src="${ls_src01}" alt="Image 1" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image01}')">`;
-        document.getElementById('cell2').innerHTML = `<img src="${ls_src02}" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image02}')">`;
-        document.getElementById('cell3').innerHTML = `<img src="${ls_src03}" alt="Image 3" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image03}')">`;
-        document.getElementById('cell4').innerHTML = `<img src="${ls_src04}" alt="Image 4" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image04}')">`;
-        document.getElementById('cell5').innerHTML = `<img src="${ls_src05}" alt="Image 5" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image05}')">`;
-        document.getElementById('cell6').innerHTML = `<img src="${ls_src06}" alt="Image 6" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image06}')">`;
+        // // 이미지를 갱신하여 즉시 반영
+        // document.getElementById('cell1').innerHTML = `<img src="${ls_src01}" alt="Image 1" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image01}')">`;
+        // document.getElementById('cell2').innerHTML = `<img src="${ls_src02}" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image02}')">`;
+        // document.getElementById('cell3').innerHTML = `<img src="${ls_src03}" alt="Image 3" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image03}')">`;
+        // document.getElementById('cell4').innerHTML = `<img src="${ls_src04}" alt="Image 4" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image04}')">`;
+        // document.getElementById('cell5').innerHTML = `<img src="${ls_src05}" alt="Image 5" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image05}')">`;
+        // document.getElementById('cell6').innerHTML = `<img src="${ls_src06}" alt="Image 6" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this, '${ls_image06}')">`;
 
 
 
-        // var ls_src01 = "assets/upload/" + arg0 + "/" + ls_image01;
-        // var ls_src02 = "assets/upload/" + arg0 + "/" + ls_image02; 
-        // var ls_src03 = "assets/upload/" + arg0 + "/" + ls_image03; 
-        // var ls_src04 = "assets/upload/" + arg0 + "/" + ls_image04; 
-        // var ls_src05 = "assets/upload/" + arg0 + "/" + ls_image05; 
-        // var ls_src06 = "assets/upload/" + arg0 + "/" + ls_image06; 
-        // const imageUrl01 = `http://mes.c-kd.com:8500/${ls_src01}`;
-        // const imageUrl02 = `http://mes.c-kd.com:8500/${ls_src02}`;
-        // const imageUrl03 = `http://mes.c-kd.com:8500/${ls_src03}`;
-        // const imageUrl04 = `http://mes.c-kd.com:8500/${ls_src04}`;
-        // const imageUrl05 = `http://mes.c-kd.com:8500/${ls_src05}`;
-        // const imageUrl06 = `http://mes.c-kd.com:8500/${ls_src06}`;
-        // document.getElementById('cell1').innerHTML = '<img src="' + imageUrl01 + '" alt="Image 1" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image01 + '")">';
-        // document.getElementById('cell2').innerHTML = '<img src="' + imageUrl02 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image02 +'")">';
-        // document.getElementById('cell3').innerHTML = '<img src="' + imageUrl03 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image03 +'")">';
-        // document.getElementById('cell4').innerHTML = '<img src="' + imageUrl04 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image04 +'")">';
-        // document.getElementById('cell5').innerHTML = '<img src="' + imageUrl05 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image05 +'")">';
-        // document.getElementById('cell6').innerHTML = '<img src="' + imageUrl06 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image06 +'")">';
+        var ls_src01 = "assets/upload/" + arg0 + "/" + ls_image01;
+        var ls_src02 = "assets/upload/" + arg0 + "/" + ls_image02; 
+        var ls_src03 = "assets/upload/" + arg0 + "/" + ls_image03; 
+        var ls_src04 = "assets/upload/" + arg0 + "/" + ls_image04; 
+        var ls_src05 = "assets/upload/" + arg0 + "/" + ls_image05; 
+        var ls_src06 = "assets/upload/" + arg0 + "/" + ls_image06; 
+        const imageUrl01 = `http://mes.c-kd.com:8500/${ls_src01}`;
+        const imageUrl02 = `http://mes.c-kd.com:8500/${ls_src02}`;
+        const imageUrl03 = `http://mes.c-kd.com:8500/${ls_src03}`;
+        const imageUrl04 = `http://mes.c-kd.com:8500/${ls_src04}`;
+        const imageUrl05 = `http://mes.c-kd.com:8500/${ls_src05}`;
+        const imageUrl06 = `http://mes.c-kd.com:8500/${ls_src06}`;
+        document.getElementById('cell1').innerHTML = '<img src="' + imageUrl01 + '" alt="Image 1" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image01 + '")">';
+        document.getElementById('cell2').innerHTML = '<img src="' + imageUrl02 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image02 +'")">';
+        document.getElementById('cell3').innerHTML = '<img src="' + imageUrl03 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image03 +'")">';
+        document.getElementById('cell4').innerHTML = '<img src="' + imageUrl04 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image04 +'")">';
+        document.getElementById('cell5').innerHTML = '<img src="' + imageUrl05 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image05 +'")">';
+        document.getElementById('cell6').innerHTML = '<img src="' + imageUrl06 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image06 +'")">';
  
         
        searchList_rtn("B");  
@@ -2367,7 +2367,7 @@ function listUp01(){
    $(document).ready(function() {   
        init()          
        getToday()
-       fn_egov_init_date() 
+       //fn_egov_init_date() 
        $("#frdate").change(function(e){ 
            // console.log("달력클릭");
            // console.log(convert_time(e.timestamp));
