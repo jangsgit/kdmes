@@ -130,6 +130,12 @@
     <script src="https://cdn.grapecity.com/wijmo/5.20211.781/controls/wijmo.grid.sheet.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script> 
 
+
+
+    <!-- 바코드  -->
+    <script src="https://cdn.grapecity.com/wijmo/5.20221.842/controls/wijmo.barcode.min.js"></script> 
+    <script src="https://cdn.grapecity.com/wijmo/5.20221.842/controls/wijmo.barcode.common.min.js"></script>  
+
     <!-- Wijmo 배포라이선스키 적용 (배포 시 필요) -->
     <script>
       wijmo.setLicenseKey('mes.c-kd.com,655947746177123#B0Kc6Jye0ICbuFkI1pjIEJCLi4TPnJFSFBzb62SMZVlehxmdwEHSxIkS984LCpnaWdkcXFEd8EHNyNTb794Y6MDbIRVRExUYFV7KXRDbkdHWZhkb4M4c5NHSI94RYpkdyUDc7QzYtxEc8RmS9wGOTNkVsp4bCh6arAzcyJGdSZ4bwFDWrYnd9RlRNpWdTJUS6oFdmVjM9JnUwg6K94Wen3mSR5kbzpnRkVjV42yMoN5Q5YjR4gXW0tmTXt4M0V6LqlFZnt6TiZHSvREUjdHeuh4crYlUrd6KOlDe6BHS9Q7UIJke8skUvg4Ywg4S9QHTilnNORkZvMHMzkXUwl5b6hnNIF7ZZtiU4hUOapmb4ZGTyRjWyZ5KolEdVRzRPZ4RYF4NGV6dtlWZCdFOZZTV7gGROFVeORlQndVTpFjNwUzNxMkY8t6Z9kkdpp4QIVmQWpXOlxkT686bM9GejBzR68GM0l5TZJVValjUiojITJCLiIERCdjR7QzNiojIIJCLyQDM6kzNwUDO0IicfJye35XX3JSSwIjUiojIDJCLi86bpNnblRHeFBCI4VWZoNFelxmRg2Wbql6ViojIOJyes4nI5kkTRJiOiMkIsIibvl6cuVGd8VEIgIXZ7VWaWRncvBXZSBybtpWaXJiOi8kI1xSfis4N8gkI0IyQiwiIu3Waz9WZ4hXRgAydvJVa4xWdNBybtpWaXJiOi8kI1xSfiQjR6QkI0IyQiwiIu3Waz9WZ4hXRgACUBx4TgAybtpWaXJiOi8kI1xSfiMzQwIkI0IyQiwiIlJ7bDBybtpWaXJiOi8kI1xSfiUFO7EkI0IyQiwiIu3Waz9WZ4hXRgACdyFGaDxWYpNmbh9WaGBybtpWaXJiOi8kI1tlOiQmcQJCLiETN9IzNwAiMxkDM4IDMyIiOiQncDJCLi46bj9CZr5yYuMXZtJiOiMXbEJCLiwZhtTqisz9isDrgsDIjrLiOiEmTDJCLiMjMxczNxYDN7cDN9UTN6IiOiQWSiwSfdtlOicGbmJCLiIjdyIDMyIiOiIXZ6JCLlNHbhZIOMI');
@@ -141,5 +147,54 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-
+   <style>
+    @media print {
+      @page {
+          size: 11cm 6cm; /* 라벨 크기에 맞추기 */
+          margin: 10;
+      }
+      body {
+          margin: 0;
+          padding: 0;
+      }
+      .print-area {
+          width: 10cm;
+          height: 2cm;
+          border: none;
+          padding: 0;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+      }
+      .barcode-image {
+          width: 100%;
+          height: 3.5cm;
+      }
+      .details {
+          font-size: 14px;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          line-height: 2; /* 줄 간격 최소화 */
+      }
+      .details p {
+          margin: 0; /* 간격을 줄이기 위해 여백을 조정 */
+      }
+      .details .item-barcode {
+          font-weight: bold; /* 품명 굵게 표시 */
+      }
+      .details .item-name {
+          font-weight: bold; /* 품명 굵게 표시 */
+      }
+      .details .item-cltnm {
+          font-weight: bold; /* 품명 굵게 표시 */
+      }
+      .details .item-qty {
+          font-weight: bold; /* 품명 굵게 표시 */
+      }
+  } 
+</style>
 </head> 
