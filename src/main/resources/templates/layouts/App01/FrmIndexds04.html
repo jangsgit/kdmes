@@ -616,7 +616,7 @@
         var cnt = 0;
         const response = await fetch('/appcms/addlistinfo'); // Replace with actual API endpoint
         const data = await response.json();
-        
+        console.log(data)
         for (var i = 0; i < data.length; i++) {
             if(data[i]["mold_Temperature_1"] + 
                data[i]["mold_Temperature_2"] + 
@@ -629,6 +629,7 @@
             wtab01_data.push({
                 id: i, 
                 index: cnt,
+                machine_name: data[i]["machine_name"], 
                 additional_Info_1: data[i]["additional_Info_1"], 
                 status: data[i]["status"], 
                 wotqty: data[i]["wotqty"], 
@@ -697,7 +698,7 @@
             
              
             if (element) { // Check if the element exists
-                element.innerHTML = `No. ${i + 1}. ${wtab01_data[i].additional_Info_1}`;
+                element.innerHTML = `${wtab01_data[i].machine_name}호기  ${wtab01_data[i].additional_Info_1}`;
             } else {
                 console.warn(`Element with id addname${i} not found.`);
             } 
