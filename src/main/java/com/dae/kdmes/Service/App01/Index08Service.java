@@ -1,6 +1,7 @@
 package com.dae.kdmes.Service.App01;
 
 import com.dae.kdmes.DTO.App01.Pc110Dto;
+import com.dae.kdmes.DTO.App01.Pc120Dto;
 import com.dae.kdmes.DTO.App01.PcFixDto;
 import com.dae.kdmes.Mapper.App01.Index08Mapper;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,9 @@ public class Index08Service {
     public List<Pc110Dto> getMachList(Pc110Dto parm){
         return  indexMapper.getMachList(parm);
     }
+    public List<Pc120Dto> getFacList(Pc120Dto parm){
+        return  indexMapper.getFacList(parm);
+    }
     public List<Pc110Dto> getPringImg(Pc110Dto parm){
         return  indexMapper.getPringImg(parm);
     }
@@ -28,14 +32,30 @@ public class Index08Service {
     public String getDupleMachchk(Pc110Dto parm){
         return  indexMapper.getDupleMachchk(parm);
     }
+    public String SelectMaxFac(Pc120Dto parm){
+        return  indexMapper.SelectMaxFac(parm);
+    }
+
+    public String getDupleFacchk(Pc120Dto parm){
+        return  indexMapper.getDupleFacchk(parm);
+    }
     public Boolean InsertMach(Pc110Dto parm){
         return  indexMapper.InsertMach(parm);
+    }
+    public Boolean InsertFac(Pc120Dto parm){
+        return  indexMapper.InsertFac(parm);
     }
     public Boolean UpdateMach(Pc110Dto parm){
         return  indexMapper.UpdateMach(parm);
     }
+    public Boolean UpdateFac(Pc120Dto parm){
+        return  indexMapper.UpdateFac(parm);
+    }
     public Boolean DeleteMach(Pc110Dto parm){
         return  indexMapper.DeleteMach(parm);
+    }
+    public Boolean DeleteFac(Pc120Dto parm){
+        return  indexMapper.DeleteFac(parm);
     }
 
     public Boolean InsertMachFix(PcFixDto parm){

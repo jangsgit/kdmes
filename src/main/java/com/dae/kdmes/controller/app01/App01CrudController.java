@@ -1219,6 +1219,235 @@ public class App01CrudController {
         return "success";
     }
 
+
+    @RequestMapping(value="/index22/del")
+    public String index22Delete(  @RequestParam("infaccd") String infaccd,
+                                  Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        Pc120Dto _index120Dto = new Pc120Dto();
+        Pc110Dto _index08Dto = new Pc110Dto();
+        _index120Dto.setFaccd(infaccd);
+        Boolean result = service08.DeleteFac(_index120Dto);
+        if (!result) {
+            return "error";
+        }
+        _index08Dto.setMachcd(infaccd);
+        result = service08.DeleteGumALLIMG(_index08Dto);
+        //result = service08.DeleteMachFixAll(_index08Dto);
+
+        return "success";
+    }
+
+    @RequestMapping(value="/index22/save")
+    public String index22Save( @RequestPart(value = "key") Map<String, Object> param
+            ,@RequestPart(value = "file",required = false ) List<MultipartFile> file
+            , Model model
+            , HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+
+        String ls_fileName = "";
+        String ls_errmsg = "";
+        /* 업로드 파일 정보를 담을 비어있는 리스트 */
+        List<AttachDTO> attachList = new ArrayList<>();
+        App05ElvlrtDto _App05Dto = new App05ElvlrtDto();
+
+
+        Pc120Dto _index08Dto = new Pc120Dto();
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "infaccd":
+                    _index08Dto.setFaccd(values.toString());
+                    break;
+                case "infacflag":
+                    _index08Dto.setFacflag(values.toString());
+                    break;
+                case "infacno":
+                    _index08Dto.setFacno(values.toString());
+                    break;
+                case "infacname":
+                    _index08Dto.setFacname(values.toString());
+                    break;
+                case "infacdate":
+                    _index08Dto.setFacdate(values.toString());
+                    break;
+                case "infacstdate":
+                    _index08Dto.setFacstdate(values.toString());
+                    break;
+                case "infaceddate":
+                    _index08Dto.setFaceddate(values.toString());
+                    break;
+                case "infacmodel":
+                    _index08Dto.setFacmodel(values.toString());
+                    break;
+                case "infacjaejo":
+                    _index08Dto.setFacjaejo(values.toString());
+                    break;
+                case "infacjaejono":
+                    _index08Dto.setFacjaejo(values.toString());
+                    break;
+                case "infacbycltnm":
+                    _index08Dto.setFacbycltnm(values.toString());
+                    break;
+                case "infacbypernm":
+                    _index08Dto.setFacbypernm(values.toString());
+                    break;
+                case "infactelno":
+                    _index08Dto.setFactelno(values.toString());
+                    break;
+                case "infacgubun":
+                    _index08Dto.setFacgubun(values.toString());
+                    break;
+                case "infacamt":
+                    _index08Dto.setFacamt(Integer.parseInt(values.toString()));
+                    break;
+                case "infacjunwon":
+                    _index08Dto.setFacjunwon(values.toString());
+                    break;
+                case "infacdivnm":
+                    _index08Dto.setFacdivnm(values.toString());
+                    break;
+                case "infacgita":
+                    _index08Dto.setFacgita(values.toString());
+                    break;
+                case "infacsize":
+                    _index08Dto.setFacsize(values.toString());
+                    break;
+                case "infacweight":
+                    _index08Dto.setFacweight(values.toString());
+                    break;
+                case "infachyung":
+                    _index08Dto.setFachyung(values.toString());
+                    break;
+                case "infacscrew":
+                    _index08Dto.setFacscrew(values.toString());
+                    break;
+                case "infactype":
+                    _index08Dto.setFactype(values.toString());
+                    break;
+                case "infacvolumn":
+                    _index08Dto.setFacvolumn(values.toString());
+                    break;
+                case "infacgunondo":
+                    _index08Dto.setFacgunondo(values.toString());
+                    break;
+                case "infacgunpung":
+                    _index08Dto.setFacgunpung(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+        String ls_maxfaccd = _index08Dto.getFaccd();
+        String ls_seq;
+        Boolean result = false;
+        if (ls_maxfaccd == null || ls_maxfaccd.equals("")) {
+            _index08Dto.setYymm(getDate().substring(0,6));
+            log.info(_index08Dto.getYymm());
+            ls_maxfaccd = service08.SelectMaxFac(_index08Dto);
+            if (ls_maxfaccd != null && !ls_maxfaccd.equals("")) {
+                ls_seq = ls_maxfaccd.substring(6, 8);
+                int ll_seq = Integer.parseInt(ls_seq) + 1;
+                ls_seq = Integer.toString(ll_seq);
+
+                if (ls_seq.length() == 1) {
+                    ls_seq = "000" + ls_seq;
+                } else if (ls_seq.length() == 2) {
+                    ls_seq = "00" + ls_seq;
+                } else if (ls_seq.length() == 3) {
+                    ls_seq = "0" + ls_seq;
+                }
+                ls_maxfaccd = getDate().substring(0,5) + ls_seq;
+            }else{
+                ls_maxfaccd = getDate().substring(0,6) + "001";
+            }
+            _index08Dto.setFaccd(ls_maxfaccd);
+            result = service08.InsertFac(_index08Dto);
+            if (!result) {
+                return "error";
+            }
+        } else {
+            result = service08.UpdateFac(_index08Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+//        C:\Project\aprjKDMES\src\main\resources\static\assets
+//        C:\Project\aprjKDMES\src\main\java\com\dae\kdmes\controller\app01
+        //D:\workspace\KDMES\src\main\resources\static\assets
+        String _uploadPath = Paths.get("D:", "workspace", "KDMES","src","main","resources","static","assets","upload", _index08Dto.getFaccd()).toString();
+        /* uploadPath에 해당하는 디렉터리가 존재하지 않으면, 부모 디렉터리를 포함한 모든 디렉터리를 생성 */
+        File dir = new File(_uploadPath);
+        if (dir.exists() == false) {
+            dir.mkdirs();
+        }
+
+        try {
+
+            for(MultipartFile multipartFile : file){
+//                log.info("================================================================");
+//                log.info("upload file name : " + multipartFile.getOriginalFilename());
+//                log.info("upload file name : " + multipartFile.getSize());
+                ls_fileName = multipartFile.getOriginalFilename();
+
+
+                /* 파일이 비어있으면 비어있는 리스트 반환 */
+                if (multipartFile.getSize() < 1) {
+                    ls_errmsg = "success";
+                    return ls_errmsg;
+                }
+                /* 파일 확장자 */
+                final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+                /* 서버에 저장할 파일명 (랜덤 문자열 + 확장자) */
+                final String saveName = getRandomString() + "." + extension;
+
+                /* 업로드 경로에 saveName과 동일한 이름을 가진 파일 생성 */
+                File target = new File(_uploadPath, saveName);
+
+                log.info("uploadPath : " + _uploadPath);
+                log.info("saveName : " + saveName);
+
+                multipartFile.transferTo(target);
+                String nseq1 = _index08Dto.getFaccd();
+                /* 파일 정보 저장 */
+                AttachDTO attach = new AttachDTO();
+                attach.setBoardIdx(nseq1);
+                attach.setOriginalName(multipartFile.getOriginalFilename());
+                attach.setSaveName(saveName);
+                attach.setSize(multipartFile.getSize());
+                attach.setFlag("FF");
+                /* 파일 정보 추가 */
+                attachList.add(attach);
+            }
+
+            result  = appServiceImpl.registerMNotice(_App05Dto, attachList);
+            if(!result){
+                return  "error";
+            }
+        }catch (DataAccessException e){
+            log.info("memberUpload DataAccessException ================================================================");
+            log.info(e.toString());
+            throw new AttachFileException("[" + ls_fileName + "] DataAccessException to save");
+            //utils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다", "/App05/App05list/", Method.GET, model);
+        } catch (Exception  e){
+            /*log.info("memberUpload Exception ================================================================");
+            log.info(e.toString());
+            ls_errmsg = "[" + ls_fileName + "] failed to save";
+            throw new AttachFileException("[" + ls_fileName + "] failed to save");*/
+            //utils.showMessageWithRedirect("시스템에 문제가 발생하였습니다", "/app05/App05list/", Method.GET, model);
+        }
+        return "success";
+    }
+
+
+
+
     //거래처등록
     @GetMapping(value="/index08/listtot")
     public Object App082ListTot_index(@RequestParam("searchtxt") String inmachcd,
@@ -1242,6 +1471,34 @@ public class App01CrudController {
 
         } catch (Exception ex) {
             log.info("App08ListTot_index Exception =====>" + ex.toString());
+        }
+
+        return _index08ListDto;
+    }
+
+    //거래처등록
+    @GetMapping(value="/index22/listtot")
+    public Object App022ListTot_index(@RequestParam("searchtxt") String inFaccd,
+                                      Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("설비등록");
+        CommDto.setMenuUrl("기준정보>설비등록");
+        CommDto.setMenuCode("index22");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        List<Pc120Dto> _index08ListDto = new ArrayList<>();
+        Pc120Dto _index08Dto = new Pc120Dto();
+        try {
+            if(inFaccd == null || inFaccd.equals("")){
+                inFaccd = "%";
+            }
+            _index08Dto.setFaccd(inFaccd);
+            _index08ListDto = service08.getFacList(_index08Dto);
+            model.addAttribute("index08List",_index08ListDto);
+
+        } catch (Exception ex) {
+            log.info("App022ListTot_index Exception =====>" + ex.toString());
         }
 
         return _index08ListDto;
@@ -1380,6 +1637,36 @@ public class App01CrudController {
     }
 
 
+
+    //거래처등록
+    @GetMapping(value="/index22/printview")
+    public Object AppPrintView22_index(@RequestParam("infaccd") String infaccd,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("설비이력카드");
+        CommDto.setMenuUrl("기준정보>설비이력카드");
+        CommDto.setMenuCode("index22");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        Pc120Dto _index08Dto = new Pc120Dto();
+        List<Pc120Dto> _Pc120DtoListDto = new ArrayList<>();
+        try {
+            if(infaccd == null || infaccd.equals("")){
+                infaccd = "%";
+            }
+            _index08Dto.setFaccd(infaccd);
+            _Pc120DtoListDto = service08.getFacList(_index08Dto);
+            model.addAttribute("index08List",_Pc120DtoListDto);
+
+        } catch (Exception ex) {
+            log.info("AppPrintView22_index Exception =====>" + ex.toString());
+        }
+
+        return _Pc120DtoListDto;
+    }
+
+
     //이미지불러오기
     @GetMapping(value="/index08/printimg")
     public Object AppPrintJPG_index(@RequestParam("inmachcd") String inmachcd,
@@ -1404,6 +1691,8 @@ public class App01CrudController {
 
         return _Pc110DtoListDto;
     }
+
+
 
     //이미지불러오기
     @GetMapping(value="/index08/printimgdel")

@@ -34,6 +34,42 @@
         ]]>
     </select>
 
+    <select id="getFacList" parameterType="com.dae.kdmes.DTO.App01.Pc120Dto" resultType="com.dae.kdmes.DTO.App01.Pc120Dto">
+        <![CDATA[
+        SELECT faccd
+             ,facno
+             ,facflag
+             ,facname
+             ,Left(facdate,4) + '-' + substring(facdate, 5,2)+ '-' + substring(facdate, 7,2) as facdate
+             ,Left(facstdate,4) + '-' + substring(facstdate, 5,2)+ '-' + substring(facstdate, 7,2) as facstdate
+             ,Left(faceddate,4) + '-' + substring(faceddate, 5,2)+ '-' + substring(faceddate, 7,2) as faceddate
+             ,facmodel
+             ,facjaejo
+             ,facjaejono
+             ,facbycltnm
+             ,facbypernm
+             ,factelno
+             ,facgubun
+             ,facamt
+             ,facjunwon
+             ,facdivnm
+             ,facsize
+             ,fachyung
+             ,facweight
+             ,facscrew
+             ,factype
+             ,facgunondo
+             ,facvolumn
+             ,facgunpung
+             ,facgita
+        FROM TB_PC120 WITH(NOLOCK)
+        WHERE ( isnull(facmodel,'') Like concat('%',#{facname},'%')
+           or isnull(facname,'') Like concat('%',#{facname},'%') )
+        ]]>
+    </select>
+
+
+
     <select id="getMachFixList" parameterType="com.dae.kdmes.DTO.App01.PcFixDto" resultType="com.dae.kdmes.DTO.App01.PcFixDto">
         <![CDATA[
             SELECT ROW_NUMBER() OVER (ORDER BY fixid) AS rownum
@@ -56,6 +92,15 @@
             SELECT isnull(machname,'') as machname
               FROM TB_PC110 WITH(NOLOCK)
              WHERE machcd = #{machcd}
+        ]]>
+    </select>
+
+
+    <select id="getDupleFacchk" parameterType="com.dae.kdmes.DTO.App01.Pc120Dto" resultType="String">
+        <![CDATA[
+        SELECT isnull(facname,'') as facname
+        FROM TB_PC120 WITH(NOLOCK)
+        WHERE faccd = #{faccd}
         ]]>
     </select>
 
@@ -113,6 +158,63 @@
         )
     </insert>
 
+
+    <insert id="InsertFac" parameterType="com.dae.kdmes.DTO.App01.Pc120Dto" >
+        insert into TB_PC120 (faccd
+                             ,facno
+                             ,facflag
+                             ,facname
+                             ,facdate
+                             ,facstdate
+                             ,faceddate
+                             ,facmodel
+                             ,facjaejo
+                             ,facjaejono
+                             ,facbycltnm
+                             ,facbypernm
+                             ,factelno
+                             ,facgubun
+                             ,facamt
+                             ,facjunwon
+                             ,facdivnm
+                             ,facsize
+                             ,fachyung
+                             ,facweight
+                             ,facscrew
+                             ,factype
+                             ,facgunondo
+                             ,facvolumn
+                             ,facgunpung
+                             ,facgita
+        ) values  (
+                    #{faccd}
+                  ,#{facno}
+                  ,#{facflag}
+                  ,#{facname}
+                  ,#{facdate}
+                  ,#{facstdate}
+                  ,#{faceddate}
+                  ,#{facmodel}
+                  ,#{facjaejo}
+                  ,#{facjaejono}
+                  ,#{facbycltnm}
+                  ,#{facbypernm}
+                  ,#{factelno}
+                  ,#{facgubun}
+                  ,#{facamt}
+                  ,#{facjunwon}
+                  ,#{facdivnm}
+                  ,#{facsize}
+                  ,#{fachyung}
+                  ,#{facweight}
+                  ,#{facscrew}
+                  ,#{factype}
+                  ,#{facgunondo}
+                  ,#{facvolumn}
+                  ,#{facgunpung}
+                  ,#{facgita}
+                  )
+    </insert>
 
     <insert id="InsertMachFix" parameterType="com.dae.kdmes.DTO.App01.PcFixDto" >
         insert into TB_PCFIXLIST (fixmachcd
@@ -181,6 +283,62 @@
     </update>
 
 
+    <update id="UpdateFac" parameterType="com.dae.kdmes.DTO.App01.Pc120Dto">
+        update TB_PC120
+        set perid = '00'
+        <if test="facflag != null ">,</if>
+        <if test="facflag != null">facflag=#{facflag}</if>
+        <if test="facno != null ">,</if>
+        <if test="facno != null">facno=#{facno}</if>
+        <if test="facname != null ">,</if>
+        <if test="facname != null">facname=#{facname}</if>
+        <if test="facdate != null ">,</if>
+        <if test="facdate != null">facdate=#{facdate}</if>
+        <if test="facstdate != null ">,</if>
+        <if test="facstdate != null">facstdate=#{facstdate}</if>
+        <if test="faceddate != null ">,</if>
+        <if test="faceddate != null">faceddate=#{faceddate}</if>
+        <if test="facmodel != null ">,</if>
+        <if test="facmodel != null">facmodel=#{facmodel}</if>
+        <if test="facjaejo != null ">,</if>
+        <if test="facjaejo != null">facjaejo=#{facjaejo}</if>
+        <if test="facjaejono != null ">,</if>
+        <if test="facjaejono != null">facjaejono=#{facjaejono}</if>
+        <if test="facbycltnm != null ">,</if>
+        <if test="facbycltnm != null">facbycltnm=#{facbycltnm}</if>
+        <if test="facbypernm != null ">,</if>
+        <if test="facbypernm != null">facbypernm=#{facbypernm}</if>
+        <if test="factelno != null ">,</if>
+        <if test="factelno != null">factelno=#{factelno}</if>
+        <if test="facgubun != null ">,</if>
+        <if test="facgubun != null">facgubun=#{facgubun}</if>
+        <if test="facamt != null ">,</if>
+        <if test="facamt != null">facamt=#{facamt}</if>
+        <if test="facjunwon != null ">,</if>
+        <if test="facjunwon != null">facjunwon=#{facjunwon}</if>
+        <if test="facdivnm != null ">,</if>
+        <if test="facdivnm != null">facdivnm=#{facdivnm}</if>
+        <if test="facsize != null ">,</if>
+        <if test="facsize != null">facsize=#{facsize}</if>
+        <if test="fachyung != null ">,</if>
+        <if test="fachyung != null">fachyung=#{fachyung}</if>
+        <if test="facweight != null ">,</if>
+        <if test="facweight != null">facweight=#{facweight}</if>
+        <if test="facscrew != null ">,</if>
+        <if test="facscrew != null">facscrew=#{facscrew}</if>
+        <if test="factype != null ">,</if>
+        <if test="factype != null">factype=#{factype}</if>
+        <if test="facgunondo != null ">,</if>
+        <if test="facgunondo != null">facgunondo=#{facgunondo}</if>
+        <if test="facvolumn != null ">,</if>
+        <if test="facvolumn != null">facvolumn=#{facvolumn}</if>
+        <if test="facgunpung != null ">,</if>
+        <if test="facgunpung != null">facgunpung=#{facgunpung}</if>
+        <if test="facgita != null ">,</if>
+        <if test="facgita != null">facgita=#{facgita}</if>
+        where faccd = #{faccd}
+    </update>
+
     <update id="UpdateMachFix" parameterType="com.dae.kdmes.DTO.App01.PcFixDto">
         update TB_PCFIXLIST
         set perid = '00'
@@ -209,6 +367,11 @@
         ]]>
     </update>
 
+    <update id="DeleteFac" parameterType="com.dae.kdmes.DTO.App01.Pc120Dto">
+        <![CDATA[
+        DELETE  TB_PC120  where faccd = #{faccd}
+        ]]>
+    </update>
 
     <update id="DeleteMachFix" parameterType="com.dae.kdmes.DTO.App01.PcFixDto">
         <![CDATA[
@@ -234,5 +397,10 @@
         DELETE  TB_MATTACH  where save_name = #{save_name}
         ]]>
     </update>
+
+
+    <select id="SelectMaxFac" parameterType="com.dae.kdmes.DTO.App01.Pc120Dto" resultType="String">
+        <![CDATA[  select  max(faccd) as lotnomax  from TB_PC120 where Left(faccd,6) = #{yymm}      ]]>
+    </select>
 
 </mapper>

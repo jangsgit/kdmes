@@ -308,18 +308,18 @@ public class App01Controller {
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
-        List<Pc110Dto> _index08ListDto = new ArrayList<>();
-        Pc110Dto _index08Dto = new Pc110Dto();
+        List<Pc120Dto> _index08ListDto = new ArrayList<>();
+        Pc120Dto _index08Dto = new Pc120Dto();
         try {
-            _index08Dto.setMachcd("%");
-            _index08ListDto = service08.getMachList(_index08Dto);
+            _index08Dto.setFacname("%");
+            _index08ListDto = service08.getFacList(_index08Dto);
             //   index02ListDto = service02.getWrcmList(index02Dto);
 
-            model.addAttribute("Index08List",_index08ListDto);
+            model.addAttribute("Index22List",_index08ListDto);
             //    model.addAttribute("WrcmList",index02ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
-            log.info("App08_index Exception =============================");
+            log.info("App01_index22 Exception =============================");
             log.info("Exception =====>" + ex.toString());
 //            log.debug("Exception =====>" + ex.toString() );
         }

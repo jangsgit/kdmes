@@ -394,7 +394,7 @@
     let formData = new FormData();  
 
     window.onload = function() {   
-        document.getElementById('typeSelector').value = "01";
+        document.getElementById('infacflag').value = "01";
         updateTable("01");
         view_p01tab04page = new wijmo.collections.CollectionView(getData_tab04(), {
                     pageSize: 21
@@ -407,33 +407,33 @@
             allowSorting: 'MultiColumn',
             alternatingRowStep: 0,
             columns: [    
-                { binding: 'machcd', header: '설비구분', align: "center", width: 120 }, 
-                { binding: 'machname', 
+                { binding: 'flagnm', header: '설비구분', align: "center", width: 150 }, 
+                { binding: 'facname', 
                     header: '설비명', 
                     align: "center", 
                     width: 150,
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.machname}</b>',
+                        text: '<b>${item.facname}</b>',
                         click: (e, ctx) => {
-                            wcifChk_a( ctx.item.machcd,  ctx.item.machno, ctx.item.machname, 
-                                    ctx.item.machdate, ctx.item.machstdate, 
-                                    ctx.item.macheddate ,ctx.item.machshot, 
-                                    ctx.item.machgugek, ctx.item.machcavity, 
-                                    ctx.item.machuse,  ctx.item.machcha, 
-                                    ctx.item.machcltnm,ctx.item.machplace, 
-                                    ctx.item.machwon, ctx.item.machgrade, 
-                                    ctx.item.machgram, ctx.item.machncha, 
-                                    ctx.item.machjaejak );                    
+                            wcifChk_a( ctx.item.faccd,  ctx.item.facflag, ctx.item.facno, 
+                                    ctx.item.facname, ctx.item.facmodel, ctx.item.facjaejo, 
+                                    ctx.item.facjaejono ,ctx.item.facdate, ctx.item.facstdate, 
+                                    ctx.item.faceddate, ctx.item.facbycltnm, ctx.item.facbypernm, 
+                                    ctx.item.factelno,  ctx.item.facgubun, ctx.item.facamt, 
+                                    ctx.item.facjunwon,ctx.item.facdivnm, ctx.item.facgita, 
+                                    ctx.item.facsize, ctx.item.facweight, ctx.item.fachyung, 
+                                    ctx.item.factype, ctx.item.facvolumn, ctx.item.facgunondo, 
+                                    ctx.item.facgunpung, ctx.item.facscrew );  
                         }
                     }) 
                 },      
-                { binding: 'machno', header: '모델명', align: "center", width: 120 },
-                { binding: 'machwon', header: '제조사', align: "left", width: 200 },
-                { binding: 'machgugek', header: '제조번호', align: "left", width: 90 }, 
-                { binding: 'machcltnm', header: '제조일', align: "left", width: 100 }, 
-                { binding: 'machcavity', header: '구매회사', align: "left", width: 180 }, 
-                { binding: 'machshot', header: '구매일', align: "right", width: 150 },        
-                { binding: 'machdate', header: '구매담당', align: "center", width: 120 },        
+                { binding: 'facmodel', header: '모델명', align: "center", width: 120 },
+                { binding: 'facjaejo', header: '제조사', align: "left", width: 200 },
+                { binding: 'facjaejono', header: '제조번호', align: "left", width: 90 }, 
+                { binding: 'facstdate', header: '제조일', align: "left", width: 100 }, 
+                { binding: 'facbycltnm', header: '구매회사', align: "left", width: 180 }, 
+                { binding: 'faceddate', header: '구매일', align: "right", width: 150 },        
+                { binding: 'facbypernm', header: '구매담당', align: "center", width: 120 },        
             ], 
             itemsSource: view_p01tab04page
         });        
@@ -462,6 +462,9 @@
                     var cnt = 1;   
                     var ls_facflag = "";
                     var ls_flagnm = "";
+                    if(wtab01Dto == null){
+                        return wactnm_data
+                    }
                     for (var i = 0; i < wtab01Dto.length; i++) {
                         
                         ls_facflag = wtab01Dto[i]["facflag"]
@@ -795,8 +798,7 @@
                     "infacname"    : ls_infacname , 
                     "infacdate"    : ls_infacdate, 
                     "infacstdate"         : ls_infacstdate , 
-                    "infaceddate"         : ls_infaceddate, 
-                    "infacdate"        : ls_infacdate,
+                    "infaceddate"         : ls_infaceddate,  
                     "infacmodel"         : ls_infacmodel,
                     "infacjaejo"        : ls_infacjaejo,
                     "infacjaejono"        : ls_infacjaejono , 
@@ -940,9 +942,9 @@
        switch(ls_tab){
            case 'A': 
                 var ls_infaccd = document.getElementById('infaccd').value;              //설비코드
-                if(ls_inmachcd == null || ls_inmachcd.length == 0 || ls_inmachcd == ""){ 
-                    alert("품번을 확인하세요") 
-                    document.getElementById("inmachcd").focus(); 
+                if(ls_infaccd == null || ls_infaccd.length == 0 || ls_infaccd == ""){ 
+                    alert("설비를 선택하세요") 
+                    document.getElementById("infaccd").focus(); 
                     return ;               
                 }    
 
@@ -1009,6 +1011,8 @@
         var ls_tab = document.getElementById('tabvalue').value;  
        switch(ls_tab){
            case 'A':  
+           
+                document.getElementById('infaccd').value = "";
                 document.getElementById('infacflag').value = "01";
                 document.getElementById('infacno').value = "";
                 document.getElementById('infacname').value = "";
@@ -1016,7 +1020,7 @@
                 document.getElementById('infacmodel').value = "";
                 document.getElementById('infacjaejo').value = "";
                 document.getElementById('infacjaejono').value = "";
-
+                
                 document.getElementById('infacbycltnm').value = "";
                 document.getElementById('infacbypernm').value = "";
                 document.getElementById('infactelno').value = "";
@@ -1024,6 +1028,7 @@
                 document.getElementById('infacamt').value = 0;
                 document.getElementById('infacjunwon').value = "";
                 document.getElementById('infacdivnm').value = "";
+                document.getElementById('infacgita').value = "";
 
                 document.getElementById('infacsize').value = "";
                 document.getElementById('infacweight').value = "";
@@ -1134,15 +1139,13 @@
 
         switch(ls_tab){
             case 'A': 
-                    var ls_inmachcd = document.getElementById('inmachcd').value;
-                    var ls_inmachno = document.getElementById('inmachno').value;  
+                    var ls_infaccd = document.getElementById('infaccd').value;  
                     //선택된 매출그룹조회     
                     $.ajax({
-                        url: '/app01m/index08/printview',  
+                        url: '/app01m/index22/printview',  
                         type:"POST",
                         data: { 
-                            "inmachcd"  : ls_inmachcd,  
-                            "inmachno"   : ls_inmachno   ,  
+                            "infaccd"  : ls_infaccd  
                         }, 
                         async:false,
                         success:function(data){  
@@ -1167,8 +1170,7 @@
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 인쇄 @@@@@@@@@@@@@@@@@@@@@@@@@@@
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      function print_rtn(getData){ 
-            var ls_inmachcd = document.getElementById('inmachcd').value;
-            var ls_inmachno = document.getElementById('inmachno').value;  
+            var ls_infaccd = document.getElementById('infaccd').value; 
             
             var doc = new wijmo.pdf.PdfDocument({   
                 compress: true,
@@ -1189,7 +1191,7 @@
                         brush: '#bfc1c2'
                     }
                 },
-                ended: (sender, args) => wijmo.pdf.saveBlob(args.blob, ls_inmachcd + '_금형이력카드.pdf')
+                ended: (sender, args) => wijmo.pdf.saveBlob(args.blob, ls_infaccd + '_설비카드.pdf')
             }) 
             
             doc.registerFont({
@@ -1207,7 +1209,7 @@
                 url: '/app01m/index08/printimg',  
                 type:"POST",
                 data: { 
-                    "inmachcd" : ls_inmachcd, 
+                    "inmachcd" : ls_infaccd, 
                 }, 
                 async:false,
                 success:function(data){  
@@ -1739,106 +1741,133 @@
        var wtab03Dto  = data;    
        var wtab03_data = [];
        var cnt = 1;
-       for (var i = 0; i < wtab03Dto.length; i++) {
-           wtab03_data.push({
-               id: i, 
-               index: cnt,
-                machcd: wtab03Dto[i]["machcd"], 
-                machno: wtab03Dto[i]["machno"], 
-                machname: wtab03Dto[i]["machname"], 
-                machdate: wtab03Dto[i]["machdate"], 
-                machstdate: wtab03Dto[i]["machstdate"], 
-                macheddate: wtab03Dto[i]["macheddate"], 
-                machshot: wtab03Dto[i]["machshot"], 
-                machgugek: wtab03Dto[i]["machgugek"], 
-                machcavity: wtab03Dto[i]["machcavity"], 
-                machuse: wtab03Dto[i]["machuse"], 
-                machcha: wtab03Dto[i]["machcha"], 
-                machcltnm: wtab03Dto[i]["machcltnm"], 
-                machjaejak: wtab03Dto[i]["machjaejak"], 
-                machplace: wtab03Dto[i]["machplace"], 
-                machamt: wtab03Dto[i]["machamt"], 
-                machwon: wtab03Dto[i]["machwon"], 
-                machgrade: wtab03Dto[i]["machgrade"],
-                machgram: wtab03Dto[i]["machgram"],  
-                machncha: wtab03Dto[i]["machncha"], 
-                remark: wtab03Dto[i]["remark"], 
-                indate: wtab03Dto[i]["indate"], 
-                inperid: wtab03Dto[i]["inperid"],                            
-           });
+       
+       for (var i = 0; i < wtab03Dto.length; i++) { 
+            ls_facflag = wtab03Dto[i]["facflag"]
+            switch(ls_facflag){
+                case '01': 
+                    ls_flagnm  = "사출기" 
+                    break;        
+                case '02': 
+                    ls_flagnm  = "로봇"
+                    break;        
+                case '03': 
+                    ls_flagnm  = "열풍기"
+                    break;             
+                case '04': 
+                    ls_flagnm  = "자동화기"
+                    break;             
+                case '05': 
+                    ls_flagnm  = "슬리브검사"
+                    break;           
+                default:    
+                    break;                
+            }  
+            wtab03_data.push({
+                id: i, 
+                index: cnt,
+                faccd: wtab03Dto[i]["faccd"],
+                facflag: wtab03Dto[i]["facflag"], 
+                flagnm: ls_flagnm,
+                facno: wtab03Dto[i]["facno"], 
+                facname: wtab03Dto[i]["facname"], 
+                facdate: wtab03Dto[i]["facdate"], 
+                facstdate: wtab03Dto[i]["facstdate"], 
+                faceddate: wtab03Dto[i]["faceddate"], 
+                facmodel: wtab03Dto[i]["facmodel"], 
+                facjaejo: wtab03Dto[i]["facjaejo"], 
+                facjaejono: wtab03Dto[i]["facjaejono"], 
+                facbycltnm: wtab03Dto[i]["facbycltnm"], 
+                facbypernm: wtab03Dto[i]["facbypernm"], 
+                factelno: wtab03Dto[i]["factelno"], 
+                facgubun: wtab03Dto[i]["facgubun"], 
+                facamt: wtab03Dto[i]["facamt"], 
+                facjunwon: wtab03Dto[i]["facjunwon"], 
+                facdivnm: wtab03Dto[i]["facdivnm"], 
+                facgita: wtab03Dto[i]["facgita"],
+                facsize: wtab03Dto[i]["facsize"],  
+                facweight: wtab03Dto[i]["facweight"], 
+                fachyung: wtab03Dto[i]["fachyung"], 
+                facscrew: wtab03Dto[i]["facscrew"], 
+                factype: wtab03Dto[i]["factype"],   
+                facvolumn: wtab03Dto[i]["facvolumn"],   
+                facgunondo: wtab03Dto[i]["facgunondo"],   
+                facgunpung: wtab03Dto[i]["facgunpung"],   
+                
+            }); 
            cnt++;
        }   
        // console.log("wtab01_data",wactnm_data) +
-       // console.log(wtab01_data.length);
+        console.log(wtab03_data);
        wtab04Grid.columns.clear();  
        wtab04Grid.autoGenerateColumns = false; 
        view_p01tab04page.sourceCollection  = wtab03_data;
        var cols = new wijmo.grid.Column(); 
        cols = new wijmo.grid.Column(); 
-       cols.binding = 'machcd';
-       cols.header = '품번';
+       cols.binding = 'flagnm';
+       cols.header = '설비구분';
        cols.align = "center";
-       cols.width = 100; 
+       cols.width = 150; 
        wtab04Grid.columns.push(cols);   
 
        cols = new wijmo.grid.Column(); 
-       cols.binding = 'machname';
-       cols.header = '품명';
+       cols.binding = 'facname';
+       cols.header = '설비명';
        cols.align = "center";
        cols.width = 150;  
        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-           text: '<b>${item.machname}</b>',
+           text: '<b>${item.facname}</b>',
             click: (e, ctx) => {                
-                wcifChk_a(ctx.item.machcd,  ctx.item.machno, ctx.item.machname,ctx.item.machdate, ctx.item.machstdate,ctx.item.macheddate ,ctx.item.machshot,ctx.item.machgugek, ctx.item.machcavity,ctx.item.machuse,  ctx.item.machcha,ctx.item.machcltnm,ctx.item.machplace,ctx.item.machwon, ctx.item.machgrade,ctx.item.machgram, ctx.item.machncha,ctx.item.machjaejak );  
+                wcifChk_a(ctx.item.faccd,  ctx.item.facflag, ctx.item.facno, ctx.item.facname, ctx.item.facmodel, ctx.item.facjaejo,ctx.item.facjaejono ,ctx.item.facdate, ctx.item.facstdate, ctx.item.faceddate, ctx.item.facbycltnm, ctx.item.facbypernm, ctx.item.factelno,  ctx.item.facgubun, ctx.item.facamt, ctx.item.facjunwon,ctx.item.facdivnm, ctx.item.facgita, ctx.item.facsize, ctx.item.facweight, ctx.item.fachyung, ctx.item.factype, ctx.item.facvolumn, ctx.item.facgunondo, ctx.item.facgunpung, ctx.item.facscrew );  
             }
         }); 
        wtab04Grid.columns.push(cols);
        
        cols = new wijmo.grid.Column(); 
-       cols.binding = 'machno';
-       cols.header = '금형번호';
+       cols.binding = 'facmodel';
+       cols.header = '모델명';
        cols.align = "center";
        cols.width = 120;  
        wtab04Grid.columns.push(cols);  
 
        cols = new wijmo.grid.Column(); 
-       cols.binding = 'machwon';
-       cols.header = '원재료명';
-       cols.align = "left";
+       cols.binding = 'facjaejo';
+       cols.header = '제조사';
+       cols.align = "center";
        cols.width = 120;  
        wtab04Grid.columns.push(cols);
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'machgugek';
-        cols.header = '금형규격';
-        cols.align = "left";
+        cols.binding = 'facjaejono';
+        cols.header = '제조번호';
+        cols.align = "center";
         cols.width = 90;  
         wtab04Grid.columns.push(cols);
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'machcltnm';
-        cols.header = '거래선';
-        cols.align = "left";
+        cols.binding = 'facstdate';
+        cols.header = '제조일';
+        cols.align = "center";
         cols.width = 100;  
         wtab04Grid.columns.push(cols);
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'machcavity';
-        cols.header = 'CAVITY수';
-        cols.align = "left";
+        cols.binding = 'facbycltnm';
+        cols.header = '구매회사';
+        cols.align = "center";
         cols.width = 180;  
         wtab04Grid.columns.push(cols);
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'machshot';
-        cols.header = '예상SHOT';
-        cols.align = "right";
+        cols.binding = 'faceddate';
+        cols.header = '구매일';
+        cols.align = "center";
         cols.width = 150;  
         wtab04Grid.columns.push(cols);
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'machdate';
-        cols.header = '최초일자';
+        cols.binding = 'facbypernm';
+        cols.header = '구매담당';
         cols.align = "center";
         cols.width = 120;  
         wtab04Grid.columns.push(cols); 
@@ -1847,56 +1876,55 @@
 
 
    
-   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17){   
-        // machcd machno, machname,       machdate, machstdate, macheddate ,machshot, 
-        // machgugek, machcavity,  machuse,  machcha,    machcltnm,machplace, 
-        // machwon, machgrade,     machgram, machncha,   machjaejak 
+   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25){   
+        // faccd,  facflag, facno, facname, facmodel,   0-4
+        //  facjaejo,facjaejono ,facdate, facstdate, faceddate, 5-9
+        //  facbycltnm, facbypernm, factelno,  facgubun, facamt, 10-14
+        // facjunwon,facdivnm, facgita, facsize, facweight, 15-19
+        // fachyung, factype, facvolumn, facgunondo, facgunpung  20-24
+        //  facscrew ); 25
        var ls_tab = document.getElementById('tabvalue').value; 
-        
+       updateTable(arg1)
        document.getElementById('infaccd').value = arg0;
-       document.getElementById('infacflag').value = arg0;
-       document.getElementById('infacno').value = arg0;
-       document.getElementById('infacname').value = arg1;
-       document.getElementById('infacmodel').value = arg1;
-       document.getElementById('infacjaejo').value = arg2;       
-       document.getElementById('infacjaejono').value = arg2;
-       wmachdate.value   = arg3;
-       wmachstdate.value = arg4;
-       wmacheddate.value = arg5;
+       document.getElementById('infacflag').value = arg1;
+       document.getElementById('infacno').value = arg2;
+       document.getElementById('infacname').value = arg3;
+       document.getElementById('infacmodel').value = arg4;
+       document.getElementById('infacjaejo').value = arg5;       
+       document.getElementById('infacjaejono').value = arg6;
+       wmachdate.value   = arg7;
+       wmachstdate.value = arg8;
+       wmacheddate.value = arg9;
     //    document.getElementById('infacdate').value = arg3;
     //    document.getElementById('infacstdate').value = arg4;
     //    document.getElementById('infaceddate').value = arg5;
-       document.getElementById('infacbycltnm').value = arg6;
+       document.getElementById('infacbycltnm').value = arg10;
 
-       document.getElementById('infacbypernm').value = arg7;
-       document.getElementById('infactelno').value = arg8;
-       document.getElementById('infacgubun').value = arg9;
-       document.getElementById('infacamt').value = arg10;
-       document.getElementById('infacjunwon').value = arg11;
-       document.getElementById('infacdivnm').value = arg12; 
-       document.getElementById('infacgita').value = arg13;
-
-       document.getElementById('inmachgrade').value = arg14;
-       document.getElementById('inmachgram').value = arg15;
-       document.getElementById('inmachncha').value = arg16; 
-       document.getElementById('inmachjaejak').value = arg17; 
+       document.getElementById('infacbypernm').value = arg11;
+       document.getElementById('infactelno').value = arg12;
+       document.getElementById('infacgubun').value = arg13;
+       document.getElementById('infacamt').value = arg14;
+       document.getElementById('infacjunwon').value = arg15;
+       document.getElementById('infacdivnm').value = arg16; 
+       document.getElementById('infacgita').value = arg17;
+ 
 
 
-        switch(arg0){
+        switch(arg1){
             case '01': 
                 document.getElementById('infacsize').value = arg18;          //SIZE
                 document.getElementById('infacweight').value = arg19;      //중량
                 document.getElementById('infachyung').value = arg20;          //형체결력
-                document.getElementById('infacscrew').value = arg21;         //스크류
+                document.getElementById('infacscrew').value = arg25;         //스크류
                 break;        
             case '02': 
-                document.getElementById('infactype').value = arg22;         //TYPE
+                document.getElementById('infactype').value = arg21;         //TYPE
                 break;        
             case '03': 
                 document.getElementById('infacsize').value = arg18;         //SIZE
-                document.getElementById('infacvolumn').value = arg23;     //용량
-                document.getElementById('infacgunondo').value = arg24;          //건조온도
-                document.getElementById('infacgunpung').value = arg25;         //건조풍량
+                document.getElementById('infacvolumn').value = arg22;     //용량
+                document.getElementById('infacgunondo').value = arg23;          //건조온도
+                document.getElementById('infacgunpung').value = arg24;         //건조풍량
                 break;           
             default:    
                 break;                
@@ -2087,7 +2115,7 @@ function changeFilename(file) {
 }
 
 function listUp01(){
-    window.location.href = '/app01/index08';
+    window.location.href = '/app01/index22';
 }; 
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
