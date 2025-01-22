@@ -1288,7 +1288,7 @@ public class App01CrudController {
                     _index08Dto.setFacjaejo(values.toString());
                     break;
                 case "infacjaejono":
-                    _index08Dto.setFacjaejo(values.toString());
+                    _index08Dto.setFacjaejono(values.toString());
                     break;
                 case "infacbycltnm":
                     _index08Dto.setFacbycltnm(values.toString());
@@ -1640,7 +1640,7 @@ public class App01CrudController {
 
     //거래처등록
     @GetMapping(value="/index22/printview")
-    public Object AppPrintView22_index(@RequestParam("infaccd") String infaccd,
+    public Object AppPrintView22_index(@RequestParam("infacname") String infacname,
                                      Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("설비이력카드");
         CommDto.setMenuUrl("기준정보>설비이력카드");
@@ -1652,10 +1652,10 @@ public class App01CrudController {
         Pc120Dto _index08Dto = new Pc120Dto();
         List<Pc120Dto> _Pc120DtoListDto = new ArrayList<>();
         try {
-            if(infaccd == null || infaccd.equals("")){
-                infaccd = "%";
+            if(infacname == null || infacname.equals("")){
+                infacname = "%";
             }
-            _index08Dto.setFaccd(infaccd);
+            _index08Dto.setFacname(infacname);
             _Pc120DtoListDto = service08.getFacList(_index08Dto);
             model.addAttribute("index08List",_Pc120DtoListDto);
 

@@ -388,6 +388,7 @@
     let wmacheddate;
     let wreqdate;
     let wrespdate;
+    var gs_today;
    var wseries_data = [0];
    
     let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
@@ -1139,13 +1140,13 @@
 
         switch(ls_tab){
             case 'A': 
-                    var ls_infaccd = document.getElementById('infaccd').value;  
+                    var ls_infacname = document.getElementById('infacname').value;  
                     //선택된 매출그룹조회     
                     $.ajax({
                         url: '/app01m/index22/printview',  
                         type:"POST",
                         data: { 
-                            "infaccd"  : ls_infaccd  
+                            "infacname"  : ls_infacname 
                         }, 
                         async:false,
                         success:function(data){  
@@ -1171,6 +1172,7 @@
         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      function print_rtn(getData){ 
             var ls_infaccd = document.getElementById('infaccd').value; 
+            var ls_infacmodel = document.getElementById('infacmodel').value; 
             
             var doc = new wijmo.pdf.PdfDocument({   
                 compress: true,
@@ -1191,7 +1193,7 @@
                         brush: '#bfc1c2'
                     }
                 },
-                ended: (sender, args) => wijmo.pdf.saveBlob(args.blob, ls_infaccd + '_설비카드.pdf')
+                ended: (sender, args) => wijmo.pdf.saveBlob(args.blob, ls_infacmodel + '_설비카드.pdf')
             }) 
             
             doc.registerFont({
@@ -1204,6 +1206,10 @@
 
             var ls_image01 = ""
             var ls_image02 = ""
+            var ls_image03 = ""
+            var ls_image04 = ""
+            var ls_image05 = ""
+            var ls_image06 = ""
             //이력조회     
             $.ajax({
                 url: '/app01m/index08/printimg',  
@@ -1213,8 +1219,14 @@
                 }, 
                 async:false,
                 success:function(data){  
-                    ls_image01 = data[0].save_name;
-                    ls_image02 = data[1].save_name;
+                    if(data.length > 0){
+                        ls_image01 = data[0].save_name;
+                        ls_image02 = data[1].save_name;
+                        ls_image03 = data[2].save_name;
+                        ls_image04 = data[3].save_name;
+                        ls_image05 = data[4].save_name;
+                        ls_image06 = data[5].save_name; 
+                    }
                 },error:function(e){
                     console.log("error");                            
                 }
@@ -1223,8 +1235,12 @@
             })  
 
             const addImageToPDF = async () => {
+                
+                if(ls_image01 == null || ls_image01.length == 0 || ls_image01 == ""){  
+                    return ;               
+                }    
                 const ls_imgstr =
-                    'assets/upload/' + ls_inmachcd + '/' + ls_image01;
+                    'assets/upload/' + ls_infaccd + '/' + ls_image01;
                  
                 const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
  
@@ -1255,8 +1271,11 @@
             };
 
             const addImageToPDF02 = async () => {
+                if(ls_image02 == null || ls_image02.length == 0 || ls_image02 == ""){  
+                    return ;               
+                }   
                 const ls_imgstr =
-                    'assets/upload/' + ls_inmachcd + '/' + ls_image02;
+                    'assets/upload/' + ls_infaccd + '/' + ls_image02;
                  
                 const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
 
@@ -1285,6 +1304,153 @@
                     console.error('이미지 로드 중 오류 발생:', error);
                 }
             };
+            
+            
+            const addImageToPDF03 = async () => {
+                if(ls_image03 == null || ls_image03.length == 0 || ls_image03 == ""){  
+                    return ;               
+                }   
+                const ls_imgstr =
+                    'assets/upload/' + ls_infaccd + '/' + ls_image03;
+                 
+                const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
+
+                console.log(imageUrl)
+                try {
+                    const response = await fetch(imageUrl);
+                    if (!response.ok) {
+                        throw new Error('이미지 로드 실패');
+                    }
+                    const blob = await response.blob();
+                    const reader = new FileReader();
+
+                    return new Promise((resolve) => {
+                        reader.onloadend = function () {
+                            const base64EncodedImage = reader.result; // Base64 데이터
+                             
+                            doc.drawImage(base64EncodedImage, 36, 380, {
+                                width: 250,
+                                height: 150,
+                            });
+                            resolve();
+                        };
+                        reader.readAsDataURL(blob); // Blob을 Base64로 변환
+                    });
+                } catch (error) {
+                    console.error('이미지 로드 중 오류 발생:', error);
+                }
+            };
+            
+            
+            const addImageToPDF04 = async () => {
+                if(ls_image04 == null || ls_image04.length == 0 || ls_image04 == ""){  
+                    return ;               
+                }   
+                const ls_imgstr =
+                    'assets/upload/' + ls_infaccd + '/' + ls_image04;
+                 
+                const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
+
+                console.log(imageUrl)
+                try {
+                    const response = await fetch(imageUrl);
+                    if (!response.ok) {
+                        throw new Error('이미지 로드 실패');
+                    }
+                    const blob = await response.blob();
+                    const reader = new FileReader();
+
+                    return new Promise((resolve) => {
+                        reader.onloadend = function () {
+                            const base64EncodedImage = reader.result; // Base64 데이터
+                             
+                            doc.drawImage(base64EncodedImage, 300, 380, {
+                                width: 250,
+                                height: 150,
+                            });
+                            resolve();
+                        };
+                        reader.readAsDataURL(blob); // Blob을 Base64로 변환
+                    });
+                } catch (error) {
+                    console.error('이미지 로드 중 오류 발생:', error);
+                }
+            };
+            
+            
+            const addImageToPDF05 = async () => {
+                if(ls_image05 == null || ls_image05.length == 0 || ls_image05 == ""){  
+                    return ;               
+                }   
+                const ls_imgstr =
+                    'assets/upload/' + ls_infaccd + '/' + ls_image05;
+                 
+                const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
+
+                console.log(imageUrl)
+                try {
+                    const response = await fetch(imageUrl);
+                    if (!response.ok) {
+                        throw new Error('이미지 로드 실패');
+                    }
+                    const blob = await response.blob();
+                    const reader = new FileReader();
+
+                    return new Promise((resolve) => {
+                        reader.onloadend = function () {
+                            const base64EncodedImage = reader.result; // Base64 데이터
+                             
+                            doc.drawImage(base64EncodedImage, 36, 500, {
+                                width: 250,
+                                height: 150,
+                            });
+                            resolve();
+                        };
+                        reader.readAsDataURL(blob); // Blob을 Base64로 변환
+                    });
+                } catch (error) {
+                    console.error('이미지 로드 중 오류 발생:', error);
+                }
+            };
+            
+            
+            const addImageToPDF06 = async () => {
+                if(ls_image06 == null || ls_image06.length == 0 || ls_image06 == ""){  
+                    return ;               
+                }   
+                const ls_imgstr =
+                    'assets/upload/' + ls_infaccd + '/' + ls_image06;
+                 
+                const imageUrl = `http://mes.c-kd.com:8500/${ls_imgstr}`;
+
+                console.log(imageUrl)
+                try {
+                    const response = await fetch(imageUrl);
+                    if (!response.ok) {
+                        throw new Error('이미지 로드 실패');
+                    }
+                    const blob = await response.blob();
+                    const reader = new FileReader();
+
+                    return new Promise((resolve) => {
+                        reader.onloadend = function () {
+                            const base64EncodedImage = reader.result; // Base64 데이터
+                             
+                            doc.drawImage(base64EncodedImage, 300, 500, {
+                                width: 250,
+                                height: 150,
+                            });
+                            resolve();
+                        };
+                        reader.readAsDataURL(blob); // Blob을 Base64로 변환
+                    });
+                } catch (error) {
+                    console.error('이미지 로드 중 오류 발생:', error);
+                }
+            };
+            
+            
+            
             const processPDF = async () => {
 
                 //getData.forEach((saledata, i, arr) => {
@@ -1292,8 +1458,12 @@
                     
                     await addImageToPDF();
                     await addImageToPDF02();
+                    await addImageToPDF03();
+                    await addImageToPDF04();
+                    await addImageToPDF05();
+                    await addImageToPDF06();
 
-                    drawSales(doc, getData);
+                    //drawSales(doc, getData);
                      
                // });
 
@@ -1304,84 +1474,135 @@
       }
 
         function drawHeader(doc, salesdata) {
-            var ls_inmachcd = document.getElementById('inmachcd').value;
-            var ls_inmachno = document.getElementById('inmachno').value;  
+            var ls_faccd = document.getElementById('infaccd').value;
+            var ls_facname = document.getElementById('infacname').value;  
             let tot = 0; //salesdata.expenses.totals;  
 
             try {  
                 
-            var ls_machncha = salesdata[0].machncha    
-            var ls_machstdate = salesdata[0].machstdate   
-            var ls_macheddate = salesdata[0].macheddate 
-            var ls_gram = String(salesdata[0].machgram)
+            var ls_facno = salesdata[0].facno    
+            var ls_facflag = salesdata[0].facflag   
+            var ls_facname = salesdata[0].facname  
+            var ls_facdate = salesdata[0].facdate  
+            var ls_facstdate = salesdata[0].facstdate  
+            var ls_faceddate = salesdata[0].faceddate  
+            var ls_facmodel = salesdata[0].facmodel  
+            var ls_facjaejo = salesdata[0].facjaejo  
+            var ls_facjaejono = salesdata[0].facjaejono  
+            var ls_facbycltnm = salesdata[0].facbycltnm  
+            var ls_facbypernm = salesdata[0].facbypernm  
+            var ls_factelno = salesdata[0].factelno  
+            var ls_facgubun = salesdata[0].facgubun 
+            var ls_facjunwon = salesdata[0].facjunwon 
+            var ls_facdivnm = salesdata[0].facdivnm 
+            var ls_facsize = salesdata[0].facsize 
+            var ls_fachyung = salesdata[0].fachyung 
+            var ls_facweight = salesdata[0].facweight 
+            var ls_facscrew = salesdata[0].facscrew 
+            var ls_factype = salesdata[0].factype 
+            var ls_facgunondo = salesdata[0].facgunondo 
+            var ls_facvolumn = salesdata[0].facvolumn 
+            var ls_facgunpung = salesdata[0].facgunpung 
+            var ls_facgita = salesdata[0].facgita   
+            var ls_facamt = String(salesdata[0].facamt)
                 let y = doc.y;
-                doc.header.drawText("금형 이력 CARD", null, null, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 25), align: 1, baseline: 5, underline: false});   //align 1 center baseline 5 bottom
+                doc.header.drawText("설 비 카 드", null, null, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 25), align: 1, baseline: 5, underline: false});   //align 1 center baseline 5 bottom
                     
                 // doc.moveDown(1);
                 // * draw captions *
                 //doc.drawText('작  성   일  자 : ' + ls_misdatetxt + ' [' + ls_misnum + ']', 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), align: 0, underline:false});
                  
                 y = doc.y; 
-                doc.drawText(ls_machncha  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), align: 0, underline:true}); 
-                doc.drawText('제작 : ' + ls_machstdate + ' - '  + ls_macheddate  , 380, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:true});  
+                doc.drawText('관리번호 ' + ls_facno  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:true}); 
+                doc.drawText(gs_today  , 420, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), align: 0, underline:true}); 
+                y = doc.y; 
+                doc.drawText(ls_facname  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 30),  align: 1, underline:true});  
                 //
                 //doc.drawText('등록번호 : ' + ls_eeasano, 320, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),  underline:false});                     
                 //
                 doc.moveDown(1);
                 //  
                 y = doc.y; 
-                doc.drawText('[품       명] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false});
-                doc.drawText(  salesdata[0].machname   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});  
-                doc.drawText('[금형제작업체] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
-                doc.drawText(  salesdata[0].machjaejak   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});     
+                doc.drawText('[모   델   명] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false});
+                doc.drawText(  ls_facmodel   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});  
+                doc.drawText('[제   조   사] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText(  ls_facjaejo   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});     
                 //
                 //doc.moveDown(1);
                 //
                 y = doc.y;
-                doc.drawText('[품       번] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
-                doc.drawText(  salesdata[0].machcd   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[금형보관위치] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
-                doc.drawText(  salesdata[0].machplace   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
+                doc.drawText('[제 조 번 호] '  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText(  ls_facjaejono   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                doc.drawText('[제   조   일] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText(  ls_facstdate   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
                 //
                 //doc.moveDown(1); 
                 //
                 y = doc.y;
-                doc.drawText('[거   래  선]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
-                doc.drawText(  salesdata[0].machcltnm   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[차            종]'  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
-                doc.drawText(  salesdata[0].machcha   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
+                doc.drawText('[구  매  회  사]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText(  ls_facbycltnm   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                doc.drawText('[구   매   일]'  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText(  ls_faceddate   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
                 //
                 //doc.moveDown(1);
                 // 
                 y = doc.y;
-                doc.drawText('[금 형  번 호]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
-                doc.drawText(  salesdata[0].machno   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[사  용    기  계] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
-                doc.drawText(  salesdata[0].machuse   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
+                doc.drawText('[구 매 담 당 자]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText(  ls_facbypernm   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                doc.drawText('[연   락   처] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText(  ls_factelno   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
                 //
                 //doc.moveDown(1);
                 // 
                 y = doc.y;
-                doc.drawText('[CAVITY  수]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
-                doc.drawText(  salesdata[0].machcavity   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[원  재  료  명] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
-                doc.drawText(  salesdata[0].machwon   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
+                doc.drawText('[구         분]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText(  ls_facgubun   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                doc.drawText('[구    매   가] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText(  ls_facamt  , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
 
                 y = doc.y;
-                doc.drawText('[GRADE    NO]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
-                doc.drawText(  salesdata[0].machgrade   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[제품 중량 (g)] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
-                doc.drawText(  ls_gram   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
-                 
-                y = doc.y;
-                doc.drawText('[금  형  규  격]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
-                doc.drawText(  salesdata[0].machgugek   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
-                doc.drawText('[수명예상 SHOT] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
-                doc.drawText(  String(salesdata[0].machshot)   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
+                doc.drawText('[전         원]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText(  ls_facjunwon   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                doc.drawText('[사  용  부  서] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText(  ls_facdivnm   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
+                console.log(ls_facflag) 
+                if (ls_facflag == "01") { 
+                    y = doc.y;
+                    doc.drawText('[S  I  Z  E]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                    doc.drawText(  ls_facsize   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                    doc.drawText('[중       량] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                    doc.drawText(  ls_facweight   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
+                    y = doc.y;
+                    doc.drawText('[형  체  결  력]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                    doc.drawText(  ls_fachyung   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                    doc.drawText('[스   크   류] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                    doc.drawText(  ls_facscrew   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
+                }else if(ls_facflag == "02"){
+                    y = doc.y;
+                    doc.drawText('[T  Y  P  E]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                    doc.drawText(  ls_factype   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                    
+                }else if(ls_facflag == "03"){
+                    y = doc.y;
+                    doc.drawText('[S  I  Z  E]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                    doc.drawText(  ls_facsize   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                    doc.drawText('[용       량] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                    doc.drawText(  ls_facvolumn   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
+                    y = doc.y;
+                    doc.drawText('[건  조  온  도]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                    doc.drawText(  ls_facgunondo   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
+                    doc.drawText('[건  조  풍  량] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                    doc.drawText(  ls_facgunpung   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
+
+                }else{
+
+                }
+
                 // 
                 y = doc.y;
-                doc.drawText('[최 초 입 고 일]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
-                doc.drawText(  salesdata[0].machdate   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
+                doc.drawText('==============================================================================='  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false});                 
+                y = doc.y;
+                doc.drawText(  ls_facgita   , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
                 doc.moveDown(3);                  
                 y = doc.y;
                 doc.drawText('사진 및 위치', 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:true}); 
@@ -1394,8 +1615,7 @@
         }
         
       function drawSales(doc, salesdata) {
-            var ls_inmachcd = document.getElementById('inmachcd').value;
-            var ls_inmachno = document.getElementById('inmachno').value;  
+        var ls_faccd = document.getElementById('infaccd').value; 
             let tot = 0; //salesdata.expenses.totals; 
             //컬럼 수정시 footer.cells 수정할것.
             let expenses = salesdata;
@@ -1415,7 +1635,7 @@
                 url: '/app01m/index08/listtotfix',  
                 type:"POST",
                 data: { 
-                    "searchtxt" : ls_inmachcd, 
+                    "searchtxt" : ls_faccd, 
                 }, 
                 async:false,
                 success:function(data){  
@@ -2181,7 +2401,8 @@ function listUp01(){
         wmachstdate.value = ls_date;  
         wmacheddate.value = ls_date;   
         wreqdate.value = ls_date;  
-        wrespdate.value = ls_date;  
+        wrespdate.value = ls_date; 
+        gs_today = ls_date;
     } 
 
 
