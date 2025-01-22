@@ -2161,16 +2161,18 @@
             url: '/app01m/index08/printimg',  
             type:"POST",
             data: { 
-                "infaccd" : arg0, 
+                "inmachcd" : arg0, 
             }, 
             async:false,
             success:function(data){  
-                ls_image01 = data[0].save_name;
-                ls_image02 = data[1].save_name;
-                ls_image03 = data[2].save_name;
-                ls_image04 = data[3].save_name;
-                ls_image05 = data[4].save_name;
-                ls_image06 = data[5].save_name;
+                for (var i = 0; i < data.length; i++) { 
+                    if (i == 0){ls_image01 = data[0].save_name;}
+                    if (i == 1){ls_image02 = data[1].save_name;}
+                    if (i == 2){ls_image03 = data[2].save_name;}
+                    if (i == 3){ls_image04 = data[3].save_name;}
+                    if (i == 4){ls_image05 = data[4].save_name;}
+                    if (i == 5){ls_image06 = data[5].save_name;}
+                }
             },error:function(e){
                 console.log("error");                            
             }
