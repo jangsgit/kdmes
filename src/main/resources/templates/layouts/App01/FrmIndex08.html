@@ -2121,10 +2121,10 @@
         const timestamp = new Date().getTime();
         var ls_src01 = "assets/upload/" + arg0 + "/" + ls_image01;
         var ls_src02 = "assets/upload/" + arg0 + "/" + ls_image02; 
-        const imageUrl01 = `http://mes.c-kd.com:8500/${ls_src01}?t=${timestamp}`;
-        const imageUrl02 = `http://mes.c-kd.com:8500/${ls_src02}?t=${timestamp}`; 
-        document.getElementById('cell1').innerHTML = '<img src="' + imageUrl01 + '" alt="Image 1" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image01 + '")">';
-        document.getElementById('cell2').innerHTML = '<img src="' + imageUrl02 + '" alt="Image 2" style="max-width:100%; max-height:100%;" onclick="confirmDeletion(this,"' + ls_image02 +'")">';
+        const imageUrl01 = `http://mes.c-kd.com:8500/${ls_src01}`;
+        const imageUrl02 = `http://mes.c-kd.com:8500/${ls_src02}`; 
+        document.getElementById('cell1').innerHTML = '<img src="' + imageUrl01 + '" alt="Image 1" style="max-width:100%; max-height:100%;"  >';
+        document.getElementById('cell2').innerHTML = '<img src="' + imageUrl02 + '" alt="Image 2" style="max-width:100%; max-height:100%;"  >';
     
 
 
