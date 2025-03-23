@@ -62,6 +62,7 @@
              ,facvolumn
              ,facgunpung
              ,facgita
+             ,facpower
         FROM TB_PC120 WITH(NOLOCK)
         WHERE ( isnull(facmodel,'') Like concat('%',#{facname},'%')
            or isnull(facname,'') Like concat('%',#{facname},'%') )
@@ -186,6 +187,7 @@
                              ,facvolumn
                              ,facgunpung
                              ,facgita
+                             ,facpower
         ) values  (
                     #{faccd}
                   ,#{facno}
@@ -213,6 +215,7 @@
                   ,#{facvolumn}
                   ,#{facgunpung}
                   ,#{facgita}
+                  ,#{facpower}
                   )
     </insert>
 
@@ -336,6 +339,8 @@
         <if test="facgunpung != null">facgunpung=#{facgunpung}</if>
         <if test="facgita != null ">,</if>
         <if test="facgita != null">facgita=#{facgita}</if>
+        <if test="facpower != null ">,</if>
+        <if test="facpower != null">facpower=#{facpower}</if>
         where faccd = #{faccd}
     </update>
 

@@ -1349,6 +1349,9 @@ public class App01CrudController {
                 case "infacgunpung":
                     _index08Dto.setFacgunpung(values.toString());
                     break;
+                case "infacpower":
+                    _index08Dto.setFacpower(values.toString());
+                    break;
                 default:
                     break;
             }

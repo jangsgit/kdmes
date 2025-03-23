@@ -32,6 +32,7 @@ public class Pc120Dto {
     private String facvolumn;
     private String facgunpung;
     private String facgita;
+    private String facpower;
     private String yymm;
     private String save_name;
 

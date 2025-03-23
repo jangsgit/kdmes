@@ -229,9 +229,15 @@
                                         </tr>   
                                         <tr> 
                                             <th>기타내용</th>
-                                            <td colspan="5">
+                                            <td colspan="2">
+                                                <div class="input_wrap">  
+                                                    <textarea class="form-control" aria-label="With textarea" name="infacgita" id="infacgita" ></textarea> 
+                                                </div>
+                                            </td>                                       
+                                            <th>소비전력</th> 
+                                            <td  colspan="2">
                                                 <div class="input_wrap">                                               
-                                                    <input type="text"  id="infacgita" autocomplete="off"  placeholder="" >  
+                                                    <input type="text"  id="infacpower" autocomplete="off"   > 
                                                 </div>
                                             </td>         
                                         </tr> 
@@ -424,7 +430,7 @@
                                     ctx.item.facjunwon,ctx.item.facdivnm, ctx.item.facgita, 
                                     ctx.item.facsize, ctx.item.facweight, ctx.item.fachyung, 
                                     ctx.item.factype, ctx.item.facvolumn, ctx.item.facgunondo, 
-                                    ctx.item.facgunpung, ctx.item.facscrew );  
+                                    ctx.item.facgunpung, ctx.item.facscrew, ctx.item.facpower );  
                         }
                     }) 
                 },      
@@ -517,8 +523,8 @@
                             factype: wtab01Dto[i]["factype"],   
                             facvolumn: wtab01Dto[i]["facvolumn"],   
                             facgunondo: wtab01Dto[i]["facgunondo"],   
-                            facgunpung: wtab01Dto[i]["facgunpung"],   
-                            
+                            facgunpung: wtab01Dto[i]["facgunpung"],  
+                            facpower: wtab01Dto[i]["facpower"],  
                         });
                         cnt++;
                     }      
@@ -659,6 +665,7 @@
                 var ls_infacjunwon = document.getElementById('infacjunwon').value;      //전원
                 var ls_infacdivnm = document.getElementById('infacdivnm').value;        //사용부서
                 var ls_infacgita  = document.getElementById('infacgita').value;         //기타내용
+                var ls_infacpower  = document.getElementById('infacpower').value;         //소비전력
  
                 var ls_infacsize = "";
                 var ls_infacweight = "";
@@ -778,6 +785,9 @@
                if(ls_infacgunpung == null || ls_infacgunpung.length == 0  ){
                     ls_infacgunpung = "";
                }   
+               if(ls_infacpower == null || ls_infacpower.length == 0  ){
+                    ls_infacpower = "";
+               }   
      
                for (h = 0; h <= fileIdx; h++ ){
                     ls_fileid = 'file_' + h;
@@ -818,7 +828,8 @@
                     "infactype"        : ls_infactype,  
                     "infacvolumn"        : ls_infacvolumn,  
                     "infacgunondo"        : ls_infacgunondo,  
-                    "infacgunpung"        : ls_infacgunpung,  
+                    "infacgunpung"        : ls_infacgunpung,   
+                    "infacpower"        : ls_infacpower, 
                     
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -1961,7 +1972,7 @@
        var wtab03Dto  = data;    
        var wtab03_data = [];
        var cnt = 1;
-       
+       console.log(data)
        for (var i = 0; i < wtab03Dto.length; i++) { 
             ls_facflag = wtab03Dto[i]["facflag"]
             switch(ls_facflag){
@@ -2012,8 +2023,8 @@
                 factype: wtab03Dto[i]["factype"],   
                 facvolumn: wtab03Dto[i]["facvolumn"],   
                 facgunondo: wtab03Dto[i]["facgunondo"],   
-                facgunpung: wtab03Dto[i]["facgunpung"],   
-                
+                facgunpung: wtab03Dto[i]["facgunpung"],  
+                facpower: wtab03Dto[i]["facpower"],  
             }); 
            cnt++;
        }   
@@ -2038,7 +2049,7 @@
        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
            text: '<b>${item.facname}</b>',
             click: (e, ctx) => {                
-                wcifChk_a(ctx.item.faccd,  ctx.item.facflag, ctx.item.facno, ctx.item.facname, ctx.item.facmodel, ctx.item.facjaejo,ctx.item.facjaejono ,ctx.item.facdate, ctx.item.facstdate, ctx.item.faceddate, ctx.item.facbycltnm, ctx.item.facbypernm, ctx.item.factelno,  ctx.item.facgubun, ctx.item.facamt, ctx.item.facjunwon,ctx.item.facdivnm, ctx.item.facgita, ctx.item.facsize, ctx.item.facweight, ctx.item.fachyung, ctx.item.factype, ctx.item.facvolumn, ctx.item.facgunondo, ctx.item.facgunpung, ctx.item.facscrew );  
+                wcifChk_a(ctx.item.faccd,  ctx.item.facflag, ctx.item.facno, ctx.item.facname, ctx.item.facmodel, ctx.item.facjaejo,ctx.item.facjaejono ,ctx.item.facdate, ctx.item.facstdate, ctx.item.faceddate, ctx.item.facbycltnm, ctx.item.facbypernm, ctx.item.factelno,  ctx.item.facgubun, ctx.item.facamt, ctx.item.facjunwon,ctx.item.facdivnm, ctx.item.facgita, ctx.item.facsize, ctx.item.facweight, ctx.item.fachyung, ctx.item.factype, ctx.item.facvolumn, ctx.item.facgunondo, ctx.item.facgunpung, ctx.item.facscrew, ctx.item.facpower  );  
             }
         }); 
        wtab04Grid.columns.push(cols);
@@ -2096,13 +2107,13 @@
 
 
    
-   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25){   
+   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22,arg23,arg24,arg25,arg26){   
         // faccd,  facflag, facno, facname, facmodel,   0-4
         //  facjaejo,facjaejono ,facdate, facstdate, faceddate, 5-9
         //  facbycltnm, facbypernm, factelno,  facgubun, facamt, 10-14
         // facjunwon,facdivnm, facgita, facsize, facweight, 15-19
         // fachyung, factype, facvolumn, facgunondo, facgunpung  20-24
-        //  facscrew ); 25
+        //  facscrew, facpower ); 25 26
        var ls_tab = document.getElementById('tabvalue').value; 
        updateTable(arg1)
        document.getElementById('infaccd').value = arg0;
@@ -2127,6 +2138,7 @@
        document.getElementById('infacjunwon').value = arg15;
        document.getElementById('infacdivnm').value = arg16; 
        document.getElementById('infacgita').value = arg17;
+       document.getElementById('infacpower').value = arg26;
  
 
 
