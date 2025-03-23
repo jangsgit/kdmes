@@ -1,6 +1,7 @@
 package com.dae.kdmes.Service.App01;
 
 import com.dae.kdmes.DTO.App01.Index03Dto;
+import com.dae.kdmes.DTO.Appm.TBPopupVO;
 import com.dae.kdmes.Mapper.App01.Index03Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,4 +79,19 @@ public class Index03Service {
     }
 
 
+    public List<TBPopupVO> GetJpumComboList(TBPopupVO parm) {
+        return  appMapper.GetJpumComboList(parm);
+    }             //작업설비
+    public List<TBPopupVO> GetDoor1ComboList(TBPopupVO parm){
+        return  appMapper.GetDoor1ComboList(parm);
+    }             //작업설비
+    public List<TBPopupVO> GetDoor2ComboList(TBPopupVO parm){
+        return  appMapper.GetDoor2ComboList(parm);
+    }            //작업설비
+    public List<TBPopupVO> GetFormComboList(TBPopupVO parm){
+        return  appMapper.GetFormComboList(parm);
+    }
+    public List<TBPopupVO> GetColorComboList(TBPopupVO parm){
+        return  appMapper.GetColorComboList(parm);
+    }
 }

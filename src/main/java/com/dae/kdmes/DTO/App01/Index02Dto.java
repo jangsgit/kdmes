@@ -59,5 +59,7 @@ public class Index02Dto {
     private String afax;
     private String acode;
     private String ajusotxt;
+    private String abuse1;
+    private String adam1;
 
 }

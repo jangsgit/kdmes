@@ -67,12 +67,12 @@
             <div class="tab-content">
             <div class="tab-pane fade show active" id="step01">   
                 <div class="row gx-3" style="  margin: 10px 10px 10px;">
-                    <div class="col-2 col-sm-2">
+                    <div class="col-auto">
                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류코드</span> 
                             <input class="form-control form-control-sm" id="com_cls" type="text"    autocomplete="off"  placeholder="3자리"     > 
                         </div>
                     </div>
-                    <div class="col-2 col-sm-2">
+                    <div class="col-auto">
                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">대분류명칭</span> 
                             <input class="form-control form-control-sm" id="com_cnam" type="text"    autocomplete="off"> 
                         </div>
@@ -433,7 +433,27 @@
                 //금형코드                
                 document.getElementById('com_code_txt').innerHTML = "금형코드"               
                 document.getElementById('com_rem1_txt').innerHTML = "금형명"               
+               break;                 
+            case "101":
+                //품명코드                
+                document.getElementById('com_code_txt').innerHTML = "품명코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "품명명"               
                break;                                            
+            case "102":
+                //door1코드                
+                document.getElementById('com_code_txt').innerHTML = "door1코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "door1명"               
+               break;                                            
+            case "103":
+                //door2코드                
+                document.getElementById('com_code_txt').innerHTML = "door2코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "door2명"               
+               break;                                            
+            case "104":
+                //유형                
+                document.getElementById('com_code_txt').innerHTML = "유형코드"               
+                document.getElementById('com_rem1_txt').innerHTML = "유형명"               
+               break;                                                                       
             default:
                 break;
            }
@@ -491,12 +511,18 @@
                    document.getElementById("com_cnam").focus(); 
                    return ;               
                }   
+               
+               var ls_com_rem2 = ""
+               var ls_com_work = ""
+
                    $.ajax({
                        url: '/app01m/comcodesave',  
                        type:"POST",
                        data: { 
                            "com_cls"      : ls_code,  
-                           "com_cnam"      : ls_codenm ,  
+                           "com_cnam"      : ls_codenm ,   
+                            "com_rem2"      : ls_com_rem2 ,  
+                            "com_work"      : ls_com_work , 
                        }, 
                        async:false,
                        success:function(data){   

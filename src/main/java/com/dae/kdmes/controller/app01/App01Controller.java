@@ -89,6 +89,7 @@ public class App01Controller {
         model.addAttribute("userformDto",userformDto);
 
         try {
+            index01Dto.setCom_cls("%");
             index01ListDto = service01.getComCodeList(index01Dto);
             index01ListDto1 = service01.getCom_rem2_keyList(index01Dto);
 
@@ -104,6 +105,33 @@ public class App01Controller {
 
         return "App01/index01";
     }
+    @GetMapping(value="/index18")
+    public String App18_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("사원코드등록");
+        CommDto.setMenuUrl("기준정보>사원코드등록");
+        CommDto.setMenuCode("index18");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            index01Dto.setCom_cls("002");
+            index01ListDto = service01.getComCodeList(index01Dto);
+            index01ListDto1 = service01.getCom_rem2_keyList(index01Dto);
+
+            model.addAttribute("com_rem2_keyList",index01ListDto1);
+            model.addAttribute("comcodeList",index01ListDto);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App18_index Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index18";
+    }
+
 
     @GetMapping(value="/index02")
     public String App01_index02(Model model, HttpServletRequest request) throws Exception{
@@ -159,6 +187,13 @@ public class App01Controller {
         CommDto.setMenuTitle("제품등록");
         CommDto.setMenuUrl("기준정보>제품정보");
         CommDto.setMenuCode("index05");
+        TBPopupVO _indexpopDto = new TBPopupVO();
+        List<TBPopupVO> _indexJpumList = new ArrayList<>();
+        List<TBPopupVO> _indexDoor1List = new ArrayList<>();
+        List<TBPopupVO> _indexDoor2List = new ArrayList<>();
+        List<TBPopupVO> _indexFormList = new ArrayList<>();
+        List<TBPopupVO> _indexColorList = new ArrayList<>();
+
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
@@ -172,10 +207,23 @@ public class App01Controller {
             popupListDto2 = service03.getGumtype_keyList(popupDto);
 
 
+            _indexJpumList = service03.GetJpumComboList(_indexpopDto);
+            _indexDoor1List = service03.GetDoor1ComboList(_indexpopDto);
+            _indexDoor2List = service03.GetDoor2ComboList(_indexpopDto);
+            _indexFormList = service03.GetFormComboList(_indexpopDto);
+            _indexColorList = service03.GetColorComboList(_indexpopDto);
+
+
             model.addAttribute("j1_keyList",popupListDto);
             model.addAttribute("j2_keyList",popupListDto1);
             model.addAttribute("j3_keyList",popupListDto2);
             model.addAttribute("index03List",index03List);
+            model.addAttribute("jpumList",_indexJpumList);
+            model.addAttribute("door1List",_indexDoor1List);
+            model.addAttribute("door2List",_indexDoor2List);
+            model.addAttribute("formList",_indexFormList);
+            model.addAttribute("colorList",_indexColorList);
+
         } catch (Exception ex) {
 //                dispatchException = ex;
             log.info("App03001Tab01Form Exception ===== ======");

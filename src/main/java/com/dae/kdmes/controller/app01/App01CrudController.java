@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -555,6 +556,10 @@ public class App01CrudController {
                         break;
                     case "jgumtype":
                         index03Dto.setJgumtype(values.toString());
+                    case "jdoor1":
+                        index03Dto.setJdoor1(values.toString());
+                    case "jdoor2":
+                        index03Dto.setJdoor2(values.toString());
                         break;
                     default:
                         break;
@@ -980,6 +985,12 @@ public class App01CrudController {
                         break;
                     case "afax":
                         index07Dto.setAfax(values.toString());
+                        break;
+                    case "abuse1":
+                        index07Dto.setAbuse1(values.toString());
+                        break;
+                    case "adam1":
+                        index07Dto.setAdam1(values.toString());
                         break;
                     default:
                         break;
@@ -1667,6 +1678,7 @@ public class App01CrudController {
     }
 
 
+
     //이미지불러오기
     @GetMapping(value="/index08/printimg")
     public Object AppPrintJPG_index(@RequestParam("inmachcd") String inmachcd,
@@ -1677,14 +1689,25 @@ public class App01CrudController {
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
-
+        String uploadPath = "D:/workspace/KDMES/src/main/resources/static/assets/upload/";
         Pc110Dto _index08Dto = new Pc110Dto();
         List<Pc110Dto> _Pc110DtoListDto = new ArrayList<>();
         try {
             _index08Dto.setMachcd(inmachcd);
             _Pc110DtoListDto = service08.getPringImg(_index08Dto);
+            int i = 0;
+            String ls_filename = "";
+            if(_Pc110DtoListDto.size() > 0){
+                for(int h =0; h <= _Pc110DtoListDto.size(); h++){
+                    // 첫 번째 객체의 file_url 설정
+                    Pc110Dto dto1 = _Pc110DtoListDto.get(h);
+                    ls_filename = dto1.getSave_name();
+                    dto1.setFile_url(uploadPath + inmachcd + "/" + ls_filename); // 첫 번째 file_url 값 설정
+                    _Pc110DtoListDto.set(h, dto1);
+ ;
+                }
+            }
             model.addAttribute("index08List",_Pc110DtoListDto);
-
         } catch (Exception ex) {
             log.info("AppPrintView_index Exception =====>" + ex.toString());
         }

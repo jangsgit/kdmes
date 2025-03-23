@@ -61,35 +61,56 @@
                 <button type="button" class="color4" id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal">
                     거래처현황
                 </button>
-            </li>
+            </li> 
         </ul>  
     </div>   -->
 
     <!-- contents body 시작--> 
+    <div class="dashboard">
+        <div class="card" > 
+            <div class="info" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"> 
+                <div class="input_wrap" style="flex-shrink: 0;">                                     
+                    <input type="text" id="searchtxt" placeholder="거래처명"
+                           style="height: 38px; padding: 0 10px; font-size: 14px;">
+                </div>                            
+                <button class="btn btn-primary me-1 mb-1" type="button" id="retrieveBtn"
+                        style="height: 38px;">
+                    <span style="color: #f6f9fa;">검색</span>
+                </button>        
+                <button class="btn btn-primary me-1 mb-1"   type="button" id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal"> <span style="color: #f6f9fa;">거래처현황</span></button>                                                      
+            </div>                       
+            <!-- //여기서부터 그래프 --> 
+            <div class="info">
+                <div class="container-fluid" id="op1" >
+                    <div id="wtab01Grid_div"  style="overflow:scroll;   height:200px;  width:900px;   margin:0 auto; "></div>                                    
+                </div> 
+            </div>
+ 
+        </div> 
+    </div>
     <!-- form 또는 action 으로 받아오기  -->
     <div class="section regist"> 
-        <div class="sec_con" style="width: 30%;  ">
+        <!-- <div class="sec_con" style="width: 30%;  ">
             <div class="box_wrap">
                 <div class="box_input" >
                     <div class="date_wrap">
                         <input type="text"  id="searchtxt" placeholder="거래처명"> 
                         <button type="button" id="retrieveBtn" >검색</button>      
-                    </div>                              
-                    <!-- //여기서부터 그래프 -->
+                    </div>                         
                     <div class="table table_style2">
                         <div class="container-fluid" id="op1" >
                             <div id="wtab01Grid_div"  style="overflow:scroll;   height:650px;    margin:0 auto; "></div>                                    
                         </div> 
                     </div>                       
-                </div>  <!---  <div class="box_input" >  -->
-            </div>    <!--  <div class="box_wrap"> -->
-        </div>
+                </div>   
+            </div>    
+        </div> -->
         <!-- 우측 전체 테이블 -->
-        <div class="sec_con"  style="width: 50%;">
-            <div class="box_wrap" style="padding-bottom: 100px;">
+        <div class="sec_con"  style="width:900px; " >
+            <div class="box_wrap"  >
                 <form action="">
                     <div class="table table_style1" >
-                        <table>
+                        <table >
                             <tbody>   
                                 <tr> 
                                     <th>업체구분</th>
@@ -101,13 +122,22 @@
                                             </select>
                                         </div>
                                     </td>            
-                                    <td colspan="2">
+                                    <td >
                                         <div class="input_wrap">                                    
                                             <input type="text"   name="acorp2" id="acorp2" autocomplete="off"  disabled >  
                                         </div>
                                     </td>                 
-                                    <td colspan="2">
-                                        <button class="btn btn-primary me-1 mb-1"   type="button" id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal"> <span style="color: #f6f9fa;">거래처현황</span></button>            
+                                    <td colspan="3"> 
+                                        <div   style="float: right; margin-bottom: 10px;">
+                                            <div class="btns" >                                                        
+                                                <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
+                                                <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
+                                                <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
+
+                                            </div>
+                                            
+                                            <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
+                                        </div>   
                                     </td>                                    
                                 </tr>    
                                 <tr>
@@ -214,7 +244,21 @@
                                             <input type="text" name="atelno2" id="atelno2" placeholder=""  >                             
                                         </div>
                                     </td>                                                                                    
-                                </tr>                                                                                                                                                                                         
+                                </tr>                                                                                                                                                                                           
+                                <tr>                                     
+                                    <th>담당자</th>
+                                    <td  colspan="2"> 
+                                        <div class="input_wrap">
+                                            <input type="text" name="adam1" id="adam1" placeholder=""  >                             
+                                        </div>
+                                    </td>                                   
+                                    <th>담당자연락처</th>
+                                    <td colspan="3"> 
+                                        <div class="input_wrap">
+                                            <input type="text" name="abuse1" id="abuse1" placeholder=""  >                             
+                                        </div>
+                                    </td>                                                                                   
+                                </tr>                                                                                                                                                                                        
                                 <tr>                                     
                                     <th>핸드폰</th>
                                     <td  colspan="2"> 
@@ -253,17 +297,7 @@
                                     </td>                                       
                                 </tr>   
                             </tbody>
-                        </table>
-                            <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
-                                <div class="btns" >                                                        
-                                    <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
-                                    <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
-                                    <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
-
-                                </div>
-                                
-                                <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
-                            </div>                              
+                        </table>                           
                     </div>                           
                 </form>
 
@@ -310,7 +344,9 @@
             </div>
         </div> 
     </div>  
- 
+  
+
+
     <!--------------------------------------------------------------------------------------->   
     <!-- 거래처현황 MODAL ForM  -->  
     <div class="modal fade" id="gomodal" data-bs-keyboard="false"
@@ -330,41 +366,41 @@
                                 <img th:src="@{/assets/images/i_search.png}" alt=""> 
                             </button>                            
                         </div>   -->
-                        <div class="infor_bar type2">
-                            <div class="left">
-                                거래처현황
+                        <div class="infor_bar type2" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; padding: 10px 15px;">
+                            <!-- 좌측 검색영역 -->
+                            <div class="left" style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                <!-- 업체구분 -->
+                                <div style="display: flex; align-items: center;">
+                                    <span class="input-group-text" style="height: 28px; font-size: 13px; background: #e9eff2; border: 1px solid #ccc;">업체구분</span>
+                                    <select class="form-select" name="conacorp1" id="conacorp1" style="height: 28px; font-size: 13px; border: 1px solid #ccc;">
+                                        <option value="">선택</option>
+                                        <option th:each="val : ${cifcodeList}" th:value="${val.cifcode}" th:text="${val.cifcodename}"></option>
+                                    </select>
                                 </div>
-                                <ul class="right">
-                                    <li>
-                                    <button type="button" class="color2" id="wciflistBtn">
-                                        <i><img th:src="@{/assets/images/i_search.png}" alt=""></i>조회
-                                    </button>
-                                    </li>                                   
-                                </ul>
+                        
+                                <!-- 검색어 -->
+                                <div style="display: flex; align-items: center;">
+                                    <span class="input-group-text" style="height: 28px; font-size: 13px; background: #e9eff2; border: 1px solid #ccc;">검색어</span>
+                                    <input class="form-control" type="text" id="conacorp" placeholder="거래처명 / 거래처코드"
+                                           style="height: 28px; font-size: 13px; border: 1px solid #ccc; width: 200px;">
+                                </div>
+                            </div>
+                        
+                            <!-- 조회 버튼 -->
+                            <div class="right" style="margin-top: 10px;">
+                                <button type="button" class="color2" id="wciflistBtn"
+                                        style="height: 30px; padding: 0 15px; background: #1c6b92; color: white; border: none; font-size: 13px; border-radius: 3px;">
+                                    <i style="margin-right: 4px;"><img th:src="@{/assets/images/i_search.png}" alt="" style="vertical-align: middle; width: 14px;"></i>
+                                    조회
+                                </button>
+                            </div>
                         </div>
-                        <div class="box_wrap">
-                            <ul class="search_box" style="width: 100%; margin: 17px 15px 55px;"  >                                   
-                                <li style ="float:left; list-style-type:none; margin-left:300px;">
-                                    <div class="input-group mb-3">  
-                                        <span class="input-group-text" style="max-height:30px;">업체구분</span>                                            
-                                        <select class="form-select" th:field="*{cifcodeList}" name="conacorp1" id="conacorp1">
-                                            <option value="">선택</option>
-                                            <option th:each="val : ${cifcodeList}" th:value="${val.cifcode}" th:text="${val.cifcodename}">
-                                        </select>
-                                    </div>
-                                </li>   
-                                <li style ="float:left; list-style-type:none; margin-left:40px;">
-                                    <div class="input-group mb-3"><span class="input-group-text" id="inputGroup-sizing-default">검색어</span>
-                                        <input class="form-control" type="text"   aria-describedby="inputGroup-sizing-default"  id="conacorp" placeholder="거래처명/ 거래처코드"/>
-                                    </div>
-                                </li>                                   
-                            </ul>
-                        </div>                            
+                                             
                     </div>   
                     <div class="box_wrap with_tit" style="padding: 10px;">
                         <div class="container-fluid" style="padding: 10px;">
                             <div id="wtab02Grid_div" ></div>
-                            <div  id="tab02Pager"></div>
+                            <!-- <div  id="tab02Pager"></div> -->
                         </div>   
                     </div>
                 </div>  
@@ -437,14 +473,33 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.acorp}</b>',
                             click: (e, ctx) => {
-                                wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03 );                    
+                                wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03, ctx.item.abuse1, ctx.item.adam1 );                    
                             }
                         }),
-                      width: '*' 
+                      width: 150
                     },  
-                    { binding: 'atelno', header: '전화번호', align: "left", width: '*' },                      
-                    // { binding: 'aemail', header: '메일', align: "left", width: '*' },  
-                    // { binding: 'ajusotxt', header: '주소', align: "left", width: '*' },                     
+                    { binding: 'atelno', header: '전화번호', align: "left", width: 130 }, 
+                    { binding: 'asanotxt', 
+                      header: '사업자번호', 
+                      align: "center", 
+                        cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                            text: '<b>${item.asanotxt}</b>',
+                            click: (e, ctx) => {
+                                wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03, ctx.item.abuse1, ctx.item.adam1 );                    
+                            }
+                        }),
+                      width: 150
+                    },              
+                    { binding: 'aname', header: '대표자', align: "center", width: 100 },  
+                    { binding: 'aupte', header: '업태', align: "center", width: 80 },  
+                    { binding: 'ajong', header: '업종', align: "center", width: 80 },          
+                    { binding: 'atelno2', header: '전화번호2', align: "left", width: 130 },        
+                    { binding: 'ahand', header: '핸드폰', align: "left", width: 130 },                     
+                    { binding: 'aemail', header: '메일', align: "left", width: 200 },     
+                    { binding: 'ajusotxt', header: '주소', align: "center", width: 200 },    
+                    { binding: 'inname01', header: '담당(현)', align: "left", width: 100 },        
+                    { binding: 'inname02', header: '담당', align: "left", width: 100 },        
+                    { binding: 'inname03', header: '담당', align: "center", width: 100 },                         
                     
                 ], 
                 itemsSource: view_p01tab01page,  
@@ -523,7 +578,9 @@
                         abonsadam2: wtab01Dto[i]["abonsadam2"],   
                         abonsadam3: wtab01Dto[i]["abonsadam3"],   
                         adomain: wtab01Dto[i]["adomain"],   
-                        afax: wtab01Dto[i]["afax"],   
+                        afax: wtab01Dto[i]["afax"],  
+                        abuse1: wtab01Dto[i]["abuse1"],   
+                        adam1: wtab01Dto[i]["adam1"],   
                         inname01: wtab01Dto[i]["inname01"],   
                         inname02: wtab01Dto[i]["inname02"],   
                         inname03: wtab01Dto[i]["inname03"],      
@@ -540,14 +597,14 @@
 
             view_p01tab02page = new wijmo.collections.CollectionView(getData_tab02(), {
                 sortDescriptions: [new wijmo.collections.SortDescription("acode", false)],
-                pageSize: 18
+                //pageSize: 18
             });
         // tab02 grid page
-            new wijmo.input.CollectionViewNavigator('#tab02Pager', {
-                byPage: true,
-                headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
-                cv: view_p01tab02page
-            });      
+            // new wijmo.input.CollectionViewNavigator('#tab02Pager', {
+            //     byPage: true,
+            //     headerFormat: 'Page {currentPage:n0} of {pageCount:n0}',
+            //     cv: view_p01tab02page
+            // });      
             wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
                 autoGenerateColumns: false,
                 showMarquee: true,
@@ -565,7 +622,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.acode}</b>',
                             click: (e, ctx) => {
-                                wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03 );                    
+                                wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03, ctx.item.abuse1, ctx.item.adam1 );                    
                             }
                         })
                     }, 
@@ -598,13 +655,13 @@
                 //     grid: wtab02Grid
                 // }); 
                 // 선택기 생성
-                selector = new wijmo.grid.selector.Selector(wtab02Grid, {
-                    itemChecked: () => {
-                        showCheckedCount();
-                    }
-                }); 
+                // selector = new wijmo.grid.selector.Selector(wtab02Grid, {
+                //     itemChecked: () => {
+                //         showCheckedCount();
+                //     }
+                // }); 
                 // 헤더 열 전환
-                setHeaderColumn02(true);
+                setHeaderColumn02(false);
                 function setHeaderColumn02(headerOn) {
                     wtab02Grid.headersVisibility = headerOn
                     ? wijmo.grid.HeadersVisibility.All
@@ -662,6 +719,8 @@
                         abonsadam3: wtab01Dto[i]["abonsadam3"],   
                         adomain: wtab01Dto[i]["adomain"],   
                         afax: wtab01Dto[i]["afax"],   
+                        abuse1: wtab01Dto[i]["abuse1"],   
+                        adam1: wtab01Dto[i]["adam1"],  
                         inname01: wtab01Dto[i]["inname01"],   
                         inname02: wtab01Dto[i]["inname02"],   
                         inname03: wtab01Dto[i]["inname03"],      
@@ -781,6 +840,8 @@
                 // document.getElementById('abonsadam3').value = "";
                 document.getElementById('adomain').value = "";
                 document.getElementById('afax').value = "";
+                document.getElementById('abuse1').value = "";
+                document.getElementById('adam1').value = "";
                 // document.getElementById('inname01').value = "";
                 // document.getElementById('inname02').value = "";
                 // document.getElementById('inname03').value = "";  
@@ -816,7 +877,9 @@
             // var ls_abonsadam2 = document.getElementById('abonsadam2').value ; 
             // var ls_abonsadam3 = document.getElementById('abonsadam3').value; 
             var ls_adomain = document.getElementById('adomain').value; 
-            var ls_afax = document.getElementById('afax').value ; 
+            var ls_afax = document.getElementById('afax').value ;
+            var ls_adam1 = document.getElementById('adam1').value ;
+            var ls_abuse1 = document.getElementById('abuse1').value ; 
             // var ls_inname01 = document.getElementById('inname01').value ; 
             // var ls_inname02 = document.getElementById('inname02').value ; 
             // var ls_inname03 = document.getElementById('inname03').value;  
@@ -947,8 +1010,8 @@
                     "atelno2" : ls_atelno2,
                     "aemail"   : ls_aemail,
                     "ahand" : ls_ahand,
-                    // "abonsadam1" : ls_abonsadam1,
-                    // "abonsadam2" : ls_abonsadam2,
+                    "adam1" : ls_adam1,
+                    "abuse1" : ls_abuse1,
                     // "abonsadam3" : ls_abonsadam3, 
                     "adomain" : ls_adomain,                
                     "afax" : ls_afax          
@@ -1194,6 +1257,7 @@
                         asano1: wtab01Dto[i]["asano1"], 
                         asano2: wtab01Dto[i]["asano2"], 
                         asano3: wtab01Dto[i]["asano3"], 
+                        asanotxt: wtab01Dto[i]["asanotxt"],  
                         aname: wtab01Dto[i]["aname"], 
                         aupte: wtab01Dto[i]["aupte"], 
                         ajong: wtab01Dto[i]["ajong"], 
@@ -1215,7 +1279,9 @@
                         abonsadam2: wtab01Dto[i]["abonsadam2"],   
                         abonsadam3: wtab01Dto[i]["abonsadam3"],   
                         adomain: wtab01Dto[i]["adomain"],   
-                        afax: wtab01Dto[i]["afax"],  
+                        afax: wtab01Dto[i]["afax"],   
+                        abuse1: wtab01Dto[i]["abuse1"],   
+                        adam1: wtab01Dto[i]["adam1"],  
                         inname01: wtab01Dto[i]["inname01"],   
                         inname02: wtab01Dto[i]["inname02"],   
                         inname03: wtab01Dto[i]["inname03"],       
@@ -1242,32 +1308,90 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.acorp}</b>',
                     click: (e, ctx) => {
-                        wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03 );                    
+                        wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03, ctx.item.abuse1, ctx.item.adam1 );                    
                         
                     }
                 });
                 wtab01Grid.columns.push(cols); 
-
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'atelno';
                 cols.header = '전화번호';
                 cols.align = "left";
-                cols.width =  200 ;  
+                cols.width =  130 ;  
                 wtab01Grid.columns.push(cols);  
-
-                // cols = new wijmo.grid.Column(); 
-                // cols.binding = 'aemail';
-                // cols.header = '메일';
-                // cols.align = "left";
-                // cols.width = '*';                  
-                // wtab01Grid.columns.push(cols);  
-
-                // cols = new wijmo.grid.Column(); 
-                // cols.binding = 'ajusotxt';
-                // cols.header = '주소';
-                // cols.align = "left";
-                // cols.width = '*';           
-                // wtab01Grid.columns.push(cols);
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'asanotxt';
+                cols.header = '사업자번호';
+                cols.align = "center";
+                cols.width =  150 ;  
+                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                    text: '<b>${item.asanotxt}</b>',
+                    click: (e, ctx) => {
+                        wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03, ctx.item.abuse1, ctx.item.adam1 );                    
+                        
+                    }
+                });
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'aname';
+                cols.header = '대표자';
+                cols.align = "center";
+                cols.width =  100 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'aupte';
+                cols.header = '업태';
+                cols.align = "center";
+                cols.width =  80 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'ajong';
+                cols.header = '업종';
+                cols.align = "center";
+                cols.width =  80 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'atelno2';
+                cols.header = '전화번호2';
+                cols.align = "center";
+                cols.width =  100 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'ahand';
+                cols.header = '핸드폰';
+                cols.align = "center";
+                cols.width =  100 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'aemail';
+                cols.header = '메일';
+                cols.align = "left";
+                cols.width =  200 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'ajusotxt';
+                cols.header = '주소';
+                cols.align = "center";
+                cols.width =  200 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'inname01';
+                cols.header = '담당(현)';
+                cols.align = "center";
+                cols.width =  100 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'inname02';
+                cols.header = '담당';
+                cols.align = "center";
+                cols.width =  100 ;  
+                wtab01Grid.columns.push(cols); 
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'inname03';
+                cols.header = '담당';
+                cols.align = "center";
+                cols.width =  100 ;  
+                wtab01Grid.columns.push(cols);  
         
             }        
 
@@ -1275,7 +1399,7 @@
             //  ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2,
             //   ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax 
                         
-            function wcifChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32){            
+            function wcifChk_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34){            
                 document.getElementById('acorp1').value = arg1;  
                 document.getElementById('acorp2').value = arg2;   
                 document.getElementById('acorp3').value = arg3;
@@ -1308,6 +1432,8 @@
                 // document.getElementById('inname01').value = arg30; 
                 // document.getElementById('inname02').value = arg31; 
                 // document.getElementById('inname03').value = arg32; 
+                document.getElementById('abuse1').value = arg33; 
+                document.getElementById('adam1').value = arg34; 
             }      
 
 
@@ -1381,6 +1507,8 @@
                         abonsadam3: wtab02Dto[i]["abonsadam3"],   
                         adomain: wtab02Dto[i]["adomain"],   
                         afax: wtab02Dto[i]["afax"],  
+                        abuse1: wtab02Dto[i]["abuse1"],   
+                        adam1: wtab02Dto[i]["adam1"],  
                         inname01: wtab02Dto[i]["inname01"],   
                         inname02: wtab02Dto[i]["inname02"],   
                         inname03: wtab02Dto[i]["inname03"],       
@@ -1400,7 +1528,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.acode}</b>',
                     click: (e, ctx) => {
-                        wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03 );                    
+                        wcifChk_a(ctx.item.acorp1, ctx.item.acorp2, ctx.item.acorp3, ctx.item.acode, ctx.item.acorp,ctx.item.asano1, ctx.item.asano2, ctx.item.asano3, ctx.item.aname, ctx.item.aupte, ctx.item.ajong,ctx.item.apost1, ctx.item.ajuso1, ctx.item.ajuso2, ctx.item.abigo, ctx.item.agita, ctx.item.ajumi1, ctx.item.ajumi2,ctx.item.aascode1, ctx.item.aascode2, ctx.item.atelno, ctx.item.atelno2, ctx.item.aemail, ctx.item.ahand, ctx.item.abonsadam1, ctx.item.abonsadam2, ctx.item.abonsadam3, ctx.item.adomain, ctx.item.afax, ctx.item.inname01, ctx.item.inname02, ctx.item.inname03, ctx.item.abuse1, ctx.item.adam1 );                    
                         
                     }
                 });
@@ -1411,14 +1539,7 @@
                 cols.header = '거래처명'; 
                 cols.align = "left"; 
                 cols.width = 200;
-                wtab02Grid.columns.push(cols); 
-
-                cols = new wijmo.grid.Column(); 
-                cols.binding = 'cifcodename';
-                cols.header = '구분'; 
-                cols.align = "center"; 
-                cols.width = 100;     
-                wtab02Grid.columns.push(cols); 
+                wtab02Grid.columns.push(cols);  
                 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'asanotxt';

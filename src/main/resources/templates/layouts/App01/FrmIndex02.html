@@ -80,29 +80,29 @@
                             </td>
                             <td class="align-top">
                             <div class="row gx-3" style="  margin: 10px 10px 10px;">
-                                <div class="col-2 col-sm-2">
+                                <div class="col-auto">
                                     <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정코드</span> 
                                         <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off"  placeholder="3자리" disabled> 
                                     </div>
                                 </div>
-                                <div class="col-2 col-sm-2">
+                                <div class="col-auto">
                                     <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">공정명</span> 
                                         <input class="form-control form-control-sm" id="com_rem1" type="text"    autocomplete="off" disabled> 
                                     </div>
                                 </div>
                                 </div>
                                 <div class="row gx-3" style="  margin: 10px 10px 10px;">
-                                <div class="col-2 col-sm-2">
+                                <div class="col-auto">
                                     <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">설비코드</span> 
                                         <input class="form-control form-control-sm" id="wrmc" type="text"    autocomplete="off"> 
                                     </div>
                                 </div>
-                                <div class="col-2 col-sm-2">
+                                <div class="col-auto">
                                     <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">설비명</span> 
                                         <input class="form-control form-control-sm" id="wrmcnm" type="text"    autocomplete="off"> 
                                     </div>
                                 </div>                                                    
-                                <div class="col-2 col-sm-2">
+                                <div class="col-auto">
                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">담당자명</span> 
                                     <input class="form-control form-control-sm" id="wpernm" type="text"    autocomplete="off">
                                     <input class="form-control form-control-sm" id="wperid" type="hidden"    autocomplete="off">  
@@ -448,12 +448,6 @@ function insaSearchList_rtn(arg){
        cols.header = '코드';
        cols.align = "center";
        cols.width = 80;  
-       cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-           text: '<b>${item.insano}</b>',
-           click: (e, ctx) => {
-               winsaChk_a(ctx.item.inname, ctx.item.insano);  
-           }
-       });
        winnameGrid.columns.push(cols);  
 
        cols = new wijmo.grid.Column(); 
@@ -461,6 +455,12 @@ function insaSearchList_rtn(arg){
        cols.header = '담당자명';
        cols.align = "center";
        cols.width = 150;  
+       cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+           text: '<b>${item.inname}</b>',
+           click: (e, ctx) => {
+               winsaChk_a(ctx.item.inname, ctx.item.insano);  
+           }
+       });
        winnameGrid.columns.push(cols);  
    }
    

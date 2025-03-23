@@ -1,6 +1,7 @@
 package com.dae.kdmes.Mapper.App01;
 
 import com.dae.kdmes.DTO.App01.Index03Dto;
+import com.dae.kdmes.DTO.Appm.TBPopupVO;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -41,6 +42,12 @@ public interface Index03Mapper {
     public Boolean InsertJegoIpgo(Index03Dto parm) ;
     public Boolean DeleteJaegoIpgo(Index03Dto parm) ;
     public List<Index03Dto> SelectJegoList(Index03Dto parm) ;
+
+    public List<TBPopupVO> GetJpumComboList(TBPopupVO bankBoard);              //품명
+    public List<TBPopupVO> GetDoor1ComboList(TBPopupVO bankBoard);              //도어1
+    public List<TBPopupVO> GetDoor2ComboList(TBPopupVO bankBoard);              //도어2
+    public List<TBPopupVO> GetFormComboList(TBPopupVO bankBoard);              //유형
+    public List<TBPopupVO> GetColorComboList(TBPopupVO bankBoard);              //색상
 
 
 }

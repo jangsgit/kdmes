@@ -446,12 +446,16 @@
                     document.getElementById("com_cnam").focus(); 
                     return ;               
                 }   
+                var ls_com_rem2 = ""
+                var ls_com_work = ""
                     $.ajax({
                         url: '/app01m/comcodesave',  
                         type:"POST",
                         data: { 
                             "com_cls"      : ls_code,  
-                            "com_cnam"      : ls_codenm ,  
+                            "com_cnam"      : ls_codenm ,   
+                            "com_rem2"      : ls_com_rem2 ,  
+                            "com_work"      : ls_com_work , 
                         }, 
                         async:false,
                         success:function(data){   
