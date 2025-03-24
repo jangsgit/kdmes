@@ -375,6 +375,34 @@ public class App01Controller {
         return "App01/index22";
     }
 
+
+    @GetMapping(value="/index23")
+    public String App01_index23(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("수주업로드");
+        CommDto.setMenuUrl("기준정보>수주업로드");
+        CommDto.setMenuCode("index23");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        List<Pc120Dto> _index08ListDto = new ArrayList<>();
+        Pc120Dto _index08Dto = new Pc120Dto();
+        try {
+            _index08Dto.setFacname("%");
+            _index08ListDto = service08.getFacList(_index08Dto);
+            //   index02ListDto = service02.getWrcmList(index02Dto);
+
+            model.addAttribute("Index23List",_index08ListDto);
+            //    model.addAttribute("WrcmList",index02ListDto);
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App01_index23 Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index23";
+    }
+
     @GetMapping(value="/index09")
     public String App01_index09(Model model, HttpServletRequest request) throws Exception{
         List<FPLAN_VO> _itemSachulDtoList = new ArrayList<>();

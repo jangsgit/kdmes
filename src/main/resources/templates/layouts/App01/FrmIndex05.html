@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <header th:fragment="headerFragment">
     <!-- py-md-2 px-1 py-1 -->
-    <div class="card-body "> <!--   d-flex align-items-center py-md-2 px-auto py-auto  body에 scroll이 생김-->
+    <div class="card-body  d-flex align-items-center py-md-2 px-auto py-auto ">  <!--   d-flex align-items-center py-md-2 px-auto py-auto  body에 scroll이 생김-->
         <main class="main" id="top"> 
-            <!-- <div class="container-fluid">  -->
+            <div class="container-fluid">  
                 <script>
                     var isFluid = JSON.parse(localStorage.getItem('isFluid'));
                     if (isFluid) {
@@ -50,328 +50,204 @@
 <div class="con">
     <!-- contents header -->
     <th:block th:include="layouts/APPHeader/appheadTop"/>
-    <!-- contents infor_bar -->
-    <!-- <div class="infor_bar type2">                                  
-        <div class="left">제품등록</div>
-        <ul class="right" >  
-            <li>
-                <h5 style="color:rgb(255, 166, 0); font-size: 17px; text-align: center;" ><b>★ : 필수 입력</b></h5> 
-            </li>
-            <li>
-                <button type="button" class="color4" id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal">
-                    제품현황
-                </button>
-            </li>
-        </ul>               
-    </div>    -->
-
-    <!-- contents body 시작-->  
-    <div class="dashboard">
-        <div class="card" style="width:950px; "> 
-            <div class="info" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;"> 
-                <div class="input_wrap" style="flex-shrink: 0;">                                     
-                    <input type="text" id="searchtxt" placeholder="품명"
-                           style="height: 38px; padding: 0 10px; font-size: 14px;">
-                </div>                            
-                <button class="btn btn-primary me-1 mb-1" type="button" id="retrieveBtn"
-                        style="height: 38px;">
-                    <span style="color: #f6f9fa;">검색</span>
-                </button>               
-                <button class="btn btn-primary me-1 mb-1"   type="button" id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal"> <span style="color: #f6f9fa;">제품현황</span></button>                                   
-            </div>                       
-            <!-- //여기서부터 그래프 --> 
-            <div class="info">
-                <div class="container-fluid" id="op1" >
-                    <div id="wtab01Grid_div"  style="overflow:scroll;   height:200px;  width:900px;   margin:0 auto; "></div>                                    
-                </div> 
-            </div>
- 
-        </div> 
-    </div>
     
-    <!-- form 또는 action 으로 받아오기  -->
-    <div class="section">
-        <!-- <div class="sec_con" style="width: 30%; ">
-            <div class="box_wrap">
-                <div class="box_input" >
-                    <div class="date_wrap">
-                        <input type="text"  id="searchtxt" placeholder="품명"> 
-                        <button type="button" id="retrieveBtn" >검색</button>      
-                    </div>                      
-                    <div class="table table_style2">
-                        <div class="container-fluid" id="op1" >
-                            <div id="wtab01Grid_div"  style="overflow:scroll;   height:650px;    margin:0 auto; "></div>
+    <!-- contents body 시작--> 
+    <div class="card">
+        <div class="card-body p-3">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <input type="text" class="form-control form-control-sm" style="width: 200px;" placeholder="품명 입력..." id="searchtxt"  />
+                <button class="btn btn-primary btn-sm"   id="retrieveBtn">검색</button>
+                <button class="btn btn-primary btn-sm"     id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal">제품현황</button> 
+                <label class="form-label d-block">&nbsp;</label>
+                <button type="button" class="btn btn-primary btn-sm" id="save" onclick="save_btn()">저장</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clear_rtn()">신규</button>
+                <button type="button" class="btn btn-outline-danger btn-sm"  id="delete" onclick="delete_btn()">삭제</button>
+                <!-- <div class="col-md-6 text-end">
+                    <label class="form-label d-block">&nbsp;</label>
+                    <button type="button" class="btn btn-primary btn-sm" id="save" onclick="save_btn()">저장</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clear_rtn()">신규</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm"  id="delete" onclick="delete_btn()">삭제</button>
+                </div>   -->
+            </div>
+            <!-- Grid Area -->
+            <div class="grid-container mb-3"> 
+                    <div id="wtab01Grid_div"  style="  height:200px;  width:1100px;   margin:0 auto; "></div>    
+            </div> 
+            <!-- Form Section -->
+    
+            <div class="form-section">
+                <form class="row g-2">
+                    <div class="col-md-3">
+                        <div class="input_wrap" style="max-width: 230px;"> 
+                            <label for="companyType" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">대분류<span class="text-danger">*</span></label>
+                            <select th:field="*{j1_keyList}" name="j_dae" id="j_dae" onchange="handleItemCategoryChange()">
+                            <option value="">선택</option>
+                            <option th:each="val : ${j1_keyList}" th:value="${val.j1_key}" th:text="${val.j1_name}">
+                            </select>    
+                        </div>    
+                    </div>
+                    <div class="col-md-3">   
+                        <div class="input_wrap" style="max-width: 230px;"> 
+                            <label for="companyType" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">중분류<span class="text-danger">*</span></label>
+                            <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
+                                <option value="">선택</option>
+                                <option th:each="val : ${j2_keyList}" th:value="${val.j2_key}" th:text="${val.j2_name}">
+                            </select>                                              
+                        </div>     
+                    </div>
+                    <div class="col-md-3">
+                        <label for="clientName" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품코드 <span class="text-danger">*</span></label>  
+                        <input type="text" id="jkey" class="form-control"  onclick="barcode_prt()" disabled  required /> 
+                    </div>
+                    <div class="col-md-2">
+                        <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">미사용제품</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" id="j_misayong" value="0" type="checkbox"/>                                         
                         </div>
-                    </div>       
-                                                
-                </div>
-            </div>
-        </div> -->
-        <!-- 우측 전체 테이블 -->
-        <div class="sec_con"  style="width:900px; " ><!--</div> style="width: 50%;">-->
-            <div class="box_wrap"  >
-                <form action="">
-                    <div class="table table_style1" >
-                        <table>
-                            <tbody>   
-                                <tr> 
-                                    <th>품목분류<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
-                                    <td >
-                                        <div class="input_wrap" style="max-width: 230px;"> 
-                                            <select th:field="*{j1_keyList}" name="j_dae" id="j_dae" onchange="handleItemCategoryChange()">
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${j1_keyList}" th:value="${val.j1_key}" th:text="${val.j1_name}">
-                                            </select>                                              
-                                        </div>                                            
-                                    </td>
-                                    <td>
-                                        <div class="input_wrap" style="max-width: 225px;"> 
-                                            <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${j2_keyList}" th:value="${val.j2_key}" th:text="${val.j2_name}">
-                                            </select>                                              
-                                        </div>                                                                                                           
-                                    </td>    
-                                    <td colspan="2">
-                                        <div   style="float: right; margin-bottom: 10px;">
-                                            <div class="btns" >                                                      
-                                                <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
-                                                <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
-                                                <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn()"><span style="color: #084661;">저장</span></button>                                    
-            
-                                            </div>
-                                            
-                                            <!-- <button type="button" id="save" onclick="save_btn()">저장</button>                                     -->
-                                        </div>
-                                    </td>   
-                                    
-                                </tr>   
-                                <tr> 
-                                    <th>제품코드</th>
-                                    <td >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="jkey" autocomplete="off"  onclick="barcode_prt()" disabled > 
-                                        </div>
-                                    </td>                                    
-                                    <th>미사용제품</th>
-                                    <td > 
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" id="j_misayong" value="0" type="checkbox"/>                                         
-                                        </div>
-                                    </td>                                                         
-                                </tr>  
-                                <tr>          
-                                    <th>차종</th>
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="jchajong" autocomplete="off"   > 
-                                        </div>
-                                    </td>                                        
-                                    <th>제품명<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>    
-                                    <td  >  
-                                        <div class="input_wrap" style="max-width: 225px;"  id="jpum_wrap"> 
-                                            <select th:field="*{jpumList}" name="jpum" id="jpum">
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${jpumList}" th:value="${val.pcode}" th:text="${val.pname}">
-                                            </select>                                              
-                                        </div>  
-                                    </td>                                                                              
-                                </tr>     
-                                <tr>         
-                                    <th>금형코드<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
-                                    <td >       
-                                        <div class="input_wrap" style="max-width: 230px;"> 
-                                            <select th:field="*{j3_keyList}" name="jgumtype" id="jgumtype">
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${j3_keyList}" th:value="${val.wcode}" th:text="${val.wcdnm}">
-                                            </select>                                              
-                                        </div>      
-                                    </td>                                     
-                                    <th>규격</th>
-                                    <td >
-                                        <div class="input_wrap">
-                                            <input type="text" id="jgugek" placeholder=""  >
-                                        </div>
-                                    </td>                                                   
-                                </tr>  
-                                <tr> 
-                                    <th>색상</th>
-                                    <td > 
-                                        <div class="input_wrap" style="max-width: 225px;"    id="jgugek2_wrap"> 
-                                            <select th:field="*{colorList}" name="jgugek2" id="jgugek2">
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${colorList}" th:value="${val.pcode}" th:text="${val.pname}">
-                                            </select>                                              
-                                        </div>   
-                                    </td>                                                                                
-                                    <th>유형</th> 
-                                    <td  >
-                                        <div class="input_wrap"  id="jpumname_wrap">     
-                                            <select th:field="*{formList}" name="jpumname" id="jpumname"  >  
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${formList}" th:value="${val.pcode}" th:text="${val.pname}">
-                                            </select>    
-                                        </div>
-                                    </td>                                                       
-                                </tr>   
-                                <tr> 
-                                    <th>Door1</th>
-                                    <td > 
-                                        <div class="input_wrap" style="max-width: 225px;"  id="jdoor1_wrap">   
-                                            <select th:field="*{door1List}" name="jdoor1" id="jdoor1">
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${door1List}" th:value="${val.pcode}" th:text="${val.pname}">
-                                            </select>                                              
-                                        </div>   
-                                    </td>                                                                                
-                                    <th>Door2</th> 
-                                    <td  >
-                                        <div class="input_wrap"  id="jdoor2_wrap">      
-                                            <select th:field="*{door2List}" name="jdoor2" id="jdoor2">
-                                                <option value="">선택</option>
-                                                <option th:each="val : ${door2List}" th:value="${val.pcode}" th:text="${val.pname}">
-                                            </select>    
-                                        </div>
-                                    </td>                                                       
-                                </tr>  
-                                <tr> 
-                                    <th>C/T</th>
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="j_ct" autocomplete="off"   > 
-                                        </div>
-                                    </td>                                        
-                                    <th>CAVITY</th> 
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="j_cavity" autocomplete="off"   > 
-                                        </div>
-                                    </td>                                                       
-                                </tr>                                                                                                                                                                                   
-                                <tr>                                            
-                                    <th>스프루</th> 
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="j_sr" autocomplete="off"   > 
-                                        </div>
-                                    </td>                            
-                                    <th>적입수량</th>
-                                    <td > 
-                                        <div class="input_wrap">  
-                                            <input type="number"  id="jboxsu1" value="jboxsu1" />                                         
-                                        </div>
-                                    </td>                                                       
-                                </tr>     
-                                <tr>                                                                                
-                                    <th>KCC<br>품목코드</th> 
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="jpumcode" autocomplete="off"   > 
-                                        </div>
-                                    </td>       
-                                    <th>사양구분</th>
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="jsayang" autocomplete="off"   > 
-                                        </div>
-                                    </td>                                                                             
-                                </tr>  
-                                <tr>    
-                                    <th>기본단위</th>
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="jdanwy" autocomplete="off"   > 
-                                        </div>
-                                    </td>                                        
-                                    <th>제품중량</th> 
-                                    <td  >
-                                        <div class="input_wrap">                                               
-                                            <input type="text"  id="j_net" autocomplete="off"   > 
-                                        </div>
-                                    </td>                                                                                                                         
-                                </tr>                                       
-                                <tr>  
-                                    <th>거래처</th>
-                                    <td  >
-                                        <div class="input_wrap">             
-                                            <input type="text" id="acode"   >       
-                                            <input type="hidden" id="acorp1"   >      
-                                            <input type="hidden" id="acorp2"   >      
-                                            <input type="hidden" id="acorp3"   >   
-                                        </div>
-                                    </td>  
-                                    <td colspan="3">
-                                        <span id = "acorp"></span>                                 
-                                    </td>                                                                                                                                    
-                                </tr>                                          
-                                <tr>   
-                                    <th>비고</th>
-                                    <td colspan="4">
-                                        <div class="input-group"> 
-                                            <textarea class="form-control" aria-label="With textarea" name="jbigo" id="jbigo" ></textarea>
-                                        </div>                                   
-                                    </td>                                                                                                                                    
-                                </tr>    
-                                <tr>  
-                                    <th>품목분류</th>
-                                    <td colspan="5">                                           
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="w_b_gubn" name="w_b_gubn" type="radio"  value="J"  />
-                                            <label class="form-check-label" for="inlineRadio1">제품</label>
-                                        </div>                                             
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="w_b_gubn" name="w_b_gubn" type="radio"  value="W"  />
-                                            <label class="form-check-label" for="inlineRadio1">원자재</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="w_b_gubn" name="w_b_gubn" type="radio" value="B" />
-                                            <label class="form-check-label" for="inlineRadio2">부자재</label>
-                                        </div>
-                                        <!-- <div class="form-check form-check-inline">
-                                            <input class="form-check-input" name="w_b_gubn" type="radio" name="inlineRadioOptions" value="option3"/>
-                                            <label class="form-check-label" for="inlineRadio4">제품</label>
-                                        </div> -->
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="w_b_gubn" name="w_b_gubn"  type="radio"  value="H"/>
-                                            <label class="form-check-label" for="inlineRadio3">반제품</label>
-                                        </div>   
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" id="w_b_gubn" name="w_b_gubn" type="radio"  value="G"/>
-                                            <label class="form-check-label" for="inlineRadio5">기타</label>
-                                        </div>                                                                            
-                                    </td>                                                                                  
-                                </tr>                                   
-                                <!-- <tr>  
-                                    <th>BARCODE</th>
-                                    <td colspan="1"> 
-                                            <div id="btnDiv" class="btn_wrap">  
-                                            <div id="bcTarget"></div> 
-                                        </div>             
-                                    </td>     
-                                    <th>인쇄수량</th>       
-                                    <td colspan="4">
-                                        <div class="container">
-                                            <div class="row align-items-start">
-                                                <div class="col"> 
-                                                    <input class="form-control form-control-sm" id="inprtqty" type="number"  value = 0 placeholder=""  />
-                                                    </div>
-                                                    <div class="col">
-                                                    <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="barcodeprt" onclick="barcodeprt_btn()"><span class="fas fa-print ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">출력</span></button>                                               
-                                                    </div>
-                                            </div>
-                                        </div>        
-                                    </td>                                       
-                                </tr>    -->
-                            </tbody>
-                        </table>     
-                                                          
-                    </div>                           
+                    </div>
+                    <div class="col-md-3">
+                        <label for="ceo" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종<span class="text-danger">*</span></label>
+                        <input type="text" id="jchajong"  class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="ajumi1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품명<span class="text-danger">*</span></label>
+                        <div class="input_wrap" style="max-width: 225px;"  id="jpum_wrap"> 
+                            <select th:field="*{jpumList}" name="jpum" id="jpum">
+                                <option value="">선택</option>
+                                <option th:each="val : ${jpumList}" th:value="${val.pcode}" th:text="${val.pname}">
+                            </select>                                              
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="aupte" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형코드<span class="text-danger">*</span></label>  
+                        <div class="input_wrap" style="max-width: 230px;"> 
+                            <select th:field="*{j3_keyList}" name="jgumtype" id="jgumtype">
+                                <option value="">선택</option>
+                                <option th:each="val : ${j3_keyList}" th:value="${val.wcode}" th:text="${val.wcdnm}">
+                            </select>                                              
+                        </div>      
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">규격</label>
+                        <input type="text" id="jgugek" class="form-control"  /> 
+                    </div>
+                    <div class="col-md-3">
+                        <label for="apost1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">색상</label>
+                        <div class="input_wrap" style="max-width: 225px;"    id="jgugek2_wrap"> 
+                            <select th:field="*{colorList}" name="jgugek2" id="jgugek2">
+                                <option value="">선택</option>
+                                <option th:each="val : ${colorList}" th:value="${val.pcode}" th:text="${val.pname}">
+                            </select>                                              
+                        </div>   
+                    </div>
+                    <div class="col-md-3">
+                        <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">유형</label>
+                        <div class="input_wrap"  id="jpumname_wrap">     
+                            <select th:field="*{formList}" name="jpumname" id="jpumname"  >  
+                                <option value="">선택</option>
+                                <option th:each="val : ${formList}" th:value="${val.pcode}" th:text="${val.pname}">
+                            </select>    
+                        </div>
+                    </div> 
+                    <div class="col-md-3"> 
+                        <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">Door1</label>
+                        <div class="input_wrap" style="max-width: 225px;"  id="jdoor1_wrap">   
+                            <select th:field="*{door1List}" name="jdoor1" id="jdoor1">
+                                <option value="">선택</option>
+                                <option th:each="val : ${door1List}" th:value="${val.pcode}" th:text="${val.pname}">
+                            </select>                                              
+                        </div>   
+                    </div> 
+                    <div class="col-md-3">
+                        <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">Door2</label>
+                        <div class="input_wrap"  id="jdoor2_wrap">      
+                            <select th:field="*{door2List}" name="jdoor2" id="jdoor2">
+                                <option value="">선택</option>
+                                <option th:each="val : ${door2List}" th:value="${val.pcode}" th:text="${val.pname}">
+                            </select>    
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="j_ct" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">C/T</label>
+                        <input type="text" id="j_ct" class="form-control"  />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="j_cavity" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">CAVITY</label>
+                        <input type="text" id="j_cavity" class="form-control"  />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="j_sr" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">스프루</label>
+                        <input type="text" id="j_sr" class="form-control"  />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jboxsu1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">적입수량</label>
+                        <input type="number" id="jboxsu1" class="form-control"  />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">KCC품목코드</label>
+                        <input type="text" id="jpumcode" class="form-control"  />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jsayang" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">사양구분</label>
+                        <input type="text" id="jsayang" class="form-control"  />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jdanwy" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">기본단위</label>
+                        <input type="text" id="jdanwy" class="form-control"  />
+                    </div> 
+                    <div class="col-md-3">
+                        <label for="j_net" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품중량</label>
+                        <input type="text" id="j_net" class="form-control"  />
+                    </div> 
+                    <div class="col-md-3">
+                        <label for="acode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">거래처코드</label>
+                        <input type="text" id="acode" class="form-control"  />     
+                        <input type="hidden" id="acorp1"   >      
+                        <input type="hidden" id="acorp2"   >      
+                        <input type="hidden" id="acorp3"   >  
+                    </div> 
+                    <div class="col-md-3">
+                        <label for="acorp" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0" >거래처명</label>
+                        <input type="text" id="acorp" class="form-control"  disabled />  
+                    </div> 
+                    <div class="col-md-3">
+                        <label for="jdanwy" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">비고</label>
+                        <div class="input-group"> 
+                            <textarea class="form-control" aria-label="With textarea" name="jbigo" id="jbigo" ></textarea>
+                        </div>  
+                    </div>  
+                    <div class="col-md-7">
+                        <label class="form-label">품목분류</label>
+                        <div class="d-flex flex-wrap gap-2">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_J" name="w_b_gubn" type="radio" value="J" />
+                            <label class="form-check-label" for="w_b_gubn_J">제품</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_W" name="w_b_gubn" type="radio" value="W" />
+                            <label class="form-check-label" for="w_b_gubn_W">원자재</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_B" name="w_b_gubn" type="radio" value="B" />
+                            <label class="form-check-label" for="w_b_gubn_B">부자재</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_H" name="w_b_gubn" type="radio" value="H" />
+                            <label class="form-check-label" for="w_b_gubn_H">반제품</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_G" name="w_b_gubn" type="radio" value="G" />
+                            <label class="form-check-label" for="w_b_gubn_G">기타</label>
+                          </div>
+                        </div>
+                    </div>
                 </form>
-
-            </div>
+            </div>      
         </div>
-    </div>  
+    </div>
+
      
+ 
     <!--------------------------------------------------------------------------------------->   
     <!-- 제품현황 MODAL ForM  -->  
     <div class="modal fade" id="gomodal" data-bs-keyboard="false"
@@ -1643,7 +1519,7 @@
             // document.getElementById('j_sang').value = arg19;   //규격중복체크
             document.getElementById('jboxsu1').value = arg20;  
             document.getElementById('acode').value = arg21;  
-            document.getElementById('acorp').innerText = arg22;  
+            document.getElementById('acorp').value = arg22;  //.innerText = arg22;  
             document.getElementById('jgumtype').value = arg23;   
             document.getElementById('jdoor1').value = arg24;   
             document.getElementById('jdoor2').value = arg25;   
@@ -1969,7 +1845,7 @@
                 document.getElementById('acorp2').value = arg2;  
                 document.getElementById('acorp3').value = arg3;  
                 document.getElementById('acode').value = arg4;   
-                document.getElementById("acorp").innerText = arg5;
+                document.getElementById("acorp").value = arg4;  //.innerText = arg5;
                 //document.getElementById('acorp').value = arg5;   
                 $("#wciflist_rtn").trigger("click");
                 
