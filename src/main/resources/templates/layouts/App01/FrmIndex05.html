@@ -55,7 +55,7 @@
     <div class="card">
         <div class="card-body p-3">
             <div class="d-flex align-items-center gap-2 mb-3">
-                <input type="text" class="form-control form-control-sm" style="width: 200px;" placeholder="품명 입력..." id="searchtxt"  />
+                <input type="text" class="form-control form-control-sm" style="width: 200px;" placeholder="차종 입력..." id="searchtxt"  />
                 <button class="btn btn-primary btn-sm"   id="retrieveBtn">검색</button>
                 <button class="btn btn-primary btn-sm"     id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal">제품현황</button> 
                 <label class="form-label d-block">&nbsp;</label>
@@ -386,16 +386,6 @@
         let ani;
         var wseries_data = [0]; 
         
-        const select_01 = document.createElement('select');  //jpum
-        const input_01 = document.createElement('input');    //jpum
-        const select_02 = document.createElement('select');  //jgugek2
-        const input_02 = document.createElement('input');    //jgugek2
-        const select_03 = document.createElement('select');  //door1
-        const input_03 = document.createElement('input');    //door1
-        const select_04 = document.createElement('select');  //door2
-        const input_04 = document.createElement('input');    //door2
-        const select_05 = document.createElement('select');  //form
-        const input_05 = document.createElement('input');    //form
 
         const productList = [[${jpumList}]];
         const door1List = [[${door1List}]];
@@ -441,15 +431,26 @@
                             }
                         })
                     }, 
-                    { binding: 'jpum', header: '제품명', align: "left", width: 250 }, 
+                    { binding: 'jchajong', header: '차종', align: "center", width: 100 },  
+                    {
+                        binding: 'jpum',
+                        width: 250,
+                        header: '제품명', 
+                        align:"center",
+                        cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                            text: '<b>${item.jpum}</b>',
+                            click: (e, ctx) => {
+                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
+                            }
+                        })
+                    },   
                     { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
                     { binding: 'jpumcode', header: 'KCC품목코드', align: "center", width: 200 },
-                    { binding: 'jpumname', header: 'KCC품번', align: "center", width: 200 },
+                    { binding: 'jpumname', header: '유형', align: "center", width: 200 },
                     { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
                     { binding: 'j_net', header: '제품중량', align: "center", width: 100 },
-                    { binding: 'jchajong', header: '차종', align: "center", width: 100 },
                     { binding: 'j_sr', header: '스프루', align: "center", width: 100 },
                     { binding: 'j_ct', header: 'C/T', align: "center", width: 100 },   
                     { binding: 'j_cavity', header: 'CAVITY', align: "center", width: 100 },
@@ -561,7 +562,7 @@
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
                     { binding: 'jpumcode', header: 'KCC품목코드', align: "center", width: 200 },
-                    { binding: 'jpumname', header: 'KCC품번', align: "center", width: 200 },
+                    { binding: 'jpumname', header: '유형', align: "center", width: 200 },
                     { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
                     { binding: 'j_net', header: '제품중량', align: "center", width: 100 },
                     { binding: 'jchajong', header: '차종', align: "center", width: 100 },
@@ -700,6 +701,17 @@
         function handleItemCategoryChange(){ 
             const category = document.getElementById('j_dae').value; 
             
+            const select_01 = document.createElement('select');  //jpum
+            const input_01 = document.createElement('input');    //jpum
+            const select_02 = document.createElement('select');  //jgugek2
+            const input_02 = document.createElement('input');    //jgugek2
+            const select_03 = document.createElement('select');  //door1
+            const input_03 = document.createElement('input');    //door1
+            const select_04 = document.createElement('select');  //door2
+            const input_04 = document.createElement('input');    //door2
+            const select_05 = document.createElement('select');  //form
+            const input_05 = document.createElement('input');    //form
+
             const jpumWrap = document.getElementById('jpum_wrap');    
             const jgugek2Wrap = document.getElementById('jgugek2_wrap');
             const jpumnameWrap = document.getElementById('jpumname_wrap');
@@ -942,7 +954,6 @@
             var ls_door1    =  document.getElementById('jdoor1').value; 
             var ls_door2    =  document.getElementById('jdoor2').value; 
             var ls_jgumtype    =  document.getElementById('jgumtype').value; 
-            
             var ls_jchgoga0 =  0; 
             var ls_j_misayong =  document.getElementById('j_misayong').value;
             // var ls_j_sang =  document.getElementById('j_sang').value;
@@ -1195,10 +1206,24 @@
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
+            cols.binding = 'jchajong';
+            cols.header = '차종'; 
+            cols.align = "center"; 
+            cols.width = 100;
+            wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
             cols.binding = 'jpum';
             cols.header = '제품명';
             cols.align = "left";
-            cols.width = 250;           
+            cols.width = 250;    
+            cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                text: '<b>${item.jpum}</b>',
+                click: (e, ctx) => {
+                    wjcodeChk_a("A",ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);                 
+                    
+                }
+            });       
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
@@ -1232,7 +1257,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'jpumname';
-            cols.header = 'KCC품번'; 
+            cols.header = '유형'; 
             cols.align = "center"; 
             cols.width = 200;
             wtab01Grid.columns.push(cols); 
@@ -1247,13 +1272,6 @@
             cols = new wijmo.grid.Column(); 
             cols.binding = 'j_net';
             cols.header = '제품중량'; 
-            cols.align = "center"; 
-            cols.width = 100;
-            wtab01Grid.columns.push(cols);  
-
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'jchajong';
-            cols.header = '차종'; 
             cols.align = "center"; 
             cols.width = 100;
             wtab01Grid.columns.push(cols);  
@@ -1496,8 +1514,7 @@
                 input_05.style.width = '200px';
                 jpumnameWrap.appendChild(input_05);
             } 
- 
-
+  
 
             document.getElementById('jkey').value = arg1;  
             document.getElementById('j_dae').value = arg2;   
@@ -1514,7 +1531,7 @@
             document.getElementById('j_cavity').value = arg13; 
             document.getElementById('jdanwy').value = arg14;  
             document.getElementById('jbigo').value = arg15;
-            document.getElementById('w_b_gubn').value = arg16; 
+            //document.getElementById('w_b_gubn').value = arg16; 
             document.getElementById('jpumname').value = arg17;
             // document.getElementById('j_sang').value = arg19;   //규격중복체크
             document.getElementById('jboxsu1').value = arg20;  
@@ -1522,20 +1539,13 @@
             document.getElementById('acorp').value = arg22;  //.innerText = arg22;  
             document.getElementById('jgumtype').value = arg23;   
             document.getElementById('jdoor1').value = arg24;   
-            document.getElementById('jdoor2').value = arg25;   
-            console.log(arg23)
+            document.getElementById('jdoor2').value = arg25;  
             const j_misayong = document.getElementById('j_misayong'); 
             if(arg18 == "1"){
                 j_misayong.checked = true; 
             }else{
                 j_misayong.checked = false; 
-            }  
-            // const callbackflag = document.getElementById('j_sang'); 
-            // if(arg19 == "1"){
-            //     j_sang.checked = true; 
-            // }else{
-            //     j_sang.checked = false;  
-            // }
+            }   
             var x = document.getElementsByName('w_b_gubn');
 
             for(var i=0; i<5; i++) {
@@ -1673,7 +1683,7 @@
                 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'jpumname';
-                cols.header = 'KCC품번'; 
+                cols.header = '유형'; 
                 cols.align = "center"; 
                 cols.width = 200;
                 wtab02Grid.columns.push(cols); 
