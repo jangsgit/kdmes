@@ -151,6 +151,32 @@
         #{pcode}, #{pname}, #{psize},  #{qty}   )
     </insert>
 
+
+    <insert id="InsertCA608" parameterType="com.dae.kdmes.DTO.App01.IndexCa608Dto" >
+        insert into TB_CA608 (custcd, spjangcd, cltcd,   baldate, balnum, acorp,
+        moncls, ischdate,  ischnm, balno  ) values
+        ('KDMES', 'ZZ', #{cltcd},  #{baldate},    #{balnum}, #{acorp},
+        #{moncls},     #{ischdate},   #{ischnm},   #{balno}  )
+    </insert>
+
+
+    <insert id="InsertCA609" parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto" >
+        insert into TB_CA609 (custcd, spjangcd,  baldate, balnum, balseq,
+        pcode, pname, psize,    qty, ischdate, ischnm, balflag ) values
+        ('KDMES', 'ZZ',  #{deldate},  #{delnum}, #{delseq},
+        #{pcode}, #{pname}, #{psize},  #{qty},  #{ischdate},  #{ischnm},  #{balflag}   )
+    </insert>
+
+    <delete id="DeleteCA608" parameterType="com.dae.kdmes.DTO.App01.IndexCa608Dto" >
+        delete from TB_CA608
+        where baldate = #{baldate} and balnum = #{balnum}
+    </delete>
+
+    <delete id="DeleteCA609" parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto" >
+        delete from TB_CA609
+        where baldate = #{baldate} and balnum = #{balnum}
+    </delete>
+
     <delete id="DeleteCA611" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
         delete from TB_CA611
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum}

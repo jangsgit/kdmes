@@ -1220,7 +1220,7 @@ public class App02CrudController {
             , Model model
             , HttpServletRequest request){
 
-        IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
+        IndexCa608Dto _indexCa608Dto = new IndexCa608Dto();
         IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
 
 
@@ -1228,27 +1228,16 @@ public class App02CrudController {
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
 
-        String ibgnum = "";
+        String balnum = "";
         Boolean result = true;
-        ibgnum = _indexCa611Dto.getDelnum();
-        if (ibgnum == null || ibgnum.equals("")) {
-            ibgnum = GetMaxBalnum(_indexCa611Dto.getDeldate());
-            _indexCa611Dto.setDelnum(ibgnum);
-            result = service10.InsertDA036Sch(_indexCa611Dto);
-            if (!result) {
-                return "error";
-            }
-        } else {
-            result = service10.UpdateDa036(_indexCa611Dto);
-            if (!result) {
-                return "error";
-            }
-        }
-        //모두 삭제후 재 입력
-        result = service10.DeleteDa037(_indexCa611Dto);
+        _indexCa608Dto.setBaldate(baldateArr.get(0));
+        balnum = GetMaxBalnum(_indexCa608Dto.getDeldate());
+        _indexCa608Dto.setBalnum(balnum);
+        result = service10.InsertDA036Sch(_indexCa611Dto);
         if (!result) {
-            //return "error";
+            return "error";
         }
+
         _indexCa609Dto.setBaldate(baldateArr.get(0));
         String ls_delseq = "001";
         Integer ll_delseq = 0 ;
