@@ -1200,6 +1200,93 @@ public class App02CrudController {
         return _indexCa613ListDto;
     }
 
+
+
+    @RequestMapping(value="/index23/save", method = RequestMethod.POST)
+    public String index23Save(
+            @RequestParam("cltnm[]") List<String> cltnmArr
+            ,@RequestParam("balno[]") List<String> balnoArr
+            ,@RequestParam("baldate[]") List<String> baldateArr
+            ,@RequestParam("moncls[]") List<String> monclsArr
+            ,@RequestParam("balflag[]") List<String> balflagArr
+            ,@RequestParam("pname[]") List<String> pnameArr
+            ,@RequestParam("psize[]") List<String> psizeArr
+            ,@RequestParam("punit[]") List<String> punitArr
+            ,@RequestParam( value =  "qty[]") List<Integer> qtyArr
+            ,@RequestParam( value =  "uamt[]") List<Integer> uamtArr
+            ,@RequestParam( value =  "samt[]") List<Integer> samtArr
+            ,@RequestParam("ischnm[]") List<String> ischnmArr
+            ,@RequestParam("ischdate[]") List<String> ischdateArr
+            , Model model
+            , HttpServletRequest request){
+
+        IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
+        IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        String ibgnum = "";
+        Boolean result = true;
+        ibgnum = _indexCa611Dto.getDelnum();
+        if (ibgnum == null || ibgnum.equals("")) {
+            ibgnum = GetMaxBalnum(_indexCa611Dto.getDeldate());
+            _indexCa611Dto.setDelnum(ibgnum);
+            result = service10.InsertDA036Sch(_indexCa611Dto);
+            if (!result) {
+                return "error";
+            }
+        } else {
+            result = service10.UpdateDa036(_indexCa611Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+        //모두 삭제후 재 입력
+        result = service10.DeleteDa037(_indexCa611Dto);
+        if (!result) {
+            //return "error";
+        }
+        _indexCa609Dto.setBaldate(baldateArr.get(0));
+        String ls_delseq = "001";
+        Integer ll_delseq = 0 ;
+
+        ibgnum = GetMaxBalnum(_indexCa609Dto.getBaldate());
+
+        for(int i = 0; i < pnameArr.size(); i++){
+
+            if(psizeArr.get(i) != null || !psizeArr.get(i).equals("")) {
+                _indexCa609Dto.setPsize(psizeArr.get(i));
+            }else{
+                _indexCa609Dto.setPsize("");
+            }
+            _indexCa609Dto.setDelseq(ls_delseq);
+            _indexCa609Dto.setPname(pnameArr.get(i));
+            _indexCa609Dto.setQty(qtyArr.get(i));
+            ll_delseq = Integer.parseInt(ls_delseq) + 1;
+            if(ll_delseq < 9){
+                ls_delseq = "00" + ll_delseq.toString();
+            }else{
+                ls_delseq =  "0" + ll_delseq.toString();
+            }
+            //result = service10.InsertDa037(_indexCa609Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+
+        return "success";
+    }
+
+
+
+
+
+
+
+
     @GetMapping(value="/index10/listtot")
     public Object App03ListTot_index(@RequestParam("jpbgubn") String jpbgubn,
                                      @RequestParam("jmodelcode") String jmodelcode,
@@ -1389,6 +1476,32 @@ public class App02CrudController {
         return ls_seq;
     }
 
+    public String GetMaxBalnum(String indate){
+
+        String ls_seq = service10.SelectMaxBalnum(indate);
+
+        if(ls_seq == null){
+            ls_seq =  "0001";
+        }else{
+            Integer ll_misnum = Integer.parseInt(ls_seq) + 1;
+            ls_seq = ll_misnum.toString();
+            switch (ls_seq.length()){
+                case 1:
+                    ls_seq = "000" + ls_seq;
+                    break;
+                case 2:
+                    ls_seq = "00" + ls_seq;
+                    break;
+                case 3:
+                    ls_seq = "0" + ls_seq;
+                    break;
+                default:
+                    break;
+            }
+        }
+        log.info("GetMaxBalnum  =====>" + ls_seq);
+        return ls_seq;
+    }
 
     public String GetMaxSeq1(String indate, String rwflag){
 

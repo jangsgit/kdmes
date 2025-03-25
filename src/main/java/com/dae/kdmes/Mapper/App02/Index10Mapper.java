@@ -59,6 +59,7 @@ public interface Index10Mapper {
     public Boolean UpdateDa037(IndexCa613Dto  parm) ;
     public String SelectMaxIbgnum(String  parm) ;
     public String SelectMaxDelnum(String  parm) ;
+    public String SelectMaxBalnum(String  parm) ;
     public String CA613_OWORK_MAXWSEQ(IndexCa613OworkDto parm) ;
 
     public Boolean CA613_OWORK_Insert(IndexCa613OworkDto  parm) ;

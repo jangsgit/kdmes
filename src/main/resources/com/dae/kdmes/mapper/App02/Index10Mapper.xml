@@ -279,6 +279,10 @@
         <![CDATA[  select  max(delnum)  from TB_DA036 where deldate = #{deldate}      ]]>
     </select>
 
+    <select id="SelectMaxBalnum" parameterType="String" resultType="String">
+        <![CDATA[  select  max(delnum)  from TB_DA008 where baldate = #{baldate}      ]]>
+    </select>
+
     <select id="SelectCa613List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
 
         <![CDATA[ select B.cltcd as cltcd,

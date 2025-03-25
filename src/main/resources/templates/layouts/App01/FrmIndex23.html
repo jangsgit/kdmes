@@ -52,16 +52,35 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">발주업로드</a>
                                 </li>
-                               <!-- <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">생산설비별현황</a>
-                                </li> -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">발주현황</a>
+                                </li>  
                                 <!--  <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">검사이력현황</a>
                                 </li> -->
                                 <input type="hidden" id="tabvalue" value="A">
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="step01">     
+                                    <div class="tab-pane fade show active" id="step01">  
+                                        <div class="row gx-3" style="  margin: 10px 10px 10px;">    
+                                            <div class="col-2 col-sm-3">
+                                                <input type="file" class="form-control" id="importFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />                                               
+                                            </div>
+                                            <div class="col-2 col-sm-1"> 
+                                                <button class="btn btn-falcon-primary me-1 mb-1 btn-sm" type="button" id="loadXlsx">엑셀적용
+                                                </button> 
+                                            </div> 
+                                            <div class="col-auto">  
+                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="save_btn()" >발주등록
+                                                </button> 
+                                            </div>   
+                                        </div>
+                                        <div class="container-fluid">   
+                                            <div id="wtab01Grid_div" style="overflow:scroll;   height:680px; width: 95%;    margin:0 auto; "></div> 
+                                            <!-- <div id="tab01Pager"></div> -->
+                                        </div>   
+                                    </div> 
+                                    <div class="tab-pane fade show" id="step02">     
                                         <div class="row gx-3" style="  margin: 10px 10px 10px;">    
                                             <div class="col-auto">
                                                 <div class="input-group input-group-sm mb-3"> 
@@ -97,30 +116,13 @@
                                                 </button> 
                                             </div>   
                                             <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >삭제
+                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="delete_btn()">삭제
                                                 </button> 
-                                            </div>   
-                                        </div> 
-                                        <div class="row gx-3" style="  margin: 10px 10px 10px;">    
-                                            <div class="col-2 col-sm-3">
-                                                <input type="file" class="form-control" id="importFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />                                               
-                                            </div>
-                                            <div class="col-2 col-sm-1"> 
-                                                <button class="btn btn-falcon-primary me-1 mb-1 btn-sm" type="button" id="loadXlsx">엑셀적용
-                                                </button> 
-                                            </div> 
-                                            <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >발주등록
-                                                </button> 
-                                            </div>   
-                                        </div>
-                                        <div class="container-fluid">   
-                                            <div id="wtab01Grid_div" style="overflow:scroll;   height:680px; width: 95%;    margin:0 auto; "></div> 
-                                            <!-- <div id="tab01Pager"></div> -->
-                                        </div>   
-                                    </div> 
-                                    <div class="tab-pane fade show" id="step02">     
-                                           
+                                            </div>  
+                                            <div class="container-fluid">   
+                                                <div id="wtab02Grid_div" style="overflow:scroll;   height:680px; width: 95%;    margin:0 auto; "></div>  
+                                            </div>  
+                                        </div>    
                                     </div> 
             
                                 </div>
@@ -186,6 +188,7 @@
                         let wtodate;   
                         let wfrdate02;
                         let wtodate02;   
+                        let includeColumnHeader = false;
                         window.onload = function() {    
                            view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                                 // pageSize: 21
@@ -199,18 +202,18 @@
                                 alternatingRowStep: 0,
                                 columns: [     
                                     { binding: 'cltnm', header: '거래처', align: "left", width: 130 },
-                                    { binding: 'wflagnm', header: '발주번호', align: "center", width: 120 },  
-                                    { binding: 'indate', header: '발주일자', align: "center",  width: 120 },  
-                                    { binding: 'jchajong', header: '통화', align: "left", width: 120 },
-                                    { binding: 'jchajong', header: '상태', align: "left", width: 120 },
-                                    { binding: 'jpum', header: '품명', align: "left", width: 150 },   
-                                    { binding: 'jgugek', header: '규격', align: "left", width: 120 },   
-                                    { binding: 'wflagnm', header: '단위', align: "center", width: 80 },   
-                                    { binding: 'prod_qty', header: '수량', align: "right", format: 'n0', width: 80 },  
-                                    { binding: 'winqt', header: '단가', align: "right", format: 'n0', width: 80 }, 
-                                    { binding: 'wbdqt', header: '금액', align: "right", format: 'n0', width: 80 },  
-                                    { binding: 'wrpsnm', header: '납품장소', align: "center", width: 280 },           
-                                    { binding: 'glotno', header: '납기일', align: "center", width: 100 },         
+                                    { binding: 'balno', header: '발주번호', align: "center", width: 120 },  
+                                    { binding: 'baldate', header: '발주일자', align: "center",  width: 120 },  
+                                    { binding: 'moncls', header: '통화', align: "left", width: 120 },
+                                    { binding: 'balflag', header: '상태', align: "left", width: 120 },
+                                    { binding: 'pname', header: '품명', align: "left", width: 150 },   
+                                    { binding: 'psize', header: '규격', align: "left", width: 120 },   
+                                    { binding: 'punit', header: '단위', align: "center", width: 80 },   
+                                    { binding: 'qty', header: '수량', align: "right", format: 'n0', width: 80 },  
+                                    { binding: 'uamt', header: '단가', align: "right", format: 'n0', width: 80 }, 
+                                    { binding: 'samt', header: '금액', align: "right", format: 'n0', width: 80 },  
+                                    { binding: 'ischnm', header: '납품장소', align: "center", width: 280 },           
+                                    { binding: 'ischdate', header: '납기일', align: "center", width: 100 },         
                                 ], 
                                 itemsSource: view_p01tab01page
                             });   
@@ -220,8 +223,8 @@
                            function setHeaderColumn(headerOn) {
                                wtab01Grid.headersVisibility = headerOn
                                ? wijmo.grid.HeadersVisibility.All
-                               : wijmo.grid.HeadersVisibility.Column; 
-                           } 
+                               : wijmo.grid.HeadersVisibility.Column;  
+                           }  
                              // tab01검색 데이터 수집
                            function getData_tab01(){       
                                var wactnm_data = [];
@@ -238,7 +241,105 @@
                                return wactnm_data;                                          
                            }  
 
- 
+   
+                           view_p01tab02page = new wijmo.collections.CollectionView(getData_tab01(), {
+                                // pageSize: 21
+                            }); 
+                            wtab02Grid = new wijmo.grid.FlexGrid('#wtab02Grid_div', {  
+                                autoGenerateColumns: false,
+                                showMarquee: true,
+                                isReadOnly: false, 
+                                // selectionMode: 'RowRange',
+                                allowSorting: 'MultiColumn',
+                                alternatingRowStep: 0,
+                                columns: [     
+                                    { binding: 'cltnm', header: '거래처', align: "left", width: 130 },
+                                    { binding: 'balno', header: '발주번호', align: "center", width: 120 },  
+                                    { binding: 'baldate', header: '발주일자', align: "center",  width: 120 },  
+                                    { binding: 'moncls', header: '통화', align: "left", width: 120 },
+                                    { binding: 'balflag', header: '상태', align: "left", width: 120 },
+                                    { binding: 'pname', header: '품명', align: "left", width: 150 },   
+                                    { binding: 'psize', header: '규격', align: "left", width: 120 },   
+                                    { binding: 'punit', header: '단위', align: "center", width: 80 },   
+                                    { binding: 'qty', header: '수량', align: "right", format: 'n0', width: 80 },  
+                                    { binding: 'uamt', header: '단가', align: "right", format: 'n0', width: 80 }, 
+                                    { binding: 'samt', header: '금액', align: "right", format: 'n0', width: 80 },  
+                                    { binding: 'ischnm', header: '납품장소', align: "center", width: 280 },           
+                                    { binding: 'ischdate', header: '납기일', align: "center", width: 100 },         
+                                ], 
+                                itemsSource: view_p01tab02page
+                            });   
+                            
+                           new FlexGridContextMenu(wtab02Grid); 
+                            // 선택기 생성
+                            let selector = new wijmo.grid.selector.Selector(wtab02Grid, {
+                                itemChecked: () => {
+                                    showCheckedCount();
+                                }
+                            }); 
+                            // 그룹 전환 
+                            setGroups(true); 
+                            function setGroups(groupsOn) {
+                                let groups = view_p01tab02page.groupDescriptions;
+                                groups.clear();
+                                if (groupsOn) {
+                                    groups.push(new wijmo.collections.PropertyGroupDescription('baldate') );
+                                }
+                            } 
+                           setHeaderColumn02(true);
+                           function setHeaderColumn02(headerOn) {
+                               wtab02Grid.headersVisibility = headerOn
+                               ? wijmo.grid.HeadersVisibility.All
+                               : wijmo.grid.HeadersVisibility.Column; 
+                                selector.column = headerOn
+                                ? wtab02Grid.rowHeaders.columns[0]
+                                : wtab02Grid.columns[0];
+                           } 
+                            // 체크된 항목 표시 
+                            function showCheckedCount() {
+                                let cnt = document.getElementById('checked-count02'), sel = wtab02Grid.rows.filter(r => r.isSelected);
+                                cnt.textContent = sel.length.toString();   
+                                let jqty = 0;
+                                chkTabB = sel;    
+                                for (var i = 0; i < sel.length; i++) { 
+                                    jqty   = sel[i]._data.jqty; 
+                                    if(jqty == 0){
+                                        //alert("재고수량을 확인하세요")
+                                    }
+                                }       
+                                // for (var i = 0; i < sel.length; i++) { 
+                                //     misdateWArr[i]   = sel[i]._data.misdate;
+                                //     misnumWArr[i]   = sel[i]._data.misnum;
+                                //     seqWArr[i]  = sel[i]._data.seq; 
+                                //     cltcdWArr[i]  = sel[i]._data.cltcd; 
+                                //     gubunWArr[i]  = sel[i]._data.misgubun; 
+                                //     fixflagWArr[i]  = sel[i]._data.fixflag; 
+                                //     // omisdateWArr[i]   = sel[i]._data.omisdate;
+                                //     // omisnumWArr[i]   = sel[i]._data.omisnum;
+                                //     // oseqWArr[i]  = sel[i]._data.oseq; 
+                                //     if(!fixflagWArr[i]){
+                                //         fixflagWArr[i] = "0";
+                                //     }else{
+                                //         fixflagWArr[i] = "1";
+                                //     }
+                                // } 
+                
+                            } 
+                             // tab01검색 데이터 수집
+                           function getData_tab01(){       
+                               var wactnm_data = [];
+                               var cnt = 1;
+                               for (var i = 0; i < 20; i++) {
+                                   wactnm_data.push({
+                                       id: i, 
+                                       index: cnt,
+                                       jcode: '', 
+                                       ipqty:  '', 
+                                   });
+                                   cnt++;
+                               }    
+                               return wactnm_data;                                          
+                           }  
  
 
 
@@ -318,8 +419,23 @@
                            document.getElementById('tabvalue').value = arg; 
                        } 
                       
+
+
+                        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                        
+                        // tab01 엑셀적용   
+                        document.getElementById("loadXlsx").addEventListener("click",function(){ 
+
+                            let inputEle = document.querySelector('#importFile');
+                            if (inputEle.files[0]) {
+                                wijmo.grid.xlsx.FlexGridXlsxConverter.loadAsync(wtab01Grid, inputEle.files[0], { includeColumnHeaders: includeColumnHeader });
+                            } 
+                        })  
+
                        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-                                                    
+                           
+                       
+
                        // tab01 검색   
                        document.getElementById("retrieveBtn").addEventListener("click",function(){ 
                            
@@ -327,6 +443,115 @@
                            searchList_rtn(ls_tab);
                        })   
                     
+
+                       function save_btn(arg){
+                            var ls_tab = document.getElementById('tabvalue').value;                                        
+                            const warnning_grid = document.getElementById('inwarnning_grid'); 
+                            var ls_pcode  =  [];        
+                            var ll_qty    =  [];    
+                            var ls_jcode  =  [];        
+                            var ll_jqty    =  []; 
+                            var llCount = 0;         
+
+                        
+                            if (!confirm("저장하시겠습니까?")) {
+                                    return ; 
+                            }   
+                            
+                            switch(ls_tab){
+                                case 'A':  
+                                    var gridrow = wtab01Grid.rows.length ; 
+                                    for( i=0; i < gridrow; i++){
+                                        //console.log(wtab01Grid.rows[i]);
+                                            ls_cltnm[i] =  wtab01Grid.getCellData(i, 0, false); 
+                                            ls_balno[i] =  wtab01Grid.getCellData(i, 1, false); 
+                                            ls_baldate[i] =  wtab01Grid.getCellData(i, 2, false); 
+                                            ls_moncls[i] =  wtab01Grid.getCellData(i, 3, false); 
+                                            ls_balflag[i] =  wtab01Grid.getCellData(i, 4, false); 
+                                            ls_pname[i] =  wtab01Grid.getCellData(i, 5, false); 
+                                            ls_psize[i] =  wtab01Grid.getCellData(i, 6, false); 
+                                            ls_punit[i] =  wtab01Grid.getCellData(i, 7, false); 
+                                            ll_qty[i]   =  parseInt(wtab01Grid.getCellData(i, 8, false));   
+                                            ll_uamt[i]   =  parseInt(wtab01Grid.getCellData(i, 9, false));   
+                                            ll_samt[i]   =  parseInt(wtab01Grid.getCellData(i, 10, false)); 
+                                            ls_ischnm[i] =  wtab01Grid.getCellData(i, 11, false); 
+                                            ls_ischdate[i] =  wtab01Grid.getCellData(i, 12, false);   
+                                            if(!ls_pname[i] ){
+                                                continue;
+                                            }
+                                            if(!ll_qty[i] ){ 
+                                                ll_qty[i] = 0;
+                                                alert("수량을 등록하세요") 
+                                                return                                           
+                                            } 
+                                            if(!ls_cltnm[i] ){  
+                                                alert("거래처를 등록하세요") 
+                                                return                                           
+                                            } 
+                                            if(!ls_pname[i] ){  
+                                                alert("품목을 등록하세요") 
+                                                return                                           
+                                            } 
+                                            if(!ls_balno[i] ){  
+                                                alert("발주번호를 등록하세요") 
+                                                return                                           
+                                            } 
+                                            llCount++; 
+                                    }    
+                                    if(llCount ==0 ){
+                                        alert("엑셀 자료를 등록하세요") 
+                                        return     
+                                    } 
+                                    $.ajax({
+                                        url: '/app02m/index23/save',  
+                                        type:"POST",
+                                        data: {  
+                                            "cltnm"   : ls_cltnm     ,
+                                            "balno"     : ls_balno   ,      
+                                            "baldate"  : ls_baldate   ,      
+                                            "moncls"  : ls_moncls      ,      
+                                            "balflag"  : ls_balflag     ,      
+                                            "pname"  : ls_pname     ,      
+                                            "psize"  : ls_psize     ,      
+                                            "punit"  : ls_punit     ,      
+                                            "qty"  : ll_qty     ,      
+                                            "uamt"  : ll_uamt     ,      
+                                            "samt"  : ll_samt   ,      
+                                            "ischnm"  : ls_ischnm   ,      
+                                            "ischdate"  : ls_ischdate  
+                                        }, 
+                                        async:false,
+                                        success:function(data){   
+                                            if(data == "success"){
+                                                alert("저장되었습니다.") 
+                                                // searchList_rtn(ls_tab);  
+                                                // clear_rtn(ls_tab);        
+                                            }else{        
+                                                if(data == "relogin"){
+                                                    alert("다시 로그인해주세요")
+                                                    window.location.href='http://eean.co.kr';
+                                                    return 
+                                                }                      
+                                                alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
+                                                // listUp();
+                                                console.log(data);  
+                                            }
+                                        
+                                        },error:function(e){
+                                            console.log("error"); 
+                                        }
+                                    }).done(function(fragment){           
+
+                                    })  
+                                    break;              
+                                default:    
+                                    break;                
+                            } 
+
+                        } 
+
+
+
                        function searchList_rtn(arg1){ 
                            switch(arg1){
                                case 'A':  

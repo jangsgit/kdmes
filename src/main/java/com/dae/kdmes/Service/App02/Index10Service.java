@@ -88,6 +88,9 @@ public class Index10Service {
     public String SelectMaxDelnum(String parm){
         return  indexMapper.SelectMaxDelnum(parm);
     }
+    public String SelectMaxBalnum(String parm){
+        return  indexMapper.SelectMaxBalnum(parm);
+    }
     public String CA613_OWORK_MAXWSEQ(IndexCa613OworkDto parm){ return indexMapper.CA613_OWORK_MAXWSEQ(parm);}
     public Boolean CA613_OWORK_Insert(IndexCa613OworkDto parm){ return  indexMapper.CA613_OWORK_Insert(parm);}
     public Boolean CA613_OWORK_Update(IndexCa613OworkDto parm){  return  indexMapper.CA613_OWORK_Update(parm);  }
