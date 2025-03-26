@@ -72,6 +72,12 @@ public class Index10Service {
         return indexMapper.SelectCa613ChulListSum(parm);
     }
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm){return indexMapper.SelectCa613JaegoList(parm);}
+    public List<IndexCa609Dto> SelectCa609List(IndexCa609Dto parm){return indexMapper.SelectCa609List(parm);}
+
+
+    public String GetJcodeCheck(Index03Dto parm){  return  indexMapper.GetJcodeCheck(parm);  }
+    public String GetCltcdCheck(Index02Dto parm){  return  indexMapper.GetCltcdCheck(parm);  }
+
 
     public Boolean DeleteCa613(IndexCa613Dto parm){  return  indexMapper.DeleteCa613(parm);  }
     public Boolean InsertCa613(IndexCa613Dto parm){ return  indexMapper.InsertCa613(parm);}
@@ -82,6 +88,10 @@ public class Index10Service {
     public Boolean UpdateCa613(IndexCa613Dto parm){  return  indexMapper.UpdateCa613(parm);  }
     public Boolean UpdateDa036(IndexCa611Dto parm){  return  indexMapper.UpdateDa036(parm);  }
     public Boolean UpdateDa037(IndexCa613Dto parm){  return  indexMapper.UpdateDa037(parm);  }
+    public Boolean InsertCA608(IndexCa608Dto parm){ return  indexMapper.InsertCA608(parm);}
+    public Boolean InsertCA609(IndexCa609Dto parm){ return  indexMapper.InsertCA609(parm);}
+    public Boolean DeleteCA608(IndexCa608Dto parm){ return  indexMapper.DeleteCA608(parm);}
+    public Boolean DeleteCA609(IndexCa609Dto parm){ return  indexMapper.DeleteCA609(parm);}
     public String SelectMaxIbgnum(String parm){
         return  indexMapper.SelectMaxIbgnum(parm);
     }

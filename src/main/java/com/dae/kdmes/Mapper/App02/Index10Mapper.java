@@ -1,9 +1,6 @@
 package com.dae.kdmes.Mapper.App02;
 
-import com.dae.kdmes.DTO.App01.IndexCa611Dto;
-import com.dae.kdmes.DTO.App01.IndexCa613Dto;
-import com.dae.kdmes.DTO.App01.Index01Dto;
-import com.dae.kdmes.DTO.App01.IndexCa613OworkDto;
+import com.dae.kdmes.DTO.App01.*;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -41,9 +38,17 @@ public interface Index10Mapper {
 
     public IndexCa613OworkDto SelectCa613ChulListSum(IndexCa613OworkDto parm) ;
 
+    public List<IndexCa609Dto> SelectCa609List(IndexCa609Dto parm) ;
+
 
 
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm) ;
+
+    public String GetJcodeCheck(Index03Dto parm);
+
+    public String GetCltcdCheck(Index02Dto parm);
+
+
 
     public Boolean DeleteCa613(IndexCa613Dto parm) ;
     public Boolean DeleteDa037(IndexCa611Dto parm) ;
@@ -57,6 +62,12 @@ public interface Index10Mapper {
     public Boolean UpdateCa613(IndexCa613Dto  parm) ;
     public Boolean UpdateDa036(IndexCa611Dto  parm) ;
     public Boolean UpdateDa037(IndexCa613Dto  parm) ;
+
+    public Boolean InsertCA608(IndexCa608Dto parm) ;
+    public Boolean InsertCA609(IndexCa609Dto  parm) ;
+    public Boolean DeleteCA608(IndexCa608Dto parm) ;
+    public Boolean DeleteCA609(IndexCa609Dto parm) ;
+
     public String SelectMaxIbgnum(String  parm) ;
     public String SelectMaxDelnum(String  parm) ;
     public String SelectMaxBalnum(String  parm) ;

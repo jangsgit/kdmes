@@ -1204,63 +1204,110 @@ public class App02CrudController {
 
     @RequestMapping(value="/index23/save", method = RequestMethod.POST)
     public String index23Save(
-            @RequestParam("cltnm[]") List<String> cltnmArr
-            ,@RequestParam("balno[]") List<String> balnoArr
-            ,@RequestParam("baldate[]") List<String> baldateArr
-            ,@RequestParam("moncls[]") List<String> monclsArr
-            ,@RequestParam("balflag[]") List<String> balflagArr
-            ,@RequestParam("pname[]") List<String> pnameArr
-            ,@RequestParam("psize[]") List<String> psizeArr
-            ,@RequestParam("punit[]") List<String> punitArr
+            @RequestParam(value =  "cltnm[]") List<String> cltnmArr
+            ,@RequestParam(value =  "balno[]") List<String> balnoArr
+            ,@RequestParam(value =  "baldate[]") List<String> baldateArr
+            ,@RequestParam(value =  "moncls[]") List<String> monclsArr
+            ,@RequestParam(value =  "balflag[]") List<String> balflagArr
+            ,@RequestParam(value =  "pname[]") List<String> pnameArr
+            ,@RequestParam(value =  "psize[]") List<String> psizeArr
+            ,@RequestParam(value =  "punit[]") List<String> punitArr
             ,@RequestParam( value =  "qty[]") List<Integer> qtyArr
             ,@RequestParam( value =  "uamt[]") List<Integer> uamtArr
             ,@RequestParam( value =  "samt[]") List<Integer> samtArr
-            ,@RequestParam("ischnm[]") List<String> ischnmArr
-            ,@RequestParam("ischdate[]") List<String> ischdateArr
+            ,@RequestParam(value =  "ischnm[]") List<String> ischnmArr
+            ,@RequestParam(value =  "ischdate[]") List<String> ischdateArr
             , Model model
             , HttpServletRequest request){
 
-        IndexCa608Dto _indexCa608Dto = new IndexCa608Dto();
         IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
-
+        Index02Dto _index02Dto = new Index02Dto();
+        Index03Dto _index03Dto = new Index03Dto();
 
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
 
-        String balnum = "";
+        String ls_balnum = "";
+        String ls_pcode = "";
+        String ls_cltcd = "";
+        Integer ll_balnum = 0 ;
         Boolean result = true;
-        _indexCa608Dto.setBaldate(baldateArr.get(0));
-        balnum = GetMaxBalnum(_indexCa608Dto.getDeldate());
-        _indexCa608Dto.setBalnum(balnum);
-        result = service10.InsertDA036Sch(_indexCa611Dto);
-        if (!result) {
-            return "error";
-        }
-
         _indexCa609Dto.setBaldate(baldateArr.get(0));
-        String ls_delseq = "001";
-        Integer ll_delseq = 0 ;
+        ls_balnum = GetMaxBalnum(_indexCa609Dto.getDeldate());
 
-        ibgnum = GetMaxBalnum(_indexCa609Dto.getBaldate());
 
-        for(int i = 0; i < pnameArr.size(); i++){
+        for(int i = 0; i < baldateArr.size(); i++){
+            _index02Dto.setAcorp(cltnmArr.get(i));
+            ls_cltcd = service10.GetCltcdCheck(_index02Dto);
 
+            if(ls_cltcd != null  ) {
+                _indexCa609Dto.setCltcd(ls_cltcd);
+            }else{
+                _indexCa609Dto.setCltcd(ls_cltcd);
+            }
+            _indexCa609Dto.setAcorp(cltnmArr.get(i));
+            _indexCa609Dto.setBaldate(baldateArr.get(i));
+            _indexCa609Dto.setBalnum(ls_balnum);
+            _indexCa609Dto.setAcorp(cltnmArr.get(i));
+            _indexCa609Dto.setBalno(balnoArr.get(i));
+            _indexCa609Dto.setBalflag(balflagArr.get(i));
+            _indexCa609Dto.setMoncls(monclsArr.get(i));
+            _indexCa609Dto.setIschdate(ischdateArr.get(i));
+            _indexCa609Dto.setIschnm(ischnmArr.get(i));
+            _indexCa609Dto.setPunit(punitArr.get(i));
+
+            _index03Dto.setJpum(pnameArr.get(i));
+            ls_pcode = service10.GetJcodeCheck(_index03Dto);
+            if(ls_pcode != null  ) {
+                _indexCa609Dto.setPcode(ls_pcode);
+            }else{
+                _indexCa609Dto.setPcode("");
+            }
+            if(pnameArr.get(i) != null || !pnameArr.get(i).equals("")) {
+                _indexCa609Dto.setPname(pnameArr.get(i));
+            }else{
+                _indexCa609Dto.setPname("");
+            }
             if(psizeArr.get(i) != null || !psizeArr.get(i).equals("")) {
                 _indexCa609Dto.setPsize(psizeArr.get(i));
             }else{
                 _indexCa609Dto.setPsize("");
             }
-            _indexCa609Dto.setDelseq(ls_delseq);
-            _indexCa609Dto.setPname(pnameArr.get(i));
-            _indexCa609Dto.setQty(qtyArr.get(i));
-            ll_delseq = Integer.parseInt(ls_delseq) + 1;
-            if(ll_delseq < 9){
-                ls_delseq = "00" + ll_delseq.toString();
+            if(balflagArr.get(i) != null || !balflagArr.get(i).equals("")) {
+                _indexCa609Dto.setBalflag(balflagArr.get(i));
             }else{
-                ls_delseq =  "0" + ll_delseq.toString();
+                _indexCa609Dto.setBalflag("");
             }
-            //result = service10.InsertDa037(_indexCa609Dto);
+            if(monclsArr.get(i) != null || !monclsArr.get(i).equals("")) {
+                _indexCa609Dto.setMoncls(monclsArr.get(i));
+            }else{
+                _indexCa609Dto.setMoncls("");
+            }
+            if(ischdateArr.get(i) != null || !ischdateArr.get(i).equals("")) {
+                _indexCa609Dto.setIschdate(ischdateArr.get(i));
+            }else{
+                _indexCa609Dto.setIschdate("");
+            }
+            if(ischnmArr.get(i) != null || !ischnmArr.get(i).equals("")) {
+                _indexCa609Dto.setIschnm(ischnmArr.get(i));
+            }else{
+                _indexCa609Dto.setIschnm("");
+            }
+            _indexCa609Dto.setBalseq("001");
+            _indexCa609Dto.setQty(qtyArr.get(i));
+            _indexCa609Dto.setUamt(uamtArr.get(i));
+            _indexCa609Dto.setSamt(samtArr.get(i));
+            ll_balnum = Integer.parseInt(ls_balnum) + 1;
+            if(ll_balnum < 9){
+                ls_balnum = "000" + ll_balnum.toString();
+            }else if(ll_balnum < 99){
+                ls_balnum =  "00" + ll_balnum.toString();
+            }
+            else{
+                ls_balnum =  "0" + ll_balnum.toString();
+            }
+            result = service10.InsertCA609(_indexCa609Dto);
             if (!result) {
                 return "error";
             }
@@ -1270,7 +1317,60 @@ public class App02CrudController {
     }
 
 
+    @RequestMapping(value="/index23/del", method = RequestMethod.POST)
+    public String index23Del(
+            @RequestParam(value =  "idxkeyArr[]") List<Integer> idxkeyArr
+            , Model model
+            , HttpServletRequest request){
 
+        IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        Boolean result = false;
+
+        for(int i = 0; i < idxkeyArr.size(); i++){
+            _indexCa609Dto.setIdxkey(idxkeyArr.get(i));
+            result = service10.DeleteCA609(_indexCa609Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+
+        return "success";
+    }
+
+
+    @GetMapping(value="/index23/list01")
+    public Object App23ListTot_index(@RequestParam("frdate") String frdate,
+                                     @RequestParam("todate") String todate,
+                                     @RequestParam("acode") String acode,
+                                     @RequestParam("balflag") String balflag,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("발주등록");
+        CommDto.setMenuUrl("기준정보>발주정보");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+        List<IndexCa609Dto> _indexCa609ListDto = new ArrayList<>();
+
+        try {
+            _indexCa609Dto.setFrdate(frdate);
+            _indexCa609Dto.setTodate(todate);
+            _indexCa609Dto.setCltcd(acode);
+            _indexCa609Dto.setBalflag(balflag);
+            _indexCa609ListDto = service10.SelectCa609List(_indexCa609Dto);
+            model.addAttribute("index23List",_indexCa609ListDto);
+
+        } catch (Exception ex) {
+            log.info("App23ListTot_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return _indexCa609ListDto;
+    }
 
 
 

@@ -105,7 +105,7 @@
                                             <div class="col-1 col-sm-1">
                                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">상태</span> 
                                                     <select  name="com_rem2" id="com_rem2" class="form-control form-control-sm">
-                                                        <option value="">선택</option>
+                                                        <option value="%">선택</option>
                                                         <option  th:value="001"  th:text="미출하">
                                                         <option  th:value="002"  th:text="출하">
                                                     </select>   
@@ -116,7 +116,7 @@
                                                 </button> 
                                             </div>   
                                             <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="delete_btn()">삭제
+                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="delete_btn('B')">삭제
                                                 </button> 
                                             </div>  
                                             <div class="container-fluid">   
@@ -187,7 +187,8 @@
                         let wfrdate;
                         let wtodate;   
                         let wfrdate02;
-                        let wtodate02;   
+                        let wtodate02; 
+                        var idxkeyArr = new Array();  
                         let includeColumnHeader = false;
                         window.onload = function() {    
                            view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
@@ -298,31 +299,7 @@
                             // 체크된 항목 표시 
                             function showCheckedCount() {
                                 let cnt = document.getElementById('checked-count02'), sel = wtab02Grid.rows.filter(r => r.isSelected);
-                                cnt.textContent = sel.length.toString();   
-                                let jqty = 0;
-                                chkTabB = sel;    
-                                for (var i = 0; i < sel.length; i++) { 
-                                    jqty   = sel[i]._data.jqty; 
-                                    if(jqty == 0){
-                                        //alert("재고수량을 확인하세요")
-                                    }
-                                }       
-                                // for (var i = 0; i < sel.length; i++) { 
-                                //     misdateWArr[i]   = sel[i]._data.misdate;
-                                //     misnumWArr[i]   = sel[i]._data.misnum;
-                                //     seqWArr[i]  = sel[i]._data.seq; 
-                                //     cltcdWArr[i]  = sel[i]._data.cltcd; 
-                                //     gubunWArr[i]  = sel[i]._data.misgubun; 
-                                //     fixflagWArr[i]  = sel[i]._data.fixflag; 
-                                //     // omisdateWArr[i]   = sel[i]._data.omisdate;
-                                //     // omisnumWArr[i]   = sel[i]._data.omisnum;
-                                //     // oseqWArr[i]  = sel[i]._data.oseq; 
-                                //     if(!fixflagWArr[i]){
-                                //         fixflagWArr[i] = "0";
-                                //     }else{
-                                //         fixflagWArr[i] = "1";
-                                //     }
-                                // } 
+                                chkTabA = sel; 
                 
                             } 
                              // tab01검색 데이터 수집
@@ -440,15 +417,26 @@
                        document.getElementById("retrieveBtn").addEventListener("click",function(){ 
                            
                            var ls_tab = document.getElementById('tabvalue').value;   
-                           searchList_rtn(ls_tab);
+                           searchList_rtn('B');
                        })   
                     
 
                        function save_btn(arg){
                             var ls_tab = document.getElementById('tabvalue').value;                                        
                             const warnning_grid = document.getElementById('inwarnning_grid'); 
-                            var ls_pcode  =  [];        
-                            var ll_qty    =  [];    
+                            var ls_cltnm  =  [];        
+                            var ls_balno  =  [];        
+                            var ls_baldate  =  [];        
+                            var ls_moncls  =  [];        
+                            var ls_balflag  =  [];        
+                            var ls_pname  =  [];          
+                            var ls_psize  =  [];          
+                            var ls_punit  =  [];          
+                            var ls_ischnm  =  [];          
+                            var ls_ischdate  =  [];       
+                            var ll_qty    =  [];         
+                            var ll_uamt    =  [];         
+                            var ll_samt    =  [];    
                             var ls_jcode  =  [];        
                             var ll_jqty    =  []; 
                             var llCount = 0;         
@@ -476,6 +464,24 @@
                                             ll_samt[i]   =  parseInt(wtab01Grid.getCellData(i, 10, false)); 
                                             ls_ischnm[i] =  wtab01Grid.getCellData(i, 11, false); 
                                             ls_ischdate[i] =  wtab01Grid.getCellData(i, 12, false);   
+
+                                            const date = new Date(ls_baldate[i]); 
+                                            const yyyy = date.getFullYear();
+                                            const mm = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+                                            const dd = String(date.getDate()).padStart(2, '0'); 
+                                            const formattedDate = `${yyyy}${mm}${dd}`;
+                                            ls_baldate[i] = formattedDate;
+
+
+                                            if(ls_ischdate[i] != null  ){
+                                                const date_s = new Date(ls_ischdate[i]); 
+                                                const yyyy_s = date_s.getFullYear();
+                                                const mm_s = String(date_s.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+                                                const dd_s = String(date_s.getDate()).padStart(2, '0'); 
+                                                const formattedDate_s = `${yyyy_s}${mm_s}${dd_s}`;
+                                                ls_ischdate[i] = formattedDate_s;
+                                            }
+ 
                                             if(!ls_pname[i] ){
                                                 continue;
                                             }
@@ -495,6 +501,15 @@
                                             if(!ls_balno[i] ){  
                                                 alert("발주번호를 등록하세요") 
                                                 return                                           
+                                            } 
+                                            if(!ls_balflag[i] ){ 
+                                                ls_balflag[i] = "0";                              
+                                            } 
+                                            if(!ls_ischnm[i] ){ 
+                                                ls_ischnm[i] = "";                              
+                                            } 
+                                            if(!ls_ischdate[i] ){ 
+                                                ls_ischdate[i] = "";                              
                                             } 
                                             llCount++; 
                                     }    
@@ -524,14 +539,9 @@
                                         success:function(data){   
                                             if(data == "success"){
                                                 alert("저장되었습니다.") 
-                                                // searchList_rtn(ls_tab);  
+                                                searchList_rtn('B');  
                                                 // clear_rtn(ls_tab);        
-                                            }else{        
-                                                if(data == "relogin"){
-                                                    alert("다시 로그인해주세요")
-                                                    window.location.href='http://eean.co.kr';
-                                                    return 
-                                                }                      
+                                            }else{                      
                                                 alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                                                 // listUp();
                                                 console.log(data);  
@@ -552,71 +562,88 @@
 
 
 
+
+                        function savechk_rtn(){
+                            if(chkTabA.length == 0){
+                                alert("주문할 자료를 선택하세요")
+                                return false
+                            }
+                            while (idxkeyArr.length > 0) {
+                                idxkeyArr.pop(); 
+                            }  
+
+                            for (var i = 0; i < chkTabA.length; i++) { 
+                                idxkeyArr[i]   = chkTabA[i]._data.idxkey;  
+                            }        
+                            return true        
+                        }
+                        
+                        function delete_btn(arg){
+                            savechk_rtn()
+                            var ls_tab = document.getElementById('tabvalue').value;  
+                            if (!confirm( "선택한 자료를 삭제하시겠습니까?")) {
+                                    return ; 
+                            }   
+                            
+                            switch(arg){
+                                case 'B':  
+                                    $.ajax({
+                                        url: '/app02m/index23/del',  
+                                        type:"POST",
+                                        data: { 
+                                            "idxkeyArr"  : idxkeyArr   ,    
+                                        }, 
+                                        async:false,
+                                        success:function(data){   
+                                            if(data == "success"){
+                                                alert("삭제되었습니다.") 
+                                                searchList_rtn(ls_tab);          
+                                            }else{                         
+                                                alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
+                                            }
+                                        
+                                        },error:function(e){
+                                            console.log("error"); 
+                                        }
+                                    }).done(function(fragment){           
+
+                                    })  
+                                    break;                
+                                default:    
+                                    break;                
+                            } 
+
+                        }         
+                    
                        function searchList_rtn(arg1){ 
                            switch(arg1){
-                               case 'A':  
-                                    var  ls_frdate     =  convert_date(wfrdate.value);                    
-                                    var  ls_todate     =  convert_date(wtodate.value); 
-                                   var ls_lotno = document.getElementById('inlotno').value; 
-                                   if(ls_lotno == null || ls_lotno.length == 0 || ls_lotno == ""){ 
-                                        ls_lotno    = "%"
-                                   }  
-                                   var ls_inmachname = document.getElementById('inmachname').value
-                                   var ls_inwrmc = document.getElementById('inwrmc').value
-                                   var ls_inwcodenm = ""; //document.getElementById('inwcodenm').value
-                                   var ls_inwcode = ""; //document.getElementById('inwcode').value
-                                    var  ls_inwrps = document.getElementById('inwrps').value;    
-                                    var  inwrpsnm = document.getElementById('inwrpsnm').value;  
-                                    if(inwrpsnm == null || inwrpsnm.length == 0 || inwrpsnm == ""){  
-                                            ls_inwrps = '%';
-                                    }  
-                                   if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
-                                        ls_inwrmc    = "%"
-                                   }  
-                                   if(ls_inwcodenm == null || ls_inwcodenm.length == 0 || ls_inwcodenm == ""){ 
-                                        ls_inwcode    = "%"
-                                   }   
-                                   $.ajax({
-                                       url: '/app03m/index13/list01',  
-                                       type:"POST",
-                                       data: { 
-                                           "frdate"      : ls_frdate,  
-                                           "todate"      : ls_todate, 
-                                           "inwrps"      : ls_inwrps,  
-                                           "lotno"      : ls_lotno, 
-                                           "inwrmc"      : ls_inwrmc, 
-                                       }, 
-                                       async:false,
-                                       success:function(data){ 
-                                           tabA_grid(data);
-                                       },error:function(e){
-                                           console.log("error");                            
-                                       }
-                                   }).done(function(fragment){           
-                    
-                                   })    
+                               case 'A':   
                                    break;
                                case 'B': 
-                                    var  ls_frdate     =  convert_date(wfrdate02.value);                    
-                                    var  ls_todate     =  convert_date(wtodate02.value);  
-                                   var ls_inmachname = document.getElementById('inmachname').value
-                                   var ls_inwrmc = document.getElementById('inwrmc').value 
-                                   if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
-                                        ls_inwrmc    = "%"
-                                   }    
+                                    var  ls_frdate     =  convert_date(wfrdate.value);                    
+                                    var  ls_todate     =  convert_date(wtodate.value);   
+                                    var ls_com_rem    =  document.getElementById('com_rem2').value                 
+                                    var  ls_acorp1     =  document.getElementById('acorp1').value    
+                                    var  ls_acorp2     =  document.getElementById('acorp2').value      
+                                    var  ls_acode     =  document.getElementById('acode').value 
+                                   var ls_cltnm = document.getElementById('cltnm').value  
+                                   if(ls_cltnm == null || ls_cltnm.length == 0 || ls_cltnm == ""){ 
+                                    ls_acode    = "%"
+                                   }         
+                                   console.log(ls_frdate)         
+                                   console.log(ls_todate)       
                                    $.ajax({
-                                       url: '/app03m/index13/list01',  
+                                       url: '/app02m/index23/list01',  
                                        type:"POST",
                                        data: { 
                                            "frdate"      : ls_frdate,  
                                            "todate"      : ls_todate, 
-                                           "inwrps"      : ls_inwrps,  
-                                           "lotno"      : ls_lotno, 
-                                           "inwrmc"      : ls_inwrmc, 
+                                           "acode"      : ls_acode,  
+                                           "balflag"      : ls_com_rem,  
                                        }, 
                                        async:false,
                                        success:function(data){ 
-                                           tabB_grid(data);
+                                        tabA_grid(data);
                                        },error:function(e){
                                            console.log("error");                            
                                        }
@@ -631,229 +658,154 @@
                        }   
                        
                        
-                       function tabA_grid(data){        
+                       function tabA_grid(data){   
                             var wtab01Dto = data;   
                             var wtab01_data = [];       
                             var cnt = 1;   
-                            for (var i = 0; i < wtab01Dto.length; i++) {
-                            var ll_planqty = 0;
-                            var ll_otqty = 0;
-                            var ll_wyul = 0;
-                            var ll_gumqty = 0;
-                            var ls_gindate = "";
-                            var ls_flagnm = "";
-                            var ls_inmonth = "";
-                            var ls_inweeks = "";
-                            var ls_inmonthtxt = "";
-                            ll_planqty = wtab01Dto[i]["prod_qty"];
-                            ll_otqty = wtab01Dto[i]["wjqty"];
-                            if(ll_otqty > 0){
-                                ll_wyul = (ll_otqty / ll_planqty) * 100;
-                            }
-                            ls_gindate = wtab01Dto[i]["ginputdate"];
-                            if(ls_gindate == null || ls_gindate.length == 0 || ls_gindate == ""){  
-                                    ls_gindate = "";
-                            }else{
-                                    ls_gindate = ls_gindate.substr(0,4) + '-' + ls_gindate.substr(4,2) + '-' + ls_gindate.substr(6,2);
-                            }
-                            ll_gumqty = wtab01Dto[i]["gumqty"];
-                            if((ll_gumqty == null || ll_gumqty == 0) && ll_otqty > 0){
-                                ls_flagnm = "사출"
-                            }else{
-                                ls_flagnm =  wtab01Dto[i]["wflagnm"]
-                            }
-                            ls_inmonth = wtab01Dto[i]["inmonth"];
-                            ls_inweeks = wtab01Dto[i]["inweeks"]; 
-                            if(ls_inmonth == null || ls_inmonth.length == 0){
-                                ls_inmonthtxt = ""
-                            }else{
-                                ls_inmonthtxt = ls_inmonth + '' + ls_inweeks + '주차'
-                            }
-                            
-                            wtab01_data.push({
-                                id: i, 
-                                index: cnt,
-                                indate: wtab01Dto[i]["indate"],
-                                ecltnm: wtab01Dto[i]["ecltnm"],
-                                prod_sdate: wtab01Dto[i]["prod_sdate"], 
-                                prod_edate: wtab01Dto[i]["prod_edate"], 
-                                wflagnm: ls_flagnm,
-                                statuscd: wtab01Dto[i]["statuscd"], 
-                                wrmcnm: wtab01Dto[i]["wrmcnm"], 
-                                rwflagnm: wtab01Dto[i]["rwflagnm"], 
-                                lotno: wtab01Dto[i]["lotno"], 
-                                glotno: wtab01Dto[i]["glotnono"], 
-                                jpum: wtab01Dto[i]["jpum"], 
-                                jchajong: wtab01Dto[i]["jchajong"], 
-                                jgugek: wtab01Dto[i]["jgugek"], 
-                                prod_qty: wtab01Dto[i]["prod_qty"], 
-                                winqt: wtab01Dto[i]["winqt"], 
-                                wotqt: wtab01Dto[i]["wotqt"], 
-                                wbdqt: wtab01Dto[i]["wbdqt"], 
-                                wjqty: wtab01Dto[i]["wjqty"], 
-                                gumqty: wtab01Dto[i]["gumqty"], 
-                                wyul: ll_wyul, 
-                                wrpsnm: wtab01Dto[i]["wrpsnm"], 
-                                gumwrpsnm: wtab01Dto[i]["gumwrpsnm"], 
-                                wfrdt: wtab01Dto[i]["wfrdt"], 
-                                wtrdt: wtab01Dto[i]["wtrdt"], 
-                                inmonth: wtab01Dto[i]["inmonth"], 
-                                inweeks: wtab01Dto[i]["inweeks"], 
-                                workhr: wtab01Dto[i]["workhr"], 
-                                workmin: wtab01Dto[i]["workmin"], 
-                                wbdyul: wtab01Dto[i]["wbdyul"], 
-                                inmonthtxt : ls_inmonthtxt,
-                                ginputdate: ls_gindate,  
+                            for (var i = 0; i < wtab01Dto.length; i++) { 
+                                var ls_baldate = "";
+                                var ls_ischdate = ""; 
+                                ls_baldate = wtab01Dto[i]["baldate"];
+                                if(ls_baldate == null || ls_baldate.length == 0 || ls_baldate == ""){  
+                                    ls_baldate = "";
+                                }else{
+                                    ls_baldate = ls_baldate.substr(0,4) + '-' + ls_baldate.substr(4,2) + '-' + ls_baldate.substr(6,2);
+                                } 
+                                ls_ischdate = wtab01Dto[i]["ischdate"];
+                                if(ls_ischdate == null || ls_ischdate.length == 0 || ls_ischdate == ""){  
+                                    ls_ischdate = "";
+                                }else{
+                                    ls_ischdate = ls_ischdate.substr(0,4) + '-' + ls_ischdate.substr(4,2) + '-' + ls_ischdate.substr(6,2);
+                                } 
                                 
-                            });
-                            cnt++;
-                        }        
+                                wtab01_data.push({
+                                    id: i, 
+                                    index: cnt,
+                                    idxkey: wtab01Dto[i]["idxkey"],
+                                    cltnm: wtab01Dto[i]["acorp"],
+                                    balno: wtab01Dto[i]["balno"],
+                                    baldate: ls_baldate,  
+                                    moncls: wtab01Dto[i]["moncls"], 
+                                    balflag: wtab01Dto[i]["balflag"], 
+                                    pname: wtab01Dto[i]["pname"], 
+                                    psize: wtab01Dto[i]["psize"], 
+                                    punit: wtab01Dto[i]["punit"], 
+                                    qty: wtab01Dto[i]["qty"], 
+                                    uamt: wtab01Dto[i]["uamt"], 
+                                    samt: wtab01Dto[i]["samt"], 
+                                    ischnm: wtab01Dto[i]["ischnm"], 
+                                    ischdate: ls_ischdate,  
+                                    
+                                });
+                                cnt++;
+                            }        
 
-                        wtab01Grid.columns.clear();  
-                        wtab01Grid.autoGenerateColumns = false; 
-                        view_p01tab01page.sourceCollection  = wtab01_data;
+                        wtab02Grid.columns.clear();  
+                        wtab02Grid.autoGenerateColumns = false; 
+                        view_p01tab02page.sourceCollection  = wtab01_data;
                         
                         var cols = new wijmo.grid.Column(); 
-                        cols.binding = 'indate';
-                        cols.header = '등록일자';
-                        cols.align = "center";
-                        cols.width = 120;  
-                        wtab01Grid.columns.push(cols);    
-
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'inmonthtxt';
-                        cols.header = '주차';
-                        cols.align = "center";
-                        cols.width = 100; 
-                        wtab01Grid.columns.push(cols);  
-
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wfrdt';
-                        cols.header = '작업시작';
-                        cols.align = "center";
-                        cols.width = 200;  
-                        wtab01Grid.columns.push(cols);   
-
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wtrdt';
-                        cols.header = '작업종료';
-                        cols.align = "center";
-                        cols.width = 200;  
-                        wtab01Grid.columns.push(cols);   
-
-                        // cols = new wijmo.grid.Column(); 
-                        // cols.binding = 'workhr';
-                        // cols.header = '작업(hr)';
-                        // cols.align = "center";
-                        // cols.width = 80;  
-                        // wtab01Grid.columns.push(cols);   
-
-                        // cols = new wijmo.grid.Column(); 
-                        // cols.binding = 'workmin';
-                        // cols.header = '작업(min)';
-                        // cols.align = "center";
-                        // cols.width = 80;  
-                        // wtab01Grid.columns.push(cols);  
-                    
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'rwflagnm';
-                        cols.header = '주야';
-                        cols.align = "center";
-                        cols.width = 60;  
-                        wtab01Grid.columns.push(cols);   
-
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'ecltnm';
+                        cols.binding = 'cltnm';
                         cols.header = '거래처';
                         cols.align = "left";
-                        cols.width = 160;  
-                        wtab01Grid.columns.push(cols);   
+                        cols.width = 200;  
+                        wtab02Grid.columns.push(cols);    
 
                         cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wrpsnm';
-                        cols.header = '담당';
+                        cols.binding = 'balno';
+                        cols.header = '발주번호';
                         cols.align = "center";
-                        cols.width = 80; 
-                        wtab01Grid.columns.push(cols);     
+                        cols.width = 120; 
+                        wtab02Grid.columns.push(cols);  
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'baldate';
+                        cols.header = '발주일자';
+                        cols.align = "center";
+                        cols.width = 120;  
+                        wtab02Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'moncls';
+                        cols.header = '통화';
+                        cols.align = "center";
+                        cols.width = 120;  
+                        wtab02Grid.columns.push(cols);    
+                    
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'balflag';
+                        cols.header = '상태';
+                        cols.align = "center";
+                        cols.width = 120;  
+                        wtab02Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'pname';
+                        cols.header = '품명';
+                        cols.align = "left";
+                        cols.width = 150;  
+                        wtab02Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'psize';
+                        cols.header = '규격';
+                        cols.align = "left";
+                        cols.width = 120; 
+                        wtab02Grid.columns.push(cols);     
   
 
                         cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wrmcnm';
-                        cols.header = '설비';
+                        cols.binding = 'punit';
+                        cols.header = '단위';
                         cols.align = "center";
-                        cols.width = 110;  
-                        wtab01Grid.columns.push(cols);   
+                        cols.width = 80;  
+                        wtab02Grid.columns.push(cols);   
                         
                         cols = new wijmo.grid.Column(); 
-                        cols.binding = 'jchajong';
-                        cols.header = '차종';
-                        cols.align = "left";
+                        cols.binding = 'qty';
+                        cols.header = '수량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab02Grid.columns.push(cols);   
+                        
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'uamt';
+                        cols.header = '단가';
+                        cols.align = "center";
+                        cols.width = 80;  
+                        cols.format = 'n0'; 
+                        wtab02Grid.columns.push(cols);  
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'samt';
+                        cols.header = '금액';
+                        cols.align = "right";
                         cols.width = 120;  
-                        wtab01Grid.columns.push(cols);   
+                        cols.format = 'n0'
+                        wtab02Grid.columns.push(cols);     
                         
-
                         cols = new wijmo.grid.Column(); 
-                        cols.binding = 'jpum';
-                        cols.header = '품명';
+                        cols.binding = 'ischnm';
+                        cols.header = '납품장소';
+                        cols.align = "left";
+                        cols.width = 280;   
+                        wtab02Grid.columns.push(cols);   
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'ischdate';
+                        cols.header = '납기일';
+                        cols.align = "left";
+                        cols.width = 150;   
+                        wtab02Grid.columns.push(cols);    
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'idxkey';
+                        cols.header = 'seq';
                         cols.align = "center";
-                        cols.width = 150;  
-                        wtab01Grid.columns.push(cols);  
-
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'prod_qty';
-                        cols.header = '지시';
-                        cols.align = "right";
-                        cols.width = 80;  
-                        cols.format = 'n0'
-                        wtab01Grid.columns.push(cols);   
-                        
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'winqt';
-                        cols.header = '생산';
-                        cols.align = "right";
-                        cols.width = 80;  
-                        cols.format = 'n0'
-                        wtab01Grid.columns.push(cols);    
-                        
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wjqty';
-                        cols.header = '완료';
-                        cols.align = "right";
-                        cols.width = 80;  
-                        cols.format = 'n0'
-                        wtab01Grid.columns.push(cols);   
-                        
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wbdqt';
-                        cols.header = '불량';
-                        cols.align = "right";
-                        cols.width = 80;  
-                        cols.format = 'n0'
-                        wtab01Grid.columns.push(cols);   
-                        
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wyul';
-                        cols.header = '달성률';
-                        cols.align = "center";
-                        cols.width = 80;  
-                        cols.format = 'n0'
-                        wtab01Grid.columns.push(cols);  
-                        
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'wbdyul';
-                        cols.header = '불량율(%)';
-                        cols.align = "right";
-                        cols.width = 90;  
-                        cols.format = 'n0'
-                        wtab01Grid.columns.push(cols);      
-
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'lotno';
-                        cols.header = '로트';
-                        cols.align = "center";
-                        cols.width = 160;  
-                        wtab01Grid.columns.push(cols);    
-                    
+                        cols.width = 50;   
+                        wtab02Grid.columns.push(cols);    
                        }
                          
 
