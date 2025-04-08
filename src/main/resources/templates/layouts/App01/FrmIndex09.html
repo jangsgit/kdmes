@@ -95,7 +95,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">작지번호</div>
                                 <input class="form-control form-control-sm" id="inplan_no"
-                                    type="text" placeholder="작지번호"    disabled />
+                                    type="text" placeholder="작지번호"  style="height: 40px;"  disabled />
                                 <input class="form-control form-control-sm"  type="hidden"  id="inspjangcd"/>   
                                 <input class="form-control form-control-sm"  type="hidden"  id="incustcd"/>       
                                 <input class="form-control form-control-sm"  type="hidden"  id="inwono"  />       
@@ -116,7 +116,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">거래처</div>
                                 <input class="form-control form-control-sm" id="incltnm" type="text" disabled
-                                    size="15" placeholder="거래처"     />
+                                    size="15" placeholder="거래처"   style="height: 40px;"  />
                                 <input class="form-control form-control-sm"  type="hidden"  id="incltcd"    />  
                             </div>
                         </div> 
@@ -124,7 +124,7 @@
                             <div class="input-group">
                                 <div class="input-group-text">품목명</div> 
                                 <input class="form-control form-control-sm" id="inpname" type="text" disabled
-                                    size="15"  /> 
+                                    size="15" style="height: 40px;" /> 
                                 <input class="form-control form-control-sm" id="inpcode" type="hidden" disabled
                                     size="15"  />     
                             </div>
@@ -142,20 +142,20 @@
                             <div class="input-group"> 
                                 <div class="input-group-text">LOTNO</div> 
                                 <input class="form-control form-control-sm" id="inlotno" type="text" disabled
-                                    size="15"  /> 
+                                    size="15" style="height: 40px;" /> 
                             </div>
                         </div> 
                         <div  class="col-3">
                             <div class="input-group">
                                 <div class="input-group-text">계획량</div>
-                                <input class="form-control form-control-sm" id="prod_qty" type="number" disabled
+                                <input class="form-control form-control-sm" id="prod_qty" type="number" disabled style="height: 40px;"
                                     placeholder=""  />
                             </div>
                         </div>  
                         <div class="col-3">
                             <div class="input-group"> 
                                 <div class="input-group-text">설비</div>
-                                <input class="form-control form-control-sm" id="inmachname" type="text"    disabled
+                                <input class="form-control form-control-sm" id="inmachname" type="text"    disabled style="height: 40px;"
                                     placeholder=""   />
                                 <input class="form-control form-control-sm" id="inwrmc" type="hidden"  placeholder=""   /> 
                                 <input class="form-control form-control-sm" id="injgumtype" type="hidden"  placeholder=""   /> 
@@ -168,7 +168,7 @@
                         <div class="col-auto">
                             <div class="input-group">
                                 <!-- <div class="input-group-text">작업자</div> -->
-                                <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wperidmodal" style=" height:40px;  " id="wperidBtn">1.작업자 </button>
+                                <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wperidmodal"  id="wperidBtn">1.작업자 </button>
                                     <input class="form-control form-control-sm" id="inwrpsnm" type="text"  disabled  placeholder=""  />
                                     <input class="form-control form-control-sm" id="inwrps" type="hidden"  placeholder=""   />
                                     <input class="form-control form-control-sm" id="inwinps" type="hidden"  placeholder=""   />
@@ -176,20 +176,20 @@
                         </div>
                         <!-- <div class="col-4">
                             <div class="input-group"> 
-                                <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal" style=" height:40px;  " id="wrmcBtn" >작업설비 </button>
+                                <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wrmcmodal"  id="wrmcBtn" >작업설비 </button>
                                 
                             </div>
                         </div> -->
                         <div class="col-3">
                             <div class="input-group"> 
-                                <button   class="btn btn-primary btn-sm" type="button" id="partbtn"  style=" height:40px;  "  >2.원재료선택 </button> 
+                                <button   class="btn btn-primary btn-sm" type="button" id="partbtn"    >2.원재료선택 </button> 
                                 <input class="form-control form-control-sm" id="inpartnm" type="text" placeholder="" disabled />
                                 <input class="form-control form-control-sm" id="inpartcode" type="hidden" placeholder=""  /> 
                             </div>
                         </div> 
                         <div class="col-auto">
                             <div class="input-group"> 
-                                <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"  style=" height:40px;  "  >3.작업시작 </button>
+                                <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"    >3.작업시작 </button>
                                 <input type="text"  class="form-control datetimepicker" id="startDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled> 
                             </div> 
                         </div>
@@ -198,15 +198,15 @@
                         <div  class="col-3">
                             <div class="input-group">
                                 <!-- <div class="input-group-text">불량내역</div> --> 
-                                <button   class="btn btn-primary btn-sm" type="button" id="wbadqtyBtn"  style=" height:40px;  "  >4.불량내역 </button>
-                                <!-- <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wbadqtymodal" style=" height:40px;  " id="wbadqtyBtn">불량내역 </button> -->
+                                <button   class="btn btn-primary btn-sm" type="button" id="wbadqtyBtn"    >4.불량내역 </button>
+                                <!-- <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wbadqtymodal"  id="wbadqtyBtn">불량내역 </button> -->
                                 <input class="form-control form-control-sm"  type="text" id="inwbdqt"  disabled
                                     placeholder=""  />
                             </div>
                         </div> 
                         <div class="col-auto">
                             <div class="input-group"> 
-                                <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"  style=" height:40px;  "  >5.작업종료 </button>
+                                <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"    >5.작업종료 </button>
                                 <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled > 
                             </div>
                         </div> 
@@ -222,11 +222,11 @@
                         </div>   -->
                         <div class="col-4">
                             <div class="input-group">
-                                <!-- <button   class="btn btn-primary btn-sm" type="button" id="wotqtyBtn"  style=" height:40px;  "  >생산량 </button> -->
-                                <!-- <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal" style=" height:40px;  " id="wotqtyBtn">생산량 </button> -->                                                        
+                                <!-- <button   class="btn btn-primary btn-sm" type="button" id="wotqtyBtn"    >생산량 </button> -->
+                                <!-- <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wotqtymodal"  id="wotqtyBtn">생산량 </button> -->                                                        
                                 <div class="input-group-text">생산량</div>
                                 <input class="form-control form-control-sm"  type="number" id="inwotqt"
-                                    placeholder=""    onchange="fnc_calvalue(this)"   />
+                                    placeholder=""  style="height: 40px;"  onchange="fnc_calvalue(this)"   />
                                 <input class="form-control form-control-sm" id="inwinqt" type="hidden" data-bs-toggle="modal" data-bs-target="#wiworkmodal"    placeholder=""   />
                                  <div id='inwinqtbdg'></div>     
                             </div>
@@ -234,14 +234,14 @@
                         <div  class="col-3">
                             <div class="input-group">
                                 <div class="input-group-text">완료량</div>
-                                <input class="form-control form-control-sm" id="inwokqt" type="number"  
+                                <input class="form-control form-control-sm" id="inwokqt" type="number"  style="height: 40px;"
                                     placeholder=""  />
                             </div>
                         </div>
                         <div  class="col-3">
                             <div class="input-group">                                                     
                                 <div class="input-group-text">비고</div>
-                                <input class="form-control form-control-sm" id="inwremark" type="text"
+                                <input class="form-control form-control-sm" id="inwremark" type="text"  style="height: 40px;"
                                     placeholder=""  />
                             </div>
                         </div>   
@@ -2322,6 +2322,12 @@
             }else{
                 ll_inwbdqt = Number(ll_inwbdqt); 
             
+            } 
+        }
+        if(arg1 == "0" ){ 
+            if(!ll_inwotqt){
+                alert("완료량을 확인하세요.")  
+                return ;               
             } 
         }
         if(!ll_inwotqt){

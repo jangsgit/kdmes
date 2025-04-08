@@ -69,7 +69,7 @@
             from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey  = E.jcifcode)
             LEFT OUTER JOIN cif      F WITH(NOLOCK) ON (JCODE.cltcd = F.acorp1 + CAST(F.acorp2 as varchar))
-            WHERE (isnull(jchajong,'') Like concat('%',#{jpum},'%') )
+            WHERE (isnull(jchajong,'') Like concat('%',#{jpum},'%') OR isnull(jpum,'') Like concat('%',#{jpum},'%') )
             and isnull(j_misayong,'0') Like concat('%',#{j_misayong},'%')
             ORDER BY jkey
         ]]>
