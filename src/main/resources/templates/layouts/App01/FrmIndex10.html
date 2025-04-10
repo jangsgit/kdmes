@@ -1827,7 +1827,13 @@
                             j_misayong: wtab03Dto[i]["j_misayong"],
                             j_sang: wtab03Dto[i]["j_sang"]     ,
                             cltcd: wtab03Dto[i]["cltcd"]        ,
-                            acorp: wtab03Dto[i]["acorp"]           
+                            acorp: wtab03Dto[i]["acorp"]    ,
+                            jgumtype: wtab03Dto[i]["jgumtype"] ,  
+                            jgumtypenm: wtab03Dto[i]["jgumtypenm"] ,  
+                            jdoor1: wtab03Dto[i]["jdoor1"] ,  
+                            jdoor2: wtab03Dto[i]["jdoor2"] ,  
+                            jpumname: wtab03Dto[i]["jpumname"] , 
+                                     
                         });
                         cnt++;
                     }   
@@ -1839,31 +1845,45 @@
                     view_p01tab03page.sourceCollection  = wtab03_data;
         
                     var cols = new wijmo.grid.Column(); 
-                    cols.binding = 'jkey';
-                    cols.header = '제품코드';
+                    cols.binding = 'jchajong';
+                    cols.header = '차종';
                     cols.align = "center";
-                    cols.width = 180;
-                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.jkey}</b>',
-                        click: (e, ctx) => {
-                            wcifChk1_a(ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.cltcd, ctx.item.acorp);                 
-                            
-                        }
-                    });
+                    cols.width = 100;
                     wtab03Grid.columns.push(cols);  
         
                     cols = new wijmo.grid.Column(); 
                     cols.binding = 'jpum';
                     cols.header = '제품명';
                     cols.align = "left";
-                    cols.width = 250;           
+                    cols.width = 150;       
+                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                        text: '<b>${item.jpum}</b>',
+                        click: (e, ctx) => {
+                            wcifChk1_a(ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.cltcd, ctx.item.acorp);                 
+                            
+                        }
+                    });    
                     wtab03Grid.columns.push(cols);  
-        
+            
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'jgugek';
-                    cols.header = '규격';
-                    cols.align = "center";
-                    cols.width = 200;                  
+                    cols.binding = 'jpumname';
+                    cols.header = '유형'; 
+                    cols.align = "center"; 
+                    cols.width = 100;
+                    wtab03Grid.columns.push(cols);  
+                    
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'jdoor1';
+                    cols.header = 'Door1'; 
+                    cols.align = "center"; 
+                    cols.width = 100;
+                    wtab03Grid.columns.push(cols);  
+                    
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'jdoor2';
+                    cols.header = 'Door2'; 
+                    cols.align = "center"; 
+                    cols.width = 100;
                     wtab03Grid.columns.push(cols);  
         
                     cols = new wijmo.grid.Column(); 
@@ -1871,90 +1891,6 @@
                     cols.header = '색상';
                     cols.align = "center";
                     cols.width = 100;           
-                    wtab03Grid.columns.push(cols); 
-                    
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'jdanwy';
-                    cols.header = '단위'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-                    
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'jpumcode';
-                    cols.header = 'KCC품번'; 
-                    cols.align = "center"; 
-                    cols.width = 200;
-                    wtab03Grid.columns.push(cols); 
-                    
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'jsayang';
-                    cols.header = '사양구분'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'j_net';
-                    cols.header = '제품중량'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'jchajong';
-                    cols.header = '차종'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'j_sr';
-                    cols.header = '스프루'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'j_ct';
-                    cols.header = 'C/T'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'j_cavity';
-                    cols.header = 'CAVITY'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'jbigo';
-                    cols.header = '비고'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'w_b_gubn';
-                    cols.header = '품목분류'; 
-                    cols.align = "center"; 
-                    cols.width = 100;
-                    wtab03Grid.columns.push(cols);  
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'j_dae';
-                    cols.header = '대분류'; 
-                    cols.align = "right"; 
-                    cols.width = 0;
-                    wtab03Grid.columns.push(cols); 
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'j_jung';
-                    cols.header = '중분류'; 
-                    cols.align = "right"; 
-                    cols.width = 0;
                     wtab03Grid.columns.push(cols);  
                 }     
         

@@ -444,6 +444,7 @@
                             }
                         })
                     },   
+                    { binding: 'jgumtypenm', header: '금형', align: "center", width: 130 }, 
                     { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
@@ -513,6 +514,7 @@
                         cltcd: wtab01Dto[i]["cltcd"] , 
                         acorp: wtab01Dto[i]["acorp"] ,  
                         jgumtype: wtab01Dto[i]["jgumtype"] ,  
+                        jgumtypenm: wtab01Dto[i]["jgumtypenm"] ,  
                         jdoor1: wtab01Dto[i]["jdoor1"] ,  
                         jdoor2: wtab01Dto[i]["jdoor2"] ,  
                         
@@ -559,7 +561,7 @@
                     }, 
                     { binding: 'jchajong', header: '차종', align: "center", width: 100 },
                     { binding: 'jpum', header: '품명', align: "left", width: 250 }, 
-                    { binding: 'jgumtype', header: '금형코드', align: "center", width: 200 },   
+                    { binding: 'jgumtypenm', header: '금형코드', align: "center", width: 200 },   
                     { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
                     { binding: 'jpumname', header: '유형', align: "center", width: 100 },  
@@ -640,6 +642,7 @@
                         cltcd: wtab01Dto[i]["cltcd"] ,    
                         acorp: wtab01Dto[i]["acorp"],  
                         jgumtype: wtab01Dto[i]["jgumtype"] ,  
+                        jgumtypenm: wtab01Dto[i]["jgumtypenm"] ,  
                         jdoor1: wtab01Dto[i]["jdoor1"] ,  
                         jdoor2: wtab01Dto[i]["jdoor2"] ,  
                         
@@ -933,21 +936,35 @@
             document.getElementById('j_misayong').checked = false; 
             document.getElementById('acode').value = ""; 
             document.getElementById('acorp').innerHTML = "";  
+            document.getElementById('acorp').value = "";  
             document.getElementById('jgumtype').value = ""; 
+            document.getElementById('jsayang').value = ""; 
+            document.getElementById('jdoor1').value = ""; 
+            document.getElementById('jdoor2').value = ""; 
             // document.getElementById('j_sang').value = ""; 
             document.getElementById('jboxsu1').value = 0; 
         }
         // <!-- 저장 스크립트 시작 -->
         function save_btn(){   
-                    
+            var jpum_sel = document.getElementById('jpum'); 
+            var jgugek2_sel = document.getElementById('jgugek2'); 
+            var jdoor1_sel = document.getElementById('jdoor1'); 
+            var jdoor2_sel = document.getElementById('jdoor2'); 
+            var jpumname_sel = document.getElementById('jpumname');
+
             var ls_jkey     =  document.getElementById('jkey').value;  
             var ls_j_dae    =  document.getElementById('j_dae').value;  
             var ls_j_jung   =  document.getElementById('j_jung').value;
             var ls_jgugek   =  document.getElementById('jgugek').value;  
-            var ls_jpum     =  document.getElementById('jpum').value;
-            var ls_jgugek2  =  document.getElementById('jgugek2').value;     
-            var ls_jpumcode =  document.getElementById('jpumcode').value;    
-            var ls_jpumname =  document.getElementById('jpumname').value;  
+            var ls_jpum     =  document.getElementById('jpum').value; 
+            if (jpum_sel.tagName === 'SELECT') {
+                var ls_jpum =  jpum_sel.options[jpum_sel.selectedIndex].text;
+            }    
+            var ls_jgugek2  =  document.getElementById('jgugek2').value; 
+            if (jgugek2_sel.tagName === 'SELECT') { 
+                var ls_jgugek2  =  jgugek2_sel.options[jgugek2_sel.selectedIndex].text;    
+            }
+            var ls_jpumcode =  document.getElementById('jpumcode').value;  
             var ls_jsayang  =  document.getElementById('jsayang').value; 
             var ls_j_net    =  document.getElementById('j_net').value;  
             var ls_jchajong =  document.getElementById('jchajong').value;    
@@ -956,10 +973,20 @@
             var ls_j_cavity =  document.getElementById('j_cavity').value;  
             var ls_jdanwy   =  document.getElementById('jdanwy').value; 
             var ls_jbigo    =  document.getElementById('jbigo').value; 
-            var ls_acode    =  document.getElementById('acode').value; 
-            var ls_door1    =  document.getElementById('jdoor1').value; 
-            var ls_door2    =  document.getElementById('jdoor2').value; 
-            var ls_jgumtype    =  document.getElementById('jgumtype').value; 
+            var ls_acode    =  document.getElementById('acode').value;  
+            var ls_jgumtype     =  document.getElementById('jgumtype').value;
+            var ls_door1    =  document.getElementById('jdoor1').value;
+            if (jdoor1_sel.tagName === 'SELECT') { 
+                var ls_door1    =  jdoor1_sel.options[jdoor1_sel.selectedIndex].text;
+            }
+            var ls_door2        =  document.getElementById('jdoor2').value; 
+            if (jdoor2_sel.tagName === 'SELECT') { 
+                var ls_door2    =  jdoor2_sel.options[jdoor2_sel.selectedIndex].text; 
+            }   
+            var ls_jpumname =  document.getElementById('jpumname').value; 
+            if (jpumname_sel.tagName === 'SELECT') { 
+                var ls_jpumname =  jpumname_sel.options[jpumname_sel.selectedIndex].text; 
+            }                
             var ls_jchgoga0 =  0; 
             var ls_j_misayong =  document.getElementById('j_misayong').value;
             // var ls_j_sang =  document.getElementById('j_sang').value;
@@ -989,7 +1016,7 @@
             // } 
             var ls_w_b_gubn = ""
             var x = document.getElementsByName('w_b_gubn');
-
+ 
                 for(var i=0; i<5; i++) {
                     if(x[i].checked){
                         ls_w_b_gubn = x[i].value;
@@ -1187,7 +1214,8 @@
                     jboxsu1: wtab01Dto[i]["jboxsu1"],       
                     acorp: wtab01Dto[i]["acorp"],       
                     cltcd: wtab01Dto[i]["cltcd"],        
-                    jgumtype: wtab01Dto[i]["jgumtype"],       
+                    jgumtype: wtab01Dto[i]["jgumtype"],   
+                    jgumtypenm: wtab01Dto[i]["jgumtypenm"],       
                     jdoor1: wtab01Dto[i]["jdoor1"],     
                     jdoor2: wtab01Dto[i]["jdoor2"], 
                 });
@@ -1230,6 +1258,13 @@
                     
                 }
             });       
+            wtab01Grid.columns.push(cols);  
+            
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'jgumtypenm';
+            cols.header = '금형코드'; 
+            cols.align = "center"; 
+            cols.width = 130;
             wtab01Grid.columns.push(cols);  
 
             cols = new wijmo.grid.Column(); 
@@ -1636,7 +1671,8 @@
                         jboxsu1: wtab02Dto[i]["jboxsu1"],      
                         acorp: wtab02Dto[i]["acorp"],  
                         cltcd: wtab02Dto[i]["cltcd"],    
-                        jgumtype: wtab02Dto[i]["jgumtype"],    
+                        jgumtype: wtab02Dto[i]["jgumtype"],  
+                        jgumtypenm: wtab02Dto[i]["jgumtypenm"],    
                         jdoor1: wtab01Dto[i]["jdoor1"],     
                         jdoor2: wtab01Dto[i]["jdoor2"],     
                     });
@@ -1677,7 +1713,7 @@
                 wtab02Grid.columns.push(cols);   
 
                 cols = new wijmo.grid.Column(); 
-                cols.binding = 'jgumtype';
+                cols.binding = 'jgumtypenm';
                 cols.header = '금형코드';
                 cols.align = "center";
                 cols.width = 200;                  
@@ -1897,13 +1933,13 @@
             wtab03Grid.columns.push(cols); 
         }        
 
-
+                        //acorp1, acorp2, acorp3, acode,   acorp
         function wcifChk_a(arg1, arg2, arg3, arg4, arg5){                       
                 document.getElementById('acorp1').value = arg1;  
                 document.getElementById('acorp2').value = arg2;  
                 document.getElementById('acorp3').value = arg3;  
                 document.getElementById('acode').value = arg4;   
-                document.getElementById("acorp").value = arg4;  //.innerText = arg5;
+                document.getElementById("acorp").value = arg5;  //.innerText = arg5;
                 //document.getElementById('acorp').value = arg5;   
                 $("#wciflist_rtn").trigger("click");
                 

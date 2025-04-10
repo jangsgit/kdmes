@@ -47,6 +47,7 @@ public class Index03Dto {
     private String jepm_size;
     private String cltcd;
     private String jgumtype;
+    private String jgumtypenm;
     private String jdoor1;
     private String jdoor2;
 

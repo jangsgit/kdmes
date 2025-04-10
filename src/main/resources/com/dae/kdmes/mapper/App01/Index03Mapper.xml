@@ -65,10 +65,11 @@
         <![CDATA[
             select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jpumname, jsayang, jpum, jboxsu1, jgumtype, jdoor1, jdoor2,
                    j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn,
-                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp
+                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp, G.com_rem1 as jgumtypenm, jgumtype
             from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey  = E.jcifcode)
             LEFT OUTER JOIN cif      F WITH(NOLOCK) ON (JCODE.cltcd = F.acorp1 + CAST(F.acorp2 as varchar))
+            LEFT OUTER JOIN TB_CA510 G WITH(NOLOCK) ON (JCODE.jgumtype = G.com_code AND G.com_cls = '006' AND G.com_code   != '00' )
             WHERE (isnull(jchajong,'') Like concat('%',#{jpum},'%') OR isnull(jpum,'') Like concat('%',#{jpum},'%') )
             and isnull(j_misayong,'0') Like concat('%',#{j_misayong},'%')
             ORDER BY jkey

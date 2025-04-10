@@ -163,7 +163,7 @@
           AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
 		  AND A.plan_no = F.plan_no
 		   AND F.wflag = '00010'
-		   AND F.decision = '1'
+		   AND F.decision in( '1', '3')
 		   and D.lotno = F.lotno
           AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
           AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
