@@ -102,7 +102,7 @@
                                                     <input class="form-control form-control-sm" id="delnum" type="hidden"  />   
                                                 </div>
                                             </div>    
-                                            <div class="col-1 col-sm-1">
+                                            <!-- <div class="col-1 col-sm-1">
                                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">상태</span> 
                                                     <select  name="com_rem2" id="com_rem2" class="form-control form-control-sm">
                                                         <option value="%">선택</option>
@@ -110,7 +110,7 @@
                                                         <option  th:value="002"  th:text="출하">
                                                     </select>   
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-auto">  
                                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
                                                 </button> 
@@ -257,11 +257,11 @@
                                     { binding: 'cltnm', header: '거래처', align: "left", width: 130 },
                                     { binding: 'balno', header: '발주번호', align: "center", width: 120 },  
                                     { binding: 'baldate', header: '발주일자', align: "center",  width: 120 },  
-                                    { binding: 'moncls', header: '통화', align: "left", width: 120 },
-                                    { binding: 'balflag', header: '상태', align: "left", width: 120 },
+                                    // { binding: 'moncls', header: '통화', align: "left", width: 120 },
+                                    // { binding: 'balflag', header: '상태', align: "left", width: 120 },
                                     { binding: 'pname', header: '품명', align: "left", width: 150 },   
-                                    { binding: 'psize', header: '규격', align: "left", width: 120 },   
-                                    { binding: 'punit', header: '단위', align: "center", width: 80 },   
+                                    // { binding: 'psize', header: '규격', align: "left", width: 120 },   
+                                    // { binding: 'punit', header: '단위', align: "center", width: 80 },   
                                     { binding: 'qty', header: '수량', align: "right", format: 'n0', width: 80 },  
                                     { binding: 'uamt', header: '단가', align: "right", format: 'n0', width: 80 }, 
                                     { binding: 'samt', header: '금액', align: "right", format: 'n0', width: 80 },  
@@ -622,7 +622,7 @@
                                case 'B': 
                                     var  ls_frdate     =  convert_date(wfrdate.value);                    
                                     var  ls_todate     =  convert_date(wtodate.value);   
-                                    var ls_com_rem    =  document.getElementById('com_rem2').value                 
+                                    var ls_com_rem    =   '%' //document.getElementById('com_rem2').value                 
                                     var  ls_acorp1     =  document.getElementById('acorp1').value    
                                     var  ls_acorp2     =  document.getElementById('acorp2').value      
                                     var  ls_acode     =  document.getElementById('acode').value 
@@ -725,19 +725,19 @@
                         cols.width = 120;  
                         wtab02Grid.columns.push(cols);   
 
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'moncls';
-                        cols.header = '통화';
-                        cols.align = "center";
-                        cols.width = 120;  
-                        wtab02Grid.columns.push(cols);    
+                        // cols = new wijmo.grid.Column(); 
+                        // cols.binding = 'moncls';
+                        // cols.header = '통화';
+                        // cols.align = "center";
+                        // cols.width = 120;  
+                        // wtab02Grid.columns.push(cols);    
                     
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'balflag';
-                        cols.header = '상태';
-                        cols.align = "center";
-                        cols.width = 120;  
-                        wtab02Grid.columns.push(cols);   
+                        // cols = new wijmo.grid.Column(); 
+                        // cols.binding = 'balflag';
+                        // cols.header = '상태';
+                        // cols.align = "center";
+                        // cols.width = 120;  
+                        // wtab02Grid.columns.push(cols);   
 
                         cols = new wijmo.grid.Column(); 
                         cols.binding = 'pname';
@@ -746,20 +746,20 @@
                         cols.width = 150;  
                         wtab02Grid.columns.push(cols);   
 
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'psize';
-                        cols.header = '규격';
-                        cols.align = "left";
-                        cols.width = 120; 
-                        wtab02Grid.columns.push(cols);     
+                        // cols = new wijmo.grid.Column(); 
+                        // cols.binding = 'psize';
+                        // cols.header = '규격';
+                        // cols.align = "left";
+                        // cols.width = 120; 
+                        // wtab02Grid.columns.push(cols);     
   
 
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'punit';
-                        cols.header = '단위';
-                        cols.align = "center";
-                        cols.width = 80;  
-                        wtab02Grid.columns.push(cols);   
+                        // cols = new wijmo.grid.Column(); 
+                        // cols.binding = 'punit';
+                        // cols.header = '단위';
+                        // cols.align = "center";
+                        // cols.width = 80;  
+                        // wtab02Grid.columns.push(cols);   
                         
                         cols = new wijmo.grid.Column(); 
                         cols.binding = 'qty';
@@ -800,12 +800,13 @@
                         cols.width = 150;   
                         wtab02Grid.columns.push(cols);    
                         
-                        cols = new wijmo.grid.Column(); 
-                        cols.binding = 'idxkey';
-                        cols.header = 'seq';
-                        cols.align = "center";
-                        cols.width = 50;   
-                        wtab02Grid.columns.push(cols);    
+                        // cols = new wijmo.grid.Column(); 
+                        // cols.binding = 'idxkey';
+                        // cols.header = 'seq';
+                        // cols.hidden = true
+                        // cols.align = "center";
+                        // cols.width = 50;   
+                        // wtab02Grid.columns.push(cols);    
                        }
                          
 

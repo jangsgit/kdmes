@@ -72,7 +72,7 @@
                             <td class="align-top">
                                 <div class="row gx-2 align-items-end" style="margin: 10px 10px 10px;"> 
                                     <div class="col-auto">  
-                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
+                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="searchList_rtn('B')">조회
                                         </button>
                                     </div>  
                                     <div class="col-auto">  
@@ -93,7 +93,7 @@
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="com_code_txt">코드</span> 
                                             <input class="form-control form-control-sm" id="com_code" type="text"    autocomplete="off"> 
                                             <input class="form-control form-control-sm" id="com_cls" value="002" type="hidden"    autocomplete="off" > 
-                                            <input class="form-control form-control-sm" id="com_cls02" type="hidden"    autocomplete="off" > 
+                                            <input class="form-control form-control-sm" id="com_cls02" type="hidden"    autocomplete="off"  > 
                                             <input class="form-control form-control-sm" id="com_cnam02" type="hidden"    autocomplete="off" > 
                                             <input class="form-control form-control-sm" id="com_cnam" value="사원코드" type="hidden"    autocomplete="off" > 
                                             
@@ -244,7 +244,7 @@
            switch (arg1){
             case "002":
                 //사원코드 
-                document.getElementById('com_code_txt').innerHTML = "사원코드"               
+                document.getElementById('com_code_txt').innerHTML = "패스워드"               
                 document.getElementById('com_rem1_txt').innerHTML = "사원명"               
                break;                                                                  
             default:
@@ -372,7 +372,7 @@
                        type:"POST",
                        data: { 
                            "com_cls"      : ls_code,  
-                           "com_cnam"      : ls_codenm ,  
+                           "com_cnam"      : ls_codes ,  
                        }, 
                        async:false,
                        success:function(data){   
@@ -478,7 +478,7 @@
        })   
 
        function searchList_rtn(ls_tab){ 
-
+           ls_tab = "B"
            var ls_code = document.getElementById('com_cls02').value;
            var ls_codenm = document.getElementById('com_cnam02').value;
            switch(ls_tab){
@@ -601,7 +601,7 @@
            view_p01tab03page.sourceCollection  = wtab03_data;
            var cols = new wijmo.grid.Column(); 
            cols.binding = 'com_code';
-           cols.header = '코드';
+           cols.header = '패스워드';
            cols.align = "center";
            cols.width = 100; 
            wtab03Grid.columns.push(cols);  

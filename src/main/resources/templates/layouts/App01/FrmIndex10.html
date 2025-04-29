@@ -257,7 +257,7 @@
                                             </div>         
                                         </td>                                                                                      
                                     </tr>    
-                                    <tr>    
+                                    <!-- <tr>    
                                         <th>규격</th>
                                         <td colspan="2">
                                             <div class="input_wrap">
@@ -298,9 +298,9 @@
                                                 <input type="text"  id="jdanwy" autocomplete="off"   > 
                                             </div>
                                         </td> 
-                                    </tr>  
+                                    </tr>   -->
                                     <tr> 
-                                        <th>거래처<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
+                                        <!-- <th>거래처<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
                                         <td colspan="2">
                                                 <input class="form-control form-control-sm" id="ecltnm" type="text"    autocomplete="off"  placeholder="">
                                                 <input class="form-control form-control-sm" id="acorp1" type="hidden"  />
@@ -309,13 +309,16 @@
                                                 <input class="form-control form-control-sm" id="acode" type="hidden"  />  
                                                 <input class="form-control form-control-sm" id="plan_no" type="hidden"  />  
                                                    
-                                        </td>                                                                                 
+                                        </td>                                                                                  -->
                                         <th>출고예정일</th> 
                                         <td colspan="2">
                                             <div class="input_wrap">
-                                                <input type="text"  class="form-control datetimepicker" id="qcdate" autocomplete="off"  placeholder="Y-m-d"     >                                                      
+                                                <input type="text"  class="form-control datetimepicker" id="qcdate" autocomplete="off"  placeholder="Y-m-d"     >    
+                                                <input class="form-control form-control-sm" id="plan_no" type="hidden"  />                                                  
                                             </div>
-                                        </td>
+                                        </td>                                    
+                                        <th>&nbsp;</th> 
+                                        <td  colspan="2"> &nbsp;</td> 
                                     </tr>  
                                     <!-- <tr>                                                                                                
                                         <th>생산계획수량<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
@@ -1139,23 +1142,24 @@
                 wqcdate.value = ls_qcdate;
 
                 document.getElementById('plan_no').value =  "";
-                document.getElementById('ecltnm').value =  "";  
-                document.getElementById('acode').value =  "";   
-                document.getElementById('acorp1').value =  "";  
-                document.getElementById('acorp2').value =  "";  
-                document.getElementById('acorp3').value =  "";    
                 document.getElementById('workdv').value = "0"; 
                 document.getElementById('pcode').value =  ""; 
                 document.getElementById('jpum').value =  "";   
-                document.getElementById('jgugek').value =  "";  
-                document.getElementById('jchajong').value =  ""; 
-                document.getElementById('jsayang').value = "";  
-                document.getElementById('jgugek2').value = "";     
-                document.getElementById('jdanwy').value = ""; 
-                document.getElementById('j_sr').value = "";   
+                //document.getElementById('jdanwy').value = ""; 
                 document.getElementById('prod_qty').value = ""; 
                 document.getElementById('remark').value = ""; 
                 document.getElementById('wrmc').value = ""; 
+
+                //document.getElementById('ecltnm').value =  "";  
+                //document.getElementById('acode').value =  "";   
+                //document.getElementById('acorp1').value =  "";  
+                //document.getElementById('acorp2').value =  "";  
+                //document.getElementById('acorp3').value =  "";    
+                //document.getElementById('jgugek').value =  "";  
+                //document.getElementById('jchajong').value =  ""; 
+                //document.getElementById('jsayang').value = "";  
+                //document.getElementById('jgugek2').value = "";     
+                //document.getElementById('j_sr').value = "";   
                 //document.getElementById('indate').value =  ""; 
                 //document.getElementById('prod_sdate').value =  "";   
                 //document.getElementById('prod_edate').value =  "";  
@@ -1248,14 +1252,14 @@
                 var ls_prod_sdate =  convert_date(wprod_sdate.value); //(document.getElementById('prod_sdate').value).replaceAll("-","");   
                 var ls_prod_edate =  convert_date(wprod_edate.value); //(document.getElementById('prod_edate')).value.replaceAll("-","");                   
                 var ls_qcdate     =  convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");   
-                var ls_cltcd   =  document.getElementById('acode').value;
-                var ls_ecltnm  =  document.getElementById('ecltnm').value;
+                var ls_cltcd   =  "" //document.getElementById('acode').value;
+                var ls_ecltnm  =  ""  //document.getElementById('ecltnm').value;
                 var ls_pcode   =  document.getElementById('pcode').value;   
-                var ls_jchajong  =  document.getElementById('jchajong').value; 
-                var ls_jsayang  =  document.getElementById('jsayang').value; 
-                var ls_jgugek2  =  document.getElementById('jgugek2').value; 
-                var ls_j_sr  =  document.getElementById('j_sr').value; 
-                var ls_jdanwy  =  document.getElementById('jdanwy').value;   
+                var ls_jchajong  = ""  //document.getElementById('jchajong').value; 
+                var ls_jsayang  = ""  //document.getElementById('jsayang').value; 
+                var ls_jgugek2  = ""  //document.getElementById('jgugek2').value; 
+                var ls_j_sr  =  ""  //document.getElementById('j_sr').value; 
+                var ls_jdanwy  = ""  //document.getElementById('jdanwy').value;   
                 var ls_prod_qty  =  document.getElementById('prod_qty').value;  
                 var ls_remark =  document.getElementById('remark').value;  
                 var ls_plan_no  =  document.getElementById('plan_no').value;  
@@ -1314,11 +1318,11 @@
                             document.getElementById("prod_qty").focus(); 
                             return ;               
                 }
-                if(ls_cltcd == null || ls_cltcd.length == 0 || ls_cltcd == ""){ 
-                            alert("거래처를 선택하세요") 
-                            document.getElementById("ecltnm").focus(); 
-                            return ;               
-                }   
+                // if(ls_cltcd == null || ls_cltcd.length == 0 || ls_cltcd == ""){ 
+                //             alert("거래처를 선택하세요") 
+                //             document.getElementById("ecltnm").focus(); 
+                //             return ;               
+                // }   
                 if(ls_istore == null || ls_istore.length == 0 || ls_istore == ""){ 
                     ls_istore = 'W01' 
                 } 
@@ -1415,12 +1419,12 @@
                     }
                 });    
                 //거래처검색  
-                document.getElementById("ecltnm").addEventListener("keyup", (e)=>{                     
-                    if(e.keyCode === 13){   
-                        document.getElementById("innamebtn").click(); 
-                        CifSearchList_rtn("A"); 
-                    }
-                });  
+                // document.getElementById("ecltnm").addEventListener("keyup", (e)=>{                     
+                //     if(e.keyCode === 13){   
+                //         document.getElementById("innamebtn").click(); 
+                //         CifSearchList_rtn("A"); 
+                //     }
+                // });  
                 //사원검색 
                 //
                 // document.getElementById("inname01").addEventListener("keyup", (e)=>{ 
@@ -1637,21 +1641,21 @@
                         wqcdate.value = arg6;
                     } 
                     // document.getElementById('lotno').value = arg4; 
-                    document.getElementById('ecltnm').value = arg5; 
-                    document.getElementById('acode').value = arg25;   
+                    //document.getElementById('ecltnm').value = arg5; 
+                    //document.getElementById('acode').value = arg25;   
                     // document.getElementById('perid').value = arg7;   
                     // document.getElementById('inname01').value = arg27;
                     //document.getElementById('workdv').value = arg8;
                     document.getElementById('pcode').value = arg9; 
                     document.getElementById('jpum').value = arg10;   
-                    document.getElementById('jgugek').value = arg11; 
+                    //document.getElementById('jgugek').value = arg11; 
                     // document.getElementById('dem_flag').value = arg12; 
-                    document.getElementById('jchajong').value = arg13; 
-                    document.getElementById('jsayang').value = arg14;  
-                    document.getElementById('jgugek2').value = arg15;
-                    document.getElementById('j_sr').value = arg16;
+                    //document.getElementById('jchajong').value = arg13; 
+                    //document.getElementById('jsayang').value = arg14;  
+                    //document.getElementById('jgugek2').value = arg15;
+                    //document.getElementById('j_sr').value = arg16;
                     // document.getElementById('jpumcode').value = arg17;
-                    document.getElementById('jdanwy').value = arg18;
+                    //document.getElementById('jdanwy').value = arg18;
                     document.getElementById('prod_qty').value = arg19;
                     // document.getElementById('cls_flag').value = arg20;
                     // document.getElementById('istore').value = arg21;
@@ -1898,15 +1902,15 @@
         
                     document.getElementById('pcode').value = arg1;  
                     document.getElementById('jpum').value = arg2;
-                    document.getElementById('jgugek').value = arg3;
-                    document.getElementById('jchajong').value = arg4;
-                    document.getElementById('jsayang').value = arg5;
-                    document.getElementById('jgugek2').value = arg6;
-                    document.getElementById('j_sr').value = arg7;
+                    //document.getElementById('jgugek').value = arg3;
+                    //document.getElementById('jchajong').value = arg4;
+                    //document.getElementById('jsayang').value = arg5;
+                    //document.getElementById('jgugek2').value = arg6;
+                    //document.getElementById('j_sr').value = arg7;
                     // document.getElementById('jpumcode').value = arg8;
                     document.getElementById('jdanwy').value = arg9; 
-                    document.getElementById('acode').value = arg10; 
-                    document.getElementById('ecltnm').value = arg11; 
+                    //document.getElementById('acode').value = arg10; 
+                    //document.getElementById('ecltnm').value = arg11; 
         
                     $("#wciflist_rtn").trigger("click");
                 }

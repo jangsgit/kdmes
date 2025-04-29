@@ -102,7 +102,7 @@ public class App01CrudController {
 
         Boolean result = false;
         index01Dto.setCom_cls(com_cls);
-        index01Dto.setCom_cnam(com_cnam);
+        index01Dto.setCom_code(com_cnam);
         index01ListDto = service01.getComCodeList(index01Dto);
         result = service01.DeleteComCode(index01Dto);
         if (!result) {
