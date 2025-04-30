@@ -28,6 +28,8 @@
                   ,remark
                   ,indate
                   ,inperid
+                  ,inpcode
+                  ,injpum
               FROM TB_PC110 WITH(NOLOCK)
              WHERE ( isnull(machcd,'') Like concat('%',#{machcd},'%')
                or isnull(machname,'') Like concat('%',#{machcd},'%') )
@@ -135,6 +137,8 @@
                             ,machncha
                             ,indate
                             ,inperid
+                            ,inpcode
+                            ,injpum
         ) values  (
                              #{machcd}
                             ,#{machno}
@@ -156,6 +160,8 @@
                             ,#{machncha}
                             ,#{indate}
                             ,#{inperid}
+                            ,#{inpcode}
+                            ,#{injpum}
         )
     </insert>
 
@@ -282,6 +288,10 @@
         <if test="indate != null">indate=#{indate}</if>
         <if test="inperid != null ">,</if>
         <if test="inperid != null">inperid=#{inperid}</if>
+        <if test="inpcode != null ">,</if>
+        <if test="inpcode != null">inpcode=#{inpcode}</if>
+        <if test="injpum != null ">,</if>
+        <if test="injpum != null">injpum=#{injpum}</if>
         where machcd = #{machcd}
     </update>
 

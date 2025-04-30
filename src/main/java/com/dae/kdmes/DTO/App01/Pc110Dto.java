@@ -29,5 +29,7 @@ public class Pc110Dto {
     private String inperid;
     private String save_name;
     private String file_url;
+    private String inpcode;
+    private String injpum;
 
 }

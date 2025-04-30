@@ -1117,6 +1117,12 @@ public class App01CrudController {
                 case "inmachncha":
                     _index08Dto.setMachncha(values.toString());
                     break;
+                case "inpcode":
+                    _index08Dto.setInpcode(values.toString());
+                    break;
+                case "injpum":
+                    _index08Dto.setInjpum(values.toString());
+                    break;
                 default:
                     break;
             }
