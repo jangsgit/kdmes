@@ -94,4 +94,7 @@ public class Index03Service {
     public List<TBPopupVO> GetColorComboList(TBPopupVO parm){
         return  appMapper.GetColorComboList(parm);
     }
+    public List<TBPopupVO> GetJthickComboList(TBPopupVO parm){
+        return  appMapper.GetJthickComboList(parm);
+    }
 }

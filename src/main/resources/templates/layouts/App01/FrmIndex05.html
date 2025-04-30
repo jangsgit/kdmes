@@ -45,12 +45,24 @@
 
 <body layout:fragment="index05"> 
 <!-- ######################### ######################### ######################### ######################### ######################### ######################### -->
-<!-- contents body 시작--> 
+<!-- contents body 시작-->  
 <!-- form 또는 action 으로 받아오기  -->
 <div class="con">
     <!-- contents header -->
     <th:block th:include="layouts/APPHeader/appheadTop"/>
-    
+    <!-- 정리된 품목 등록 Form - 라벨 위치 정렬 및 구성 정돈 + 구분선 및 정렬 개선 -->
+    <style>
+        .form-label {
+        font-weight: 600;
+        text-align: left;
+        }
+        .form-section {
+        border-top: 1px solid #ccc;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        }
+    </style>
+        
     <!-- contents body 시작--> 
     <div class="card">
         <div class="card-body p-3">
@@ -70,13 +82,14 @@
                 </div>   -->
             </div>
             <!-- Grid Area -->
-            <div class="grid-container mb-3"> 
+            <!-- <div class="grid-container mb-3">  -->
                     <div id="wtab01Grid_div"  style="  height:200px;  width:1100px;   margin:0 auto; "></div>    
-            </div> 
+            <!-- </div>  -->
             <!-- Form Section -->
     
-            <div class="form-section">
-                <form class="row g-2">
+            <!-- <div class="form-section"> -->
+                 
+                <form class="row g-2"> 
                     <div class="col-md-3">
                         <div class="input_wrap" style="max-width: 230px;"> 
                             <label for="companyType" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">대분류<span class="text-danger">*</span></label>
@@ -86,7 +99,7 @@
                             </select>    
                         </div>    
                     </div>
-                    <div class="col-md-3">   
+                    <!-- <div class="col-md-3">   
                         <div class="input_wrap" style="max-width: 230px;"> 
                             <label for="companyType" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">중분류<span class="text-danger">*</span></label>
                             <select th:field="*{j2_keyList}" name="j_jung" id="j_jung">
@@ -94,21 +107,53 @@
                                 <option th:each="val : ${j2_keyList}" th:value="${val.j2_key}" th:text="${val.j2_name}">
                             </select>                                              
                         </div>     
-                    </div>
+                    </div> -->
                     <div class="col-md-3">
                         <label for="clientName" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품코드 <span class="text-danger">*</span></label>  
                         <input type="text" id="jkey" class="form-control"  onclick="barcode_prt()" disabled  required /> 
-                    </div>
-                    <div class="col-md-2">
-                        <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">미사용제품</label>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" id="j_misayong" value="0" type="checkbox"/>                                         
-                        </div>
-                    </div>
+                    </div> 
                     <div class="col-md-3">
                         <label for="ceo" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종<span class="text-danger">*</span></label>
                         <input type="text" id="jchajong"  class="form-control" />
                     </div>
+                    <div class="col-md-2 align-self-end">
+                        <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">미사용제품</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" id="j_misayong" value="0" type="checkbox"/>                                         
+                        </div>
+                    </div> 
+                </form> <br>
+                <form class="row g-2">  
+                    <div class="col-md-8">
+                        <label class="form-label">품목분류</label>
+                        <div class="d-flex flex-wrap gap-2">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_J" name="w_b_gubn" type="radio" value="J" />
+                            <label class="form-check-label" for="w_b_gubn_J">제품</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_W" name="w_b_gubn" type="radio" value="W" />
+                            <label class="form-check-label" for="w_b_gubn_W">원자재</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_B" name="w_b_gubn" type="radio" value="B" />
+                            <label class="form-check-label" for="w_b_gubn_B">부자재</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_H" name="w_b_gubn" type="radio" value="H" />
+                            <label class="form-check-label" for="w_b_gubn_H">반제품</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_G" name="w_b_gubn" type="radio" value="G" />
+                            <label class="form-check-label" for="w_b_gubn_G">기타</label>
+                          </div>
+                        </div>
+                    </div>
+                </form> 
+                <div class="col-12">
+                    <h6 class="form-section"></h6>
+                  </div>
+                <form class="row g-2">      
                     <div class="col-md-3">
                         <label for="ajumi1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품명<span class="text-danger">*</span></label>
                         <div class="input_wrap" style="max-width: 225px;"  id="jpum_wrap"> 
@@ -128,10 +173,6 @@
                         </div>      
                     </div>
                     <div class="col-md-3">
-                        <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">규격</label>
-                        <input type="text" id="jgugek" class="form-control"  /> 
-                    </div>
-                    <div class="col-md-3">
                         <label for="apost1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">색상</label>
                         <div class="input_wrap" style="max-width: 225px;"    id="jgugek2_wrap"> 
                             <select th:field="*{colorList}" name="jgugek2" id="jgugek2">
@@ -139,6 +180,10 @@
                                 <option th:each="val : ${colorList}" th:value="${val.pcode}" th:text="${val.pname}">
                             </select>                                              
                         </div>   
+                    </div>
+                    <div class="col-md-3">
+                        <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">규격</label>
+                        <input type="text" id="jgugek" class="form-control"  /> 
                     </div>
                     <div class="col-md-3">
                         <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">유형</label>
@@ -168,8 +213,13 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <label for="j_ct" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">C/T</label>
-                        <input type="text" id="j_ct" class="form-control"  />
+                        <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">유리두께</label>
+                        <div class="input_wrap"  id="jthick_wrap">      
+                            <select th:field="*{jthickList}" name="jthick" id="jthick">
+                                <option value="">선택</option>
+                                <option th:each="val : ${jthickList}" th:value="${val.pcode}" th:text="${val.pname}">
+                            </select>    
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <label for="j_cavity" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">CAVITY</label>
@@ -188,6 +238,10 @@
                         <input type="text" id="jpumcode" class="form-control"  />
                     </div>
                     <div class="col-md-3">
+                        <label for="j_ct" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">C/T</label>
+                        <input type="text" id="j_ct" class="form-control"  />
+                    </div>
+                    <div class="col-md-3">
                         <label for="jsayang" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">사양구분</label>
                         <input type="text" id="jsayang" class="form-control"  />
                     </div>
@@ -199,6 +253,8 @@
                         <label for="j_net" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품중량</label>
                         <input type="text" id="j_net" class="form-control"  />
                     </div> 
+                </form>                    
+                <form class="row g-2"> 
                     <div class="col-md-3">
                         <label for="acode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">거래처코드</label>
                         <input type="text" id="acode" class="form-control"  />     
@@ -215,34 +271,9 @@
                         <div class="input-group"> 
                             <textarea class="form-control" aria-label="With textarea" name="jbigo" id="jbigo" ></textarea>
                         </div>  
-                    </div>  
-                    <div class="col-md-7">
-                        <label class="form-label">품목분류</label>
-                        <div class="d-flex flex-wrap gap-2">
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" id="w_b_gubn_J" name="w_b_gubn" type="radio" value="J" />
-                            <label class="form-check-label" for="w_b_gubn_J">제품</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" id="w_b_gubn_W" name="w_b_gubn" type="radio" value="W" />
-                            <label class="form-check-label" for="w_b_gubn_W">원자재</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" id="w_b_gubn_B" name="w_b_gubn" type="radio" value="B" />
-                            <label class="form-check-label" for="w_b_gubn_B">부자재</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" id="w_b_gubn_H" name="w_b_gubn" type="radio" value="H" />
-                            <label class="form-check-label" for="w_b_gubn_H">반제품</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" id="w_b_gubn_G" name="w_b_gubn" type="radio" value="G" />
-                            <label class="form-check-label" for="w_b_gubn_G">기타</label>
-                          </div>
-                        </div>
-                    </div>
+                    </div> 
                 </form>
-            </div>      
+            <!-- </div>       -->
         </div>
     </div>
 
@@ -392,6 +423,8 @@
         const door2List = [[${door2List}]];
         const formList = [[${formList}]];
         const colorList = [[${colorList}]];
+        const jthickList = [[${jthickList}]];
+        
         // 폼 저장시  file data 와   string data 담을 변수 
         let formData = new FormData(); 
 
@@ -427,7 +460,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.jkey}</b>',
                             click: (e, ctx) => {
-                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
+                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
                             }
                         })
                     }, 
@@ -436,11 +469,11 @@
                         binding: 'jpum',
                         width: 250,
                         header: '제품명', 
-                        align:"center",
+                        align:"left",
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.jpum}</b>',
                             click: (e, ctx) => {
-                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
+                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
                             }
                         })
                     },   
@@ -459,7 +492,7 @@
                     { binding: 'w_b_gubn', header: '품목분류', align: "center", width: 100 },               
                     { binding: 'jchgoga0', header: '단가', align: "right", width: 100 }, 
                     { binding: 'j_dae', header: '대분류', align: "center", width: 0 },               
-                    { binding: 'j_jung', header: '중분류', align: "right", width: 0 }, 
+                    // { binding: 'j_jung', header: '중분류', align: "right", width: 0 }, 
                     { binding: 'j_misayong', header: '미사용', align: "right", width: 0 },  
                     // { binding: 'j_sang', header: '구격중복사용', align: "right", width: 0 },                                  
                     
@@ -516,7 +549,8 @@
                         jgumtype: wtab01Dto[i]["jgumtype"] ,  
                         jgumtypenm: wtab01Dto[i]["jgumtypenm"] ,  
                         jdoor1: wtab01Dto[i]["jdoor1"] ,  
-                        jdoor2: wtab01Dto[i]["jdoor2"] ,  
+                        jdoor2: wtab01Dto[i]["jdoor2"] ,   
+                        jthick: wtab01Dto[i]["jthick"] , 
                         
                         
                     });
@@ -566,7 +600,8 @@
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
                     { binding: 'jpumname', header: '유형', align: "center", width: 100 },  
                     { binding: 'jdoor1', header: 'Door1', align: "center", width: 100 },   
-                    { binding: 'jdoor2', header: 'Door2', align: "center", width: 100 },  
+                    { binding: 'jdoor2', header: 'Door2', align: "center", width: 100 },              
+                    { binding: 'jthick', header: '유리두께', align: "center", width: 100 }, 
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
                     { binding: 'jpumcode', header: 'KCC품목코드', align: "center", width: 200 }, 
                     { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
@@ -577,8 +612,7 @@
                     { binding: 'jbigo', header: '비고', align: "center", width: 100 },
                     { binding: 'w_b_gubn', header: '품목분류', align: "center", width: 100 },               
                     { binding: 'jchgoga0', header: '단가', align: "right", width: 100 }, 
-                    { binding: 'j_dae', header: '대분류', align: "center", width: 0 },               
-                    { binding: 'j_jung', header: '중분류', align: "center", width: 0 }, 
+                    { binding: 'j_dae', header: '대분류', align: "center", width: 0 },   
                     { binding: 'j_misayong', header: '미사용', align: "center", width: 0 },  
                     // { binding: 'j_sang', header: '구격중복사용', align: "right", width: 0 },           
                     
@@ -644,7 +678,8 @@
                         jgumtype: wtab01Dto[i]["jgumtype"] ,  
                         jgumtypenm: wtab01Dto[i]["jgumtypenm"] ,  
                         jdoor1: wtab01Dto[i]["jdoor1"] ,  
-                        jdoor2: wtab01Dto[i]["jdoor2"] ,  
+                        jdoor2: wtab01Dto[i]["jdoor2"] ,   
+                        jthick: wtab01Dto[i]["jthick"] , 
                         
                     });
                     cnt++;
@@ -726,6 +761,8 @@
             const jpumnameWrap = document.getElementById('jpumname_wrap');
             const jdoor1Wrap = document.getElementById('jdoor1_wrap');
             const jdoor2Wrap = document.getElementById('jdoor2_wrap'); 
+            const jthick2Wrap = document.getElementById('jthick_wrap'); 
+            
             // 완전히 제거
             while (jpumWrap.firstChild) {
                 jpumWrap.removeChild(jpumWrap.firstChild);
@@ -742,7 +779,10 @@
             while (jdoor2Wrap.firstChild) {
                 jdoor2Wrap.removeChild(jdoor2Wrap.firstChild);
             }
-   
+            while (jthickWrap.firstChild) {
+                jthickWrap.removeChild(jthickWrap.firstChild);
+            }
+            
 
             if (category === '02') { 
                 // jpum 생성 --------------------------------------
@@ -816,6 +856,24 @@
                     select_04.appendChild(opt04);
                 }); 
                 jdoor2Wrap.appendChild(select_04);
+                // jthick 생성 --------------------------------------
+                select_06.name = "jthick";
+                select_06.id = "jthick";
+                select_06.className = "form-select form-select-sm";
+                select_06.style.width = "200px";
+
+                const dOpt06 = document.createElement('option'); 
+                dOpt06.value = "";
+                dOpt06.text = "선택";
+                select_06.appendChild(dOpt06);
+
+                jthickList.forEach(item => {
+                    const opt06 = document.createElement('option');
+                    opt06.value = item.pname;
+                    opt06.text = item.pname;  
+                    select_06.appendChild(opt06);
+                }); 
+                jthickWrap.appendChild(select_06);
                 // form 생성 --------------------------------------
                 select_05.name = "jpumname";
                 select_05.id = "jpumname";
@@ -871,6 +929,17 @@
                 input_04.autocomplete = 'off';
                 input_04.style.width = '200px';
                 jdoor2Wrap.appendChild(input_04);
+                // jthick 생성
+                input_06.type = 'text';
+                input_06.name = 'jthick';
+                input_06.id = 'jthick';
+                input_06.className = 'form-control form-control-sm';
+                input_06.placeholder = 'jthick을 직접 입력하세요';
+                input_06.autocomplete = 'off';
+                input_06.style.width = '200px';
+                jthickWrap.appendChild(input_06);
+
+                
                 // form 생성
                 input_05.type = 'text';
                 input_05.name = 'jpumname';
@@ -918,7 +987,7 @@
         function clear_rtn(elem){
             document.getElementById('jkey').value =  ""; 
             document.getElementById('j_dae').value =  "02";   
-            document.getElementById('j_jung').value =  ""; 
+            // document.getElementById('j_jung').value =  ""; 
             document.getElementById('jgugek').value =  "";
             document.getElementById('jpum').value =  "";  
             document.getElementById('jgugek2').value =  "";    
@@ -940,7 +1009,9 @@
             document.getElementById('jgumtype').value = ""; 
             document.getElementById('jsayang').value = ""; 
             document.getElementById('jdoor1').value = ""; 
-            document.getElementById('jdoor2').value = ""; 
+            document.getElementById('jdoor2').value = "";
+            document.getElementById('jthick').value = "";
+             
             // document.getElementById('j_sang').value = ""; 
             document.getElementById('jboxsu1').value = 0; 
         }
@@ -950,19 +1021,25 @@
             var jgugek2_sel = document.getElementById('jgugek2'); 
             var jdoor1_sel = document.getElementById('jdoor1'); 
             var jdoor2_sel = document.getElementById('jdoor2'); 
+            var jthick_sel = document.getElementById('jthick'); 
+            
             var jpumname_sel = document.getElementById('jpumname');
 
             var ls_jkey     =  document.getElementById('jkey').value;  
             var ls_j_dae    =  document.getElementById('j_dae').value;  
-            var ls_j_jung   =  document.getElementById('j_jung').value;
+            var ls_j_jung   =  ""; //document.getElementById('j_jung').value;
             var ls_jgugek   =  document.getElementById('jgugek').value;  
             var ls_jpum     =  document.getElementById('jpum').value; 
-            if (jpum_sel.tagName === 'SELECT') {
+            if (jpum_sel.tagName === 'SELECT'   && jpum_sel.selectedIndex >= 0) {
                 var ls_jpum =  jpum_sel.options[jpum_sel.selectedIndex].text;
-            }    
+            }else{
+                var ls_jpum    = "";
+            }   
             var ls_jgugek2  =  document.getElementById('jgugek2').value; 
-            if (jgugek2_sel.tagName === 'SELECT') { 
+            if (jgugek2_sel.tagName === 'SELECT'  && jgugek2_sel.selectedIndex >= 0) { 
                 var ls_jgugek2  =  jgugek2_sel.options[jgugek2_sel.selectedIndex].text;    
+            }else{
+                var ls_jgugek2    = "";
             }
             var ls_jpumcode =  document.getElementById('jpumcode').value;  
             var ls_jsayang  =  document.getElementById('jsayang').value; 
@@ -976,13 +1053,25 @@
             var ls_acode    =  document.getElementById('acode').value;  
             var ls_jgumtype     =  document.getElementById('jgumtype').value;
             var ls_door1    =  document.getElementById('jdoor1').value;
-            if (jdoor1_sel.tagName === 'SELECT') { 
+            if (jdoor1_sel.tagName === 'SELECT' && jdoor1_sel.selectedIndex >= 0) { 
                 var ls_door1    =  jdoor1_sel.options[jdoor1_sel.selectedIndex].text;
+            }else{
+                var ls_door1    = "";
             }
             var ls_door2        =  document.getElementById('jdoor2').value; 
-            if (jdoor2_sel.tagName === 'SELECT') { 
+            
+            if (jdoor2_sel.tagName === 'SELECT' && jdoor2_sel.selectedIndex >= 0 ) { 
                 var ls_door2    =  jdoor2_sel.options[jdoor2_sel.selectedIndex].text; 
+            }else{
+                var ls_door2    = "";
             }   
+            var ls_jthick        =  document.getElementById('jthick').value; 
+            if (jthick_sel.tagName === 'SELECT' && jthick_sel.selectedIndex >= 0) { 
+                var ls_jthick    =  jthick_sel.options[jthick_sel.selectedIndex].text; 
+            }else{
+                var ls_jthick    = "";
+            } 
+            
             var ls_jpumname =  document.getElementById('jpumname').value; 
             if (jpumname_sel.tagName === 'SELECT') { 
                 var ls_jpumname =  jpumname_sel.options[jpumname_sel.selectedIndex].text; 
@@ -1038,10 +1127,10 @@
                     alert("대분류를 선택하세요") 
                         return ;                 
                 }  
-                if(!ls_j_jung){
-                    alert("중분류를 선택하세요") 
-                        return ;                 
-                }  
+                // if(!ls_j_jung){
+                //     alert("중분류를 선택하세요") 
+                //         return ;                 
+                // }  
                 // if(!ls_jchajong){
                 //     alert("차종을 입력하세요") 
                 //         return ;                 
@@ -1075,7 +1164,8 @@
                     "acode"         : ls_acode,     
                     "jgumtype"      : ls_jgumtype,     
                     "jdoor1"        : ls_door1,     
-                    "jdoor2"        : ls_door2
+                    "jdoor2"        : ls_door2,
+                    "jthick"        : ls_jthick
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
                 formData.delete("key");   
@@ -1218,6 +1308,8 @@
                     jgumtypenm: wtab01Dto[i]["jgumtypenm"],       
                     jdoor1: wtab01Dto[i]["jdoor1"],     
                     jdoor2: wtab01Dto[i]["jdoor2"], 
+                    jthick: wtab01Dto[i]["jthick"], 
+                    
                 });
                 cnt++;
             }    
@@ -1233,7 +1325,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.jkey}</b>',
                 click: (e, ctx) => {
-                    wjcodeChk_a("A",ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);                 
+                    wjcodeChk_a("A",ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);                 
                     
                 }
             });
@@ -1367,12 +1459,12 @@
             cols.width = 0;
             wtab01Grid.columns.push(cols); 
 
-            cols = new wijmo.grid.Column(); 
-            cols.binding = 'j_jung';
-            cols.header = '중분류'; 
-            cols.align = "center"; 
-            cols.width = 0;
-            wtab01Grid.columns.push(cols); 
+            // cols = new wijmo.grid.Column(); 
+            // cols.binding = 'j_jung';
+            // cols.header = '중분류'; 
+            // cols.align = "center"; 
+            // cols.width = 0;
+            // wtab01Grid.columns.push(cols); 
 
             cols = new wijmo.grid.Column(); 
             cols.binding = 'j_misayong';
@@ -1382,7 +1474,7 @@
             wtab01Grid.columns.push(cols);  
         }        
  
-            //   "A", jkey, j_dae, j_jung, jgugek, jgugek2,jpum, jpumcode, jsayang, j_net, jchajong, 
+            //   "A", jkey, j_dae, jthick, jgugek, jgugek2,jpum, jpumcode, jsayang, j_net, jchajong, 
             //   j_sr,j_ct, j_cavity, jdanwy, jbigo, w_b_gubn , jpumname, j_misayong, j_sang, jboxsu1, 
             //   cltcd, acorp, jgumtype, jdoor1, jdoor2
         function wjcodeChk_a(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25){            
@@ -1393,7 +1485,8 @@
             const jpumnameWrap = document.getElementById('jpumname_wrap');
             const jdoor1Wrap = document.getElementById('jdoor1_wrap');
             const jdoor2Wrap = document.getElementById('jdoor2_wrap');
- 
+            const jthickWrap = document.getElementById('jthick_wrap');
+            
             const select_01 = document.createElement('select');  //jpum
             const input_01 = document.createElement('input');    //jpum
             const select_02 = document.createElement('select');  //jgugek2
@@ -1404,6 +1497,8 @@
             const input_04 = document.createElement('input');    //door2
             const select_05 = document.createElement('select');  //form
             const input_05 = document.createElement('input');    //form
+            const select_06 = document.createElement('select');  //jthick
+            const input_06 = document.createElement('input');    //jthick
             
             // ✅ 기존 하위 요소 제거
             jpumWrap.innerHTML = '';
@@ -1411,7 +1506,8 @@
             jpumnameWrap.innerHTML = '';
             jdoor1Wrap.innerHTML = '';
             jdoor2Wrap.innerHTML = '';
-
+            jthickWrap.innerHTML = '';
+            
             // 완전히 제거
             while (jpumWrap.firstChild) {
                 jpumWrap.removeChild(jpumWrap.firstChild);
@@ -1428,7 +1524,10 @@
             while (jdoor2Wrap.firstChild) {
                 jdoor2Wrap.removeChild(jdoor2Wrap.firstChild);
             }
-   
+            while (jthickWrap.firstChild) {
+                jthickWrap.removeChild(jthickWrap.firstChild);
+            }
+            
 
             if (arg2 === '02') { 
                 // jpum 생성 --------------------------------------
@@ -1501,6 +1600,24 @@
                     select_04.appendChild(opt04);
                 }); 
                 jdoor2Wrap.appendChild(select_04);
+                // jthick 생성 --------------------------------------
+                select_06.name = "jthick";
+                select_06.id = "jthick";
+                select_06.className = "form-select form-select-sm";
+                select_06.style.width = "200px";
+
+                const dOpt06 = document.createElement('option'); 
+                dOpt06.value = "";
+                dOpt06.text = "선택";
+                select_06.appendChild(dOpt06);
+
+                jthickList.forEach(item => {
+                    const opt06 = document.createElement('option');
+                    opt06.value = item.pname;
+                    opt06.text = item.pname;  
+                    select_06.appendChild(opt06);
+                }); 
+                jthickWrap.appendChild(select_06);
                 // form 생성 --------------------------------------
                 select_05.name = "jpumname";
                 select_05.id = "jpumname";
@@ -1556,6 +1673,15 @@
                 input_04.autocomplete = 'off';
                 input_04.style.width = '200px';
                 jdoor2Wrap.appendChild(input_04);
+                // jthick 생성
+                input_06.type = 'text';
+                input_06.name = 'jthick';
+                input_06.id = 'jthick';
+                input_06.className = 'form-control form-control-sm';
+                input_06.placeholder = '유리두께를 직접 입력하세요';
+                input_06.autocomplete = 'off';
+                input_06.style.width = '200px';
+                jthickWrap.appendChild(input_06);
                 // form 생성
                 input_05.type = 'text';
                 input_05.name = 'jpumname';
@@ -1570,7 +1696,7 @@
 
             document.getElementById('jkey').value = arg1;  
             document.getElementById('j_dae').value = arg2;   
-            document.getElementById('j_jung').value = arg3;
+            document.getElementById('jthick').value = arg3;
             document.getElementById('jgugek').value = arg4; 
             document.getElementById('jgugek2').value = arg5; 
             document.getElementById('jpum').value = arg6;   
@@ -1675,6 +1801,8 @@
                         jgumtypenm: wtab02Dto[i]["jgumtypenm"],    
                         jdoor1: wtab01Dto[i]["jdoor1"],     
                         jdoor2: wtab01Dto[i]["jdoor2"],     
+                        jthick: wtab01Dto[i]["jthick"],     
+                        
                     });
                     cnt++;
                 }   
@@ -1757,6 +1885,14 @@
                 cols.width = 100;
                 wtab02Grid.columns.push(cols);  
 
+                                
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'jthick';
+                cols.header = '유리두께'; 
+                cols.align = "center"; 
+                cols.width = 100;
+                wtab02Grid.columns.push(cols);  
+
                 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'jdanwy';
@@ -1835,12 +1971,12 @@
                 cols.width = 0;
                 wtab02Grid.columns.push(cols); 
 
-                cols = new wijmo.grid.Column(); 
-                cols.binding = 'j_jung';
-                cols.header = '중분류'; 
-                cols.align = "center"; 
-                cols.width = 0;
-                wtab02Grid.columns.push(cols); 
+                // cols = new wijmo.grid.Column(); 
+                // cols.binding = 'j_jung';
+                // cols.header = '중분류'; 
+                // cols.align = "center"; 
+                // cols.width = 0;
+                // wtab02Grid.columns.push(cols); 
 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'j_misayong';

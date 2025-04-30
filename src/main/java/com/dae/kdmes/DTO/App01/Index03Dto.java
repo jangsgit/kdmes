@@ -50,5 +50,6 @@ public class Index03Dto {
     private String jgumtypenm;
     private String jdoor1;
     private String jdoor2;
+    private String jthick;
 
 }

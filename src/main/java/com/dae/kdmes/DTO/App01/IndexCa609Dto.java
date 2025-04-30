@@ -57,6 +57,11 @@ public class IndexCa609Dto {
     private String wonflag;
     private String moncls;
     private Integer lvsn;
+    private Integer jboxsu1;
+    private Integer boxsu;
+    private Integer boxjan;
+    private Integer ischqty;
+
     private List<IndexCa613OworkDto> oworks;
 
 }

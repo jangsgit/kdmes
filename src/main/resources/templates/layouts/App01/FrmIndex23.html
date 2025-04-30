@@ -266,7 +266,11 @@
                                     { binding: 'uamt', header: '단가', align: "right", format: 'n0', width: 80 }, 
                                     { binding: 'samt', header: '금액', align: "right", format: 'n0', width: 80 },  
                                     { binding: 'ischnm', header: '납품장소', align: "center", width: 280 },           
-                                    { binding: 'ischdate', header: '납기일', align: "center", width: 100 },         
+                                    { binding: 'ischdate', header: '납기일', align: "center", width: 100 },              
+                                    { binding: 'ischdate', header: 'BOX단위', align: "center", width: 100 },           
+                                    { binding: 'ischdate', header: 'BOX수량', align: "center", width: 100 },           
+                                    { binding: 'ischdate', header: 'BOX잔량', align: "center", width: 100 },      
+                                    { binding: 'ischdate', header: '납품가능수량', align: "center", width: 100 },      
                                 ], 
                                 itemsSource: view_p01tab02page
                             });   
@@ -694,6 +698,10 @@
                                     uamt: wtab01Dto[i]["uamt"], 
                                     samt: wtab01Dto[i]["samt"], 
                                     ischnm: wtab01Dto[i]["ischnm"], 
+                                    jboxsu1: wtab01Dto[i]["jboxsu1"], 
+                                    boxsu: wtab01Dto[i]["boxsu"], 
+                                    boxjan: wtab01Dto[i]["boxjan"], 
+                                    ischqty: wtab01Dto[i]["ischqty"],  
                                     ischdate: ls_ischdate,  
                                     
                                 });
@@ -790,14 +798,46 @@
                         cols.binding = 'ischnm';
                         cols.header = '납품장소';
                         cols.align = "left";
-                        cols.width = 280;   
+                        cols.width = 150;   
                         wtab02Grid.columns.push(cols);   
                         
                         cols = new wijmo.grid.Column(); 
                         cols.binding = 'ischdate';
                         cols.header = '납기일';
-                        cols.align = "left";
-                        cols.width = 150;   
+                        cols.align = "center";
+                        cols.width = 120;   
+                        wtab02Grid.columns.push(cols);     
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'jboxsu1';
+                        cols.header = 'BOX단위';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab02Grid.columns.push(cols);     
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'boxsu';
+                        cols.header = 'BOX수량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab02Grid.columns.push(cols);     
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'boxjan';
+                        cols.header = 'BOX잔량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab02Grid.columns.push(cols);     
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'ischqty';
+                        cols.header = '납품가능수량';
+                        cols.align = "right";
+                        cols.width = 120;  
+                        cols.format = 'n0';  
                         wtab02Grid.columns.push(cols);    
                         
                         // cols = new wijmo.grid.Column(); 

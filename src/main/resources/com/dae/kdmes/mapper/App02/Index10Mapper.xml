@@ -515,13 +515,21 @@
 
         <![CDATA[ select A.idxkey , A.baldate, A.balnum, A.balseq,
                       A.cltcd,  A.acorp, A.balno, A.pcode,
-                      A.pname, A.moncls , A.qty, A.uamt, A.uamt, A.samt, A.balflag, A.ischdate, A.ischnm
+                      A.pname, A.moncls , A.qty, A.uamt, A.uamt, A.samt, A.balflag, A.ischdate, A.ischnm,
+                    B.jboxsu1,
+                    Round(A.qty / B.jboxsu1,0) as boxsu,
+                    case when A.qty < Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) then 0 else (A.qty % B.jboxsu1) end boxjan,
+                    case when A.qty < Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) then A.qty else   Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) end   as ischqty
                   from  TB_CA609 A WITH (NOLOCK)
+                  LEFT JOIN JCODE B ON A.pname = B.jpum
                   where  isnull(A.balflag,'') Like #{balflag} + '%'
                     AND  isnull(A.cltcd,'')  Like #{cltcd} + '%'
                     AND  A.baldate between #{frdate} and #{todate}
                   ORDER BY A.idxkey, A.baldate
         ]]>
+
+
+
     </select>
 
 

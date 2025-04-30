@@ -65,7 +65,7 @@
         <![CDATA[
             select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jpumname, jsayang, jpum, jboxsu1, jgumtype, jdoor1, jdoor2,
                    j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn,
-                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp, G.com_rem1 as jgumtypenm, jgumtype
+                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp, G.com_rem1 as jgumtypenm, jgumtype, jthick
             from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey  = E.jcifcode)
             LEFT OUTER JOIN cif      F WITH(NOLOCK) ON (JCODE.cltcd = F.acorp1 + CAST(F.acorp2 as varchar))
@@ -91,10 +91,10 @@
 
     <insert id="InsertJpum" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
         insert into JCODE ( jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jpumname, cltcd, jgumtype,
-                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1 , jdoor1, jdoor2) values
+                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1 , jdoor1, jdoor2, jthick) values
                         (#{jkey}, #{j_dae}, #{j_jung}, #{jgugek}, #{jpum}, #{jgugek2}, #{jpumcode}, #{jpumname},#{cltcd}, #{jgumtype},
                          #{jsayang}, #{j_net}, #{jchajong}, #{j_sr}, #{j_ct}, #{j_cavity}, #{jdanwy}, #{jbigo}, #{w_b_gubn},
-                         #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1}, #{jdoor1}, #{jdoor2})
+                         #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1}, #{jdoor1}, #{jdoor2}, #{jthick})
     </insert>
 
 
@@ -149,6 +149,9 @@
         <if test="jdoor1 != null">jdoor1=#{jdoor1}</if>
         <if test="jdoor2 != null ">,</if>
         <if test="jdoor2 != null">jdoor2=#{jdoor2}</if>
+        <if test="jthick != null ">,</if>
+        <if test="jthick != null">jthick=#{jthick}</if>
+
         where jkey   = #{jkey}
     </update>
 
@@ -214,5 +217,11 @@
         ORDER BY  A.com_code
     </select>
 
+    <select id="GetJthickComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        SELECT  A.com_code as pcode , A.com_rem1 as pname
+        FROM TB_CA510 A WITH (NOLOCK)
+        WHERE A.com_code != '00' AND A.com_cls = '106'
+        ORDER BY  A.com_code
+    </select>
 
 </mapper>

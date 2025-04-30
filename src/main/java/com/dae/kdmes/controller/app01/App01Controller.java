@@ -193,6 +193,7 @@ public class App01Controller {
         List<TBPopupVO> _indexDoor2List = new ArrayList<>();
         List<TBPopupVO> _indexFormList = new ArrayList<>();
         List<TBPopupVO> _indexColorList = new ArrayList<>();
+        List<TBPopupVO> _indexJthickList = new ArrayList<>();
 
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -212,6 +213,7 @@ public class App01Controller {
             _indexDoor2List = service03.GetDoor2ComboList(_indexpopDto);
             _indexFormList = service03.GetFormComboList(_indexpopDto);
             _indexColorList = service03.GetColorComboList(_indexpopDto);
+            _indexJthickList = service03.GetJthickComboList(_indexpopDto);
 
 
             model.addAttribute("j1_keyList",popupListDto);
@@ -223,6 +225,7 @@ public class App01Controller {
             model.addAttribute("door2List",_indexDoor2List);
             model.addAttribute("formList",_indexFormList);
             model.addAttribute("colorList",_indexColorList);
+            model.addAttribute("jthickList",_indexJthickList);
 
         } catch (Exception ex) {
 //                dispatchException = ex;

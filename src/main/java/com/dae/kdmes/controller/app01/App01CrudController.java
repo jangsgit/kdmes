@@ -561,6 +561,9 @@ public class App01CrudController {
                     case "jdoor2":
                         index03Dto.setJdoor2(values.toString());
                         break;
+                    case "jthick":
+                        index03Dto.setJthick(values.toString());
+                        break;
                     default:
                         break;
                 }
