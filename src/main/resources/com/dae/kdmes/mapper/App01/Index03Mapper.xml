@@ -183,42 +183,42 @@
     </select>
 
     <select id="GetJpumComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
-        SELECT  A.com_code as pcode , A.com_rem1 as pname
+        SELECT  A.com_code as pcode , LTRIM(RTRIM(A.com_rem1)) as pname
         FROM TB_CA510 A WITH (NOLOCK)
         WHERE A.com_code != '00' AND A.com_cls = '101'
         ORDER BY  A.com_code
     </select>
 
     <select id="GetDoor1ComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
-        SELECT  A.com_code as pcode , A.com_rem1 as pname
+        SELECT  A.com_code as pcode , LTRIM(RTRIM(A.com_rem1)) as pname
         FROM TB_CA510 A WITH (NOLOCK)
         WHERE A.com_code != '00' AND A.com_cls = '102'
         ORDER BY  A.com_code
     </select>
 
     <select id="GetDoor2ComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
-        SELECT  A.com_code as pcode , A.com_rem1 as pname
+        SELECT  A.com_code as pcode , LTRIM(RTRIM(A.com_rem1)) as pname
         FROM TB_CA510 A WITH (NOLOCK)
         WHERE A.com_code != '00' AND A.com_cls = '103'
         ORDER BY  A.com_code
     </select>
 
     <select id="GetFormComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
-        SELECT  A.com_code as pcode , A.com_rem1 as pname
+        SELECT  A.com_code as pcode , LTRIM(RTRIM(A.com_rem1)) as pname
         FROM TB_CA510 A WITH (NOLOCK)
         WHERE A.com_code != '00' AND A.com_cls = '104'
         ORDER BY  A.com_code
     </select>
 
     <select id="GetColorComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
-        SELECT  A.com_code as pcode , A.com_rem1 as pname
+        SELECT  A.com_code as pcode , LTRIM(RTRIM(A.com_rem1)) as pname
         FROM TB_CA510 A WITH (NOLOCK)
         WHERE A.com_code != '00' AND A.com_cls = '105'
         ORDER BY  A.com_code
     </select>
 
     <select id="GetJthickComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
-        SELECT  A.com_code as pcode , A.com_rem1 as pname
+        SELECT  A.com_code as pcode , LTRIM(RTRIM(A.com_rem1)) as pname
         FROM TB_CA510 A WITH (NOLOCK)
         WHERE A.com_code != '00' AND A.com_cls = '106'
         ORDER BY  A.com_code

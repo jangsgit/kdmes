@@ -52,6 +52,8 @@ public class App01Controller {
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
 
+    TBPopupVO wrmcDto = new TBPopupVO();
+
     Index01Dto index01Dto = new Index01Dto();
 
     Index02Dto index02Dto = new Index02Dto();
@@ -388,13 +390,24 @@ public class App01Controller {
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
         List<Pc120Dto> _index08ListDto = new ArrayList<>();
+        List<TBPopupVO> _indexJpumList = new ArrayList<>();
         Pc120Dto _index08Dto = new Pc120Dto();
+        TBPopupVO _indexpopDto = new TBPopupVO();
+
         try {
             _index08Dto.setFacname("%");
             _index08ListDto = service08.getFacList(_index08Dto);
             //   index02ListDto = service02.getWrcmList(index02Dto);
-
             model.addAttribute("Index23List",_index08ListDto);
+            wrmcDto.setWflag("00010");
+            wrmcDto.setMachname("%");
+            model.addAttribute("wrmcist", appPopupService.GetWrmcList01(wrmcDto));
+
+
+            _indexJpumList = service03.GetJpumComboList(_indexpopDto);
+            model.addAttribute("jpumList",_indexJpumList);
+
+
             //    model.addAttribute("WrcmList",index02ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

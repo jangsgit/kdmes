@@ -116,6 +116,10 @@
                                                 </button> 
                                             </div>   
                                             <div class="col-auto">  
+                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" onclick="wf_planno('','')">작업걔획
+                                                </button> 
+                                            </div>   
+                                            <div class="col-auto">  
                                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="delete_btn('B')">삭제
                                                 </button> 
                                             </div>  
@@ -173,7 +177,108 @@
                         </div> 
                     </div>    
  
+
+
+                    <!--------------------------------------------------------------------------------------->    
+                    <!--  모달 처리 -->
+                    <input class="form-control form-control-sm"  type="hidden" id="inplannobtn" data-bs-toggle="modal" data-bs-target="#plannomodal"  /> 
+                    <!--------------------------------------------------------------------------------------->   
+                    <div class="modal fade" id="plannomodal" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1">
+                        <div class="modal-dialog modal-lg mt-6" style="max-width: 1200px;">
+                          <div class="modal-content border-0"> 
+                            <div class="modal-header justify-content-between">
+                                <h5 class="modal-title fw-bold" id="plannomodalLabel">생산계획등록</h5>
+                                <button class="btn btn-primary btn-sm" type="button" id="savePlanBtn">저장</button>
+                            </div>
+
+                            <div class="modal-body p-4">
+                              <form class="row g-3">
+                                <div class="col-md-3">
+                                  <label for="indate" class="form-label">등록일자<span class="text-danger">*</span></label>
+                                  <input type="text" class="form-control datetimepicker" id="indate" autocomplete="off" placeholder="Y-m-d">
+                                  <input type="hidden" class="form-control" id="pbaldate" autocomplete="off" placeholder="">
+                                  <input type="hidden" class="form-control" id="pbalno" autocomplete="off" placeholder="">
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="prod_sdate" class="form-label">생산시작일자<span class="text-danger">*</span></label>
+                                  <input type="text" class="form-control datetimepicker" id="prod_sdate" autocomplete="off" placeholder="Y-m-d">
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="prod_edate" class="form-label">생산종료일자</label>
+                                  <input type="text" class="form-control datetimepicker" id="prod_edate" autocomplete="off" placeholder="Y-m-d">
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="prod_edate" class="form-label">출고예정일</label>
+                                  <input type="text" class="form-control datetimepicker" id="qcdate" autocomplete="off" placeholder="Y-m-d">
+                                </div>
+                            </form>
+                            <form class="row g-3"> 
+                                <div class="col-md-3"> 
+                                  <label for="ajumi1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품명<span class="text-danger">*</span></label>
+                                  <div class="input_wrap" style="max-width: 225px;"  id="jpum_wrap"> 
+                                      <select th:field="*{jpumList}" name="jpum" id="jpum">
+                                          <option value="">선택</option>
+                                          <option th:each="val : ${jpumList}" th:value="${#strings.trim(val.pname)}" th:text="${val.pname}"> 
+                                      </select>                                              
+                                  </div> 
+                                  <input type="hidden" class="form-control" id="pcode" autocomplete="off" placeholder="">
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="prod_qty" class="form-label">생산계획수량</label>
+                                  <input type="number" class="form-control" id="prod_qty" autocomplete="off">
+                                </div>
+                            </form>    
+                            <form class="row g-3">
+                                <div class="col-md-3">
+                                  <label   class="form-label">호기</label>
+                                  <select  class="form-select"  th:field="*{wrmcist}" name="wrmccon" id="wrmccon">
+                                      <option value="">호기</option>
+                                      <option th:each="val : ${wrmcist}" th:value="${val.wrmc}" th:text="${val.wrmcnm}">
+                                  </select>   
+                                </div>
+                                <div class="col-md-3">
+                                  <label  class="form-label">월</label>
+                                  <select class="form-select" id="inmonth">
+                                    <option selected="">월</option>
+                                    <option value="1월">1월</option>
+                                    <option value="2월">2월</option>
+                                    <option value="3월">3월</option>
+                                    <option value="4월">4월</option>
+                                    <option value="5월">5월</option>
+                                    <option value="6월">6월</option>
+                                    <option value="7월">7월</option>
+                                    <option value="8월">8월</option>
+                                    <option value="9월">9월</option>
+                                    <option value="10월">10월</option>
+                                    <option value="11월">11월</option>
+                                    <option value="12월">12월</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-3">
+                                  <label   class="form-label">주차</label>
+                                  <select class="form-select" id="inweeks">
+                                    <option selected="">주차</option>
+                                    <option value="1">1주차</option>
+                                    <option value="2">2주차</option>
+                                    <option value="3">3주차</option>
+                                    <option value="4">4주차</option>
+                                    <option value="5">5주차</option>
+                                    <option value="6">6주차</option>
+                                  </select>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="modal-footer justify-content-end"> 
+                                  <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">닫기</button> 
+                            </div> 
+                              
+                          </div>
+                        </div>
+                      </div>
+                                      
                 <!--------------------------------------------------------------------------------------->   
+
+                
 
                     <script type="text/javascript" th:inline="javascript">
                         var view_p01tab01page;
@@ -188,6 +293,10 @@
                         let wtodate;   
                         let wfrdate02;
                         let wtodate02; 
+                        let windate;
+                        let wprod_sdate;
+                        let wprod_edate;
+                        let wqcdate; 
                         var idxkeyArr = new Array();  
                         let includeColumnHeader = false;
                         window.onload = function() {    
@@ -563,10 +672,7 @@
                             } 
 
                         } 
-
-
-
-
+ 
                         function savechk_rtn(){
                             if(chkTabA.length == 0){
                                 alert("주문할 자료를 선택하세요")
@@ -633,9 +739,7 @@
                                    var ls_cltnm = document.getElementById('cltnm').value  
                                    if(ls_cltnm == null || ls_cltnm.length == 0 || ls_cltnm == ""){ 
                                     ls_acode    = "%"
-                                   }         
-                                   console.log(ls_frdate)         
-                                   console.log(ls_todate)       
+                                   }              
                                    $.ajax({
                                        url: '/app02m/index23/list01',  
                                        type:"POST",
@@ -690,7 +794,8 @@
                                     balno: wtab01Dto[i]["balno"],
                                     baldate: ls_baldate,  
                                     moncls: wtab01Dto[i]["moncls"], 
-                                    balflag: wtab01Dto[i]["balflag"], 
+                                    balflag: wtab01Dto[i]["balflag"],  
+                                    pcode: wtab01Dto[i]["pcode"], 
                                     pname: wtab01Dto[i]["pname"], 
                                     psize: wtab01Dto[i]["psize"], 
                                     punit: wtab01Dto[i]["punit"], 
@@ -752,6 +857,12 @@
                         cols.header = '품명';
                         cols.align = "left";
                         cols.width = 150;  
+                        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
+                            text: '<b>${item.pname}</b>',
+                            click: (e, ctx) => {
+                                wf_planno(ctx.item.balno,ctx.item.baldate, ctx.item.pcode, ctx.item.pname);           
+                            }
+                        });
                         wtab02Grid.columns.push(cols);   
 
                         // cols = new wijmo.grid.Column(); 
@@ -848,8 +959,24 @@
                         // cols.width = 50;   
                         // wtab02Grid.columns.push(cols);    
                        }
-                         
+                    //balno,baldate, pcode, pname   
+                    function wf_planno(arg1, arg2,arg3, arg4){                          
+                        document.getElementById('pbalno').value = arg1
+                        document.getElementById('pbaldate').value = arg2
+                        document.getElementById('pcode').value = arg3 
+                        document.getElementById('jpum').value = arg4 
+                        document.getElementById("inplannobtn").click();
+                    }
+                    function save_planno(){
 
+                        var ls_indate     =  convert_date(windate.value); // (document.getElementById('indate').value).replaceAll("-","");                  
+                        var ls_prod_sdate =  convert_date(wprod_sdate.value); //(document.getElementById('prod_sdate').value).replaceAll("-","");   
+                        var ls_prod_edate =  convert_date(wprod_edate.value); //(document.getElementById('prod_edate')).value.replaceAll("-","");                 
+                        var ls_qcdate     =  convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");   
+                        
+                        
+
+                    }                        
                     function CifSearchList_rtn(arg){  
     
                         var searchCode = "";   
@@ -1006,9 +1133,93 @@
                                 result.setHours(result.getHours() + 9); 
                                 var ls_date = result.toISOString().substring(0,10);                                 
                                 wfrdate.value = ls_date;   
-                                wtodate.value = ls_date;   
-                        } 
-                     
+                                wtodate.value = ls_date; 
+
+                                windate = new wijmo.input.InputDate('#indate', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd', 
+                                });
+                                
+                                wprod_sdate = new wijmo.input.InputDate('#prod_sdate', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd',
+                                    valueChanged: (sender) => showCurrentDate(sender, 7)
+                                });
+                                
+                                wprod_edate = new wijmo.input.InputDate('#prod_edate', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd', 
+                                });
+                                
+                                wqcdate = new wijmo.input.InputDate('#qcdate', {
+                                    isRequired: false,
+                                    value: null,
+                                    placeholder: '',
+                                    format: 'yyyy-MM-dd', 
+                                });
+                                
+                                var result = new Date();
+                                result.setHours(result.getHours() + 9);
+                                var ls_date = result.toISOString().substring(0,10);
+                                windate.value = ls_date; 
+                                wprod_sdate.value = ls_date;  
+                                
+                                result.setDate(result.getDate() + 7);
+                                var ls_edate = result.toISOString().substring(0,10);
+                                wprod_edate.value = ls_edate;
+                                
+                                var today = new Date();
+                                today.setDate(today.getDate() + 30);
+                                var ls_qcdate = today.toISOString().substring(0,10);
+                                wqcdate.value = ls_qcdate;
+                                showCurrentDate(wprod_sdate, 5);   
+                        }  
+                    
+                        // 현재 선택된 날짜 + 5일
+                        function showCurrentDate(ctrl, days) {
+                            var ls_sdate = ctrl.value;   
+                            if(ls_sdate == null || ls_sdate.length == 0 || ls_sdate == ""){ 
+                                return;         
+                            }  
+                            var result = new Date(ls_sdate);
+
+                            
+                            const weekOfMonth = getWeekOfMonth(result); 
+                            const month = ls_sdate.toLocaleString('default', { month: 'long' }); 
+                            document.getElementById('inmonth').value = month;
+                            document.getElementById('inweeks').value = weekOfMonth; 
+                            // document.getElementById('incopymonth').value = month;
+                            // document.getElementById('incopyweeks').value = weekOfMonth; 
+
+                            
+
+                            result.setDate(result.getDate() + days); 
+                            var ls_edate = result.toISOString().substring(0,10); 
+                            wprod_edate.value = ls_edate;  
+                        }  
+                        function getWeekOfMonth(date) { 
+                            const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                            const dayOfWeek = startDate.getDay(); 
+                            const dayOfMonth = date.getDate();
+                            return Math.ceil((dayOfMonth + dayOfWeek) / 7);
+                        }
+                       function convert_time(timestamp){ 
+                           //현재시간
+                           var date = new Date(timestamp); 
+                           var year = date.getFullYear();
+                           var month = ("0" + (1 + date.getMonth())).slice(-2);
+                           var day = ("0" + date.getDate()).slice(-2); 
+                           var hh = date.getHours();  
+                           var min = ('0' + date.getMinutes()).slice(-2) 
+                           time = year +  month +  day   ;
+                           return time;  
+                       }
                     
                     
                        function getToday(){
@@ -1023,23 +1234,9 @@
                            let ls_frday = year + '-' + month + '-01' 
                            let ls_today = year + '-' + month + '-' + date 
                            document.getElementById('frdate').value = ls_frday;  
-                           document.getElementById('todate').value = ls_today;
-                           
-                           // document.getElementById('todate').value = ls_today;
+                           document.getElementById('todate').value = ls_today; 
                        }
-                    
-                       function convert_time(timestamp){ 
-                           //현재시간
-                           var date = new Date(timestamp); 
-                           var year = date.getFullYear();
-                           var month = ("0" + (1 + date.getMonth())).slice(-2);
-                           var day = ("0" + date.getDate()).slice(-2); 
-                           var hh = date.getHours();  
-                           var min = ('0' + date.getMinutes()).slice(-2) 
-                           time = year +  month +  day   ;
-                           return time;  
-                       }
-                    
+
                        function fn_egov_init_date(){
                            // var $frdate = $('#frdate');
                            // var $todate = $('#todate');
