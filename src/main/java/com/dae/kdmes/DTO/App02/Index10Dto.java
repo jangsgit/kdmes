@@ -128,6 +128,9 @@ public class Index10Dto {
     private String inmonthcp;
     private String inweekscp;
 
+    private String sachulflag;
+    private String sachultxt;
+
     private Integer decision2;
     private Integer decision1;
     private Integer decision3;

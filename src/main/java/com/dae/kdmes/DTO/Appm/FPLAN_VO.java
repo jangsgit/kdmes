@@ -88,6 +88,8 @@ public class FPLAN_VO {
     private String wrps;
     private String partcode;
     private String partnm;
+    private String subpartcode;
+    private String subpartnm;
     private String frdate;
     private String todate;
     private String wremark;

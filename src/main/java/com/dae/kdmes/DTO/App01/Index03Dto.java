@@ -51,5 +51,6 @@ public class Index03Dto {
     private String jdoor1;
     private String jdoor2;
     private String jthick;
+    private String j_yangsan;
 
 }

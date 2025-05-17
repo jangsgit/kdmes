@@ -108,15 +108,21 @@
                             </select>                                              
                         </div>     
                     </div> -->
-                    <div class="col-md-3">
+                    <div class="col-auto">
                         <label for="clientName" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품코드 <span class="text-danger">*</span></label>  
-                        <input type="text" id="jkey" class="form-control"  onclick="barcode_prt()" disabled  required /> 
+                        <input type="text" id="jkey"   class="form-control"  onclick="barcode_prt()" disabled  required /> 
                     </div> 
-                    <div class="col-md-3">
+                    <div class="col-auto">
                         <label for="ceo" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종<span class="text-danger">*</span></label>
                         <input type="text" id="jchajong"  class="form-control" />
                     </div>
-                    <div class="col-md-2 align-self-end">
+                    <div class="col-auto">
+                        <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">양산</label> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" id="j_yangsan" value="0" type="checkbox"/>                                         
+                        </div> 
+                    </div> 
+                    <div class="col-auto">
                         <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">미사용제품</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" id="j_misayong" value="0" type="checkbox"/>                                         
@@ -124,7 +130,7 @@
                     </div> 
                 </form> <br>
                 <form class="row g-2">  
-                    <div class="col-md-8">
+                    <div class="col-auto">
                         <label class="form-label">품목분류</label>
                         <div class="d-flex flex-wrap gap-2">
                           <div class="form-check form-check-inline">
@@ -460,7 +466,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.jkey}</b>',
                             click: (e, ctx) => {
-                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
+                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2, ctx.item.j_yangsan);
                             }
                         })
                     }, 
@@ -473,7 +479,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.jpum}</b>',
                             click: (e, ctx) => {
-                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
+                                wjcodeChk_a("A", ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2, ctx.item.j_yangsan);
                             }
                         })
                     },   
@@ -494,6 +500,7 @@
                     { binding: 'j_dae', header: '대분류', align: "center", width: 0 },               
                     // { binding: 'j_jung', header: '중분류', align: "right", width: 0 }, 
                     { binding: 'j_misayong', header: '미사용', align: "right", width: 0 },  
+                    { binding: 'j_yangsan', header: '양산', align: "right", width: 0 },  
                     // { binding: 'j_sang', header: '구격중복사용', align: "right", width: 0 },                                  
                     
                 ], 
@@ -550,7 +557,8 @@
                         jgumtypenm: wtab01Dto[i]["jgumtypenm"] ,  
                         jdoor1: wtab01Dto[i]["jdoor1"] ,  
                         jdoor2: wtab01Dto[i]["jdoor2"] ,   
-                        jthick: wtab01Dto[i]["jthick"] , 
+                        jthick: wtab01Dto[i]["jthick"] ,   
+                        j_yangsan: wtab01Dto[i]["j_yangsan"] , 
                         
                         
                     });
@@ -589,7 +597,7 @@
                         cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.jkey}</b>',
                             click: (e, ctx) => {                                
-                                wjcodeChk_a("B", ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
+                                wjcodeChk_a("B", ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2, ctx.item.j_yangsan);
                             }
                         })
                     }, 
@@ -613,7 +621,8 @@
                     { binding: 'w_b_gubn', header: '품목분류', align: "center", width: 100 },               
                     { binding: 'jchgoga0', header: '단가', align: "right", width: 100 }, 
                     { binding: 'j_dae', header: '대분류', align: "center", width: 0 },   
-                    { binding: 'j_misayong', header: '미사용', align: "center", width: 0 },  
+                    { binding: 'j_misayong', header: '미사용', align: "center", width: 0 },
+                    { binding: 'j_yangsan', header: '양산', align: "center", width: 0 },  
                     // { binding: 'j_sang', header: '구격중복사용', align: "right", width: 0 },           
                     
                 ], 
@@ -679,7 +688,8 @@
                         jgumtypenm: wtab01Dto[i]["jgumtypenm"] ,  
                         jdoor1: wtab01Dto[i]["jdoor1"] ,  
                         jdoor2: wtab01Dto[i]["jdoor2"] ,   
-                        jthick: wtab01Dto[i]["jthick"] , 
+                        jthick: wtab01Dto[i]["jthick"] ,  
+                        j_yangsan: wtab01Dto[i]["j_yangsan"] , 
                         
                     });
                     cnt++;
@@ -1003,6 +1013,7 @@
             document.getElementById('jbigo').value = "";   
             document.querySelector('input[name="w_b_gubn"][value="J"]').checked = true; 
             document.getElementById('j_misayong').checked = false; 
+            document.getElementById('j_yangsan').checked = false; 
             document.getElementById('acode').value = ""; 
             document.getElementById('acorp').innerHTML = "";  
             document.getElementById('acorp').value = "";  
@@ -1078,6 +1089,7 @@
             }                
             var ls_jchgoga0 =  0; 
             var ls_j_misayong =  document.getElementById('j_misayong').value;
+            var ls_j_yangsan =  document.getElementById('j_yangsan').value;
             // var ls_j_sang =  document.getElementById('j_sang').value;
             var ls_jboxsu1 =  document.getElementById('jboxsu1').value;
                  
@@ -1094,6 +1106,14 @@
                 ls_j_misayong = "0"
             }else{
                 ls_j_misayong = "1"
+            }
+            const j_yangsan = document.getElementById('j_yangsan'); 
+            const is_checked02 = j_yangsan.checked;
+             
+            if (!is_checked02){
+                ls_j_yangsan = "0"
+            }else{
+                ls_j_yangsan = "1"
             }
             var ls_j_sang = "0"
             // const j_sang = document.getElementById('j_sang'); 
@@ -1165,7 +1185,8 @@
                     "jgumtype"      : ls_jgumtype,     
                     "jdoor1"        : ls_door1,     
                     "jdoor2"        : ls_door2,
-                    "jthick"        : ls_jthick
+                    "jthick"        : ls_jthick,
+                    "j_yangsan"    : ls_j_yangsan,
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
                 formData.delete("key");   
@@ -1309,6 +1330,7 @@
                     jdoor1: wtab01Dto[i]["jdoor1"],     
                     jdoor2: wtab01Dto[i]["jdoor2"], 
                     jthick: wtab01Dto[i]["jthick"], 
+                    j_yangsan: wtab01Dto[i]["j_yangsan"], 
                     
                 });
                 cnt++;
@@ -1325,7 +1347,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.jkey}</b>',
                 click: (e, ctx) => {
-                    wjcodeChk_a("A",ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);                 
+                    wjcodeChk_a("A",ctx.item.jkey, ctx.item.j_dae, ctx.item.jthick, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2, ctx.item.j_yangsan);                 
                     
                 }
             });
@@ -1346,7 +1368,7 @@
             cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                 text: '<b>${item.jpum}</b>',
                 click: (e, ctx) => {
-                    wjcodeChk_a("A",ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);                 
+                    wjcodeChk_a("A",ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname , ctx.item.j_misayong , ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2, ctx.item.j_yangsan);                 
                     
                 }
             });       
@@ -1472,12 +1494,19 @@
             cols.align = "center"; 
             cols.width = 0;
             wtab01Grid.columns.push(cols);  
+
+            cols = new wijmo.grid.Column(); 
+            cols.binding = 'j_yangsan';
+            cols.header = '양산'; 
+            cols.align = "center"; 
+            cols.width = 0;
+            wtab01Grid.columns.push(cols);  
         }        
  
             //   "A", jkey, j_dae, jthick, jgugek, jgugek2,jpum, jpumcode, jsayang, j_net, jchajong, 
             //   j_sr,j_ct, j_cavity, jdanwy, jbigo, w_b_gubn , jpumname, j_misayong, j_sang, jboxsu1, 
-            //   cltcd, acorp, jgumtype, jdoor1, jdoor2
-        function wjcodeChk_a(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25){            
+            //   cltcd, acorp, jgumtype, jdoor1, jdoor2, j_yangsan
+        function wjcodeChk_a(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26){            
 
 
             const jpumWrap = document.getElementById('jpum_wrap');    
@@ -1724,6 +1753,12 @@
             }else{
                 j_misayong.checked = false; 
             }   
+            const j_yangsan = document.getElementById('j_yangsan'); 
+            if(arg26 == "1"){
+                j_yangsan.checked = true; 
+            }else{
+                j_yangsan.checked = false; 
+            }   
             var x = document.getElementsByName('w_b_gubn');
 
             for(var i=0; i<5; i++) {
@@ -1801,7 +1836,8 @@
                         jgumtypenm: wtab02Dto[i]["jgumtypenm"],    
                         jdoor1: wtab01Dto[i]["jdoor1"],     
                         jdoor2: wtab01Dto[i]["jdoor2"],     
-                        jthick: wtab01Dto[i]["jthick"],     
+                        jthick: wtab01Dto[i]["jthick"],       
+                        j_yangsan: wtab01Dto[i]["j_yangsan"],   
                         
                     });
                     cnt++;
@@ -1821,7 +1857,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.jkey}</b>',
                     click: (e, ctx) => {                        
-                        wjcodeChk_a("B", ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2);
+                        wjcodeChk_a("B", ctx.item.jkey, ctx.item.j_dae, ctx.item.j_jung, ctx.item.jgugek, ctx.item.jgugek2,ctx.item.jpum, ctx.item.jpumcode, ctx.item.jsayang, ctx.item.j_net, ctx.item.jchajong, ctx.item.j_sr,ctx.item.j_ct, ctx.item.j_cavity, ctx.item.jdanwy, ctx.item.jbigo, ctx.item.w_b_gubn , ctx.item.jpumname, ctx.item.j_misayong, ctx.item.j_sang, ctx.item.jboxsu1, ctx.item.cltcd, ctx.item.acorp, ctx.item.jgumtype, ctx.item.jdoor1, ctx.item.jdoor2, ctx.item.j_yangsan);
                     }
                 });       
                 wtab02Grid.columns.push(cols); 
@@ -1981,6 +2017,13 @@
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'j_misayong';
                 cols.header = '미사용여부'; 
+                cols.align = "center"; 
+                cols.width = 0;
+                wtab02Grid.columns.push(cols);  
+
+                cols = new wijmo.grid.Column(); 
+                cols.binding = 'j_yangsan';
+                cols.header = '양산'; 
                 cols.align = "center"; 
                 cols.width = 0;
                 wtab02Grid.columns.push(cols); 

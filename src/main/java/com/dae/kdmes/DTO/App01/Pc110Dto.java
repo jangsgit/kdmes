@@ -13,7 +13,9 @@ public class Pc110Dto {
     private String machstdate;
     private String macheddate;
     private int machshot;
-    private String machgugek;
+    private int machgugek01;
+    private int machgugek02;
+    private int machgugek03;
     private String machcavity;
     private String machuse;
     private String machcha;
@@ -31,5 +33,6 @@ public class Pc110Dto {
     private String file_url;
     private String inpcode;
     private String injpum;
+    private String machgumnm;
 
 }

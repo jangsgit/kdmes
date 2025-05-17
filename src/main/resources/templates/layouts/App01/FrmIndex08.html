@@ -146,7 +146,7 @@
                                     <input type="text"  class="form-control"  id="inmachcltnm" placeholder=""  >
                                 </div> 
                                 <div class="col-md-3">
-                                    <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종</label>
+                                    <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종(모델명)</label>
                                     <input type="text"  class="form-control"  id="inmachcha" placeholder=""  >
                                 </div> 
                                 <div class="col-md-3"> 
@@ -154,8 +154,8 @@
                                     <input type="text"   class="form-control"  id="inmachno" autocomplete="off"  placeholder="" >      
                                 </div> 
                                 <div class="col-md-3">
-                                    <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">사용기계</label>
-                                    <input type="text"   class="form-control" id="inmachuse" autocomplete="off"  placeholder="" >  
+                                    <label for="j_sr" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형등급</label>
+                                    <input type="text"   class="form-control" id="inmachgrade" autocomplete="off"  placeholder="" >  
                                 </div>
                                 <div class="col-md-3">
                                     <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">CAVITY 수</label>
@@ -166,8 +166,8 @@
                                     <input type="text"   class="form-control" id="inmachwon" autocomplete="off"   > 
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="j_sr" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">GRADE NO.</label>
-                                    <input type="text"   class="form-control" id="inmachgrade" autocomplete="off"  placeholder="" >  
+                                    <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">사용기계</label>
+                                    <input type="text"   class="form-control" id="inmachuse" autocomplete="off"  placeholder="" >  
                                 </div>
                                 <div class="col-md-3">
                                     <label for="jboxsu1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품중량(g)</label>
@@ -177,13 +177,26 @@
                                     <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">수명예상SHOT</label>
                                     <input type="number"   class="form-control" id="inmachshot" autocomplete="off"  placeholder="" >  
                                 </div>
+                                
                                 <div class="col-md-3">
-                                    <label for="j_ct" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형규격</label>
-                                    <input type="text"   class="form-control" id="inmachgugek" autocomplete="off"   > 
-                                </div>
+                                    <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형규격</label>
+                                    <div class="d-flex gap-2 align-items-end">
+                                        <input type="number" id="inmachgugek01" maxlength="6" class="form-control text-center" style="width: 80px;" oninput="limitTwoDigits(this)">
+                                        <span class="mt-1">X</span>
+                                        <input type="number" id="inmachgugek02" maxlength="6" class="form-control text-center" style="width: 80px;" oninput="limitTwoDigits(this)">
+                                        <span class="mt-1">X</span>
+                                        <input type="number" id="inmachgugek03" maxlength="6" class="form-control text-center" style="width: 80px;" oninput="limitTwoDigits(this)">
+                                  </div>
+                                </div> 
+                                
                                 <div class="col-md-3">
                                     <label for="jsayang" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">n차금형</label>
                                     <input type="text"   class="form-control" id="inmachncha" autocomplete="off"   > 
+                                </div> 
+                                
+                                <div class="col-md-3">
+                                    <label for="jsayang" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형</label>
+                                    <input type="text"   class="form-control" id="inmachgumnm" autocomplete="off"   > 
                                 </div> 
                             </form>                                    
                             <form class="row g-2"> 
@@ -214,13 +227,7 @@
                                         
                         <!-- </div>       -->
                     </div>
-                </div>
-            
-
-
-
-
-
+                </div> 
             </div> 
             <div class="tab-pane fade show" id="step02"> 
                 <div class="table-responsive">
@@ -230,39 +237,53 @@
                             <td class="align-top"> 
                                 <div class="row gx-3" style="  margin: 10px 10px 10px;">
                                     <div class="col-auto">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품번</span> 
+                                        <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">품번</span> 
                                             <input type="text" class="form-control form-control-sm" id="infixmachcd" autocomplete="off" disabled    > 
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품명</span> 
+                                        <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">품명</span> 
                                             <input type="text" class="form-control form-control-sm" id="infixmachname" autocomplete="off" disabled    > 
                                         </div>
                                     </div>                                                    
                                     <div class="col-auto">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">금형번호</span> 
+                                        <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">금형번호</span> 
                                             <input type="text" class="form-control form-control-sm" id="infixmachno" autocomplete="off" disabled    > 
                                         </div>
                                     </div>   
                                 </div>           
-                                <div class="row gx-3" style="  margin: 10px 10px 10px;">
+                                <div class="row gx-3" style="  margin: 10px 10px 10px;">   
                                     <div class="col-auto">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">의뢰일</span> 
+                                        <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">의뢰일</span> 
                                             <input type="text"  class="form-control datetimepicker" id="inreqdate" autocomplete="off"  placeholder="Y-m-d"     > 
                                             <input type="hidden"  id="infixid" autocomplete="off"   >  
                                         </div>
-                                    </div>
+                                    </div>                                                
                                     <div class="col-auto">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">완료일</span> 
+                                        <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">의뢰내용</span> 
+                                            <input class="form-control form-control-sm" id="inreqtext" type="text"    autocomplete="off" style="width: 400px;">  
+                                        </div>
+                                    </div>   
+                                </div>                     
+                                <div class="row gx-3" style="  margin: 10px 10px 10px;">   
+                                    <div class="col-auto">
+                                        <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">완료일</span> 
                                             <input type="text"  class="form-control datetimepicker" id="inrespdate" autocomplete="off"  placeholder="Y-m-d"     > 
                                         </div>
                                     </div>                                                    
                                     <div class="col-auto">
-                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">수리내용</span> 
+                                        <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">수리내용</span> 
                                             <input class="form-control form-control-sm" id="infixtext" type="text"    autocomplete="off" style="width: 400px;">  
                                         </div>
                                     </div>   
-                                </div>           
+                                    <!-- 완료여부 -->
+                                    <div class="col-auto d-flex align-items-center">
+                                        <label for="infixflag" class="form-label fw-bold mb-0 me-2 text-primary">완료여부</label>
+                                        <div class="form-check form-switch m-0">
+                                            <input class="form-check-input" id="infixflag" type="checkbox" value="0">
+                                        </div>
+                                    </div>
+                                </div>     
                                 <div class="row gx-3" style="  margin: 10px 10px 10px;">                                                      
                                     <div class="col-auto">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">수리업체</span> 
@@ -347,7 +368,7 @@
     data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel"
     aria-hidden="true">
         <div class="modal-dialog modal-lg mt-6" role="document" id = "modalForm01"
-            style="max-width: 600px">
+            style="max-width: 800px">
             <div class="modal-content border-0">
                 <div class="modal-body p-0" >  
                     <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">                            
@@ -467,20 +488,22 @@
                         wcifChk_a( ctx.item.machcd,  ctx.item.machno, ctx.item.machname, 
                                    ctx.item.machdate, ctx.item.machstdate, 
                                    ctx.item.macheddate ,ctx.item.machshot, 
-                                   ctx.item.machgugek, ctx.item.machcavity, 
+                                   ctx.item.machgugek01, 
+                                   ctx.item.machcavity, 
                                    ctx.item.machuse,  ctx.item.machcha, 
                                    ctx.item.machcltnm,ctx.item.machplace, 
                                    ctx.item.machwon, ctx.item.machgrade, 
                                    ctx.item.machgram, ctx.item.machncha, 
-                                   ctx.item.machjaejak, ctx.item.inpcode, ctx.item.injpum );                    
+                                   ctx.item.machjaejak, ctx.item.inpcode, ctx.item.injpum,
+                                   ctx.item.machgugek02, ctx.item.machgugek03, ctx.item.machgumnm );                    
                     }
                 }) 
             },      
             { binding: 'machno', header: '금형번호', align: "center", width: 120 },
             { binding: 'machwon', header: '원재료명', align: "left", width: 200 },
-            { binding: 'machgugek', header: '금형규격', align: "left", width: 90 }, 
+            { binding: 'machgugektxt', header: '금형규격', align: "left", width: 150 }, 
             { binding: 'machcltnm', header: '거래선', align: "left", width: 100 }, 
-            { binding: 'machcavity', header: 'CAVITY수', align: "left", width: 180 }, 
+            { binding: 'machcavity', header: 'CAVITY수', align: "left", width: 100 }, 
             { binding: 'machshot', header: '예상SHOT', align: "right", width: 150 },        
             { binding: 'machdate', header: '최초일자', align: "center", width: 120 },        
         ], 
@@ -508,8 +531,10 @@
     function getData_tab04(){    
                 var wtab01Dto = [[${Index08List}]];   
                 var wactnm_data = [];   
-                var cnt = 1;   
+                var cnt = 1;  
+                var machgugektxt = "";
                 for (var i = 0; i < wtab01Dto.length; i++) {
+                    machgugektxt = wtab01Dto[i]["machgugek01"] + 'X' + wtab01Dto[i]["machgugek02"] + 'X' + wtab01Dto[i]["machgugek03"]
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
@@ -520,7 +545,10 @@
                         machstdate: wtab01Dto[i]["machstdate"], 
                         macheddate: wtab01Dto[i]["macheddate"], 
                         machshot: wtab01Dto[i]["machshot"], 
-                        machgugek: wtab01Dto[i]["machgugek"], 
+                        machgugek01: wtab01Dto[i]["machgugek01"], 
+                        machgugek02: wtab01Dto[i]["machgugek02"], 
+                        machgugek03: wtab01Dto[i]["machgugek03"], 
+                        machgugektxt: machgugektxt, 
                         machcavity: wtab01Dto[i]["machcavity"], 
                         machuse: wtab01Dto[i]["machuse"], 
                         machcha: wtab01Dto[i]["machcha"], 
@@ -532,6 +560,7 @@
                         machgrade: wtab01Dto[i]["machgrade"],
                         machgram: wtab01Dto[i]["machgram"],  
                         machncha: wtab01Dto[i]["machncha"], 
+                        machgumnm: wtab01Dto[i]["machgumnm"], 
                         remark: wtab01Dto[i]["remark"], 
                         indate: wtab01Dto[i]["indate"], 
                         inperid: wtab01Dto[i]["inperid"],   
@@ -612,11 +641,13 @@
         allowSorting: 'MultiColumn',
         alternatingRowStep: 0,
         columns: [       
-            { binding: 'rownum', header: '순번', align: "center", width: 150 }, 
-            { binding: 'reqdate', header: '의뢰일', align: "center", width: 150 }, 
-            { binding: 'respdate', header: '완료일', align: "center", width: 150 }, 
-            { binding: 'fixtext', header: '수리내용', align: "center", width: 400 }, 
-            { binding: 'fixcltnm', header: '수리업체', align: "center", width: 200 }, 
+            { binding: 'rownum', header: '순번', align: "center", width: 50 }, 
+            { binding: 'reqdate', header: '의뢰일', align: "center", width: 120 }, 
+            { binding: 'reqtext', header: '의뢰내용', align: "center", width: 300 }, 
+            { binding: 'respdate', header: '완료일', align: "center", width: 120 }, 
+            { binding: 'fixtext', header: '수리내용', align: "center", width: 300 }, 
+            { binding: 'fixcltnm', header: '수리업체', align: "center", width: 120 }, 
+            { binding: 'fixflag', header: '완료', align: "center", width: 50 }, 
             { binding: 'remark', header: '비고', align: "center", width: 150 }, 
         ], 
             
@@ -664,10 +695,10 @@
         columns: [       
             { binding: 'rownum', header: '순번', align: "center", width: 150 }, 
             { binding: 'reqdate', header: '의뢰일', align: "center", width: 150 }, 
+            { binding: 'reqtext', header: '의뢰내용', align: "center", width: 200 },  
             { binding: 'respdate', header: '완료일', align: "center", width: 150 }, 
             { binding: 'fixtext', header: '수리내용', align: "center", width: 400 }, 
-            { binding: 'fixcltnm', header: '수리업체', align: "center", width: 200 }, 
-            { binding: 'remark', header: '비고', align: "center", width: 150 }, 
+            { binding: 'fixcltnm', header: '수리업체', align: "center", width: 200 },
         ], 
             
         itemsSource: view_p01tab01page
@@ -806,9 +837,11 @@
 
    function new_btn(arg){  
        document.getElementById('infixid').value = "";
+       document.getElementById('inreqtext').value = "";
        document.getElementById('infixtext').value = "";
        document.getElementById('infixcltnm').value = "";
        document.getElementById('inremark').value = "";
+       document.getElementById('infixflag').checked = false;  
    }
    function save_btn(arg){
        var ls_tab = document.getElementById('tabvalue').value;  
@@ -832,7 +865,10 @@
                 //    var ls_inmacheddate = document.getElementById('inmacheddate').value;
                 var ls_inmachshot = document.getElementById('inmachshot').value;
 
-                var ls_inmachgugek = document.getElementById('inmachgugek').value;
+                var ls_inmachgugek01 = document.getElementById('inmachgugek01').value;
+                var ls_inmachgugek02 = document.getElementById('inmachgugek02').value;
+                var ls_inmachgugek03 = document.getElementById('inmachgugek03').value;
+
                 var ls_inmachcavity = document.getElementById('inmachcavity').value;
                 var ls_inmachuse = document.getElementById('inmachuse').value;
                 var ls_inmachcha = document.getElementById('inmachcha').value;
@@ -844,6 +880,7 @@
                 var ls_inmachgrade = document.getElementById('inmachgrade').value;
                 var ls_inmachgram = document.getElementById('inmachgram').value;
                 var ls_inmachncha = document.getElementById('inmachncha').value; 
+                var ls_inmachgumnm = document.getElementById('inmachgumnm').value; 
  
                if(ls_inmachcd == null || ls_inmachcd.length == 0 || ls_inmachcd == ""){ 
                    alert("품번을 등록하세요") 
@@ -878,9 +915,15 @@
                if(ls_inmachshot == null || ls_inmachshot.length == 0  ){
                     ls_inmachshot = "0";
                }    
-               if(ls_inmachgugek == null || ls_inmachgugek.length == 0  ){
-                    ls_inmachgugek = "";
-               }     
+               if(ls_inmachgugek01 == null || ls_inmachgugek01.length == 0  ){
+                    ls_inmachgugek01 = "0";
+               }      
+               if(ls_inmachgugek02 == null || ls_inmachgugek02.length == 0  ){
+                    ls_inmachgugek02 = "0";
+               }   
+               if(ls_inmachgugek03 == null || ls_inmachgugek03.length == 0  ){
+                    ls_inmachgugek03 = "0";
+               }  
                if(ls_inmachcavity == null || ls_inmachcavity.length == 0  ){
                     ls_inmachcavity = "";
                }       
@@ -910,7 +953,10 @@
                }      
                if(ls_inmachncha == null || ls_inmachncha.length == 0  ){
                     ls_inmachncha = "";
-               }      
+               }         
+               if(ls_inmachgumnm == null || ls_inmachgumnm.length == 0  ){
+                    ls_inmachgumnm = "";
+               }    
                if(ls_inpcode == null || ls_inpcode.length == 0  ){
                 ls_inpcode = "";
                }     
@@ -939,7 +985,9 @@
                     "inmachstdate"         : ls_inmachstdate , 
                     "inmacheddate"         : ls_inmacheddate, 
                     "inmachshot"        : ls_inmachshot,
-                    "inmachgugek"         : ls_inmachgugek,
+                    "inmachgugek01"         : ls_inmachgugek01,
+                    "inmachgugek02"         : ls_inmachgugek02,
+                    "inmachgugek03"         : ls_inmachgugek03,
                     "inmachcavity"        : ls_inmachcavity,
                     "inmachuse"        : ls_inmachuse , 
                     "inmachcha"         : ls_inmachcha,
@@ -951,6 +999,7 @@
                     "inmachgrade"        : ls_inmachgrade,
                     "inmachgram"        : ls_inmachgram,  
                     "inmachncha"        : ls_inmachncha, 
+                    "inmachgumnm"        : ls_inmachgumnm, 
                     "inpcode"       : ls_inpcode, 
                     "injpum"       : ls_injpum, 
                     
@@ -990,11 +1039,20 @@
            
                 var ls_infixid = document.getElementById('infixid').value;
                 var ls_infixmachcd = document.getElementById('infixmachcd').value;
+                var ls_inreqtext   = document.getElementById('inreqtext').value;
                 var ls_infixtext   = document.getElementById('infixtext').value;
                 var ls_infixcltnm = document.getElementById('infixcltnm').value;
                 var ls_inremark   = document.getElementById('inremark').value; 
+                var ls_infixflag   = document.getElementById('infixflag').value;   
                 var ls_inreqdate   =  convert_date(wreqdate.value);                 
-                var ls_inrespdate =  convert_date(wrespdate.value);     
+                var ls_inrespdate =  convert_date(wrespdate.value);
+                const j_fixflag = document.getElementById('infixflag'); 
+                const is_checked = j_fixflag.checked;  
+                if (!is_checked){
+                    ls_infixflag = "0"
+                }else{
+                    ls_infixflag = "1"
+                }   
 
                if(ls_infixmachcd == null || ls_infixmachcd.length == 0 || ls_infixmachcd == ""){ 
                    alert("품번을 선택하세요")  
@@ -1027,11 +1085,13 @@
                var inputdata = {  
                     "infixid"           : ls_infixid,
                     "infixmachcd"       : ls_infixmachcd,
+                    "inreqtext"         : ls_inreqtext,
                     "infixtext"         : ls_infixtext,
                     "infixcltnm"        : ls_infixcltnm , 
                     "inremark"          : ls_inremark, 
                     "inreqdate"         : ls_inreqdate , 
                     "inrespdate"        : ls_inrespdate,  
+                    "infixflag"        : ls_infixflag,  
                     
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -1158,7 +1218,9 @@
                 document.getElementById('inmachname').value = "";
                 document.getElementById('inmachshot').value = 0;
 
-                document.getElementById('inmachgugek').value = "";
+                document.getElementById('inmachgugek01').value = 0;
+                document.getElementById('inmachgugek02').value = 0;
+                document.getElementById('inmachgugek03').value = 0;
                 document.getElementById('inmachcavity').value = "";
                 document.getElementById('inmachuse').value = "";
                 document.getElementById('inmachcha').value = "";
@@ -1170,6 +1232,7 @@
                 document.getElementById('inmachgrade').value = "";
                 document.getElementById('inmachgram').value = 0;
                 document.getElementById('inmachncha').value = ""; 
+                document.getElementById('inmachgumnm').value = ""; 
                 
                 document.getElementById('pcode').value = ""; 
                 document.getElementById('jpum').value = ""; 
@@ -1425,7 +1488,7 @@
                 doc.drawText(  salesdata[0].machwon   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});   
 
                 y = doc.y;
-                doc.drawText('[GRADE    NO]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
+                doc.drawText('[금  형  등  급]'  , 10, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11), underline:false}); 
                 doc.drawText(  salesdata[0].machgrade   , 100, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});
                 doc.drawText('[제품 중량 (g)] '  , 300, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false}); 
                 doc.drawText(  ls_gram   , 400, y, {font: new wijmo.pdf.PdfFont("BMHANNAPro", 11),   underline:false});    
@@ -1705,15 +1768,16 @@
     }   
      
     //                   jkey, jpum, jgugek, jchajong, jsayang, jgugek2, j_sr, jpumcode, jdanwy, cltcd, acorp  
-    function wcifChk_JKEY(arg1, arg2, arg3, arg4,      arg5,     arg6, arg7,    arg8,    arg9,   arg10, arg11){  
+    function wcifChk_JKEY(arg1, arg2, arg3, arg4,      arg5,     arg6, arg7,    arg8,    arg9,   arg10, arg11, arg12){  
         
         document.getElementById('pcode').value = arg1;  
         document.getElementById('jpum').value = arg2;   
         document.getElementById('inmachcha').value = arg4;   
-        document.getElementById('inmachgugek').value = arg3;   
+        //document.getElementById('inmachgugek').value = arg3;   
         document.getElementById('inmachcd').value = arg8;   
         document.getElementById('inmachcltnm').value = arg11;  
-        document.getElementById('inmachname').value = arg2;      
+        document.getElementById('inmachname').value = arg2;     
+        document.getElementById('inmachgumnm').value = arg12;      
 
         $("#wciflist_rtn").trigger("click");
     }
@@ -1758,6 +1822,7 @@
                    async:false,
                    success:function(data){  
                         tabA_grid(data);
+                        new_btn()
                    },error:function(e){
                        console.log("error");                            
                    }
@@ -1793,16 +1858,26 @@
        var wtab02Dto  = data;    
        var wtab02_data = [];
        var cnt = 1;
+       var ls_fixflag = ''
        for (var i = 0; i < wtab02Dto.length; i++) {
+            if(wtab02Dto[i]["fixflag"] == '1'){
+                ls_fixflag = 'O'
+            }else{
+                ls_fixflag = ''
+            }
+           
            wtab02_data.push({
                id: i, 
                index: cnt,
                rownum: wtab02Dto[i]["rownum"],
                fixid: wtab02Dto[i]["fixid"],
                fixmachcd: wtab02Dto[i]["fixmachcd"],   
-               reqdate: wtab02Dto[i]["reqdate"], 
+               reqdate: wtab02Dto[i]["reqdate"],  
                respdate: wtab02Dto[i]["respdate"], 
+               reqtext: wtab02Dto[i]["reqtext"], 
                fixtext: wtab02Dto[i]["fixtext"], 
+               fixflag: wtab02Dto[i]["fixflag"], 
+               fixflagtxt: ls_fixflag, 
                fixcltnm: wtab02Dto[i]["fixcltnm"], 
                remark: wtab02Dto[i]["remark"]                               
            });
@@ -1816,7 +1891,7 @@
         cols.binding = 'rownum';
         cols.header = '순번';
         cols.align = "center";
-        cols.width = 80;  
+        cols.width = 50;  
         wtab02Grid.columns.push(cols);    
 
 
@@ -1824,35 +1899,50 @@
        cols.binding = 'reqdate';
        cols.header = '의뢰일';
        cols.align = "center";
-       cols.width = 150; 
+       cols.width = 120; 
        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
            text: '<b>${item.reqdate}</b>',
            click: (e, ctx) => {
-            wcifChk_b(ctx.item.fixid, ctx.item.fixmachcd, ctx.item.reqdate, ctx.item.respdate, ctx.item.fixtext, ctx.item.fixcltnm, ctx.item.remark );
+            wcifChk_b(ctx.item.fixid, ctx.item.fixmachcd, ctx.item.reqdate, ctx.item.respdate, ctx.item.fixtext, ctx.item.fixcltnm, ctx.item.remark, ctx.item.reqtext, ctx.item.fixflag );
            }
        });
        wtab02Grid.columns.push(cols);    
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'reqtext';
+        cols.header = '의뢰내용';
+        cols.align = "left";
+        cols.width = 300;  
+        wtab02Grid.columns.push(cols);     
 
        cols = new wijmo.grid.Column(); 
        cols.binding = 'respdate';
        cols.header = '완료일';
        cols.align = "center";
-       cols.width = 150;  
+       cols.width = 120;  
        wtab02Grid.columns.push(cols);     
 
         cols = new wijmo.grid.Column(); 
         cols.binding = 'fixtext';
         cols.header = '수리내용';
         cols.align = "left";
-        cols.width = 400;  
+        cols.width = 300;  
         wtab02Grid.columns.push(cols);     
 
         cols = new wijmo.grid.Column(); 
         cols.binding = 'fixcltnm';
         cols.header = '수리업체';
         cols.align = "left";
-        cols.width = 200;  
+        cols.width = 120;  
+        wtab02Grid.columns.push(cols);        
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'fixflagtxt';
+        cols.header = '완료';
+        cols.align = "center";
+        cols.width = 50;  
         wtab02Grid.columns.push(cols);     
+
 
         cols = new wijmo.grid.Column(); 
         cols.binding = 'remark';
@@ -1983,7 +2073,8 @@
                 machwon: wtab03Dto[i]["machwon"], 
                 machgrade: wtab03Dto[i]["machgrade"],
                 machgram: wtab03Dto[i]["machgram"],  
-                machncha: wtab03Dto[i]["machncha"], 
+                machncha: wtab03Dto[i]["machncha"],  
+                machgumnm: wtab03Dto[i]["machgumnm"], 
                 remark: wtab03Dto[i]["remark"], 
                 indate: wtab03Dto[i]["indate"], 
                 inperid: wtab03Dto[i]["inperid"],                            
@@ -2011,7 +2102,7 @@
        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
            text: '<b>${item.machname}</b>',
             click: (e, ctx) => {                
-                wcifChk_JKEY(ctx.item.machcd,  ctx.item.machno, ctx.item.machname,ctx.item.machdate, ctx.item.machstdate,ctx.item.macheddate ,ctx.item.machshot,ctx.item.machgugek, ctx.item.machcavity,ctx.item.machuse,  ctx.item.machcha,ctx.item.machcltnm,ctx.item.machplace,ctx.item.machwon, ctx.item.machgrade,ctx.item.machgram, ctx.item.machncha,ctx.item.machjaejak );  
+                wcifChk_JKEY(ctx.item.machcd,  ctx.item.machno, ctx.item.machname,ctx.item.machdate, ctx.item.machstdate,ctx.item.macheddate ,ctx.item.machshot,ctx.item.machgugek, ctx.item.machcavity,ctx.item.machuse,  ctx.item.machcha,ctx.item.machcltnm,ctx.item.machplace,ctx.item.machwon, ctx.item.machgrade,ctx.item.machgram, ctx.item.machncha,ctx.item.machjaejak, ctx.item.machgumnm );  
             }
         }); 
        wtab04Grid.columns.push(cols);
@@ -2192,6 +2283,12 @@
        var wtab02_data = [];
        var cnt = 1;
        for (var i = 0; i < wtab02Dto.length; i++) {
+           if(wtab02Dto[i]["fixflag"] == '1'){
+            ls_fixflag = 'O'
+           }else{
+            ls_fixflag = ''
+           }
+        
            wtab02_data.push({
                id: i, 
                index: cnt,
@@ -2199,9 +2296,12 @@
                fixid: wtab02Dto[i]["fixid"],
                fixmachcd: wtab02Dto[i]["fixmachcd"],   
                reqdate: wtab02Dto[i]["reqdate"], 
+               reqtext: wtab02Dto[i]["reqtext"], 
                respdate: wtab02Dto[i]["respdate"], 
                fixtext: wtab02Dto[i]["fixtext"], 
                fixcltnm: wtab02Dto[i]["fixcltnm"], 
+               fixflag: wtab02Dto[i]["fixflag"],  
+               fixflagtxt: ls_fixflag, 
                remark: wtab02Dto[i]["remark"]                               
            });
            cnt++;
@@ -2223,9 +2323,11 @@
                     fixid: '',
                     fixmachcd: '', 
                     reqdate: '',
+                    reqtext: '',
                     respdate: '',
                     fixtext: '',
                     fixcltnm: '',
+                    fixflagtxt: '',
                     remark: '',   
                 });
             cnt++;
@@ -2236,33 +2338,40 @@
        wtabinGrid.autoGenerateColumns = false; 
        view_innamepage.sourceCollection  = wtab02_data;
 
-    var cols = new wijmo.grid.Column(); 
-        cols.binding = 'rownum';
-        cols.header = '순번';
-        cols.align = "center";
-        cols.width = 80;  
-        wtabinGrid.columns.push(cols);    
+    // var cols = new wijmo.grid.Column(); 
+    //     cols.binding = 'rownum';
+    //     cols.header = '순번';
+    //     cols.align = "center";
+    //     cols.width = 50;  
+    //     wtabinGrid.columns.push(cols);    
 
 
-       cols = new wijmo.grid.Column(); 
+    var  cols = new wijmo.grid.Column(); 
        cols.binding = 'reqdate';
        cols.header = '의뢰일';
        cols.align = "center";
-       cols.width = 150;  
+       cols.width = 120;  
        wtabinGrid.columns.push(cols);    
+
+        cols = new wijmo.grid.Column(); 
+        cols.binding = 'reqtext';
+        cols.header = '의뢰내용';
+        cols.align = "left";
+        cols.width = 300;  
+        wtabinGrid.columns.push(cols);      
 
        cols = new wijmo.grid.Column(); 
        cols.binding = 'respdate';
        cols.header = '완료일';
        cols.align = "center";
-       cols.width = 150;  
+       cols.width = 120;  
        wtabinGrid.columns.push(cols);     
 
         cols = new wijmo.grid.Column(); 
         cols.binding = 'fixtext';
         cols.header = '수리내용';
         cols.align = "left";
-        cols.width = 400;  
+        cols.width = 300;  
         wtabinGrid.columns.push(cols);     
 
         cols = new wijmo.grid.Column(); 
@@ -2273,19 +2382,20 @@
         wtabinGrid.columns.push(cols);     
 
         cols = new wijmo.grid.Column(); 
-        cols.binding = 'remark';
-        cols.header = '비고';
-        cols.align = "left";
-        cols.width = 150;  
+        cols.binding = 'fixflagtxt';
+        cols.header = '완료';
+        cols.align = "center";
+        cols.width = 80;  
         wtabinGrid.columns.push(cols);     
 
    }
  
    
-   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19){   
+   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22){   
         // machcd machno, machname,       machdate, machstdate, macheddate ,machshot, 
-        // machgugek, machcavity,  machuse,  machcha,    machcltnm,machplace, 
-        // machwon, machgrade,     machgram, machncha,   machjaejak 
+        // machgugek01, machcavity,  machuse,  machcha,    machcltnm,machplace, 
+        // machwon, machgrade,     machgram, machncha,   machjaejak , machgugek02
+        // machgugek03
        var ls_tab = document.getElementById('tabvalue').value; 
         
        document.getElementById('inmachcd').value = arg0;
@@ -2302,7 +2412,7 @@
     //    document.getElementById('inmacheddate').value = arg5;
        document.getElementById('inmachshot').value = arg6;
 
-       document.getElementById('inmachgugek').value = arg7;
+       document.getElementById('inmachgugek01').value = arg7;
        document.getElementById('inmachcavity').value = arg8;
        document.getElementById('inmachuse').value = arg9;
        document.getElementById('inmachcha').value = arg10;
@@ -2318,6 +2428,10 @@
        
        document.getElementById('pcode').value = arg18;
        document.getElementById('jpum').value = arg19;
+       
+       document.getElementById('inmachgugek02').value = arg20;
+       document.getElementById('inmachgugek03').value = arg21;
+       document.getElementById('inmachgumnm').value = arg22;
 
 
        var ls_image01 = "" ;
@@ -2355,7 +2469,7 @@
 
 
 
-    //    searchList_rtn("B");  
+        searchList_rtn("B");  
 
    }   
    function wcifChk_c(arg){  
@@ -2400,14 +2514,20 @@
                 imgElement.parentElement.innerHTML = "";
          }    
    }
-   function wcifChk_b(arg1,arg2,arg3,arg4,arg5,arg6,arg7  ){   
+   function wcifChk_b(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9  ){   
         // fixid, fixmachcd, reqdate, respdate, fixtext, fixcltnm, remark  
        var ls_tab = document.getElementById('tabvalue').value; 
           
        document.getElementById('infixid').value = arg1; 
        document.getElementById('infixtext').value = arg5;
        document.getElementById('infixcltnm').value = arg6;
-       document.getElementById('inremark').value = arg7;    
+       document.getElementById('inremark').value = arg7;   
+       document.getElementById('inreqtext').value = arg8;  
+       if(arg9 == '1') { 
+        document.getElementById('infixflag').checked = true;    
+       }else{
+        document.getElementById('infixflag').checked = false;    
+       }
        wreqdate.value   = arg3;
        wrespdate.value = arg4; 
        

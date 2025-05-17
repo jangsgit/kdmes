@@ -11,8 +11,10 @@ public class PcFixDto {
     private String fixmachcd;
     private String reqdate;
     private String respdate;
+    private String reqtext;
     private String fixtext;
     private String fixcltnm;
+    private String fixflag;
     private String remark;
     private String indate;
     private String inperid;

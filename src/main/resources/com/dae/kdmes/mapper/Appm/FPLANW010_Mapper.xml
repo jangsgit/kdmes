@@ -145,6 +145,8 @@
                isnull(D.wotqt,0) - isnull(D.wbdqt,0) as otqty,
                D.partcode  as partcode,
                D.partnm  as partnm,
+               D.subpartcode  as subpartcode,
+               D.subpartnm  as subpartnm,
                D.winps as winps,
                D.wrmc as wrmc,
                E.wrmcnm as wrmcnm,
@@ -1168,9 +1170,9 @@
 
     <insert id="FPLANW010_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
         INSERT INTO TB_FPLAN_W010(custcd, spjangcd, plan_no, lotno,  wflag, wfrdt, wtrdt, wrmc, winqt, wotqt, wqcqt,
-                             wbdqt,   winps, wsyul, wrps, wremark, decision,indate, inperid, partcode, partnm )
+                             wbdqt,   winps, wsyul, wrps, wremark, decision,indate, inperid, partcode, partnm, subpartcode, subpartnm  )
         VALUES (#{custcd},#{spjangcd}, #{plan_no}, #{lotno}, #{wflag}, #{wfrdt}, #{wtrdt}, #{wrmc}, #{winqt}, #{wotqt}, #{wqcqt},
-                 #{wbdqt},   #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid}, #{partcode}, #{partnm})
+                 #{wbdqt},   #{winps}, #{wsyul}, #{wrps}, #{wremark}, #{decision}, #{indate}, #{inperid}, #{partcode}, #{partnm}, #{subpartcode}, #{subpartnm})
     </insert>
 
     <insert id="FPLANW020_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
@@ -1197,6 +1199,10 @@
         <if test="partcode != null">partcode=#{partcode}</if>
         <if test="partnm != null ">,</if>
         <if test="partnm != null">partnm=#{partnm}</if>
+        <if test="subpartcode != null ">,</if>
+        <if test="subpartcode != null">subpartcode=#{subpartcode}</if>
+        <if test="subpartnm != null ">,</if>
+        <if test="subpartnm != null">subpartnm=#{subpartnm}</if>
         <if test="winqt != null ">,</if>
         <if test="winqt != null">winqt=#{winqt}</if>
         <if test="wotqt != null ">,</if>

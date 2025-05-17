@@ -82,6 +82,8 @@ public class FPLANW010_VO {
     private String clsflag;
     private String partcode;
     private String partnm;
+    private String subpartcode;
+    private String subpartnm;
     private String glotnono;
     private float gqty01;
     private float gqty02;

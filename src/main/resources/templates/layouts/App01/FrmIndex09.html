@@ -187,18 +187,25 @@
                                 <input class="form-control form-control-sm" id="inpartcode" type="hidden" placeholder=""  /> 
                             </div>
                         </div> 
+                        <div class="col-3">
+                            <div class="input-group"> 
+                                <button   class="btn btn-primary btn-sm" type="button" id="subpartbtn"    >3.부재료선택 </button> 
+                                <input class="form-control form-control-sm" id="insubpartnm" type="text" placeholder="" disabled />
+                                <input class="form-control form-control-sm" id="insubpartcode" type="hidden" placeholder=""  /> 
+                            </div>
+                        </div> 
+                    </div> 
+                    <div class="row mb-3 row-cols-lg-3 align-items-center">
                         <div class="col-auto">
                             <div class="input-group"> 
-                                <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"    >3.작업시작 </button>
+                                <button   class="btn btn-primary btn-sm" type="button" id="wfrdt"    >4.작업시작 </button>
                                 <input type="text"  class="form-control datetimepicker" id="startDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled> 
                             </div> 
                         </div>
-                    </div> 
-                    <div class="row mb-3 row-cols-lg-3 align-items-center">
                         <div  class="col-3">
                             <div class="input-group">
                                 <!-- <div class="input-group-text">불량내역</div> --> 
-                                <button   class="btn btn-primary btn-sm" type="button" id="wbadqtyBtn"    >4.불량내역 </button>
+                                <button   class="btn btn-primary btn-sm" type="button" id="wbadqtyBtn"    >5.불량내역 </button>
                                 <!-- <button   class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#wbadqtymodal"  id="wbadqtyBtn">불량내역 </button> -->
                                 <input class="form-control form-control-sm"  type="text" id="inwbdqt"  disabled
                                     placeholder=""  />
@@ -206,7 +213,7 @@
                         </div> 
                         <div class="col-auto">
                             <div class="input-group"> 
-                                <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"    >5.작업종료 </button>
+                                <button   class="btn btn-primary btn-sm" type="button"  id="wtrdt"    >6.작업종료 </button>
                                 <input type="text"  class="form-control datetimepicker" id="endDate" autocomplete="off"  placeholder="Y-m-d H:i"   disabled > 
                             </div>
                         </div> 
@@ -675,7 +682,7 @@
                         <div class="modal-content border-0">
                             <div class="modal-body p-0" > 
                                 <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                    <h4 class="mb-1" id="modalExampleDemoLabel">원자재목록</h4>
+                                    <h4 class="mb-1" id="modalExampleDemoLabel">자재목록</h4>
                                 </div>     
                                 <div class="container-fluid"> 
                                     <div class="col-auto">
@@ -685,6 +692,7 @@
                                                 placeholder="품목명"     /> 
                                             <button class="btn btn-falcon-warning me-1 mb-1" id="jqtySearchBtn" type="button" >검색
                                             </button>
+                                            <input type="hidden" id="wonflag" name = "wonflag" >
                                         </div>
                                     </div> 
                                 </div>       
@@ -1003,7 +1011,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.lotno}</b>',
                         click: (e, ctx) => {
-                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn, ctx.item.jgumtype , ctx.item.jgumnm    );
+                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn, ctx.item.jgumtype , ctx.item.jgumnm , ctx.item.subpartcode, ctx.item.subpartnm   );
                         }
                     })
                 }, 
@@ -1017,7 +1025,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {
-                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn, ctx.item.jgumtype , ctx.item.jgumnm    );
+                            selectChk_02(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode, ctx.item.partnm, ctx.item.wbgubn, ctx.item.jgumtype , ctx.item.jgumnm , ctx.item.subpartcode, ctx.item.subpartnm   );
                         }
                     })
                 },  
@@ -1101,6 +1109,8 @@
                     wrmcnm: ListDto[i]["wrmcnm"],
                     partcode: ListDto[i]["partcode"],
                     partnm: ListDto[i]["partnm"],
+                    subpartcode: ListDto[i]["subpartcode"],
+                    subpartnm: ListDto[i]["subpartnm"],
                     wbgubn: ListDto[i]["w_b_gubn"]  ,
                     jgumtype: ListDto[i]["jgumtype"],
                     jgumnm: ListDto[i]["jgumnm"] 
@@ -1745,19 +1755,33 @@
 
     //원자재 목록 조회 
     document.getElementById("inpartnm").addEventListener("click",function(){ 
-        searchjgqty_fnc()
+        document.getElementById('wonflag').value = '1';  
+        searchjgqty_fnc('1')
         document.getElementById("injglistbtn").click();  
     })  
     document.getElementById("partbtn").addEventListener("click",function(){ 
-        searchjgqty_fnc()
+        document.getElementById('wonflag').value = '1';  
+        searchjgqty_fnc('1')
+        document.getElementById("injglistbtn").click();  
+    })  
+    //부자재 목록 조회 
+    document.getElementById("insubpartnm").addEventListener("click",function(){
+        document.getElementById('wonflag').value = '2';   
+        searchjgqty_fnc('2')
+        document.getElementById("injglistbtn").click();  
+    })  
+    document.getElementById("subpartbtn").addEventListener("click",function(){ 
+        document.getElementById('wonflag').value = '2';  
+        searchjgqty_fnc('2')
         document.getElementById("injglistbtn").click();  
     })  
     document.getElementById("jqtySearchBtn").addEventListener("click",function(){ 
-        searchjgqty_fnc() 
+        var ls_wonflag = document.getElementById('wonflag').value;  
+        searchjgqty_fnc(ls_wonflag) 
     })  
     
     //원자재 조회  
-    function searchjgqty_fnc(){  
+    function searchjgqty_fnc(arg){  
         var ls_plan_no   = document.getElementById('inplan_no').value;  
         var ls_search   = document.getElementById('searchjqty').value;  
         var ls_wflag = '00010'  
@@ -1774,6 +1798,7 @@
             type:"POST",
             data: { 
                 "searchtxt" :ls_search,  
+                "wonflag" :arg,  
             }, 
             async:false,
             success:function(data){  
@@ -1792,7 +1817,7 @@
         var wtab01_data = [];
         var cnt = 1;
         var ls_wontxt = "";
-        console.log(wtab01Dto)
+        //console.log(wtab01Dto)
         for (var i = 0; i < wtab01Dto.length; i++) {
             ls_wontxt = wtab01Dto[i]["wonflag"]; 
             if(ls_wontxt == null || ls_wontxt.length == 0 || ls_wontxt == ""){ 
@@ -2251,6 +2276,8 @@
         var ls_inwono   = document.getElementById('inwono').value;  
         var ls_inpartcode  = document.getElementById('inpartcode').value;  
         var ls_inpartnm  = document.getElementById('inpartnm').value;  
+        var ls_insubpartcode  = document.getElementById('insubpartcode').value;  
+        var ls_insubpartnm  = document.getElementById('insubpartnm').value;  
         var ls_inwbgubn  = document.getElementById('inwbgubn').value;  
         var ls_injgumtype  = document.getElementById('injgumtype').value;  
         var ls_injgumnm  = document.getElementById('injgumnm').value; 
@@ -2402,7 +2429,9 @@
                     "pcode"     : ls_inpcode     ,
                     "wono"      : ls_inwono ,
                     "partcode"      : ls_inpartcode , 
-                    "partnm"      : ls_inpartnm ,                     
+                    "partnm"      : ls_inpartnm ,     
+                    "subpartcode"      : ls_insubpartcode , 
+                    "subpartnm"      : ls_insubpartnm ,                     
                     "workdv"      : arg1, 
                     "rwflag"      : ls_rwflag, 
                     "wbgubn"      : ls_inwbgubn,  
@@ -2959,7 +2988,9 @@
         document.getElementById('inostore').value= ""; 
         document.getElementById('prod_qty').value = 0;    
         document.getElementById('inpartcode').value = ""; 
-        document.getElementById('inpartnm').value = ""; 
+        document.getElementById('inpartnm').value = "";  
+        document.getElementById('insubpartcode').value = ""; 
+        document.getElementById('insubpartnm').value = ""; 
         document.getElementById('inwbgubn').value= "";   
         document.getElementById('inwrmc').value = "";            //설비코드
         document.getElementById('inmachname').value = "";       //설비명 
@@ -3057,7 +3088,9 @@
         document.getElementById('inlotno').value = ""; 
         document.getElementById('prod_qty').value= arg20;   
         document.getElementById('inpartcode').value = ""; 
-        document.getElementById('inpartnm').value = ""; 
+        document.getElementById('inpartnm').value = "";  
+        document.getElementById('insubpartcode').value = ""; 
+        document.getElementById('insubpartnm').value = ""; 
         document.getElementById('inwbgubn').value= arg25;  
         document.getElementById('inwrmc').value = arg21;           //설비코드
         document.getElementById('inmachname').value  = arg22;     //설비명 
@@ -3127,14 +3160,14 @@
           
 
     }  
-    function selectChk_02(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27 ){ 
+    function selectChk_02(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29 ){ 
  
             // custcd, spjangcd, wono, cltnm, pname, 
             // ostore, plan_no, cltcd, pcode, wseq, 
             // wflag, phmmdoc, otqty, wrpsnm, owqty ,
             // obqty,winps,wrps,lotno,prod_qty,
             //  wrmc, wrmcnm, partcode , partnm, wbgubn, 
-            //  jgumtype, jgumnm
+            //  jgumtype, jgumnm, subpartcode , subpartnm
         var button_workstBtn = document.getElementById('workstBtn');
         var button_workedBtn = document.getElementById('workedBtn'); 
             button_workstBtn.disabled = false;
@@ -3160,6 +3193,8 @@
         document.getElementById('inmachname').value  = arg22;     //설비명  
         document.getElementById('injgumtype').value  = arg26;     //금형코드 
         document.getElementById('injgumnm').value  = arg27;     //금형명
+        document.getElementById('insubpartcode').value= arg28;  //부자재
+        document.getElementById('insubpartnm').value= arg29;    //부자재
         
         // <input class="form-control form-control-sm" id="inwrpsnm" type="text"  disabled  placeholder=""  />
         // <input class="form-control form-control-sm" id="inwrps" type="hidden"  placeholder=""   />
@@ -3422,8 +3457,15 @@
             save_btn("3");
     }
     function wjglistChk(arg1, arg2  ){   
-            document.getElementById('inpartcode').value= arg1; 
-            document.getElementById('inpartnm').value= arg2;   
+            var ls_wonflag = document.getElementById('wonflag').value; 
+            if (ls_wonflag = '1'){
+                document.getElementById('inpartcode').value= arg1; 
+                document.getElementById('inpartnm').value= arg2;   
+            }else{
+                document.getElementById('insubpartcode').value= arg1; 
+                document.getElementById('insubpartnm').value= arg2;   
+            }
+
             $("#wjglistmodal_btn").trigger("click");  
     }
     function searchList_rtn(arg){  

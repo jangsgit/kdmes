@@ -564,6 +564,9 @@ public class App01CrudController {
                     case "jthick":
                         index03Dto.setJthick(values.toString());
                         break;
+                    case "j_yangsan":
+                        index03Dto.setJ_yangsan(values.toString());
+                        break;
                     default:
                         break;
                 }
@@ -1084,8 +1087,14 @@ public class App01CrudController {
                 case "inmachshot":
                     _index08Dto.setMachshot(Integer.parseInt(values.toString()));
                     break;
-                case "inmachgugek":
-                    _index08Dto.setMachgugek(values.toString());
+                case "inmachgugek01":
+                    _index08Dto.setMachgugek01(Integer.parseInt(values.toString()));
+                    break;
+                case "inmachgugek02":
+                    _index08Dto.setMachgugek02(Integer.parseInt(values.toString()));
+                    break;
+                case "inmachgugek03":
+                    _index08Dto.setMachgugek03(Integer.parseInt(values.toString()));
                     break;
                 case "inmachcavity":
                     _index08Dto.setMachcavity(values.toString());
@@ -1122,6 +1131,9 @@ public class App01CrudController {
                     break;
                 case "injpum":
                     _index08Dto.setInjpum(values.toString());
+                    break;
+                case "inmachgumnm":
+                    _index08Dto.setMachgumnm(values.toString());
                     break;
                 default:
                     break;
@@ -1545,6 +1557,9 @@ public class App01CrudController {
                 case "infixmachcd":
                     _index08FixDto.setFixmachcd(values.toString());
                     break;
+                case "inreqtext":
+                    _index08FixDto.setReqtext(values.toString());
+                    break;
                 case "infixtext":
                     _index08FixDto.setFixtext(values.toString());
                     break;
@@ -1559,6 +1574,9 @@ public class App01CrudController {
                     break;
                 case "inrespdate":
                     _index08FixDto.setRespdate(values.toString());
+                    break;
+                case "infixflag":
+                    _index08FixDto.setFixflag(values.toString());
                     break;
                 default:
                     break;
@@ -1714,6 +1732,9 @@ public class App01CrudController {
                     // 첫 번째 객체의 file_url 설정
                     Pc110Dto dto1 = _Pc110DtoListDto.get(h);
                     ls_filename = dto1.getSave_name();
+//                    log.info("size =====>" + _Pc110DtoListDto.size());
+//                    log.info("inmachcd =====>" + inmachcd);
+//                    log.info("ls_filenamen =====>" + ls_filename);
                     dto1.setFile_url(uploadPath + inmachcd + "/" + ls_filename); // 첫 번째 file_url 값 설정
                     _Pc110DtoListDto.set(h, dto1);
  ;
@@ -1721,7 +1742,7 @@ public class App01CrudController {
             }
             model.addAttribute("index08List",_Pc110DtoListDto);
         } catch (Exception ex) {
-            log.info("AppPrintView_index Exception =====>" + ex.toString());
+            log.info("AppPrintJPG_index Exception =====>" + ex.toString());
         }
 
         return _Pc110DtoListDto;

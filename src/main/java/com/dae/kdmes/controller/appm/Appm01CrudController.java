@@ -221,6 +221,8 @@ public class Appm01CrudController {
             ,@RequestParam("wono") String wono
             ,@RequestParam("partcode") String partcode
             ,@RequestParam("partnm") String partnm
+            ,@RequestParam("subpartcode") String subpartcode
+            ,@RequestParam("subpartnm") String subpartnm
             ,@RequestParam("workdv") String workdv
             ,@RequestParam("rwflag") String rwflag
             ,@RequestParam("wbgubn") String wbgubn
@@ -269,6 +271,8 @@ public class Appm01CrudController {
         workDto.setWono(wono);
         workDto.setPartcode(partcode);
         workDto.setPartnm(partnm);
+        workDto.setSubpartcode(subpartcode);
+        workDto.setSubpartnm(subpartnm);
         String ls_lotno = "";
         if(lotno != null && lotno.length() > 0){
             ls_lotno = lotno;

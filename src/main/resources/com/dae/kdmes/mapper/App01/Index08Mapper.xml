@@ -12,7 +12,9 @@
                   ,Left(machstdate,4) + '-' + substring(machstdate, 5,2)+ '-' + substring(machstdate, 7,2) as machstdate
                   ,Left(macheddate,4) + '-' + substring(macheddate, 5,2)+ '-' + substring(macheddate, 7,2) as macheddate
                   ,machshot
-                  ,machgugek
+                  ,machgugek01
+                  ,machgugek02
+                  ,machgugek03
                   ,machcavity
                   ,machuse
                   ,machcha
@@ -30,6 +32,7 @@
                   ,inperid
                   ,inpcode
                   ,injpum
+                  ,machgumnm
               FROM TB_PC110 WITH(NOLOCK)
              WHERE ( isnull(machcd,'') Like concat('%',#{machcd},'%')
                or isnull(machname,'') Like concat('%',#{machcd},'%') )
@@ -80,8 +83,10 @@
                   ,fixmachcd
                   ,Left(reqdate,4) + '-' + substring(reqdate, 5,2)+ '-' + substring(reqdate, 7,2) as reqdate
                   ,Left(respdate,4) + '-' + substring(respdate, 5,2)+ '-' + substring(respdate, 7,2) as respdate
+                  ,reqtext
                   ,fixtext
                   ,fixcltnm
+                  ,fixflag
                   ,remark
                   ,indate
                   ,inperid
@@ -124,7 +129,9 @@
                             ,machstdate
                             ,macheddate
                             ,machshot
-                            ,machgugek
+                            ,machgugek01
+                            ,machgugek02
+                            ,machgugek03
                             ,machcavity
                             ,machuse
                             ,machcha
@@ -139,6 +146,7 @@
                             ,inperid
                             ,inpcode
                             ,injpum
+                            ,machgumnm
         ) values  (
                              #{machcd}
                             ,#{machno}
@@ -147,7 +155,9 @@
                             ,#{machstdate}
                             ,#{macheddate}
                             ,#{machshot}
-                            ,#{machgugek}
+                            ,#{machgugek01}
+                            ,#{machgugek02}
+                            ,#{machgugek03}
                             ,#{machcavity}
                             ,#{machuse}
                             ,#{machcha}
@@ -162,6 +172,7 @@
                             ,#{inperid}
                             ,#{inpcode}
                             ,#{injpum}
+                            ,#{machgumnm}
         )
     </insert>
 
@@ -229,20 +240,24 @@
         insert into TB_PCFIXLIST (fixmachcd
             ,reqdate
             ,respdate
+            ,reqtext
             ,fixtext
             ,fixcltnm
             ,remark
             ,indate
             ,inperid
+            ,fixflag
         ) values  (
              #{fixmachcd}
             ,#{reqdate}
             ,#{respdate}
+            ,#{reqtext}
             ,#{fixtext}
             ,#{fixcltnm}
             ,#{remark}
             ,#{indate}
             ,#{inperid}
+            ,#{fixflag}
         )
     </insert>
 
@@ -262,8 +277,12 @@
         <if test="macheddate != null">macheddate=#{macheddate}</if>
         <if test="machshot != null ">,</if>
         <if test="machshot != null">machshot=#{machshot}</if>
-        <if test="machgugek != null ">,</if>
-        <if test="machgugek != null">machgugek=#{machgugek}</if>
+        <if test="machgugek01 != null ">,</if>
+        <if test="machgugek01 != null">machgugek01=#{machgugek01}</if>
+        <if test="machgugek02 != null ">,</if>
+        <if test="machgugek02 != null">machgugek02=#{machgugek02}</if>
+        <if test="machgugek03 != null ">,</if>
+        <if test="machgugek03 != null">machgugek03=#{machgugek03}</if>
         <if test="machcavity != null ">,</if>
         <if test="machcavity != null">machcavity=#{machcavity}</if>
         <if test="machuse != null ">,</if>
@@ -292,6 +311,8 @@
         <if test="inpcode != null">inpcode=#{inpcode}</if>
         <if test="injpum != null ">,</if>
         <if test="injpum != null">injpum=#{injpum}</if>
+        <if test="machgumnm != null ">,</if>
+        <if test="machgumnm != null">machgumnm=#{machgumnm}</if>
         where machcd = #{machcd}
     </update>
 
@@ -361,6 +382,8 @@
         <if test="fixmachcd != null">fixmachcd=#{fixmachcd}</if>
         <if test="reqdate != null ">,</if>
         <if test="reqdate != null">reqdate=#{reqdate}</if>
+        <if test="reqtext != null ">,</if>
+        <if test="reqtext != null">reqtext=#{reqtext}</if>
         <if test="respdate != null ">,</if>
         <if test="respdate != null">respdate=#{respdate}</if>
         <if test="fixtext != null ">,</if>
@@ -373,6 +396,8 @@
         <if test="indate != null">indate=#{indate}</if>
         <if test="inperid != null ">,</if>
         <if test="inperid != null">inperid=#{inperid}</if>
+        <if test="fixflag != null ">,</if>
+        <if test="fixflag != null">fixflag=#{fixflag}</if>
         where fixid = #{fixid}
     </update>
 

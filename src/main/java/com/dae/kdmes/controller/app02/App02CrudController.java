@@ -490,6 +490,12 @@ public class App02CrudController {
                 case "wrmc":
                     _index10Dto.setWrmc(values.toString());
                     break;
+                case "sachulflag":
+                    _index10Dto.setSachulflag(values.toString());
+                    break;
+                case "sachultxt":
+                    _index10Dto.setSachultxt(values.toString());
+                    break;
                 default:
                     break;
             }
@@ -886,6 +892,7 @@ public class App02CrudController {
 
     @GetMapping(value="/index15/jglist")
     public Object App15JaegoList_index(@RequestParam("searchtxt") String searchtxt,
+                                       @RequestParam("wonflag") String wonflag,
                                   Model model, HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -897,6 +904,7 @@ public class App02CrudController {
                 searchtxt = "%";
             }
             _indexCa613Dto.setPname(searchtxt);
+            _indexCa613Dto.setWonflag(wonflag);
             _indexCa613ListDto = service10.SelectCa613JaegoList(_indexCa613Dto);
             model.addAttribute("index15List",_indexCa613ListDto);
 

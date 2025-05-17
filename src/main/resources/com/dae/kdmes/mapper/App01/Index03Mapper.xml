@@ -65,7 +65,7 @@
         <![CDATA[
             select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jpumname, jsayang, jpum, jboxsu1, jgumtype, jdoor1, jdoor2,
                    j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn,
-                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp, G.com_rem1 as jgumtypenm, jgumtype, jthick
+                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp, G.com_rem1 as jgumtypenm, jgumtype, jthick, j_yangsan
             from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey  = E.jcifcode)
             LEFT OUTER JOIN cif      F WITH(NOLOCK) ON (JCODE.cltcd = F.acorp1 + CAST(F.acorp2 as varchar))
@@ -79,7 +79,7 @@
     <select id="GetJpumListTot" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
         <![CDATA[
         select jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jboxsu1, jgumtype,
-               jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, w_b_gubn, Convert(int, jchgoga0) AS jchgoga0, jbigo,
+               jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, w_b_gubn, Convert(int, jchgoga0) AS jchgoga0, jbigo, j_yangsan,
                E.jcifcodename as jcifcodename
         from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey = E.jcifcode)
@@ -91,10 +91,10 @@
 
     <insert id="InsertJpum" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
         insert into JCODE ( jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jpumname, cltcd, jgumtype,
-                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1 , jdoor1, jdoor2, jthick) values
+                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1 , jdoor1, jdoor2, jthick, j_yangsan) values
                         (#{jkey}, #{j_dae}, #{j_jung}, #{jgugek}, #{jpum}, #{jgugek2}, #{jpumcode}, #{jpumname},#{cltcd}, #{jgumtype},
                          #{jsayang}, #{j_net}, #{jchajong}, #{j_sr}, #{j_ct}, #{j_cavity}, #{jdanwy}, #{jbigo}, #{w_b_gubn},
-                         #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1}, #{jdoor1}, #{jdoor2}, #{jthick})
+                         #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1}, #{jdoor1}, #{jdoor2}, #{jthick}, #{j_yangsan})
     </insert>
 
 
@@ -151,6 +151,8 @@
         <if test="jdoor2 != null">jdoor2=#{jdoor2}</if>
         <if test="jthick != null ">,</if>
         <if test="jthick != null">jthick=#{jthick}</if>
+        <if test="j_yangsan != null ">,</if>
+        <if test="j_yangsan != null">j_yangsan=#{j_yangsan}</if>
 
         where jkey   = #{jkey}
     </update>

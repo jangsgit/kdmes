@@ -257,21 +257,21 @@
                                             </div>         
                                         </td>                                                                                      
                                     </tr>    
-                                    <!-- <tr>    
-                                        <th>규격</th>
-                                        <td colspan="2">
-                                            <div class="input_wrap">
-                                                <input type="text" id="jgugek" placeholder=""  >
+                                    <tr>    
+                                        <th>사출여부</th>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" id="sachulflag" value="0" type="checkbox"/>     
                                             </div>
                                         </td>                                      
-                                        <th>차종</th>
-                                        <td colspan="2">
-                                            <div class="input_wrap">
-                                                <input type="text" id="jchajong" placeholder=""  >
+                                        <th>사출내용</th>
+                                        <td colspan="3">
+                                            <div class="input_wrap">   
+                                                <input type="text" class="form-control form-control-sm" id="sachultxt" placeholder=""  >
                                             </div>
                                         </td>  
                                     </tr>
-                                    <tr>                                 
+                                    <!-- <tr>                                 
                                         <th>사양구분</th>
                                         <td colspan="2"> 
                                             <div class="input_wrap">
@@ -299,8 +299,10 @@
                                             </div>
                                         </td> 
                                     </tr>   -->
-                                    <tr> 
-                                        <!-- <th>거래처<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
+                                    <input type="hidden"  id="qcdate" autocomplete="off"  placeholder="Y-m-d"     >    
+                                    <input class="form-control form-control-sm" id="plan_no" type="hidden"  />  
+                                    <!-- <tr> 
+                                          <th>거래처<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th>
                                         <td colspan="2">
                                                 <input class="form-control form-control-sm" id="ecltnm" type="text"    autocomplete="off"  placeholder="">
                                                 <input class="form-control form-control-sm" id="acorp1" type="hidden"  />
@@ -309,7 +311,7 @@
                                                 <input class="form-control form-control-sm" id="acode" type="hidden"  />  
                                                 <input class="form-control form-control-sm" id="plan_no" type="hidden"  />  
                                                    
-                                        </td>                                                                                  -->
+                                        </td>                                                                                  
                                         <th>출고예정일</th> 
                                         <td colspan="2">
                                             <div class="input_wrap">
@@ -319,7 +321,7 @@
                                         </td>                                    
                                         <th>&nbsp;</th> 
                                         <td  colspan="2"> &nbsp;</td> 
-                                    </tr>  
+                                    </tr>   -->
                                     <!-- <tr>                                                                                                
                                         <th>생산계획수량<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
                                         <td  colspan="2">
@@ -360,7 +362,7 @@
                                         <th>주의사항</th>
                                         <td  colspan="4">
                                             <div class="input_wrap">                                               
-                                                <input type="text"  id="remark" autocomplete="off"   > 
+                                                <input type="text" class="form-control form-control-sm" id="remark" autocomplete="off"   > 
                                             </div>
                                         </td>                                                                                            
                                     </tr>                                                                             
@@ -686,7 +688,7 @@
                             cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                 text: '<b>${item.prod_sdate}</b>',
                                 click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm, ctx.item.inmonth, ctx.item.inweeks, ctx.item.wrmc);                    
+                                    wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm, ctx.item.inmonth, ctx.item.inweeks, ctx.item.wrmc, ctx.item.sachulflag, ctx.item.sachultxt);                    
                                 }
                             }) 
                         },      
@@ -771,7 +773,9 @@
                             inmonth: wtab01Dto[i]["inmonth"],   
                             inweeks: wtab01Dto[i]["inweeks"],   
                             wrmc: wtab01Dto[i]["wrmc"],                               
-                            wrmcnm: wtab01Dto[i]["wrmcnm"],   
+                            wrmcnm: wtab01Dto[i]["wrmcnm"],                             
+                            sachulflag: wtab01Dto[i]["sachulflag"],                             
+                            sachultxt: wtab01Dto[i]["sachultxt"],   
                             inmonthtxt: ls_monthtxt                          
                         });
                         cnt++;
@@ -1139,7 +1143,7 @@
                 
                 today.setDate(today.getDate() + 30);
                 var ls_qcdate = today.toISOString().substring(0,10);
-                wqcdate.value = ls_qcdate;
+                //wqcdate.value = ls_qcdate;
 
                 document.getElementById('plan_no').value =  "";
                 document.getElementById('workdv').value = "0"; 
@@ -1149,6 +1153,8 @@
                 document.getElementById('prod_qty').value = ""; 
                 document.getElementById('remark').value = ""; 
                 document.getElementById('wrmc').value = ""; 
+                document.getElementById('sachultxt').value = ""; 
+                document.getElementById('sachulflag').checked = false; 
 
                 //document.getElementById('ecltnm').value =  "";  
                 //document.getElementById('acode').value =  "";   
@@ -1251,7 +1257,7 @@
                 var ls_indate     =  convert_date(windate.value); // (document.getElementById('indate').value).replaceAll("-","");                   
                 var ls_prod_sdate =  convert_date(wprod_sdate.value); //(document.getElementById('prod_sdate').value).replaceAll("-","");   
                 var ls_prod_edate =  convert_date(wprod_edate.value); //(document.getElementById('prod_edate')).value.replaceAll("-","");                   
-                var ls_qcdate     =  convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");   
+                var ls_qcdate     =  "" //convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");   
                 var ls_cltcd   =  "" //document.getElementById('acode').value;
                 var ls_ecltnm  =  ""  //document.getElementById('ecltnm').value;
                 var ls_pcode   =  document.getElementById('pcode').value;   
@@ -1265,7 +1271,16 @@
                 var ls_plan_no  =  document.getElementById('plan_no').value;  
                 var ls_inmonth  =  document.getElementById('inmonth').value;  
                 var ls_inweeks  =  document.getElementById('inweeks').value;    
-                var ls_wrmc  =  document.getElementById('wrmc').value;   
+                var ls_wrmc  =  document.getElementById('wrmc').value;       
+                var ls_sachultxt  =  document.getElementById('sachultxt').value;    
+                const j_sachulflag = document.getElementById('sachulflag'); 
+                const is_checked02 = j_sachulflag.checked;
+                
+                if (!is_checked02){
+                    ls_sachulflag = "0"
+                }else{
+                    ls_sachulflag = "1"
+                }
                 var ls_cls_flag  =  ""; //document.getElementById('cls_flag').value;  
                 var ls_istore  =  ""; //document.getElementById('istore').value;   
                 var ls_ostore  =  ""; //document.getElementById('ostore').value; 
@@ -1360,6 +1375,8 @@
                     "inmonth"        : ls_inmonth, 
                     "inweeks"        : ls_inweeks,  
                     "wrmc"        : ls_wrmc,    
+                    "sachulflag"        : ls_sachulflag,    
+                    "sachultxt"        : ls_sachultxt,    
                     
                 } 
         
@@ -1527,6 +1544,8 @@
                             inweeks: wtab01Dto[i]["inweeks"], 
                             wrmc: wtab01Dto[i]["wrmc"], 
                             wrmcnm: wtab01Dto[i]["wrmcnm"], 
+                            sachulflag: wtab01Dto[i]["sachulflag"], 
+                            sachultxt: wtab01Dto[i]["sachultxt"], 
                             inmonttxt: ls_monthtxt, 
                         });
                         cnt++;
@@ -1554,7 +1573,7 @@
                     cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.prod_sdate}</b>',
                         click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm, ctx.item.inmonth, ctx.item.inweeks, ctx.item.wrmc);           
+                            wcifChk3_a(ctx.item.indate, ctx.item.prod_sdate, ctx.item.prod_edate, ctx.item.lotno, ctx.item.ecltnm ,ctx.item.qcdate, ctx.item.perid, ctx.item.workdv, ctx.item.pcode,  ctx.item.jpum, ctx.item.jgugek,ctx.item.dem_flag, ctx.item.jchajong, ctx.item.jsayang, ctx.item.jgugek2, ctx.item.j_sr, ctx.item.jpumcode, ctx.item.jdanwy, ctx.item.prod_qty, ctx.item.cls_flag,  ctx.item.istore, ctx.item.ostore, ctx.item.rwflag, ctx.item.remark, ctx.item.cltcd, ctx.item.plan_no, ctx.item.pernm, ctx.item.inmonth, ctx.item.inweeks, ctx.item.wrmc, ctx.item.sachulflag, ctx.item.sachultxt);           
                         }
                     });
                     wtab01Grid.columns.push(cols);  
@@ -1614,8 +1633,8 @@
                                 //jgugek,dem_flag,jchajong,jsayang,jgugek2,
                                 //j_sr,jpumcode,jdanwy,prod_qty,cls_flag,
                                 //istore,ostore,rwflag,remark,cltcd
-                                //plan_no , pernm inmonth, inweeks , wrmc
-                function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30){
+                                //plan_no , pernm inmonth, inweeks , wrmc, sachulflag, sachultxt
+                function wcifChk3_a(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32){
                  
                     //document.getElementById('indate').value = arg1;  
                     //document.getElementById('prod_sdate').value = arg2;   
@@ -1636,10 +1655,10 @@
                     }else{
                         wprod_edate.value = arg3;
                     }
-                    if(arg6 == null || arg6.length == 0 || arg6.length < 8 || arg6 == ""|| arg6 == "null"){  
-                    }else{
-                        wqcdate.value = arg6;
-                    } 
+                    // if(arg6 == null || arg6.length == 0 || arg6.length < 8 || arg6 == ""|| arg6 == "null"){  
+                    // }else{
+                    //     wqcdate.value = arg6;
+                    // } 
                     // document.getElementById('lotno').value = arg4; 
                     //document.getElementById('ecltnm').value = arg5; 
                     //document.getElementById('acode').value = arg25;   
@@ -1666,6 +1685,14 @@
                     document.getElementById('inmonth').value = arg28;
                     document.getElementById('inweeks').value = arg29;
                     document.getElementById('wrmc').value = arg30;
+                    document.getElementById('wrmc').value = arg30;
+                    document.getElementById('sachultxt').value = arg32;
+                    const j_sachulflag = document.getElementById('sachulflag'); 
+                    if(arg31 == "1"){
+                        j_sachulflag.checked = true; 
+                    }else{
+                        j_sachulflag.checked = false; 
+                    }   
                     
                     // var x = document.getElementsByName('rwflag');
         
@@ -2253,12 +2280,12 @@
                             format: 'yyyy-MM-dd', 
                         });
                         
-                        wqcdate = new wijmo.input.InputDate('#qcdate', {
-                            isRequired: false,
-                            value: null,
-                            placeholder: '',
-                            format: 'yyyy-MM-dd', 
-                        });
+                        // wqcdate = new wijmo.input.InputDate('#qcdate', {
+                        //     isRequired: false,
+                        //     value: null,
+                        //     placeholder: '',
+                        //     format: 'yyyy-MM-dd', 
+                        // });
                           
                         var result = new Date();
                         result.setHours(result.getHours() + 9);
@@ -2270,10 +2297,10 @@
                         var ls_edate = result.toISOString().substring(0,10);
                         wprod_edate.value = ls_edate;
                         
-                        var today = new Date();
-                        today.setDate(today.getDate() + 30);
-                        var ls_qcdate = today.toISOString().substring(0,10);
-                        wqcdate.value = ls_qcdate;
+                        // var today = new Date();
+                        // today.setDate(today.getDate() + 30);
+                        // var ls_qcdate = today.toISOString().substring(0,10);
+                        // wqcdate.value = ls_qcdate;
  
                         showCurrentDate(wprod_sdate, 5); 
                 } 

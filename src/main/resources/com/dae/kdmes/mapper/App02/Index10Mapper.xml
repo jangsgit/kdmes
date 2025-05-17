@@ -13,7 +13,7 @@
                 Left(TB.prod_edate,4) + '-' + substring(TB.prod_edate, 5,2)+ '-' + substring(TB.prod_edate, 7,2) as prod_edate,
                 Left(TB.qcdate,4) + '-' + substring(TB.qcdate, 5,2)+ '-' + substring(TB.qcdate, 7,2) as qcdate,
                 TB.lotno, TB.cltcd,  TB.perid, (select com_rem1 from TB_CA510  where com_cls = '002' and com_code=TB.perid) as pernm,
-                TB.workdv, TB.ecltnm, TB.qcdate, TB.plan_no,
+                TB.workdv, TB.ecltnm, TB.qcdate, TB.plan_no, TB.sachulflag, TB.sachultxt,
                 TB.pcode, E.jpum, E.jgugek, TB.dem_flag, E.jchajong, E.jgugek2, E.jsayang, E.j_sr, E.jpumcode, E.jdanwy,
                 TB.prod_qty, TB.cls_flag, TB.istore, TB.ostore, TB.rwflag, TB.remark, isnull(TB.inmonth,'') as inmonth, isnull(TB.inweeks,'') as inweeks,
                 Left(TB.orddate,4) + '-' + substring(TB.orddate, 5,2)+ '-' + substring(TB.orddate, 7,2) as orddate,
@@ -49,11 +49,11 @@
         insert into TB_FPLAN ( custcd, spjangcd, plan_no, indate, prod_sdate, prod_edate, lotno, cltcd,  perid, ecltnm , line, wono ,
         workdv, pcode, dem_flag, prod_qty, cls_flag, istore, ostore, rwflag, remark ,
         wram , woam, qcqty, end_qty, ordtype, decision, decision1, decision2, decision3 , decision4 , work_flag, qc_flag, close_flag, end_flag, tordqty, selck, batchdv, ocls_flag, autodv ,wodv , opcod
-        , prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks, wrmc ) values
+        , prod_dqty , ord_edate, wflag, orddate, qcdate , inmonth, inweeks, wrmc, sachulflag, sachultxt ) values
         ('KDMES' ,'ZZ', #{plan_no} , #{indate}, #{prod_sdate}, #{prod_edate}, #{lotno}, #{cltcd}, #{perid}, #{ecltnm}, '00', #{wono},
         #{workdv}, #{pcode}, #{dem_flag}, #{prod_qty}, '1', #{istore}, #{ostore}, #{rwflag}, #{remark} ,
         '0', '0' , '0' , '0' , '1', '0' , '0', '0' , '0', '0', '0' , '0' , '0' , '0' , '0' , '0', '0' , '0' , '1' , '0' , #{pcode} ,
-        '0' ,'' , '00010', #{orddate} , #{qcdate} , #{inmonth} , #{inweeks}, #{wrmc})
+        '0' ,'' , '00010', #{orddate} , #{qcdate} , #{inmonth} , #{inweeks}, #{wrmc}, #{sachulflag}, #{sachultxt})
     </insert>
 
     <insert id="InsertFplanCopy" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" >
@@ -113,6 +113,10 @@
         <if test="inweeks != null">inweeks=#{inweeks}</if>
         <if test="wrmc != null ">,</if>
         <if test="wrmc != null">wrmc=#{wrmc}</if>
+        <if test="sachulflag != null ">,</if>
+        <if test="sachulflag != null">sachulflag=#{sachulflag}</if>
+        <if test="sachultxt != null ">,</if>
+        <if test="sachultxt != null">sachultxt=#{sachultxt}</if>
         where plan_no=#{plan_no}
     </update>
 
@@ -506,6 +510,7 @@
                         Group BY  B.pcode, B.pname, B.psize, B.punit, B.wonflag
                 ) Z where Z.janqty > 0
                 AND  Z.pname Like concat('%',#{pname},'%')
+                AND  Z.wonflag = #{wonflag}
                 ORDER BY  Z.pname, Z.psize, Z.punit, Z.pcode
         ]]>
     </select>
