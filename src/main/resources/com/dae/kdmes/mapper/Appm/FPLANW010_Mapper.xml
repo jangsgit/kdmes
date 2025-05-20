@@ -100,7 +100,6 @@
                D.lotno AS lotno,
                A.plan_no,
                A.cltcd,
-               B.acorp as cltnm,
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
@@ -156,10 +155,8 @@
              LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00010'
              Left OUTER JOIN  TB_FPLAN_WRMC E ON D.wflag = E.wflag and D.wrmc = E.wrmc ,
             JCODE C WITH(NOLOCK),
-            CIF B WITH(NOLOCK) ,
 			TB_FPLAN_WORK F  WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
 		  AND A.plan_no = F.plan_no
 		   AND F.wflag = '00010'
 		   AND F.decision in( '1', '3')
@@ -349,7 +346,6 @@
                D.lotno,
                A.plan_no,
                A.cltcd,
-               B.acorp as cltnm,
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
@@ -393,10 +389,8 @@
         FROM TB_FPLAN A WITH(NOLOCK)
              LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no   = D.plan_no AND D.wflag = '00010'
              LEFT OUTER JOIN  TB_FPLAN_W020 E ON A.plan_no = D.plan_no AND D.wflag = '00020' ,
-            JCODE C WITH(NOLOCK),
-            CIF B WITH(NOLOCK)
+            JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND (D.decision          IN (  '3' ))
           AND D.lotno in
                 <foreach collection="itemcdArr" item="itemcd" open="(" close=")" separator=",">
@@ -419,7 +413,6 @@
         A.lotno,
         A.plan_no,
         A.cltcd,
-        B.acorp as cltnm,
         A.pcode,
         C.jpum AS pname,
         C.jgugek AS psize,
@@ -461,10 +454,8 @@
         (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
         FROM TB_FPLAN A WITH(NOLOCK)
         LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00020' ,
-        JCODE C WITH(NOLOCK),
-        CIF B WITH(NOLOCK)
+        JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-        AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
         AND (A.cls_flag          IN ('1', '2', '3' ))
         AND A.lotno in
         <foreach collection="itemcdArr" item="itemcd" open="(" close=")" separator=",">
@@ -651,7 +642,6 @@
                A.spjangcd,
                (A.plan_no) AS plan_no,
                A.cltcd,
-               B.acorp as cltnm,
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
@@ -680,10 +670,8 @@
 			LEFT OUTER JOIN  TB_FPLAN_IWORK F ON D.lotno   = F.glotno
 			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = F.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 AND ( ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
             LEFT OUTER JOIN  TB_FPLAN_W010  E ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
-            JCODE C WITH(NOLOCK),
-            CIF B WITH(NOLOCK)
+            JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND C.w_b_gubn NOT IN ('H')
           AND D.indate between #{fdate} and #{tdate}
           AND isnull(D.wrps, '')   lIKE  concat('%',#{wrps},'%')
@@ -810,7 +798,6 @@
         A.lotno,
         A.plan_no,
         A.cltcd,
-        B.acorp as cltnm,
         A.pcode,
         C.jpum AS pname,
         C.jgugek AS psize,
@@ -852,10 +839,8 @@
         (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
         FROM TB_FPLAN A WITH(NOLOCK)
         LEFT OUTER JOIN  TB_FPLAN_W010 D ON A.plan_no = D.plan_no AND D.wflag = '00030' ,
-        JCODE C WITH(NOLOCK),
-        CIF B WITH(NOLOCK)
+        JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-        AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
         AND (A.cls_flag          IN ('1', '2', '3' ))
         AND A.lotno in
         <foreach collection="itemcdArr" item="itemcd" open="(" close=")" separator=",">
@@ -961,7 +946,6 @@
                D.lotno AS lotno,
                A.plan_no,
                A.cltcd,
-               B.acorp as cltnm,
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
@@ -1004,10 +988,8 @@
                (CASE WHEN D.winps > 1 THEN DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '')  + '외 ' + CAST(D.winps - 1 AS VARCHAR(2)) + '명' ELSE  DBO.DF_NM_RTN('TB_JA001', D.custcd, D.wrps, '', '') END ) wrpsnm
         FROM TB_FPLAN A WITH(NOLOCK),
              TB_FPLAN_W020 D WITH(NOLOCK) ,
-            JCODE C WITH(NOLOCK),
-            CIF B WITH(NOLOCK)
+            JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND (A.line               = #{line})
           AND (A.cls_flag          IN ('1', '2', '3' ))
           AND A.plan_no = D.plan_no
@@ -1032,7 +1014,6 @@
                A.lotno,
                A.plan_no,
                A.cltcd,
-               B.acorp as cltnm,
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
@@ -1078,10 +1059,8 @@
             LEFT OUTER JOIN  TB_FPLAN_W030 D ON A.plan_no = D.plan_no AND D.wflag = '00030'
             LEFT OUTER JOIN  TB_FPLAN_WTIME F ON A.plan_no = F.plan_no AND F.wflag = '00030' AND F.WSEQ = '03' AND F.SEQ = '001'
             LEFT OUTER JOIN  TB_FPLAN_W010 E ON A.plan_no   = E.plan_no AND E.wflag = '00010' ,
-            JCODE C WITH(NOLOCK),
-            CIF B WITH(NOLOCK)
+            JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND (A.line               = #{line})
           AND (A.cls_flag          IN ('1', '2', '3' ))
           AND (A.prod_sdate         BETWEEN #{fdate} AND #{tdate})
@@ -1133,16 +1112,15 @@
 
     <select id="GetFPLANW020_LIST" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
-               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono, C.acorp as cltnm  , D.jkey AS pcode, D.jpum AS pname,
+               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono,   D.jkey AS pcode, D.jpum AS pname,
                D.jgugek AS psize, D.jdanwy AS punit,
                (CASE WHEN A.winps > 1 THEN E.inname  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  E.inname END ) wrpsnm
         from TB_FPLAN_W020 A WITH (NOLOCK)
             LEFT OUTER JOIN  INSA E ON A.wrps = E.insano
             Left OUTER JOIN  TB_FPLAN_WRMC F ON A.wflag = F.wflag and A.wrmc = F.wrmc ,
-            TB_FPLAN B WITH(NOLOCK), cif C WITH(NOLOCK),  JCODE D WITH(NOLOCK)
+            TB_FPLAN B WITH(NOLOCK),    JCODE D WITH(NOLOCK)
         where A.spjangcd = B.spjangcd
           AND   A.plan_no = B.plan_no
-          AND   B.cltcd = C.acorp1 + CAST(C.acorp2 as varchar)
           AND   B.pcode = D.JKEY
           AND   A.lotno=#{lotno} and A.wseq in (#{wseq}, '02')
     </select>
@@ -1150,15 +1128,14 @@
 
     <select id="GetFPLANW030_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  (select machname from TB_PC110 where machnum=A.wrmc) as machname,
-        A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
+        A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono,   D.jkey AS pcode, D.jpum AS pname,
         D.jgugek AS psize, D.jdanwy AS punit,
         (CASE WHEN A.winps > 1 THEN E.inname  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  E.inname END ) wrpsnm
         from TB_FPLAN_W030 A WITH (NOLOCK)
             LEFT OUTER JOIN  INSA E ON A.wrps = E.insano   ,
-            TB_FPLAN B WITH(NOLOCK), cif C WITH(NOLOCK),  JCODE D WITH(NOLOCK)
+            TB_FPLAN B WITH(NOLOCK),    JCODE D WITH(NOLOCK)
         where A.spjangcd = B.spjangcd
         AND   A.plan_no = B.plan_no
-        AND   B.cltcd = C.acorp1 + CAST(C.acorp2 as varchar)
         AND   B.pcode = D.JKEY
         AND   A.plan_no=#{plan_no}  and A.wseq in (#{wseq}, '03')
     </select>
