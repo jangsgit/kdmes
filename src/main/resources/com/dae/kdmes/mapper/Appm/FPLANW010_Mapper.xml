@@ -29,7 +29,6 @@
                A.lotno,
                A.plan_no,
                A.cltcd,
-               B.acorp as cltnm,
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
@@ -73,10 +72,8 @@
                (select com_rem1 from TB_CA510 WITH (NOLOCK) WHERE com_code !='00'  AND com_cls = '006'  and com_code=C.jgumtype) as jgumnm
         FROM TB_FPLAN A WITH(NOLOCK)
                 LEFT join TB_FPLAN_WRMC F WITH (NOLOCK) ON A.wrmc = F.wrmc and F.wflag = '00010',
-            JCODE C WITH(NOLOCK),
-            CIF B WITH(NOLOCK)
+            JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND (ISNULL(A.cltcd,'')   lIKE  concat('%',#{cltcd},'%') )
           AND (ISNULL(A.pcode,'')   lIKE  concat('%',#{pcode},'%') )
            AND (ISNULL(A.inmonth,'')   lIKE  concat('%',#{inmonth},'%') )
