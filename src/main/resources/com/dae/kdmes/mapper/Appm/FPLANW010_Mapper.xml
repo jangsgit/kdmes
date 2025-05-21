@@ -1076,18 +1076,16 @@
 
     <select id="GetFPLANW010_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.lotno, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
-               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision,B.decision1, A.indate, A.inperid, B.wono, C.acorp as cltnm , D.jkey AS pcode, D.jpum AS pname,
+               A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision,B.decision1, A.indate, A.inperid, B.wono,   D.jkey AS pcode, D.jpum AS pname,
                D.jgugek AS psize, D.jdanwy AS punit, D.w_b_gubn,
                (CASE WHEN A.winps > 1 THEN E.inname  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  E.inname END ) wrpsnm
         from TB_FPLAN_W010 A WITH (NOLOCK)
 		     LEFT OUTER JOIN  INSA E ON A.wrps = E.insano
              Left OUTER JOIN  TB_FPLAN_WRMC F ON A.wflag = F.wflag and A.wrmc = F.wrmc ,
             TB_FPLAN B WITH(NOLOCK),
-            CIF C WITH(NOLOCK),
             JCODE D WITH(NOLOCK)
         where A.spjangcd = B.spjangcd
           AND   A.plan_no = B.plan_no
-          AND   B.cltcd =  C.acorp1 + CAST(C.acorp2 as varchar)
           AND   B.pcode = D.jkey
           AND   A.plan_no=#{plan_no}
           AND   A.lotno =#{lotno}

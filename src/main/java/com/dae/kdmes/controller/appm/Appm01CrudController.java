@@ -289,6 +289,7 @@ public class Appm01CrudController {
                 ls_lotno = plan_no.substring(0,8) + rwflag + "0001";
             } else {
                 ls_seq = ls_maxlotno.substring(9, 13);
+
                 int ll_seq = Integer.parseInt(ls_seq) + 1;
                 ls_seq = Integer.toString(ll_seq);
 
@@ -299,6 +300,7 @@ public class Appm01CrudController {
                 } else if (ls_seq.length() == 3) {
                     ls_seq = "0" + ls_seq;
                 }
+
                 ls_lotno = plan_no.substring(0,8) + rwflag + ls_seq;
             }
             _index10Dto.setLotno(ls_lotno);
@@ -341,7 +343,6 @@ public class Appm01CrudController {
 
             // 임시적으로 막음 25.01.21
             // wotqt = cmsservice01.getSHOTDATA_wotqty(cmsdto);  //생산량
-            log.info("wotqt =====> " + wotqt);
             workDto.setWqty(wotqt);
             workDto.setQty(wotqt);
             workDto.setWotqt(wotqt);
