@@ -574,7 +574,6 @@
                A.spjangcd,
                (A.plan_no) AS plan_no,
                A.cltcd,
-               B.acorp as cltnm,
                A.pcode,
                C.jpum AS pname,
                C.jgugek AS psize,
@@ -603,10 +602,8 @@
 			LEFT OUTER JOIN  TB_FPLAN_IWORK F ON D.lotno   = F.glotno
 			LEFT OUTER JOIN  TB_FPLAN      A ON A.plan_no   = F.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 AND ( ISNULL(A.lotno,'')   lIKE  concat('%',#{lotno},'%') )
             LEFT OUTER JOIN  TB_FPLAN_W010  E ON A.plan_no   = E.plan_no AND Len( ISNULL(A.wflag,'') ) > 0 ,
-            JCODE C WITH(NOLOCK),
-            CIF B WITH(NOLOCK)
+            JCODE C WITH(NOLOCK)
         WHERE (A.pcode              = C.JKEY)
-          AND (A.cltcd              =  B.acorp1 + CAST(B.acorp2 as varchar) )
           AND C.w_b_gubn NOT IN ('H')
           AND D.indate between #{fdate} and #{tdate}
           AND isnull(D.wrps, '')   lIKE  concat('%',#{wrps},'%')
