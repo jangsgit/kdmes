@@ -268,7 +268,7 @@
                                 <div class="row gx-3" style="  margin: 10px 10px 10px;">   
                                     <div class="col-auto">
                                         <div class="input-group input-group-sm"><span class="input-group-text" id="inputGroup-sizing-sm">완료일</span> 
-                                            <input type="text"  class="form-control datetimepicker" id="inrespdate" autocomplete="off"  placeholder="Y-m-d"     > 
+                                            <input type="text"  class="form-control datetimepicker" id="inrespdate" autocomplete="off"  placeholder="Y-m-d"  disabled   > 
                                         </div>
                                     </div>                                                    
                                     <div class="col-auto">
@@ -280,7 +280,7 @@
                                     <div class="col-auto d-flex align-items-center">
                                         <label for="infixflag" class="form-label fw-bold mb-0 me-2 text-primary">완료여부</label>
                                         <div class="form-check form-switch m-0">
-                                            <input class="form-check-input" id="infixflag" type="checkbox" value="0">
+                                            <input class="form-check-input" id="infixflag" type="checkbox" value="0" onchange="endflag()" >
                                         </div>
                                     </div>
                                 </div>     
@@ -289,12 +289,12 @@
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">수리업체</span> 
                                             <input class="form-control form-control-sm" id="infixcltnm" type="text"    autocomplete="off" style="width: 250px;">  
                                         </div>
-                                    </div>        
-                                    <div class="col-auto">
+                                    </div>   
+                                    <!-- <div class="col-auto">
                                         <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">비고</span> 
                                             <input class="form-control form-control-sm" id="inremark" type="text"    autocomplete="off" style="width: 350px;">  
                                         </div>
-                                    </div>    
+                                    </div>     -->
                                     <!-- <div class="col-auto">  
                                         <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" id="retrieveBtn"  type="button" onclick="retrieve_rtn()">조회
                                         </button>
@@ -311,9 +311,16 @@
                                         <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="delete_btn()">삭제
                                         </button>
                                     </div>  
-                                </div>                                                    
+                                </div>       
+                                <div class="row gx-3" style="  margin: 10px 10px 10px;">   
+                                    
+                                        <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">비고</span> 
+                                            <textarea class="form-control" aria-label="With textarea" name="inremark" id="inremark" style="width: 100%; height: 120px;" ></textarea>
+                                        </div>  
+                                    
+                                </div>                                             
                                 <div class="container-fluid"  >                                                         
-                                    <div id="wtab02Grid_div"  style="overflow:scroll;   height:485px;   margin:0 auto; "></div>  
+                                    <div id="wtab02Grid_div"  style="overflow:scroll;   height:385px;   margin:0 auto; "></div>  
                                 </div>  
                             </td> 
                         </tr>
@@ -834,7 +841,14 @@
        document.getElementById('tabvalue').value = arg; 
    } 
   
-
+   function endflag(){ 
+        lb_endflag = document.getElementById('infixflag').checked ; 
+        if(lb_endflag) {
+             wrespdate.isDisabled = false; 
+        }else{
+             wrespdate.isDisabled = true; 
+        } 
+   }
    function new_btn(arg){  
        document.getElementById('infixid').value = "";
        document.getElementById('inreqtext').value = "";
@@ -842,6 +856,7 @@
        document.getElementById('infixcltnm').value = "";
        document.getElementById('inremark').value = "";
        document.getElementById('infixflag').checked = false;  
+       document.getElementById('inrespdate').disabled = true;  
    }
    function save_btn(arg){
        var ls_tab = document.getElementById('tabvalue').value;  
@@ -1067,10 +1082,14 @@
                    alert("의뢰일을 등록하세요")  
                    return ;               
                } 
-               if(ls_inrespdate == null || ls_inrespdate.length == 0 || ls_inrespdate == ""){ 
-                   alert("완료일을 등록하세요")  
-                   return ;               
-               }   
+               if(is_checked){
+                    if(ls_inrespdate == null || ls_inrespdate.length == 0 || ls_inrespdate == ""){ 
+                        alert("완료일을 등록하세요")  
+                        return ;               
+                    }   
+               }else{
+                    ls_inrespdate = ""
+               } 
                if(ls_infixcltnm == null || ls_infixcltnm.length == 0  ){
                     ls_infixcltnm = "";
                }    
@@ -2525,8 +2544,10 @@
        document.getElementById('inreqtext').value = arg8;  
        if(arg9 == '1') { 
         document.getElementById('infixflag').checked = true;    
+        wrespdate.isDisabled = false; 
        }else{
         document.getElementById('infixflag').checked = false;    
+        wrespdate.isDisabled = true; 
        }
        wreqdate.value   = arg3;
        wrespdate.value = arg4; 
@@ -2685,7 +2706,7 @@ function listUp01(){
             isRequired: false,
             value: null,
             placeholder: '',
-            format: 'yyyy-MM-dd', 
+            format: 'yyyy-MM-dd',  
         });
 
         var result = new Date();
@@ -2695,7 +2716,11 @@ function listUp01(){
         wmachstdate.value = ls_date;  
         wmacheddate.value = ls_date;   
         wreqdate.value = ls_date;  
-        wrespdate.value = ls_date;  
+        wrespdate.value = ls_date; 
+        // 비활성화
+        wrespdate.isDisabled = true; 
+         
+
     } 
 
 
@@ -2711,7 +2736,7 @@ function listUp01(){
        let ls_frday = year + '-' + month + '-01' 
        let ls_today = year + '-' + month + '-' + date 
        // document.getElementById('frdate').value = ls_frday;
-       // document.getElementById('todate').value = ls_today;
+       // document.getElementById('todate').value = ls_today; 
    }
 
    function convert_date(arg_date){  
