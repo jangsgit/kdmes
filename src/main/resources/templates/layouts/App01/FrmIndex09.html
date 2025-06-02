@@ -184,7 +184,9 @@
                             <div class="input-group"> 
                                 <button   class="btn btn-primary btn-sm" type="button" id="partbtn"    >2.원재료선택 </button> 
                                 <input class="form-control form-control-sm" id="inpartnm" type="text" placeholder="" disabled />
-                                <input class="form-control form-control-sm" id="inpartcode" type="hidden" placeholder=""  /> 
+                                <input class="form-control form-control-sm" id="inpartcode" type="hidden" placeholder=""  />  
+                                <input class="form-control form-control-sm" id="injchajong" type="hidden" placeholder=""  />  
+                                
                             </div>
                         </div> 
                         <div class="col-3">
@@ -2820,15 +2822,32 @@
 
 
     function prt_btn(){
-        var ls_inlotno   = document.getElementById('inlotno').value; 
-        var ls_inpname   = document.getElementById('inpname').value; 
+        var ls_inlotno   = document.getElementById('inlotno').value;      //lotno
+        var ls_inpname   = document.getElementById('inpname').value;      //품명 
         var ls_incltnm   = document.getElementById('incltnm').value; 
-        var ls_inwokqt   = document.getElementById('inwokqt').value; 
+        var ls_inwokqt   = document.getElementById('inwokqt').value;  
+        var ls_startDate   = document.getElementById('startDate').value; //작업시작일자
+        var ls_rwflag   = document.getElementById('rwflag').value;       //주야간구분 
+        const ls_char = ls_inlotno.replace(/[^A-Z]/g, '');  //주야간구분  
+
+        if(ls_char == "D"){
+            ls_rwflag = "주간"  
+        }else{
+            ls_rwflag = "야간"  
+        }
+        var ls_inwrpsnm   = document.getElementById('inwrpsnm').value;   //작업자 
+        var ls_inpartnm   = document.getElementById('inpartnm').value;   //원재료   
+        var ls_insubpartnm   = document.getElementById('insubpartnm').value;    //부재료
+        var ls_injchajong   = document.getElementById('injchajong').value;    //차종
+        var ls_inpcode   = document.getElementById('inpcode').value;    //품목코드
+        var ls_inboxno = 1;
+        const dateOnly = ls_startDate?.split(' ')[0] ?? ls_startDate; // 시:분:초 제거
+
         if (!ls_inlotno || !ls_inpname) {
             alert('작업지시서를 선택하세요.');
             return;
         } 
-        
+        /*
         const text = ls_inlotno;
         // const barcodeImage = document.getElementById('barcodeImage');
         const printArea = document.createElement('div');
@@ -2849,8 +2868,78 @@
             // <p class="item-qty">수량:  ${ls_inwokqt}</p>
         printArea.appendChild(barcodeImage);
         printArea.appendChild(details);
+        */
+       
+        // 전체 출력 영역
+        const printWrapper = document.createElement('div');
+        printWrapper.style.width = '100%';
+        printWrapper.style.display = 'flex';
+        printWrapper.style.justifyContent = 'center'; // 중앙 정렬
+        printWrapper.style.backgroundColor = '#ffffff';
 
-         
+        const text = ls_inlotno; 
+        const printArea = document.createElement('div');
+        printArea.style.fontFamily = 'Arial, sans-serif';
+        printArea.style.fontSize = '13px';
+        printArea.style.border = '1px solid black';
+        printArea.style.padding = '10px'; 
+        printArea.style.backgroundColor = '#ffffff';
+        printArea.style.maxWidth = '600px';
+        printArea.style.boxSizing = 'border-box';
+
+        // 바코드 이미지 생성
+        const barcodeImage = document.createElement('img');
+        barcodeImage.className = 'barcode-image';
+        barcodeImage.src = `/input/generate-barcode?text=${encodeURIComponent(text)}`;
+        barcodeImage.style.display = 'block';
+        barcodeImage.style.margin = '10px auto 5px auto';
+        barcodeImage.style.width = '250px';
+        barcodeImage.style.height = 'auto';
+
+        // 테이블 생성
+        const table = document.createElement('table');
+        table.style.borderCollapse = 'collapse';
+        table.style.width = '100%';
+        table.style.textAlign = 'left';
+        table.style.margin = '0 auto';
+        table.style.fontSize = '14px';
+        table.style.tableLayout = 'fixed';
+        // 공통 셀 스타일
+        const tdStyle = 'border: 0px solid black; padding: 4px; word-break: break-word;';
+
+        // 각 행 구성
+        table.innerHTML = `
+            <tr>
+                <th style="${tdStyle}">날짜</th>    <td  style="${tdStyle}">${dateOnly}</td>
+                <th style="${tdStyle}">차종</th>    <td  style="${tdStyle}">${ls_injchajong}</td>
+                <th style="${tdStyle}">주/야</th>   <td  style="${tdStyle}">${ls_rwflag}</td>
+            </tr>
+            <tr>
+                <th style="${tdStyle}">품명</th>      <td  style="${tdStyle}">${ls_inpname}</td>
+                <th style="${tdStyle}">작업자</th>    <td  style="${tdStyle}">${ls_inwrpsnm}</td>
+                <th style="${tdStyle}">박스순번</th>  <td  style="${tdStyle}">${ls_inboxno}</td>
+            </tr>
+            <tr>
+                <th style="${tdStyle}" colspan="2">품목코드/품번</th><td style="${tdStyle}">${ls_inpcode}</td>
+                <th style="${tdStyle}" >Lot.no</th>   <td style="${tdStyle}" colspan="2">${ls_inlotno}</td>
+                 
+            </tr>
+            <tr>
+                <th style="${tdStyle}" colspan="2">원재료명</th><td style="${tdStyle}">${ls_inpartnm}</td>
+                <th style="${tdStyle}" >부재료명</th>  <td style="${tdStyle}" colspan="2">${ls_insubpartnm}</td> 
+            </tr> 
+            <tr>
+                <td colspan="6" style="text-align: center;">${barcodeImage.outerHTML}</td>
+            </tr> 
+        `;
+
+        // 최종 출력 구성
+        printArea.appendChild(table);
+        document.body.appendChild(printWrapper);
+
+
+
+
         // var ls_itemName   = document.getElementById('itemName'); 
         // var ls_quantity   = document.getElementById('quantity');         
         // var ls_companyName   = document.getElementById('companyName');
@@ -3052,13 +3141,13 @@
         document.getElementById('popseq').value= arg5;  
     }
     //작업지시선택 
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27 , arg28){ 
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27 , arg28, arg29){ 
              // custcd, spjangcd, wono, cltnm, pname, 
             // ostore, plan_no, cltcd, pcode, wseq, 
             // wflag, phmmdoc, otqty, wrpsnm, owqty ,
             // obqty,winps,wrps,lotno,prod_qty, 
             // wrmc, wrmcnm, partcode, partnm, wbgubn, 
-            // end_qty, jgumtype, jgumnm 
+            // end_qty, jgumtype, jgumnm  jchajong
             console.log(arg27)
             console.log(arg28)
          if(arg20 <= arg26){
@@ -3096,6 +3185,8 @@
         document.getElementById('inmachname').value  = arg22;     //설비명 
         document.getElementById('injgumtype').value  = arg27;     //금형코드 
         document.getElementById('injgumnm').value  = arg28;     //금형명
+        document.getElementById('injchajong').value  = arg29;     //차종
+        
     // document.getElementById('inphmmdoc').value= arg12;  
         wflag = arg11; //document.getElementById('inwflag').value;
         if(!wflag){wflag = "00010";} 
@@ -3572,7 +3663,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.prod_sdate}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm);
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong);
                     }
                 });
                 wtab01Grid.columns.push(cols);   
@@ -3585,7 +3676,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.inmonth}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm);
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong);
                     }
                 });
                 wtab01Grid.columns.push(cols);   
@@ -3596,9 +3687,9 @@
                 cols.align = "center";
                 cols.width = 150 ; 
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                    text: '<b>${item.plan_no}</b>',
+                    text: '<b>${item.pname}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm);
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong);
                     }
                 });
                 wtab01Grid.columns.push(cols);   

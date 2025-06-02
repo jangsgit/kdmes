@@ -538,6 +538,7 @@
                             var ls_baldate  =  [];        
                             var ls_moncls  =  [];        
                             var ls_balflag  =  [];        
+                            var ls_pcode  =  [];          
                             var ls_pname  =  [];          
                             var ls_psize  =  [];          
                             var ls_punit  =  [];          
@@ -560,19 +561,19 @@
                                     var gridrow = wtab01Grid.rows.length ; 
                                     for( i=0; i < gridrow; i++){
                                         //console.log(wtab01Grid.rows[i]);
-                                            ls_cltnm[i] =  wtab01Grid.getCellData(i, 0, false); 
-                                            ls_balno[i] =  wtab01Grid.getCellData(i, 1, false); 
-                                            ls_baldate[i] =  wtab01Grid.getCellData(i, 2, false); 
-                                            ls_moncls[i] =  wtab01Grid.getCellData(i, 3, false); 
-                                            ls_balflag[i] =  wtab01Grid.getCellData(i, 4, false); 
-                                            ls_pname[i] =  wtab01Grid.getCellData(i, 5, false); 
-                                            ls_psize[i] =  wtab01Grid.getCellData(i, 6, false); 
-                                            ls_punit[i] =  wtab01Grid.getCellData(i, 7, false); 
-                                            ll_qty[i]   =  parseInt(wtab01Grid.getCellData(i, 8, false));   
-                                            ll_uamt[i]   =  parseInt(wtab01Grid.getCellData(i, 9, false));   
-                                            ll_samt[i]   =  parseInt(wtab01Grid.getCellData(i, 10, false)); 
-                                            ls_ischnm[i] =  wtab01Grid.getCellData(i, 11, false); 
-                                            ls_ischdate[i] =  wtab01Grid.getCellData(i, 12, false);   
+                                            ls_cltnm[i] =  wtab01Grid.getCellData(i, 0, false);         //거래처명
+                                            ls_balno[i] =  wtab01Grid.getCellData(i, 1, false);         //발주번호
+                                            ls_baldate[i] =  wtab01Grid.getCellData(i, 2, false);       //발주일자
+                                            ls_moncls[i] =  wtab01Grid.getCellData(i, 3, false);        //통화
+                                            ls_balflag[i] =  wtab01Grid.getCellData(i, 4, false);       //상태 입고,미입고
+                                            ls_pname[i] =  wtab01Grid.getCellData(i, 5, false);         //품목명
+                                            ls_psize[i] =  wtab01Grid.getCellData(i, 6, false);         //규격
+                                            ls_punit[i] =  wtab01Grid.getCellData(i, 7, false);         //단위
+                                            ll_qty[i]   =  parseInt(wtab01Grid.getCellData(i, 8, false));           //수량
+                                            ll_uamt[i]   =  parseInt(wtab01Grid.getCellData(i, 9, false));          //단가
+                                            ll_samt[i]   =  parseInt(wtab01Grid.getCellData(i, 10, false));         //금액
+                                            ls_ischnm[i] =  wtab01Grid.getCellData(i, 11, false);                   //납품장소
+                                            ls_ischdate[i] =  wtab01Grid.getCellData(i, 12, false);                 //납기일
 
                                             const date = new Date(ls_baldate[i]); 
                                             const yyyy = date.getFullYear();
