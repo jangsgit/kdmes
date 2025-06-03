@@ -56,6 +56,7 @@ public interface FPLANW010_Mapper {
 
      public Boolean FPLANW010_WrmcUpdate(FPLANW010_VO xa012Board);    //수정
      public Boolean FPLANW010_Delete(FPLANW010_VO parm);       //삭제
+     public Boolean FPLANBarcode_Delete(FPLANW010_VO parm);       //삭제
      public Boolean FPLANW020_Delete(FPLANW010_VO parm);       //삭제
      public Boolean FPLANW030_Delete(FPLANW010_VO parm);       //삭제
 
@@ -72,8 +73,11 @@ public interface FPLANW010_Mapper {
      public Boolean FPLAN_Update(FPLANW010_VO parm);
      public Boolean FPLAN_Update_GDEL(FPLANW010_VO parm);
 
-     public Boolean FPLAN_OWORK_Insert(FPLANW010_VO parm);     //blank data
-     public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO bankBoard);
+     public Boolean FPLAN_OWORK_Insert(FPLANW010_VO parm);
+
+     public Boolean FPLAN_BARCODE_Insert(FPLANW010_VO parm);     //blank data
+     public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO bankBoard);  //blank data
+     public String FPLAN_BARCODE_MAXCD(FPLANW010_VO bankBoard);
      public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO bankBoard);
      public String FPLAN_W020_MAXLOT(FPLANW010_VO bankBoard);
      public String FPLAN_W030_MAXLOT(FPLANW010_VO bankBoard);

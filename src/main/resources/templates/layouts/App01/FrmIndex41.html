@@ -271,10 +271,11 @@
                                                         <div id="wtab04Grid_div" style="overflow:scroll; width: 650px;  height:150px;    margin:0 auto; "></div> 
                                                     </div>  
                                                     <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
-                                                        <div class="btns" >                                                        
+                                                        <div class="btns" >                            
+                                                            <button class="btn btn-outline-primary me-1 mb-1"  style="display:inline; color:#1739cf; " type="button" id="prtbtn" onclick="prt_btn()"><span class="fas fa-w-14 ms-1" data-fa-transform="shrink-3"></span>출력</button>
                                                             <button class="btn btn-outline-danger me-1 mb-1"  style="display:inline; color:#dc3545; " type="button" id="delete" onclick="delete_btn()"><span class="fas fa-trash ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">삭제</span></button>
                                                             <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #27bcfd;" onclick="clear_rtn()"><span class="fas fa-plus me-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">신규</span></button>                                                                                                
-                                                            <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn('A')"><span style="color: #084661;">저장</span></button>                                    
+                                                            <button class="btn btn-outline-warning me-1 mb-1 " type="button" style="color: #f5803e;" id="save" onclick="save_btn('A')"><span class="fas fa-w-9 ms-1" data-fa-transform="shrink-3"></span><span style="color: #084661;">저장</span></button>                                    
                                                         </div> 
                                                     </div>   
                                                 </div> 
@@ -2214,7 +2215,7 @@
     
            }
    
-           function tabB_grid(data){
+        function tabB_grid(data){
                var wtab02Dto  = data;    
                var wtab02_data = [];
                var cnt = 1;    
@@ -2388,6 +2389,93 @@
                wtab02Grid.columns.push(cols);     
            } 
      
+
+        function prt_btn(){
+            var ls_inlotno   = "2025050001D0001"; //document.getElementById('inlotno').value;         //lotno
+            var ls_inpname   = "Grip Holder"; //document.getElementById('inpname').value;         //품명 
+            var ls_injchajong   = "DM"; //document.getElementById('injchajong').value;   //차종
+            var ls_incltnm   = "KCC"; //document.getElementById('incltnm').value;  
+            var ls_inpcode   = "0100200001" //document.getElementById('inpcode').value;        //품목코드
+            var ls_injpumcode   = "DMZ001QQ" //document.getElementById('injpumcode').value;  //품번코드
+    
+            // 전체 출력 영역
+            const printWrapper = document.createElement('div');
+            printWrapper.style.width = '100%';
+            printWrapper.style.display = 'flex';
+            printWrapper.style.justifyContent = 'center'; // 중앙 정렬
+            printWrapper.style.backgroundColor = '#ffffff';
+
+            const text = ls_inlotno; 
+            const printArea = document.createElement('div');
+            printArea.style.fontFamily = 'Arial, sans-serif';
+            printArea.style.fontSize = '13px';
+            printArea.style.border = '1px solid black';
+            printArea.style.padding = '10px'; 
+            printArea.style.backgroundColor = '#ffffff';
+            printArea.style.maxWidth = '590px';
+            printArea.style.boxSizing = 'border-box';
+
+            // 바코드 이미지 생성
+            const barcodeImage = document.createElement('img');
+            barcodeImage.className = 'barcode-image';
+            barcodeImage.src = `/input/generate-barcode?text=${encodeURIComponent(text)}`;
+            barcodeImage.style.display = 'block';
+            barcodeImage.style.margin = '10px auto 5px auto';
+            barcodeImage.style.width = '250px';
+            barcodeImage.style.height = 'auto';
+
+            // 테이블 생성
+            const table = document.createElement('table');
+            table.style.borderCollapse = 'collapse';
+            table.style.width = '100%';
+            table.style.textAlign = 'left';
+            table.style.margin = '0 auto';
+            table.style.fontSize = '14px';
+            table.style.tableLayout = 'fixed';
+            // 공통 셀 스타일
+            const tdStyle = 'border: 0px solid black; padding: 4px; word-break: break-word;';
+            const tdStyle02 = 'border: 0px solid black; padding: 4px; fontSize:9px; word-break: break-word;';
+
+            // 각 행 구성
+            table.innerHTML = `
+                <tr>
+                    <th style="${tdStyle}">차종</th>    <td  style="${tdStyle}">${ls_injchajong}</td>
+                    <th style="${tdStyle}">품명</th>    <td  style="${tdStyle}">${ls_inpname}</td> 
+                </tr>
+                <tr>
+                    <th style="${tdStyle}">생산LotNo</th>      <td  style="${tdStyle}">${ls_inlotno}</td> 
+                    <th style="${tdStyle}">품번</th>    <td  style="${tdStyle}">${ls_injpumcode}</td> 
+                </tr> 
+                <tr>
+                    <th style="${tdStyle}" >거래처</th><td  colspan="3" style="${tdStyle}">${ls_incltnm}</td> 
+                </tr> 
+                <tr>
+                    <td colspan="4" style="text-align: center;">${barcodeImage.outerHTML}</td>
+                </tr> 
+            `;
+
+            // 최종 출력 구성
+            printArea.appendChild(table);
+            document.body.appendChild(printWrapper);
+
+ 
+            
+            barcodeImage.onload = () => {
+                // const barcodeImage = document.getElementById('barcodeImage'); 
+                var doc = new wijmo.PrintDocument({
+                    // title: ls_inlotno,
+                    copyCss: true // prevent cross-origin issues in jsfiddle 
+                }); 
+                    // const printArea = document.getElementById('printArea').cloneNode(true)
+                    doc.append(printArea);
+                    // doc.append(barcodeImage);
+                    // Print the document
+                    doc.print(); 
+            } ; // Adjust the timeout duration as needed
+            
+        }
+   
+
    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    
    

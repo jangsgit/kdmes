@@ -113,5 +113,6 @@ public class FPLAN_VO {
     private String inweeks;
     private String jgumtype;
     private String jgumnm;
+    private String jpumcode;
 
 }

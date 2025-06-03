@@ -980,6 +980,39 @@ public class Appm01CrudController {
         return ll_sumqty ;
     }
 
+
+    //작업설비 update 조회
+    @RequestMapping(value="/prtcount", method = RequestMethod.POST)
+    public String AppW010Prtcount_index(@RequestParam("lotno") String lotno
+                                        ,@RequestParam("wflag") String wflag) throws Exception {
+
+        FPLANW010_VO _itemDto = new FPLANW010_VO();
+
+        _itemDto.setLotno(lotno);
+        _itemDto.setIndate(getToDate());
+        _itemDto.setWflag(wflag);
+        _itemDto.setSpjangcd("ZZ");
+        String ls_seq = appcom01Service.FPLAN_BARCODE_MAXCD(_itemDto);
+        if (ls_seq == null) {
+            ls_seq = "001";
+        } else {
+            int ll_seq = Integer.parseInt(ls_seq) + 1;
+            ls_seq = Integer.toString(ll_seq);
+            if (ls_seq.length() == 1) {
+                ls_seq = "00" + ls_seq;
+            } else if (ls_seq.length() == 2) {
+                ls_seq = "0" + ls_seq;
+            }
+        }
+        _itemDto.setSeq(ls_seq);
+        appcom01Service.FPLANBarcode_Delete(_itemDto);
+        appcom01Service.FPLAN_BARCODE_Insert(_itemDto);
+        return ls_seq;
+
+    }
+
+
+
     @GetMapping("/generate-barcode")
     public void generateBarcode(@RequestParam String text, HttpServletResponse response) throws IOException, WriterException {
         int width = 300;

@@ -136,7 +136,12 @@ public class Appcom01Service {
     public Boolean FPLAN_OWORK_Insert(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLAN_OWORK_Insert(parm);
     }
+
+    public Boolean FPLAN_BARCODE_Insert(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLAN_BARCODE_Insert(parm);
+    }
     public String FPLAN_OWORK_MAXWSEQ(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_OWORK_MAXWSEQ(parm);}
+    public String FPLAN_BARCODE_MAXCD(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_BARCODE_MAXCD(parm);}
     public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO parm){ return FPLANW010_mapper.FPLAN_IWORK_MAXWSEQ(parm);}
     public String FPLAN_W020_MAXLOT(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_W020_MAXLOT(parm);}
     public String FPLAN_W030_MAXLOT(FPLANW010_VO parm){ return FPLANW010_mapper.FPLAN_W030_MAXLOT(parm);}
@@ -147,6 +152,9 @@ public class Appcom01Service {
     }
     public Boolean FPLANW010_Delete(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW010_Delete(parm);
+    }
+    public Boolean FPLANBarcode_Delete(FPLANW010_VO parm){
+        return FPLANW010_mapper.FPLANBarcode_Delete(parm);
     }
     public Boolean FPLANW020_Delete(FPLANW010_VO parm){
         return FPLANW010_mapper.FPLANW020_Delete(parm);
