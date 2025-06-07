@@ -477,11 +477,12 @@
                D.lotno AS lotno,
                MAX(A.plan_no) AS plan_no,
                MAX(A.cltcd) cltcd ,
-               ''  as cltnm,
+               MAX(A.ecltnm)  as cltnm,
                MAX(A.pcode) as pcode,
                MAX(C.jpum) AS pname,
                MAX(C.jgugek) AS psize,
                MAX(C.jdanwy) AS punit,
+               MAX(C.jpumcode) AS jpumcode,
                MAX(C.jchajong) AS jchajong,
                MAX(A.prod_sdate) as prod_sdate,
                MAX(A.prod_edate) AS prod_edate,
@@ -1094,7 +1095,7 @@
     <select id="GetFPLANW020_Detail" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
         select A.custcd, A.spjangcd, A.plan_no, A.wseq, A.wflag, A.wfrdt, A.wtrdt, A.wrmc as wrmc,  F.wrmcnm as machname,
         A.winqt, A.wotqt, A.wqcqt, A.wbdqt, A.wscnt, A.winps, A.wsyul, A.wrps, A.wremark, A.decision, A.indate, A.inperid, B.wono, C.acorp as cltnm  , D.jkey AS pcode, D.jpum AS pname,
-        D.jgugek AS psize, D.jdanwy AS punit,
+        D.jgugek AS psize, D.jdanwy AS punit, D.jpumcode, D.jchajong,
         (CASE WHEN A.winps > 1 THEN E.inname  + '외 ' + CAST(A.winps - 1 AS VARCHAR(2)) + '명' ELSE  E.inname END ) wrpsnm
         from TB_FPLAN_W020 A WITH (NOLOCK)
             LEFT OUTER JOIN  INSA E ON A.wrps = E.insano

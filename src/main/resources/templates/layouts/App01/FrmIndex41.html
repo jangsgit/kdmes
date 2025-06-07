@@ -171,6 +171,9 @@
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwseq"  />         
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwflag" />    
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="inostore"     value=0   />  
+                                                                        <input class="form-control form-control-sm"  type="hidden"  id="injchajong" />  
+                                                                        <input class="form-control form-control-sm"  type="hidden"  id="injpumcode" />  
+                                                                        
                                                                     </div>                                            
                                                                 </td>   
                                                                 <th>규격</th>
@@ -567,7 +570,7 @@
                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                                text: '<b>${item.lotno}</b>',
                                click: (e, ctx) => {
-                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag , ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm , ctx.item.wqcqt );
+                                   selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate , ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wqcqt, ctx.item.demflag , ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm , ctx.item.wqcqt, ctx.item.jchajong, ctx.item.jpumcode );
                                }
                            })
                        },       
@@ -620,6 +623,8 @@
                            cltnm: ListDto[i]["cltnm"], 
                            pname: ListDto[i]["pname"], 
                            psize: ListDto[i]["psize"], 
+                           jpumcode: ListDto[i]["jpumcode"], 
+                           jchajong: ListDto[i]["jchajong"], 
                            prod_qty: ListDto[i]["prod_qty"],
                            winqt: ListDto[i]["winqt"] , 
                            owqty: ListDto[i]["owqty"] ,  
@@ -1194,12 +1199,12 @@
                 }  
                 wtab03Grid.newRowAtTop = false;
            }
-           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27){ 
+           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29){ 
                //console.log(arg14)
                //custcd, spjangcd, wono, cltnm, pname, ostore, plan_no, 1-7
                //cltcd, pcode, wseq, wflag, lotno, prod_qty  otqty otqty 8-15
                //qcdate, winps , wrpsnm, wremark psize, wboxsu, wsumqt demflag 16-23  
-               // wbdqt, wcode, wcodenm, wqcqt ); 24-27
+               // wbdqt, wcode, wcodenm, wqcqt, injchajong, injpumcode ); 24-29
                const ls_demflagEle   = document.getElementById('demflag');             //완료여부
                if(arg23){
                 ls_demflagEle.checked = true;
@@ -1242,6 +1247,8 @@
                }      
                document.getElementById('inpsize').value= arg20;    
                document.getElementById('inboxsu1').value= arg21; 
+               document.getElementById('injchajong').value= arg28; 
+               document.getElementById('injpumcode').value= arg29; 
                
                searchList_sachul (arg12) 
            } 
@@ -2137,6 +2144,8 @@
                            wsumqt: wtab01Dto[i]["wsumqt"] , 
                            wbdqt: wtab01Dto[i]["wbdqt"] , 
                            wcode: wtab01Dto[i]["wcode"] , 
+                           jchajong: wtab01Dto[i]["jchajong"] , 
+                           jpumcode: wtab01Dto[i]["jpumcode"] , 
                            wcodenm: wtab01Dto[i]["wcodenm"] , 
                            demflag: bdemflag , 
                            
@@ -2177,7 +2186,7 @@
                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                    text: '<b>${item.lotno}</b>',
                    click: (e, ctx) => {
-                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm, ctx.item.wqcqt );
+                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm, ctx.item.wqcqt, ctx.item.jchajong , ctx.item.jpumcode );
                    }
                });
                wtab01Grid.columns.push(cols);       
@@ -2390,13 +2399,18 @@
            } 
      
 
-        function prt_btn(){
-            var ls_inlotno   = "2025050001D0001"; //document.getElementById('inlotno').value;         //lotno
-            var ls_inpname   = "Grip Holder"; //document.getElementById('inpname').value;         //품명 
-            var ls_injchajong   = "DM"; //document.getElementById('injchajong').value;   //차종
-            var ls_incltnm   = "KCC"; //document.getElementById('incltnm').value;  
-            var ls_inpcode   = "0100200001" //document.getElementById('inpcode').value;        //품목코드
-            var ls_injpumcode   = "DMZ001QQ" //document.getElementById('injpumcode').value;  //품번코드
+        function prt_btn(){ 
+            
+            // Wijmo 그리드 인스턴스를 theGrid라고 가정
+            var firstLotNo = wtab05Grid.collectionView.items[0].lotno;  
+            var ls_firstLotNo   = firstLotNo; //document.getElementById('inlotno').value;         //lotno
+            var ls_inlotno   =  document.getElementById('inlotno').value;         //lotno
+            var ls_inpname      = document.getElementById('inpname').value;         //품명 
+            var ls_injchajong   = document.getElementById('injchajong').value;      //차종
+            var ls_incltnm      =  document.getElementById('incltnm').value;  
+            var ls_inpcode      =  document.getElementById('inpcode').value;        //품목코드
+            var ls_injpumcode   =  document.getElementById('injpumcode').value;  //품번코드
+             
     
             // 전체 출력 영역
             const printWrapper = document.createElement('div');
@@ -2443,7 +2457,7 @@
                     <th style="${tdStyle}">품명</th>    <td  style="${tdStyle}">${ls_inpname}</td> 
                 </tr>
                 <tr>
-                    <th style="${tdStyle}">생산LotNo</th>      <td  style="${tdStyle}">${ls_inlotno}</td> 
+                    <th style="${tdStyle}">생산LotNo</th>      <td  style="${tdStyle}">${ls_firstLotNo}</td> 
                     <th style="${tdStyle}">품번</th>    <td  style="${tdStyle}">${ls_injpumcode}</td> 
                 </tr> 
                 <tr>
