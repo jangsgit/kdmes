@@ -13,6 +13,7 @@ import com.dae.kdmes.Service.App01.Index01Service;
 import com.dae.kdmes.Service.App01.Index02Service;
 import com.dae.kdmes.Service.App01.Index03Service;
 import com.dae.kdmes.Service.App01.Index04Service;
+import com.dae.kdmes.Service.Appm.Appcom01Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 // @RestController : return을 텍스트로 반환함.
 @RestController
@@ -36,6 +38,7 @@ public class App02CrudController {
     private final Index01Service service01;
     private final Index02Service service02;
     private final Index03Service service03;
+    private final Appcom01Service appcom01Service;
     CommonDto CommDto = new CommonDto();
     PopupDto popupDto = new PopupDto();
     Index01Dto index01Dto = new Index01Dto();
@@ -1065,6 +1068,7 @@ public class App02CrudController {
 
         IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
         IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        FPLANW010_VO   _workDto = new FPLANW010_VO();
 
 
         HttpSession session = request.getSession();
@@ -1101,6 +1105,7 @@ public class App02CrudController {
                 return "error";
             }
         }
+
         //모두 삭제후 재 입력
         result = service10.DeleteDa037(_indexCa611Dto);
         if (!result) {
@@ -1130,7 +1135,13 @@ public class App02CrudController {
             if (!result) {
                 return "error";
             }
+
+            //재고계산
+            _workDto.setIndate(_indexCa613Dto.getDeldate());
+            _workDto.setPcode(pcodeArr.get(i));
+            appcom01Service.SelectStockCal(_workDto);
         }
+
 
         return "success";
     }
@@ -1217,6 +1228,7 @@ public class App02CrudController {
             ,@RequestParam(value =  "baldate[]") List<String> baldateArr
             ,@RequestParam(value =  "moncls[]") List<String> monclsArr
             ,@RequestParam(value =  "balflag[]") List<String> balflagArr
+            ,@RequestParam(value =  "pcode[]") List<String> pcodeArr
             ,@RequestParam(value =  "pname[]") List<String> pnameArr
             ,@RequestParam(value =  "psize[]") List<String> psizeArr
             ,@RequestParam(value =  "punit[]") List<String> punitArr
@@ -1241,6 +1253,7 @@ public class App02CrudController {
         String ls_cltcd = "";
         Integer ll_balnum = 0 ;
         Boolean result = true;
+        Integer ll_idxkey = 0;
         _indexCa609Dto.setBaldate(baldateArr.get(0));
         ls_balnum = GetMaxBalnum(_indexCa609Dto.getDeldate());
 
@@ -1315,7 +1328,15 @@ public class App02CrudController {
             else{
                 ls_balnum =  "0" + ll_balnum.toString();
             }
-            result = service10.InsertCA609(_indexCa609Dto);
+
+            ll_idxkey = service10.SelectCheckBalnum(_indexCa609Dto);
+
+            if (ll_idxkey != null  && ll_idxkey > 0  ){
+                continue;
+            }else{
+                result = service10.InsertCA609(_indexCa609Dto);
+            }
+
             if (!result) {
                 return "error";
             }
@@ -1345,6 +1366,35 @@ public class App02CrudController {
                 return "error";
             }
         }
+
+        return "success";
+    }
+
+
+    @RequestMapping(value="/index23/chulsave", method = RequestMethod.POST)
+    public String index23ChulSave(
+            @RequestParam(value =  "idxkeyArr[]") List<Integer> idxkeyArr
+            , Model model
+            , HttpServletRequest request){
+
+        IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        Boolean result = false;
+
+        String csv = idxkeyArr.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+
+        _indexCa609Dto.setIdxkeyArr(csv);
+//        log.info(_indexCa609Dto.getIdxkeyArr());
+        result = service10.InsertChulha(_indexCa609Dto);
+        if (!result) {
+            return "error";
+        }
+
 
         return "success";
     }

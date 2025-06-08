@@ -310,7 +310,7 @@ public class Appm02CrudController {
         workDto.setWboxsu(wboxsu);
         workDto.setWsumqt(wsumqt);
         workDto.setDemflag("1");
-
+        workDto.setPcode(pcode);
         String wstdt = inputdate;
         String wendt = inputdate;
 
@@ -483,6 +483,9 @@ public class Appm02CrudController {
                 appcom01Service.FPLAN_WBAD_Update(wbadDto);
             }
         }
+
+        //재고계산
+        appcom01Service.SelectStockCal(workDto);
 
         //--------------------------------------------
         //workDto.setWflag("00090");  //조립완료

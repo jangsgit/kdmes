@@ -1537,6 +1537,15 @@
         FROM TB_FPLAN_IWORK WITH(NOLOCK) WHERE plan_no =#{plan_no} and lotno=#{lotno} and wflag=#{wflag}
     </select>
 
+    <select id="SelectStockCal"  parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" resultType="com.dae.kdmes.DTO.Appm.FPLANW010_VO">
+
+        exec SP_JaegoCalProduct
+        #{indate, jdbcType=VARCHAR},
+        #{indate, jdbcType=VARCHAR},
+        #{pcode, jdbcType=VARCHAR}
+
+    </select>
+
     <insert id="FPLANI_IWORK_Insert" parameterType="com.dae.kdmes.DTO.Appm.FPLANW010_VO" keyProperty="plan_no">
         INSERT INTO TB_FPLAN_IWORK(custcd, spjangcd, plan_no,  wseq,  wflag, seq, pcode, lotno, glotno,
                                      store, jqty, sqty, qty, bqty, indate, styn, inperid )

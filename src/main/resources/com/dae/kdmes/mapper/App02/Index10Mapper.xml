@@ -182,6 +182,11 @@
     </delete>
 
 
+    <update  id="InsertChulha" parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto"  >
+        EXEC SP_INSERTCHULHA #{idxkeyArr}
+    </update >
+
+
     <select id="GetJcodeCheck" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="String">
         <![CDATA[
         select   jkey
@@ -332,6 +337,10 @@
 
     <select id="SelectMaxBalnum" parameterType="String" resultType="String">
         <![CDATA[  select  max(balnum)  from TB_CA609 where baldate = #{baldate}      ]]>
+    </select>
+
+    <select id="SelectCheckBalnum" parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto" resultType="Integer">
+        <![CDATA[  select  idxkey  from TB_CA609 where baldate = #{baldate} and balno = #{balno} and psize = #{psize} and pname = #{pname}     ]]>
     </select>
 
     <select id="SelectCa613List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
@@ -523,14 +532,16 @@
                       A.pname, A.moncls , A.qty, A.uamt, A.uamt, A.samt, A.balflag, A.ischdate, A.ischnm,
                     B.jboxsu1,
                     Round(A.qty / B.jboxsu1,0) as boxsu,
+                    isnull(D.stock_qty, 0) as stockqty,
                     case when A.qty < Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) then 0 else (A.qty % B.jboxsu1) end boxjan,
                     case when A.qty < Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) then A.qty else   Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) end   as ischqty
                   from  TB_CA609 A WITH (NOLOCK)
                   LEFT JOIN JCODE B ON A.pname = B.jpum
+                  LEFT JOIN TB_JSTOCK D ON D.jkey = B.jkey
                   where  isnull(A.balflag,'') Like #{balflag} + '%'
                     AND  isnull(A.cltcd,'')  Like #{cltcd} + '%'
                     AND  A.baldate between #{frdate} and #{todate}
-                  ORDER BY A.idxkey, A.baldate
+                  ORDER BY  A.baldate, A.balno
         ]]>
 
 

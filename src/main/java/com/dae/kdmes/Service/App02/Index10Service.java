@@ -92,6 +92,7 @@ public class Index10Service {
     public Boolean InsertCA609(IndexCa609Dto parm){ return  indexMapper.InsertCA609(parm);}
     public Boolean DeleteCA608(IndexCa608Dto parm){ return  indexMapper.DeleteCA608(parm);}
     public Boolean DeleteCA609(IndexCa609Dto parm){ return  indexMapper.DeleteCA609(parm);}
+    public Boolean InsertChulha(IndexCa609Dto parm){ return  indexMapper.InsertChulha(parm);}
     public String SelectMaxIbgnum(String parm){
         return  indexMapper.SelectMaxIbgnum(parm);
     }
@@ -100,6 +101,9 @@ public class Index10Service {
     }
     public String SelectMaxBalnum(String parm){
         return  indexMapper.SelectMaxBalnum(parm);
+    }
+    public Integer SelectCheckBalnum(IndexCa609Dto parm){
+        return  indexMapper.SelectCheckBalnum(parm);
     }
     public String CA613_OWORK_MAXWSEQ(IndexCa613OworkDto parm){ return indexMapper.CA613_OWORK_MAXWSEQ(parm);}
     public Boolean CA613_OWORK_Insert(IndexCa613OworkDto parm){ return  indexMapper.CA613_OWORK_Insert(parm);}

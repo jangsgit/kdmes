@@ -61,6 +61,8 @@ public class IndexCa609Dto {
     private Integer boxsu;
     private Integer boxjan;
     private Integer ischqty;
+    private Integer stockqty;
+    private String  idxkeyArr;
 
     private List<IndexCa613OworkDto> oworks;
 

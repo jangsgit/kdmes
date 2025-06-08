@@ -81,6 +81,7 @@ public interface FPLANW010_Mapper {
      public String FPLAN_IWORK_MAXWSEQ(FPLANIWORK_VO bankBoard);
      public String FPLAN_W020_MAXLOT(FPLANW010_VO bankBoard);
      public String FPLAN_W030_MAXLOT(FPLANW010_VO bankBoard);
+     public String SelectStockCal(FPLANW010_VO bankBoard);
 
 
      public String GetWIworkWseq(FPLANIWORK_VO bankBoard);

@@ -178,7 +178,9 @@ public class Appcom01Service {
     public String GetWtimeWseq(TBPopupVO parm){
         return FPLANW010_mapper.GetWtimeWseq(parm);
     }
-
+    public String SelectStockCal(FPLANW010_VO parm){
+        return FPLANW010_mapper.SelectStockCal(parm);
+    }
 
     public String GetWIworkWseq(FPLANIWORK_VO parm){
         return FPLANW010_mapper.GetWIworkWseq(parm);
