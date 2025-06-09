@@ -83,6 +83,7 @@ public class Index10Service {
     public Boolean InsertCa613(IndexCa613Dto parm){ return  indexMapper.InsertCa613(parm);}
     public Boolean DeleteDA036Sch(IndexCa611Dto parm){  return  indexMapper.DeleteDA036Sch(parm);  }
     public Boolean DeleteDa037(IndexCa611Dto parm){  return  indexMapper.DeleteDa037(parm);  }
+    public Boolean UpdateCa609Chul(IndexCa611Dto parm){  return  indexMapper.UpdateCa609Chul(parm);  }
     public Boolean InsertDA036Sch(IndexCa611Dto parm){ return  indexMapper.InsertDA036Sch(parm);}
     public Boolean InsertDa037(IndexCa613Dto parm){ return  indexMapper.InsertDa037(parm);}
     public Boolean UpdateCa613(IndexCa613Dto parm){  return  indexMapper.UpdateCa613(parm);  }

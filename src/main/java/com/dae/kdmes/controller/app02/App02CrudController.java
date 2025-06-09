@@ -1155,6 +1155,7 @@ public class App02CrudController {
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
         IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
+        IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
         _indexCa611Dto.setDeldate(deldate);
         _indexCa611Dto.setDelnum(delnum);
         Boolean result = service10.DeleteDA036Sch(_indexCa611Dto);
@@ -1165,6 +1166,8 @@ public class App02CrudController {
         if (!result) {
             return "error";
         }
+        result = service10.UpdateCa609Chul(_indexCa611Dto);
+
         return "success";
     }
 
@@ -1277,8 +1280,9 @@ public class App02CrudController {
             _indexCa609Dto.setIschdate(ischdateArr.get(i));
             _indexCa609Dto.setIschnm(ischnmArr.get(i));
             _indexCa609Dto.setPunit(punitArr.get(i));
-
+            _indexCa609Dto.setJpumcode(pcodeArr.get(i));
             _index03Dto.setJpum(pnameArr.get(i));
+            _index03Dto.setJpumcode(pcodeArr.get(i));
             ls_pcode = service10.GetJcodeCheck(_index03Dto);
             if(ls_pcode != null  ) {
                 _indexCa609Dto.setPcode(ls_pcode);
@@ -1374,10 +1378,12 @@ public class App02CrudController {
     @RequestMapping(value="/index23/chulsave", method = RequestMethod.POST)
     public String index23ChulSave(
             @RequestParam(value =  "idxkeyArr[]") List<Integer> idxkeyArr
+            ,@RequestParam(value =  "pcodeArr[]") List<String> pcodeArr
             , Model model
             , HttpServletRequest request){
 
         IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+        FPLANW010_VO _workDto = new FPLANW010_VO();
 
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -1391,10 +1397,16 @@ public class App02CrudController {
         _indexCa609Dto.setIdxkeyArr(csv);
 //        log.info(_indexCa609Dto.getIdxkeyArr());
         result = service10.InsertChulha(_indexCa609Dto);
-        if (!result) {
-            return "error";
-        }
+//        if (!result) {
+//            return "error";
+//        }
 
+
+        for(int i = 0; i < pcodeArr.size(); i++){
+            //재고계산
+            _workDto.setPcode(pcodeArr.get(i));
+            appcom01Service.SelectStockCal(_workDto);
+        }
 
         return "success";
     }

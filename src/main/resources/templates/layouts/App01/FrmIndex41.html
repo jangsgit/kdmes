@@ -1321,7 +1321,7 @@
                             
                     } 
                }    
-               console.log("ll_inboxsu1-->" + ll_inboxsu1)
+               console.log("ls_inpcode-->" + ls_inpcode)
                console.log("ll_inwqcqt-->" + ll_inwqcqt)
                if(parseInt(ll_inboxsu1) < parseInt(ll_inwqcqt) ){
                     alert("적입수량을 초과했습니다. 확인하세요");
@@ -1797,13 +1797,15 @@
                                psdate = psdate.substr(0,4) + '-' + psdate.substr(4,2)+ '-' + psdate.substr(6,2);
                                var date_format = new Date(psdate);  //wijmo.DateTime.addDays(date_format, 0),
                                var ll_gqty = 0;
-                               if(ListDto[i]["prod_qty"] - ListDto[i]["otqty"] > 0){
+                               if( (ListDto[i]["prod_qty"] - ListDto[i]["otqty"] > 0) && (ListDto[i]["prod_qty"] - ListDto[i]["otqty"] <= ListDto[i]["jboxsu1"])  ){
                                  ll_gqty = ListDto[i]["prod_qty"] - ListDto[i]["otqty"];
+                               }else if(ListDto[i]["prod_qty"] - ListDto[i]["otqty"] > 0){
+                                  ll_gqty = ListDto[i]["jboxsu1"]; 
                                }else if(ListDto[i]["prod_qty"] - ListDto[i]["otqty"] <= 0){
                                     continue;
                                }else{
-                                 ll_gqty = ListDto[i]["prod_qty"]; 
-                               }
+                                 ll_gqty = ListDto[i]["jboxsu1"]; 
+                               } 
                                dataArr.push({
                                    id: i, 
                                    index: cnt,                                                                

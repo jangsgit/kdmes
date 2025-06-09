@@ -166,9 +166,9 @@
 
     <insert id="InsertCA609" parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto" >
         insert into TB_CA609 (custcd, spjangcd,  baldate, balnum, balseq, cltcd, acorp, balno,
-        pcode, pname, psize,    qty, uamt, samt, ischdate, ischnm, balflag, moncls ) values
+        pcode, pname, psize,    qty, uamt, samt, ischdate, ischnm, balflag, moncls, jpumcode ) values
         ('KDMES', 'ZZ',  #{baldate},  #{balnum}, #{balseq}, #{cltcd}, #{acorp}, #{balno},
-        #{pcode}, #{pname}, #{psize},  #{qty},  #{uamt}, #{samt},  #{ischdate},  #{ischnm},  #{balflag}, #{moncls}   )
+        #{pcode}, #{pname}, #{psize},  #{qty},  #{uamt}, #{samt},  #{ischdate},  #{ischnm},  #{balflag}, #{moncls} , #{jpumcode}  )
     </insert>
 
     <delete id="DeleteCA608" parameterType="com.dae.kdmes.DTO.App01.IndexCa608Dto" >
@@ -191,7 +191,7 @@
         <![CDATA[
         select   jkey
         from JCODE WITH (NOLOCK)
-        WHERE isnull(jpum,'')   = #{jpum}
+        WHERE isnull(jpumcode,'')   = #{jpumcode}
         ORDER BY jpum
         ]]>
     </select>
@@ -226,6 +226,12 @@
         delete from TB_DA037
         where deldate = #{deldate} and delnum = #{delnum}
     </delete>
+
+    <update id="UpdateCa609Chul" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto">
+        UPDATE TB_CA609 SET
+        balflag = '0'
+        where deldate = #{deldate} and delnum = #{delnum}
+    </update>
 
     <update id="UpdateCa613" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
         UPDATE TB_CA613 SET
@@ -534,9 +540,10 @@
                     Round(A.qty / B.jboxsu1,0) as boxsu,
                     isnull(D.stock_qty, 0) as stockqty,
                     case when A.qty < Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) then 0 else (A.qty % B.jboxsu1) end boxjan,
-                    case when A.qty < Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) then A.qty else   Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) end   as ischqty
+                    case when A.qty < Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) then A.qty else   Round( (B.jboxsu1 * Round(A.qty / B.jboxsu1,0)),0) end   as ischqty,
+                    (select plan_no from TB_FPLAN WITH (NOLOCK) where isnull(remark, '') = A.balno and prod_qty = A.qty) as planno
                   from  TB_CA609 A WITH (NOLOCK)
-                  LEFT JOIN JCODE B ON A.pname = B.jpum
+                  LEFT JOIN JCODE B ON A.pcode = B.jkey
                   LEFT JOIN TB_JSTOCK D ON D.jkey = B.jkey
                   where  isnull(A.balflag,'') Like #{balflag} + '%'
                     AND  isnull(A.cltcd,'')  Like #{cltcd} + '%'

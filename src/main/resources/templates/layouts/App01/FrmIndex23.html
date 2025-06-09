@@ -71,8 +71,9 @@
                                                 </button> 
                                             </div> 
                                             <div class="col-auto">  
-                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="save_btn()" >발주등록
+                                                <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="save_btn('A')" >발주등록
                                                 </button> 
+                                                <span class="text-danger small fw-semibold">일자는 0000-00-00 형식으로 맞춰주세요</span>
                                             </div>   
                                         </div>
                                         <div class="container-fluid">   
@@ -188,7 +189,7 @@
                           <div class="modal-content border-0"> 
                             <div class="modal-header justify-content-between">
                                 <h5 class="modal-title fw-bold" id="plannomodalLabel">생산계획등록</h5>
-                                <button class="btn btn-primary btn-sm" type="button" id="savePlanBtn">저장</button>
+                                <button class="btn btn-primary btn-sm" type="button" id="savePlanBtn" onclick="save_btn('B')" >저장</button>
                             </div>
 
                             <div class="modal-body p-4">
@@ -222,9 +223,13 @@
                                       </select>                                              
                                   </div> 
                                   <input type="hidden" class="form-control" id="pcode" autocomplete="off" placeholder="">
+                                  <input type="hidden" class="form-control" id="cltcd" autocomplete="off" placeholder="">
+                                  <input type="hidden" class="form-control" id="ecltnm" autocomplete="off" placeholder="">
+                                  <input type="hidden" class="form-control" id="balno" autocomplete="off" placeholder="">
+                                  
                                 </div>
                                 <div class="col-md-3">
-                                  <label for="prod_qty" class="form-label">생산계획수량</label>
+                                  <label   class="form-label">생산계획수량</label>
                                   <input type="number" class="form-control" id="prod_qty" autocomplete="off">
                                 </div>
                             </form>    
@@ -269,7 +274,7 @@
                               </form>
                             </div>
                             <div class="modal-footer justify-content-end"> 
-                                  <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">닫기</button> 
+                                  <button class="btn btn-secondary" type="button"  id="winplannomodal_btn"  data-bs-dismiss="modal">닫기</button> 
                             </div> 
                               
                           </div>
@@ -300,8 +305,13 @@
                         let wprod_sdate;
                         let wprod_edate;
                         let wqcdate; 
-                        var idxkeyArr = new Array();   
+                        var idxkeyArr = new Array(); 
+                        var balflagArr = new Array();  
+                        var stockqtyArr = new Array();   
+                        var pcodeArr = new Array();  
+                        
                         let includeColumnHeader = false;
+                        let formData = new FormData(); 
                         window.onload = function() {    
                            view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                                 // pageSize: 21
@@ -540,7 +550,7 @@
                     
                         
                        function save_btn(arg){
-                            var ls_tab = document.getElementById('tabvalue').value;                                        
+                            var ls_tab = arg //document.getElementById('tabvalue').value;                                        
                             const warnning_grid = document.getElementById('inwarnning_grid'); 
                             var ls_cltnm  =  [];        
                             var ls_balno  =  [];        
@@ -687,6 +697,107 @@
 
                                     })  
                                     break;              
+                               
+                                
+                                case 'B': 
+                                    var ls_indate     =  convert_date(windate.value); // (document.getElementById('indate').value).replaceAll("-","");                   
+                                    var ls_prod_sdate =  convert_date(wprod_sdate.value); //(document.getElementById('prod_sdate').value).replaceAll("-","");   
+                                    var ls_prod_edate =  convert_date(wprod_edate.value); //(document.getElementById('prod_edate')).value.replaceAll("-","");                   
+                                    var ls_qcdate     =  convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");   
+                                    var ls_cltcd   =  "" //document.getElementById('acode').value;
+                                    var ls_ecltnm  =  document.getElementById('ecltnm').value;
+                                    var ls_pcode   =  document.getElementById('pcode').value;   
+                                    var ls_jchajong  = ""  //document.getElementById('jchajong').value; 
+                                    var ls_jsayang  = ""  //document.getElementById('jsayang').value; 
+                                    var ls_jgugek2  = ""  //document.getElementById('jgugek2').value; 
+                                    var ls_j_sr  =  ""  //document.getElementById('j_sr').value; 
+                                    var ls_jdanwy  = ""  //document.getElementById('jdanwy').value;   
+                                    var ls_prod_qty  =  document.getElementById('prod_qty').value;  
+                                    var ls_remark =  document.getElementById('balno').value;  
+                                    var ls_plan_no  =  "";  
+                                    var ls_inmonth  =  document.getElementById('inmonth').value;  
+                                    var ls_inweeks  =  document.getElementById('inweeks').value;    
+                                    var ls_wrmc     =  document.getElementById('wrmccon').value;       
+                                    var ls_sachultxt  =  "";  
+                                    var ls_cls_flag  =  ""; //document.getElementById('cls_flag').value;  
+                                    var ls_istore  =  ""; //document.getElementById('istore').value;   
+                                    var ls_ostore  =  ""; //document.getElementById('ostore').value; 
+                                    var ls_rwflag =  ""; //document.getElementById('rwflag').value;
+                                    var ls_lotno   =  ""; // document.getElementById('lotno').value;  
+                                    var ls_perid   =  ""; // document.getElementById('perid').value;  
+                                    var ls_workdv  =  ""; //document.getElementById('workdv').value; 
+                                    var ls_dem_flag  =  "0"; //document.getElementById('dem_flag').value; 
+                                    var ls_jpumcode  =  ""; // document.getElementById('jpumcode').value;      
+                                    var ls_sachulflag  =   "";     
+                                    if(!ls_pcode){
+                                        alert("품목을 선택하세요")
+                                        return ; 
+                                    } 
+                                    if(!ls_wrmc){
+                                        alert("호기를 선택하세요")
+                                        return ; 
+                                    } 
+                                    if(ls_prod_qty == null || ls_prod_qty.length == 0 || ls_prod_qty == ""){ 
+                                                alert("생산계획수량을 입력하세요") 
+                                                document.getElementById("prod_qty").focus(); 
+                                                return ;               
+                                    } 
+                                    if(ls_istore == null || ls_istore.length == 0 || ls_istore == ""){ 
+                                        ls_istore = 'W01' 
+                                    } 
+                                    if(ls_ostore == null || ls_ostore.length == 0 || ls_ostore == ""){ 
+                                        ls_ostore = 'P01' 
+                                    }     
+                                    
+                                    var inputdata = {  
+                                        "plan_no"       : ls_plan_no,
+                                        "indate"        : ls_indate,
+                                        "prod_sdate"    : ls_prod_sdate , 
+                                        "prod_edate"    : ls_prod_edate, 
+                                        "lotno"         : ls_lotno , 
+                                        "cltcd"         : ls_cltcd, 
+                                        "qcdate"        : ls_qcdate,
+                                        "perid"         : ls_perid,
+                                        "ecltnm"        : ls_ecltnm,
+                                        "workdv"        : ls_workdv , 
+                                        "pcode"         : ls_pcode,
+                                        "dem_flag"      : ls_dem_flag,
+                                        "prod_qty"      : ls_prod_qty,
+                                        "cls_flag"      : ls_cls_flag,
+                                        "istore"        : ls_istore, 
+                                        "ostore"        : ls_ostore,
+                                        "rwflag"        : ls_rwflag,
+                                        "remark"        : ls_remark,  
+                                        "inmonth"        : ls_inmonth, 
+                                        "inweeks"        : ls_inweeks,  
+                                        "wrmc"        : ls_wrmc,    
+                                        "sachulflag"        : ls_sachulflag,    
+                                        "sachultxt"        : ls_sachultxt,  
+                                    }      
+                                    //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
+                                    formData.delete("key");    
+                                    formData.append("key", new Blob([ JSON.stringify(inputdata) ], {type : "application/json"}));
+                                
+                                    $.ajax({
+                                        url: '/app02m/index10/save',
+                                        type: "POST",   
+                                        processData : false,                //  processData : false로 선언 시 formData를 string으로 변환하지 않음
+                                        contentType : false,                // contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게     
+                                        data: formData,                   
+                                        async:false,
+                                        success:function(data){
+                                            if(data == "success"){
+                                                alert("저장되었습니다.")  
+                                                $("#winplannomodal_btn").trigger("click");
+                                            }else{                       
+                                                alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.") 
+                                                console.log(data);  
+                                            }
+                                        },error:function(e){
+                                            console.log('error',e);
+                                        }
+                                    })                                 
+                                    break;                
                                 default:    
                                     break;                
                             } 
@@ -700,10 +811,26 @@
                             }
                             while (idxkeyArr.length > 0) {
                                 idxkeyArr.pop(); 
+                                balflagArr.pop(); 
+                                stockqtyArr.pop(); 
+                                pcodeArr.pop(); 
+
                             }  
 
                             for (var i = 0; i < chkTabA.length; i++) { 
-                                idxkeyArr[i]   = chkTabA[i]._data.idxkey;  
+                                idxkeyArr[i]   = chkTabA[i]._data.idxkey; 
+                                pcodeArr[i]   = chkTabA[i]._data.pcode; 
+                                balflagArr[i]   = chkTabA[i]._data.balflag; 
+                                if (balflagArr[i] == "출하"){
+                                    alert("이미 출하되었습니다.") 
+                                    return false
+                                }
+                                stockqtyArr[i]   = chkTabA[i]._data.stockqty;
+                                if (stockqtyArr[i] == 0){
+                                    alert("재고를 확인하세요.") 
+                                    return false
+                                } 
+                                
                             }        
                             return true        
                         }
@@ -721,7 +848,8 @@
                                         url: '/app02m/index23/del',  
                                         type:"POST",
                                         data: { 
-                                            "idxkeyArr"  : idxkeyArr   ,    
+                                            "idxkeyArr"  : idxkeyArr      
+                                             
                                         }, 
                                         async:false,
                                         success:function(data){   
@@ -745,17 +873,25 @@
 
                         }         
 
+
+
+
+
+                        
                         function chulsave_btn(){
                             if (!confirm("출하등록 하시겠습니까?")) {
                                     return ; 
                             }   
                             var ls_tab = document.getElementById('tabvalue').value;  
-                            savechk_rtn()
+                            if(!savechk_rtn()){
+                               return ;     
+                            }
                             $.ajax({
                                 url: '/app02m/index23/chulsave',  
                                 type:"POST",
                                 data: { 
-                                    "idxkeyArr"  : idxkeyArr   ,    
+                                    "idxkeyArr"  : idxkeyArr   ,   
+                                     "pcodeArr"  : pcodeArr   ,    
                                 }, 
                                 async:false,
                                 success:function(data){   
@@ -771,8 +907,7 @@
                                 }
                             }).done(function(fragment){           
 
-                            })  
-                            alert("출하")
+                            })   
                         }                      
                        function searchList_rtn(arg1){ 
                            switch(arg1){
@@ -823,6 +958,7 @@
                                 var ls_baldate = "";
                                 var ls_ischdate = ""; 
                                 var ls_balflag = "";
+                                var ls_planno= "";
                                 ls_baldate = wtab01Dto[i]["baldate"];
                                 if(ls_baldate == null || ls_baldate.length == 0 || ls_baldate == ""){  
                                     ls_baldate = "";
@@ -836,16 +972,20 @@
                                     ls_ischdate = ls_ischdate.substr(0,4) + '-' + ls_ischdate.substr(4,2) + '-' + ls_ischdate.substr(6,2);
                                 } 
                                 ls_balflag = wtab01Dto[i]["balflag"];
-                                console.log(ls_balflag)
-                                if(ls_balflag == null || ls_balflag.length == 0 || ls_balflag == "" || ls_balflag == "0"){  
-                                    ls_balflag = "";
-                                }else{
+                                ls_planno = wtab01Dto[i]["planno"]; 
+                                if(ls_balflag != null && ls_balflag.length > 0 && ls_balflag == '1' ){ 
                                     ls_balflag = '출하'
-                                } 
+                                }else if(ls_planno != null && ls_planno.length > 0 ){  
+                                    ls_balflag = "생산";
+                                }else{
+                                    ls_balflag = ''
+                                }   
+ 
                                 wtab01_data.push({
                                     id: i, 
                                     index: cnt,
                                     idxkey: wtab01Dto[i]["idxkey"],
+                                    cltcd: wtab01Dto[i]["cltcd"],
                                     cltnm: wtab01Dto[i]["acorp"],
                                     balno: wtab01Dto[i]["balno"],
                                     baldate: ls_baldate,  
@@ -918,7 +1058,7 @@
                         cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                             text: '<b>${item.pname}</b>',
                             click: (e, ctx) => {
-                                wf_planno(ctx.item.balno,ctx.item.baldate, ctx.item.pcode, ctx.item.pname, ctx.item.stockqty, ctx.item.qty, ctx.item.balflag);           
+                                wf_planno(ctx.item.balno,ctx.item.baldate, ctx.item.pcode, ctx.item.pname, ctx.item.stockqty, ctx.item.qty, ctx.item.balflag, ctx.item.cltcd, ctx.item.cltnm, ctx.item.balno);           
                             }
                         });
                         wtab02Grid.columns.push(cols);   
@@ -1022,7 +1162,14 @@
                         cols.align = "right";
                         cols.width = 120;  
                         cols.format = 'n0';  
-                        wtab02Grid.columns.push(cols);    
+                        wtab02Grid.columns.push(cols);      
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'pcode';
+                        cols.header = '제품코드';
+                        cols.align = "center";
+                        cols.width = 120;    
+                        wtab02Grid.columns.push(cols);   
                         
                         // cols = new wijmo.grid.Column(); 
                         // cols.binding = 'idxkey';
@@ -1032,32 +1179,32 @@
                         // cols.width = 50;   
                         // wtab02Grid.columns.push(cols);    
                        }
-                    //balno,baldate, pcode, pname, stockqty, qty   
-                    function wf_planno(arg1, arg2,arg3, arg4, arg5, arg6, arg7){     
+                    //balno,baldate, pcode, pname, stockqty, qty   , balflag, cltcd, cltnm, balno
+                    function wf_planno(arg1, arg2,arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10){  
                         if(arg7 == "출하") {
-                            alert("확인")
+                            alert("출하되었습니다.")
+                            return    
+                        }
+                        if(arg7 == "생산") {
+                            alert("주간생산계획이 등록되었습니다.")
                             return    
                         }
                         if(arg5 == 0 || arg6 > arg5 ){
                             document.getElementById('pbalno').value = arg1
                             document.getElementById('pbaldate').value = arg2
                             document.getElementById('pcode').value = arg3 
-                            document.getElementById('jpum').value = arg4 
+                            document.getElementById('jpum').value = arg4  
+                            document.getElementById('cltcd').value = arg8 
+                            document.getElementById('prod_qty').value = arg6
+                            document.getElementById('ecltnm').value = arg9
+                            document.getElementById('balno').value = arg10
+                            
+                            
                             document.getElementById("inplannobtn").click();
                         }else{                            
                             document.getElementById("inchulhabtn").click();
                         }
-                    }
-                    function save_planno(){
-
-                        var ls_indate     =  convert_date(windate.value); // (document.getElementById('indate').value).replaceAll("-","");                  
-                        var ls_prod_sdate =  convert_date(wprod_sdate.value); //(document.getElementById('prod_sdate').value).replaceAll("-","");   
-                        var ls_prod_edate =  convert_date(wprod_edate.value); //(document.getElementById('prod_edate')).value.replaceAll("-","");                 
-                        var ls_qcdate     =  convert_date(wqcdate.value);  //(document.getElementById('qcdate').value).replaceAll("-","");   
-                        
-                        
-
-                    }                        
+                    }                     
                     function CifSearchList_rtn(arg){  
     
                         var searchCode = "";   

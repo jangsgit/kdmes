@@ -53,6 +53,7 @@ public interface Index10Mapper {
     public Boolean DeleteCa613(IndexCa613Dto parm) ;
     public Boolean DeleteDa037(IndexCa611Dto parm) ;
     public Boolean DeleteDA036Sch(IndexCa611Dto parm) ;
+    public Boolean UpdateCa609Chul(IndexCa611Dto parm) ;
 
     public Boolean InsertCa613(IndexCa613Dto  parm) ;
 

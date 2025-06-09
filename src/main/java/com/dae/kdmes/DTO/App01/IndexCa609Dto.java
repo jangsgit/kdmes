@@ -63,6 +63,8 @@ public class IndexCa609Dto {
     private Integer ischqty;
     private Integer stockqty;
     private String  idxkeyArr;
+    private String  planno;
+    private String  jpumcode;
 
     private List<IndexCa613OworkDto> oworks;
 
