@@ -1155,7 +1155,9 @@ public class App02CrudController {
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
         IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
-        IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        List<IndexCa613Dto> _indexCa613ListDto = new ArrayList<>();
+        FPLANW010_VO _workDto = new FPLANW010_VO();
         _indexCa611Dto.setDeldate(deldate);
         _indexCa611Dto.setDelnum(delnum);
         Boolean result = service10.DeleteDA036Sch(_indexCa611Dto);
@@ -1167,6 +1169,20 @@ public class App02CrudController {
             return "error";
         }
         result = service10.UpdateCa609Chul(_indexCa611Dto);
+
+        //재고계산
+        _indexCa613Dto.setDeldate(deldate);
+        _indexCa613Dto.setDelnum(delnum);
+        _indexCa613ListDto = service10.SelectDa037PcodeList(_indexCa613Dto);
+
+        for(int i = 0; i < _indexCa613ListDto.size(); i++){
+            _workDto.setPcode(_indexCa613ListDto.get(i).getPcode());
+            _workDto.setIndate(getToDate());
+            log.info("setPcode=====>" + _workDto.getPcode());
+            log.info("setIndate=====>" + _workDto.getIndate());
+            //재고계산
+            appcom01Service.SelectStockCal(_workDto);
+        }
 
         return "success";
     }
@@ -1405,6 +1421,7 @@ public class App02CrudController {
         for(int i = 0; i < pcodeArr.size(); i++){
             //재고계산
             _workDto.setPcode(pcodeArr.get(i));
+            _workDto.setIndate(getToDate());
             appcom01Service.SelectStockCal(_workDto);
         }
 

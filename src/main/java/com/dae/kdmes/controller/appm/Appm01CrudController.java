@@ -284,12 +284,13 @@ public class Appm01CrudController {
             _index10Dto.setRwflag(rwflag);
 
             String ls_maxlotno = service10.SelectMaxLotno(_index10Dto);
+//            log.info("plan_no =====>" + plan_no);
+//            log.info("ls_maxlotno =====>" + ls_maxlotno);
             String ls_seq;
             if (ls_maxlotno == null) {
                 ls_lotno = plan_no.substring(0,8) + rwflag + "0001";
             } else {
                 ls_seq = ls_maxlotno.substring(9, 13);
-
                 int ll_seq = Integer.parseInt(ls_seq) + 1;
                 ls_seq = Integer.toString(ll_seq);
 

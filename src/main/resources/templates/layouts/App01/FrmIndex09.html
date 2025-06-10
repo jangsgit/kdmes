@@ -2349,6 +2349,10 @@
             document.getElementById('endDate').value = null;
             btn_progress(true, false, true, false) 
         }   
+        if(ls_plan_no == null || ls_plan_no.length == 0){
+            alert("작업지시서를 다시 선택하세요")
+            return 
+        }
         if(!ll_inwinqt){
             ll_inwinqt = 0;
         }else{ 
