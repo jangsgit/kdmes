@@ -4,6 +4,7 @@ import com.dae.kdmes.DTO.App01.*;
 import com.dae.kdmes.DTO.App02.Index10Dto;
 import com.dae.kdmes.DTO.App02.Index11Dto;
 import com.dae.kdmes.DTO.Appm.FPLANW010_VO;
+import com.dae.kdmes.DTO.Appm.FPLAN_VO;
 import com.dae.kdmes.DTO.CommonDto;
 import com.dae.kdmes.DTO.Popup.PopupDto;
 import com.dae.kdmes.DTO.UserFormDto;
@@ -1155,9 +1156,27 @@ public class App02CrudController {
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
         IndexCa611Dto _indexCa611Dto = new IndexCa611Dto();
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
         IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+        List<IndexCa613Dto> itemCa613List = new ArrayList<>();
+        FPLANW010_VO _workDto = new FPLANW010_VO();
         _indexCa611Dto.setDeldate(deldate);
         _indexCa611Dto.setDelnum(delnum);
+
+
+        _indexCa613Dto.setDeldate(deldate);
+        _indexCa613Dto.setDelnum(delnum);
+        itemCa613List = service10.SelectDa037ChulList(_indexCa613Dto);
+
+        //재고계산
+        for(int i = 0; i < itemCa613List.size(); i++){
+            _workDto.setPcode(itemCa613List.get(i).getPcode());
+            _workDto.setIndate(getToDate());
+            log.info("getPcode Exception =====>" + _workDto.getPcode());
+            appcom01Service.SelectStockCal(_workDto);
+        }
+
+
         Boolean result = service10.DeleteDA036Sch(_indexCa611Dto);
         if (!result) {
             return "error";
@@ -1167,6 +1186,7 @@ public class App02CrudController {
             return "error";
         }
         result = service10.UpdateCa609Chul(_indexCa611Dto);
+
 
         return "success";
     }
@@ -1405,6 +1425,7 @@ public class App02CrudController {
         for(int i = 0; i < pcodeArr.size(); i++){
             //재고계산
             _workDto.setPcode(pcodeArr.get(i));
+            _workDto.setIndate(getToDate());
             appcom01Service.SelectStockCal(_workDto);
         }
 

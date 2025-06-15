@@ -522,6 +522,13 @@ public class Appm02CrudController {
         workDto.setDecision("3");
         workDto.setDecision1("3");
         workDto.setPlan_no(planno);
+
+        //재고계산을 위한 상세리스트
+        FPLANW010_VO _fplanDto = new FPLANW010_VO();
+        List<FPLAN_VO> _itemDtoList = new ArrayList<>();
+        _wsumDto.setLotno(lotno);
+        _itemDtoList = appcom01Service.GetFPLAN_List02_salist(_wsumDto);
+
         result = appcom01Service.FPLAN_Update_GDEL(workDto);
         if (!result) {
            // log.info("error =====> FPLAN_Update_GDEL");
@@ -556,6 +563,13 @@ public class Appm02CrudController {
             //log.info("error Exception =====> FPLANW010_Update_GDEL" );
             //return "error";
         }
+
+        for(int i = 0; i < _itemDtoList.size(); i++){
+            _fplanDto.setPcode(_itemDtoList.get(i).getPcode());
+            _fplanDto.setIndate(getToDate());
+            appcom01Service.SelectStockCal(_fplanDto);
+        }
+
 
         //기존 검사된 사용량 조회하여 업데이트
 //        _wsumDto.setPlan_no(planno);
