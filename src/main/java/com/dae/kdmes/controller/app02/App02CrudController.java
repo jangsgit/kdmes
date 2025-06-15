@@ -1163,18 +1163,11 @@ public class App02CrudController {
         _indexCa611Dto.setDeldate(deldate);
         _indexCa611Dto.setDelnum(delnum);
 
-
+        //재고계산 출하상세 리스트
         _indexCa613Dto.setDeldate(deldate);
         _indexCa613Dto.setDelnum(delnum);
         itemCa613List = service10.SelectDa037ChulList(_indexCa613Dto);
 
-        //재고계산
-        for(int i = 0; i < itemCa613List.size(); i++){
-            _workDto.setPcode(itemCa613List.get(i).getPcode());
-            _workDto.setIndate(getToDate());
-            log.info("getPcode Exception =====>" + _workDto.getPcode());
-            appcom01Service.SelectStockCal(_workDto);
-        }
 
 
         Boolean result = service10.DeleteDA036Sch(_indexCa611Dto);
@@ -1186,6 +1179,15 @@ public class App02CrudController {
             return "error";
         }
         result = service10.UpdateCa609Chul(_indexCa611Dto);
+
+
+        //재고계산
+        for(int i = 0; i < itemCa613List.size(); i++){
+            _workDto.setPcode(itemCa613List.get(i).getPcode());
+            _workDto.setIndate(getToDate());
+            log.info("getPcode Exception =====>" + _workDto.getPcode());
+            appcom01Service.SelectStockCal(_workDto);
+        }
 
         return "success";
     }
