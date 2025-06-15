@@ -1426,6 +1426,7 @@ public class App02CrudController {
         for(int i = 0; i < pcodeArr.size(); i++){
             //재고계산
             _workDto.setPcode(pcodeArr.get(i));
+            _workDto.setIndate(getToDate());
             appcom01Service.SelectStockCal(_workDto);
         }
 
