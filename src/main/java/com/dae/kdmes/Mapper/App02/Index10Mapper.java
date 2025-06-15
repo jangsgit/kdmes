@@ -30,6 +30,7 @@ public interface Index10Mapper {
 
 
     public List<IndexCa611Dto> SelectDa036List(IndexCa611Dto parm) ;
+    public List<IndexCa613Dto> SelectDa037PcodeList(IndexCa613Dto parm) ;
     public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm) ;
 
     public List<IndexCa613OworkDto> SelectCa613ChulList(IndexCa613OworkDto parm) ;

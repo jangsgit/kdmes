@@ -365,7 +365,7 @@
     </select>
 
 
-    <select id="SelectDa036List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa611Dto">
+    <select id="SelectDa036List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa611Dto">
 
         <![CDATA[ select A.cltcd , A.inmonth, A.inweeks,
                       Left(A.deldate,4) + '-' + substring(A.deldate, 5,2)+ '-' + substring(A.deldate, 7,2) as deldate,
@@ -378,6 +378,17 @@
                     AND  isnull(A.inmonth,'')  Like #{inmonth} + '%'
                     AND  isnull(A.inweeks,'')  Like #{inweeks} + '%'
                   ORDER BY  A.deldate desc, A.delnum
+        ]]>
+    </select>
+
+
+    <select id="SelectDa037PcodeList"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+
+        <![CDATA[ select A.pcode
+                  from  TB_DA037 A WITH (NOLOCK)
+                  where  isnull(A.deldate,'') = #{deldate}
+                    AND  isnull(A.delnum,'')  = #{delnum}
+                  ORDER BY  A.pcode
         ]]>
     </select>
 
