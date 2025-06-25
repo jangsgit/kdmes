@@ -55,9 +55,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">발주현황</a>
                                 </li>  
-                                <!--  <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">검사이력현황</a>
-                                </li> -->
+                                 <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">발주집집계현황</a>
+                                </li>
                                 <input type="hidden" id="tabvalue" value="A">
                                 </ul>
                                 <div class="tab-content">
@@ -412,7 +412,7 @@
                                 let groups = view_p01tab02page.groupDescriptions;
                                 groups.clear();
                                 if (groupsOn) {
-                                    groups.push(new wijmo.collections.PropertyGroupDescription('baldate') );
+                                    groups.push(new wijmo.collections.PropertyGroupDescription('balno') );
                                 }
                             } 
                            setHeaderColumn02(true);

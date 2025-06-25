@@ -2449,8 +2449,8 @@
             table.style.fontSize = '14px';
             table.style.tableLayout = 'fixed';
             // 공통 셀 스타일
-            const tdStyle = 'border: 0px solid black; padding: 4px; word-break: break-word;';
-            const tdStyle02 = 'border: 0px solid black; padding: 4px; fontSize:9px; word-break: break-word;';
+            const tdStyle = 'border: 1px solid black; padding: 4px; word-break: break-word;';
+            const tdStyle02 = 'border: 1px solid black; padding: 4px; fontSize:11px; word-break: break-word;';
 
             // 각 행 구성
             table.innerHTML = `
@@ -2459,11 +2459,11 @@
                     <th style="${tdStyle}">품명</th>    <td  style="${tdStyle}">${ls_inpname}</td> 
                 </tr>
                 <tr>
-                    <th style="${tdStyle}">생산LotNo</th>      <td  style="${tdStyle}">${ls_firstLotNo}</td> 
+                    <th style="${tdStyle}" >거래처</th><td  style="${tdStyle}">${ls_incltnm}</td> 
                     <th style="${tdStyle}">품번</th>    <td  style="${tdStyle}">${ls_injpumcode}</td> 
                 </tr> 
-                <tr>
-                    <th style="${tdStyle}" >거래처</th><td  colspan="3" style="${tdStyle}">${ls_incltnm}</td> 
+                <tr> 
+                    <th style="${tdStyle}">생산LotNo</th>      <td colspan="3"  style="${tdStyle02}">${ls_firstLotNo}</td> 
                 </tr> 
                 <tr>
                     <td colspan="4" style="text-align: center;">${barcodeImage.outerHTML}</td>

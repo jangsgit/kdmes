@@ -108,13 +108,14 @@
                             </select>                                              
                         </div>     
                     </div> -->
-                    <div class="col-auto">
+                    <!-- <div class="col-auto">
                         <label for="clientName" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품코드 <span class="text-danger">*</span></label>  
-                        <input type="text" id="jkey"   class="form-control"  onclick="barcode_prt()" disabled  required /> 
-                    </div> 
+                        
+                    </div>  -->
                     <div class="col-auto">
                         <label for="ceo" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종<span class="text-danger">*</span></label>
                         <input type="text" id="jchajong"  class="form-control" />
+                        <input type="hidden" id="jkey"   class="form-control"  onclick="barcode_prt()" disabled  required /> 
                     </div>
                     <div class="col-auto">
                         <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">양산</label> 
@@ -128,8 +129,33 @@
                             <input class="form-check-input" id="j_misayong" value="0" type="checkbox"/>                                         
                         </div>
                     </div> 
+                    <div class="col-auto">
+                        <label class="form-label">품목분류</label>
+                        <div class="d-flex flex-wrap gap-2">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_J" name="w_b_gubn" type="radio" value="J" />
+                            <label class="form-check-label" for="w_b_gubn_J">제품</label>
+                          </div>
+                          <!-- <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_W" name="w_b_gubn" type="radio" value="W" />
+                            <label class="form-check-label" for="w_b_gubn_W">원자재</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_B" name="w_b_gubn" type="radio" value="B" />
+                            <label class="form-check-label" for="w_b_gubn_B">부자재</label>
+                          </div> -->
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_H" name="w_b_gubn" type="radio" value="H" />
+                            <label class="form-check-label" for="w_b_gubn_H">반제품</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="w_b_gubn_G" name="w_b_gubn" type="radio" value="G" />
+                            <label class="form-check-label" for="w_b_gubn_G">기타</label>
+                          </div>
+                        </div>
+                    </div>
                 </form> <br>
-                <form class="row g-2">  
+                <!-- <form class="row g-2">  
                     <div class="col-auto">
                         <label class="form-label">품목분류</label>
                         <div class="d-flex flex-wrap gap-2">
@@ -155,7 +181,7 @@
                           </div>
                         </div>
                     </div>
-                </form> 
+                </form>  -->
                 <div class="col-12">
                     <h6 class="form-section"></h6>
                   </div>
@@ -240,7 +266,7 @@
                         <input type="number" id="jboxsu1" class="form-control"  />
                     </div>
                     <div class="col-md-3">
-                        <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">KCC품목코드</label>
+                        <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">규격(품번)</label>
                         <input type="text" id="jpumcode" class="form-control"  />
                     </div>
                     <div class="col-md-3">
@@ -487,7 +513,7 @@
                     { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
-                    { binding: 'jpumcode', header: 'KCC품목코드', align: "center", width: 200 },
+                    { binding: 'jpumcode', header: '규격(품번)', align: "center", width: 200 },
                     { binding: 'jpumname', header: '유형', align: "center", width: 200 },
                     { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
                     { binding: 'j_net', header: '제품중량', align: "center", width: 100 },
@@ -611,7 +637,7 @@
                     { binding: 'jdoor2', header: 'Door2', align: "center", width: 100 },              
                     { binding: 'jthick', header: '유리두께', align: "center", width: 100 }, 
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
-                    { binding: 'jpumcode', header: 'KCC품목코드', align: "center", width: 200 }, 
+                    { binding: 'jpumcode', header: '규격(품번)', align: "center", width: 200 }, 
                     { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
                     { binding: 'j_net', header: '제품중량', align: "center", width: 100 },
                     { binding: 'j_sr', header: '스프루', align: "center", width: 100 },
@@ -1405,7 +1431,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'jpumcode';
-            cols.header = 'KCC품목코드'; 
+            cols.header = '규격(품번)'; 
             cols.align = "center"; 
             cols.width = 200;
             wtab01Grid.columns.push(cols); 
@@ -1939,7 +1965,7 @@
                 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'jpumcode';
-                cols.header = 'KCC품목코드'; 
+                cols.header = '규격(품번)'; 
                 cols.align = "center"; 
                 cols.width = 200;
                 wtab02Grid.columns.push(cols);  
