@@ -284,8 +284,8 @@ public class Appm01CrudController {
             _index10Dto.setRwflag(rwflag);
 
             String ls_maxlotno = service10.SelectMaxLotno(_index10Dto);
-//            log.info("plan_no =====>" + plan_no);
-//            log.info("ls_maxlotno =====>" + ls_maxlotno);
+//           log.info("plan_no =====>" + plan_no);
+           log.info("ls_maxlotno =====>" + ls_maxlotno);
             String ls_seq;
             if (ls_maxlotno == null) {
                 ls_lotno = plan_no.substring(0,8) + rwflag + "0001";
@@ -304,6 +304,7 @@ public class Appm01CrudController {
 
                 ls_lotno = plan_no.substring(0,8) + rwflag + ls_seq;
             }
+            log.info("ls_lotno =====>" + ls_lotno);
             _index10Dto.setLotno(ls_lotno);
             result = service10.UpdateFplan(_index10Dto);
             if (!result) {
