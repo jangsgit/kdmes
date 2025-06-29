@@ -123,7 +123,9 @@
                                             <div class="col-auto">  
                                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  onclick="chulsave_btn()" >출하등록
                                                 </button> 
+                                                <span style="color:red; font-size: 0.85rem; margin-left: 5px;">[ 출하수량을 수정한 후 출하할 품목을 선택하세요 ]</span>
                                             </div>   
+                                            
                                             <div class="container-fluid">   
                                                 <div id="wtab02Grid_div" style="overflow:scroll;   height:680px; width: 95%;    margin:0 auto; "></div>  
                                             </div>  
@@ -386,6 +388,7 @@
                         var balflagArr = new Array();  
                         var stockqtyArr = new Array();   
                         var pcodeArr = new Array();  
+                        var chulqtyArr = new Array();  
                         
                         let includeColumnHeader = false;
                         let formData = new FormData(); 
@@ -898,7 +901,7 @@
                                     var ls_jchajong  = ""  //document.getElementById('jchajong').value; 
                                     var ls_jsayang  = ""  //document.getElementById('jsayang').value; 
                                     var ls_jgugek2  = ""  //document.getElementById('jgugek2').value; 
-                                    var ls_j_sr  =  ""  //document.getElementById('j_sr').value; 
+                                    var ls_balno  =  document.getElementById('balno').value; 
                                     var ls_jdanwy  = ""  //document.getElementById('jdanwy').value;   
                                     var ls_prod_qty  =  document.getElementById('prod_qty').value;  
                                     var ls_remark =  document.getElementById('balno').value;  
@@ -955,7 +958,8 @@
                                         "istore"        : ls_istore, 
                                         "ostore"        : ls_ostore,
                                         "rwflag"        : ls_rwflag,
-                                        "remark"        : ls_remark,  
+                                        "balno"          : ls_balno,  
+                                        "remark"        : ls_remark, 
                                         "inmonth"        : ls_inmonth, 
                                         "inweeks"        : ls_inweeks,  
                                         "wrmc"        : ls_wrmc,    
@@ -1002,13 +1006,14 @@
                                 balflagArr.pop(); 
                                 stockqtyArr.pop(); 
                                 pcodeArr.pop(); 
-
+                                chulqtyArr.pop(); 
                             }  
 
                             for (var i = 0; i < chkTabA.length; i++) { 
                                 idxkeyArr[i]   = chkTabA[i]._data.idxkey; 
                                 pcodeArr[i]   = chkTabA[i]._data.pcode; 
                                 balflagArr[i]   = chkTabA[i]._data.balflag; 
+                                chulqtyArr[i]   = chkTabA[i]._data.chulqty; 
                                 if (balflagArr[i] == "출하"){
                                     alert("이미 출하되었습니다.") 
                                     return false
@@ -1073,13 +1078,14 @@
                             var ls_tab = document.getElementById('tabvalue').value;  
                             if(!savechk_rtn()){
                                return ;     
-                            } 
+                            }  
                             $.ajax({
                                 url: '/app02m/index23/chulsave',  
                                 type:"POST",
                                 data: { 
                                     "idxkeyArr"  : idxkeyArr   ,   
-                                     "pcodeArr"  : pcodeArr   ,    
+                                     "pcodeArr"  : pcodeArr   ,       
+                                     "chulqtyArr"  : chulqtyArr   , 
                                 }, 
                                 async:false,
                                 success:function(data){   
@@ -1140,8 +1146,25 @@
                                     var  ls_JPUM     =  document.getElementById('jpum').value  
                                    if(ls_JPUM == null || ls_JPUM.length == 0 || ls_JPUM == ""){ 
                                       ls_PCODE    = "%"
-                                   }   
-                                   break;                               
+                                   }               
+                                   $.ajax({
+                                       url: '/app02m/index23/list02',  
+                                       type:"POST",
+                                       data: { 
+                                           "frdate"      : ls_frdate,  
+                                           "todate"      : ls_todate, 
+                                           "pcode"      : ls_PCODE,    
+                                       }, 
+                                       async:false,
+                                       success:function(data){ 
+                                        tabC_grid(data);
+                                       },error:function(e){
+                                           console.log("error");                            
+                                       }
+                                   }).done(function(fragment){           
+                    
+                                   })    
+                                   break;                                
                                default:    
                                    break;                
                            } 
@@ -1158,6 +1181,7 @@
                                 var ls_ischdate = ""; 
                                 var ls_balflag = "";
                                 var ls_planno= "";
+                                var ll_chulqty = 0
                                 ls_baldate = wtab01Dto[i]["baldate"];
                                 if(ls_baldate == null || ls_baldate.length == 0 || ls_baldate == ""){  
                                     ls_baldate = "";
@@ -1179,6 +1203,7 @@
                                 }else{
                                     ls_balflag = ''
                                 }   
+                                
  
                                 wtab01_data.push({
                                     id: i, 
@@ -1194,7 +1219,8 @@
                                     pname: wtab01Dto[i]["pname"], 
                                     psize: wtab01Dto[i]["psize"], 
                                     punit: wtab01Dto[i]["punit"], 
-                                    qty: wtab01Dto[i]["qty"], 
+                                    qty: wtab01Dto[i]["qty"],  
+                                    chulqty: wtab01Dto[i]["qty"],  
                                     uamt: wtab01Dto[i]["uamt"], 
                                     samt: wtab01Dto[i]["samt"], 
                                     ischnm: wtab01Dto[i]["ischnm"], 
@@ -1280,6 +1306,14 @@
                         cols = new wijmo.grid.Column(); 
                         cols.binding = 'qty';
                         cols.header = '수량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab02Grid.columns.push(cols);       
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'chulqty';
+                        cols.header = '출하수량';
                         cols.align = "right";
                         cols.width = 80;  
                         cols.format = 'n0';  
@@ -1403,7 +1437,129 @@
                         }else{                            
                             document.getElementById("inchulhabtn").click();
                         }
-                    }                     
+                    }  
+                    
+                    
+
+                       
+                    function tabC_grid(data){  
+                            var wtab01Dto = data;   
+                            var wtab01_data = [];       
+                            var cnt = 1;   
+                            for (var i = 0; i < wtab01Dto.length; i++) {  
+ 
+                                wtab01_data.push({
+                                    id: i, 
+                                    index: cnt,   
+                                    pcode: wtab01Dto[i]["pcode"], 
+                                    pname: wtab01Dto[i]["pname"], 
+                                    psize: wtab01Dto[i]["psize"],  
+                                    qty: wtab01Dto[i]["qty"],  
+                                    samt: wtab01Dto[i]["samt"],  
+                                    jboxsu1: wtab01Dto[i]["jboxsu1"],  
+                                    boxsu: wtab01Dto[i]["boxsu"], 
+                                    boxjan: wtab01Dto[i]["boxjan"],  
+                                    stockqty: wtab01Dto[i]["stockqty"],   
+                                    
+                                });
+                                cnt++;
+                            }        
+
+                        wtab03Grid.columns.clear();  
+                        wtab03Grid.autoGenerateColumns = false; 
+                        view_p01tab03page.sourceCollection  = wtab01_data;
+                        
+                        var cols = new wijmo.grid.Column(); 
+                        cols.binding = 'pname';
+                        cols.header = '품명';
+                        cols.align = "left";
+                        cols.width = 200;  
+                        wtab03Grid.columns.push(cols);    
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'psize';
+                        cols.header = '규격';
+                        cols.align = "left";
+                        cols.width = 350; 
+                        wtab03Grid.columns.push(cols);    
+
+
+                        // cols = new wijmo.grid.Column(); 
+                        // cols.binding = 'punit';
+                        // cols.header = '단위';
+                        // cols.align = "center";
+                        // cols.width = 80;  
+                        // wtab03Grid.columns.push(cols);     
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'qty';
+                        cols.header = '수량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        cols.aggregate = 'Sum';
+                        wtab03Grid.columns.push(cols);   
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'stockqty';
+                        cols.header = '재고수량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab03Grid.columns.push(cols);    
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'samt';
+                        cols.header = '금액';
+                        cols.align = "right";
+                        cols.width = 120;  
+                        cols.format = 'n0'
+                        cols.aggregate = 'Sum';
+                        wtab03Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'jboxsu1';
+                        cols.header = 'BOX단위';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab03Grid.columns.push(cols);     
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'boxsu';
+                        cols.header = 'BOX수량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        cols.aggregate = 'Sum';
+                        wtab03Grid.columns.push(cols);     
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'boxjan';
+                        cols.header = 'BOX잔량';
+                        cols.align = "right";
+                        cols.width = 80;  
+                        cols.format = 'n0';  
+                        wtab03Grid.columns.push(cols);      
+                        
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'pcode';
+                        cols.header = '제품코드';
+                        cols.align = "center";
+                        cols.width = 120;    
+                        wtab03Grid.columns.push(cols);   
+                        
+                        // cols = new wijmo.grid.Column(); 
+                        // cols.binding = 'idxkey';
+                        // cols.header = 'seq';
+                        // cols.hidden = true
+                        // cols.align = "center";
+                        // cols.width = 50;   
+                        // wtab03Grid.columns.push(cols);    
+                       }
+                   
+
+
                     function CifSearchList_rtn(arg){  
     
                         var searchCode = "";   
@@ -1617,6 +1773,7 @@
             
                         document.getElementById('pcode').value = arg1;  
                         document.getElementById('jpum').value = arg2; 
+                        // searchList_rtn('C');/
                         $("#wciflist_rtn").trigger("click");
                     }
                     //거래처검색  

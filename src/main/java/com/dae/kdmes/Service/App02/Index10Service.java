@@ -74,6 +74,7 @@ public class Index10Service {
     }
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm){return indexMapper.SelectCa613JaegoList(parm);}
     public List<IndexCa609Dto> SelectCa609List(IndexCa609Dto parm){return indexMapper.SelectCa609List(parm);}
+    public List<IndexCa609Dto> SelectCa609ListGroup(IndexCa609Dto parm){return indexMapper.SelectCa609ListGroup(parm);}
 
 
     public String GetJcodeCheck(Index03Dto parm){  return  indexMapper.GetJcodeCheck(parm);  }

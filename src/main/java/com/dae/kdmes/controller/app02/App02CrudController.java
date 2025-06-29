@@ -500,6 +500,9 @@ public class App02CrudController {
                 case "sachultxt":
                     _index10Dto.setSachultxt(values.toString());
                     break;
+                case "balno":
+                    _index10Dto.setBalno(values.toString());
+                    break;
                 default:
                     break;
             }
@@ -538,6 +541,7 @@ public class App02CrudController {
                     return "error";
                 }
             }
+
 //            model.addAttribute("userformDto",userformDto);
 
         return "success";
@@ -1400,6 +1404,7 @@ public class App02CrudController {
     public String index23ChulSave(
             @RequestParam(value =  "idxkeyArr[]") List<Integer> idxkeyArr
             ,@RequestParam(value =  "pcodeArr[]") List<String> pcodeArr
+            ,@RequestParam(value =  "chulqtyArr[]") List<String> chulqtyArr
             , Model model
             , HttpServletRequest request){
 
@@ -1414,8 +1419,12 @@ public class App02CrudController {
         String csv = idxkeyArr.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
+        String csv02 = chulqtyArr.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
 
         _indexCa609Dto.setIdxkeyArr(csv);
+        _indexCa609Dto.setChulqtyArr(csv02);
 //        log.info(_indexCa609Dto.getIdxkeyArr());
         result = service10.InsertChulha(_indexCa609Dto);
 //        if (!result) {
@@ -1464,6 +1473,35 @@ public class App02CrudController {
         return _indexCa609ListDto;
     }
 
+
+
+    @GetMapping(value="/index23/list02")
+    public Object App23ListTot02_index(@RequestParam("frdate") String frdate,
+                                     @RequestParam("todate") String todate,
+                                     @RequestParam("pcode") String pcode,
+                                     Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("발주등록");
+        CommDto.setMenuUrl("기준정보>발주정보");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa609Dto _indexCa609Dto = new IndexCa609Dto();
+        List<IndexCa609Dto> _indexCa609ListDto = new ArrayList<>();
+
+        try {
+            _indexCa609Dto.setFrdate(frdate);
+            _indexCa609Dto.setTodate(todate);
+            _indexCa609Dto.setPcode(pcode);
+            _indexCa609ListDto = service10.SelectCa609ListGroup(_indexCa609Dto);
+            model.addAttribute("index23List",_indexCa609ListDto);
+
+        } catch (Exception ex) {
+            log.info("App23ListTot_index Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return _indexCa609ListDto;
+    }
 
 
 

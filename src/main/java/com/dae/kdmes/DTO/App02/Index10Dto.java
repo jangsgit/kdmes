@@ -130,6 +130,7 @@ public class Index10Dto {
 
     private String sachulflag;
     private String sachultxt;
+    private String balno;
 
     private Integer decision2;
     private Integer decision1;

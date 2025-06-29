@@ -183,7 +183,7 @@
 
 
     <update  id="InsertChulha" parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto"  >
-        EXEC SP_INSERTCHULHA #{idxkeyArr}
+        EXEC SP_INSERTCHULHA #{idxkeyArr}, #{chulqtyArr}
     </update >
 
 
@@ -566,6 +566,27 @@
 
     </select>
 
+    <select id="SelectCa609ListGroup"  parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa609Dto">
+
+        <![CDATA[
+                select   A.pcode,
+                      A.pname, A.psize, sum(A.qty) as qty, sum( A.samt) as samt,
+                    isnull(max(D.stock_qty), 0) as stockqty,
+					max(B.jboxsu1) as jboxsu1,
+                      FLOOR(sum(A.qty) / max(B.jboxsu1) ) as boxsu,
+					  sum(A.qty) - (FLOOR(sum(A.qty) / max(B.jboxsu1)  ) * max(B.jboxsu1)) as boxjan
+                  from  TB_CA609 A WITH (NOLOCK)
+                  LEFT JOIN JCODE B ON A.pcode = B.jkey
+                  LEFT JOIN TB_JSTOCK D ON D.jkey = B.jkey
+                  where  isnull(A.pcode,'')  Like #{pcode} + '%'
+                    AND  A.baldate between #{frdate} and #{todate}
+					group by A.pcode, A.pname, A.PSIZE
+                  ORDER BY  A.pcode, A.pname, A.PSIZE
+        ]]>
+
+
+
+    </select>
 
     <select id="CA613_OWORK_MAXWSEQ" parameterType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" resultType="String">
         SELECT MAX(seq) FROM  TB_CA613_OWORK

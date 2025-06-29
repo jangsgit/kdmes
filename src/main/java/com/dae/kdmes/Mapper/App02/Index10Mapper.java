@@ -41,6 +41,8 @@ public interface Index10Mapper {
 
     public List<IndexCa609Dto> SelectCa609List(IndexCa609Dto parm) ;
 
+    public List<IndexCa609Dto> SelectCa609ListGroup(IndexCa609Dto parm) ;
+
 
 
     public List<IndexCa613Dto> SelectCa613JaegoList(IndexCa613Dto parm) ;
