@@ -85,33 +85,40 @@
                                         <div class="row gx-3" style="  margin: 10px 10px 10px;">    
                                             <div class="col-auto">
                                                 <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"     >
+                                                    <input type="text"  class="form-control datetimepicker" id="frdate" autocomplete="off"  placeholder="Y-m-d"  style="width:150px;"   >
                                                 </div> 
                                             </div>   
                                             <div class="col-auto"> 
                                                 <div class="input-group input-group-sm mb-3"> 
-                                                    <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"     >
+                                                    <input type="text"  class="form-control datetimepicker" id="todate" autocomplete="off"  placeholder="Y-m-d"  style="width:150px;"   >
                                                 </div>
                                             </div> 
                                             <div class="col-auto">
                                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">거래처</span> 
-                                                    <input class="form-control form-control-sm" id="cltnm" type="text"    autocomplete="off"  placeholder="">
+                                                    <input class="form-control form-control-sm" id="cltnm" type="text"    autocomplete="off"  placeholder="" style="width:100px;">
                                                     <input class="form-control form-control-sm" id="acorp1" type="hidden"  />
                                                     <input class="form-control form-control-sm" id="acorp2" type="hidden"  />
                                                     <input class="form-control form-control-sm" id="acorp3" type="hidden"  />
                                                     <input class="form-control form-control-sm" id="acode" type="hidden"  /> 
                                                     <input class="form-control form-control-sm" id="delnum" type="hidden"  />   
                                                 </div>
-                                            </div>    
-                                            <!-- <div class="col-1 col-sm-1">
-                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">상태</span> 
-                                                    <select  name="com_rem2" id="com_rem2" class="form-control form-control-sm">
-                                                        <option value="%">선택</option>
-                                                        <option  th:value="001"  th:text="미출하">
-                                                        <option  th:value="002"  th:text="출하">
+                                            </div>   
+                                            <div class="col-1 col-sm-1">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">상태</span> 
+                                                    <select name="com_rem2" id="com_rem2" class="form-control form-control-sm">
+                                                        <option value="%">전체</option>                                                        
+                                                        <option th:value="0" th:text="'미출하'"></option>
+                                                        <option th:value="1" th:text="'출하'"></option>
                                                     </select>   
                                                 </div>
-                                            </div> -->
+                                            </div>
+
+                                            <div class="col-auto">
+                                                <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">발주번호</span> 
+                                                    <input class="form-control form-control-sm" id="txtbalno" type="text"    autocomplete="off"  placeholder="" style="width:100px;">  
+                                                </div>
+                                            </div>    
                                             <div class="col-auto">  
                                                 <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button"  id="retrieveBtn" >조회
                                                 </button> 
@@ -1110,13 +1117,17 @@
                                case 'B': 
                                     var  ls_frdate     =  convert_date(wfrdate.value);                    
                                     var  ls_todate     =  convert_date(wtodate.value);   
-                                    var ls_com_rem    =   '%' //document.getElementById('com_rem2').value                 
+                                    var ls_com_rem    =    document.getElementById('com_rem2').value                 
                                     var  ls_acorp1     =  document.getElementById('acorp1').value    
                                     var  ls_acorp2     =  document.getElementById('acorp2').value      
-                                    var  ls_acode     =  document.getElementById('acode').value 
+                                    var  ls_acode     =  document.getElementById('acode').value     
+                                    var  ls_balno     =  document.getElementById('txtbalno').value 
                                    var ls_cltnm = document.getElementById('cltnm').value  
                                    if(ls_cltnm == null || ls_cltnm.length == 0 || ls_cltnm == ""){ 
                                     ls_acode    = "%"
+                                   }              
+                                   if(ls_balno == null || ls_balno.length == 0 || ls_balno == ""){ 
+                                      ls_balno    = "%"
                                    }              
                                    $.ajax({
                                        url: '/app02m/index23/list01',  
@@ -1126,6 +1137,7 @@
                                            "todate"      : ls_todate, 
                                            "acode"      : ls_acode,  
                                            "balflag"      : ls_com_rem,  
+                                           "balno"      : ls_balno,  
                                        }, 
                                        async:false,
                                        success:function(data){ 
@@ -1861,9 +1873,13 @@
                                 var result = new Date();
                                 result.setHours(result.getHours() + 9); 
                                 var ls_date = result.toISOString().substring(0,10);                                 
-                                wfrdate.value = ls_date;   
+                                // result 날짜 기준으로 당월 1일로 변경
+                                result.setDate(1);
+                                var ls_frdate = result.toISOString().substring(0, 10);
+
+                                wfrdate.value = ls_frdate;   
                                 wtodate.value = ls_date;                                  
-                                wfrdate02.value = ls_date;   
+                                wfrdate02.value = ls_frdate;   
                                 wtodate02.value = ls_date; 
 
                                 windate = new wijmo.input.InputDate('#indate', {

@@ -40,7 +40,7 @@
 
     <!--        <![CDATA[  select  max(lotno) as lotnomax  from TB_FPLAN_W010 where Left(lotno,8) = #{lotno}      ]]>-->
     <select id="SelectMaxLotno" parameterType="com.dae.kdmes.DTO.App02.Index10Dto" resultType="String">
-        <![CDATA[  select  max(lotno) as lotnomax  from TB_FPLAN_W010 where plan_no = #{plan_no} and SUBSTRING(lotno, 9,1) = #{rwflag}      ]]>
+        <![CDATA[  select  top 1 lotno as lotnomax    from TB_FPLAN_W010 where plan_no = #{plan_no} and SUBSTRING(lotno, 9,1) = #{rwflag}  order by lotno desc    ]]>
     </select>
 
 
@@ -558,6 +558,7 @@
                   LEFT JOIN TB_JSTOCK D ON D.jkey = B.jkey
                   where  isnull(A.balflag,'') Like #{balflag} + '%'
                     AND  isnull(A.cltcd,'')  Like #{cltcd} + '%'
+                    AND  isnull(A.balno,'')  Like #{balno} + '%'
                     AND  A.baldate between #{frdate} and #{todate}
                   ORDER BY  A.baldate, A.balno
         ]]>

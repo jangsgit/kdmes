@@ -1448,6 +1448,7 @@ public class App02CrudController {
                                      @RequestParam("todate") String todate,
                                      @RequestParam("acode") String acode,
                                      @RequestParam("balflag") String balflag,
+                                     @RequestParam("balno") String balno,
                                      Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("발주등록");
         CommDto.setMenuUrl("기준정보>발주정보");
@@ -1462,6 +1463,7 @@ public class App02CrudController {
             _indexCa609Dto.setTodate(todate);
             _indexCa609Dto.setCltcd(acode);
             _indexCa609Dto.setBalflag(balflag);
+            _indexCa609Dto.setBalno(balno);
             _indexCa609ListDto = service10.SelectCa609List(_indexCa609Dto);
             model.addAttribute("index23List",_indexCa609ListDto);
 

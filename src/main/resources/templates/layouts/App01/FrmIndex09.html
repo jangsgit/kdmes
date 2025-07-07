@@ -2917,7 +2917,7 @@
         printArea.style.border = '1px solid black';
         printArea.style.padding = '10px'; 
         printArea.style.backgroundColor = '#ffffff';
-        printArea.style.maxWidth = '590px';
+        printArea.style.maxWidth = '590px'; 
         printArea.style.boxSizing = 'border-box';
 
         // 바코드 이미지 생성
@@ -2938,19 +2938,20 @@
         table.style.fontSize = '14px';
         table.style.tableLayout = 'fixed';
         // 공통 셀 스타일
+        const fontLarge = 'font-size:14px; font-weight:bold;';
         const tdStyle = 'border: 1px solid black; padding: 4px; word-break: break-word;';
-        const tdStyle02 = 'border: 1px solid black; padding: 4px; fontSize:11px; word-break: break-word;';
-        const tdStyle03 = 'border: 1px solid black; padding: 4px; fontSize:9px; word-break: break-word;';
-
+        const tdStyle02 = 'border: 1px solid black; padding: 4px; font-size:12px; word-break: break-word;';
+        const tdStyle03 = 'border: 1px solid black; padding: 4px; font-size:9px; word-break: break-word;';
+ 
         // 각 행 구성
         table.innerHTML = `
             <tr>
                 <th style="${tdStyle}">날짜</th>    <td  style="${tdStyle}">${dateOnly}</td>
-                <th style="${tdStyle}">차종</th>    <td  style="${tdStyle02}">${ls_injchajong}</td>
-                <th style="${tdStyle}">주/야</th>   <td  style="${tdStyle02}">${ls_rwflag}</td>
+                <th style="${tdStyle}">차종</th>    <td  style="${tdStyle02}; ${fontLarge}">${ls_injchajong}</td>
+                <th style="${tdStyle}">주/야</th>   <td  style="${tdStyle02}; ${fontLarge}">${ls_rwflag}</td>
             </tr>
             <tr>
-                <th style="${tdStyle}">품명</th>      <td  style="${tdStyle02}">${ls_inpname}</td>
+                <th style="${tdStyle}">품명</th>      <td  style="${tdStyle02}; ${fontLarge}">${ls_inpname}</td>
                 <th style="${tdStyle}">작업자</th>    <td  style="${tdStyle}">${ls_inwrpsnm}</td>
                 <th style="${tdStyle}">박스순번</th>  <td  style="${tdStyle}">${ls_inboxno}</td>
             </tr>
@@ -2960,7 +2961,7 @@
                  
             </tr>
             <tr>
-                <td colspan="6" style="text-align: center;">${barcodeImage.outerHTML}</td>
+                <td colspan="6" style="text-align: center;padding: 0px; margin: 0px; height: 40px;">${barcodeImage.outerHTML}</td>
             </tr> 
         `;
 
@@ -3321,7 +3322,7 @@
 
         document.getElementById('inwflag').value= arg11;  
         document.getElementById('inlotno').value= arg19;  
-        document.getElementById('prod_qty').value= arg20;   
+        document.getElementById('prod_qty').value= arg20.toLocaleString();  
         document.getElementById('inwrmc').value  = arg21;  
         document.getElementById('inmachname').value  = arg22;     //설비명  
         document.getElementById('inpartcode').value= arg23;        //원자재코드 
