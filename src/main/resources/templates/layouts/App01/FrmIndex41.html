@@ -2437,7 +2437,7 @@
             barcodeImage.src = `/input/generate-barcode?text=${encodeURIComponent(text)}`;
             barcodeImage.style.display = 'block';
             barcodeImage.style.margin = '10px auto 5px auto';
-            barcodeImage.style.width = '250px';
+            barcodeImage.style.width = '300px';
             barcodeImage.style.height = 'auto';
 
             // 테이블 생성
@@ -2449,8 +2449,9 @@
             table.style.fontSize = '14px';
             table.style.tableLayout = 'fixed';
             // 공통 셀 스타일
-            const tdStyle = 'border: 1px solid black; padding: 4px; word-break: break-word;';
-            const tdStyle02 = 'border: 1px solid black; padding: 4px; fontSize:11px; word-break: break-word;';
+            const tdStyle = 'border: 1px solid black; padding: 10px 6px; word-break: break-word;';
+            const tdStyle02 = 'border: 1px solid black; padding: 10px 6px; fontSize:15px; word-break: break-word;';
+            const fontLarge = 'font-size:14px; font-weight:bold;';
 
             // 각 행 구성
             table.innerHTML = `
@@ -2463,7 +2464,7 @@
                     <th style="${tdStyle}">품번</th>    <td  style="${tdStyle}">${ls_injpumcode}</td> 
                 </tr> 
                 <tr> 
-                    <th style="${tdStyle}">생산LotNo</th>      <td colspan="3"  style="${tdStyle02}">${ls_firstLotNo}</td> 
+                    <th style="${tdStyle}">생산LotNo</th>      <td colspan="3"  style="${tdStyle02}; ${fontLarge}">${ls_firstLotNo}</td> 
                 </tr> 
                 <tr>
                     <td colspan="4" style="text-align: center;">${barcodeImage.outerHTML}</td>

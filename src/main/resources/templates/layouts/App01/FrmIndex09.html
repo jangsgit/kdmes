@@ -2926,7 +2926,7 @@
         barcodeImage.src = `/input/generate-barcode?text=${encodeURIComponent(text)}`;
         barcodeImage.style.display = 'block';
         barcodeImage.style.margin = '10px auto 5px auto';
-        barcodeImage.style.width = '250px';
+        barcodeImage.style.width = '300px';
         barcodeImage.style.height = 'auto';
 
         // 테이블 생성
@@ -2939,9 +2939,9 @@
         table.style.tableLayout = 'fixed';
         // 공통 셀 스타일
         const fontLarge = 'font-size:14px; font-weight:bold;';
-        const tdStyle = 'border: 1px solid black; padding: 4px; word-break: break-word;';
-        const tdStyle02 = 'border: 1px solid black; padding: 4px; font-size:12px; word-break: break-word;';
-        const tdStyle03 = 'border: 1px solid black; padding: 4px; font-size:9px; word-break: break-word;';
+        const tdStyle = 'border: 1px solid black; padding: 10px 6px; word-break: break-word;';
+        const tdStyle02 = 'border: 1px solid black; padding: 10px 6px; font-size:15px; word-break: break-word;';
+        const tdStyle03 = 'border: 1px solid black; padding: 4px; font-size:12px; word-break: break-word;';
  
         // 각 행 구성
         table.innerHTML = `
