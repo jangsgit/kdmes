@@ -124,7 +124,7 @@
                         </div> 
                     </div> 
                     <div class="col-auto">
-                        <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">미사용제품</label>
+                        <label for="bizNumber" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">A/S</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" id="j_misayong" value="0" type="checkbox"/>                                         
                         </div>
@@ -266,7 +266,7 @@
                         <input type="number" id="jboxsu1" class="form-control"  />
                     </div>
                     <div class="col-md-3">
-                        <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">규격(품번)</label>
+                        <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">KCC품번</label>
                         <input type="text" id="jpumcode" class="form-control"  />
                     </div>
                     <div class="col-md-3">
@@ -280,11 +280,12 @@
                     <div class="col-md-3">
                         <label for="jdanwy" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">기본단위</label>
                         <input type="text" id="jdanwy" class="form-control"  />
+                        <input type="hidden" id="j_net" class="form-control"  />
                     </div> 
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <label for="j_net" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품중량</label>
-                        <input type="text" id="j_net" class="form-control"  />
-                    </div> 
+                        
+                    </div>  -->
                 </form>                    
                 <form class="row g-2"> 
                     <div class="col-md-3">
@@ -513,7 +514,7 @@
                     { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
-                    { binding: 'jpumcode', header: '규격(품번)', align: "center", width: 200 },
+                    { binding: 'jpumcode', header: 'KCC품번', align: "center", width: 200 },
                     { binding: 'jpumname', header: '유형', align: "center", width: 200 },
                     { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
                     { binding: 'j_net', header: '제품중량', align: "center", width: 100 },
@@ -637,7 +638,7 @@
                     { binding: 'jdoor2', header: 'Door2', align: "center", width: 100 },              
                     { binding: 'jthick', header: '유리두께', align: "center", width: 100 }, 
                     { binding: 'jdanwy', header: '단위', align: "center", width: 100 },  
-                    { binding: 'jpumcode', header: '규격(품번)', align: "center", width: 200 }, 
+                    { binding: 'jpumcode', header: 'KCC품번', align: "center", width: 200 }, 
                     { binding: 'jsayang', header: '사양구분', align: "center", width: 100 },
                     { binding: 'j_net', header: '제품중량', align: "center", width: 100 },
                     { binding: 'j_sr', header: '스프루', align: "center", width: 100 },
@@ -791,6 +792,8 @@
             const input_04 = document.createElement('input');    //door2
             const select_05 = document.createElement('select');  //form
             const input_05 = document.createElement('input');    //form
+            const select_06 = document.createElement('select');  //form
+            const input_06 = document.createElement('input');    //form
 
             const jpumWrap = document.getElementById('jpum_wrap');    
             const jgugek2Wrap = document.getElementById('jgugek2_wrap');
@@ -815,8 +818,8 @@
             while (jdoor2Wrap.firstChild) {
                 jdoor2Wrap.removeChild(jdoor2Wrap.firstChild);
             }
-            while (jthickWrap.firstChild) {
-                jthickWrap.removeChild(jthickWrap.firstChild);
+            while (jthick2Wrap.firstChild) {
+                jthick2Wrap.removeChild(jthick2Wrap.firstChild);
             }
             
 
@@ -909,7 +912,7 @@
                     opt06.text = item.pname;  
                     select_06.appendChild(opt06);
                 }); 
-                jthickWrap.appendChild(select_06);
+                jthick2Wrap.appendChild(select_06);
                 // form 생성 --------------------------------------
                 select_05.name = "jpumname";
                 select_05.id = "jpumname";
@@ -973,7 +976,7 @@
                 input_06.placeholder = 'jthick을 직접 입력하세요';
                 input_06.autocomplete = 'off';
                 input_06.style.width = '200px';
-                jthickWrap.appendChild(input_06);
+                jthick2Wrap.appendChild(input_06);
 
                 
                 // form 생성
@@ -1069,15 +1072,11 @@
             var ls_jpum     =  document.getElementById('jpum').value; 
             if (jpum_sel.tagName === 'SELECT'   && jpum_sel.selectedIndex >= 0) {
                 var ls_jpum =  jpum_sel.options[jpum_sel.selectedIndex].text;
-            }else{
-                var ls_jpum    = "";
             }   
             var ls_jgugek2  =  document.getElementById('jgugek2').value; 
             if (jgugek2_sel.tagName === 'SELECT'  && jgugek2_sel.selectedIndex >= 0) { 
                 var ls_jgugek2  =  jgugek2_sel.options[jgugek2_sel.selectedIndex].text;    
-            }else{
-                var ls_jgugek2    = "";
-            }
+            } 
             var ls_jpumcode =  document.getElementById('jpumcode').value;  
             var ls_jsayang  =  document.getElementById('jsayang').value; 
             var ls_j_net    =  document.getElementById('j_net').value;  
@@ -1092,21 +1091,15 @@
             var ls_door1    =  document.getElementById('jdoor1').value;
             if (jdoor1_sel.tagName === 'SELECT' && jdoor1_sel.selectedIndex >= 0) { 
                 var ls_door1    =  jdoor1_sel.options[jdoor1_sel.selectedIndex].text;
-            }else{
-                var ls_door1    = "";
-            }
+            } 
             var ls_door2        =  document.getElementById('jdoor2').value; 
             
             if (jdoor2_sel.tagName === 'SELECT' && jdoor2_sel.selectedIndex >= 0 ) { 
                 var ls_door2    =  jdoor2_sel.options[jdoor2_sel.selectedIndex].text; 
-            }else{
-                var ls_door2    = "";
             }   
             var ls_jthick        =  document.getElementById('jthick').value; 
             if (jthick_sel.tagName === 'SELECT' && jthick_sel.selectedIndex >= 0) { 
                 var ls_jthick    =  jthick_sel.options[jthick_sel.selectedIndex].text; 
-            }else{
-                var ls_jthick    = "";
             } 
             
             var ls_jpumname =  document.getElementById('jpumname').value; 
@@ -1152,7 +1145,7 @@
             var ls_w_b_gubn = ""
             var x = document.getElementsByName('w_b_gubn');
  
-                for(var i=0; i<5; i++) {
+                for(var i=0; i<3; i++) {
                     if(x[i].checked){
                         ls_w_b_gubn = x[i].value;
                         //break;
@@ -1431,7 +1424,7 @@
             
             cols = new wijmo.grid.Column(); 
             cols.binding = 'jpumcode';
-            cols.header = '규격(품번)'; 
+            cols.header = 'KCC품번'; 
             cols.align = "center"; 
             cols.width = 200;
             wtab01Grid.columns.push(cols); 
@@ -1787,7 +1780,7 @@
             }   
             var x = document.getElementsByName('w_b_gubn');
 
-            for(var i=0; i<5; i++) {
+            for(var i=0; i<3; i++) {
                 if(x[i].value == arg16){
                     x[i].checked = true;
                 }else{
@@ -1965,7 +1958,7 @@
                 
                 cols = new wijmo.grid.Column(); 
                 cols.binding = 'jpumcode';
-                cols.header = '규격(품번)'; 
+                cols.header = 'KCC품번'; 
                 cols.align = "center"; 
                 cols.width = 200;
                 wtab02Grid.columns.push(cols);  
