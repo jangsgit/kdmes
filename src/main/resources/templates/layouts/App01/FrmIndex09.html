@@ -188,6 +188,9 @@
                                 <input class="form-control form-control-sm" id="injchajong" type="hidden" placeholder=""  />  
                                 <input class="form-control form-control-sm" id="injpumcode" type="hidden" placeholder=""  /> 
                                 <input class="form-control form-control-sm" id="injpsize" type="hidden" placeholder=""  />  
+                                <input class="form-control form-control-sm" id="injpumname" type="hidden" placeholder=""  />  
+                                <input class="form-control form-control-sm" id="injdoor1" type="hidden" placeholder=""  />  
+                                <input class="form-control form-control-sm" id="injdoor2" type="hidden" placeholder=""  />  
                                 
                             </div>
                         </div> 
@@ -901,7 +904,7 @@
                     cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
                         text: '<b>${item.pname}</b>',
                         click: (e, ctx) => {                            
-                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode);
+                            selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode, ctx.item.psize, ctx.item.jpumname, ctx.item.jdoor1, ctx.item.jdoor2);
                         }
                     })
                 }, 
@@ -987,7 +990,10 @@
                     wbgubn: ListDto[i]["w_b_gubn"] ,
                     jgumtype: ListDto[i]["jgumtype"],
                     jgumnm: ListDto[i]["jgumnm"] ,
-                    jchajong: ListDto[i]["jchajong"]                     
+                    jchajong: ListDto[i]["jchajong"]  ,
+                    jpumname: ListDto[i]["jpumname"],
+                    jdoor1: ListDto[i]["jdoor1"],
+                    jdoor2: ListDto[i]["jdoor2"]                   
                     
                 });
                 cnt++;
@@ -2856,6 +2862,9 @@
         var ls_inpcode   = document.getElementById('inpcode').value;    //품목코드
         var ls_injpumcode   = document.getElementById('injpumcode').value;    //품목코드
         var ls_injpsize     =  document.getElementById('injpsize').value ;    //규격
+        var ls_injpumname     =  document.getElementById('injpumname').value ;    //유형
+        var ls_injdoor1     =  document.getElementById('injdoor1').value ;    //도어1
+        var ls_injdoor2     =  document.getElementById('injdoor2').value ;    //도어2
         var ls_inboxno = 1;
         const dateOnly = ls_startDate?.split(' ')[0] ?? ls_startDate; // 시:분:초 제거
 
@@ -2946,22 +2955,24 @@
         // 각 행 구성
         table.innerHTML = `
             <tr>
-                <th style="${tdStyle}">날짜</th>    <td  style="${tdStyle}">${dateOnly}</td>
-                <th style="${tdStyle}">차종</th>    <td  style="${tdStyle02}; ${fontLarge}">${ls_injchajong}</td>
-                <th style="${tdStyle}">주/야</th>   <td  style="${tdStyle02}; ${fontLarge}">${ls_rwflag}</td>
+                <th style="${tdStyle}">품명</th>      <td  colspan="5" style="${tdStyle02}; ${fontLarge}">${ls_injchajong} &nbsp;&nbsp;
+                                                      ${ls_inpname}  &nbsp;&nbsp;
+                                                      ${ls_injpumname} &nbsp;&nbsp;
+                                                       ${ls_injdoor1} &nbsp;&nbsp;
+                                                       ${ls_injdoor2}</td>
             </tr>
             <tr>
-                <th style="${tdStyle}">품명</th>      <td  style="${tdStyle02}; ${fontLarge}">${ls_inpname}</td>
-                <th style="${tdStyle}">작업자</th>    <td  style="${tdStyle}">${ls_inwrpsnm}</td>
+                <th style="${tdStyle}">날짜</th>    <td  colspan="2" style="${tdStyle}">${dateOnly} &nbsp;&nbsp; ${ls_rwflag}</td>
+                                                     <td  style="${tdStyle}">${ls_inwrpsnm}</td>
                 <th style="${tdStyle}">박스순번</th>  <td  style="${tdStyle}">${ls_inboxno}</td>
             </tr>
             <tr>
-                <th style="${tdStyle}" >규격(품번)</th><td  colspan="2" style="${tdStyle}">${ls_injpsize}</td>
-                <th style="${tdStyle}" >생산수량</th>  <td style="${tdStyle}" colspan="2">${ls_inwokqt}</td> 
+                <th style="${tdStyle}" >규격</th><td colspan="3"  style="${tdStyle}">${ls_injpsize}</td> 
+                <th style="${tdStyle}" >생산수량</th>  <td style="${tdStyle}"  >${ls_inwokqt}</td> 
                  
             </tr>
             <tr>
-                <td colspan="6" style="text-align: center;padding: 0px; margin: 0px; height: 40px;">${barcodeImage.outerHTML}</td>
+                <td colspan="6" style="text-align: center;padding: 0px; margin: 0px; height: 35px;">${barcodeImage.outerHTML}</td>
             </tr> 
         `;
 
@@ -3180,13 +3191,14 @@
         document.getElementById('popseq').value= arg5;  
     }
     //작업지시선택 
-    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27 , arg28, arg29, arg30, arg31){ 
+    function selectChk(arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16 , arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27 , arg28, arg29, arg30, arg31, arg32, arg33, arg34){ 
              // custcd, spjangcd, wono, cltnm, pname, 
             // ostore, plan_no, cltcd, pcode, wseq, 
             // wflag, phmmdoc, otqty, wrpsnm, owqty ,
             // obqty,winps,wrps,lotno,prod_qty, 
             // wrmc, wrmcnm, partcode, partnm, wbgubn, 
-            // end_qty, jgumtype, jgumnm  jchajong, jpumcode, psize
+            // end_qty, jgumtype, jgumnm  jchajong, jpumcode, psize, jpumname, jdoor1, jdoor2
+                                           
             // console.log(arg27)
             // console.log(arg28)
          if(arg20 <= arg26){
@@ -3227,7 +3239,9 @@
         document.getElementById('injchajong').value  = arg29;     //차종
         document.getElementById('injpumcode').value  = arg30;     //KCC 품번
         document.getElementById('injpsize').value  = arg31;     //규격
-        
+        document.getElementById('injpumname').value  = arg32;     //유형
+        document.getElementById('injdoor1').value  = arg33;     //DOOR1
+        document.getElementById('injdoor2').value  = arg34;     //DOOR2 
     // document.getElementById('inphmmdoc').value= arg12;  
         wflag = arg11; //document.getElementById('inwflag').value;
         if(!wflag){wflag = "00010";} 
@@ -3686,6 +3700,9 @@
                             jchajong: ListDto[i]["jchajong"]  ,
                             jgumnm: ListDto[i]["jgumnm"]  ,
                             jgumtype: ListDto[i]["jgumtype"]  ,
+                            jpumname: ListDto[i]["jpumname"]  ,
+                            jdoor1: ListDto[i]["jdoor1"]  ,
+                            jdoor2: ListDto[i]["jdoor2"]  ,
                             inmonth: ls_inmonth
                         });
                     cnt++;
@@ -3708,7 +3725,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.prod_sdate}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode, ctx.item.psize);
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode, ctx.item.psize, ctx.item.jpumname, ctx.item.jdoor1, ctx.item.jdoor2);
                     }
                 });
                 wtab01Grid.columns.push(cols);   
@@ -3721,7 +3738,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.inmonth}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode);
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode, ctx.item.psize, ctx.item.jpumname, ctx.item.jdoor1, ctx.item.jdoor2);
                     }
                 });
                 wtab01Grid.columns.push(cols);   
@@ -3734,7 +3751,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.pname}</b>',
                     click: (e, ctx) => {                        
-                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode);
+                        selectChk(ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.phmmdoc, ctx.item.otqty, ctx.item.wrpsnm, ctx.item.owqty ,ctx.item.obqty,ctx.item.winps,ctx.item.wrps,ctx.item.lotno,ctx.item.prod_qty, ctx.item.wrmc, ctx.item.wrmcnm, ctx.item.partcode , ctx.item.partnm, ctx.item.wbgubn, ctx.item.end_qty,  ctx.item.jgumtype,  ctx.item.jgumnm, ctx.item.jchajong, ctx.item.jpumcode, ctx.item.psize, ctx.item.jpumname, ctx.item.jdoor1, ctx.item.jdoor2);
                     }
                 });
                 wtab01Grid.columns.push(cols);   

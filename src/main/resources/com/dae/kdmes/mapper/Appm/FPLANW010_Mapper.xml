@@ -70,6 +70,9 @@
                F.wrmc as wrmc,
                F.wrmcnm as wrmcnm,
                C.jgumtype,
+               C.jpumname,
+               C.jdoor1,
+               C.jdoor2,
                (select com_rem1 from TB_CA510 WITH (NOLOCK) WHERE com_code !='00'  AND com_cls = '006'  and com_code=C.jgumtype) as jgumnm
         FROM TB_FPLAN A WITH(NOLOCK)
                 LEFT join TB_FPLAN_WRMC F WITH (NOLOCK) ON A.wrmc = F.wrmc and F.wflag = '00010',
@@ -483,6 +486,9 @@
                MAX(C.jgugek) AS psize,
                MAX(C.jdanwy) AS punit,
                MAX(C.jpumcode) AS jpumcode,
+               MAX(C.jpumname) AS jpumname,
+               MAX(C.jdoor1) AS jdoor1,
+               MAX(C.jdoor2) AS jdoor2,
                MAX(C.jchajong) AS jchajong,
                MAX(A.prod_sdate) as prod_sdate,
                MAX(A.prod_edate) AS prod_edate,

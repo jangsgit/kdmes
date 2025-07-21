@@ -172,7 +172,10 @@
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="inwflag" />    
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="inostore"     value=0   />  
                                                                         <input class="form-control form-control-sm"  type="hidden"  id="injchajong" />  
-                                                                        <input class="form-control form-control-sm"  type="hidden"  id="injpumcode" />  
+                                                                        <input class="form-control form-control-sm"  type="hidden"  id="injpumcode" />   
+                                                                        <input class="form-control form-control-sm"  type="hidden"  id="injpumname" />  
+                                                                        <input class="form-control form-control-sm"  type="hidden"  id="injdoor1" />  
+                                                                        <input class="form-control form-control-sm"  type="hidden"  id="injdoor2" />   
                                                                         
                                                                     </div>                                            
                                                                 </td>   
@@ -1199,12 +1202,13 @@
                 }  
                 wtab03Grid.newRowAtTop = false;
            }
-           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29){ 
+           function selectChk(arg0, arg1, arg2, arg3, arg4, arg5 , arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33){ 
                //console.log(arg14)
                //custcd, spjangcd, wono, cltnm, pname, ostore, plan_no, 1-7
                //cltcd, pcode, wseq, wflag, lotno, prod_qty  otqty otqty 8-15
                //qcdate, winps , wrpsnm, wremark psize, wboxsu, wsumqt demflag 16-23  
                // wbdqt, wcode, wcodenm, wqcqt, injchajong, injpumcode ); 24-29
+               //jpumname, jdoor1, jdoor2    30 31 32
                const ls_demflagEle   = document.getElementById('demflag');             //완료여부
                if(arg23){
                 ls_demflagEle.checked = true;
@@ -1249,6 +1253,10 @@
                document.getElementById('inboxsu1').value= arg21; 
                document.getElementById('injchajong').value= arg28; 
                document.getElementById('injpumcode').value= arg29; 
+               document.getElementById('injpumname').value= arg30; 
+               document.getElementById('injdoor1').value= arg31; 
+               document.getElementById('injdoor2').value= arg32; 
+               document.getElementById('inpsize').value= arg33; 
                
                searchList_sachul (arg12) 
            } 
@@ -2147,7 +2155,10 @@
                            wbdqt: wtab01Dto[i]["wbdqt"] , 
                            wcode: wtab01Dto[i]["wcode"] , 
                            jchajong: wtab01Dto[i]["jchajong"] , 
-                           jpumcode: wtab01Dto[i]["jpumcode"] , 
+                           jpumcode: wtab01Dto[i]["jpumcode"] ,  
+                           jpumname: wtab01Dto[i]["jpumname"] ,  
+                           jdoor1: wtab01Dto[i]["jdoor1"] ,  
+                           jdoor2: wtab01Dto[i]["jdoor2"] , 
                            wcodenm: wtab01Dto[i]["wcodenm"] , 
                            demflag: bdemflag , 
                            
@@ -2188,7 +2199,7 @@
                cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                    text: '<b>${item.lotno}</b>',
                    click: (e, ctx) => {
-                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm, ctx.item.wqcqt, ctx.item.jchajong , ctx.item.jpumcode );
+                       selectChk( "A", ctx.item.custcd, ctx.item.spjangcd, ctx.item.wono, ctx.item.cltnm, ctx.item.pname, ctx.item.ostore, ctx.item.plan_no, ctx.item.cltcd, ctx.item.pcode, ctx.item.wseq, ctx.item.wflag, ctx.item.lotno, ctx.item.prod_qty, ctx.item.otqty, ctx.item.otqty , ctx.item.qcdate, ctx.item.winps , ctx.item.wrpsnm, ctx.item.wremark, ctx.item.psize, ctx.item.wboxsu, ctx.item.wsumqt, ctx.item.demflag, ctx.item.wbdqt, ctx.item.wcode, ctx.item.wcodenm, ctx.item.wqcqt, ctx.item.jchajong , ctx.item.jpumcode, ctx.item.jpumname, ctx.item.jdoor1, ctx.item.jdoor2, ctx.item.psize  );
                    }
                });
                wtab01Grid.columns.push(cols);       
@@ -2408,11 +2419,15 @@
             var ls_firstLotNo   = firstLotNo; //document.getElementById('inlotno').value;         //lotno
             var ls_inlotno   =  document.getElementById('inlotno').value;         //lotno
             var ls_inpname      = document.getElementById('inpname').value;         //품명 
+            var ls_inpsize      = document.getElementById('inpsize').value;         //규격  
             var ls_injchajong   = document.getElementById('injchajong').value;      //차종
             var ls_incltnm      =  document.getElementById('incltnm').value;  
             var ls_inpcode      =  document.getElementById('inpcode').value;        //품목코드
             var ls_injpumcode   =  document.getElementById('injpumcode').value;  //품번코드
-             
+            var ls_injpumname   =  document.getElementById('injpumname').value;  //유형
+            var ls_injdoor1   =  document.getElementById('injdoor1').value;  //door1
+            var ls_injdoor2   =  document.getElementById('injdoor2').value;  //door2
+               
     
             // 전체 출력 영역
             const printWrapper = document.createElement('div');
@@ -2456,12 +2471,14 @@
             // 각 행 구성
             table.innerHTML = `
                 <tr>
-                    <th style="${tdStyle}">차종</th>    <td  style="${tdStyle}">${ls_injchajong}</td>
-                    <th style="${tdStyle}">품명</th>    <td  style="${tdStyle}">${ls_inpname}</td> 
+                    <th style="${tdStyle}">품명</th>    <td colspan="3" style="${tdStyle02}; ${fontLarge}">${ls_injchajong} &nbsp;&nbsp;
+                                                      ${ls_inpname}  &nbsp;&nbsp;
+                                                      ${ls_injpumname} &nbsp;&nbsp;
+                                                       ${ls_injdoor1} &nbsp;&nbsp;
+                                                       ${ls_injdoor2}</td>
                 </tr>
                 <tr>
-                    <th style="${tdStyle}" >거래처</th><td  style="${tdStyle}">${ls_incltnm}</td> 
-                    <th style="${tdStyle}">품번</th>    <td  style="${tdStyle}">${ls_injpumcode}</td> 
+                    <th style="${tdStyle}" >규격</th><td colspan="3" style="${tdStyle}">${ls_inpsize}</td>  
                 </tr> 
                 <tr> 
                     <th style="${tdStyle}">생산LotNo</th>      <td colspan="3"  style="${tdStyle02}; ${fontLarge}">${ls_firstLotNo}</td> 

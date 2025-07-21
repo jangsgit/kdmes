@@ -114,5 +114,8 @@ public class FPLAN_VO {
     private String jgumtype;
     private String jgumnm;
     private String jpumcode;
+    private String jpumname;
+    private String jdoor1;
+    private String jdoor2;
 
 }
