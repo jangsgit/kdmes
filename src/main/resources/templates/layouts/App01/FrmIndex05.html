@@ -130,20 +130,30 @@
                         </div>
                     </div> 
                     <div class="col-auto">
+                        <label class="form-label" for="w_b_gubn">품목분류</label>
+                        <select class="form-select" id="w_b_gubn" name="w_b_gubn">
+                          <option value="J">제품</option>
+                          <option value="W">원자재</option>
+                          <option value="B">부자재</option>
+                          <option value="H">반제품</option>
+                          <option value="G">기타</option>
+                        </select>
+                      </div> 
+                    <!-- <div class="col-auto">
                         <label class="form-label">품목분류</label>
                         <div class="d-flex flex-wrap gap-2">
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_J" name="w_b_gubn" type="radio" value="J" />
                             <label class="form-check-label" for="w_b_gubn_J">제품</label>
                           </div>
-                          <!-- <div class="form-check form-check-inline">
+                          <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_W" name="w_b_gubn" type="radio" value="W" />
                             <label class="form-check-label" for="w_b_gubn_W">원자재</label>
                           </div>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_B" name="w_b_gubn" type="radio" value="B" />
                             <label class="form-check-label" for="w_b_gubn_B">부자재</label>
-                          </div> -->
+                          </div>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_H" name="w_b_gubn" type="radio" value="H" />
                             <label class="form-check-label" for="w_b_gubn_H">반제품</label>
@@ -153,7 +163,7 @@
                             <label class="form-check-label" for="w_b_gubn_G">기타</label>
                           </div>
                         </div>
-                    </div>
+                    </div> -->
                 </form> <br>
                 <!-- <form class="row g-2">  
                     <div class="col-auto">
@@ -185,7 +195,11 @@
                 <div class="col-12">
                     <h6 class="form-section"></h6>
                   </div>
-                <form class="row g-2">      
+                <form class="row g-2">  
+                    <div class="col-md-3">
+                        <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">규격</label>
+                        <input type="text" id="jgugek" class="form-control"  /> 
+                    </div>    
                     <div class="col-md-3">
                         <label for="ajumi1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품명<span class="text-danger">*</span></label>
                         <div class="input_wrap" style="max-width: 225px;"  id="jpum_wrap"> 
@@ -212,10 +226,6 @@
                                 <option th:each="val : ${colorList}" th:value="${val.pcode}" th:text="${val.pname}">
                             </select>                                              
                         </div>   
-                    </div>
-                    <div class="col-md-3">
-                        <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">규격</label>
-                        <input type="text" id="jgugek" class="form-control"  /> 
                     </div>
                     <div class="col-md-3">
                         <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">유형</label>
@@ -279,9 +289,12 @@
                     </div>
                     <div class="col-md-3">
                         <label for="jdanwy" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">기본단위</label>
-                        <input type="text" id="jdanwy" class="form-control"  />
-                        <input type="hidden" id="j_net" class="form-control"  />
-                    </div> 
+                        <div class="input-group">
+                            <input type="text" id="jdanwy" class="form-control"  />    
+                            <button class="btn btn-outline-primary" type="button" id="btnSoyo">소요량</button>                 
+                        </div>                            
+                        <input type="hidden" id="j_net" class="form-control"  />   
+                    </div>                     
                     <!-- <div class="col-md-3">
                         <label for="j_net" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품중량</label>
                         
@@ -430,8 +443,28 @@
         </div> 
     </div>  
     <!--------------------------------------------------------------------------------------->   
+    <!--------------------------------------------------------------------------------------->   
+    <div class="modal fade" id="soyoModal" tabindex="-1" aria-labelledby="soyoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="soyoModalLabel">소요량 확인</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+            </div>
+            <div class="modal-body">
+              <iframe id="soyoFrame" src="" width="100%" height="600" frameborder="0"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--------------------------------------------------------------------------------------->   
 
-
+      <script>
+        document.getElementById("btnSoyo").addEventListener("click", function () { 
+            window.open("/app01/index06", "소요량", "width=1200,height=800");
+        });
+      </script>
+      
     <!--########################################자바 스크립트 시작-->
     <script th:inline="javascript"> 
         // 그리드 호출 window.onload 
@@ -465,7 +498,8 @@
 
         window.onload = function() {   
             
-            document.querySelector('input[name="w_b_gubn"][value="J"]').checked = true; 
+            // document.querySelector('input[name="w_b_gubn"][value="J"]').checked = true; 
+            document.getElementById("w_b_gubn").value = "J";
                 //tab01 grid list
             view_p01tab01page = new wijmo.collections.CollectionView(getData_tab01(), {
                 //sortDescriptions: [new wijmo.collections.SortDescription("jkey", false)],
@@ -510,6 +544,7 @@
                             }
                         })
                     },   
+                    { binding: 'w_b_gubnnm', header: '품목분류', align: "center", width: 100 },  
                     { binding: 'jgumtypenm', header: '금형', align: "center", width: 130 }, 
                     { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
                     { binding: 'jgugek2', header: '색상', align: "center", width: 100 },   
@@ -521,8 +556,7 @@
                     { binding: 'j_sr', header: '스프루', align: "center", width: 100 },
                     { binding: 'j_ct', header: 'C/T', align: "center", width: 100 },   
                     { binding: 'j_cavity', header: 'CAVITY', align: "center", width: 100 },
-                    { binding: 'jbigo', header: '비고', align: "center", width: 100 },
-                    { binding: 'w_b_gubn', header: '품목분류', align: "center", width: 100 },               
+                    { binding: 'jbigo', header: '비고', align: "center", width: 100 },             
                     { binding: 'jchgoga0', header: '단가', align: "right", width: 100 }, 
                     { binding: 'j_dae', header: '대분류', align: "center", width: 0 },               
                     // { binding: 'j_jung', header: '중분류', align: "right", width: 0 }, 
@@ -553,7 +587,22 @@
                 var wtab01Dto = [[${index03List}]];   
                 var wactnm_data = [];       
                 var cnt = 1;   
+                var ls_w_b_gubn = "";
+                var ls_w_b_gubnnm = "";
                 for (var i = 0; i < wtab01Dto.length; i++) {
+
+                    ls_w_b_gubn =  wtab01Dto[i]["w_b_gubn"] 
+                    if (ls_w_b_gubn == 'J') {
+                        ls_w_b_gubnnm = "제품"
+                    }else if(ls_w_b_gubn == 'W'){
+                        ls_w_b_gubnnm = "원자재"
+                    }else if(ls_w_b_gubn == 'B'){
+                        ls_w_b_gubnnm = "부자재"                        
+                    }else if(ls_w_b_gubn == 'H'){
+                        ls_w_b_gubnnm = "반제품"                        
+                    }else if(ls_w_b_gubn == 'G'){
+                        ls_w_b_gubnnm = "기타"                        
+                    } 
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
@@ -573,6 +622,7 @@
                         j_cavity: wtab01Dto[i]["j_cavity"], 
                         jdanwy: wtab01Dto[i]["jdanwy"],
                         w_b_gubn: wtab01Dto[i]["w_b_gubn"],
+                        w_b_gubnnm: ls_w_b_gubnnm,
                         jchgoga0: wtab01Dto[i]["jchgoga0"],
                         jbigo: wtab01Dto[i]["jbigo"],
                         j_misayong: wtab01Dto[i]["j_misayong"],
@@ -629,6 +679,7 @@
                         })
                     }, 
                     { binding: 'jchajong', header: '차종', align: "center", width: 100 },
+                    { binding: 'w_b_gubnnm', header: '품목분류', align: "center", width: 100 },  
                     { binding: 'jpum', header: '품명', align: "left", width: 250 }, 
                     { binding: 'jgumtypenm', header: '금형코드', align: "center", width: 200 },   
                     { binding: 'jgugek', header: '규격', align: "center", width: 200 },   
@@ -644,8 +695,7 @@
                     { binding: 'j_sr', header: '스프루', align: "center", width: 100 },
                     { binding: 'j_ct', header: 'C/T', align: "center", width: 100 },   
                     { binding: 'j_cavity', header: 'CAVITY', align: "center", width: 100 },
-                    { binding: 'jbigo', header: '비고', align: "center", width: 100 },
-                    { binding: 'w_b_gubn', header: '품목분류', align: "center", width: 100 },               
+                    { binding: 'jbigo', header: '비고', align: "center", width: 100 },             
                     { binding: 'jchgoga0', header: '단가', align: "right", width: 100 }, 
                     { binding: 'j_dae', header: '대분류', align: "center", width: 0 },   
                     { binding: 'j_misayong', header: '미사용', align: "center", width: 0 },
@@ -681,7 +731,21 @@
                 var wtab01Dto = [[${index03List}]];   
                 var wactnm_data = [];         
                 var cnt = 1;   
+                var ls_w_b_gubn = "";
+                var ls_w_b_gubnnm = "";
                 for (var i = 0; i < wtab01Dto.length; i++) {
+                    ls_w_b_gubn =  wtab01Dto[i]["w_b_gubn"] 
+                    if (ls_w_b_gubn == 'J') {
+                        ls_w_b_gubnnm = "제품"
+                    }else if(ls_w_b_gubn == 'W'){
+                        ls_w_b_gubnnm = "원자재"
+                    }else if(ls_w_b_gubn == 'B'){
+                        ls_w_b_gubnnm = "부자재"                        
+                    }else if(ls_w_b_gubn == 'H'){
+                        ls_w_b_gubnnm = "반제품"                        
+                    }else if(ls_w_b_gubn == 'G'){
+                        ls_w_b_gubnnm = "기타"                        
+                    }
                     wactnm_data.push({
                         id: i, 
                         index: cnt,
@@ -705,6 +769,7 @@
                         jdanwy: wtab01Dto[i]["jdanwy"],
                         jbigo: wtab01Dto[i]["jbigo"],
                         w_b_gubn: wtab01Dto[i]["w_b_gubn"],
+                        w_b_gubnnm: ls_w_b_gubnnm,
                         jchgoga0: wtab01Dto[i]["jchgoga0"], 
                         j_misayong: wtab01Dto[i]["j_misayong"], 
                         j_sang: wtab01Dto[i]["j_sang"],    
@@ -801,7 +866,7 @@
             const jdoor1Wrap = document.getElementById('jdoor1_wrap');
             const jdoor2Wrap = document.getElementById('jdoor2_wrap'); 
             const jthick2Wrap = document.getElementById('jthick_wrap'); 
-            
+            const jpumcode = document.getElementById('jpumcode'); 
             // 완전히 제거
             while (jpumWrap.firstChild) {
                 jpumWrap.removeChild(jpumWrap.firstChild);
@@ -930,7 +995,9 @@
                     opt05.text = item.pname;  
                     select_05.appendChild(opt05);
                 }); 
-                jpumnameWrap.appendChild(select_05); 
+                jpumnameWrap.appendChild(select_05);  
+                jpumcode.disabled = false; // KCC 품번
+                
             } else {  
                 // jpum 생성
                 input_01.type = 'text';
@@ -987,7 +1054,8 @@
                 input_05.placeholder = '유형을 직접 입력하세요';
                 input_05.autocomplete = 'off';
                 input_05.style.width = '200px';
-                jpumnameWrap.appendChild(input_05);
+                jpumnameWrap.appendChild(input_05); 
+                jpumcode.disabled = true; // KCC 품번
             } 
 
         }
@@ -1040,7 +1108,8 @@
             document.getElementById('j_cavity').value =  ""; 
             document.getElementById('jdanwy').value = "";  
             document.getElementById('jbigo').value = "";   
-            document.querySelector('input[name="w_b_gubn"][value="J"]').checked = true; 
+            // document.querySelector('input[name="w_b_gubn"][value="J"]').checked = true; 
+            document.getElementById("w_b_gubn").value = "J";
             document.getElementById('j_misayong').checked = false; 
             document.getElementById('j_yangsan').checked = false; 
             document.getElementById('acode').value = ""; 
@@ -1054,6 +1123,7 @@
              
             // document.getElementById('j_sang').value = ""; 
             document.getElementById('jboxsu1').value = 0; 
+            document.getElementById('jpumcode').disabled = false; // KCC 품번
         }
         // <!-- 저장 스크립트 시작 -->
         function save_btn(){   
@@ -1142,15 +1212,17 @@
             // }else{
             //     ls_j_sang = "1"
             // } 
-            var ls_w_b_gubn = ""
-            var x = document.getElementsByName('w_b_gubn');
- 
-                for(var i=0; i<3; i++) {
-                    if(x[i].checked){
-                        ls_w_b_gubn = x[i].value;
-                        //break;
-                    }
-                }  
+
+            // var ls_w_b_gubn = ""
+            // var x = document.getElementsByName('w_b_gubn'); 
+            //     for(var i=0; i<3; i++) {
+            //         if(x[i].checked){
+            //             ls_w_b_gubn = x[i].value;
+            //             //break;
+            //         }
+            //     }  
+            var ls_w_b_gubn = document.getElementById("w_b_gubn").value;
+
                 if (!confirm("저장하시겠습니까?")) {
                         return ; 
                     }   
@@ -1778,15 +1850,16 @@
             }else{
                 j_yangsan.checked = false; 
             }   
-            var x = document.getElementsByName('w_b_gubn');
 
-            for(var i=0; i<3; i++) {
-                if(x[i].value == arg16){
-                    x[i].checked = true;
-                }else{
-                    x[i].checked = false;
-                }
-            }
+            // var x = document.getElementsByName('w_b_gubn'); 
+            // for(var i=0; i<3; i++) {
+            //     if(x[i].value == arg16){
+            //         x[i].checked = true;
+            //     }else{
+            //         x[i].checked = false;
+            //     }
+            // }
+            document.getElementById("w_b_gubn").value = arg16; 
             if(arg0 == "B"){
                 $("#wjcodelist_rtn").trigger("click");
             }
