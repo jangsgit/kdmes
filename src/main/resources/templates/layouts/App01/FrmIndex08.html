@@ -175,7 +175,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">수명예상SHOT</label>
-                                    <input type="number"   class="form-control" id="inmachshot" autocomplete="off"  placeholder="" >  
+                                    <input type="text"   class="form-control" id="inmachshot" autocomplete="off"  placeholder="" >  
                                 </div>
                                 
                                 <div class="col-md-3">
@@ -1074,9 +1074,10 @@
                    return ;               
                }  
                if(ls_infixtext == null || ls_infixtext.length == 0 || ls_infixtext == ""){ 
-                   alert("수리내용을 등록하세요") 
-                   document.getElementById("infixtext").focus(); 
-                   return ;               
+                //    alert("수리내용을 등록하세요") 
+                //    document.getElementById("infixtext").focus(); 
+                //    return ;   
+                ls_infixtext == ""            
                }  
                if(ls_inreqdate == null || ls_inreqdate.length == 0 || ls_inreqdate == ""){ 
                    alert("의뢰일을 등록하세요")  
@@ -2428,8 +2429,8 @@
        wmacheddate.value = arg5;
     //    document.getElementById('inmachdate').value = arg3;
     //    document.getElementById('inmachstdate').value = arg4;
-    //    document.getElementById('inmacheddate').value = arg5;
-       document.getElementById('inmachshot').value = arg6;
+    //    document.getElementById('inmacheddate').value = arg5; 
+       document.getElementById('inmachshot').value = arg6.toLocaleString();;
 
        document.getElementById('inmachgugek01').value = arg7;
        document.getElementById('inmachcavity').value = arg8;
