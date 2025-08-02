@@ -13,6 +13,7 @@ import java.util.List;
 public interface Index03Mapper {
 
     public List<Index03Dto> GetJpumList(Index03Dto parm) ;
+    public List<Index03Dto> GetJpumList_BH(Index03Dto parm) ;
     public List<Index03Dto> GetJpumListTot(Index03Dto parm) ;
     public List<Index03Dto> GetGanListBonsa01(Index03Dto parm) ;
     public List<Index03Dto> GetGanListBonsa02(Index03Dto parm) ;

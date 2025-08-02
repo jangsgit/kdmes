@@ -67,6 +67,15 @@
     <div class="card">
         <div class="card-body p-3">
             <div class="d-flex align-items-center gap-2 mb-3">
+                <!-- 품목분류 콤보박스 -->
+                <select class="form-select form-select-sm" style="width: 120px;" id="con_gubn" name="con_gubn">
+                    <option value="">전체</option>
+                    <option value="J">제품</option>
+                    <option value="W">원자재</option>
+                    <option value="B">부자재</option>
+                    <option value="H">설비부품</option>
+                    <option value="G">기타</option>
+                </select>
                 <input type="text" class="form-control form-control-sm" style="width: 200px;" placeholder="품목/차종 검색..." id="searchtxt"  />
                 <button class="btn btn-primary btn-sm"   id="retrieveBtn">검색</button>
                 <button class="btn btn-primary btn-sm"     id="gogobtn" data-bs-toggle="modal" data-bs-target="#gomodal">제품현황</button> 
@@ -1137,7 +1146,7 @@
 
             var ls_jkey     =  document.getElementById('jkey').value;  
             var ls_j_dae    =  document.getElementById('j_dae').value;  
-            var ls_j_jung   =  ""; //document.getElementById('j_jung').value;
+            var ls_j_jung   =  "01"; //document.getElementById('j_jung').value;
             var ls_jgugek   =  document.getElementById('jgugek').value;  
             var ls_jpum     =  document.getElementById('jpum').value; 
             if (jpum_sel.tagName === 'SELECT'   && jpum_sel.selectedIndex >= 0) {
@@ -1249,7 +1258,7 @@
                 if(!ls_jgumtype){
                     alert("금형을 입력하세요") 
                         return ;                 
-                }            
+                }             
                 var inputdata = {  
                     "jkey"          : ls_jkey,
                     "j_dae"         : ls_j_dae , 
@@ -1365,12 +1374,17 @@
                 searchList_rtn(searchText); 
             }
         });         
-        function searchList_rtn(arg1){    
+        function searchList_rtn(arg1){  
+            ls_congubn = document.getElementById("con_gubn").value ;    
+            if(ls_congubn == null || ls_congubn.length == 0 || ls_congubn == ""){ 
+                ls_congubn = "%";            
+            }   
             $.ajax({
                         url: '/app01m/index03/listmain',  
                         type:"POST",
                         data: { 
                             "searchtxt" :arg1, 
+                            "congubn" :ls_congubn, 
                         }, 
                         async:false,
                         success:function(data){  

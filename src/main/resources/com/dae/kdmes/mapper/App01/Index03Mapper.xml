@@ -57,7 +57,7 @@
         <![CDATA[
         select   max(jkey) as jkey
         from JCODE WITH (NOLOCK)
-        WHERE Left( isnull(jkey,'') ,4)   = #{jkey}
+        WHERE Left( isnull(jkey,'') ,4)  = #{jdaejung}
         ]]>
     </select>
 
@@ -71,7 +71,19 @@
             LEFT OUTER JOIN cif      F WITH(NOLOCK) ON (JCODE.cltcd = F.acorp1 + CAST(F.acorp2 as varchar))
             LEFT OUTER JOIN TB_CA510 G WITH(NOLOCK) ON (JCODE.jgumtype = G.com_code AND G.com_cls = '006' AND G.com_code   != '00' )
             WHERE (isnull(jchajong,'') Like concat('%',#{jpum},'%') OR isnull(jpum,'') Like concat('%',#{jpum},'%') )
-            and isnull(j_misayong,'0') Like concat('%',#{j_misayong},'%')
+            and isnull(w_b_gubn,'0') Like concat('%',#{w_b_gubn},'%')
+            ORDER BY jkey
+        ]]>
+    </select>
+
+
+    <select id="GetJpumList_BH" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
+        <![CDATA[
+            select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jpumname, jsayang, jpum, jboxsu1, jgumtype, jdoor1, jdoor2,
+                   j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn
+            from JCODE WITH (NOLOCK)
+            WHERE (isnull(jpum,'') Like concat('%',#{jpum},'%') OR isnull(jpum,'') Like concat('%',#{jpum},'%') )
+            and isnull(w_b_gubn,'') <> (#{w_b_gubn})
             ORDER BY jkey
         ]]>
     </select>

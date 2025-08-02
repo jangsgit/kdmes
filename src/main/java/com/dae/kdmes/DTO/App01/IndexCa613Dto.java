@@ -22,6 +22,7 @@ public class IndexCa613Dto {
     private String psize;
     private String punit;
     private Integer qty;
+    private Integer weight;
     private Integer cqty;
     private Integer uamt;
     private Integer samt;

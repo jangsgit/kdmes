@@ -427,6 +427,7 @@ public class App01CrudController {
     }
     @GetMapping(value="/index03/list")
     public Object App03List_index(@RequestParam("searchtxt") String searchtxt,
+                                  @RequestParam("gubn") String gubn,
                                   Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("제품등록");
         CommDto.setMenuUrl("기준정보>제품정보");
@@ -443,7 +444,13 @@ public class App01CrudController {
             index03Dto.setJpum(searchtxt);
             index03Dto.setJkey(searchtxt);
             index03Dto.setJ_misayong("0");
-            index03List = service03.GetJpumList(index03Dto);
+            index03Dto.setW_b_gubn(gubn);
+            if (gubn.equals("W")) {
+                index03Dto.setW_b_gubn("J");
+                index03List = service03.GetJpumList_BH(index03Dto);
+            }else{
+                index03List = service03.GetJpumList(index03Dto);
+            }
             model.addAttribute("index03List",index03List);
 
         } catch (Exception ex) {
@@ -455,6 +462,7 @@ public class App01CrudController {
 
     @GetMapping(value="/index03/listmain")
     public Object App03MainList_index(@RequestParam("searchtxt") String searchtxt,
+                                      @RequestParam("congubn") String congubn,
                                   Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("제품등록");
         CommDto.setMenuUrl("기준정보>제품정보");
@@ -471,6 +479,7 @@ public class App01CrudController {
             index03Dto.setJpum(searchtxt);
             index03Dto.setJkey(searchtxt);
             index03Dto.setJ_misayong("%");
+            index03Dto.setW_b_gubn(congubn);
             index03List = service03.GetJpumList(index03Dto);
             model.addAttribute("index03List",index03List);
 
@@ -576,16 +585,17 @@ public class App01CrudController {
             model.addAttribute("userformDto",userformDto);
             String ls_jkeychk = index03Dto.getJkey();
             if (ls_jkeychk == null || ls_jkeychk.equals("")) {
-                ls_jkeychk = index03Dto.getJ_jung();
-                index03Dto.setJkey(ls_jkeychk);
+                ls_jkeychk = index03Dto.getJ_dae() + index03Dto.getJ_jung();
+                index03Dto.setJdaejung(ls_jkeychk);
                 ls_jkeychk = "";
                 ls_jkeychk = service03.GetMaxJkey(index03Dto);
                 if(ls_jkeychk == null){
-                    ls_jkeychk = index03Dto.getJ_jung() + "000001";
+                    ls_jkeychk = index03Dto.getJdaejung() + "000001";
                 }else{
                     Integer ll_jeky = Integer.parseInt(ls_jkeychk.substring(4,10)) + 1;
-                    ls_jkeychk = index03Dto.getJ_jung() + String.format("%06d", ll_jeky);
+                    ls_jkeychk = index03Dto.getJdaejung() + String.format("%06d", ll_jeky);
                 }
+
                 index03Dto.setJkey(ls_jkeychk);
             }
             String ls_acode = service03.GetJpumCheck(index03Dto);

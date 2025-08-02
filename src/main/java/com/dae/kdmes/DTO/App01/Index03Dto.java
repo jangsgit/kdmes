@@ -9,6 +9,7 @@ public class Index03Dto {
     private String jkey;
     private String j_dae;
     private String j_jung;
+    private String jdaejung;
     private String jgugek;
     private String jpum;
     private String jgugek2;

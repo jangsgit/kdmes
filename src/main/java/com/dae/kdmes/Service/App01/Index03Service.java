@@ -19,6 +19,9 @@ public class Index03Service {
     public List<Index03Dto> GetJpumList(Index03Dto parm){
                 return  appMapper.GetJpumList(parm);
     }
+    public List<Index03Dto> GetJpumList_BH(Index03Dto parm){
+        return  appMapper.GetJpumList_BH(parm);
+    }
     public List<Index03Dto> GetJpumListTot(Index03Dto parm){
         return  appMapper.GetJpumListTot(parm);
     }

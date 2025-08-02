@@ -183,6 +183,11 @@
                                             <input class="form-control form-control-sm" id="jpsize" type="text"    autocomplete="off" disabled > 
                                         </div>
                                     </div>
+                                    <div class="col-auto">  
+                                        <!-- <button class="btn btn-outline-info me-1 mb-1"  type="button" style="color: #dc3545;"  id="deleteRow" ><span style="color: #084661;">행삭제</span></button>  -->
+                                        <button class="btn btn-falcon-danger me-1 mb-1 btn-sm" type="button" onclick="searchList_rtn('B')" >모품목조회
+                                        </button>
+                                    </div>  
                                 </div>
                                 <div class="row gx-3" style="  margin: 10px 10px 10px;">
                                     <div class="col-auto">
@@ -297,6 +302,7 @@ aria-hidden="true">
     var pnameArr = [];
     var psizeArr = [];
     var pqtyArr = [];
+    var pweightArr = [];
    var wseries_data = [0]; 
 
     window.onload = function() {    
@@ -350,6 +356,7 @@ aria-hidden="true">
                { binding: 'spcodnm', header: '원부자재명', align: "center", width: 200, isReadOnly: true  }, 
                { binding: 'jgugek', header: '규격', align: "center", width: 150, isReadOnly: true  },   
                { binding: 'qty', header: '소요량', align: "center", width: 80 }, 
+               { binding: 'weight', header: '중량', align: "center", width: 80 }, 
             //    { binding: 'wpernm', header: '외주', align: "center", width: 80, dataType:3,allowSorting: false }, 
             //    { binding: 'wpernm', header: '스크랩', align: "center", width: 80, dataType:3,allowSorting: false }, 
             //    { binding: 'wpernm', header: '원재료', align: "center", width: 80, dataType:3,allowSorting: false }, 
@@ -586,7 +593,7 @@ aria-hidden="true">
         let e = new wijmo.grid.CellEditEndingEventArgs(wtab02Grid.cells, wtab02Grid.selection); //cellEditEndingEventArgs 생성
 
         wtab02Grid.onDeletingRow(e)
-    }) 
+    })  
     //초기화 function
     function new_btn(){  
         document.getElementById('jpname').value =  "";
@@ -623,6 +630,12 @@ aria-hidden="true">
        cols.header = '소요량';
        cols.align = "center";
        cols.width = 80;  
+       wtab02Grid.columns.push(cols);   
+       cols = new wijmo.grid.Column(); 
+       cols.binding = 'weight';
+       cols.header = '중량';
+       cols.align = "center";
+       cols.width = 80;  
        wtab02Grid.columns.push(cols); 
        view_p01tab02page.removeAt(1); 
         let e = new wijmo.grid.CellEditEndingEventArgs(wtab02Grid.cells, wtab02Grid.selection); //cellEditEndingEventArgs 생성 
@@ -643,6 +656,7 @@ aria-hidden="true">
                 pnameArr.pop();
                 psizeArr.pop(); 
                 pqtyArr.pop(); 
+                pweightArr.pop(); 
         }   
         var cnt = 0;
         for (var i = 0; i < wtab02Grid.rows.length; i++) { 
@@ -650,6 +664,7 @@ aria-hidden="true">
             pnameArr.push(wtab02Grid.getCellData(cnt, 1));
             psizeArr.push(wtab02Grid.getCellData(cnt, 2)); 
             pqtyArr.push(wtab02Grid.getCellData(cnt, 3)); 
+            pweightArr.push(wtab02Grid.getCellData(cnt, 4)); 
             console.log(cnt)
             if(pqtyArr[cnt]  == null || pqtyArr[cnt] == 0){ 
                 alert("소요량을 확인하세요")
@@ -686,6 +701,7 @@ aria-hidden="true">
                 "pnameArr"        : pnameArr, 
                 "psizeArr"        : psizeArr, 
                 "pqtyArr"        : pqtyArr,    
+                "pweightArr"        : pweightArr,    
             }, 
             async:false,
             success:function(data){   
@@ -753,10 +769,10 @@ aria-hidden="true">
    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
            
 
-   function searchList_rtn(arg1){  
-
+   function searchList_rtn(arg1){   
        var ls_jpname = document.getElementById('jpname').value;
-       var ls_jpcode = document.getElementById('jpcode').value; 
+       var ls_jpcode = document.getElementById('jpcode').value;
+        
        switch(arg1){
            case 'A':
            $.ajax({
@@ -802,6 +818,7 @@ aria-hidden="true">
    }     
 
    function tabA_grid(data){
+    console.log(data)
         var wtab01Dto  = data;    
         var wtab01_data = [];
         var cnt = 1; 
@@ -849,7 +866,7 @@ aria-hidden="true">
         wtab01Grid.columns.push(cols);   
  
     }  
-   function tabC_grid(data){
+   function tabC_grid(data){ 
         var wtab02Dto  = data;    
         var wtab02_data = [];
         var cnt = 1;
@@ -873,7 +890,8 @@ aria-hidden="true">
                 spcod: wtab02Dto[i]["spcod"],    
                 spcodnm: wtab02Dto[i]["spcodnm"],    
                 spgugek: wtab02Dto[i]["spgugek"],    
-                qty: wtab02Dto[i]["qty"],                                
+                qty: wtab02Dto[i]["qty"],            
+                weight: wtab02Dto[i]["weight"],                                
             });
             cnt++;
         }   
@@ -909,6 +927,12 @@ aria-hidden="true">
         cols.align = "center";
         cols.width = 80;  
         wtab02Grid.columns.push(cols); 
+        cols = new wijmo.grid.Column();  
+        cols.binding = 'weight';
+        cols.header = '중량';
+        cols.align = "center";
+        cols.width = 80;  
+        wtab02Grid.columns.push(cols); 
  
     }  
      
@@ -925,18 +949,22 @@ aria-hidden="true">
                 
         if(arg == "M"){
             searchCode = document.getElementById('conacorp').value; 
+            ls_gubn = '%'
         }
         if(arg == "A"){
             searchCode = document.getElementById('jpname').value; 
+            ls_gubn = 'J'
         }   
         if(arg == "B"){
             searchCode = document.getElementById('pname').value; 
+            ls_gubn = 'W'
         }  
         $.ajax({
                     url: '/app01m/index03/list',  
                     type:"POST",
                     data: { 
                         "searchtxt" :searchCode,
+                        "gubn" :ls_gubn,
                     }, 
                     async:false,
                     success:function(data){  
