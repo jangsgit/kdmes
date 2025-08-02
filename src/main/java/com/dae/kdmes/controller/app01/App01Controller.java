@@ -334,13 +334,16 @@ public class App01Controller {
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
         List<Pc110Dto> _index08ListDto = new ArrayList<>();
+        List<PopupDto> _popupListDto = new ArrayList<>();
         Pc110Dto _index08Dto = new Pc110Dto();
         try {
+            _popupListDto = service03.getj1_keyList(popupDto);
             _index08Dto.setMachcd("%");
             _index08ListDto = service08.getMachList(_index08Dto);
             //   index02ListDto = service02.getWrcmList(index02Dto);
 
             model.addAttribute("Index08List",_index08ListDto);
+            model.addAttribute("j1_keyList",_popupListDto);
             //    model.addAttribute("WrcmList",index02ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;
