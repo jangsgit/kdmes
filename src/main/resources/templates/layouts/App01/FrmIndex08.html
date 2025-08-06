@@ -77,6 +77,12 @@
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clear_rtn('A')">신규</button>
                             <button type="button" class="btn btn-outline-danger btn-sm"  id="delete" onclick="delete_btn()">삭제</button> 
                         </div>
+                        <!-- <input type="hidden" class="form-control datetimepicker" id="inmachdate" autocomplete="off"  placeholder="Y-m-d"  />  -->
+                        <!-- <input type="hidden"  class="form-control datetimepicker" id="inmachstdate" autocomplete="off"  placeholder="Y-m-d"   /> 
+                        <input type="hidden"  class="form-control datetimepicker" id="inmacheddate" autocomplete="off"  placeholder="Y-m-d"     >   -->
+                        <input type="hidden"  id="jpum" autocomplete="off" class="form-control"  disabled  >
+                        <input type="hidden"  id="pcode" autocomplete="off" class="form-control"  disabled  >
+                        <input type="hidden"   id="jbigo" autocomplete="off"       >  
                         <!-- Grid Area -->
                         <!-- <div class="grid-container mb-3">  -->
                                 <div id="wtab04Grid_div"  style="  height:200px;  width:1100px;   margin:0 auto; "></div>    
@@ -85,7 +91,7 @@
                 
                         <!-- <div class="form-section"> -->
                              
-                            <form class="row g-2">  
+                            <!-- <form class="row g-2">  
                                 <div class="col-md-3">
                                     <label for="clientName" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">최초입고일</label>  
                                     <input type="text" class="form-control datetimepicker" id="inmachdate" autocomplete="off"  placeholder="Y-m-d"  /> 
@@ -120,63 +126,19 @@
                                         <textarea class="form-control" aria-label="With textarea" name="jbigo" id="jbigo" ></textarea>
                                     </div>  
                                 </div> 
-                            </form>    
-                            <div class="col-12">
-                                <h6 class="form-section"></h6>
-                              </div>
-                            <form class="row g-2">      
-                                <div class="col-md-3">
-                                    <label for="ajumi1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">품목명<span class="text-danger">*</span></label>
-                                    <input type="text"   class="form-control"  id="inmachname" autocomplete="off"  placeholder=""> 
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="aupte" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">품번<span class="text-danger">*</span></label>  
-                                    <input type="text"  class="form-control"  id="inmachcd" autocomplete="off"   >      
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="apost1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형제작업체</label>
-                                    <input type="text"  class="form-control"  id="inmachjaejak" placeholder=""  > 
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형보관위치</label>
-                                    <input type="text"  class="form-control"  id="inmachplace" placeholder=""  >
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">거래선</label>
-                                    <input type="text"  class="form-control"  id="inmachcltnm" placeholder=""  >
-                                </div> 
-                                <div class="col-md-3">
-                                    <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종(모델명)</label>
-                                    <input type="text"  class="form-control"  id="inmachcha" placeholder=""  >
-                                </div> 
+                            </form>     -->
+                            
+                            <form class="row g-2"> 
                                 <div class="col-md-3"> 
                                     <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형번호<span class="text-danger">*</span></label>
                                     <input type="text"   class="form-control"  id="inmachno" autocomplete="off"  placeholder="" >      
                                 </div> 
-                                <div class="col-md-3">
-                                    <label for="j_sr" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형등급</label>
-                                    <input type="text"   class="form-control" id="inmachgrade" autocomplete="off"  placeholder="" >  
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">CAVITY 수</label>
-                                    <input type="text"   class="form-control" id="inmachcavity" autocomplete="off"  placeholder="" >  
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="j_cavity" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">원재료명</label>
-                                    <input type="text"   class="form-control" id="inmachwon" autocomplete="off"   > 
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">사용기계</label>
-                                    <input type="text"   class="form-control" id="inmachuse" autocomplete="off"  placeholder="" >  
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="jboxsu1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품중량(g)</label>
-                                    <input type="number"   class="form-control" id="inmachgram" autocomplete="off"   > 
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">수명예상SHOT</label>
-                                    <input type="text"   class="form-control" id="inmachshot" autocomplete="off"  placeholder="" >  
-                                </div>
+                            </form>   
+
+                            <div class="col-12">
+                                <h6 class="form-section"></h6>
+                              </div>
+                            <form class="row g-2"> 
                                 
                                 <div class="col-md-3">
                                     <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형규격</label>
@@ -188,18 +150,68 @@
                                         <input type="number" id="inmachgugek03" maxlength="6" class="form-control text-center" style="width: 80px;" oninput="limitTwoDigits(this)">
                                   </div>
                                 </div> 
-                                
                                 <div class="col-md-3">
                                     <label for="jsayang" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">n차금형</label>
                                     <input type="text"   class="form-control" id="inmachncha" autocomplete="off"   > 
                                 </div> 
-                                
                                 <div class="col-md-3">
-                                    <label for="jsayang" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형</label>
+                                    <label for="jpumcode" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">보증SHOT</label>
+                                    <input type="text"   class="form-control" id="inmachshot" autocomplete="off"  placeholder="" >  
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="j_sr" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0"> 등급</label>
+                                    <input type="text"   class="form-control" id="inmachgrade" autocomplete="off"  placeholder="" >  
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">보관위치</label>
+                                    <input type="text"  class="form-control"  id="inmachplace" placeholder=""  >
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="apost1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형제작업체</label>
+                                    <input type="text"  class="form-control"  id="inmachjaejak" placeholder=""  > 
+                                </div>
+                            </form>
+                            <form class="row g-2"> 
+                                <div class="col-md-3">
+                                    <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">거래선</label>
+                                    <input type="text"  class="form-control"  id="inmachcltnm" placeholder=""  >
+                                </div> 
+                                <div class="col-md-3">
+                                    <label for="ajuso1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">차종(모델명)</label>
+                                    <input type="text"  class="form-control"  id="inmachcha" placeholder=""  >
+                                </div>  
+                                <div class="col-md-3">
+                                    <label for="ajumi1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">품목명<span class="text-danger">*</span></label>
+                                    <input type="text"   class="form-control"  id="inmachname" autocomplete="off"  placeholder=""> 
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="aupte" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">품번<span class="text-danger">*</span></label>  
+                                    <input type="text"  class="form-control"  id="inmachcd" autocomplete="off"   >      
+                                </div>
+                            </form>
+                            <form class="row g-2"> 
+                                <div class="col-md-3">
+                                    <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">사용기계</label>
+                                    <input type="text"   class="form-control" id="inmachuse" autocomplete="off"  placeholder="" >  
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="j_cavity" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">원재료명</label>
+                                    <input type="text"   class="form-control" id="inmachwon" autocomplete="off"   > 
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="atelno" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">CAVITY 수</label>
+                                    <input type="text"   class="form-control" id="inmachcavity" autocomplete="off"  placeholder="" >  
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="jboxsu1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">제품중량(g)</label>
+                                    <input type="number"   class="form-control" id="inmachgram" autocomplete="off"   > 
+                                </div> 
+                                <div class="col-md-3">
+                                    <label for="jsayang" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">사출명</label>
                                     <input type="text"   class="form-control" id="inmachgumnm" autocomplete="off"   > 
                                 </div> 
                             </form>                                    
-                            <form class="row g-2"> 
+                            <!-- <form class="row g-2"> 
                                 <div class="col-md-3"> 
                                     <input type="text" class="upload-name" value="파일 찾기" readonly /> <label for="file_0" class="control-label">.</label>
                                     <input type="file" name="files_0" id="file_0" multiple='multiple'  class="upload-hidden" onchange="changeFilename(this)" />
@@ -223,7 +235,7 @@
                                         </tbody>
                                     </table>
                                 </div>  
-                            </form>
+                            </form> -->
                                         
                         <!-- </div>       -->
                     </div>
@@ -872,13 +884,17 @@
                 var ls_inmachcd = document.getElementById('inmachcd').value;
                 var ls_inmachno = document.getElementById('inmachno').value;
                 var ls_inmachname = document.getElementById('inmachname').value;
-                var ls_inmachdate   =  convert_date(wmachdate.value);                 
-                var ls_inmachstdate =  convert_date(wmachstdate.value);  
-                var ls_inmacheddate =  convert_date(wmacheddate.value);   
+                var ls_inmachdate   =  "" //convert_date(wmachdate.value);                 
+                var ls_inmachstdate =  "" //  convert_date(wmachstdate.value);  
+                var ls_inmacheddate =   "" // convert_date(wmacheddate.value);   
                 //    var ls_inmachdate = document.getElementById('inmachdate').value;
                 //    var ls_inmachstdate = document.getElementById('inmachstdate').value;
                 //    var ls_inmacheddate = document.getElementById('inmacheddate').value;
-                var ls_inmachshot = document.getElementById('inmachshot').value;
+                var ls_inmachshot_raw  = document.getElementById('inmachshot')?.value ?? '';
+                var ls_inmachshot = 0;
+                if (ls_inmachshot_raw.trim() !== '') {
+                    ls_inmachshot = parseInt(ls_inmachshot_raw.replace(/,/g, ''), 10) || 0;
+                } 
 
                 var ls_inmachgugek01 = document.getElementById('inmachgugek01').value;
                 var ls_inmachgugek02 = document.getElementById('inmachgugek02').value;
@@ -908,19 +924,19 @@
                    return ;               
                }  
                if(ls_inmachdate == null || ls_inmachdate.length == 0 || ls_inmachdate == ""){ 
-                   alert("최초입고일을 등록하세요") 
-                   document.getElementById("inmachdate").focus(); 
-                   return ;               
+                //    alert("최초입고일을 등록하세요") 
+                //    document.getElementById("inmachdate").focus(); 
+                //    return ;               
                } 
                if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
-                   alert("제작시작일을 등록하세요") 
-                   document.getElementById("inmachstdate").focus(); 
-                   return ;               
+                //    alert("제작시작일을 등록하세요") 
+                //    document.getElementById("inmachstdate").focus(); 
+                //    return ;               
                } 
                if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
-                   alert("제작종료일을 등록하세요") 
-                   document.getElementById("inmacheddate").focus(); 
-                   return ;               
+                //    alert("제작종료일을 등록하세요") 
+                //    document.getElementById("inmacheddate").focus(); 
+                //    return ;               
                }  
                if(ls_inmachno == null || ls_inmachno.length == 0 || ls_inmachno == ""){
                    alert("금형번호를 등록하세요") 
@@ -979,26 +995,28 @@
                 ls_injpum = "";
                } 
                
-               for (h = 0; h <= fileIdx; h++ ){
-                    ls_fileid = 'file_' + h;
+            //    for (h = 0; h <= fileIdx; h++ ){
+            //         ls_fileid = 'file_' + h;
 
-                    const fileInput = document.getElementById(ls_fileid);
-                    // const selectedFile = fileInput.files[0];
-                    const selectedFile = [...fileInput.files];
-                    for (s = 0; s <= selectedFile.length - 1; s++){
-                        formData.append("file", selectedFile[s]);
-                        // console.log(selectedFile[s]);
-                    }
+            //         const fileInput = document.getElementById(ls_fileid);
+            //         // const selectedFile = fileInput.files[0];
+            //         const selectedFile = [...fileInput.files];
+            //         for (s = 0; s <= selectedFile.length - 1; s++){
+            //             formData.append("file", selectedFile[s]);
+            //             // console.log(selectedFile[s]);
+            //         }
 
-                }
+            //     }
 
+            // "inpcode"       : ls_inpcode, 
+            // "injpum"       : ls_injpum, 
+            // "inmachdate"    : ls_inmachdate, 
+            // "inmachstdate"         : ls_inmachstdate , 
+            // "inmacheddate"         : ls_inmacheddate, 
                var inputdata = {  
                     "inmachcd"       : ls_inmachcd,
                     "inmachno"        : ls_inmachno,
                     "inmachname"    : ls_inmachname , 
-                    "inmachdate"    : ls_inmachdate, 
-                    "inmachstdate"         : ls_inmachstdate , 
-                    "inmacheddate"         : ls_inmacheddate, 
                     "inmachshot"        : ls_inmachshot,
                     "inmachgugek01"         : ls_inmachgugek01,
                     "inmachgugek02"         : ls_inmachgugek02,
@@ -1015,8 +1033,6 @@
                     "inmachgram"        : ls_inmachgram,  
                     "inmachncha"        : ls_inmachncha, 
                     "inmachgumnm"        : ls_inmachgumnm, 
-                    "inpcode"       : ls_inpcode, 
-                    "injpum"       : ls_injpum, 
                     
                 } 
                 //직전 데이타가 메모리에 남아 폼데이타 키를 삭제후 다시 데이타를 전송해야함. 
@@ -2424,9 +2440,9 @@
        document.getElementById('infixmachno').value = arg1;
        document.getElementById('inmachname').value = arg2;       
        document.getElementById('infixmachname').value = arg2;
-       wmachdate.value   = arg3;
-       wmachstdate.value = arg4;
-       wmacheddate.value = arg5;
+    //    wmachdate.value   = arg3;
+    //    wmachstdate.value = arg4;
+    //    wmacheddate.value = arg5;
     //    document.getElementById('inmachdate').value = arg3;
     //    document.getElementById('inmachstdate').value = arg4;
     //    document.getElementById('inmacheddate').value = arg5; 
@@ -2456,25 +2472,25 @@
 
        var ls_image01 = "" ;
        var ls_image02 = "" ;
-        //이력조회     
-        $.ajax({
-            url: '/app01m/index08/printimg',  
-            type:"POST",
-            data: { 
-                "inmachcd" : arg0, 
-            }, 
-            async:false,
-            success:function(data){  
-                ls_image01 = data[0].file_url;
-                ls_image02 = data[1].file_url;
-                console.log(ls_image01)
-                console.log(ls_image02)
-            },error:function(e){
-                console.log("error");                            
-            }
-        }).done(function(fragment){           
+        // //이력조회     
+        // $.ajax({
+        //     url: '/app01m/index08/printimg',  
+        //     type:"POST",
+        //     data: { 
+        //         "inmachcd" : arg0, 
+        //     }, 
+        //     async:false,
+        //     success:function(data){  
+        //         ls_image01 = data[0].file_url;
+        //         ls_image02 = data[1].file_url;
+        //         console.log(ls_image01)
+        //         console.log(ls_image02)
+        //     },error:function(e){
+        //         console.log("error");                            
+        //     }
+        // }).done(function(fragment){           
 
-        })  
+        // })  
 
         // th:src="@{assets/img/icons/spot-illustrations/falcon.png}"
     //     const timestamp = new Date().getTime();
@@ -2482,8 +2498,8 @@
     //     var ls_src02 = "assets/upload/" + arg0 + "/" + ls_image02; 
     //     const imageUrl01 = `http://mes.c-kd.com:8500/${ls_src01}`;
     //     const imageUrl02 = `http://mes.c-kd.com:8500/${ls_src02}`; 
-         document.getElementById('cell1').innerHTML = '<img src="' + ls_image01 + '" alt="Image 1" style="max-width:100%; max-height:100%;"  >';
-         document.getElementById('cell2').innerHTML = '<img src="' + ls_image02 + '" alt="Image 2" style="max-width:100%; max-height:100%;"  >';
+        //  document.getElementById('cell1').innerHTML = '<img src="' + ls_image01 + '" alt="Image 1" style="max-width:100%; max-height:100%;"  >';
+        //  document.getElementById('cell2').innerHTML = '<img src="' + ls_image02 + '" alt="Image 2" style="max-width:100%; max-height:100%;"  >';
     
 
 
@@ -2673,26 +2689,26 @@ function listUp01(){
  
    function init(){
         // 일반 입력 날짜
-        wmachdate = new wijmo.input.InputDate('#inmachdate', {
-            isRequired: false,
-            value: null,
-            placeholder: '',
-            format: 'yyyy-MM-dd', 
-        });
+        // wmachdate = new wijmo.input.InputDate('#inmachdate', {
+        //     isRequired: false,
+        //     value: null,
+        //     placeholder: '',
+        //     format: 'yyyy-MM-dd', 
+        // });
         
-        wmachstdate = new wijmo.input.InputDate('#inmachstdate', {
-            isRequired: false,
-            value: null,
-            placeholder: '',
-            format: 'yyyy-MM-dd', 
-        });
+        // wmachstdate = new wijmo.input.InputDate('#inmachstdate', {
+        //     isRequired: false,
+        //     value: null,
+        //     placeholder: '',
+        //     format: 'yyyy-MM-dd', 
+        // });
         
-        wmacheddate = new wijmo.input.InputDate('#inmacheddate', {
-            isRequired: false,
-            value: null,
-            placeholder: '',
-            format: 'yyyy-MM-dd', 
-        });
+        // wmacheddate = new wijmo.input.InputDate('#inmacheddate', {
+        //     isRequired: false,
+        //     value: null,
+        //     placeholder: '',
+        //     format: 'yyyy-MM-dd', 
+        // });
         
         
         wreqdate = new wijmo.input.InputDate('#inreqdate', {
