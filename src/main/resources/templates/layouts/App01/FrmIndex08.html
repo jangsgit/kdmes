@@ -1804,8 +1804,7 @@
     }   
      
     //                   jkey, jpum, jgugek, jchajong, jsayang, jgugek2, j_sr, jpumcode, jdanwy, cltcd, acorp  
-    function wcifChk_JKEY(arg1, arg2, arg3, arg4,      arg5,     arg6, arg7,    arg8,    arg9,   arg10, arg11, arg12){  
-        
+    function wcifChk_JKEY(arg1, arg2, arg3, arg4,      arg5,     arg6, arg7,    arg8,    arg9,   arg10, arg11, arg12){ 
         document.getElementById('pcode').value = arg1;  
         document.getElementById('jpum').value = arg2;   
         document.getElementById('inmachcha').value = arg4;   
@@ -1826,8 +1825,7 @@
        searchList_rtn(ls_tab);
    })   
 
-   function searchList_rtn(arg1){ 
-        
+   function searchList_rtn(arg1){  
        switch(arg1){
            case 'A':
             var ls_searchtxt = document.getElementById('searchtxt').value; 
@@ -2113,7 +2111,11 @@
                 machgumnm: wtab03Dto[i]["machgumnm"], 
                 remark: wtab03Dto[i]["remark"], 
                 indate: wtab03Dto[i]["indate"], 
-                inperid: wtab03Dto[i]["inperid"],                            
+                inperid: wtab03Dto[i]["inperid"],    
+                inpcode: wtab03Dto[i]["inpcode"],  
+                injpum: wtab03Dto[i]["injpum"],  
+                machgugek02: wtab03Dto[i]["machgugek02"],  
+                machgugek03: wtab03Dto[i]["machgugek03"],                   
            });
            cnt++;
        }   
@@ -2138,7 +2140,7 @@
        cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
            text: '<b>${item.machname}</b>',
             click: (e, ctx) => {                
-                wcifChk_JKEY(ctx.item.machcd,  ctx.item.machno, ctx.item.machname,ctx.item.machdate, ctx.item.machstdate,ctx.item.macheddate ,ctx.item.machshot,ctx.item.machgugek, ctx.item.machcavity,ctx.item.machuse,  ctx.item.machcha,ctx.item.machcltnm,ctx.item.machplace,ctx.item.machwon, ctx.item.machgrade,ctx.item.machgram, ctx.item.machncha,ctx.item.machjaejak, ctx.item.machgumnm );  
+                wcifChk_a(ctx.item.machcd,  ctx.item.machno, ctx.item.machname,ctx.item.machdate, ctx.item.machstdate,ctx.item.macheddate ,ctx.item.machshot,ctx.item.machgugek, ctx.item.machcavity,ctx.item.machuse,  ctx.item.machcha,ctx.item.machcltnm,ctx.item.machplace,ctx.item.machwon, ctx.item.machgrade,ctx.item.machgram, ctx.item.machncha,ctx.item.machjaejak,ctx.item.inpcode,ctx.item.injpum,ctx.item.machgugek02,ctx.item.machgugek03, ctx.item.machgumnm );  
             }
         }); 
        wtab04Grid.columns.push(cols);
@@ -2427,11 +2429,13 @@
    }
  
    
-   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22){   
-        // machcd machno, machname,       machdate, machstdate, macheddate ,machshot, 
-        // machgugek01, machcavity,  machuse,  machcha,    machcltnm,machplace, 
-        // machwon, machgrade,     machgram, machncha,   machjaejak , machgugek02
-        // machgugek03
+   function wcifChk_a(arg0, arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14,arg15,arg16,arg17,arg18,arg19,arg20,arg21,arg22){  
+        // machcd,      machno, machname, machdate, machstdate, 0 - 4 
+        // macheddate ,machshot, machgugek01, machcavity,machuse, 5 - 9
+        // machcha,    machcltnm,machplace, machwon, machgrade, 10  - 14
+        //  machgram, machncha, machjaejak, inpcode, injpum, 15 - 19
+        //  machgugek02, machgugek03, machgumnm 20 - 22  
+        alert("kkk")
        var ls_tab = document.getElementById('tabvalue').value; 
         
        document.getElementById('inmachcd').value = arg0;
@@ -2729,13 +2733,13 @@ function listUp01(){
         var result = new Date();
         result.setHours(result.getHours() + 9);
         var ls_date = result.toISOString().substring(0,10);
-        wmachdate.value = ls_date; 
-        wmachstdate.value = ls_date;  
-        wmacheddate.value = ls_date;   
-        wreqdate.value = ls_date;  
-        wrespdate.value = ls_date; 
+        // wmachdate.value = ls_date; 
+        // wmachstdate.value = ls_date;  
+        // wmacheddate.value = ls_date;   
+        // wreqdate.value = ls_date;  
+        // wrespdate.value = ls_date; 
         // 비활성화
-        wrespdate.isDisabled = true; 
+        // wrespdate.isDisabled = true; 
          
 
     } 
