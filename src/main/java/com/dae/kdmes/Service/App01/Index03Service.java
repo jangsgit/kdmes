@@ -100,4 +100,7 @@ public class Index03Service {
     public List<TBPopupVO> GetJthickComboList(TBPopupVO parm){
         return  appMapper.GetJthickComboList(parm);
     }
+    public List<TBPopupVO> GetBoganComboList(TBPopupVO parm){
+        return  appMapper.GetBoganComboList(parm);
+    }
 }

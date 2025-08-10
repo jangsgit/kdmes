@@ -333,17 +333,21 @@ public class App01Controller {
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
+        TBPopupVO _popupDto = new TBPopupVO();
         List<Pc110Dto> _index08ListDto = new ArrayList<>();
         List<PopupDto> _popupListDto = new ArrayList<>();
+        List<TBPopupVO> _popupBoganListDto = new ArrayList<>();
         Pc110Dto _index08Dto = new Pc110Dto();
         try {
             _popupListDto = service03.getj1_keyList(popupDto);
+            _popupBoganListDto = service03.GetBoganComboList(_popupDto);
             _index08Dto.setMachcd("%");
             _index08ListDto = service08.getMachList(_index08Dto);
             //   index02ListDto = service02.getWrcmList(index02Dto);
 
             model.addAttribute("Index08List",_index08ListDto);
             model.addAttribute("j1_keyList",_popupListDto);
+            model.addAttribute("boganlist",_popupBoganListDto);
             //    model.addAttribute("WrcmList",index02ListDto);
         } catch (Exception ex) {
 //                dispatchException = ex;

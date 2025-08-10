@@ -163,8 +163,15 @@
                                     <input type="text"   class="form-control" id="inmachgrade" autocomplete="off"  placeholder="" >  
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">보관위치</label>
-                                    <input type="text"  class="form-control"  id="inmachplace" placeholder=""  >
+                                    <div class="input_wrap" style="max-width: 230px;"> 
+                                        <label for="companyType" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">보관위치<span class="text-danger">*</span></label>
+                                        <select th:field="*{boganlist}" name="inmachplace" id="inmachplace">
+                                            <option value="">선택</option>
+                                            <option th:each="val : ${boganlist}" th:value="${val.pcode}" th:text="${val.pname}">
+                                        </select>                                              
+                                    </div>    
+                                    <!-- <label for="jgugek" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">보관위치</label>
+                                    <input type="text"  class="form-control"  id="inmachplace" placeholder=""  > -->
                                 </div>
                                 <div class="col-md-3">
                                     <label for="apost1" class="form-label ls text-uppercase text-600 fw-semi-bold mb-0">금형제작업체</label>
@@ -2435,7 +2442,7 @@
         // machcha,    machcltnm,machplace, machwon, machgrade, 10  - 14
         //  machgram, machncha, machjaejak, inpcode, injpum, 15 - 19
         //  machgugek02, machgugek03, machgumnm 20 - 22  
-        alert("kkk")
+        // alert("kkk==>" + arg22)
        var ls_tab = document.getElementById('tabvalue').value; 
         
        document.getElementById('inmachcd').value = arg0;

@@ -238,4 +238,11 @@
         ORDER BY  A.com_code
     </select>
 
+    <select id="GetBoganComboList" parameterType="com.dae.kdmes.DTO.Appm.TBPopupVO"  resultType="com.dae.kdmes.DTO.Appm.TBPopupVO">
+        SELECT  A.com_code as pcode , LTRIM(RTRIM(A.com_rem1)) as pname
+        FROM TB_CA510 A WITH (NOLOCK)
+        WHERE A.com_code != '00' AND A.com_cls = '107'
+        ORDER BY  A.com_code
+    </select>
+
 </mapper>

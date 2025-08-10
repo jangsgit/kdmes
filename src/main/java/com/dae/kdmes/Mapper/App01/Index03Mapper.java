@@ -50,5 +50,6 @@ public interface Index03Mapper {
     public List<TBPopupVO> GetFormComboList(TBPopupVO bankBoard);              //유형
     public List<TBPopupVO> GetColorComboList(TBPopupVO bankBoard);              //색상
     public List<TBPopupVO> GetJthickComboList(TBPopupVO bankBoard);              //유리두께
+    public List<TBPopupVO> GetBoganComboList(TBPopupVO bankBoard);              //보관창고
 
 }
