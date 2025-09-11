@@ -68,13 +68,13 @@
         <div class="card-body p-3">
             <div class="d-flex align-items-center gap-2 mb-3">
                 <!-- 품목분류 콤보박스 -->
-                <select class="form-select form-select-sm" style="width: 120px;" id="con_gubn" name="con_gubn">
-                    <option value="">전체</option>
-                    <option value="J">제품</option>
-                    <option value="W">원자재</option>
+                <select class="form-select form-select-sm" style="width: 120px;" id="con_gubn" name="con_gubn" disabled>
+                    <!-- <option value="">전체</option> -->
+                    <option value="J" checked>제품</option>
+                    <!-- <option value="W">원자재</option>
                     <option value="B">부자재</option>
-                    <option value="H">설비부품</option>
-                    <option value="G">기타</option>
+                    <option value="H">예비부품</option>
+                    <option value="G">기타</option> -->
                 </select>
                 <input type="text" class="form-control form-control-sm" style="width: 200px;" placeholder="품목/차종 검색..." id="searchtxt"  />
                 <button class="btn btn-primary btn-sm"   id="retrieveBtn">검색</button>
@@ -140,11 +140,11 @@
                     </div> 
                     <div class="col-auto">
                         <label class="form-label" for="w_b_gubn">품목분류</label>
-                        <select class="form-select" id="w_b_gubn" name="w_b_gubn">
-                          <option value="J">제품</option>
+                        <select class="form-select" id="w_b_gubn" name="w_b_gubn" disabled>
+                          <option value="J" checked>제품</option>
                           <option value="W">원자재</option>
                           <option value="B">부자재</option>
-                          <option value="H">설비부품</option>
+                          <option value="H">예비부품</option>
                           <option value="G">기타</option>
                         </select>
                       </div> 
@@ -165,7 +165,7 @@
                           </div>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_H" name="w_b_gubn" type="radio" value="H" />
-                            <label class="form-check-label" for="w_b_gubn_H">설비부품</label>
+                            <label class="form-check-label" for="w_b_gubn_H">예비부품</label>
                           </div>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_G" name="w_b_gubn" type="radio" value="G" />
@@ -192,7 +192,7 @@
                           </div>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_H" name="w_b_gubn" type="radio" value="H" />
-                            <label class="form-check-label" for="w_b_gubn_H">설비부품</label>
+                            <label class="form-check-label" for="w_b_gubn_H">예비부품</label>
                           </div>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" id="w_b_gubn_G" name="w_b_gubn" type="radio" value="G" />
@@ -608,7 +608,7 @@
                     }else if(ls_w_b_gubn == 'B'){
                         ls_w_b_gubnnm = "부자재"                        
                     }else if(ls_w_b_gubn == 'H'){
-                        ls_w_b_gubnnm = "설비부품"                        
+                        ls_w_b_gubnnm = "예비부품"                        
                     }else if(ls_w_b_gubn == 'G'){
                         ls_w_b_gubnnm = "기타"                        
                     } 
@@ -751,7 +751,7 @@
                     }else if(ls_w_b_gubn == 'B'){
                         ls_w_b_gubnnm = "부자재"                        
                     }else if(ls_w_b_gubn == 'H'){
-                        ls_w_b_gubnnm = "설비부품"                        
+                        ls_w_b_gubnnm = "예비부품"                        
                     }else if(ls_w_b_gubn == 'G'){
                         ls_w_b_gubnnm = "기타"                        
                     }
