@@ -287,6 +287,39 @@ public class App02Controller {
     }
 
 
+    @GetMapping(value="/index19")
+    public String App19_index(Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("사원코드등록");
+        CommDto.setMenuUrl("기준정보>사원코드등록");
+        CommDto.setMenuCode("index18");
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            String fdate = getFrDate();
+            String tdate = getAddDate();
+            String pcode = "%";
+            indexCa613Dto.setPname(pcode);
+            indexCa613Dto.setFrdate(fdate);
+            indexCa613Dto.setTodate(tdate);
+            itemDtoListCa613   = service10.SelectCa613List(indexCa613Dto);
+            //창고
+            wperidDto.setWpernm("%");
+            model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
+            model.addAttribute("itemDtoList", itemDtoListCa613);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App19_index Exception =============================");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App02/index19";
+    }
+
+
     //출하등록
     @GetMapping(value="/index21")
     public String Appcom21_index( Model model, HttpServletRequest request) throws Exception{

@@ -1065,21 +1065,26 @@
                        function searchListTot_rtn(arg){  
                             if(arg == "M"){
                                 searchCode = document.getElementById('conacorp').value; 
+                                ls_gubn = '%'
                             }
                             if(arg == "A"){
                                 searchCode = document.getElementById('pname').value; 
+                                ls_gubn = 'J'
                             }   
                             if(arg == "B"){
                                 searchCode = document.getElementById('bpname').value; 
+                                ls_gubn = 'W'
                             } 
                             if(arg == "C"){
                                 searchCode = document.getElementById('cpname').value; 
+                                ls_gubn = '%'
                             }  
                             $.ajax({
                                         url: '/app01m/index03/list',  
                                         type:"POST",
                                         data: { 
                                             "searchtxt" :searchCode,
+                                            "gubn" :ls_gubn,
                                         }, 
                                         async:false,
                                         success:function(data){  
