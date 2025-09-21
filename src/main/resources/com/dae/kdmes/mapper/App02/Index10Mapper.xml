@@ -141,6 +141,17 @@
         #{mamt},  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark}, #{lotno}, #{istore}, #{ostore}, #{wonflag}  )
     </insert>
 
+
+    <insert id="InsertCa636" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
+        insert into TB_CA636 (custcd, spjangcd,   ibgdate, ibgnum, ibgseq,
+        pcode, pname, psize,    punit,  qty, cqty, uamt, samt, tamt,
+        mamt, indate, inperid,  pernm, perid, remark,   wonflag ) values
+        ('KDMES', 'ZZ',    #{ibgdate},  #{ibgnum}, #{ibgseq},
+        #{pcode}, #{pname}, #{psize}, #{punit}, #{qty}, #{cqty},   0,  0,  0,
+        0,  #{indate}, #{inperid} ,    #{pernm} , #{perid}, #{remark},  #{wonflag}  )
+    </insert>
+
+
     <insert id="InsertDA036Sch" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
         insert into TB_DA036 (custcd, spjangcd, cltcd,   deldate, delnum, acorp, demflag,
         perid, ostore,  remark, balno , lotno , inmonth, inweeks) values
@@ -217,6 +228,12 @@
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum}
     </delete>
 
+
+    <delete id="DeleteCa636" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" >
+        delete from TB_CA636
+        where ibgdate = #{ibgdate} and ibgnum = #{ibgnum}
+    </delete>
+
     <delete id="DeleteDA036Sch" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto" >
         delete from TB_DA036
         where deldate = #{deldate} and delnum = #{delnum}
@@ -272,6 +289,34 @@
         <if test="wonflag != null">wonflag=#{wonflag}</if>
         where ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and ibgseq = #{ibgseq}
     </update>
+
+
+    <update id="UpdateCa636" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+        UPDATE TB_CA636 SET
+        spjangcd='ZZ'
+        <if test="pname != null ">,</if>
+        <if test="pname != null">pname=#{pname}</if>
+        <if test="pcode != null ">,</if>
+        <if test="pcode != null">pcode=#{pcode}</if>
+        <if test="psize != null ">,</if>
+        <if test="psize != null">psize=#{psize}</if>
+        <if test="punit != null ">,</if>
+        <if test="punit != null">punit=#{punit}</if>
+        <if test="qty != null ">,</if>
+        <if test="qty != null">qty=#{qty}</if>
+        <if test="cqty != null ">,</if>
+        <if test="cqty != null">cqty=#{cqty}</if>
+        <if test="perid != null ">,</if>
+        <if test="perid != null">perid=#{perid}</if>
+        <if test="pernm != null ">,</if>
+        <if test="pernm != null">pernm=#{pernm}</if>
+        <if test="remark != null ">,</if>
+        <if test="remark != null">remark=#{remark}</if>
+        <if test="wonflag != null ">,</if>
+        <if test="wonflag != null">wonflag=#{wonflag}</if>
+        where ibgdate = #{ibgdate} and ibgnum = #{ibgnum} and ibgseq = #{ibgseq}
+    </update>
+
 
     <update id="UpdateDa036" parameterType="com.dae.kdmes.DTO.App01.IndexCa611Dto">
         UPDATE TB_DA036 SET
@@ -337,6 +382,10 @@
         <![CDATA[  select  max(ibgnum)  from TB_CA613 where ibgdate = #{ibgdate}      ]]>
     </select>
 
+    <select id="SelectMaxMovnum" parameterType="String" resultType="String">
+        <![CDATA[  select  max(ibgnum)  from TB_CA636 where ibgdate = #{ibgdate}      ]]>
+    </select>
+
     <select id="SelectMaxDelnum" parameterType="String" resultType="String">
         <![CDATA[  select  max(delnum)  from TB_DA036 where deldate = #{deldate}      ]]>
     </select>
@@ -362,6 +411,83 @@
                     AND B.ibgdate between #{frdate} and #{todate}
                   ORDER BY  B.ibgdate desc, B.ibgnum, B.ibgseq
         ]]>
+    </select>
+
+
+    <select id="SelectCa636List"  parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
+
+        <![CDATA[ select  Left(B.ibgdate,4) + '-' + substring(B.ibgdate, 5,2)+ '-' + substring(B.ibgdate, 7,2) as ibgdate,
+                      B.ibgnum, B.ibgseq, B.istore, B.ostore,
+                      B.pcode, B.pname, B.psize,    B.punit,  B.qty, B.cqty, B.uamt, B.samt, B.tamt,
+                      isnull(B.remark,'') as remark,
+                      B.mamt,  B.pernm , B.perid, B.wonflag
+                  from  TB_CA636 B WITH (NOLOCK)
+                  where  B.pname Like concat('%',#{pname},'%')
+                    AND B.ibgdate between #{frdate} and #{todate}
+                  ORDER BY  B.ibgdate desc, B.ibgnum, B.ibgseq
+        ]]>
+    </select>
+
+
+    <select id="SelectCa636StockList"  parameterType="com.dae.kdmes.DTO.App01.Index03Dto" resultType="com.dae.kdmes.DTO.App01.Index03Dto">
+
+            <![CDATA[
+                  WITH Base AS (
+                      SELECT
+                          B.pcode,
+                          B.pname,
+                          B.psize,
+                          B.punit,
+                          B.wonflag,                  -- 0: 입고, 1: 출고
+                          ISNULL(B.qty,  0) AS in_qty_raw,
+                          ISNULL(B.cqty, 0) AS out_qty_raw,
+                          B.ibgdate
+                      FROM TB_CA636 B WITH (NOLOCK)
+                      where B.pname Like concat('%',#{pname},'%')
+                    ),
+                  PrevStock AS (  -- 시작일 이전 누적(전재고)
+                      SELECT
+                          pcode,
+                          SUM(CASE WHEN wonflag = 0 THEN in_qty_raw  ELSE 0 END)
+                        - SUM(CASE WHEN wonflag = 1 THEN out_qty_raw ELSE 0 END) AS prev_qty
+                      FROM Base
+                      WHERE ibgdate < #{frdate}
+                      GROUP BY pcode
+                  ),
+                  PeriodAgg AS (  -- 기간 내 입출고
+                      SELECT
+                          pcode,
+                          SUM(CASE WHEN wonflag = 0 THEN in_qty_raw  ELSE 0 END) AS in_qty,
+                          SUM(CASE WHEN wonflag = 1 THEN out_qty_raw ELSE 0 END) AS out_qty
+                      FROM Base
+                      WHERE ibgdate BETWEEN #{frdate} AND #{todate}
+                      GROUP BY pcode
+                  ),
+                  Prod AS (       -- 품목 표시용 메타
+                      SELECT
+                          pcode,
+                          MAX(pname) AS pname,
+                          MAX(psize) AS psize,
+                          MAX(punit) AS punit
+                      FROM Base
+                      GROUP BY pcode
+                  )
+                      SELECT
+                          P.pname                        AS pname,     -- 품목명
+                          P.psize                        AS psize,     -- 규격
+                          P.punit                        AS punit,     -- 단위
+                          ISNULL(PS.prev_qty, 0)         AS prev_qty,  -- 전재고
+                          ISNULL(PA.in_qty,  0)          AS in_qty,    -- 입고수량
+                          ISNULL(PA.out_qty, 0)          AS out_qty,   -- 출고수량
+                          ISNULL(PS.prev_qty, 0)
+                            + ISNULL(PA.in_qty, 0)
+                            - ISNULL(PA.out_qty, 0)      AS cur_qty    -- 현재고
+                      FROM Prod P
+                      LEFT JOIN PrevStock PS ON PS.pcode = P.pcode
+                      LEFT JOIN PeriodAgg  PA ON PA.pcode = P.pcode
+                      ORDER BY P.pcode
+                ]]>
+
     </select>
 
 
@@ -413,6 +539,7 @@
         <result property="acorp" column="acorp" />
         <result property="pernm" column="pernm" />
         <result property="perid" column="perid" />
+        <result property="wonflag" column="wonflag" />
         <collection property="oworks" ofType="com.dae.kdmes.DTO.App01.IndexCa613OworkDto" javaType="ArrayList">
             <result property="psize" column="wotdt" />
             <result property="cqty" column="wotqt" />
@@ -437,6 +564,20 @@
         ]]>
     </select>
 
+
+    <select id="SelectCa636ListMapChul" resultMap="CA613ResultMap">
+        <![CDATA[
+            SELECT   Left(A.ibgdate,4) + '-' + substring(A.ibgdate, 5,2)+ '-' + substring(A.ibgdate, 7,2) as ibgdate,
+                  A.ibgnum, A.ibgseq,  A.istore, A.ostore, A.wonflag,
+                  A.pcode, A.pname, A.psize,    A.punit,  A.qty, A.cqty, A.uamt, A.samt, A.tamt,
+                  isnull(A.remark,'') as remark,
+                  A.mamt,   A.pernm , A.perid
+            FROM TB_CA636 A WITH (NOLOCK)
+            where  A.pname Like concat('%',#{pname},'%')
+            AND    A.ibgdate between #{frdate} and #{todate}
+            order by A.ibgdate, A.ibgnum;
+        ]]>
+    </select>
 
     <select id="SelectDa037List" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
         <![CDATA[

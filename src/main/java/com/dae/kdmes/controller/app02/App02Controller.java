@@ -291,23 +291,29 @@ public class App02Controller {
     public String App19_index(Model model, HttpServletRequest request) throws Exception{
         CommDto.setMenuTitle("사원코드등록");
         CommDto.setMenuUrl("기준정보>사원코드등록");
-        CommDto.setMenuCode("index18");
+        CommDto.setMenuCode("index19");
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
         model.addAttribute("userformDto",userformDto);
 
         try {
+
+            List<IndexCa613Dto> _itemDtoListCa613 = new ArrayList<>();
+            List<Index03Dto> _index03List = new ArrayList<>();
+            Index03Dto _index03Dto = new Index03Dto();
             String fdate = getFrDate();
             String tdate = getAddDate();
             String pcode = "%";
             indexCa613Dto.setPname(pcode);
             indexCa613Dto.setFrdate(fdate);
             indexCa613Dto.setTodate(tdate);
-            itemDtoListCa613   = service10.SelectCa613List(indexCa613Dto);
-            //창고
-            wperidDto.setWpernm("%");
-            model.addAttribute("wstoreDto", appPopupService.GetStoreList(wperidDto));
-            model.addAttribute("itemDtoList", itemDtoListCa613);
+            _itemDtoListCa613   = service10.SelectCa636List(indexCa613Dto);
+            _index03Dto.setJpum("%");
+            _index03Dto.setJ_misayong("%");
+            _index03Dto.setW_b_gubn("H");
+            _index03List = service03.GetJpumList(_index03Dto);
+            model.addAttribute("index03List",_index03List);
+            model.addAttribute("itemDtoList", _itemDtoListCa613);
 
         } catch (Exception ex) {
 //                dispatchException = ex;

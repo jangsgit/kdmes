@@ -24,6 +24,8 @@ public interface Index10Mapper {
     public Boolean UpdateFplan(Index10Dto  parm) ;
 
     public List<IndexCa613Dto> SelectCa613List(IndexCa613Dto parm) ;
+    public List<IndexCa613Dto> SelectCa636List(IndexCa613Dto parm) ;
+    public List<Index03Dto> SelectCa636StockList(Index03Dto parm) ;
     public List<IndexCa613Dto> SelectDa037List(IndexCa613Dto parm) ;
     public List<IndexCa613Dto> SelectDa037ListBarcd(IndexCa613Dto parm) ;
     public List<IndexCa613Dto> SelectDa037ListJiyuk(IndexCa613Dto parm) ;
@@ -32,6 +34,7 @@ public interface Index10Mapper {
     public List<IndexCa611Dto> SelectDa036List(IndexCa611Dto parm) ;
     public List<IndexCa613Dto> SelectDa037PcodeList(IndexCa613Dto parm) ;
     public List<IndexCa613Dto> SelectCa613ListMapChul(IndexCa613Dto parm) ;
+    public List<IndexCa613Dto> SelectCa636ListMapChul(IndexCa613Dto parm) ;
 
     public List<IndexCa613OworkDto> SelectCa613ChulList(IndexCa613OworkDto parm) ;
 
@@ -54,16 +57,20 @@ public interface Index10Mapper {
 
 
     public Boolean DeleteCa613(IndexCa613Dto parm) ;
+    public Boolean DeleteCa636(IndexCa613Dto parm) ;
     public Boolean DeleteDa037(IndexCa611Dto parm) ;
     public Boolean DeleteDA036Sch(IndexCa611Dto parm) ;
     public Boolean UpdateCa609Chul(IndexCa611Dto parm) ;
 
     public Boolean InsertCa613(IndexCa613Dto  parm) ;
 
+    public Boolean InsertCa636(IndexCa613Dto  parm) ;
+
     public Boolean InsertDA036Sch(IndexCa611Dto parm) ;
 
     public Boolean InsertDa037(IndexCa613Dto  parm) ;
     public Boolean UpdateCa613(IndexCa613Dto  parm) ;
+    public Boolean UpdateCa636(IndexCa613Dto  parm) ;
     public Boolean UpdateDa036(IndexCa611Dto  parm) ;
     public Boolean UpdateDa037(IndexCa613Dto  parm) ;
 
@@ -74,6 +81,7 @@ public interface Index10Mapper {
     public Boolean InsertChulha(IndexCa609Dto parm) ;
 
     public String SelectMaxIbgnum(String  parm) ;
+    public String SelectMaxMovnum(String  parm) ;
     public String SelectMaxDelnum(String  parm) ;
     public String SelectMaxBalnum(String  parm) ;
     public Integer SelectCheckBalnum(IndexCa609Dto parm) ;

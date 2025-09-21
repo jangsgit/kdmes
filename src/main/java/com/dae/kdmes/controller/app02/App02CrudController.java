@@ -783,6 +783,190 @@ public class App02CrudController {
         return indexCa613ListDto;
     }
 
+
+
+    @GetMapping(value="/index19/listmap")
+    public Object App19ListMap_index(@RequestParam("searchtxt") String searchtxt,
+                                     @RequestParam("frdate") String frdate,
+                                     @RequestParam("todate") String todate,
+                                     Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setPname(searchtxt);
+            indexCa613ListDto = service10.SelectCa636ListMapChul(_indexCa613Dto);
+            model.addAttribute("index19ListMap",indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App19ListMap_index Exception =====>" + ex.toString());
+        }
+
+        return indexCa613ListDto;
+    }
+
+
+    @RequestMapping(value="/index19/save")
+    public String index19Save( @RequestPart(value = "key") Map<String, Object> param
+            , Model model
+            , HttpServletRequest request){
+
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        param.forEach((key, values) -> {
+            switch (key) {
+                case "ibgdate":
+                    _indexCa613Dto.setIbgdate(values.toString());
+                    break;
+                case "ibgnum":
+                    _indexCa613Dto.setIbgnum(values.toString());
+                    break;
+                case "pcode":
+                    _indexCa613Dto.setPcode(values.toString());
+                    break;
+                case "pname":
+                    _indexCa613Dto.setPname(values.toString());
+                    break;
+                case "psize":
+                    _indexCa613Dto.setPsize(values.toString());
+                    break;
+                case "punit":
+                    _indexCa613Dto.setPunit(values.toString());
+                    break;
+                case "qty":
+                    _indexCa613Dto.setQty(Integer.parseInt(values.toString()));
+                    break;
+                case "cqty":
+                    _indexCa613Dto.setCqty(Integer.parseInt(values.toString()));
+                    break;
+                case "remark":
+                    _indexCa613Dto.setRemark(values.toString());
+                    break;
+                case "perid":
+                    _indexCa613Dto.setPerid(values.toString());
+                    break;
+                case "pernm":
+                    _indexCa613Dto.setPernm(values.toString());
+                    break;
+                case "wonflag":
+                    _indexCa613Dto.setWonflag(values.toString());
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        _indexCa613Dto.setIbgseq("001");
+        String ibgnum = "";
+        Boolean result = true;
+        ibgnum = _indexCa613Dto.getIbgnum();
+        if (ibgnum == null || ibgnum.equals("")) {
+            ibgnum = GetMaxMovnum(_indexCa613Dto.getIbgdate());
+            _indexCa613Dto.setIbgnum(ibgnum);
+            result = service10.InsertCa636(_indexCa613Dto);
+            if (!result) {
+                return "error";
+            }
+        } else {
+            result = service10.UpdateCa636(_indexCa613Dto);
+            if (!result) {
+                return "error";
+            }
+        }
+        return "success";
+    }
+
+
+    @RequestMapping(value="/index19/del")
+    public String index19Delete(  @RequestParam("ibgdate") String ibgdate,
+                                  @RequestParam("ibgnum") String ibgnum,
+                                  Model model,   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+        _indexCa613Dto.setIbgdate(ibgdate);
+        _indexCa613Dto.setIbgnum(ibgnum);
+        log.info("ibgdate=====>" + ibgdate);
+        log.info("ibgnum=====>" + ibgnum);
+        Boolean result = service10.DeleteCa636(_indexCa613Dto);
+        log.info("result=====>" + result);
+        if (!result) {
+            return "error";
+        }
+        return "success";
+    }
+
+
+    @GetMapping(value="/index19/list")
+    public Object App19List_index(@RequestParam("searchtxt") String searchtxt,
+                                  @RequestParam("frdate") String frdate,
+                                  @RequestParam("todate") String todate,
+                                  Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        IndexCa613Dto _indexCa613Dto = new IndexCa613Dto();
+
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            _indexCa613Dto.setFrdate(frdate);
+            _indexCa613Dto.setTodate(todate);
+            _indexCa613Dto.setPname(searchtxt);
+            indexCa613ListDto = service10.SelectCa636List(_indexCa613Dto);
+            model.addAttribute("index19List",indexCa613ListDto);
+
+        } catch (Exception ex) {
+            log.info("App15List_index Exception =====>" + ex.toString());
+        }
+
+        return indexCa613ListDto;
+    }
+
+
+    @GetMapping(value="/index19/jaegolist")
+    public Object App19JaegoList_index(@RequestParam("searchtxt") String searchtxt,
+                                  @RequestParam("frdate") String frdate,
+                                  @RequestParam("todate") String todate,
+                                  Model model, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+        Index03Dto _index03Dto = new Index03Dto();
+        List<Index03Dto> _index03ListDto = new ArrayList<>();
+
+        try {
+            if(searchtxt == null || searchtxt.equals("")){
+                searchtxt = "%";
+            }
+            _index03Dto.setFrdate(frdate);
+            _index03Dto.setTodate(todate);
+            _index03Dto.setPname(searchtxt);
+            _index03ListDto = service10.SelectCa636StockList(_index03Dto);
+            model.addAttribute("index19List",_index03ListDto);
+
+        } catch (Exception ex) {
+            log.info("App19JaegoList_index  Exception =====>" + ex.toString());
+        }
+
+        return _index03ListDto;
+    }
+
+
+
     //출하현황
     @GetMapping(value="/index21/listmap")
     public Object App21ListMap_index(@RequestParam("inmonth") String inmonth,
@@ -1645,6 +1829,35 @@ public class App02CrudController {
     public String GetMaxIbgnum(String indate){
 
         String ls_seq = service10.SelectMaxIbgnum(indate);
+
+        if(ls_seq == null){
+            ls_seq =  "0001";
+        }else{
+            Integer ll_misnum = Integer.parseInt(ls_seq) + 1;
+            ls_seq = ll_misnum.toString();
+            switch (ls_seq.length()){
+                case 1:
+                    ls_seq = "000" + ls_seq;
+                    break;
+                case 2:
+                    ls_seq = "00" + ls_seq;
+                    break;
+                case 3:
+                    ls_seq = "0" + ls_seq;
+                    break;
+                default:
+                    break;
+            }
+        }
+        log.info("GetMaxIbgnum  =====>" + ls_seq);
+        return ls_seq;
+    }
+
+
+
+    public String GetMaxMovnum(String indate){
+
+        String ls_seq = service10.SelectMaxMovnum(indate);
 
         if(ls_seq == null){
             ls_seq =  "0001";

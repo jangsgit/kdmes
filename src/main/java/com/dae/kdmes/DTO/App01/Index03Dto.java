@@ -42,10 +42,18 @@ public class Index03Dto {
     private Integer ijaego_su3;
     private Integer jboxsu1;
     private Integer jqty;
+    private Integer prev_qty;
+    private Integer in_qty;
+    private Integer out_qty;
+    private Integer cur_qty;
     private String jpumnm;
     private String jsize;
     private String jepm;
     private String jepm_size;
+    private String pcode;
+    private String pname;
+    private String psize;
+    private String punit;
     private String cltcd;
     private String jgumtype;
     private String jgumtypenm;
