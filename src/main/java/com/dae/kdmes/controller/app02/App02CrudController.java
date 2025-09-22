@@ -801,7 +801,7 @@ public class App02CrudController {
             }
             _indexCa613Dto.setFrdate(frdate);
             _indexCa613Dto.setTodate(todate);
-            _indexCa613Dto.setPname(searchtxt);
+            _indexCa613Dto.setPcode(searchtxt);
             indexCa613ListDto = service10.SelectCa636ListMapChul(_indexCa613Dto);
             model.addAttribute("index19ListMap",indexCa613ListDto);
 

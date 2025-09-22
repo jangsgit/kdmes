@@ -63,7 +63,7 @@
                         <a class="nav-link active" data-toggle="tab" href="#step01" onclick="tabchk_rtn('A')">예비자재 입출고등록</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">입출고현황</a>
+                        <a class="nav-link" data-toggle="tab" href="#step02"  onclick="tabchk_rtn('B')">예비자재 수불현황</a>
                     </li> 
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#step03"  onclick="tabchk_rtn('C')">현재고현황</a>
@@ -312,6 +312,7 @@
                             <div class="col-auto">
                                 <div class="input-group input-group-sm mb-3"><span class="input-group-text" id="inputGroup-sizing-sm">품명</span> 
                                     <input class="form-control form-control-sm" id="searchtxt" type="text"    autocomplete="off"   placeholder="품명"   > 
+                                    <input class="form-control form-control-sm" id="pcode02" type="hidden"    autocomplete="off"  placeholder=""> 
                                 </div>
                             </div>
                             <div class="col-1 col-sm-1">  
@@ -671,23 +672,14 @@
                        headersVisibility: 'Column',
                        // selectionMode: 'RowRange', 
                        columns: [      
-                        { binding: 'ibgdate', header: '일자', align: "center", width: 120 }, 
-                        { binding: 'pname', 
-                            header: '품목', 
-                            align: "center", 
-                            width: 200,
-                            cellTemplate: wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                                text: '<b>${item.pname}</b>',
-                                click: (e, ctx) => {
-                                    wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.llqty, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.wonflag );                    
-                                }
-                            }) 
-                        },    
+                        { binding: 'ibgdate', header: '일자', align: "center", width: 120 },  
+                        { binding: 'pname', header: '품목', align: "center", width: 200 }, 
                         { binding: 'psize', header: '규격', align: "left", width: 150 },  
-                        { binding: 'wontxt', header: '구분', align: "left", width: 180 }, 
-                        { binding: 'llqty', header: '수량', align: "right", width: 90 },   
-                        { binding: 'pernm', header: '담당자', align: "center", width: 100 },   
-                        { binding: 'remark', header: '비고', align: "center", width: 180 },      
+                        { binding: 'punit', header: '단위', align: "left", width: 100 },  
+                        { binding: 'prev_qty', header: '전재고', align: "right", width: 90 },   
+                        { binding: 'in_qty', header: '입고', align: "right", width: 90 },   
+                        { binding: 'out_qty', header: '출고', align: "right", width: 90 },   
+                        { binding: 'cur_qty ', header: '현재고', align: "right", width: 90 },    
                        ], 
                        itemsSource: view_p01tab02page
                 });    
@@ -1114,7 +1106,14 @@
                     document.getElementById("innamebtn2").click();
                     searchListTot_rtn("A"); 
                 }
-            });      
+            });     
+            //품목현황 검색  
+            document.getElementById("searchtxt").addEventListener("keyup", (e)=>{ 
+                if(e.keyCode === 13){ 
+                    document.getElementById("innamebtn2").click();
+                    searchListTot_rtn("B"); 
+                }
+            });    
             //선택한 탭 체크 
                 function tabchk_rtn(arg){
                 document.getElementById('tabvalue').value = arg; 
@@ -1148,12 +1147,19 @@
                     })  
 
                 }else{
-                    ls_search = document.getElementById('searchtxt').value ;              
-                    if(ls_search == null || ls_search.length == 0 || ls_search == ""){ 
-                        ls_search = "%" ;
-                    }  
+                     
+                    ls_search = document.getElementById('pcode02').value ; //searchtxt    
+                              
+                    if(ls_search == null || ls_search.length == 0 || ls_search == "%"){ 
+                        alert("품목을 등록하세요") 
+                        document.getElementById("searchtxt").focus(); 
+                        return ;        
+                    }     
                     ls_frdate     =  convert_date(wfrdate02.value);                    
                     ls_todate     =  convert_date(wtodate02.value);
+                    console.log(ls_frdate)
+                    console.log(ls_todate)
+                    console.log(ls_search)
                     $.ajax({
                         url: '/app02m/index19/listmap',   
                         type:"POST",
@@ -1178,47 +1184,47 @@
         
                 //  tab01 grid data 수집
             function tabA_grid(data, arg_tab){
+                console.log(data)
                 var wtab01Dto  = data;    
                 var wtab01_data = []; 
                 var cnt = 1; 
                 var ls_wontxt = "";
-                var ll_qty = 0;
-                console.log(data)
-                for (var i = 0; i < wtab01Dto.length; i++) {  
-                    if(wtab01Dto[i]["wonflag"] == "0"){
-                        ls_wontxt = "입고";
-                        ll_qty = wtab01Dto[i]["qty"];
-                    }  
-                    if(wtab01Dto[i]["wonflag"] == "1"){
-                        ls_wontxt = "출고";
-                        ll_qty = wtab01Dto[i]["cqty"];
-                    } 
-                    
-                    wtab01_data.push({
-                        id: i, 
-                        index: cnt, 
-                        ibgdate: wtab01Dto[i]["ibgdate"], 
-                        ibgnum: wtab01Dto[i]["ibgnum"], 
-                        ibgseq: wtab01Dto[i]["ibgseq"],  
-                        istore: wtab01Dto[i]["istore"], 
-                        ostore: wtab01Dto[i]["ostore"],  
-                        pcode: wtab01Dto[i]["pcode"], 
-                        pname: wtab01Dto[i]["pname"], 
-                        psize: wtab01Dto[i]["psize"], 
-                        punit: wtab01Dto[i]["punit"], 
-                        qty: wtab01Dto[i]["qty"], 
-                        cqty: wtab01Dto[i]["cqty"],  
-                        llqty: ll_qty,  
-                        remark: wtab01Dto[i]["remark"], 
-                        perid: wtab01Dto[i]["perid"],    
-                        pernm: wtab01Dto[i]["pernm"],   
-                        wonflag: wtab01Dto[i]["wonflag"],    
-                        wontxt: ls_wontxt, 
-                           
-                    });
-                    cnt++;
-                }    
-                if(arg_tab =="A"){
+                var ll_qty = 0; 
+                    if(arg_tab =="A"){
+                    for (var i = 0; i < wtab01Dto.length; i++) {  
+                            if(wtab01Dto[i]["wonflag"] == "0"){
+                                ls_wontxt = "입고";
+                                ll_qty = wtab01Dto[i]["qty"];
+                            }  
+                            if(wtab01Dto[i]["wonflag"] == "1"){
+                                ls_wontxt = "출고";
+                                ll_qty = wtab01Dto[i]["cqty"];
+                            } 
+                            
+                            wtab01_data.push({
+                                id: i, 
+                                index: cnt, 
+                                ibgdate: wtab01Dto[i]["ibgdate"], 
+                                ibgnum: wtab01Dto[i]["ibgnum"], 
+                                ibgseq: wtab01Dto[i]["ibgseq"],  
+                                istore: wtab01Dto[i]["istore"], 
+                                ostore: wtab01Dto[i]["ostore"],  
+                                pcode: wtab01Dto[i]["pcode"], 
+                                pname: wtab01Dto[i]["pname"], 
+                                psize: wtab01Dto[i]["psize"], 
+                                punit: wtab01Dto[i]["punit"], 
+                                qty: wtab01Dto[i]["qty"], 
+                                cqty: wtab01Dto[i]["cqty"],  
+                                llqty: ll_qty,  
+                                remark: wtab01Dto[i]["remark"], 
+                                perid: wtab01Dto[i]["perid"],    
+                                pernm: wtab01Dto[i]["pernm"],   
+                                wonflag: wtab01Dto[i]["wonflag"],    
+                                wontxt: ls_wontxt, 
+                                
+                            });
+                            cnt++;
+                        }    
                     wtab01Grid.columns.clear();  
                     wtab01Grid.autoGenerateColumns = false; 
                     view_p01tab01page.sourceCollection  = wtab01_data;
@@ -1288,6 +1294,23 @@
  
         
                 }else{ 
+                    for (var i = 0; i < wtab01Dto.length; i++) {   
+                            wtab01_data.push({
+                                id: i, 
+                                index: cnt, 
+                                ibgdate: wtab01Dto[i]["ibgdate"], 
+                                prev_qty: wtab01Dto[i]["prev_qty"], 
+                                in_qty: wtab01Dto[i]["in_qty"],  
+                                out_qty: wtab01Dto[i]["out_qty"], 
+                                cur_qty: wtab01Dto[i]["cur_qty"],  
+                                pcode: wtab01Dto[i]["pcode"], 
+                                pname: wtab01Dto[i]["pname"], 
+                                psize: wtab01Dto[i]["psize"], 
+                                punit: wtab01Dto[i]["punit"],  
+                                
+                            });
+                            cnt++;
+                        }    
                     wtab02Grid.columns.clear();  
                     wtab02Grid.autoGenerateColumns = false; 
                     view_p01tab02page.sourceCollection  = wtab01_data; 
@@ -1303,13 +1326,7 @@
                     cols.binding = 'pname';
                     cols.header = '품목';
                     cols.align = "left";
-                    cols.width = 200;
-                    cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
-                        text: '<b>${item.pname}</b>',
-                        click: (e, ctx) => {
-                            wcifChk3_a(ctx.item.ibgdate, ctx.item.ibgnum, ctx.item.pcode ,ctx.item.pname, ctx.item.psize, ctx.item.punit, ctx.item.llqty, ctx.item.perid, ctx.item.pernm, ctx.item.remark, ctx.item.wonflag );                    
-                        }
-                    });
+                    cols.width = 200; 
                     wtab02Grid.columns.push(cols);  
         
                     cols = new wijmo.grid.Column(); 
@@ -1324,37 +1341,35 @@
                     cols.header = '단위';
                     cols.align = "center";
                     cols.width = 100;           
-                    wtab02Grid.columns.push(cols); 
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'wontxt';
-                    cols.header = '구분';
-                    cols.align = "center";
-                    cols.width = 100;           
-                    wtab02Grid.columns.push(cols);    
+                    wtab02Grid.columns.push(cols);  
 
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'llqty';
-                    cols.header = '수량';
+                    cols.binding = 'prev_qty';
+                    cols.header = '전재고';
                     cols.align = "right";
                     cols.width = 90;                  
                     wtab02Grid.columns.push(cols);   
- 
-        
+
                     cols = new wijmo.grid.Column(); 
-                    cols.binding = 'pernm';
-                    cols.header = '담당자';
-                    cols.align = "left";
-                    cols.width = 100;           
-                    wtab02Grid.columns.push(cols);       
- 
-        
-                    cols = new wijmo.grid.Column(); 
-                    cols.binding = 'remark';
-                    cols.header = '비고';
-                    cols.align = "left";
-                    cols.width = 200;           
+                    cols.binding = 'in_qty';
+                    cols.header = '입고수량';
+                    cols.align = "right";
+                    cols.width = 90;                  
                     wtab02Grid.columns.push(cols);   
+
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'out_qty';
+                    cols.header = '출고수량';
+                    cols.align = "right";
+                    cols.width = 90;                  
+                    wtab02Grid.columns.push(cols);   
+
+                    cols = new wijmo.grid.Column(); 
+                    cols.binding = 'cur_qty';
+                    cols.header = '현재고';
+                    cols.align = "right";
+                    cols.width = 90;                  
+                    wtab02Grid.columns.push(cols);    
 
                             
                 }
@@ -1492,8 +1507,12 @@
             
             
             function searchListTot_rtn(arg){ 
-                 
-                searchCode = document.getElementById('pname').value; 
+                if(arg == "A"){
+                    searchCode = document.getElementById('pname').value; 
+                }else{
+                    searchCode = document.getElementById('searchtxt').value; 
+                } 
+                
                 ls_gubn = 'H' 
                 $.ajax({
                             url: '/app01m/index03/list',  
@@ -1504,7 +1523,7 @@
                             }, 
                             async:false,
                             success:function(data){  
-                                tabC_grid(data);
+                                tabC_grid(data,arg);
                             },error:function(e){
                                 console.log("error");                            
                             }
@@ -1515,7 +1534,7 @@
             }    
         
                 //  tab02 grid data 수집
-            function tabC_grid(data){
+            function tabC_grid(data, arg){
                 var wtab03Dto  = data;    
                 var wtab03_data = []; 
                 var cnt = 1;
@@ -1547,7 +1566,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.jkey}</b>',
                     click: (e, ctx) => {
-                        wcifChk_a(ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jdanwy);                    
+                        wcifChk_a(arg, ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jdanwy);                    
                         
                     }
                 });
@@ -1562,7 +1581,7 @@
                 cols.cellTemplate = wijmo.grid.cellmaker.CellMaker.makeLink({ 
                     text: '<b>${item.jpum}</b>',
                     click: (e, ctx) => {
-                        wcifChk_a(ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jdanwy);                    
+                        wcifChk_a(arg, ctx.item.jkey, ctx.item.jpum, ctx.item.jgugek, ctx.item.jdanwy);                    
                     }
                 });
                 wtab03Grid.columns.push(cols);  
@@ -1584,11 +1603,16 @@
         
             }   
 
-            function wcifChk_a(arg1, arg2, arg3, arg4 ){                       
-                document.getElementById('pcode').value = arg1;  
-                document.getElementById('pname').value = arg2;  
-                document.getElementById('psize').value = arg3;  
-                document.getElementById('punit').value = arg4; 
+            function wcifChk_a(arg0, arg1, arg2, arg3, arg4 ){  
+                if(arg0 == "A"){
+                    document.getElementById('pcode').value = arg1;  
+                    document.getElementById('pname').value = arg2;  
+                    document.getElementById('psize').value = arg3;  
+                    document.getElementById('punit').value = arg4; 
+                }else{
+                    document.getElementById('searchtxt').value = arg2;  
+                    document.getElementById('pcode02').value = arg1;  
+                } 
                 $("#wciflist_rtn").trigger("click");
                 
             }

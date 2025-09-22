@@ -531,6 +531,10 @@
         <result property="punit" column="punit" />
         <result property="qty" column="qty" />
         <result property="cqty" column="cqty" />
+        <result property="prev_qty" column="prev_qty" />
+        <result property="in_qty" column="in_qty" />
+        <result property="out_qty" column="out_qty" />
+        <result property="cur_qty" column="cur_qty" />
         <result property="uamt" column="uamt" />
         <result property="samt" column="samt" />
         <result property="tamt" column="tamt" />
@@ -566,19 +570,95 @@
 
 
     <select id="SelectCa636ListMapChul" resultMap="CA613ResultMap">
-        <![CDATA[
-            SELECT   Left(A.ibgdate,4) + '-' + substring(A.ibgdate, 5,2)+ '-' + substring(A.ibgdate, 7,2) as ibgdate,
-                  A.ibgnum, A.ibgseq,  A.istore, A.ostore, A.wonflag,
-                  A.pcode, A.pname, A.psize,    A.punit,  A.qty, A.cqty, A.uamt, A.samt, A.tamt,
-                  isnull(A.remark,'') as remark,
-                  A.mamt,   A.pernm , A.perid
-            FROM TB_CA636 A WITH (NOLOCK)
-            where  A.pname Like concat('%',#{pname},'%')
-            AND    A.ibgdate between #{frdate} and #{todate}
-            order by A.ibgdate, A.ibgnum;
-        ]]>
-    </select>
+        <!-- 일자별 전재고/입고/출고/현재고 타임라인 -->
 
+            <![CDATA[
+                  WITH Base AS (
+                      SELECT
+                          B.pcode,
+                          B.pname,
+                          B.psize,
+                          B.punit,
+                          B.wonflag,                 -- 0: 입고, 1: 출고
+                          ISNULL(B.qty,  0) AS in_qty_raw,
+                          ISNULL(B.cqty, 0) AS out_qty_raw,
+                          B.ibgdate                 -- YYYYMMDD (char)
+                      FROM TB_CA636 B WITH (NOLOCK)
+                      where B.pcode = #{pcode}
+
+                    ),
+                  -- 품목 메타(PCODE/PNAME/PSIZE/PUNIT)
+                  Prod AS (
+                      SELECT pcode, MAX(pname) AS pname, MAX(psize) AS psize, MAX(punit) AS punit
+                      FROM Base
+                      GROUP BY pcode
+                  ),
+                  -- 시작일 이전 누적 = 전재고
+                  Prev AS (
+                      SELECT
+                          pcode,
+                          ISNULL(
+                              SUM(CASE WHEN wonflag = 0 THEN in_qty_raw  ELSE 0 END)
+                            - SUM(CASE WHEN wonflag = 1 THEN out_qty_raw ELSE 0 END), 0
+                          ) AS prev_qty
+                      FROM Base
+                      WHERE ibgdate < #{frdate}
+                      GROUP BY pcode
+                  ),
+                  -- 기간 내 일자별 입/출고 합
+                  Daily AS (
+                      SELECT
+                          pcode,
+                          ibgdate,
+                          SUM(CASE WHEN wonflag = 0 THEN in_qty_raw  ELSE 0 END) AS in_qty,
+                          SUM(CASE WHEN wonflag = 1 THEN out_qty_raw ELSE 0 END) AS out_qty
+                      FROM Base
+                      WHERE ibgdate BETWEEN #{frdate} AND #{todate}
+                      GROUP BY pcode,  ibgdate
+                  ),
+                  -- 누적 델타(입고-출고) 및 행번호
+                    Run AS (
+                        SELECT
+                            D.pcode,
+                            D.ibgdate,
+                            D.in_qty,
+                            D.out_qty,
+                            SUM(D.in_qty - D.out_qty) OVER(
+                                PARTITION BY D.pcode
+                                ORDER BY D.ibgdate
+                                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                            ) AS run_delta,
+                            ROW_NUMBER() OVER(PARTITION BY D.pcode ORDER BY D.ibgdate) AS rn
+                        FROM Daily D
+                    )
+                  SELECT
+                      P.pcode,
+                      P.pname,
+                      P.psize,
+                      P.punit,
+                      LEFT(R.ibgdate,4) + '-' + SUBSTRING(R.ibgdate,5,2) + '-' + SUBSTRING(R.ibgdate,7,2) AS ibgdate,
+                      CASE WHEN R.rn = 1 THEN ISNULL(Pr.prev_qty, 0) ELSE NULL END AS prev_qty,  -- 전재고(첫 행만)
+                      R.in_qty  AS in_qty,                                                       -- 당일 입고
+                      R.out_qty AS out_qty,                                                      -- 당일 출고
+                      ISNULL(Pr.prev_qty, 0) + R.run_delta AS cur_qty
+                  FROM Run R
+                  JOIN Prod P      ON P.pcode = R.pcode
+                  LEFT JOIN Prev Pr ON Pr.pcode = R.pcode
+                  ORDER BY R.ibgdate
+            ]]>
+
+    </select>
+<!--    <![CDATA[-->
+<!--            SELECT   Left(A.ibgdate,4) + '-' + substring(A.ibgdate, 5,2)+ '-' + substring(A.ibgdate, 7,2) as ibgdate,-->
+<!--                  A.ibgnum, A.ibgseq,  A.istore, A.ostore, A.wonflag,-->
+<!--                  A.pcode, A.pname, A.psize,    A.punit,  A.qty, A.cqty, A.uamt, A.samt, A.tamt,-->
+<!--                  isnull(A.remark,'') as remark,-->
+<!--                  A.mamt,   A.pernm , A.perid-->
+<!--            FROM TB_CA636 A WITH (NOLOCK)-->
+<!--            where  A.pname Like concat('%',#{pname},'%')-->
+<!--            AND    A.ibgdate between #{frdate} and #{todate}-->
+<!--            order by A.ibgdate, A.ibgnum;-->
+<!--        ]]>-->
     <select id="SelectDa037List" parameterType="com.dae.kdmes.DTO.App01.IndexCa613Dto" resultType="com.dae.kdmes.DTO.App01.IndexCa613Dto">
         <![CDATA[
         SELECT B.balno, A.pcode, A.pname, B.inmonth, B.inweeks, A.qty, A.delnum, A.delseq, B.acorp,B.demflag,

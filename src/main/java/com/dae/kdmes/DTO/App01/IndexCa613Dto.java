@@ -29,6 +29,10 @@ public class IndexCa613Dto {
     private Integer tamt;
     private Integer mamt;
     private Integer janqty;
+    private Integer prev_qty;
+    private Integer in_qty;
+    private Integer out_qty;
+    private Integer cur_qty;
     private String indate;
     private String inperid;
     private String frdate;
