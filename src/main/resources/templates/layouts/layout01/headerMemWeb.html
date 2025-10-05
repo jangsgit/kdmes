@@ -212,8 +212,8 @@
                                         <div class="col-auto">
                                             <div class="input-group">
                                                 <div class="input-group-text">금형검색</div>
-                                                <input class="form-control form-control-sm" id="searchCode01" type="text"   /> 
-                                                <button class="btn btn-falcon-warning me-1 mb-1" id="SearchBtn01" type="button" >검색
+                                                <input class="form-control form-control-sm" id="searchCode02" type="text"   /> 
+                                                <button class="btn btn-falcon-warning me-1 mb-1" id="SearchBtn02" type="button" >검색
                                                 </button>
                                             </div>
                                         </div> 
@@ -869,6 +869,26 @@
                 document.getElementById("inbtn02").click();
             }
         });  
+        document.getElementById("searchCode01").addEventListener("keyup", (e)=>{ 
+            if(e.keyCode === 13){   
+                var ls_inmachname = document.getElementById('searchCode01').value; 
+                ls_inmachname = ls_inmachname.trim(); 
+                if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
+                    ls_inmachname    = "%"
+                }    
+                 machnm_list(ls_inmachname) 
+            }
+        });  
+        document.getElementById("searchCode02").addEventListener("keyup", (e)=>{ 
+            if(e.keyCode === 13){   
+                var ls_inmachname = document.getElementById('searchCode02').value; 
+                ls_inmachname = ls_inmachname.trim(); 
+                if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
+                    ls_inmachname    = "%"
+                }    
+                addinfo_list(ls_inmachname) 
+            }
+        });  
         document.getElementById("inmachname").addEventListener("click", (e)=>{  
                 machnm_list("%")
                 document.getElementById("inbtn01").click(); 
@@ -877,7 +897,26 @@
                 addinfo_list("%")
                 document.getElementById("inbtn02").click(); 
         });
-  
+        document.getElementById("SearchBtn01").addEventListener("click", (e)=>{  
+            
+            var ls_inmachname = document.getElementById('searchCode01').value; 
+            ls_inmachname = ls_inmachname.trim(); 
+            if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
+                ls_inmachname    = "%"
+            }    
+                 machnm_list(ls_inmachname) 
+        });
+        document.getElementById("SearchBtn02").addEventListener("click", (e)=>{   
+            
+            var ls_inmachname = document.getElementById('searchCode02').value; 
+            ls_inmachname = ls_inmachname.trim(); 
+            if(ls_inmachname == null || ls_inmachname.length == 0 || ls_inmachname == ""){ 
+                ls_inmachname    = "%"
+            }    
+
+                addinfo_list(ls_inmachname) 
+        });
+        
         function convert_date(arg_date){  
             var ls_arg_date = String(arg_date); 
             if(ls_arg_date == null || ls_arg_date.length == 0 || ls_arg_date == ""|| ls_arg_date == "null"){  
