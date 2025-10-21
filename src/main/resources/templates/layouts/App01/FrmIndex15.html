@@ -234,10 +234,12 @@
                                                                 <td colspan="2">
                                                                     <div class="input_wrap">                                               
                                                                         <input type="text"  id="remark" autocomplete="off"   > 
+                                                                        <input type="hidden"  id="istore" autocomplete="off"   > 
+                                                                        <input type="hidden"  id="ostore" autocomplete="off"   > 
                                                                     </div>
                                                                 </td>                                
                                                             </tr>                                                                                                                                                                                   
-                                                            <tr>                                                                                                                        
+                                                            <!-- <tr>                                                                                                                        
                                                                 <th>입고창고</th> 
                                                                 <td colspan="2">
                                                                     <div class="input_wrap" style="max-width: 235px;">
@@ -256,7 +258,7 @@
                                                                         </select>
                                                                     </div> 
                                                                 </td>                                
-                                                            </tr>                                                                        
+                                                            </tr>                                                                         -->
                                                         </tbody>
                                                     </table>
                                                     <div class="btn_wrap" style="float: right; margin-bottom: 10px;">
@@ -1122,6 +1124,11 @@
                     alert("품목을 선택하세요")
                     return ; 
                 } 
+                if(!ls_lotno){
+                    alert("로트번호를 등록하세요")
+                    return ; 
+                } 
+                 
                 if(ls_qty == null || ls_qty.length == 0 || ls_qty == ""){ 
                             alert("입고수량을 입력하세요") 
                             document.getElementById("qty").focus(); 
