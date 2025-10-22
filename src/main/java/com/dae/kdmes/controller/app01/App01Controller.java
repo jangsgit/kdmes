@@ -187,7 +187,7 @@ public class App01Controller {
     //제품등록
     @GetMapping(value="/index05")
     public String App05_index( Model model, HttpServletRequest request) throws Exception{
-        CommDto.setMenuTitle("제품등록");
+        CommDto.setMenuTitle("kcc제품등록");
         CommDto.setMenuUrl("기준정보>제품정보");
         CommDto.setMenuCode("index05");
         TBPopupVO _indexpopDto = new TBPopupVO();
@@ -206,6 +206,7 @@ public class App01Controller {
             index03Dto.setJpum("%");
             index03Dto.setJ_misayong("%");
             index03Dto.setW_b_gubn("J");
+            index03Dto.setJ_dae("02");
             index03List = service03.GetJpumList(index03Dto);
             popupListDto = service03.getj1_keyList(popupDto);
             popupListDto1 = service03.getj2_keyList(popupDto);
@@ -242,6 +243,63 @@ public class App01Controller {
     }
 
 
+    //제품등록
+    @GetMapping(value="/index16")
+    public String App16_index( Model model, HttpServletRequest request) throws Exception{
+        CommDto.setMenuTitle("매출제품등록");
+        CommDto.setMenuUrl("기준정보>제품정보");
+        CommDto.setMenuCode("index16");
+        TBPopupVO _indexpopDto = new TBPopupVO();
+        List<TBPopupVO> _indexJpumList = new ArrayList<>();
+        List<TBPopupVO> _indexDoor1List = new ArrayList<>();
+        List<TBPopupVO> _indexDoor2List = new ArrayList<>();
+        List<TBPopupVO> _indexFormList = new ArrayList<>();
+        List<TBPopupVO> _indexColorList = new ArrayList<>();
+        List<TBPopupVO> _indexJthickList = new ArrayList<>();
+
+        HttpSession session = request.getSession();
+        UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
+        model.addAttribute("userformDto",userformDto);
+
+        try {
+            index03Dto.setJpum("%");
+            index03Dto.setJ_misayong("%");
+            index03Dto.setW_b_gubn("J");
+            index03Dto.setJ_dae("04");
+            index03List = service03.GetJpumList(index03Dto);
+            popupListDto = service03.getj1_keyList(popupDto);
+            popupListDto1 = service03.getj2_keyList(popupDto);
+            popupListDto2 = service03.getGumtype_keyList(popupDto);
+
+
+            _indexJpumList = service03.GetJpumComboList(_indexpopDto);
+            _indexDoor1List = service03.GetDoor1ComboList(_indexpopDto);
+            _indexDoor2List = service03.GetDoor2ComboList(_indexpopDto);
+            _indexFormList = service03.GetFormComboList(_indexpopDto);
+            _indexColorList = service03.GetColorComboList(_indexpopDto);
+            _indexJthickList = service03.GetJthickComboList(_indexpopDto);
+
+
+            model.addAttribute("j1_keyList",popupListDto);
+            model.addAttribute("j2_keyList",popupListDto1);
+            model.addAttribute("j3_keyList",popupListDto2);
+            model.addAttribute("index03List",index03List);
+            model.addAttribute("jpumList",_indexJpumList);
+            model.addAttribute("door1List",_indexDoor1List);
+            model.addAttribute("door2List",_indexDoor2List);
+            model.addAttribute("formList",_indexFormList);
+            model.addAttribute("colorList",_indexColorList);
+            model.addAttribute("jthickList",_indexJthickList);
+
+        } catch (Exception ex) {
+//                dispatchException = ex;
+            log.info("App03001Tab01Form Exception ===== ======");
+            log.info("Exception =====>" + ex.toString());
+//            log.debug("Exception =====>" + ex.toString() );
+        }
+
+        return "App01/index16";
+    }
 
     //제품등록
     @GetMapping(value="/index051")
@@ -265,6 +323,7 @@ public class App01Controller {
             index03Dto.setJpum("%");
             index03Dto.setJ_misayong("%");
             index03Dto.setW_b_gubn("W");
+            index03Dto.setJ_dae("%");
             popupDto.setJ1_key("01");
             index03List = service03.GetJpumList(index03Dto);
             popupListDto = service03.getj1_keyList(popupDto);
@@ -323,6 +382,7 @@ public class App01Controller {
             index03Dto.setJpum("%");
             index03Dto.setJ_misayong("%");
             index03Dto.setW_b_gubn("H");
+            index03Dto.setJ_dae("%");
             popupDto.setJ1_key("03");
             index03List = service03.GetJpumList(index03Dto);
             popupListDto = service03.getj1_keyList(popupDto);

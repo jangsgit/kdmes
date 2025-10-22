@@ -489,6 +489,7 @@
            var ls_rem1 = document.getElementById('com_rem1').value;
            var ls_rem2 = "";
            var ls_work = "";
+           var ls_newflag = ""
         //    var ls_rem2 = document.getElementById('com_rem2').value;
         //    var ls_work = document.getElementById('com_work').value;
            var wtab02Grid = document.getElementById('wtab02Grid_div').value;
@@ -557,7 +558,6 @@
                        document.getElementById("com_rem1").focus(); 
                        return ;               
                    }
-
                    $.ajax({
                        url: '/app01m/comcodedetailsave',  
                        type:"POST",
@@ -568,6 +568,7 @@
                            "com_rem1"      : ls_rem1 , 
                            "com_rem2"      : ls_rem2 , 
                            "com_work"      : ls_work ,  
+                           "newflag"      : ls_newflag , 
                        }, 
                        async:false,
                        success:function(data){   

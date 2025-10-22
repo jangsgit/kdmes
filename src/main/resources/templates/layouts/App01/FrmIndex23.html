@@ -415,6 +415,12 @@
                                     { binding: 'balno', header: '발주번호', align: "center", width: 120 },  
                                     { binding: 'baldate', header: '발주일자', align: "center",  width: 120 },  
                                     { binding: 'moncls', header: '통화', align: "left", width: 120 },
+
+                                    { binding: 'condi01', header: '지불조건', align: "center", width: 120 },
+                                    { binding: 'condi02', header: '인도조건', align: "center", width: 120 },
+                                    { binding: 'gumsunm', header: '검수자', align: "center", width: 120 },
+                                    { binding: 'insunm', header: '인수자', align: "center", width: 120 },
+
                                     { binding: 'balflag', header: '상태', align: "left", width: 120 },
                                     { binding: 'pcode', header: '코드', align: "center", width: 100 },
                                     { binding: 'pname', header: '품명', align: "left", width: 150 },   
@@ -765,7 +771,11 @@
                             var ll_uamt    =  [];         
                             var ll_samt    =  [];    
                             var ls_jcode  =  [];        
-                            var ll_jqty    =  []; 
+                            var ll_jqty    =  [];      
+                            var ls_condi01    =  [];      
+                            var ls_condi02    =  [];      
+                            var ls_gumsunm    =  [];      
+                            var ls_insunm    =  []; 
                             var llCount = 0;         
                             var lsBaldate = "";
                             var ll_cnt = 0;
@@ -786,16 +796,22 @@
                                             ls_balno[ll_cnt]   =  wtab01Grid.getCellData(i, 1, false);         //발주번호
                                             ls_baldate[ll_cnt] =  wtab01Grid.getCellData(i, 2, false);       //발주일자
                                             ls_moncls[ll_cnt]  =  wtab01Grid.getCellData(i, 3, false);        //통화
-                                            ls_balflag[ll_cnt] =  wtab01Grid.getCellData(i, 4, false);       //상태 입고,미입고
-                                            ls_pcode[ll_cnt]   =  wtab01Grid.getCellData(i, 5, false);         //품목코드
-                                            ls_pname[ll_cnt]   =  wtab01Grid.getCellData(i, 6, false);         //품목명
-                                            ls_psize[ll_cnt]   =  wtab01Grid.getCellData(i, 7, false);         //규격
-                                            ls_punit[ll_cnt]   =  wtab01Grid.getCellData(i, 8, false);         //단위
-                                            ll_qty[ll_cnt]     =  parseInt(wtab01Grid.getCellData(i, 9, false).replace(/,/g, ''));           //수량
-                                            ll_uamt[ll_cnt]    =  parseInt(wtab01Grid.getCellData(i, 10, false).replace(/,/g, ''));          //단가
-                                            ll_samt[ll_cnt]    =  parseInt(wtab01Grid.getCellData(i, 11, false).replace(/,/g, ''));         //금액
-                                            ls_ischnm[ll_cnt]  =  wtab01Grid.getCellData(i, 12, false);                   //납품장소
-                                            ls_ischdate[ll_cnt] =  wtab01Grid.getCellData(i, 13, false);                 //납기일
+                                            
+                                            ls_condi01[ll_cnt]  =  wtab01Grid.getCellData(i, 4, false);        //지불조건                                            
+                                            ls_condi02[ll_cnt]  =  wtab01Grid.getCellData(i, 5, false);        //인수조건
+                                            ls_gumsunm[ll_cnt]  =  wtab01Grid.getCellData(i, 6, false);        //검수자
+                                            ls_insunm[ll_cnt]  =  wtab01Grid.getCellData(i, 7, false);        //인수자
+
+                                            ls_balflag[ll_cnt] =  wtab01Grid.getCellData(i, 8, false);       //상태 입고,미입고
+                                            ls_pcode[ll_cnt]   =  wtab01Grid.getCellData(i, 9, false);         //품목코드
+                                            ls_pname[ll_cnt]   =  wtab01Grid.getCellData(i, 10, false);         //품목명
+                                            ls_psize[ll_cnt]   =  wtab01Grid.getCellData(i, 11, false);         //규격
+                                            ls_punit[ll_cnt]   =  wtab01Grid.getCellData(i, 12, false);         //단위
+                                            ll_qty[ll_cnt]     =  parseInt(wtab01Grid.getCellData(i, 13, false).replace(/,/g, ''));           //수량
+                                            ll_uamt[ll_cnt]    =  parseInt(wtab01Grid.getCellData(i, 14, false).replace(/,/g, ''));          //단가
+                                            ll_samt[ll_cnt]    =  parseInt(wtab01Grid.getCellData(i, 15, false).replace(/,/g, ''));         //금액
+                                            ls_ischnm[ll_cnt]  =  wtab01Grid.getCellData(i, 16, false);                   //납품장소
+                                            ls_ischdate[ll_cnt] =  wtab01Grid.getCellData(i, 17, false);                 //납기일
 
                                             const date = new Date(ls_baldate[ll_cnt]); 
                                             const yyyy = date.getFullYear();
@@ -874,7 +890,11 @@
                                             "uamt"  : ll_uamt     ,      
                                             "samt"  : ll_samt   ,      
                                             "ischnm"  : ls_ischnm   ,      
-                                            "ischdate"  : ls_ischdate  
+                                            "ischdate"  : ls_ischdate  ,      
+                                            "condi01"  : ls_condi01  ,      
+                                            "condi02"  : ls_condi02  ,      
+                                            "gumsunm"  : ls_gumsunm  ,      
+                                            "insunm"  : ls_insunm  
                                         }, 
                                         async:false,
                                         success:function(data){   
@@ -1241,6 +1261,10 @@
                                     boxjan: wtab01Dto[i]["boxjan"], 
                                     ischqty: wtab01Dto[i]["ischqty"],  
                                     stockqty: wtab01Dto[i]["stockqty"],  
+                                    condi01: wtab01Dto[i]["condi01"], 
+                                    condi02: wtab01Dto[i]["condi02"], 
+                                    gumsunm: wtab01Dto[i]["gumsunm"], 
+                                    insunm: wtab01Dto[i]["insunm"], 
                                     balflag: ls_balflag,  
                                     ischdate: ls_ischdate,  
                                     
@@ -1412,6 +1436,34 @@
                         cols = new wijmo.grid.Column(); 
                         cols.binding = 'pcode';
                         cols.header = '제품코드';
+                        cols.align = "center";
+                        cols.width = 120;    
+                        wtab02Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'condi01';
+                        cols.header = '지불조건';
+                        cols.align = "center";
+                        cols.width = 120;    
+                        wtab02Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'condi02';
+                        cols.header = '인도조건';
+                        cols.align = "center";
+                        cols.width = 120;    
+                        wtab02Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'gumsunm';
+                        cols.header = '검수자';
+                        cols.align = "center";
+                        cols.width = 120;    
+                        wtab02Grid.columns.push(cols);   
+
+                        cols = new wijmo.grid.Column(); 
+                        cols.binding = 'insunm';
+                        cols.header = '인수자';
                         cols.align = "center";
                         cols.width = 120;    
                         wtab02Grid.columns.push(cols);   

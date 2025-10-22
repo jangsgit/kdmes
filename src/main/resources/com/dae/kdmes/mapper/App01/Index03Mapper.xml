@@ -65,13 +65,14 @@
         <![CDATA[
             select jkey, j_dae, j_jung, jgugek, jgugek2, jpumcode, jpumname, jsayang, jpum, jboxsu1, jgumtype, jdoor1, jdoor2,
                    j_net, jchajong, j_sr, j_ct, j_cavity, Convert(int, jchgoga0) AS jchgoga0, jbigo, jdanwy, w_b_gubn,
-                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp, G.com_rem1 as jgumtypenm, jgumtype, jthick, j_yangsan
+                   E.jcifcodename as jcifcodename, j_misayong, j_sang, cltcd , F.acorp as acorp, G.com_rem1 as jgumtypenm, jgumtype, jthick, j_yangsan, jolip
             from JCODE WITH (NOLOCK)
             LEFT OUTER JOIN jcifcode E WITH(NOLOCK) ON (JCODE.jkey  = E.jcifcode)
             LEFT OUTER JOIN cif      F WITH(NOLOCK) ON (JCODE.cltcd = F.acorp1 + CAST(F.acorp2 as varchar))
             LEFT OUTER JOIN TB_CA510 G WITH(NOLOCK) ON (JCODE.jgumtype = G.com_code AND G.com_cls = '006' AND G.com_code   != '00' )
             WHERE (isnull(jchajong,'') Like concat('%',#{jpum},'%') OR isnull(jpum,'') Like concat('%',#{jpum},'%') )
             and isnull(w_b_gubn,'0') Like concat('%',#{w_b_gubn},'%')
+            and isnull(j_dae,'0') Like concat('%',#{j_dae},'%')
             ORDER BY jkey
         ]]>
     </select>
@@ -103,10 +104,10 @@
 
     <insert id="InsertJpum" parameterType="com.dae.kdmes.DTO.App01.Index03Dto" >
         insert into JCODE ( jkey, j_dae, j_jung, jgugek, jpum, jgugek2, jpumcode, jpumname, cltcd, jgumtype,
-                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1 , jdoor1, jdoor2, jthick, j_yangsan) values
+                             jsayang, j_net, jchajong, j_sr, j_ct, j_cavity, jdanwy, jbigo, w_b_gubn, jchgoga0 ,j_misayong ,j_sang, jboxsu1 , jdoor1, jdoor2, jthick, j_yangsan, jolip) values
                         (#{jkey}, #{j_dae}, #{j_jung}, #{jgugek}, #{jpum}, #{jgugek2}, #{jpumcode}, #{jpumname},#{cltcd}, #{jgumtype},
                          #{jsayang}, #{j_net}, #{jchajong}, #{j_sr}, #{j_ct}, #{j_cavity}, #{jdanwy}, #{jbigo}, #{w_b_gubn},
-                         #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1}, #{jdoor1}, #{jdoor2}, #{jthick}, #{j_yangsan})
+                         #{jchgoga0}, #{j_misayong} , #{j_sang}, #{jboxsu1}, #{jdoor1}, #{jdoor2}, #{jthick}, #{j_yangsan}, #{jolip})
     </insert>
 
 
@@ -165,6 +166,8 @@
         <if test="jthick != null">jthick=#{jthick}</if>
         <if test="j_yangsan != null ">,</if>
         <if test="j_yangsan != null">j_yangsan=#{j_yangsan}</if>
+        <if test="jolip != null ">,</if>
+        <if test="jolip != null">jolip=#{jolip}</if>
 
         where jkey   = #{jkey}
     </update>

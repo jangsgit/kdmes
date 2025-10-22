@@ -212,6 +212,7 @@ public class App01CrudController {
                                            @RequestParam("com_rem1") String com_rem1,
                                            @RequestParam("com_rem2") String com_rem2,
                                            @RequestParam("com_work") String com_work,
+                                           @RequestParam("newflag") String newflag,
                                            Model model,   HttpServletRequest request){
         HttpSession session = request.getSession();
         UserFormDto userformDto = (UserFormDto) session.getAttribute("userformDto");
@@ -225,6 +226,15 @@ public class App01CrudController {
         index01Dto.setCom_rem2(com_rem2);
         index01Dto.setCom_work(com_work);
         String ls_comcode = service01.GetComCodeCheck(index01Dto);
+
+        if(newflag == null || newflag.equals("")){
+            newflag = "";
+        }
+        if(newflag.equals("nw")){
+            if(ls_comcode != null ){
+                return "duplicate";
+            }
+        }
         if(ls_comcode == null || ls_comcode.equals("")){
             result = service01.InsertComCodeDetail(index01Dto);
         }else{
@@ -575,6 +585,9 @@ public class App01CrudController {
                         break;
                     case "j_yangsan":
                         index03Dto.setJ_yangsan(values.toString());
+                        break;
+                    case "jolip":
+                        index03Dto.setJolip(values.toString());
                         break;
                     default:
                         break;

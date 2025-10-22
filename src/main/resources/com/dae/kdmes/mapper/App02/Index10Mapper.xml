@@ -177,9 +177,9 @@
 
     <insert id="InsertCA609" parameterType="com.dae.kdmes.DTO.App01.IndexCa609Dto" >
         insert into TB_CA609 (custcd, spjangcd,  baldate, balnum, balseq, cltcd, acorp, balno,
-        pcode, pname, psize,    qty, uamt, samt, ischdate, ischnm, balflag, moncls, jpumcode ) values
+        pcode, pname, psize,    qty, uamt, samt, ischdate, ischnm, balflag, moncls, jpumcode, condi01, condi02, gumsunm, insunm ) values
         ('KDMES', 'ZZ',  #{baldate},  #{balnum}, #{balseq}, #{cltcd}, #{acorp}, #{balno},
-        #{pcode}, #{pname}, #{psize},  #{qty},  #{uamt}, #{samt},  #{ischdate},  #{ischnm},  #{balflag}, #{moncls} , #{jpumcode}  )
+        #{pcode}, #{pname}, #{psize},  #{qty},  #{uamt}, #{samt},  #{ischdate},  #{ischnm},  #{balflag}, #{moncls} , #{jpumcode}, #{condi01} , #{condi02} , #{gumsunm} , #{insunm}   )
     </insert>
 
     <delete id="DeleteCA608" parameterType="com.dae.kdmes.DTO.App01.IndexCa608Dto" >
@@ -768,6 +768,7 @@
         <![CDATA[ select A.idxkey , A.baldate, A.balnum, A.balseq,
                       A.cltcd,  A.acorp, A.balno, A.pcode,
                       A.pname, A.moncls , A.qty, A.uamt, A.uamt, A.samt, A.balflag, A.ischdate, A.ischnm,
+                      A.condi01, A.condi02, A.gumsunm, A.insunm,
                     B.jboxsu1,
                     Round(A.qty / B.jboxsu1,0) as boxsu,
                     isnull(D.stock_qty, 0) as stockqty,

@@ -66,6 +66,10 @@ public class IndexCa609Dto {
     private String  chulqtyArr;
     private String  planno;
     private String  jpumcode;
+    private String  condi01;
+    private String  condi02;
+    private String  gumsunm;
+    private String  insunm;
 
     private List<IndexCa613OworkDto> oworks;
 

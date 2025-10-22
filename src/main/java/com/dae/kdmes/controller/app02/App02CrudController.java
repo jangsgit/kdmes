@@ -1449,6 +1449,10 @@ public class App02CrudController {
             ,@RequestParam( value =  "samt[]") List<Integer> samtArr
             ,@RequestParam(value =  "ischnm[]") List<String> ischnmArr
             ,@RequestParam(value =  "ischdate[]") List<String> ischdateArr
+            ,@RequestParam(value =  "condi01[]") List<String> condi01Arr
+            ,@RequestParam(value =  "condi02[]") List<String> condi02Arr
+            ,@RequestParam(value =  "gumsunm[]") List<String> gumsunmArr
+            ,@RequestParam(value =  "insunm[]") List<String> insunmArr
             , Model model
             , HttpServletRequest request){
 
@@ -1490,6 +1494,11 @@ public class App02CrudController {
             _indexCa609Dto.setIschnm(ischnmArr.get(i));
             _indexCa609Dto.setPunit(punitArr.get(i));
             _indexCa609Dto.setJpumcode(pcodeArr.get(i));
+            _indexCa609Dto.setCondi01(condi01Arr.get(i));
+            _indexCa609Dto.setCondi02(condi02Arr.get(i));
+            _indexCa609Dto.setGumsunm(gumsunmArr.get(i));
+            _indexCa609Dto.setInsunm(insunmArr.get(i));
+
             _index03Dto.setJpum(pnameArr.get(i));
             _index03Dto.setJpumcode(pcodeArr.get(i));
             ls_pcode = service10.GetJcodeCheck(_index03Dto);

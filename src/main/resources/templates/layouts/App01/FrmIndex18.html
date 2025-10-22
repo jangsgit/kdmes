@@ -96,6 +96,7 @@
                                             <input class="form-control form-control-sm" id="com_cls02" type="hidden"    autocomplete="off"  > 
                                             <input class="form-control form-control-sm" id="com_cnam02" type="hidden"    autocomplete="off" > 
                                             <input class="form-control form-control-sm" id="com_cnam" value="사원코드" type="hidden"    autocomplete="off" > 
+                                            <input class="form-control form-control-sm" id="newflag" type="hidden"  value="nw"  autocomplete="off" > 
                                             
                                         </div>
                                     </div>
@@ -281,6 +282,8 @@
            var ls_rem1 = document.getElementById('com_rem1').value;
            var ls_rem2  = document.getElementById('com_rem2').value;
            var ls_work  = document.getElementById('com_work').value;
+           var ls_newflag  = document.getElementById('newflag').value;
+           
         //    var ls_rem2 = document.getElementById('com_rem2').value;
         //    var ls_work = document.getElementById('com_work').value;
         //   var wtab02Grid = document.getElementById('wtab02Grid_div').value;
@@ -314,7 +317,9 @@
                            "com_code"      : ls_codes,  
                            "com_rem1"      : ls_rem1 , 
                            "com_rem2"      : ls_rem2 , 
-                           "com_work"      : ls_work ,  
+                           "com_work"      : ls_work , 
+                           "newflag"      : ls_newflag , 
+                            
                        }, 
                        async:false,
                        success:function(data){   
@@ -322,6 +327,10 @@
                                alert("저장되었습니다.") 
                                searchList_rtn(arg);  
                                clear_rtn(arg);        
+                           }else if(data == "duplicate"){
+                                alert("중복된 데이타가 있습니다.")
+                               // listUp();
+                               console.log(data);  
                            }else{                       
                                alert("저장중 오류가 발생했습니다. 관리자에게 문의하세요.")
                                // listUp();
@@ -379,7 +388,7 @@
                            if(data == "success"){
                                alert("삭제되었습니다.") 
                                searchList_rtn(ls_tab);  
-                               clear_rtn(ls_tab); 
+                               clear_rtn("B"); 
                                searchGrid(ls_tab);             
                            }else{                       
                                alert("삭제중 오류가 발생했습니다. 관리자에게 문의하세요.")  
@@ -457,6 +466,7 @@
                 //    document.getElementById('com_cnam').value = "";
                    document.getElementById('com_code').value = "";
                    document.getElementById('com_rem1').value = "";
+                   document.getElementById('newflag').value = "nw"; 
                 //    document.getElementById('com_rem2').value = "";
                 //    document.getElementById('com_work').value = "";
                    break;
@@ -651,7 +661,8 @@
            document.getElementById('com_code').value = arg1; 
            document.getElementById('com_rem1').value = arg2;
            document.getElementById('com_rem2').value = arg3;
-           document.getElementById('com_work').value = arg4;      
+           document.getElementById('com_work').value = arg4;  
+           document.getElementById('newflag').value = "up";     
        }
 
        function searchGrid(ls_tab){   
