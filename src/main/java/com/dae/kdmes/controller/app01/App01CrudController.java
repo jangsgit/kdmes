@@ -422,7 +422,7 @@ public class App01CrudController {
             if(com_code == null || com_code.equals("")){
                 com_code = "%";
             }
-            log.debug("searchtxt =====>" + searchtxt );
+//            log.debug("searchtxt =====>" + searchtxt );
 
             index02Dto.setCom_code(com_code);
             index02Dto.setCom_cnam(searchtxt);;
@@ -455,9 +455,15 @@ public class App01CrudController {
             index03Dto.setJkey(searchtxt);
             index03Dto.setJ_misayong("0");
             index03Dto.setW_b_gubn(gubn);
+            index03Dto.setJ_dae("%");
+//            log.info("gubn =====>" + gubn );
+//            log.info("searchtxt =====>" + searchtxt );
             if (gubn.equals("W")) {
                 index03Dto.setW_b_gubn("J");
                 index03List = service03.GetJpumList_BH(index03Dto);
+            }else if(gubn.equals("WW")){
+                index03Dto.setW_b_gubn("W");
+                index03List = service03.GetJpumList(index03Dto);
             }else{
                 index03List = service03.GetJpumList(index03Dto);
             }

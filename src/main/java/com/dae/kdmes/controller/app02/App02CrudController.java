@@ -1219,7 +1219,16 @@ public class App02CrudController {
 
         _ca613OworkDto = service10.SelectCa613ChulListSum(ca613OworkDto);
         _indexCa613Dto.setLotno(inlotno);
-        _indexCa613Dto.setCqty(_ca613OworkDto.getWotqt());
+        // 기본값은 0
+        int wotqt = (_ca613OworkDto != null && _ca613OworkDto.getWotqt() != null) ? _ca613OworkDto.getWotqt() : 0;
+
+        Integer ll_wotqt = 0;
+        if (_ca613OworkDto.getWotqt() == null){
+            ll_wotqt = 0;
+        }else{
+            ll_wotqt = _ca613OworkDto.getWotqt();
+        }
+        _indexCa613Dto.setCqty(wotqt);
         _indexCa613Dto.setIbgdate(ca613OworkDto.getIbgdate());
         _indexCa613Dto.setIbgnum(ca613OworkDto.getIbgnum());
         _indexCa613Dto.setIbgseq("001");
@@ -1227,7 +1236,7 @@ public class App02CrudController {
         if (!result) {
             return "error";
         }
-        String ls_wotqt = _ca613OworkDto.getWotqt().toString();
+        String ls_wotqt = ll_wotqt.toString();
 
         return ls_wotqt;
     }

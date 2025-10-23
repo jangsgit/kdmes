@@ -129,7 +129,7 @@
                                                                 <td colspan="2"> 
                                                                     <input type="text"  class="form-control datetimepicker" id="ibgdate" autocomplete="off"  placeholder="Y-m-d"     >                                                                       
                                                                 </td>                                            
-                                                                <th>LOTNO</th> 
+                                                                <th>LOTNO<h5 style="color:rgb(255, 166, 0); float:right;">★</h5></th> 
                                                                 <td colspan="2">
                                                                     <div class="input_wrap">
                                                                         <input type="text" id="lotno" placeholder=""  autocomplete="off">
@@ -1666,19 +1666,20 @@
             }
         
             function searchListTot_rtn(arg){ 
-                
-                if(arg == "M"){
-                    searchCode = document.getElementById('conacorp').value; 
-                    ls_gubn = '%'
-                }
-                if(arg == "A"){
-                    searchCode = document.getElementById('pcode').value; 
-                    ls_gubn = 'J'
-                }    
-                if(arg == "B"){
-                    searchCode = document.getElementById('pname').value; 
-                    ls_gubn = 'W'
-                }  
+                searchCode = document.getElementById('pcode').value; 
+                ls_gubn = 'WW' 
+                // if(arg == "M"){
+                //     searchCode = document.getElementById('conacorp').value; 
+                //     ls_gubn = '%'
+                // }
+                // if(arg == "A"){
+                //     searchCode = document.getElementById('pcode').value; 
+                //     ls_gubn = 'J'
+                // }    
+                // if(arg == "B"){
+                //     searchCode = document.getElementById('pname').value; 
+                //     ls_gubn = 'W'
+                // }  
                 $.ajax({
                             url: '/app01m/index03/list',  
                             type:"POST",
